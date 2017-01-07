@@ -1,0 +1,53 @@
+# Sensitive data
+.zshrc-secrets
+local.properties
+
+# OS
+.Trashes
+.DS_Store
+.DS_Store?
+desktop.ini
+._*
+Thumbs.db
+ehthumbs.db
+.Spotlight-V100
+
+# ZSH
+.zcompdump*
+.zsh-update
+
+# History files
+.*history
+
+# Project directories
+.idea
+
+# Vim
+Powerline_*.cache
+*.swp
+*.swo
+*.un~
+*.bak
+
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.tar
+*.zip
+*.rar
+
+# Logs and database
+*.log
+*.sql
+*.sqlite
