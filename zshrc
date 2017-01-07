@@ -1,19 +1,19 @@
 export DOTFILES=$HOME/.dotfiles
 
+# antigen
 source $DOTFILES/antigen/antigen.zsh
+export _ANTIGEN_CACHE_ENABLED=true
+antigen init $DOTFILES/antigen.rc
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+# colors
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle git
-antigen bundle command-not-found
+# vim
+alias vim='nvim'
+alias v='nvim'
 
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
+# shortcuts
+alias c='clear'
+alias reload='source ~/.zshrc'
 
-# Load the theme.
-antigen theme robbyrussell
-
-# Tell antigen that you're done.
-antigen apply
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
