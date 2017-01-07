@@ -5,9 +5,6 @@ source $DOTFILES/antigen/antigen.zsh
 export _ANTIGEN_CACHE_ENABLED=true
 antigen init $DOTFILES/shell/antigenrc
 
-# colors
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-
 # vim
 alias vim='nvim'
 alias v='nvim'

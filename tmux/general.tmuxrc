@@ -1,0 +1,15 @@
+# 0 is too far from ` 
+set -g base-index 1
+
+# Automatically set window title
+set-window-option -g automatic-rename on
+set-option -g set-titles on
+
+#set -g default-terminal screen-256color
+set -g status-keys vi
+set -g history-limit 10000
+
+setw -g mode-keys vi
+setw -g mode-mouse on
+setw -g monitor-activity on
+
