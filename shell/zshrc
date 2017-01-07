@@ -1,7 +1,7 @@
 export DOTFILES=$HOME/.dotfiles
 
 # antigen
-source $DOTFILES/antigen/antigen.zsh
+source $DOTFILES/modules/antigen/antigen.zsh
 export _ANTIGEN_CACHE_ENABLED=true
 antigen init $DOTFILES/shell/antigenrc
 
