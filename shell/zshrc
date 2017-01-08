@@ -5,21 +5,8 @@ source $DOTFILES/modules/antigen/antigen.zsh
 export _ANTIGEN_CACHE_ENABLED=true
 antigen init $DOTFILES/shell/antigenrc
 
-# vim
-alias vim='nvim'
-alias v='nvim'
-
-# shortcuts
-alias c='clear'
-alias reload='source ~/.zshrc'
-mkcd () { mkdir -p -- "$1" && cd -P -- "$1" }
-
-# plugins --------------------------------------
-
-# syntax highlighting
-ZSH_HIGHLIGHT_STYLES[path]='bold'
-
-# autosuggestions
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+source $DOTFILES/shell/functions.zsh
+source $DOTFILES/shell/aliases.zsh
+source $DOTFILES/shell/plugins.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
