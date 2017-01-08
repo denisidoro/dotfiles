@@ -12,5 +12,14 @@ alias v='nvim'
 # shortcuts
 alias c='clear'
 alias reload='source ~/.zshrc'
+mkcd () { mkdir -p -- "$1" && cd -P -- "$1" }
+
+# plugins --------------------------------------
+
+# syntax highlighting
+ZSH_HIGHLIGHT_STYLES[path]='bold'
+
+# autosuggestions
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

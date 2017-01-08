@@ -14,11 +14,13 @@ sudo apt-get install wget -y
 sudo apt-get install git -y
 sudo apt-get install zsh -y
 sudo apt-get install tmux -y
-sudo apt-get install neovim
+sudo apt-get install neovim -y
 sudo apt-get install unzip -y
 
 # Setup dot files
 cd ~
+mkdir -p ~/.config
+mkdir -p ~/.config/{nvim,git}
 git clone git@github.com:denisidoro/dotfiles.git .dotfiles
 bash .dotfiles/install
 

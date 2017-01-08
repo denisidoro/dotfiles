@@ -5,7 +5,9 @@ antigen use oh-my-zsh
 antigen bundle git
 antigen bundle command-not-found
 
-# Syntax highlighting bundle.
+# Writing
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-history-substring-search
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Load the theme.
