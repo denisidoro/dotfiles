@@ -2,11 +2,12 @@ export DOTFILES=$HOME/.dotfiles
 
 # antigen
 source $DOTFILES/modules/antigen/antigen.zsh
-export _ANTIGEN_CACHE_ENABLED=true
-antigen init $DOTFILES/shell/antigenrc
+export _ANTIGEN_CACHE_ENABLED=false # true
+source $DOTFILES/shell/antigenrc # antigen init
 
 source $DOTFILES/shell/functions.zsh
 source $DOTFILES/shell/aliases.zsh
 source $DOTFILES/shell/plugins.zsh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+include ~/.fzf.zsh
+include ~/.localrc
