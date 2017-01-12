@@ -9,7 +9,7 @@ set-option -g set-titles on
 set -g status-keys vi
 set -g history-limit 10000
 
-setw -g mode-keys vi
-setw -g mode-mouse on
-setw -g monitor-activity on
+set -g mode-keys vi
+set -g mouse on
+set -g monitor-activity on
 

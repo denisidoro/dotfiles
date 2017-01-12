@@ -2,20 +2,26 @@
 
 # Ubuntu
 
-# Third-party repositories
+# Add third-party repositories
 sudo add-apt-repository ppa:git-core/ppa -y
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
-# Essential commands
+# Install essential commands
 sudo apt-get install curl -y
 sudo apt-get install wget -y
 sudo apt-get install git -y
 sudo apt-get install zsh -y
 sudo apt-get install tmux -y
 sudo apt-get install neovim -y
-sudo apt-get install unzip -y
+
+# Install vim-plug
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# Install tpm
+git clone https://github.com/tmux-plugins/tpm --depth=1 ~/.tmux/plugins/tpm
 
 # Setup dot files
 cd ~
