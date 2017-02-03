@@ -9,12 +9,11 @@ sudo apt-get update -y
 sudo apt-get upgrade -y
 
 # Install essential commands
-sudo apt-get install curl -y
-sudo apt-get install wget -y
-sudo apt-get install git -y
-sudo apt-get install zsh -y
-sudo apt-get install tmux -y
-sudo apt-get install neovim -y
+for i in wget git zsh tmux neovim silversearcher-ag; do sudo apt-get install -y $i;
+
+# Install fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
 
 # Install vim-plug
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \

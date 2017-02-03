@@ -1,3 +1,8 @@
+# fzf
+FZF_DEFAULT_OPTS='--height 40%'
+FZF_DEFAULT_COMMAND='ag -g ""'
+FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
 # syntax highlighting
 ZSH_HIGHLIGHT_STYLES[path]='bold'
 ZSH_HIGHLIGHT_STYLES[reserved-word]=none

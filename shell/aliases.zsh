@@ -9,7 +9,7 @@ alias reload='source ~/.zshrc' # env -i zsh
 # git
 alias gcdr='cd $(git rev-parse --show-toplevel)'
 alias gpu='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
-gcol() {
+gcor() {
   if [[ $# -eq 0 ]]; then
     git branch --sort=-committerdate | head -n 6 | sed '/^\*/ d' | nl -nrz -w1 
   else
