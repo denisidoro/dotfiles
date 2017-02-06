@@ -1,9 +1,8 @@
 export DOTFILES=$HOME/.dotfiles
 
 # antigen
-source $DOTFILES/modules/antigen/antigen.zsh
-export _ANTIGEN_CACHE_ENABLED=true 
-antigen init $DOTFILES/shell/antigenrc
+export ZPLUG_HOME="${DOTFILES}/modules/zplug"
+source $DOTFILES/shell/zplugrc
 
 source $DOTFILES/shell/functions.zsh
 source $DOTFILES/shell/aliases.zsh
