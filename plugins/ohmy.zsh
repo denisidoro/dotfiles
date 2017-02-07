@@ -83,8 +83,7 @@ fi
 
 # Load all of the config files in ~/oh-my-zsh that end in .zsh
 # TIP: Add files you don't want in git to .gitignore
-mv $ZSH/lib/theme-and-appearance.zsh $ZSH/lib/theme-and-appearance.zsh.bak
-for config_file ($ZSH/lib/*.zsh); do
+for config_file in $(ls $ZSH/lib/*.zsh | grep -v 'appearance.zsh$'); do
   custom_config_file="${ZSH_CUSTOM}/lib/${config_file:t}"
   [ -f "${custom_config_file}" ] && config_file=${custom_config_file}
   source $config_file

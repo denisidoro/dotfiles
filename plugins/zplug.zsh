@@ -4,6 +4,7 @@ source $ZPLUG_HOME/init.zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/command-not-found", from:oh-my-zsh
 zplug "plugins/z", from:oh-my-zsh
+# zplug "plugins/fasd", from:oh-my-zsh
 
 # Writing
 zplug zsh-users/zsh-autosuggestions

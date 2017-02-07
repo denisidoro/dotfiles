@@ -1,10 +1,15 @@
-
 # ===============
 # fzf
 # ===============
 FZF_DEFAULT_OPTS='--height 40%'
 FZF_DEFAULT_COMMAND='ag -g ""'
 FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+
+# ===============
+# fasd 
+# ===============
+#eval "$(fasd --init auto)"
 
 
 # ===============
