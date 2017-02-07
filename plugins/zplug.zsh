@@ -1,6 +1,6 @@
 source $ZPLUG_HOME/init.zsh
 
-# Bundles from oh-my-zsh.
+# Bundles from oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/command-not-found", from:oh-my-zsh
 zplug "plugins/z", from:oh-my-zsh

@@ -1,12 +1,18 @@
+# set environment
 export DOTFILES=$HOME/.dotfiles
-
-# antigen
 export ZPLUG_HOME="${DOTFILES}/modules/zplug"
-source $DOTFILES/shell/zplugrc
 
-source $DOTFILES/shell/functions.zsh
-source $DOTFILES/shell/aliases.zsh
-source $DOTFILES/shell/plugins.zsh
+# load plugins
+source $DOTFILES/plugins/zplug.zsh
 
-include ~/.fzf.zsh
+# setup plugins
+source $DOTFILES/plugins/ohmy.zsh
+source $DOTFILES/plugins/config.zsh
+
+# load aliases and helper functions
+source $DOTFILES/aliases/browsing.zsh
+source $DOTFILES/aliases/coding.zsh
+source $DOTFILES/aliases/general.zsh
+
+# load local custom config
 include ~/.localrc
