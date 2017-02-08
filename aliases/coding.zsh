@@ -3,7 +3,14 @@
 # ===============
 
 alias vim='nvim'
-alias v='nvim'
+alias v="fasd -f -e nvim"
+
+
+# ===============
+# sublime text
+# ===============
+
+alias subl='subl -a'
 
 
 # ===============

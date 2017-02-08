@@ -9,18 +9,17 @@ FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # ===============
 # fasd 
 # ===============
-#eval "$(fasd --init auto)"
+eval "$(fasd --init posix-alias zsh-hook)"
 
 
 # ===============
 # syntax highlighting
 # ===============
-
 ZSH_HIGHLIGHT_STYLES[path]='bold'
 ZSH_HIGHLIGHT_STYLES[reserved-word]=none
+
 
 # ===============
 # autosuggestions
 # ===============
-
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20

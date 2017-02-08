@@ -6,7 +6,6 @@ export ZPLUG_HOME="${DOTFILES}/modules/zplug"
 source $DOTFILES/plugins/zplug.zsh
 
 # setup plugins
-source $DOTFILES/plugins/ohmy.zsh
 source $DOTFILES/plugins/config.zsh
 
 # load aliases and helper functions
