@@ -3,13 +3,5 @@
 # for examples
 
 if [ -t 1 ]; then
-exec zsh
+	exec zsh
 fi
-
-# If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
