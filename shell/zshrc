@@ -14,5 +14,8 @@ source $DOTFILES/aliases/browsing.zsh
 source $DOTFILES/aliases/coding.zsh
 source $DOTFILES/aliases/general.zsh
 
+# setup bindings
+source $DOTFILES/shell/bindings.zsh
+
 # load local custom config
 include ~/.localrc
