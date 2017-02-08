@@ -3,7 +3,6 @@
 # ===============
 
 alias vim='nvim'
-alias v="fasd -f -e nvim"
 
 
 # ===============

@@ -57,10 +57,21 @@ alias sd='fasd -sid'     # interactive directory selection
 alias sf='fasd -sif'     # interactive file selection
 alias j='fasd_cd -d'     # cd, same functionality as j in autojump
 alias zz='fasd_cd -d -i' # cd with interactive selection
+alias v="fasd -f -e nvim"
 
-
-
-
+fco() {
+  local tags branches target
+  tags=$(
+    git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
+  branches=$(
+    git branch --sort=committerdate | grep -v HEAD  |
+    sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
+    awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
+  target=$(
+    (echo "$tags"; echo "$branches") | grep . |  tac |
+    fzf-tmux --height 25% -- --no-hscroll --ansi +m -d "\t" -n 2 -1 -q "$*") || return
+  git checkout $(echo "$target" | awk '{print $2}')
+}
 
 fd() {
   local DIR

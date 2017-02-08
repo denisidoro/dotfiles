@@ -6,16 +6,10 @@
 echo "THIS IS UNTESTED"
 mkdir -p ~/tmp
 
-# Add third-party repositories
-sudo add-apt-repository ppa:git-core/ppa -y
-sudo add-apt-repository ppa:neovim-ppa/unstable -y
-sudo apt-get update -y
-sudo apt-get upgrade -y
-
 # Install essential commands
 for i in wget git zsh tmux neovim silversearcher-ag fasd
 do 
-  sudo apt-get install -y $i
+  brew install $i
 done
 
 # Install fzf
