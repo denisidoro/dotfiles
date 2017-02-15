@@ -3,7 +3,7 @@
 # Ubuntu
 
 # Initial setup
-echo "THIS IS UNTESTED"
+echo "THIS IS UNTESTED. USE CAREFULLY"
 mkdir -p ~/tmp
 
 # Add third-party repositories

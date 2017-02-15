@@ -1,0 +1,7 @@
+alias lnr="lein repl"
+alias lnm="lein midje"
+alias lnma="lein midje :autotest"
+alias lnp="lein postman"
+alias lnpr="lein postman-repl"
+alias lni="lein install"
+alias lncd="lein clean && lein deps"
