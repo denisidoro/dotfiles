@@ -15,8 +15,9 @@ export EDITOR='nvim'
 source $DOTFILES/aliases/browsing.zsh
 source $DOTFILES/aliases/coding.zsh
 source $DOTFILES/aliases/general.zsh
+source $DOTFILES/aliases/navigation.zsh
 
-# setup bindings
+# setup key bindings
 source $DOTFILES/bindings/fzf.zsh
 
 # load local custom config
