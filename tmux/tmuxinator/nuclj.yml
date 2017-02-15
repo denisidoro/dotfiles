@@ -1,0 +1,14 @@
+# ~/.tmuxinator/nuclj.yml
+
+# cd to Nubank service and open default panes for testing
+
+name: <%= @args[0] %>
+root: $NU_HOME/<%= @args[0] %>
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - clear; lein midje :autotest
+        - clear; (echo -e "(autotest)" && cat) | lein postman-repl
+        - clear

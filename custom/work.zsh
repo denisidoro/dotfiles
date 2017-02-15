@@ -5,7 +5,7 @@ export PATH="$NUCLI_HOME:$PATH"
 alias cdn="cd $NU_HOME"
 
 # cd to android project
-alias cda="cd $NU_HOME/android/nubank-android"
+alias cda="cd $NU_HOME/android"
 
 # cd to service and open default panes
 nb() {
