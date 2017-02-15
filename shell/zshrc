@@ -8,6 +8,9 @@ source $DOTFILES/plugins/zplug.zsh
 # setup plugins
 source $DOTFILES/plugins/config.zsh
 
+# set editor
+export EDITOR='nvim'
+
 # load aliases and helper functions
 source $DOTFILES/aliases/browsing.zsh
 source $DOTFILES/aliases/coding.zsh

@@ -7,7 +7,7 @@ echo "THIS IS UNTESTED"
 mkdir -p ~/tmp
 
 # Install essential commands
-for i in wget git zsh tmux neovim silversearcher-ag fasd
+for i in wget git zsh tmux neovim silversearcher-ag fasd ruby
 do 
   brew install $i
 done
@@ -22,6 +22,9 @@ curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 
 # Install tpm
 git clone https://github.com/tmux-plugins/tpm --depth=1 ~/.tmux/plugins/tpm
+
+# Install tmuxinator
+gem install tmuxinator
 
 # Setup dot files
 cd ~

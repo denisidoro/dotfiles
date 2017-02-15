@@ -69,7 +69,7 @@ fco() {
     awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
   target=$(
     (echo "$tags"; echo "$branches") | grep . |  tac |
-    fzf-tmux --height 25% -- --no-hscroll --ansi +m -d "\t" -n 2 -1 -q "$*") || return
+    fzf-tmux --query="$1" --multi --select-1 --exit-0 --reverse --height 25% -- --no-hscroll --ansi +m -d "\t" -n 2 -1 -q "$*") || return
   git checkout $(echo "$target" | awk '{print $2}')
 }
 
@@ -78,6 +78,24 @@ fd() {
   DIR=$(d | fzf +s +m) && cd $(sed 's/^[0-9.]* *//' <<< "$DIR")
 }
 
+# cf - fuzzy cd from anywhere
+# ex: cf word1 word2 ... (even part of a file name)
+# zsh autoload function
+cf() {
+  local file
+
+  file="$(locate -Ai -0 $@ | grep -z -vE '~$' | fzf --read0 -0 -1)"
+
+  if [[ -n $file ]]
+  then
+     if [[ -d $file ]]
+     then
+        cd -- $file
+     else
+        cd -- ${file:h}
+     fi
+  fi
+}
 
 # c - browse chrome history
 ch() {

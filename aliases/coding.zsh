@@ -28,3 +28,19 @@ gcor() {
   fi
 }
 
+nb() {
+  local dir
+  b=$HOME/Code/nu  
+  dir=$(ls $b | fzf-tmux --query="$1" --multi --select-1 --exit-0 --reverse --height 25%) &&
+  tmuxinator start nuclj "$b/$dir"
+}
+
+nbcd() {
+  local dir
+  b=$HOME/Code/nu  
+  dir=$(ls $b | fzf-tmux --query="$1" --multi --select-1 --exit-0 --reverse --height 25%) &&
+  cd "$b/$dir"
+}
+
+alias mux='tmuxinator'
+alias muxk='killall tmux'
