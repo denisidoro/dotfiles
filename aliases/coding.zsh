@@ -21,6 +21,9 @@ alias gcom="git checkout master"
 
 alias gcdr='cd $(git rev-parse --show-toplevel)'
 
+# git status with tig
+alias tst="tig status"
+
 # git push upstream
 alias gpu='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
 
