@@ -21,4 +21,4 @@ source $DOTFILES/aliases/navigation.zsh
 source $DOTFILES/bindings/fzf.zsh
 
 # load local custom config
-include ~/.localrc
+include $DOTFILES/local/zshrc
