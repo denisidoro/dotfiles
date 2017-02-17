@@ -10,6 +10,10 @@ zplug zsh-users/zsh-autosuggestions
 zplug zsh-users/zsh-history-substring-search
 zplug zsh-users/zsh-syntax-highlighting
 
+# Versioning
+zplug "paulirish/git-open", as:command
+zplug "rafaeldff/rgit", as:command, use:"rgit"
+
 # Load the theme
 setopt prompt_subst # Make sure propt is able to be generated properly.
 zplug "nostophilia/aplos", use:aplos.zsh-theme, defer:3
