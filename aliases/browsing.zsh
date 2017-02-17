@@ -2,7 +2,7 @@
 # listing
 # ===============
 
-alias ls='ls --color=auto'
+#alias ls='ls --color=auto'
 alias lst="tree -L 2"
 
 
