@@ -10,17 +10,15 @@ alias cda="cd $NU_HOME/android"
 # cd to service and open default panes
 nb() {
   local dir
-  b=$HOME/Code/nu  
-  dir=$(ls $b | fzf-tmux --query="$1" --multi --select-1 --exit-0 --reverse --height 25%) &&
-  tmuxinator start nuclj "$b/$dir"
+  dir=$(ls $NU_HOME | fzf-tmux --query="$1" --multi --select-1 --exit-0 --reverse --height 25%) &&
+  tmuxinator start nuclj "$dir"
 }
 
 # cd to service
 nbcd() {
-  local dir
-  b=$HOME/Code/nu  
-  dir=$(ls $b | fzf-tmux --query="$1" --multi --select-1 --exit-0 --reverse --height 25%) &&
-  cd "$b/$dir"
+  local dir 
+  dir=$(ls $NU_HOME  | fzf-tmux --query="$1" --multi --select-1 --exit-0 --reverse --height 25%) &&
+  cd "$NU_HOME/$dir"
 }
 
 alias as="open -a \"Android Studio\""
