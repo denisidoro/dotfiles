@@ -9,8 +9,10 @@ Personal dotfiles with [zsh][zsh], [tmux][tmux], [neovim][neovim], [fzf][fzf], [
 
 If you already have all the dependencies:
 ```sh
-git clone git@github.com:denisidoro/dotfiles.git ~/.dotfiles
-bash ~/.dotfiles/install
+git clone https://github.com/denisidoro/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+git pull && git submodule init && git submodule update && git submodule status
+bash install
 ```
 
 If you want to download all dependencies then install the dotfiles:

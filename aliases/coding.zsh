@@ -21,6 +21,9 @@ alias gcom="git checkout master"
 
 alias gcdr='cd $(git rev-parse --show-toplevel)'
 
+# update repository
+alias gupd="git pull && git submodule init && git submodule update && git submodule status"
+
 # git status with tig
 alias tst="tig status"
 

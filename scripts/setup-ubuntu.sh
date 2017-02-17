@@ -13,7 +13,7 @@ sudo apt-get update -y
 sudo apt-get upgrade -y
 
 # Install essential commands
-for i in wget git zsh tmux neovim silversearcher-ag fasd
+for i in wget git zsh tmux neovim silversearcher-ag fasd ruby python
 do 
   sudo apt-get install -y $i
 done
@@ -30,11 +30,12 @@ curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 git clone https://github.com/tmux-plugins/tpm --depth=1 ~/.tmux/plugins/tpm
 
 # Setup dot files
-cd ~
 mkdir -p ~/.config
 mkdir -p ~/.config/{nvim,git}
-git clone git@github.com:denisidoro/dotfiles.git .dotfiles
-bash .dotfiles/install
+git https://github.com/denisidoro/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+git pull && git submodule init && git submodule update && git submodule status
+bash install
 
 # Cleanup
 rm -rf ~/tmp

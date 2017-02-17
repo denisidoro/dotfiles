@@ -7,7 +7,7 @@ echo "THIS IS UNTESTED. USE CAREFULLY"
 mkdir -p ~/tmp
 
 # Install essential commands
-for i in wget git zsh tmux neovim silversearcher-ag fasd ruby
+for i in wget git zsh tmux neovim silversearcher-ag fasd ruby python
 do 
   brew install $i
 done
@@ -27,11 +27,12 @@ git clone https://github.com/tmux-plugins/tpm --depth=1 ~/.tmux/plugins/tpm
 gem install tmuxinator
 
 # Setup dot files
-cd ~
 mkdir -p ~/.config
 mkdir -p ~/.config/{nvim,git}
-git clone git@github.com:denisidoro/dotfiles.git .dotfiles
-bash .dotfiles/install
+git https://github.com/denisidoro/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+git pull && git submodule init && git submodule update && git submodule status
+bash install
 
 # Cleanup
 rm -rf ~/tmp
