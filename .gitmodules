@@ -3,4 +3,4 @@
 	url = https://github.com/anishathalye/dotbot
 [submodule "modules/zplug"]
 	path = modules/zplug
-	url = git@github.com:zplug/zplug.git
+	url = https://github.com/zplug/zplug.git 
