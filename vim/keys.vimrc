@@ -21,3 +21,5 @@ nnoremap <Leader>f :CtrlPMRUFiles<CR>
 " Toggle between normal and relative numbering.
 nnoremap <leader>r :call NumberToggle()<cr>
 
+" Toggle NerdTree
+nnoremap <leader>n :NERDTreeToggle<cr>
