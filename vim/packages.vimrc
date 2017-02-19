@@ -12,6 +12,9 @@ Plug 'ctrlpvim/ctrlp.vim', {'on': ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
+" editing
+Plug 'tpope/vim-surround'
+
 " Initialize plugin system
 call plug#end()
 
