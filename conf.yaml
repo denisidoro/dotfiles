@@ -5,5 +5,5 @@
     ~/.bashrc: shell/bashrc
     ~/.config/nvim/init.vim: vim/init.vim
     ~/.tmux.conf: tmux/tmux.conf
-    ~/.config/git/ignore: git/ignore
+    ~/.gitconfig: git/config
 
