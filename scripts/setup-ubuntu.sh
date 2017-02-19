@@ -6,9 +6,13 @@
 echo "THIS IS UNTESTED. USE CAREFULLY"
 mkdir -p ~/tmp
 
+# Add commons 
+sudo apt-get install software-properties-common
+
 # Add third-party repositories
 sudo add-apt-repository ppa:git-core/ppa -y
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
+sudo add-apt-repository ppa:aacebedo/fasd -y
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
