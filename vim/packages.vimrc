@@ -14,6 +14,7 @@ Plug 'vim-airline/vim-airline-themes'
 
 " editing
 Plug 'tpope/vim-surround'
+Plug 'terryma/vim-multiple-cursors'
 
 " Initialize plugin system
 call plug#end()
