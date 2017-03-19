@@ -26,3 +26,11 @@ alias as="open -a \"Android Studio\""
 nurl() {
 	nu service curl "$@" | jq
 }
+
+fnu() {
+  local target
+  target=$(
+    find $NU_HOME/nucli/nucli.d -maxdepth 2 -type f -executable | grep -v '\.sh$' | sed -r "s/.*\/(.*)\.d\/(.*)$/\x1b[34;1m\1\t\x1b[m\2/g" \
+  | fzf) || return
+  nu $(echo "$target" | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g")
+}
