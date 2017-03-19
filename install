@@ -14,4 +14,16 @@ echo "Updating submodules..."
 
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
 
+# ZPlug
+echo "Installing ZPlug plugins..."
+zplug install > /dev/null
 
+# Neovim
+echo "Installing neovim plugins..."
+nvim +silent +PlugInstall +qall > /dev/null
+
+# Tmux
+echo "Installing tpm plugins..."
+export TMUX_PLUGIN_MANAGER_PATH=$HOME/.tmux/plugins/
+bash "${TMUX_PLUGIN_MANAGER_PATH}install_plugins" > /dev/null
+bash "${TMUX_PLUGIN_MANAGER_PATH}update_plugins all" > /dev/null
