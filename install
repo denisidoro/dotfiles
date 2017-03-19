@@ -1,1 +1,8 @@
-./scripts/install
+#!/bin/bash
+
+export DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+pushd . > /dev/null
+cd "$DOTFILES/scripts"
+./install dotfiles
+popd > /dev/null
