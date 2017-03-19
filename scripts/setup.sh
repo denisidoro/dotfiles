@@ -19,7 +19,15 @@ get_platform() {
 }
 
 read_dependencies() {
-  echo "$(cat dependencies.txt)\n\n"
+  local url file tmpfile
+  file="dependencies.txt"
+  if [ ! -f "$file" ]; then
+    url=" https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/$file" 
+    tmpfile="~/tmp/$file"
+    curl "$url" > "$tmpfile"
+    file="$tmpfile"
+  fi
+  echo "$(cat "$file")\n\n"
 }
 
 from_dependencies() {
@@ -65,7 +73,7 @@ setup_mac() {
 
 }
 
-#Prompt confirmation
+# Prompt confirmation
 echo "This  script is untested. Use it at your own risk!"
 read -r -p "Do you want to continue? [Y/n] " response
 response=${response,,} 
