@@ -2,6 +2,7 @@
 # vim: filetype=sh
 
 source $DOTFILES/scripts/aux/utils.sh 
+source $DOTFILES/scripts/aux/install.sh 
 
 ##? List properties
 ##?
@@ -11,29 +12,11 @@ source $DOTFILES/scripts/aux/utils.sh
 
 eval_docopts "$@"
 
-brew_install() {
-  for repository in "$(from_dependencies "$@")"
-  do
-    brew install "$repository"
-  done
-}
-
-cask_install() {
-  for repository in "$(from_dependencies "$@")"
-  do
-    brew cask install "$repository"
-  done
-}
-
-gnu_install() {
-  brew tap homebrew/dupes
-  brew install binutils && brew install diffutils && brew install ed && brew install findutils && brew install gawk && brew install gnu-indent && brew install gnu-sed && brew install gnu-tar && brew install gnu-which && brew install gnutls && brew install grep && brew install gzip && brew install screen && brew install watch && brew install wdiff --with-gettext && brew install wget
-  brew install bash && brew install m4 && brew install make && brew install nano && brew install file-formula && brew install git && brew install less && brew install openssh && brew install rsync && brew install unzipi
-}
-
-
 if $dotfiles; then
-  bash $(rsrc "update-dotfiles")
+  update_dotfiles_common
+  if is_osx; then
+    update_dotfiles_osx
+  fi
 elif $android; then
   cask_install "cask-java" "cask-android"
 elif $clojure; then
