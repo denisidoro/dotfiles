@@ -3,22 +3,22 @@ export DOTFILES=$HOME/.dotfiles
 export ZPLUG_HOME="${DOTFILES}/modules/zplug"
 
 # load plugins
-source $DOTFILES/plugins/zplug.zsh
+source $DOTFILES/shell/plugins/zplug.zsh
 
 # setup plugins
-source $DOTFILES/plugins/config.zsh
+source $DOTFILES/shell/plugins/config.zsh
 
 # set editor
 export EDITOR='nvim'
 
 # load aliases and helper functions
-source $DOTFILES/aliases/browsing.zsh
-source $DOTFILES/aliases/coding.zsh
-source $DOTFILES/aliases/general.zsh
-source $DOTFILES/aliases/navigation.zsh
+source $DOTFILES/shell/aliases/browsing.zsh
+source $DOTFILES/shell/aliases/coding.zsh
+source $DOTFILES/shell/aliases/general.zsh
+source $DOTFILES/shell/aliases/navigation.zsh
 
 # setup key bindings
-source $DOTFILES/bindings/fzf.zsh
+source $DOTFILES/shell/bindings/fzf.zsh
 
 # load local custom config
 include $DOTFILES/local/zshrc
