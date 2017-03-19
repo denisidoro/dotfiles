@@ -109,8 +109,15 @@ curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 # Install tpm
 git clone https://github.com/tmux-plugins/tpm --depth=1 ~/.tmux/plugins/tpm
 
-# Instal tmuxinator
+# Install tmuxinator
 gem install tmuxinator
+
+# Install docopts dependencies
+if ! command_exists pip 
+then
+  curl https://bootstrap.pypa.io/get-pip.py | sudo python
+fi
+sudo pip install docopts
 
 # Setup dot files
 git https://github.com/denisidoro/dotfiles.git ~/.dotfiles

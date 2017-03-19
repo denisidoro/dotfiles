@@ -1,0 +1,20 @@
+#!/bin/bash
+# vim: filetype=sh
+
+cur_dir=$(dirname ${BASH_SOURCE[0]})
+source aux/utils.sh 
+
+##? List properties
+##?
+##? Usage:
+##?    macinstall projects
+##?    macinstall versions [--repository <repo>]
+##?
+##? Options:
+##?    -r --repository <repo>   Android repository.
+
+help=$(getHelp)
+eval_opts "${help}" "$@"
+
+echo $projects
+echo $versions

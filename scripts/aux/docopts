@@ -3,8 +3,10 @@
 # vim: set ts=4 sw=4 sts=4 et:
 
 __doc__ = """Shell interface for docopt, the CLI description language.
+
 Usage:
   docopts [options] -h <msg> : [<argv>...]
+
 Options:
   -h <msg>, --help=<msg>        The help message in docopt format.
                                 If - is given, read the help message from
@@ -27,6 +29,7 @@ Options:
   -s <str>, --separator=<str>   The string to use to separate the help message
                                 from the version message when both are given
                                 via standard input. [default: ----]
+
 """
 
 __version__ = """docopts 0.6.1+fix
@@ -34,6 +37,7 @@ Copyright (C) 2013 Vladimir Keleshev, Lari Rasku.
 License MIT <http://opensource.org/licenses/MIT>.
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
+
 """
 
 import re

@@ -3,6 +3,10 @@
 
 set -e -o pipefail
 
+function command_exists() {
+  type "$1" &> /dev/null ;
+}
+
 function is_empty() {
   local var=${1}
   [[ -z ${var} ]]
@@ -49,7 +53,8 @@ function getCommands() {
 
 function eval_opts() {
   local help="${1}"
-  eval "$($DOTFILES/scripts/aux/docopts -h "${help}" : "${@:2}")"
+  shift
+  eval "$($DOTFILES/scripts/aux/docopts -h "${help}" : "${@}")"
 }
 
 function validateCommand() {
