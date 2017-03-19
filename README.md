@@ -7,18 +7,15 @@ Personal dotfiles with [zsh][zsh], [tmux][tmux], [neovim][neovim], [fzf][fzf], [
 
 ### Installation
 
-If you already have all the dependencies:
+```sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/setup.sh)"
+```
+
+Alternatively, if you already have all the dependencies and want to clone the repository yourself:
 ```sh
 git clone https://github.com/denisidoro/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-git pull && git submodule init && git submodule update && git submodule status
 bash install
-```
-
-If you want to download all dependencies then install the dotfiles:
-```sh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/setup-mac.sh)" # OS X
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/setup-ubuntu.sh)" # Debian
 ```
 
 [zsh]: http://zsh.sourceforge.net
