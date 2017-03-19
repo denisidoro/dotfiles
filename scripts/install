@@ -8,6 +8,10 @@ DOTBOT_DIR="modules/dotbot"
 DOTBOT_BIN="bin/dotbot"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+echo "Setting folder architecture..."
+mkdir -p ~/.config
+mkdir -p ~/.config/{nvim,git}
+
 echo "Updating submodules..."
 echo
 (git pull && git submodule init && git submodule update && git submodule status && \
