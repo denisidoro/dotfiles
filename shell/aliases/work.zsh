@@ -5,7 +5,7 @@ export PATH="$NUCLI_HOME:$PATH"
 alias cdn="cd $NU_HOME"
 
 # cd to android project
-alias cda="cd $NU_HOME/android"
+alias cda="cd $NU_HOME/android-app"
 
 # cd to service and open default panes
 nb() {
@@ -22,3 +22,7 @@ nbcd() {
 }
 
 alias as="open -a \"Android Studio\""
+
+nurl() {
+	nu service curl "$@" | jq
+}
