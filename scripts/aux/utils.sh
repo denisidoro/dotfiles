@@ -3,8 +3,16 @@
 
 set -e -o pipefail
 
+function rsrc() {
+  echo "$DOTFILES/scripts/$1"
+}
+
 function command_exists() {
   type "$1" &> /dev/null ;
+}
+
+function script_dir() {
+  dirname ${BASH_SOURCE[0]}
 }
 
 function is_empty() {
@@ -22,7 +30,7 @@ function is_dir() {
   [[ -d ${dir} ]]
 }
 
-function containsElement() {
+function contains_element() {
   elements="${@:2}"
   element="${1}"
 
@@ -39,15 +47,11 @@ function contains_string() {
   echo $?
 }
 
-function getHelpString() {
+function get_help_string() {
   grep "^##?" "$1" | cut -c 5-
 }
 
-function getHelp() {
-  getHelpString "$0"
-}
-
-function getCommands() {
+function get_commands() {
   ls ${1}.d | grep -ve ".*\.sh"
 }
 
@@ -57,11 +61,16 @@ function eval_opts() {
   eval "$($DOTFILES/scripts/aux/docopts -h "${help}" : "${@}")"
 }
 
-function validateCommand() {
+function eval_docopts() {
+  local help=$(get_help_string "$0")
+  eval_opts "$help" "$@"
+}
+
+function validate_command() {
   commad="${1}"
   commands="${@:2}"
 
-  if containsElement ${command} "${commands}"; then
+  if contains_element ${command} "${commands}"; then
     echo "Available Commands: "
     echo "${commands}"
     fail "Invalid command ${command}"
@@ -83,3 +92,29 @@ function is_osx {
   [[ `uname -s` == "Darwin" ]]
 }
 
+function get_platform() {
+  case "$(uname -s)" in
+    Darwin)
+      echo osx
+      ;;
+    *)
+      if command_exists apt
+      then
+	echo apt
+      fi
+      ;;
+  esac
+}
+
+function read_dependencies() {
+  local url file tmpfile
+  file=$(rsrc "dependencies.txt")
+  echo "$(cat "$file")\n\n"
+}
+
+function from_dependencies() {
+  for key in "$@"
+  do
+    echo "$dependencies" | grep -Pzo "^$key:\n(.|\n)*?\n{2}" | tail -n +2 | sed '/^$/d'             	 
+  done
+}
