@@ -46,9 +46,9 @@ setup_apt() {
   for repository in $(from_dependencies "apt-repositories")
   do
     sudo add-apt-repository $repository -y
-    sudo apt-get update -y
-    sudo apt-get upgrade -y
   done
+  sudo apt-get update -y
+  sudo apt-get upgrade -y
 
   # Install essential commands
   for package in $(from_dependencies "brew-apt" "apt")
