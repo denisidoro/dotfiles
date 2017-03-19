@@ -3,6 +3,7 @@
 - link:
     ~/.zshrc: shell/zshrc
     ~/.bashrc: shell/bashrc
+    ~/.hushlogin: shell/hushlogin
     ~/.config/nvim/init.vim: vim/init.vim
     ~/.tmux.conf: tmux/tmux.conf
     ~/.gitconfig: git/config
