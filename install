@@ -39,6 +39,10 @@ clone_repo() {
 	git clone https://github.com/denisidoro/dotfiles.git "$DOTFILES"
 }
 
+install_dependencies() {
+	bash "$INSTALL_COMMAND" "dependencies"
+}
+
 pushd . > /dev/null
 
 export DOTFILES="$HOME/.dotfiles"
@@ -68,6 +72,7 @@ else
 	install_git_and_python
 	install_docopts
 	clone_repo
+	install_dependencies
 fi
 
 # invoke dotfiles symlinking
