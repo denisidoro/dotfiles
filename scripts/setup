@@ -1,8 +1,19 @@
 #!/bin/bash
 
+install_brew_if_on_osx() {
+	echo "WIP"
+}
+
 install_git() {
-	# WIP
-	pwd
+	echo "WIP"
+}
+
+install_python() {
+	echo "WIP"
+}
+
+install_docopts() {
+	echo "WIP"
 }
 
 # Prompt confirmation
@@ -17,7 +28,10 @@ fi
 
 export DOTFILES="$HOME/.dotfiles"
 
+install_brew_if_on_osx
 install_git
+install_python
+install_docopts
 
 # clone dotfiles repository if necessary
 if [ -d "$DOTFILES" ]; then
