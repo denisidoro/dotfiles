@@ -1,101 +1,9 @@
 #!/bin/bash
 
-command_exists() {
-  type "$1" &> /dev/null ;
+install_git() {
+	# WIP
+	pwd
 }
-
-get_platform() {
-  case "$(uname -s)" in
-    Darwin)
-      echo osx
-      ;;
-    *)
-      if command_exists apt
-      then
-	echo apt
-      fi
-      ;;
-  esac
-}
-
-is_osx() {
-  [[ `uname -s` == "Darwin" ]]
-}
-
-script_dir() {
-  cd "$(dirname "${BASH_SOURCE[0]}")" && pwd
-}
-
-read_dependencies() {
-  local url dep_file dep_filename tmp_file setup_dir
-  setup_dir=$(script_dir)
-  dep_filename="dependencies.txt"
-  dep_file="$setup_dir/$dep_filename"
-  if [ ! -f  "$dep_file" ]; then
-    url=" http://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/$file" 
-    tmp_file="$HOME/tmp/$dep_filename"
-    curl "$url" > "$tmp_file"
-    dep_file="$tmpfile"
-  fi
-  echo "$(cat "$dep_file")\n\n"
-}
-
-from_dependencies() {
-  # install ggrep if not installed
-  if is_osx; then
-    if ! command_exists ggrep; then
-      brew tap homebrew/dupes
-      brew install homebrew/dupes/grep
-    fi
-  fi
-
-  for key in "$@"
-  do
-    echo "$dependencies" | grep -Pzo "^$key:\n(.|\n)*?\n{2}" | tail -n +2 | sed '/^$/d'             	 
-  done
-}
-
-setup_apt() {
-
-  # Add commons 
-  sudo apt-get install software-properties-common
-
-  # Add third-party repositories
-  for repository in $(from_dependencies "apt-repositories")
-  do
-    sudo add-apt-repository $repository -y
-  done
-  sudo apt-get update -y
-  sudo apt-get upgrade -y
-
-  # Install essential commands
-  for package in $(from_dependencies "brew-apt" "apt")
-  do 
-    sudo apt-get install -y $package
-  done
-
-}
-
-setup_mac() {
-
-  # Install brew
-  if ! command_exists brew ; then
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  fi
-
-  # Install essential commands
-  for package in $(from_dependencies "brew-apt" "brew")
-  do
-    brew install $package
-  done
-
-}
-
-# GNU utils for OSX
-if is_osx; then
-  function grep() { ggrep "$@"; }
-  export -f grep
-fi
 
 # Prompt confirmation
 echo "This script is untested. Use it at your own risk!"
@@ -107,52 +15,15 @@ else
   exit
 fi
 
-# Clone dotfiles repository
-git https://github.com/denisidoro/dotfiles.git $HOME/.dotfiles
+export DOTFILES="$HOME/.dotfiles"
 
-# Initial setup
-sudo mkdir -p $HOME/tmp
-platform=$(get_platform)
-dependencies=$(read_dependencies)
-if [[ -z "$platform" ]]; then
-  echo "Unable to find compatible install commands for your platform. Aborting..."
-  exit
-else
-  echo "Detected platform: $platform"
+install_git
+
+# clone dotfiles repository if necessary
+if [ -d "$DOTFILES" ]; then
+	mv "$DOTFILES" "${DOTFILES}_tmp"
+	git clone https://github.com/denisidoro/dotfiles.git "$DOTFILES"
 fi
 
-# Invoke platform-specific setup
-case $platform in
-  osx) setup_mac;;
-  apt) setup_apt;;
-esac
-
-# Install fzf
-git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
-$HOME/.fzf/install
-
-# Install vim-plug
-curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-  http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-# Install tpm
-git clone https://github.com/tmux-plugins/tpm --depth=1 $HOME/.tmux/plugins/tpm
-
-# Install tmuxinator
-gem install tmuxinator
-
-# Install docopts dependencies
-if ! command_exists pip 
-then
-  curl https://bootstrap.pypa.io/get-pip.py | sudo python
-fi
-sudo pip install docopts
-
-# Setup dotfiles
-cd $HOME/.dotfiles
-bash install
-
-# Cleanup
-rm -rf $HOME/tmp
-cd $HOME
-
+# invoke setup command
+bash "$DOTFILES/scripts/install" "dependencies"

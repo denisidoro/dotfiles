@@ -16,8 +16,12 @@ cask_install() {
 
 gnu_install() {
   brew tap homebrew/dupes
-  brew install binutils && brew install diffutils && brew install ed && brew install findutils && brew install gawk && brew install gnu-indent && brew install gnu-sed && brew install gnu-tar && brew install gnu-which && brew install gnutls && brew install grep && brew install gzip && brew install screen && brew install watch && brew install wdiff --with-gettext && brew install wget
-  brew install bash && brew install m4 && brew install make && brew install nano && brew install file-formula && brew install git && brew install less && brew install openssh && brew install rsync && brew install unzipi
+  brew install binutils && brew install diffutils && brew install ed && brew install findutils && brew install gawk && \
+    brew install gnu-indent && brew install gnu-sed && brew install gnu-tar && brew install gnu-which && brew install gnutls && \
+    brew install grep && brew install gzip && brew install screen && brew install watch && brew install wdiff --with-gettext && \
+    brew install wget
+  brew install bash && brew install m4 && brew install make && brew install nano && brew install file-formula && \
+    brew install git && brew install less && brew install openssh && brew install rsync && brew install unzipi
 }
 
 update_dotfiles_common() {
@@ -28,8 +32,8 @@ update_dotfiles_common() {
   DOTBOT_BIN="bin/dotbot"
 
   echo "Setting folder architecture..."
-  mkdir -p ~/.config
-  mkdir -p ~/.config/{nvim,git}
+  mkdir -p "$HOME/.config/{nvim,git}"
+  mkdir -p "$DOTFILES/local/bin"
   pushd . > /dev/null
   cd $DOTFILES
 
@@ -61,5 +65,24 @@ update_dotfiles_common() {
 }
 
 update_dotfiles_osx() {
-  echo "WIP"
+  echo "No custom dotfiles for OSX yet"
+}
+
+read_dependencies() {
+  echo "$(cat "$DOTFILES/scripts/dependencies.txt")\n\n"
+}
+
+from_dependencies() {
+  # install ggrep if not installed on OSX
+  if is_osx; then
+    if ! command_exists ggrep; then
+      brew tap homebrew/dupes
+      brew install homebrew/dupes/grep
+    fi
+  fi
+
+  for key in "$@"
+  do
+    echo "$dependencies" | grep -Pzo "^$key:\n(.|\n)*?\n{2}" | tail -n +2 | sed '/^$/d'                
+  done
 }

@@ -3,6 +3,7 @@
 
 source $DOTFILES/scripts/aux/utils.sh 
 source $DOTFILES/scripts/aux/install.sh 
+source $DOTFILES/scripts/aux/setup.sh 
 
 ##? List properties
 ##?
@@ -14,7 +15,7 @@ source $DOTFILES/scripts/aux/install.sh
 eval_docopts "$@"
 
 if $dependencies; then
-  bash $DOTFILES/scripts/setup
+  setup
 elif $dotfiles; then
   update_dotfiles_common
   if is_osx; then

@@ -107,14 +107,42 @@ function get_platform() {
 }
 
 function read_dependencies() {
-  local url file tmpfile
+
+  local file
   file=$(rsrc "dependencies.txt")
   echo "$(cat "$file")\n\n"
 }
 
 function from_dependencies() {
+  # install compatible grep if necessary
+  if is_osx; then
+   if ! command_exists ggrep; then
+     brew tap homebrew/dupes
+     brew install homebrew/dupes/grep
+   fi
+  fi
+
   for key in "$@"
   do
     echo "$dependencies" | grep -Pzo "^$key:\n(.|\n)*?\n{2}" | tail -n +2 | sed '/^$/d'             	 
   done
 }
+
+if is_osx; then
+  function sed(){ gsed "$@"; }
+  function awk(){ gawk "$@"; }
+  function find(){ gfind "$@"; }
+  function grep(){ ggrep "$@"; }
+  function head(){ ghead "$@"; }
+  function mktemp(){ gmktemp "$@"; }
+  function date(){ gdate "$@"; }
+  function shred(){ gshred "$@"; }
+  function cut(){ gcut "$@"; }
+  function tr(){ gtr "$@"; }
+  function od(){ god "$@"; }
+  function cp(){ gcp "$@"; }
+  function cat(){ gcat "$@"; }
+  function sort(){ gsort "$@"; }
+  function kill(){ gkill "$@"; }
+  export -f sed awk find head mktemp date shred cut tr od cp cat sort kill
+fi

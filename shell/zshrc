@@ -23,3 +23,8 @@ source $DOTFILES/shell/bindings/fzf.zsh
 
 # load local custom config
 include $DOTFILES/local/zshrc
+
+# add folders to PATH
+export PATH="$DOTFILES/local/bin:$DOTFILES/bin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
