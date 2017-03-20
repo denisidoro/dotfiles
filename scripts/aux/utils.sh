@@ -12,7 +12,7 @@ function command_exists() {
 }
 
 function script_dir() {
-  dirname ${BASH_SOURCE[0]}
+  cd "$(dirname "${BASH_SOURCE[0]}")" && pwd
 }
 
 function is_empty() {

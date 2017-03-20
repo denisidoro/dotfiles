@@ -18,19 +18,37 @@ get_platform() {
   esac
 }
 
+is_osx() {
+  [[ `uname -s` == "Darwin" ]]
+}
+
+script_dir() {
+  cd "$(dirname "${BASH_SOURCE[0]}")" && pwd
+}
+
 read_dependencies() {
-  local url file tmpfile
-  file="dependencies.txt"
-  if [ ! -f "$file" ]; then
-    url=" https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/$file" 
-    tmpfile="~/tmp/$file"
-    curl "$url" > "$tmpfile"
-    file="$tmpfile"
+  local url dep_file dep_filename tmp_file setup_dir
+  setup_dir=$(script_dir)
+  dep_filename="dependencies.txt"
+  dep_file="$setup_dir/$dep_filename"
+  if [ ! -f  "$dep_file" ]; then
+    url=" http://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/$file" 
+    tmp_file="$HOME/tmp/$dep_filename"
+    curl "$url" > "$tmp_file"
+    dep_file="$tmpfile"
   fi
-  echo "$(cat "$file")\n\n"
+  echo "$(cat "$dep_file")\n\n"
 }
 
 from_dependencies() {
+  # install ggrep if not installed
+  if is_osx; then
+    if ! command_exists ggrep; then
+      brew tap homebrew/dupes
+      brew install homebrew/dupes/grep
+    fi
+  fi
+
   for key in "$@"
   do
     echo "$dependencies" | grep -Pzo "^$key:\n(.|\n)*?\n{2}" | tail -n +2 | sed '/^$/d'             	 
@@ -73,8 +91,14 @@ setup_mac() {
 
 }
 
+# GNU utils for OSX
+if is_osx; then
+  function grep() { ggrep "$@"; }
+  export -f grep
+fi
+
 # Prompt confirmation
-echo "This  script is untested. Use it at your own risk!"
+echo "This script is untested. Use it at your own risk!"
 read -r -p "Do you want to continue? [Y/n] " response
 response=${response,,} 
 if [[ $response =~ ^(yes|y| ) ]] || [ -z $response ]; then
@@ -83,14 +107,19 @@ else
   exit
 fi
 
+# Clone dotfiles repository
+git https://github.com/denisidoro/dotfiles.git $HOME/.dotfiles
+
 # Initial setup
-mkdir -p ~/tmp
+sudo mkdir -p $HOME/tmp
 platform=$(get_platform)
 dependencies=$(read_dependencies)
-if [[ -z "$system" ]]; then
-  echo "Unable to find compatible install commands for your platform"
+if [[ -z "$platform" ]]; then
+  echo "Unable to find compatible install commands for your platform. Aborting..."
+  exit
+else
+  echo "Detected platform: $platform"
 fi
-echo "Detected platform: $platform"
 
 # Invoke platform-specific setup
 case $platform in
@@ -99,15 +128,15 @@ case $platform in
 esac
 
 # Install fzf
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+$HOME/.fzf/install
 
 # Install vim-plug
-curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+  http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Install tpm
-git clone https://github.com/tmux-plugins/tpm --depth=1 ~/.tmux/plugins/tpm
+git clone https://github.com/tmux-plugins/tpm --depth=1 $HOME/.tmux/plugins/tpm
 
 # Install tmuxinator
 gem install tmuxinator
@@ -119,12 +148,11 @@ then
 fi
 sudo pip install docopts
 
-# Setup dot files
-git https://github.com/denisidoro/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
+# Setup dotfiles
+cd $HOME/.dotfiles
 bash install
 
 # Cleanup
-rm -rf ~/tmp
-cd ~
+rm -rf $HOME/tmp
+cd $HOME
 

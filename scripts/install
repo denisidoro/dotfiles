@@ -7,12 +7,15 @@ source $DOTFILES/scripts/aux/install.sh
 ##? List properties
 ##?
 ##? Usage:
+##?    install dependencies
 ##?    install dotfiles
 ##?    install osx (android|clojure|apps|gnu)
 
 eval_docopts "$@"
 
-if $dotfiles; then
+if $dependencies; then
+  bash $DOTFILES/scripts/setup
+elif $dotfiles; then
   update_dotfiles_common
   if is_osx; then
     update_dotfiles_osx
