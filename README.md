@@ -8,7 +8,7 @@ Personal dotfiles with [zsh][zsh], [tmux][tmux], [neovim][neovim], [fzf][fzf], [
 ### Installation
 
 ```sh
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/setup)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/denisidoro/dotfiles/master/install)"
 ```
 
 Alternatively, if you already have all the dependencies and want to clone the repository yourself:
