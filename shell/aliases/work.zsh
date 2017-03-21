@@ -24,7 +24,7 @@ nbcd() {
 alias as="open -a \"Android Studio\""
 
 nurl() {
-	nu service curl "$@" | jq
+	nu service curl "$@" -- -s | jq
 }
 
 fnu() {
