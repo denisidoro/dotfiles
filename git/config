@@ -17,6 +17,7 @@
   untracked = cyan
 [core]
   excludesfile = ~/.dotfiles/git/ignore
+  hookspath = ~/.dotfiles/git/hooks
   autocrlf = input
 [merge]
   ff = only
