@@ -1,15 +1,15 @@
 get_setup_platform() {
   case "$(uname -s)" in
     Darwin)
-echo osx
-;;
-*)
-if command_exists apt
-  then
-  echo apt
-fi
-;;
-esac
+      echo osx
+    ;;
+    *)
+      if command_exists apt
+      then
+        echo apt
+      fi
+    ;;
+  esac
 }
 
 setup_apt() {
