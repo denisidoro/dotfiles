@@ -18,7 +18,7 @@ fco() {
   tags=$(
     git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
   branches=$(
-    git branch --sort=committerdate | grep -v HEAD  |
+    git branch --all --sort=committerdate | grep -v HEAD  |
     sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
     awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
   target=$(
