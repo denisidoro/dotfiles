@@ -19,12 +19,11 @@
   excludesfile = ~/.dotfiles/git/ignore
   hookspath = ~/.dotfiles/git/hooks
   autocrlf = input
-[merge]
-  ff = only
 [fetch]
   prune = true
 [rebase]
   autosquash = true
 [include]
   path = ~/.dotfiles/local/gitconfig
-
+[pull]
+	rebase = true
