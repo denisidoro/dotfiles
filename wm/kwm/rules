@@ -1,0 +1,24 @@
+kwmc rule properties={float="true"} role="AXDialog"
+
+kwmc rule owner="FocusList" properties={role="AXDialog"}
+kwmc rule owner="FocusList" role="AXDialog" properties={float="false"}
+
+kwmc rule properties={float="true"} owner="App Store"
+kwmc rule properties={float="true"} owner="System Preferences""
+kwmc rule properties={float="true"} owner="Alfred Preferences"
+kwmc rule properties={float="true"} owner="BetterTouchTool"
+kwmc rule properties={float="true"} owner="The Unarchiver"
+kwmc rule properties={float="true"} owner="Android Emulator"
+kwmc rule properties={float="true"} owner="qemu-system-x86_64"
+kwmc rule properties={float="true"} owner="VLC"
+kwmc rule properties={float="true"} name="Preferences"
+
+kwmc rule properties={space="1"} owner="Google Chrome"
+kwmc rule properties={space="2"} owner="IntelliJ"
+kwmc rule properties={space="2"} owner="Android Studio"
+kwmc rule properties={space="2"} owner="Android Emulator"
+kwmc rule properties={space="2"} owner="qemu-system-x86_64"
+kwmc rule properties={space="3"} owner="Slack"
+kwmc rule properties={space="4"} owner="YouTube"
+kwmc rule properties={space="4"} owner="Spotify"
+kwmc rule properties={space="4"} owner="VLC"

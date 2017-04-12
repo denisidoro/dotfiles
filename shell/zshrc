@@ -12,9 +12,9 @@ source $DOTFILES/shell/plugins/config.zsh
 export EDITOR='nvim'
 
 # load aliases and helper functions
+source $DOTFILES/shell/aliases/general.zsh
 source $DOTFILES/shell/aliases/browsing.zsh
 source $DOTFILES/shell/aliases/coding.zsh
-source $DOTFILES/shell/aliases/general.zsh
 source $DOTFILES/shell/aliases/tmux.zsh
 source $DOTFILES/shell/aliases/git.zsh
 
