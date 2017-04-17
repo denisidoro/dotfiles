@@ -22,7 +22,7 @@ fco() {
     sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
     awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
   target=$(
-    (echo "$tags"; echo "$branches") | grep . |  tac |
+    (echo "$tags"; echo "$branches") | sort -u | grep . | tac |
     fzf-tmux --query="$1" --multi --select-1 --exit-0 --reverse --height 25% -- --no-hscroll --ansi +m -d "\t" -n 2 -1 -q "$*") || return
   git checkout $(echo "$target" | awk '{print $2}')
 }
