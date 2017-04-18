@@ -37,9 +37,9 @@ update_dotfiles_common() {
   pushd . > /dev/null
   cd $DOTFILES
 
-  echo "Updating submodules..."
+  echo "Attempting to update submodules..."
   (git pull && git submodule init && git submodule update && git submodule status && \
-    cd "${DOTFILES}" && git submodule update --init --recursive "${DOTBOT_DIR}") > /dev/null
+    cd "${DOTFILES}" && git submodule update --init --recursive "${DOTBOT_DIR}" || true) > /dev/null
 
   echo
   "${DOTFILES}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${DOTFILES}" -c "${CONFIG}" "${@}" 
