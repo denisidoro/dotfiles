@@ -16,12 +16,8 @@ cask_install() {
 
 gnu_install() {
   brew tap homebrew/dupes
-  brew install binutils && brew install diffutils && brew install ed && brew install findutils && brew install gawk && \
-    brew install gnu-indent && brew install gnu-sed && brew install gnu-tar && brew install gnu-which && brew install gnutls && \
-    brew install grep && brew install gzip && brew install screen && brew install watch && brew install wdiff --with-gettext && \
-    brew install wget
-  brew install bash && brew install m4 && brew install make && brew install nano && brew install file-formula && \
-    brew install git && brew install less && brew install openssh && brew install rsync && brew install unzipi
+  brew install binutils diffutils ed findutils gawk gnu-indent gnu-sed gnu-tar gnu-which gnutls grep gzip screen watch  wget && brew install wdiff --with-gettext
+  brew install bash emacs m4 make nano file-formula git less openssh rsync unzip
 }
 
 update_dotfiles_common() {
