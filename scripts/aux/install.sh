@@ -32,7 +32,7 @@ update_dotfiles_common() {
   DOTBOT_BIN="bin/dotbot"
 
   echo "Setting folder architecture..."
-  mkdir -p "$HOME/.config/{nvim,git}"
+  mkdir -p "$HOME/.config/{nvim,git,karabiner}"
   mkdir -p "$DOTFILES/local/bin"
   pushd . > /dev/null
   cd $DOTFILES

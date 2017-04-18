@@ -8,3 +8,4 @@
     ~/.tmux.conf: tmux/tmux.conf
     ~/.gitconfig: git/config
     ~/.ideavimrc: vim/ideavimrc
+    ~/.config/karabiner/karabiner.json: keybindings/karabiner/karabiner.json
