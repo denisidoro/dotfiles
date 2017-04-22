@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # vim: filetype=sh
 
-source $DOTFILES/scripts/aux/utils.sh 
+source $DOTFILES/scripts/core/main.sh 
 source $DOTFILES/scripts/aux/install.sh 
 source $DOTFILES/scripts/aux/setup.sh 
 
