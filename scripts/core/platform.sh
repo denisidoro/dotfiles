@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-function program_is_installed {
-  local return_=1
-  type $1 >/dev/null 2>&1 || { local return_=0; }
-  echo "$return_"
-}
-
 function command_exists() {
   type "$1" &> /dev/null ;
 }
@@ -14,10 +8,10 @@ function is_osx {
   [[ `uname -s` == "Darwin" ]]
 }
 
-function get_platform() {
+function get_package_manager() {
   case "$(uname -s)" in
     Darwin)
-      echo osx
+      echo brew
       ;;
     *)
       if command_exists apt
