@@ -46,8 +46,7 @@ echo -e "\e[36mdenisidoro's dotfiles\e[0m\n"
 if [ -f "$INSTALL_COMMAND" ]; then :
 elif [ -f "$DOTFILES" ]; then
 	echo "Backing up existing .dotfiles folder and cloning new .dotfiles..."
-        local old_dotfiles=$(mktemp -d "$DOTFILES_XXXX")
-	rm -rf $old_dotfiles
+        local old_dotfiles=$(mktemp -u -d "$DOTFILES_XXXX")
 	mv "$DOTFILES" "$old_dotfiles"
 	clone_repo
 else 
