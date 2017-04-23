@@ -81,13 +81,6 @@ setup() {
   # Install tmuxinator
   gem install tmuxinator
 
-  # Install docopts dependencies
-  if ! command_exists pip 
-    then
-    curl https://bootstrap.pypa.io/get-pip.py | sudo python
-  fi
-  sudo pip install docopts
-
   # Setup dotfiles
   cd $HOME/.dotfiles
   bash install

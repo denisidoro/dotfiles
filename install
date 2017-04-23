@@ -27,14 +27,6 @@ install_git_and_python() {
 	fi
 }
 
-install_docopts() {
-  if ! command_exists pip 
-    then
-    curl https://bootstrap.pypa.io/get-pip.py | sudo python
-  fi
-  sudo pip install docopts
-}
-
 clone_repo() {
 	git clone https://github.com/denisidoro/dotfiles.git "$DOTFILES"
 }
@@ -70,7 +62,6 @@ else
 
 	install_brew_if_on_osx
 	install_git_and_python
-	install_docopts
 	clone_repo
 	install_dependencies
 fi
