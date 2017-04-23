@@ -7,7 +7,7 @@ function get_help_string() {
 function eval_opts() {
   local help="${1}"
   shift
-  eval "$($DOTFILES/scripts/aux/docopts -h "${help}" : "${@}")"
+  eval "$($DOTFILES/scripts/core/docopts -h "${help}" : "${@}")"
 }
 
 function eval_docopts() {
