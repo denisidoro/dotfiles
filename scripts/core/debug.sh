@@ -15,7 +15,11 @@ readonly LOG_FILE="/tmp/$(basename "$0").log"
 function _log() {
   local template=$1
   shift
-  printf "$1" "$@" | tee -a "$LOG_FILE" >&2; 
+  if $log_to_file; then
+    printf "$1" "$@" | tee -a "$LOG_FILE" >&2; 
+  else
+    printf "$1" "$@";
+  fi
 }
 
 function header() { _log "\n${bold}${purple}==========  %s  ==========${freset}\n" "$@"; }
