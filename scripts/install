@@ -11,25 +11,28 @@ source $DOTFILES/scripts/aux/setup.sh
 ##? Usage:
 ##?    install dependencies
 ##?    install dotfiles
-##?    install osx (android|clojure|apps|gnu)
+##?    install osx env (apps|gnu)
+##?    install osx dev (android|clojure)
 
 eval_docopts "$@"
 
-if $dependencies; then
-  setup
-elif $dotfiles; then
+$dependencies && { setup }
+
+$dotfiles && {
   update_dotfiles_common
   if is_osx; then
     update_dotfiles_osx
   fi
-elif $android; then
-  cask_install "cask-java" "cask-android"
-elif $clojure; then
-  cask_install "cask-java"
-  brew_install "leiningen"
-elif $apps; then
-  cask_install "cask-apps"
-elif $gnu; then
-  gnu_install
-fi
+}
+
+$osx && {
+  $env && {
+    $apps && { cask_install "cask-apps" }
+    $gnu && { gnu_install }
+  }
+  $dev && {
+    $android && { cask_install "cask-java" "cask-android" }
+    $clojure && { cask_install "cask-java" && brew_install "leiningen" }
+  }
+}
 
