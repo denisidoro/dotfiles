@@ -47,6 +47,7 @@ if [ -f "$INSTALL_COMMAND" ]; then :
 elif [ -f "$DOTFILES" ]; then
 	echo "Backing up existing .dotfiles folder and cloning new .dotfiles..."
         local old_dotfiles=$(mktemp -d "$DOTFILES_XXXX")
+	rm -rf $old_dotfiles
 	mv "$DOTFILES" "$old_dotfiles"
 	clone_repo
 else 
@@ -54,7 +55,7 @@ else
 
 	# Prompt confirmation
 	echo "This script is untested. Use it at your own risk!"
-	read -r -p "Do you want to continue? [Y/n] " response
+	read -r -p "Do you want to continue? (Y/n) " response
 	response=${response,,} 
 	if [[ $response =~ ^(yes|y| ) ]] || [ -z $response ]; then
 	  sudo echo "Proceeding with installation..."

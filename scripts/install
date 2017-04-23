@@ -6,6 +6,8 @@ source $DOTFILES/scripts/core/main.sh
 source $DOTFILES/scripts/aux/install.sh 
 source $DOTFILES/scripts/aux/setup.sh 
 
+#? install 0.1.0
+
 ##? List properties
 ##?
 ##? Usage:
