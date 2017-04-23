@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if is_osx; then
+if is_osx && command_exists ggrep; then
   function sed(){ gsed "$@"; }
   function awk(){ gawk "$@"; }
   function find(){ gfind "$@"; }
