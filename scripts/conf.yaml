@@ -1,5 +1,9 @@
 - clean: ['~']
 
+- defaults:
+    link:
+       create: true
+
 - link:
     ~/.zshrc: shell/zshrc
     ~/.bashrc: shell/bashrc
