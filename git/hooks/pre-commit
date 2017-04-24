@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$DOTFILES/scripts/core/main.sh"
+
+function check_json() {
+	local files="$1"
+	for file in $(echo "$files" | grep -P '\.((js)|(json))$'); do
+		set +e
+	    python -mjson.tool $file 2> /dev/null
+	    set -e
+	    if [ $? -ne 0 ] ; then
+	        echo "Lint check of JSON object failed. Your changes were not commited."
+	        echo "in $git_dir/$file:"
+	        python -mjson.tool $file
+	        exit 1
+	    fi
+	done
+}
+
+git_dir=$(git rev-parse --show-toplevel)
+files=$(git diff-index --name-only --diff-filter=ACM --cached HEAD --)
+
+check_json "$files"
