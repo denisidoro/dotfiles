@@ -3,12 +3,17 @@
 # cd to Nubank service and open default panes for testing
 
 name: <%= @args[0] %>
-root: $NU_HOME/<%= @args[0] %>
+root: <%= ENV["NU_HOME"] %>/<%= @args[0] %>
 
 windows:
-  - editor:
+  - tests:
       layout: main-vertical
       panes:
-        - clear; lein midje :autotest
-        - clear; (echo -e "(autotest)" && cat) | lein postman-repl
-        - clear
+        - clear; lein midje :autotest # unit tests
+        - clear; (lein help postman-repl | grep -q args) && ((echo -e "(autotest)" && cat) | lein postman-repl) || (lein postman :autotest) # postman tests
+        - clear # empty
+  - git: 
+      layout: even-vertical
+      panes:
+        - clear; tig status # 
+        - clear; tig # last commits

@@ -2,9 +2,10 @@
 set -g base-index 1
 set -g pane-base-index 1
 
-# Automatically set window title
-set-window-option -g automatic-rename on
-set-option -g set-titles on
+# Disable title automatic renaming
+set-option -g allow-rename off
+# set-window-option -g automatic-rename on
+# set-option -g set-titles on
 
 set -g default-terminal "screen-256color"
 set -g status-keys vi
