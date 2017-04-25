@@ -9,6 +9,7 @@
     ~/.bashrc: shell/bashrc
     ~/.hushlogin: shell/hushlogin
     ~/.config/nvim/init.vim: vim/init.vim
+    ~/.spacemacs: emacs/spacemacs.el
     ~/.tmux.conf: tmux/tmux.conf
     ~/.gitconfig: git/config
     ~/.ideavimrc: vim/ideavimrc
