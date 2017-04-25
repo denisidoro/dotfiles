@@ -7,5 +7,6 @@ source $DOTFILES/scripts/core/documentation.sh
 source $DOTFILES/scripts/core/file.sh
 source $DOTFILES/scripts/core/platform.sh
 source $DOTFILES/scripts/core/string.sh
+source $DOTFILES/scripts/core/feedback.sh
 source $DOTFILES/scripts/core/osx_gnu.sh
 

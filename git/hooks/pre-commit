@@ -6,20 +6,21 @@ source "$DOTFILES/scripts/core/main.sh"
 function main() {
 	local git_dir=$(git rev-parse --show-toplevel)
 	local files=$(git diff-index --name-only --diff-filter=ACM --cached HEAD --)
+	local against
 
 	check_json "$files"
 	check_edn "$files"
 
 	if git rev-parse --verify HEAD >/dev/null 2>&1; then
-		local git_diff=$(git diff --cached --name-only HEAD)
-	    match_regex "$git_diff" "AWS key ID" "[^A-Z0-9][A-Z0-9]{20}[^A-Z0-9]" true
-		match_regex "$git_diff" "AWS key" "[^A-Za-z0-9/+=][A-Za-z0-9/+=]{40}[^A-Za-z0-9/+=]" true
-		match_regex "$git_diff" "code debug" "nu/tap" false
+		against="HEAD"
 	else
-		error "Unable to find commit HEAD"
-		error "Regex matches weren't checked2"
-		commited_anyway_msg
+		against=$(git hash-object -t tree /dev/null)
 	fi
+
+	local git_diff=$(git diff --cached --name-only "$against")
+    match_regex "$git_diff" "AWS key ID" "[^A-Z0-9][A-Z0-9]{20}[^A-Z0-9]" true
+	match_regex "$git_diff" "AWS key" "[^A-Za-z0-9/+=][A-Za-z0-9/+=]{40}[^A-Za-z0-9/+=]" true
+	match_regex "$git_diff" "code debug" "nu/tap" false
 }
 
 function check_json() {
@@ -67,18 +68,20 @@ function match_regex() {
 	local stop="${4:-true}"
 
 	for file in $(echo "$files"); do
-		if $(cat "$file" | grep -q -E "$pattern"); then
+		local res=$(cat "$file" | grep -E --line-number "$pattern");
+		if [ -n "$res" ]; then
 			$stop && { not_commited_msg; }
-			error "$file matched the \"$name\" blacklist regex"
-			if $stop; then
-				exit 1
+			error "$file matched the \"$name\" blacklist regex:"
+			echo "$res"
+			if $stop; then		
+			    if ! prompt_confirmation "Are you sure you want to commit anyway?" false; then
+			    	exit 1
+			    fi
 			else
 				commited_anyway_msg
 			fi
 		fi 
-	    set -e
-		done
-	set +e
+	done
 }
 
 function not_commited_msg() {
