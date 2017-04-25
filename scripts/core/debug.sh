@@ -15,10 +15,10 @@ readonly LOG_FILE="/tmp/$(basename "$0").log"
 function _log() {
   local template=$1
   shift
-  if $log_to_file; then
-    printf "$1" "$@" | tee -a "$LOG_FILE" >&2; 
+  if ${log_to_file:-false}; then
+    echo -e $(printf "$template" "$@") | tee -a "$LOG_FILE" >&2; 
   else
-    printf "$1" "$@";
+    echo -e $(printf "$template" "$@")
   fi
 }
 

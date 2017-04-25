@@ -3,6 +3,11 @@ set -euo pipefail
 
 source "$DOTFILES/scripts/core/main.sh"
 
+function main() {
+	local current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+	prompt_if_master "$current_branch"
+}
+
 function prompt_if_master() {
 	local protected_branch='master'  
 	if [ $protected_branch = $current_branch ]; then  
@@ -17,6 +22,4 @@ function prompt_if_master() {
 	fi  
 }
 
-current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
-
-prompt_if_master "$current_branch"
+main
