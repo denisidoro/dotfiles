@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 command_exists() {
   type "$1" &> /dev/null ;
@@ -27,14 +28,6 @@ install_git_and_python() {
 	fi
 }
 
-install_docopts() {
-  if ! command_exists pip 
-    then
-    curl https://bootstrap.pypa.io/get-pip.py | sudo python
-  fi
-  sudo pip install docopts
-}
-
 clone_repo() {
 	git clone https://github.com/denisidoro/dotfiles.git "$DOTFILES"
 }
@@ -53,14 +46,15 @@ echo -e "\e[36mdenisidoro's dotfiles\e[0m\n"
 if [ -f "$INSTALL_COMMAND" ]; then :
 elif [ -f "$DOTFILES" ]; then
 	echo "Backing up existing .dotfiles folder and cloning new .dotfiles..."
-	mv "$DOTFILES" "$DOTFILES_0"
+        local old_dotfiles=$(mktemp -u -d "$DOTFILES_XXXX")
+	mv "$DOTFILES" "$old_dotfiles"
 	clone_repo
 else 
 	echo "No .dotfiles folder found. Installing dependencies and cloning .dotfiles..."
 
 	# Prompt confirmation
 	echo "This script is untested. Use it at your own risk!"
-	read -r -p "Do you want to continue? [Y/n] " response
+	read -r -p "Do you want to continue? (Y/n) " response
 	response=${response,,} 
 	if [[ $response =~ ^(yes|y| ) ]] || [ -z $response ]; then
 	  sudo echo "Proceeding with installation..."
@@ -70,7 +64,6 @@ else
 
 	install_brew_if_on_osx
 	install_git_and_python
-	install_docopts
 	clone_repo
 	install_dependencies
 fi

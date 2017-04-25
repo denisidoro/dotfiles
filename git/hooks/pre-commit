@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$DOTFILES/scripts/core/main.sh"
+
+function main() {
+	local git_dir=$(git rev-parse --show-toplevel)
+	local files=$(git diff-index --name-only --diff-filter=ACM --cached HEAD --)
+	local against
+
+	check_json "$files"
+	check_edn "$files"
+
+	if git rev-parse --verify HEAD >/dev/null 2>&1; then
+		against="HEAD"
+	else
+		against=$(git hash-object -t tree /dev/null)
+	fi
+
+	local git_diff=$(git diff --cached --name-only "$against")
+    match_regex "$git_diff" "AWS key ID" "[^A-Z0-9][A-Z0-9]{20}[^A-Z0-9]" true
+	match_regex "$git_diff" "AWS key" "[^A-Za-z0-9/+=][A-Za-z0-9/+=]{40}[^A-Za-z0-9/+=]" true
+	match_regex "$git_diff" "code debug" "nu/tap" false
+}
+
+function check_json() {
+	local files="$1"
+	for file in $(echo "$files" | grep -P '\.((js))$'); do
+		set +e
+	    python -mjson.tool "$file" 2> /dev/null
+	    local result=$?
+	    if [ $result -ne 0 ] ; then
+	        not_commited_msg
+	        error "Lint check of JSON object failed\n\tin $git_dir/$file"
+	        python -mjson.tool "$file"
+	        exit 1
+	    fi
+	    set -e
+	done
+}
+
+function check_edn() {
+	local files="$1"
+	for file in $(echo "$files" | grep -P '\.((edn))$'); do
+		if command_exists eq2; then
+			set +e
+		    cat "$file" | eq 2> /dev/null
+		    local result=$?
+		    if [ $result -ne 0 ] ; then
+		        not_commited_msg
+		        error "Lint check of EDN object failed\n\tin $git_dir/$file"
+		        cat "$file" | eq
+		        exit 1
+		    fi
+		else
+			error "Your EDN files couldn't be validated"
+			commited_anyway_msg
+			note "Consider running \"npm install -g edn-eq\" before commiting next time"
+		fi
+	    set -e
+	done
+}
+
+function match_regex() {
+	local files="$1"
+	local name="$2"
+	local pattern="$3"
+	local stop="${4:-true}"
+
+	for file in $(echo "$files"); do
+		local res=$(cat "$file" | grep -E --line-number "$pattern");
+		if [ -n "$res" ]; then
+			$stop && { not_commited_msg; }
+			error "$file matched the \"$name\" blacklist regex:"
+			echo "$res"
+			if $stop; then		
+			    if ! prompt_confirmation "Are you sure you want to commit anyway?" false; then
+			    	exit 1
+			    fi
+			else
+				commited_anyway_msg
+			fi
+		fi 
+	done
+}
+
+function not_commited_msg() {
+	error "Your changes were not commited"
+}
+
+function commited_anyway_msg() {
+	warning "Your changes were commited anyway"
+}
+
+main

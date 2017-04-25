@@ -1,18 +1,6 @@
-get_setup_platform() {
-  case "$(uname -s)" in
-    Darwin)
-      echo osx
-    ;;
-    *)
-      if command_exists apt
-      then
-        echo apt
-      fi
-    ;;
-  esac
-}
+#!/usr/bin/env bash
 
-setup_apt() {
+function setup_apt() {
 
   # Add commons 
   sudo apt-get install software-properties-common
@@ -33,7 +21,7 @@ done
 
 }
 
-setup_mac() {
+function setup_brew() {
 
   # Install brew
   if ! command_exists brew ; then
@@ -48,23 +36,23 @@ setup_mac() {
 
 }
 
-setup() {
+function setup() {
 
   # Initial setup
   sudo mkdir -p $HOME/tmp
-  platform=$(get_platform)
+  package_manager=$(get_package_manager)
   dependencies=$(read_dependencies)
-  if [[ -z "$platform" ]]; then
+  if [[ -z "$package_manager" ]]; then
     echo "Unable to find compatible install commands for your platform. Aborting..."
-    exit
+    exit 1
   else
-    echo "Detected platform: $platform"
+    echo "Detected package manager: $package_manager"
   fi
 
   # Invoke platform-specific setup
-  case $platform in
-    osx) setup_mac;;
-  apt) setup_apt;;
+  case $package_manager in
+    brew) setup_brew;;
+    apt) setup_apt;;
   esac
 
   # Install fzf
@@ -80,13 +68,6 @@ setup() {
 
   # Install tmuxinator
   gem install tmuxinator
-
-  # Install docopts dependencies
-  if ! command_exists pip 
-    then
-    curl https://bootstrap.pypa.io/get-pip.py | sudo python
-  fi
-  sudo pip install docopts
 
   # Setup dotfiles
   cd $HOME/.dotfiles

@@ -1,5 +1,9 @@
 - clean: ['~']
 
+- defaults:
+    link:
+       create: true
+
 - link:
     ~/.zshrc: shell/zshrc
     ~/.bashrc: shell/bashrc
@@ -8,5 +12,5 @@
     ~/.tmux.conf: tmux/tmux.conf
     ~/.gitconfig: git/config
     ~/.ideavimrc: vim/ideavimrc
-    ~/.config/karabiner/karabiner.json: keybindings/karabiner/karabiner.json
-    ~/.khrdc: keybindings/khd/khdrc
+    ~/.config/karabiner/karabiner.json: bindings/karabiner/karabiner.json
+    ~/.khrdc: bindings/khd/khdrc

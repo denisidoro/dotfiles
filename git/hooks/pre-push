@@ -1,17 +1,22 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-protected_branch='master'  
-current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+source "$DOTFILES/scripts/core/main.sh"
 
-if [ $protected_branch = $current_branch ]  
-then  
-    read -p "Are you sure you want to push to master? (y|n) " -n 1 -r < /dev/tty
-    echo
-    if echo $REPLY | grep -E '^[Yy]$' > /dev/null
-    then
-        exit 0 
-    fi
-    exit 1 
-else  
-    exit 0 
-fi  
+function main() {
+	local current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+	prompt_if_protected "$current_branch" "tmp"
+}
+
+function prompt_if_protected() {
+	local current_branch="$1"
+	local protected_branch="$2"
+	if [ $protected_branch = $current_branch ]; then  
+	    if ! prompt_confirmation "Are you sure you want to push to $protected_branch?" true; then
+	    	exit 1
+	    fi
+	fi  
+}
+
+main
+exit 0
