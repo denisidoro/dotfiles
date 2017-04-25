@@ -15,5 +15,5 @@ windows:
   - git: 
       layout: even-vertical
       panes:
-        - clear; tig status # 
+        - clear; tig status # staged/unstaged/untracked
         - clear; tig # last commits
