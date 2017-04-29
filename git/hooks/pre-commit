@@ -25,7 +25,7 @@ function main() {
 
 function check_json() {
 	local files="$1"
-	for file in $(echo "$files" | grep -P '\.((js))$'); do
+	for file in $(echo "$files" | grep -P '\.((json))$'); do
 		set +e
 	    python -mjson.tool "$file" 2> /dev/null
 	    local result=$?
