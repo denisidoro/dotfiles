@@ -37,6 +37,7 @@ Powerline_*.cache
 *.exe
 *.o
 *.so
+*.pyc
 
 # Packages
 *.7z
