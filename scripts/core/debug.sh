@@ -22,7 +22,18 @@ function _log() {
   fi
 }
 
-function header() { _log "\n${bold}${purple}==========  %s  ==========${freset}\n" "$@"; }
+function _header() {
+  local TOTAL_CHARS=60
+  local total=$TOTAL_CHARS-2
+  local size=${#1}
+  local left=$((($total - $size) / 2))
+  local right=$(($total - $size - $left))
+  printf "%${left}s" '' | tr ' ' =
+  printf " $1 "
+  printf "%${right}s" '' | tr ' ' =
+}
+
+function header() { _log "\n${bold}${purple}$(_header "$1")${freset}\n"; }
 function success() { _log "${green}✔ %s${freset}\n" "$@"; }
 function error() { _log "${red}✖ %s${freset}\n" "$@"; }
 function warning() { _log "${tan}➜ %s${freset}\n" "$@"; }
