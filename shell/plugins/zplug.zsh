@@ -12,7 +12,7 @@ zplug zsh-users/zsh-syntax-highlighting
 
 # Versioning
 zplug "paulirish/git-open", as:command
-zplug "rafaeldff/rgit", as:command, use:"rgit"
+# zplug "rafaeldff/rgit", as:command, use:"rgit"
 
 # Load the theme
 setopt prompt_subst # Make sure propt is able to be generated properly.

@@ -13,5 +13,3 @@
     ~/.tmux.conf: tmux/tmux.conf
     ~/.gitconfig: git/config
     ~/.ideavimrc: vim/ideavimrc
-    ~/.config/bindings/karabiner.json: bindings/karabiner/karabiner.json
-    ~/.khrdc: bindings/khd/khdrc
