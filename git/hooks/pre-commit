@@ -18,9 +18,10 @@ function main() {
 	fi
 
 	local git_diff=$(git diff --cached --name-only "$against")
-    match_regex "$git_diff" "AWS key ID" "[^A-Z0-9][A-Z0-9]{20}[^A-Z0-9]" true
-	match_regex "$git_diff" "AWS key" "[^A-Za-z0-9/+=][A-Za-z0-9/+=]{40}[^A-Za-z0-9/+=]" true
-	match_regex "$git_diff" "code debug" "nu/tap" false
+    #match_content "$git_diff" "AWS key ID" "[^A-Z0-9][A-Z0-9]{20}[^A-Z0-9]" true
+	#match_content "$git_diff" "AWS key" "[^A-Za-z0-9/+=][A-Za-z0-9/+=]{40}[^A-Za-z0-9/+=]" true
+	match_filename "$git_diff" ".*secret.*" true
+	match_content "$git_diff" "code debug" "nu/tap" false
 }
 
 function check_json() {
@@ -61,7 +62,7 @@ function check_edn() {
 	done
 }
 
-function match_regex() {
+function match_content() {
 	local files="$1"
 	local name="$2"
 	local pattern="$3"
@@ -71,8 +72,31 @@ function match_regex() {
 		local res=$(cat "$file" | grep -E --line-number "$pattern");
 		if [ -n "$res" ]; then
 			$stop && { not_commited_msg; }
-			error "$file matched the \"$name\" blacklist regex:"
+			error "$file matched the \"$name\" blacklist content regex:"
 			echo "$res"
+			if $stop; then		
+			    if ! prompt_confirmation "Are you sure you want to commit anyway?" false; then
+			    	exit 1
+			    fi
+			else
+				commited_anyway_msg
+			fi
+		fi 
+	done
+}
+
+function match_filename() {
+	local files="$1"
+	local name="$2"
+	local pattern="$3"
+	local stop="${4:-true}"
+
+	for file in $(echo "$files"); do
+		local res=$(echo "$file" | grep -E "$pattern");
+		if [ -n "$res" ]; then
+			$stop && { not_commited_msg; }
+			error "$file matched the \"$name\" blacklist filename regex:"
+
 			if $stop; then		
 			    if ! prompt_confirmation "Are you sure you want to commit anyway?" false; then
 			    	exit 1

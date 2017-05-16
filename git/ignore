@@ -1,6 +1,7 @@
 # Sensitive data
 .zshrc-secrets
 local.properties
+*secret*
 
 # OS
 .Trashes
