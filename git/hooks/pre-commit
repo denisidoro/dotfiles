@@ -28,7 +28,7 @@ function check_json() {
 	local files="$1"
 	for file in $(echo "$files" | grep -P '\.((json))$'); do
 		set +e
-	    python -mjson.tool "$file" 2> /dev/null
+	    python -mjson.tool "$file" 2>&1 /dev/null
 	    local result=$?
 	    if [ $result -ne 0 ] ; then
 	        not_commited_msg
