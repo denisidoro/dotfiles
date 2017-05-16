@@ -1,0 +1,10 @@
+- clean: ['~']
+
+- defaults:
+    link:
+       create: true
+
+- link:
+    ~/.config/bindings/karabiner.json: bindings/karabiner/karabiner.json
+    ~/.khrdc: bindings/khd/khdrc
+    ~/.kwm/kwmrc: wm/kwm/kwmrc

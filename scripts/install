@@ -20,8 +20,10 @@ eval_docopts "$@"
 $dependencies && { setup; }
 
 $dotfiles && {
+  update_dotfiles_prepare;
   update_dotfiles_common;
   is_osx && { update_dotfiles_osx; }
+  update_dotfiles_finish;
 }
 
 $osx && {
