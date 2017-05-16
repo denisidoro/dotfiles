@@ -33,6 +33,12 @@ up() {
 }
 
 
+function _fq1() {
+  local lines
+  echo $(fzf --filter="$1" | head -n1)
+}
+
+
 # ===============
 # properties
 # ===============
@@ -59,5 +65,34 @@ alias f='fasd -f'           # file
 alias sd='fasd -sid'        # interactive directory selection
 alias sf='fasd -sif'        # interactive file selection
 alias j='fasd_cd -d'        # cd, same functionality as j in autojump
+#j() {   
+#  local dir
+#  dir=$(fasd -Rdl | _fq1 "$1") && cd "$dir"
+#}
 alias zz='fasd_cd -d -i'    # cd with interactive selection
 alias v="fasd -f -e nvim"   # edit file with vim
+
+fl() {
+  local folder=$(locate / | fzf-tmux --query="$1" --multi --select-1 --exit-0 --reverse --height 25%) \
+    && cd "$folder"
+}
+
+
+# cf - fuzzy cd from anywhere
+# ex: cf word1 word2 ... (even part of a file name)
+# zsh autoload function
+cf() {
+  local file
+
+  file="$(locate -0 "$@" | grep -z -vE "~$" | fzf --read0 -0 -1)"
+
+  if [[ -n $file ]]
+  then
+     if [[ -d $file ]]
+     then
+        cd -- $file
+     else
+        cd -- ${file:h}
+     fi
+  fi
+}
