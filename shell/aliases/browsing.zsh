@@ -73,7 +73,7 @@ alias zz='fasd_cd -d -i'    # cd with interactive selection
 alias v="fasd -f -e nvim"   # edit file with vim
 
 fl() {
-  local folder=$(locate / | fzf-tmux --query="$1" --multi --select-1 --exit-0 --reverse --height 25%) \
+  local folder=$(locate / | xargs -I {} bash -c 'if [ -d "{}" ]; then echo {}; fi' | fzf-tmux --query="$1" --multi --select-1 --exit-0 --reverse --height 25%) \
     && cd "$folder"
 }
 

@@ -18,8 +18,10 @@ function main() {
 	fi
 
 	local git_diff=$(git diff --cached --name-only "$against")
+   
     #match_content "$git_diff" "AWS key ID" "[^A-Z0-9][A-Z0-9]{20}[^A-Z0-9]" true
 	#match_content "$git_diff" "AWS key" "[^A-Za-z0-9/+=][A-Za-z0-9/+=]{40}[^A-Za-z0-9/+=]" true
+	check_conflict "$git_diff"
 	match_filename "$git_diff" ".*secret.*" true
 	match_content "$git_diff" "code debug" "nu/tap" false
 }
@@ -51,7 +53,7 @@ function check_edn() {
 		        not_commited_msg
 		        error "Lint check of EDN object failed\n\tin $git_dir/$file"
 		        cat "$file" | eq
-		        exit 1
+		        exit 2
 		    fi
 		else
 			error "Your EDN files couldn't be validated"
@@ -76,7 +78,7 @@ function match_content() {
 			echo "$res"
 			if $stop; then		
 			    if ! prompt_confirmation "Are you sure you want to commit anyway?" false; then
-			    	exit 1
+			    	exit 3
 			    fi
 			else
 				commited_anyway_msg
@@ -99,13 +101,24 @@ function match_filename() {
 
 			if $stop; then		
 			    if ! prompt_confirmation "Are you sure you want to commit anyway?" false; then
-			    	exit 1
+			    	exit 4
 			    fi
 			else
 				commited_anyway_msg
 			fi
 		fi 
 	done
+}
+
+function check_conflict() {
+	local files="$1"
+
+	local res=$(echo "$files" | xargs egrep '^[><=]{7}( |$)' -H -I --line-number && echo 0 || echo 1)
+	
+	if [ $res == 0 ]; then
+		error "$file still has unresolved conflicts"
+	    exit 5
+	fi
 }
 
 function not_commited_msg() {
