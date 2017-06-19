@@ -9,7 +9,7 @@ FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # ===============
 # fasd 
 # ===============
-eval "$(fasd --init posix-alias zsh-hook)"
+eval "$(fasd --init posix-alias zsh-hook 2> /dev/null)"
 
 
 # ===============
