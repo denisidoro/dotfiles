@@ -8,8 +8,8 @@
     ~/.zshrc: shell/zshrc
     ~/.bashrc: shell/bashrc
     ~/.hushlogin: shell/hushlogin
-    ~/.config/nvim/init.vim: vim/init.vim
-    ~/.spacemacs: emacs/spacemacs.el
-    ~/.tmux.conf: tmux/tmux.conf
+    ~/.config/nvim/init.vim: editors/nvim/init.vim
+    ~/.spacemacs: editors/spacemacs/spacemacs.el
+    ~/.tmux.conf: shell/tmux/tmux.conf
     ~/.gitconfig: git/config
-    ~/.ideavimrc: vim/ideavimrc
+    ~/.ideavimrc: editors/intellij/ideavimrc
