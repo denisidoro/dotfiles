@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export DOTFILES="$HOME/.dotfiles"
-export INSTALL_COMMAND="$DOTFILES/scripts/install"
+export DOTFILES="${DOTFILES:-HOME/.dotfiles}"
+
+dot() {
+  "$DOTFILES/dot" "$@"
+}
 
 command_exists() {
   type "$1" &> /dev/null ;
@@ -35,18 +38,15 @@ clone_repo() {
 	git clone https://github.com/denisidoro/dotfiles.git "$DOTFILES"
 }
 
-install_dependencies() {
-	bash "$INSTALL_COMMAND" "dependencies"
-}
-
 pushd . > /dev/null
 
 echo -e "\e[36mdenisidoro's dotfiles\e[0m\n"
+cd "$DOTFILES"
 
-if [ -f "$INSTALL_COMMAND" ]; then :
+if [ -f "$DOTFILES/dot" ]; then :
 elif [ -f "$DOTFILES" ]; then
 	echo "Backing up existing .dotfiles folder and cloning new .dotfiles..."
-        local old_dotfiles=$(mktemp -u -d "$DOTFILES_XXXX")
+        local old_dotfiles=$(mktemp -u -d "${DOTFILES}_XXXX")
 	mv "$DOTFILES" "$old_dotfiles"
 	clone_repo
 else 
@@ -65,13 +65,12 @@ else
 	install_brew_if_on_osx
 	install_git_and_python
 	clone_repo
-	install_dependencies
+        dot environment dependencies
 fi
 
 # invoke dotfiles symlinking
-echo "Updating dotfiles..."
-cd "$DOTFILES/scripts"
-bash "$INSTALL_COMMAND" "dotfiles"
+dot environment dotfiles
 
 # cleanup
 popd > /dev/null
+
