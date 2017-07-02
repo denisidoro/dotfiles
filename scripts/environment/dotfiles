@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source $DOTFILES/scripts/core/main.sh 
+source $DOTFILES/scripts/aux/install.sh 
+source $DOTFILES/scripts/aux/setup.sh 
+
+##? Dotfiles setup
+ #? 0.1.0
+##?
+##? Usage:
+##?    dotfiles
+
+eval_docopts "$@"
+
+  update_dotfiles_prepare;
+  update_dotfiles_common;
+  is_osx && { update_dotfiles_osx; }
+  update_dotfiles_finish;
+

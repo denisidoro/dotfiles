@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source $DOTFILES/scripts/core/main.sh 
+source $DOTFILES/scripts/aux/install.sh 
+source $DOTFILES/scripts/aux/setup.sh 
+
+##? OSX env
+ #? 0.1.0
+##?
+##? Usage:
+##?    osx apps
+##?    osx dev (android|clojure)
+
+eval_docopts "$@"
+
+    $apps && { 
+    cask_install "cask-apps"; 
+  };
+  $dev && {
+    $android && { cask_install "cask-java" "cask-android"; }
+    $clojure && { cask_install "cask-java" && brew_install "leiningen"; }
+  }
+

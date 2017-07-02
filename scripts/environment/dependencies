@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source $DOTFILES/scripts/core/main.sh 
+source $DOTFILES/scripts/aux/install.sh 
+source $DOTFILES/scripts/aux/setup.sh 
+
+##? Dependency install
+ #? 0.1.0
+##?
+##? Usage:
+##?    dependencies
+
+eval_docopts "$@"
+
+is_osx && gnu_install; 
+setup; 
+
