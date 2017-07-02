@@ -4,6 +4,7 @@ source $ZPLUG_HOME/init.zsh
 zplug 'robbyrussell/oh-my-zsh', use:'lib/*'
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/tmuxinator", from:oh-my-zsh
+zplug "plugins/shrink-path", from:oh-my-zsh
 
 # Writing
 zplug zsh-users/zsh-autosuggestions
@@ -16,7 +17,7 @@ zplug zsh-users/zsh-syntax-highlighting
 #zplug "shyiko/commacd", use:"commacd.bash"
 
 # Load the theme
-setopt prompt_subst # Make sure propt is able to be generated properly.
+setopt prompt_subst
 zplug "nostophilia/aplos", use:aplos.zsh-theme, defer:3
 
 # Install plugins if there are plugins that have not been installed
@@ -27,5 +28,10 @@ if ! zplug check --verbose; then
     fi
 fi
 
-# Then, source plugins and add commands to $PATH
+# Source plugins and add commands
 zplug load
+
+# Apply theme hacks
+function prompt_short_dir { echo "%{$fg_bold[yellow]%}$(shrink_path -f)" }
+PROMPT="$(echo $PROMPT | sed -e 's/\$prompt_dir/\$(prompt_short_dir)/')"
+
