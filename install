@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+export DOTFILES="$HOME/.dotfiles"
+export INSTALL_COMMAND="$DOTFILES/scripts/install"
+
 command_exists() {
   type "$1" &> /dev/null ;
 }
@@ -37,9 +40,6 @@ install_dependencies() {
 }
 
 pushd . > /dev/null
-
-export DOTFILES="$HOME/.dotfiles"
-export INSTALL_COMMAND="$DOTFILES/scripts/install"
 
 echo -e "\e[36mdenisidoro's dotfiles\e[0m\n"
 

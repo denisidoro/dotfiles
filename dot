@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$' \n\t'
+
+export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+source "$DOTFILES/scripts/core/main.sh"
+
+function main() {
+  echo -n
+  local context_query="$1"
+  local cmd_query="$2"
+   local paths="$(list_command_paths)"
+   local contexts="$(list_contexts "$paths")"
+   local context="$(find_context "$contexts" "$context_query" || echo "FAIL")"
+   #local cmd="$(find_command "$paths" "$context" "$cmd_query")"
+   echo "$context cmd"
+}
+
+function list_command_paths() {
+	find "$DOTFILES/scripts" -maxdepth 2 -executable -type f | grep -v core | sort
+}
+
+function list_contexts() {
+	local paths="$1"
+	for file in $paths; do echo $(basename $(dirname "$file")); done | uniq
+}
+
+function list_paths_for_context() {
+	local paths="$1"
+	local context="$2"
+	echo "$paths" | grep "$context/"
+}
+
+function find_match() {
+	local candidates="$1"
+	local query="$2"
+	local matches="$(echo "$candidates" | grep $query)"
+	local count="$(echo "$matches" | wc -l)"
+	if [ $count -eq 0 ]; then
+		exit 1
+	elif [ $count -gt 1 ]; then
+		exit 2
+	else 
+		echo "$matches" | head -n 1
+	fi
+}
+
+function find_context() {
+	local contexts="$1"
+	local query="$2"
+	find_match "$contexts" "$query"
+}
+
+function find_command() {
+	local paths="$1"
+	local context="$2"
+	local query="$3"
+	  local commands=$(list_paths_for_context "$paths" "$context")
+	  basename $(find_match "$commands" "$query")
+}
+
+main "$@"
+
