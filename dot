@@ -5,17 +5,6 @@ IFS=$' \n\t'
 export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 source "$DOTFILES/scripts/core/main.sh"
 
-function main() {
-  echo -n
-  local context_query="$1"
-  local cmd_query="$2"
-   local paths="$(list_command_paths)"
-   local contexts="$(list_contexts "$paths")"
-   local context="$(find_context "$contexts" "$context_query" || echo "FAIL")"
-   #local cmd="$(find_command "$paths" "$context" "$cmd_query")"
-   echo "$context cmd"
-}
-
 function list_command_paths() {
 	find "$DOTFILES/scripts" -maxdepth 2 -executable -type f | grep -v core | sort
 }
@@ -36,12 +25,14 @@ function find_match() {
 	local query="$2"
 	local matches="$(echo "$candidates" | grep $query)"
 	local count="$(echo "$matches" | wc -l)"
-	if [ $count -eq 0 ]; then
+	if [[ -z "${matches}" ]]; then
+		echo -e "No matches for $query\n\nPossible values:\n$candidates"
 		exit 1
 	elif [ $count -gt 1 ]; then
+		echo -e "Multiple matches for $query:\n$matches"
 		exit 2
 	else 
-		echo "$matches" | head -n 1
+		RESPONSE=$(echo "$matches" | head -n 1)
 	fi
 }
 
@@ -49,6 +40,7 @@ function find_context() {
 	local contexts="$1"
 	local query="$2"
 	find_match "$contexts" "$query"
+	CTX=$RESPONSE
 }
 
 function find_command() {
@@ -56,8 +48,19 @@ function find_command() {
 	local context="$2"
 	local query="$3"
 	  local commands=$(list_paths_for_context "$paths" "$context")
-	  basename $(find_match "$commands" "$query")
+	 find_match "$commands" "$query"
+	 CMD=$(basename $RESPONSE)
 }
 
-main "$@"
+
+ context_query="$1"
+ cmd_query="$2"
+ paths="$(list_command_paths)"
+ contexts="$(list_contexts "$paths")"
+ find_context "$contexts" "$context_query"
+find_command "$paths" "$CTX" "$cmd_query"
+
+shift
+shift
+bash "${DOTFILES}/scripts/${CTX}/${CMD}" "$@"
 
