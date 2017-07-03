@@ -18,12 +18,13 @@ function main() {
 	fi
 
 	local git_diff=$(git diff --cached --name-only "$against")
+	local existing_diff="$(echo "$git_diff" | perl -ne 'chomp(); if (-e $_) {print "$_\n"}')"
    
-    #match_content "$git_diff" "AWS key ID" "[^A-Z0-9][A-Z0-9]{20}[^A-Z0-9]" true
-	#match_content "$git_diff" "AWS key" "[^A-Za-z0-9/+=][A-Za-z0-9/+=]{40}[^A-Za-z0-9/+=]" true
-	check_conflict "$git_diff"
-	match_filename "$git_diff" ".*secret.*" true
-	match_content "$git_diff" "code debug" "nu/tap" false
+    #match_content "$existing_diff" "AWS key ID" "[^A-Z0-9][A-Z0-9]{20}[^A-Z0-9]" true
+	#match_content "$existing_diff" "AWS key" "[^A-Za-z0-9/+=][A-Za-z0-9/+=]{40}[^A-Za-z0-9/+=]" true
+	check_conflict "$existing_diff"
+	match_filename "$existing_diff" ".*secret.*" true
+	match_content "$existing_diff" "code debug" "nu/tap" false
 }
 
 function check_json() {
