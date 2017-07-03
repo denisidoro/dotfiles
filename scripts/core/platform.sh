@@ -16,6 +16,10 @@ function is_arm {
   [[ $(uname -u | grep -q "armv") -ne 0 ]] 
 }
 
+function dot() {
+  "$DOTFILES/dot" "$@"
+}
+
 function get_package_manager() {
   case "$(uname -s)" in
     Darwin)

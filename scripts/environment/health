@@ -5,7 +5,7 @@ set -euo pipefail
 source $DOTFILES/scripts/core/main.sh 
 
 ##? Checks for available commands, config files, etc.
- #? 0.3.0
+ #? 0.4.0
 ##?
 ##? Usage:
 ##?    health
@@ -16,8 +16,16 @@ CODE=0
 
 function main() {
 
-  header "CLIs"
-  check_commands "git zsh tmux nvim fasd ruby python ag"
+  header "Languages and versioning"
+  check_commands "git ruby python"
+
+  echo
+  header "Shell"
+  check_commands "git zsh tmux fasd ag"
+
+  echo
+  header "Editors"
+  check_commands "vim nvim emacs"
 
   if is_osx; then
     echo
@@ -35,7 +43,8 @@ function main() {
   check_file "$DOTFILES/local/gitconfig" "config"
 
   echo
-  header "dot command"
+  header "dotfiles"
+  check_env "DOTFILES"
   check_commands "dot"
 
 }
@@ -84,6 +93,16 @@ function check_file() {
     inc_error
   fi
 }
+
+function check_env() {
+  set +u
+  [[ -z "${!1}" ]] && {
+    error "\$$1"
+    inc_error
+  } || success "\$$1"
+  set -u
+}
+
 
 function inc_error() {
   CODE=$(($CODE + 1))
