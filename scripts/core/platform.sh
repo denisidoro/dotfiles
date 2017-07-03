@@ -5,7 +5,15 @@ function command_exists() {
 }
 
 function is_osx {
-  [[ `uname -s` == "Darwin" ]]
+  [[ $(uname -s) == "Darwin" ]]
+}
+
+function is_linux {
+  [[ $(uname -s) == "Linux" ]]
+}
+
+function is_arm {  
+  [[ $(uname -u | grep -q "armv") -ne 0 ]] 
 }
 
 function get_package_manager() {

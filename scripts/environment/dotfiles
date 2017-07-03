@@ -6,7 +6,7 @@ source $DOTFILES/scripts/core/main.sh
 source $DOTFILES/scripts/environment/core.sh
 
 ##? Updates submodules, dotfiles and attempts to do some setup
- #? 0.2.2
+ #? 0.2.3
 ##?
 ##? Usage:
 ##?    dotfiles
@@ -20,6 +20,8 @@ function main() {
 	update_dotfiles_pre;
 	update_dotfiles_common;
 	is_osx && { update_dotfiles_osx; }
+  is_linux && { update_dotfiles_linux; }
+  is_arm && { update_dotfiles_arm; }
 	update_dotfiles_pos;
 }
 
@@ -75,6 +77,14 @@ update_dotfiles_common() {
 update_dotfiles_osx() {
   echo "Adding necessary files for OSX"
   update_dotfiles "conf.osx.yaml"
+}
+
+update_dotfiles_linux() {
+  echo "No custom config for Linux yet"
+}
+
+update_dotfiles_arm() {
+  echo "No custom config for ARM yet"
 }
 
 main "$@"
