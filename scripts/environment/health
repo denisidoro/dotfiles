@@ -4,8 +4,8 @@ set -euo pipefail
 
 source $DOTFILES/scripts/core/main.sh 
 
-##? Checks for command availability
- #? 0.2.1
+##? Checks for available commands, config files, etc.
+ #? 0.3.0
 ##?
 ##? Usage:
 ##?    health
@@ -14,13 +14,39 @@ eval_docopts "$@"
 
 CODE=0
 
+function main() {
+
+  header "CLIs"
+  check_commands "git zsh tmux nvim fasd ruby python ag"
+
+  if is_osx; then
+    echo
+    header "GNU commands"
+    check_gnu_commands "sed grep" true
+  fi
+
+  echo
+  header "Submodules"
+  check_file "$DOTFILES/modules/dotbot/.git" "dotbot"
+  check_file "$DOTFILES/modules/zplug/.git" "zplug"
+
+  echo
+  header "Local git"
+  check_file "$DOTFILES/local/gitconfig" "config"
+
+  echo
+  header "dot command"
+  check_commands "dot"
+
+}
+
 function check_command_available() {
   local cmd="$1"
   if command_exists "$cmd"; then
     success "$cmd"
   else
     error "$cmd"
-    CODE=$(($CODE + 1))
+    inc_error
   fi
 }
 
@@ -48,13 +74,20 @@ function check_gnu_commands() {
   done
 }
 
-header "CLIs"
-check_commands "git zsh tmux nvim fasd ruby python ag"
+function check_file() {
+  local path="$1"
+  local name="$2"
+  if is_file "$path"; then
+    success "$name"
+  else
+    error "$name"
+    inc_error
+  fi
+}
 
-if is_osx; then
-  echo
-  header "GNU commands"
-  check_gnu_commands "sed grep" true
-fi
+function inc_error() {
+  CODE=$(($CODE + 1))
+}
 
+main "$@"
 exit $CODE
