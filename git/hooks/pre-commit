@@ -114,12 +114,13 @@ function match_filename() {
 function check_conflict() {
 	local files="$1"
 
-	local res=$(echo "$files" | xargs egrep '^[><=]{7}( |$)' -H -I --line-number && echo 0 || echo 1)
-	
-	if [ $res == 0 ]; then
-		error "$file still has unresolved conflicts"
-	    exit 5
-	fi
+	for file in $(echo "$files"); do
+		local res=$(echo "$file" | egrep '^[><=]{7}( |$)' -H -I --line-number && echo 0 || echo 1)
+		if [ $res == 0 ]; then
+			error "$file still has unresolved conflicts"
+		    exit 5
+		fi
+	done
 }
 
 function not_commited_msg() {

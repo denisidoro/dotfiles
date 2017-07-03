@@ -5,7 +5,7 @@ set -euo pipefail
 source $DOTFILES/scripts/core/main.sh 
 
 ##? Checks for available commands, config files, etc.
- #? 0.4.0
+ #? 0.4.1
 ##?
 ##? Usage:
 ##?    health
@@ -17,21 +17,21 @@ CODE=0
 function main() {
 
   header "Languages and versioning"
-  check_commands "git ruby python"
+  check_commands "ruby python git"
 
   echo
   header "Shell"
-  check_commands "git zsh tmux fasd ag"
-
-  echo
-  header "Editors"
-  check_commands "vim nvim emacs"
+  check_commands "zsh tmux fasd ag"
 
   if is_osx; then
     echo
     header "GNU commands"
     check_gnu_commands "sed grep" true
   fi
+
+  echo
+  header "Editors"
+  check_commands "vim nvim emacs"
 
   echo
   header "Submodules"
