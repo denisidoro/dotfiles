@@ -3,19 +3,78 @@
 set -euo pipefail
 
 source $DOTFILES/scripts/core/main.sh 
-source $DOTFILES/scripts/aux/install.sh 
-source $DOTFILES/scripts/aux/setup.sh 
+source $DOTFILES/scripts/environment/core.sh
 
-##? Dotfiles setup
- #? 0.1.0
+##? Updates submodules, dotfiles and attempts to do some setup
+ #? 0.2.2
 ##?
 ##? Usage:
 ##?    dotfiles
 
 eval_docopts "$@"
 
-  update_dotfiles_prepare;
-  update_dotfiles_common;
-  is_osx && { update_dotfiles_osx; }
-  update_dotfiles_finish;
+DOTBOT_DIR="modules/dotbot"
+DOTBOT_BIN="bin/dotbot"
 
+function main() {
+	update_dotfiles_pre;
+	update_dotfiles_common;
+	is_osx && { update_dotfiles_osx; }
+	update_dotfiles_pos;
+}
+
+update_dotfiles_pre() {
+
+  echo "Setting folder architecture..."
+  mkdir -p "$DOTFILES/local/bin"
+  pushd . > /dev/null
+  cd $DOTFILES
+
+  echo "Attempting to update submodules..."
+  (git pull && git submodule init && git submodule update && git submodule status && \
+    cd "${DOTFILES}" && git submodule update --init --recursive "${DOTBOT_DIR}" || true)
+
+}
+
+update_dotfiles() {
+
+  CONFIG="$DOTFILES/scripts/db/$1"
+  shift
+
+  echo
+  "${DOTFILES}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${DOTFILES}" -c "${CONFIG}" "${@}" 
+  echo
+
+}
+
+update_dotfiles_pos() {
+
+  # Neovim
+  echo "Installing neovim plugins..."
+  nvim +silent +PlugInstall +qall > /dev/null || true
+
+  # Tmux
+  echo "Installing tpm plugins..."
+  export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
+  bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/install_plugins" > /dev/null || true
+  bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/update_plugins" all > /dev/null || true
+
+  # ZPlug
+  echo "Installing ZPlug plugins..."
+  zplug install 2> /dev/null || true
+
+  # Cleanup
+  popd > /dev/null
+
+}
+
+update_dotfiles_common() {
+  update_dotfiles "conf.yaml"
+}
+
+update_dotfiles_osx() {
+  echo "Adding necessary files for OSX"
+  update_dotfiles "conf.osx.yaml"
+}
+
+main "$@"

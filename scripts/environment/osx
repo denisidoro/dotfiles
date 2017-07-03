@@ -3,11 +3,10 @@
 set -euo pipefail
 
 source $DOTFILES/scripts/core/main.sh 
-source $DOTFILES/scripts/aux/install.sh 
-source $DOTFILES/scripts/aux/setup.sh 
+source $DOTFILES/scripts/environment/core.sh 
 
-##? OSX env
- #? 0.1.0
+##? Setups an OSX environment
+ #? 0.1.1
 ##?
 ##? Usage:
 ##?    osx apps
@@ -15,7 +14,7 @@ source $DOTFILES/scripts/aux/setup.sh
 
 eval_docopts "$@"
 
-    $apps && { 
+  $apps && { 
     cask_install "cask-apps"; 
   };
   $dev && {

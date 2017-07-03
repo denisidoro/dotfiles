@@ -4,8 +4,8 @@ set -euo pipefail
 
 source $DOTFILES/scripts/core/main.sh 
 
-##? Healthcheck
- #? 0.1.0
+##? Checks for command availability
+ #? 0.2.1
 ##?
 ##? Usage:
 ##?    health
@@ -34,23 +34,27 @@ function check_gnu_command_available() {
   check_command_available "$cmd"
 }
 
-function check() {
+function check_commands() {
   local cmds="$1"
-  local gnu="${2:-false}"
   for cmd in $cmds; do
-    if $gnu; then
-      check_gnu_command_available "$cmd"
-    else
       check_command_available "$cmd"
-    fi
   done
 }
 
-header "Can find required commands?"
-check "git zsh tmux nvim fasd ruby python ag"
+function check_gnu_commands() {
+  local cmds="$1"
+  for cmd in $cmds; do
+      check_gnu_command_available "$cmd"
+  done
+}
 
-echo
-header "Can find gnu commands?"
-check "sed grep" true
+header "CLIs"
+check_commands "git zsh tmux nvim fasd ruby python ag"
+
+if is_osx; then
+  echo
+  header "GNU commands"
+  check_gnu_commands "sed grep" true
+fi
 
 exit $CODE

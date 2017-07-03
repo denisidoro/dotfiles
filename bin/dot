@@ -20,6 +20,13 @@ function list_paths_for_context() {
 	echo "$paths" | grep "$context/"
 }
 
+function list_commands_for_context() {
+	local paths="$1"
+	local context="$2"
+	local paths="$(echo "$paths" | grep "$context/")"
+	for file in $paths; do echo $(basename "$file"); done
+}
+
 function find_match() {
 	local candidates="$1"
 	local query="$2"
@@ -47,9 +54,9 @@ function find_command() {
 	local paths="$1"
 	local context="$2"
 	local query="$3"
-	  local commands=$(list_paths_for_context "$paths" "$context")
-	 find_match "$commands" "$query"
-	 CMD=$(basename $RESPONSE)
+	local commands=$(list_commands_for_context "$paths" "$context")
+	find_match "$commands" "$query"
+	CMD=$(basename $RESPONSE)
 }
 
 
