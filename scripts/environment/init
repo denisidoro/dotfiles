@@ -48,6 +48,16 @@ pushd . > /dev/null
 
 echo -e "\e[36mdenisidoro's dotfiles\e[0m\n"
 
+# Prompt confirmation
+echo "This script is untested. Use it at your own risk!"
+read -r -p "Do you want to continue? (Y/n) " response
+response=${response,,} 
+if [[ $response =~ ^(yes|y| ) ]] || [ -z $response ]; then
+  sudo echo "Proceeding with installation..."
+else
+  exit
+fi
+
 set +e
 install_brew_if_on_osx
 install_git_and_python
@@ -61,16 +71,6 @@ elif [ -f "$DOTFILES" ]; then
 	clone_repo
 else 
 	echo "No .dotfiles folder found. Installing dependencies and cloning .dotfiles..."
-
-	# Prompt confirmation
-	echo "This script is untested. Use it at your own risk!"
-	read -r -p "Do you want to continue? (Y/n) " response
-	response=${response,,} 
-	if [[ $response =~ ^(yes|y| ) ]] || [ -z $response ]; then
-	  sudo echo "Proceeding with installation..."
-	else
-	  exit
-	fi
 	clone_repo
 fi
 
