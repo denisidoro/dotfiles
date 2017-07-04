@@ -64,7 +64,7 @@ function find_command() {
 if [[ $# -eq 0 ]]; then
 
 	paths="$(list_command_paths)"
-	list_contexts "$pathsdo"
+	list_contexts "$paths"
 
 elif [[ $# -eq 1 ]]; then
 
