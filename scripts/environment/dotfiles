@@ -6,7 +6,7 @@ source $DOTFILES/scripts/core/main.sh
 source $DOTFILES/scripts/environment/core.sh
 
 ##? Updates submodules, dotfiles and attempts to do some setup
- #? 0.2.4
+ #? 0.3.0
 ##?
 ##? Usage:
 ##?    dotfiles
@@ -88,7 +88,8 @@ update_dotfiles_linux() {
 }
 
 update_dotfiles_arm() {
-  echo "No custom config for ARM yet"
+  echo "Adding necessary files for ARM"
+  update_dotfiles "conf.arm.yaml"
 }
 
 main "$@"
