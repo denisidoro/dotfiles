@@ -6,25 +6,30 @@ export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 source "$DOTFILES/scripts/core/main.sh"
 
 function list_command_paths() {
-	find "$DOTFILES/scripts" -maxdepth 2 -executable -type f | grep -v core | sort
+	find "$DOTFILES/scripts" -maxdepth 2 -executable -type f \
+		| grep -v core \
+		| sort
 }
 
 function list_contexts() {
 	local paths="$1"
-	for file in $paths; do echo $(basename $(dirname "$file")); done | uniq
+	echo "$paths" \
+		| xargs -I % sh -c 'basename $(dirname %)' \
+		| uniq
 }
 
 function list_paths_for_context() {
-	local paths="$1"
-	local context="$2"
-	echo "$paths" | grep "$context/"
+	local paths="$1"; local context="$2"
+	echo "$paths" \
+		| grep "$context/"
 }
 
 function list_commands_for_context() {
-	local paths="$1"
-	local context="$2"
-	local paths="$(echo "$paths" | grep "$context/")"
-	for file in $paths; do echo $(basename "$file"); done
+	local paths="$1"; local context="$2"
+
+	echo "$paths" \
+		| grep "$context/" \
+		| xargs basename
 }
 
 function find_match() {
@@ -44,30 +49,41 @@ function find_match() {
 }
 
 function find_context() {
-	local contexts="$1"
-	local query="$2"
+	local contexts="$1"; local query="$2"
 	find_match "$contexts" "$query"
 	CTX=$RESPONSE
 }
 
 function find_command() {
-	local paths="$1"
-	local context="$2"
-	local query="$3"
+	local paths="$1"; local context="$2"; local query="$3"
 	local commands=$(list_commands_for_context "$paths" "$context")
 	find_match "$commands" "$query"
 	CMD=$(basename $RESPONSE)
 }
 
+if [[ $# -eq 0 ]]; then
 
- context_query="$1"
- cmd_query="$2"
- paths="$(list_command_paths)"
- contexts="$(list_contexts "$paths")"
- find_context "$contexts" "$context_query"
-find_command "$paths" "$CTX" "$cmd_query"
+	paths="$(list_command_paths)"
+	list_contexts "$paths"
 
-shift
-shift
-bash "${DOTFILES}/scripts/${CTX}/${CMD}" "$@"
+elif [[ $# -eq 1 ]]; then
 
+	context_query="$1"
+	paths="$(list_command_paths)"
+	contexts="$(list_contexts "$paths")"
+	find_context "$contexts" "$context_query"
+	list_paths_for_context "$paths" "$CTX" | xargs basename
+
+elif [[ $# -gt 1 ]]; then
+
+	context_query="$1"; cmd_query="$2"
+	paths="$(list_command_paths)"
+	contexts="$(list_contexts "$paths")"
+	find_context "$contexts" "$context_query"
+	find_command "$paths" "$CTX" "$cmd_query"
+
+	shift
+	shift
+	bash "${DOTFILES}/scripts/${CTX}/${CMD}" "$@"
+
+fi
