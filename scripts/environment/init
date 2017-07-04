@@ -48,8 +48,10 @@ pushd . > /dev/null
 
 echo -e "\e[36mdenisidoro's dotfiles\e[0m\n"
 
+set +e
 install_brew_if_on_osx
 install_git_and_python
+set -e
 
 if [ -f "$DOTFILES/dot" ]; then :
 elif [ -f "$DOTFILES" ]; then
