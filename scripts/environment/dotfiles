@@ -6,7 +6,7 @@ source $DOTFILES/scripts/core/main.sh
 source $DOTFILES/scripts/environment/core.sh
 
 ##? Updates submodules, dotfiles and attempts to do some setup
- #? 0.2.3
+ #? 0.2.4
 ##?
 ##? Usage:
 ##?    dotfiles
@@ -17,12 +17,12 @@ DOTBOT_DIR="modules/dotbot"
 DOTBOT_BIN="bin/dotbot"
 
 function main() {
-	update_dotfiles_pre;
-	update_dotfiles_common;
-	is_osx && { update_dotfiles_osx; }
+  update_dotfiles_pre;
+  update_dotfiles_common;
+  is_osx && { update_dotfiles_osx; }
   is_linux && { update_dotfiles_linux; }
   is_arm && { update_dotfiles_arm; }
-	update_dotfiles_pos;
+  update_dotfiles_pos;
 }
 
 update_dotfiles_pre() {
@@ -51,19 +51,23 @@ update_dotfiles() {
 
 update_dotfiles_pos() {
 
+  set +e
+
   # Neovim
   echo "Installing neovim plugins..."
-  nvim +silent +PlugInstall +qall > /dev/null || true
+  nvim +silent +PlugInstall +qall > /dev/null
 
   # Tmux
   echo "Installing tpm plugins..."
   export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
-  bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/install_plugins" > /dev/null || true
-  bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/update_plugins" all > /dev/null || true
+  bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/install_plugins" > /dev/null
+  bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/update_plugins" all > /dev/null
 
   # ZPlug
   echo "Installing ZPlug plugins..."
-  zplug install 2> /dev/null || true
+  zplug install 2> /dev/null
+
+  set -e
 
   # Cleanup
   popd > /dev/null

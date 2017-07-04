@@ -3,8 +3,14 @@ set -euo pipefail
 
 export DOTFILES="${DOTFILES:-HOME/.dotfiles}"
 
+##? Setups the environment
+ #? 0.1.1
+##?
+##? Usage:
+##?    init
+
 dot() {
-  "$DOTFILES/dot" "$@"
+  "$DOTFILES/bin/dot" "$@"
 }
 
 command_exists() {
@@ -41,7 +47,9 @@ clone_repo() {
 pushd . > /dev/null
 
 echo -e "\e[36mdenisidoro's dotfiles\e[0m\n"
-cd "$DOTFILES"
+
+install_brew_if_on_osx
+install_git_and_python
 
 if [ -f "$DOTFILES/dot" ]; then :
 elif [ -f "$DOTFILES" ]; then
@@ -61,12 +69,13 @@ else
 	else
 	  exit
 	fi
-
-	install_brew_if_on_osx
-	install_git_and_python
 	clone_repo
-        dot environment dependencies
 fi
+
+cd "$DOTFILES"
+
+# install necessary dependencies
+dot environment dependencies
 
 # invoke dotfiles symlinking
 dot environment dotfiles

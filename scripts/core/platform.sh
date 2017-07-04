@@ -16,10 +16,6 @@ function is_arm {
   [[ $(uname -u | grep -q "armv") -ne 0 ]] 
 }
 
-function dot() {
-  "$DOTFILES/dot" "$@"
-}
-
 function get_package_manager() {
   case "$(uname -s)" in
     Darwin)
@@ -34,3 +30,7 @@ function get_package_manager() {
   esac
 }
 
+if ! command_exists dot; then
+  function dot() { "$DOTFILES/bin/dot" "$@"; }
+  export -f dot
+fi
