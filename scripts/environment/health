@@ -1,0 +1,129 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source $DOTFILES/scripts/core/main.sh 
+
+##? Checks for available commands, config files, etc.
+ #? 0.5.0
+##?
+##? Usage:
+##?    health
+
+eval_docopts "$@"
+
+CODE=0
+
+function main() {
+
+  header "Languages and versioning"
+  check_commands "ruby python git"
+
+  echo
+  header "Shell"
+  check_commands "zsh tmux fasd ag tmuxinator fzf"
+  check_dir "$HOME/.tmux/plugins/tpm" "tpm"
+
+  if is_osx; then
+    echo
+    header "GNU commands"
+    check_gnu_commands "sed grep" true
+  fi
+
+  echo
+  header "Editors"
+  check_commands "vim nvim emacs"
+  check_file "$HOME/.local/share/nvim/site/autoload/plug.vim" "vim-plug"
+
+  echo
+  header "Submodules"
+  check_file "$DOTFILES/modules/dotbot/.git" "dotbot"
+  check_file "$DOTFILES/modules/zplug/.git" "zplug"
+
+  echo
+  header "Local git"
+  check_file "$DOTFILES/local/gitconfig" "config"
+
+  echo
+  header "dotfiles"
+  check_env "DOTFILES"
+  check_commands "dot"
+
+}
+
+function check_command_available() {
+  local cmd="$1"
+  if command_exists "$cmd"; then
+    success "$cmd"
+  else
+    inc_error "$cmd"
+  fi
+}
+
+function check_gnu_command_available() {
+  local cmd
+  if is_osx; then
+    cmd="g$1"
+  else
+    cmd="$1"
+  fi
+  check_command_available "$cmd"
+}
+
+function check_commands() {
+  local cmds="$1"
+  for cmd in $cmds; do
+      check_command_available "$cmd"
+  done
+}
+
+function check_gnu_commands() {
+  local cmds="$1"
+  for cmd in $cmds; do
+      check_gnu_command_available "$cmd"
+  done
+}
+
+function check_vim_plug() {
+  if is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
+    success "vim-plug"
+  else
+    error "vim-plug"
+  fi
+}
+
+function check_file() {
+  local path="$1"
+  local name="$2"
+  if is_file "$path"; then
+    success "$name"
+  else
+    inc_error "$name"
+  fi
+}
+
+function check_dir() {
+  local path="$1"
+  local name="$2"
+  if is_dir "$path"; then
+    success "$name"
+  else
+    inc_error "$name"
+  fi
+}
+
+function check_env() {
+  set +u
+  [[ -z "${!1}" ]] && {
+    inc_error "\$$1"
+  } || success "\$$1"
+  set -u
+}
+
+function inc_error() {
+  error "$1"
+  CODE=$(($CODE + 1))
+}
+
+main "$@"
+exit $CODE

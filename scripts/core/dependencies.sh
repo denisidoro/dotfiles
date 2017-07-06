@@ -11,7 +11,7 @@ function script_dir() {
 function read_dependencies() {
 
   local file
-  file=$(rsrc "dependencies.txt")
+  file=$(rsrc "db/dependencies.txt")
   echo "$(cat "$file")\n\n"
 }
 

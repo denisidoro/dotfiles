@@ -5,7 +5,15 @@ function command_exists() {
 }
 
 function is_osx {
-  [[ `uname -s` == "Darwin" ]]
+  [[ $(uname -s) == "Darwin" ]]
+}
+
+function is_linux {
+  [[ $(uname -s) == "Linux" ]]
+}
+
+function is_arm {  
+  [[ $(uname -u | grep -q "armv") -ne 0 ]] 
 }
 
 function get_package_manager() {
@@ -22,3 +30,7 @@ function get_package_manager() {
   esac
 }
 
+if ! command_exists dot; then
+  function dot() { "$DOTFILES/bin/dot" "$@"; }
+  export -f dot
+fi

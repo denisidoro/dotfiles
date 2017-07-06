@@ -1,6 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+export DOTFILES="${DOTFILES:-HOME/.dotfiles}"
+
+##? Setups the environment
+ #? 0.1.1
+##?
+##? Usage:
+##?    init
+
+dot() {
+  "$DOTFILES/bin/dot" "$@"
+}
+
 command_exists() {
   type "$1" &> /dev/null ;
 }
@@ -32,46 +44,44 @@ clone_repo() {
 	git clone https://github.com/denisidoro/dotfiles.git "$DOTFILES"
 }
 
-install_dependencies() {
-	bash "$INSTALL_COMMAND" "dependencies"
-}
-
 pushd . > /dev/null
-
-export DOTFILES="$HOME/.dotfiles"
-export INSTALL_COMMAND="$DOTFILES/scripts/install"
 
 echo -e "\e[36mdenisidoro's dotfiles\e[0m\n"
 
-if [ -f "$INSTALL_COMMAND" ]; then :
+# Prompt confirmation
+echo "This script is untested. Use it at your own risk!"
+read -r -p "Do you want to continue? (Y/n) " response
+response=${response,,} 
+if [[ $response =~ ^(yes|y| ) ]] || [ -z $response ]; then
+  sudo echo "Proceeding with installation..."
+else
+  exit
+fi
+
+set +e
+install_brew_if_on_osx
+install_git_and_python
+set -e
+
+if [ -f "$DOTFILES/dot" ]; then :
 elif [ -f "$DOTFILES" ]; then
 	echo "Backing up existing .dotfiles folder and cloning new .dotfiles..."
-        local old_dotfiles=$(mktemp -u -d "$DOTFILES_XXXX")
+        local old_dotfiles=$(mktemp -u -d "${DOTFILES}_XXXX")
 	mv "$DOTFILES" "$old_dotfiles"
 	clone_repo
 else 
 	echo "No .dotfiles folder found. Installing dependencies and cloning .dotfiles..."
-
-	# Prompt confirmation
-	echo "This script is untested. Use it at your own risk!"
-	read -r -p "Do you want to continue? (Y/n) " response
-	response=${response,,} 
-	if [[ $response =~ ^(yes|y| ) ]] || [ -z $response ]; then
-	  sudo echo "Proceeding with installation..."
-	else
-	  exit
-	fi
-
-	install_brew_if_on_osx
-	install_git_and_python
 	clone_repo
-	install_dependencies
 fi
 
+cd "$DOTFILES"
+
+# install necessary dependencies
+dot environment dependencies
+
 # invoke dotfiles symlinking
-echo "Updating dotfiles..."
-cd "$DOTFILES/scripts"
-bash "$INSTALL_COMMAND" "dotfiles"
+dot environment dotfiles
 
 # cleanup
 popd > /dev/null
+

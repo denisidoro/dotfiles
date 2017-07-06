@@ -1,0 +1,129 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source $DOTFILES/scripts/core/main.sh 
+source $DOTFILES/scripts/environment/core.sh 
+
+##? Installs CLI dependencies
+ #? 0.3.2
+##?
+##? Usage:
+##?    dependencies
+
+eval_docopts "$@"
+
+function main() {
+	is_osx && gnu_install; 
+	setup; 
+}
+
+function setup_apt() {
+
+  # Add commons 
+  sudo apt-get install software-properties-common
+
+  # Add third-party repositories
+  for repository in $(from_dependencies "apt-repositories")
+  do
+    sudo add-apt-repository $repository -y
+  done
+  sudo apt-get update -y
+  sudo apt-get upgrade -y
+
+  # Install essential commands
+  for package in $(from_dependencies "brew-apt" "apt")
+  do 
+    sudo apt-get install -y $package
+  done
+
+}
+
+function setup_brew() {
+
+  # Install brew
+  if ! command_exists brew ; then
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  fi
+
+  # Install essential commands
+  for package in $(from_dependencies "brew-apt" "brew")
+  do
+    brew install $package
+  done
+
+}
+
+function install_fzf() {
+  echo "Installing fzf..."
+  if ! command_exists fzf; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+    $HOME/.fzf/install
+  fi
+}
+
+function install_vim_plug() {
+  echo "Installing vim-plug..."
+  if ! is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
+    curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  fi
+}
+
+function install_tpm() {
+  echo "Installing tpm..."
+  if ! is_dir $HOME/.tmux/plugins/tpm; then
+    git clone https://github.com/tmux-plugins/tpm --depth=1 $HOME/.tmux/plugins/tpm
+  fi
+}
+
+function install_tmuxinator() {
+  echo "Installing tmuxinator..."
+  if ! command_exists tmuxinator; then
+    gem install tmuxinator
+  fi
+}
+
+function gnu_install() {
+  if ! command_exists ggrep; then
+    brew tap homebrew/dupes
+    brew install binutils diffutils ed findutils gawk gnu-indent gnu-sed gnu-tar gnu-which gnutls grep gzip screen watch  wget && brew install wdiff --with-gettext
+    brew install bash emacs m4 make nano file-formula git less openssh rsync unzip
+  fi
+}
+
+function setup() {
+
+  package_manager=$(get_package_manager)
+  dependencies=$(read_dependencies)
+
+  if [[ -z "$package_manager" ]]; then
+    echo "Unable to find compatible install commands for your platform. Aborting..."
+    exit 1
+  else
+    echo "Detected package manager: $package_manager"
+  fi
+
+  # Invoke platform-specific setup
+  set +e
+  case $package_manager in
+    brew) setup_brew;;
+    apt) setup_apt;;
+  esac
+  set -e
+
+  install_fzf
+  install_vim_plug
+  install_tpm
+  install_tmuxinator
+
+  # Setup dotfiles
+  cd $DOTFILES
+  dot env dotfiles
+
+  # Cleanup
+  cd $HOME
+
+}
+
+main "$@"

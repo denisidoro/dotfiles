@@ -2,6 +2,8 @@
 .zshrc-secrets
 local.properties
 *secret*
+*credential*
+*password*
 
 # OS
 .Trashes
@@ -39,6 +41,10 @@ Powerline_*.cache
 *.o
 *.so
 *.pyc
+
+# Package managers
+node_modules/
+brew/
 
 # Packages
 *.7z
