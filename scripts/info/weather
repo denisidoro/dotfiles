@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source $DOTFILES/scripts/core/main.sh 
+
+##? Shows weather info
+ #? 0.1.0
+##?
+##? Usage:
+##?    weather [<location>]
+
+eval_docopts "$@"
+
+is_empty $location \
+	&& curl -s "wttr.in" \
+	|| curl -s "wttr.in/$location"
