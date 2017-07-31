@@ -14,7 +14,7 @@ function list_command_paths() {
 function list_contexts() {
 	local paths="$1"
 	echo "$paths" \
-		| xargs -I % sh -c 'basename $(dirname %)' \
+		| xargs -I % -d '\n' sh -c 'basename $(dirname %)' \
 		| uniq
 }
 
@@ -29,7 +29,7 @@ function list_commands_for_context() {
 
 	echo "$paths" \
 		| grep "$context/" \
-		| xargs basename
+		| xargs -I % -d '\n' basename "%"
 }
 
 function find_match() {
@@ -72,7 +72,7 @@ elif [[ $# -eq 1 ]]; then
 	paths="$(list_command_paths)"
 	contexts="$(list_contexts "$paths")"
 	find_context "$contexts" "$context_query"
-	list_paths_for_context "$paths" "$CTX" | xargs basename
+	list_paths_for_context "$paths" "$CTX" | xargs -I % -d '\n' basename "%"
 
 elif [[ $# -gt 1 ]]; then
 

@@ -12,6 +12,6 @@ source $DOTFILES/scripts/core/main.sh
 
 eval_docopts "$@"
 
-is_empty $location \
+is_empty ${location:-""} \
 	&& curl -s "wttr.in" \
 	|| curl -s "wttr.in/$location"
