@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source $DOTFILES/scripts/core/main.sh 
+
+##? Encrypts content
+ #? 0.1.0
+##?
+##? Usage:
+##?    encrypt <content> [--algorithm <algo>]
+##?
+##? Options:
+##?    -a --algorithm <algo>   Encryption algorithm [default: 0]
+##?
+##? Examples:
+##?    encrypt "foo bar"
+##?    encrypt "foo bar" -a 0
+
+eval_docopts "$@"
+
+function md5_fn {
+	if command_exists md5sum; then
+		echo "$1" | md5sum
+	elif command_exists md5; then
+		echo "$1" | md5
+	else
+		echo "No md5 algorithm available"
+		exit 2
+	fi
+}
+
+function algo_0() {
+	md5_fn "$1" | base64 | cut -c -16
+}
+
+function algo_1() {
+	md5_fn "$1"
+}
+
+case "$algorithm" in 
+	"0") algo_fn="algo_0";; 
+	"1") algo_fn="algo_1";; 
+	*) echo "Invalid algorithm"; exit 1;;
+esac 
+
+$algo_fn "$content"
