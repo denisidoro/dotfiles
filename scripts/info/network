@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source $DOTFILES/scripts/core/main.sh 
+
+##? Shows network info
+ #? 0.1.0
+##?
+##? Usage:
+##?    info [--fast]
+##?
+##? Options:
+##?     --fast   Fast response with the external IP only
+
+eval_docopts "$@"
+
+$fast \
+	&& dig +short myip.opendns.com @resolver1.opendns.com \
+	|| curl -s ifconfig.me/all.json | jq
