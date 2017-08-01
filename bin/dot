@@ -61,10 +61,39 @@ function find_command() {
 	CMD=$(basename $RESPONSE)
 }
 
-if [[ $# -eq 0 ]]; then
+function has_fzf() {
+	command_exists fzf
+}
 
+function doc() {
+	local paths="$1"
+	local match="$2"
+	local file="$(echo "$paths" | grep $(echo "$match" | tr " " "/"))"
+	extract_help "$file"
+}
+
+function remove_colors() {
+	 echo "$1" | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"
+}
+
+if [[ $# -eq 0 ]]; then
+	
 	paths="$(list_command_paths)"
-	list_contexts "$paths"
+
+	if has_fzf; then
+		match="$(remove_colors "$(echo "$paths" \
+			| xargs -I % sh -c 'tput setaf 1; printf "$(basename $(dirname %))"; printf " "; tput setaf 2; echo "$(basename %)"' \
+			| fzf-tmux --height 50% --preview 'dot --match {}')")"
+		printf "$match " 
+		read args
+		if is_empty "$args"; then
+			dot $match
+		else
+			dot $match "$args"
+		fi
+	else
+		list_contexts "$paths"
+	fi
 
 elif [[ $# -eq 1 ]]; then
 
@@ -76,8 +105,14 @@ elif [[ $# -eq 1 ]]; then
 
 elif [[ $# -gt 1 ]]; then
 
-	context_query="$1"; cmd_query="$2"
 	paths="$(list_command_paths)"
+
+	if [[ "$1" = "--match" ]]; then
+		doc "$paths" "$(remove_colors "$2")"
+		exit 0
+	fi
+
+	context_query="$1"; cmd_query="$2"
 	contexts="$(list_contexts "$paths")"
 	find_context "$contexts" "$context_query"
 	find_command "$paths" "$CTX" "$cmd_query"
