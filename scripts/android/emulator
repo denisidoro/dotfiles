@@ -6,14 +6,15 @@ source $DOTFILES/scripts/core/main.sh
 source $DOTFILES/scripts/environment/core.sh 
 
 ##? Performs operation on an Android emulator
- #? 0.2.0
+ #? 0.2.1
 ##?
 ##? Usage:
 ##?    emulator [list]
 ##?    emulator start [--newest]
 ##?
 ##? Options:
-##?     prop <property>       Displays a property
+##?    start          Prompts for an emulator and launch it
+##?    start newest   Starts the emulator with the most recent API
 
 eval_docopts "$@"
 
