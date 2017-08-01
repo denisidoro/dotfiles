@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source $DOTFILES/scripts/core/main.sh 
+
+##? Creates a QR code with the specified content
+ #? 0.1.0
+##?
+##? Usage:
+##?    qr <content>
+##?
+##? Examples:
+##?    qr foo
+
+eval_docopts "$@"
+
+echo "$content" | curl -F-=\<- qrenco.de

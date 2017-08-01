@@ -10,7 +10,6 @@ source $DOTFILES/scripts/core/main.sh
 ##? Usage:
 ##?    file <path>
 ##?
-##?
 ##? Examples:
 ##?    file ./foo.txt
 
