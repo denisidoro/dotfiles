@@ -44,6 +44,13 @@ clone_repo() {
 	git clone https://github.com/denisidoro/dotfiles.git "$DOTFILES"
 }
 
+# Displays help if requested
+if [[ ${1:-""} = "-h" ]]; then
+	grep "^##?" "$0" | cut -c 5-
+	exit 0
+fi
+
+# Pushes the current directory to the stack
 pushd . > /dev/null
 
 echo -e "\e[36mdenisidoro's dotfiles\e[0m\n"

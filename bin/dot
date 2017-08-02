@@ -4,6 +4,7 @@ IFS=$' \n\t'
 
 export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 source "$DOTFILES/scripts/core/main.sh"
+export CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 
 function list_command_paths() {
 	find "$DOTFILES/scripts" -maxdepth 2 -executable -type f \
@@ -61,33 +62,29 @@ function find_command() {
 	CMD=$(basename $RESPONSE)
 }
 
-function has_fzf() {
-	command_exists fzf
-}
-
-function remove_colors() {
-	 echo "$1" | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"
-}
-
-if [[ $# -eq 0 ]]; then
-	
-	paths="$(list_command_paths)"
-
-	if has_fzf; then
-		match="$(remove_colors "$(echo "$paths" \
-			| xargs -I % sh -c 'tput setaf 1; printf "$(basename $(dirname %))"; printf " "; tput setaf 2; echo "$(basename %)"' \
-			| fzf-tmux --height 50% --preview 'dot {} -h')")"
-		printf "$match " 
-		read args
-		if is_empty "$args"; then
-			dot $match
-		else
-			dot $match "$args"
-		fi
+function fzf_prompt() {
+	local paths="$1"
+	match="$(echo "$paths" \
+			| xargs -I % sh -c 'echo "$(basename $(dirname %)) $(basename %)"' \
+			| fzf-tmux --height 50% --preview 'dot $(echo {} | cut -d" " -f 1) $(echo {} | cut -d" " -f 2) -h')"
+	printf "$match " 
+	read args
+	if is_empty "$args"; then
+		dot $match
 	else
-		list_contexts "$paths"
+		dot $match "$args"
 	fi
+}
 
+# Shows available contexts
+# or prompts for a command if fzf is installed
+if [[ $# -eq 0 ]]; then
+
+	command_exists fzf \
+		&& fzf_prompt "$(list_command_paths)" \
+		|| list_contexts "$(list_command_paths)"
+
+# Shows available commands for a given context
 elif [[ $# -eq 1 ]]; then
 
 	context_query="$1"
@@ -96,15 +93,10 @@ elif [[ $# -eq 1 ]]; then
 	find_context "$contexts" "$context_query"
 	list_paths_for_context "$paths" "$CTX" | xargs -I % -d '\n' basename "%"
 
+# Executes a command
 elif [[ $# -gt 1 ]]; then
 
 	paths="$(list_command_paths)"
-
-	if [[ "$2" = "-h" ]]; then
-		doc "$paths" "$(remove_colors "$1")" || echo "No documentation available"
-		exit 0
-	fi
-
 	context_query="$1"; cmd_query="$2"
 	contexts="$(list_contexts "$paths")"
 	find_context "$contexts" "$context_query"
@@ -112,6 +104,6 @@ elif [[ $# -gt 1 ]]; then
 
 	shift
 	shift
-	bash "${DOTFILES}/scripts/${CTX}/${CMD}" "$@"
+	"${DOTFILES}/scripts/${CTX}/${CMD}" "$@"
 
 fi
