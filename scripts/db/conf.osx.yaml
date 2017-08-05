@@ -9,3 +9,4 @@
     ~/.khdrc: bindings/khd/khdrc
     ~/.chunkwmrc: wm/chunkwm/chunkwmrc
     ~/Library/Preferences/kitty/kitty.conf: shell/kitty/kitty.conf
+    ~/Library/Application\ Support/Übersicht/widgets/nerdbar.widget: wm/nerdbar
