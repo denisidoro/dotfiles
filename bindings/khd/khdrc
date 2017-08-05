@@ -2,7 +2,7 @@
 cmd + alt + ctrl - r : khd -e "reload"
 
 # open terminal, blazingly fast compared to iTerm/Hyper
-cmd - return : open -na /Applications/iTerm.app
+cmd - return : open -na /Applications/kitty.app
 
 # focus window
 alt - h : chunkc tiling::window --focus west
@@ -10,8 +10,8 @@ alt - j : chunkc tiling::window --focus south
 alt - k : chunkc tiling::window --focus north
 alt - l : chunkc tiling::window --focus east
 
-cmd - j : chunkc tiling::window --focus prev
-cmd - k : chunkc tiling::window --focus next
+# cmd - j : chunkc tiling::window --focus prev
+# cmd - k : chunkc tiling::window --focus next
 
 # equalize size of windows
 shift + alt - 0 : chunkc tiling::desktop --equalize
@@ -29,11 +29,11 @@ shift + cmd - k : chunkc tiling::window --warp north
 shift + cmd - l : chunkc tiling::window --warp east
 
 # move floating windows / windows on a floating space
-shift + alt - up     : chunkc tiling::window --warp-floating fullscreen
-shift + alt - left   : chunkc tiling::window --warp-floating left
-shift + alt - right  : chunkc tiling::window --warp-floating right
-shift + cmd - left   : chunkc tiling::window --warp-floating top-left
-shift + cmd - right  : chunkc tiling::window --warp-floating top-right
+# shift + alt - up     : chunkc tiling::window --warp-floating fullscreen
+# shift + alt - left   : chunkc tiling::window --warp-floating left
+# shift + alt - right  : chunkc tiling::window --warp-floating right
+# shift + cmd - left   : chunkc tiling::window --warp-floating top-left
+# shift + cmd - right  : chunkc tiling::window --warp-floating top-right
 shift + ctrl - left  : chunkc tiling::window --warp-floating bottom-left
 shift + ctrl - right : chunkc tiling::window --warp-floating bottom-right
 
