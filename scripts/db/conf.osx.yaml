@@ -6,5 +6,5 @@
 
 - link:
     ~/.config/bindings/karabiner.json: bindings/karabiner/karabiner.json
-    ~/.khrdc: bindings/khd/khdrc
+    ~/.khdrc: bindings/khd/khdrc
     ~/.chunkwmrc: wm/chunkwm/chunkwmrc
