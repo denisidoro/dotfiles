@@ -1,4 +1,4 @@
-# ===============
+ # ===============
 # fzf
 # ===============
 FZF_DEFAULT_OPTS='--height 40%'
@@ -9,7 +9,7 @@ FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # ===============
 # fasd 
 # ===============
-eval "$(fasd --init posix-alias zsh-hook 2> /dev/null)"
+eval "$(fasd --init posix-alias zsh-hook)"
 
 
 # ===============

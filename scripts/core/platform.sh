@@ -13,7 +13,7 @@ function is_linux {
 }
 
 function is_arm {  
-  [[ $(uname -u | grep -q "armv") -ne 0 ]] 
+  [[ $(uname -u | grep -q "armv" || 1) -eq 0 ]] 
 }
 
 function get_package_manager() {

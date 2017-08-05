@@ -2,6 +2,9 @@
 export DOTFILES=$HOME/.dotfiles
 export ZPLUG_HOME="${DOTFILES}/modules/zplug"
 
+# add folders to PATH
+export PATH="$DOTFILES/local/bin:$DOTFILES/bin:$PATH:/usr/local/bin"
+
 # load plugins
 source $DOTFILES/shell/plugins/zplug.zsh
 
@@ -23,8 +26,5 @@ source $DOTFILES/shell/bindings/fzf.zsh
 
 # load local custom config
 include $DOTFILES/local/zshrc
-
-# add folders to PATH
-export PATH="$DOTFILES/local/bin:$DOTFILES/bin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -1,4 +1,4 @@
-command: "echo $(/usr/local/bin/chunkc tiling::query --desktop id) - $(/usr/local/bin/chunkc tiling::query --window name)"
+command: "echo $(/usr/local/bin/chunkc tiling::query --desktop id) - $(/usr/local/bin/chunkc tiling::query --window owner)"
 
 refreshFrequency: 1000 # ms
 
