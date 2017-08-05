@@ -2,7 +2,7 @@
 cmd + alt + ctrl - r : khd -e "reload"
 
 # open terminal, blazingly fast compared to iTerm/Hyper
-cmd - return : open -na /Applications/Kitty.app
+cmd - return : open -na /Applications/iTerm.app
 
 # focus window
 alt - h : chunkc tiling::window --focus west
@@ -52,12 +52,12 @@ shift + alt - 6 : chunkc tiling::window --send-to-desktop 6
 shift + cmd - x : `id=$(chunkc get _last_active_desktop); chunkc tiling::window -d $id; khd -p "cmd + alt - $id" &> /dev/null`
 shift + cmd - z : chunkc tiling::window -d prev; khd -p "cmd + alt - z"
 shift + cmd - c : chunkc tiling::window -d next; khd -p "cmd + alt - c"
-shift + cmd - 1 : chunkc tiling::window -d 1; khd -p "cmd + alt - 1"
-shift + cmd - 2 : chunkc tiling::window -d 2; khd -p "cmd + alt - 2"
-shift + cmd - 3 : chunkc tiling::window -d 3; khd -p "cmd + alt - 3"
-shift + cmd - 4 : chunkc tiling::window -d 4; khd -p "cmd + alt - 4"
-shift + cmd - 5 : chunkc tiling::window -d 5; khd -p "cmd + alt - 5"
-shift + cmd - 6 : chunkc tiling::window -d 6; khd -p "cmd + alt - 6"
+shift + cmd - 1 : chunkc tiling::window -d 1; khd -p "alt - 1"
+shift + cmd - 2 : chunkc tiling::window -d 2; khd -p "alt - 2"
+shift + cmd - 3 : chunkc tiling::window -d 3; khd -p "alt - 3"
+shift + cmd - 4 : chunkc tiling::window -d 4; khd -p "alt - 4"
+shift + cmd - 5 : chunkc tiling::window -d 5; khd -p "alt - 5"
+shift + cmd - 6 : chunkc tiling::window -d 6; khd -p "alt - 6"
 
 # switch to last active desktop
 cmd + alt - x   : `id=$(chunkc get _last_active_desktop); khd -p "cmd + alt - $id" &> /dev/null`
@@ -121,6 +121,10 @@ alt - e : chunkc tiling::window --toggle split
 
 # float / unfloat window
 alt - t : chunkc tiling::window --toggle float
+
+# toggle sticky, float and resize to picture-in-picture size
+alt - s : chunkc tiling::window --toggle sticky;\
+          chunkc tiling::window --warp-floating pip-right
 
 # float next window to be tiled
 shift + alt - t : chunkc set window_float_next 1
