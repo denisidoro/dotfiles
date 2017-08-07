@@ -11,6 +11,8 @@ source $DOTFILES/scripts/environment/core.sh
 ##? Usage:
 ##?    matrix
 
+eval_docopts "$@"
+
 lines=$(tput lines)
 cols=$(tput cols)
 

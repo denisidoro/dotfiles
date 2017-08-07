@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -uo pipefail
+
+source $DOTFILES/scripts/core/main.sh 
+
+##? Manager window-manager-related features
+ #? 0.1.0
+##?
+##? Usage:
+##?    wm (start|stop)
+
+eval_docopts "$@"
+
+if $start; then
+  brew services start khd || brew services restart khd
+  brew services start crisidev/chunkwm/chunkwm || brew services restart crisidev/chunkwm/chunkwm
+  open "/Applications/Übersicht.app"
+elif $stop; 
+  ps aux | grep -ie bersicht | awk '{print $2}' | xargs kill -9 2> /dev/null
+  brew services stop crisidev/chunkwm/chunkwm
+  brew services stop khd
+fi
