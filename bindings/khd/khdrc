@@ -1,26 +1,35 @@
-# reload config
-cmd + alt + ctrl - r : khd -e "reload"
+# set color of default mode
+# khd mode default color 0xFFD5C4A1
 
-# open terminal, blazingly fast compared to iTerm/Hyper
-cmd - return : open -na /Applications/kitty.app
+# Enable the prefix mode
+khd mode resize prefix on
+khd mode resize timeout 0.75
+khd mode resize restore default
+# khd mode resize color 0xFF458588
+
+# reload config
+cmd + alt + ctrl - k : khd -e "reload"
+
+# open terminal
+cmd + shift - return : open -na /Applications/iTerm.app
 
 # focus window
 alt - h : chunkc tiling::window --focus west
 alt - j : chunkc tiling::window --focus south
 alt - k : chunkc tiling::window --focus north
 alt - l : chunkc tiling::window --focus east
-
-# cmd - j : chunkc tiling::window --focus prev
-# cmd - k : chunkc tiling::window --focus next
-
-# equalize size of windows
-shift + alt - 0 : chunkc tiling::desktop --equalize
+alt - p : chunkc tiling::window --focus prev
+alt - n : chunkc tiling::window --focus next
 
 # swap window
 shift + alt - h : chunkc tiling::window --swap west
 shift + alt - j : chunkc tiling::window --swap south
 shift + alt - k : chunkc tiling::window --swap north
 shift + alt - l : chunkc tiling::window --swap east
+
+alt - p : `export DOTFILES=/Users/denis/.dotfiles; $DOTFILES/bin/dot hardware khdx desktop next`
+# alt - w : khd -w "$(export DOTFILES=/Users/denis/.dotfiles; cd $DOTFILES; $DOTFILES/bin/dot hardware khdx desktop next)"
+alt - w : khd -w "$(export DOTFILES=/Users/denis/.dotfiles; env)"
 
 # move window
 shift + cmd - h : chunkc tiling::window --warp west
@@ -39,8 +48,6 @@ shift + ctrl - right : chunkc tiling::window --warp-floating bottom-right
 
 # send window to desktop
 shift + alt - x : chunkc tiling::window --send-to-desktop $(chunkc get _last_active_desktop)
-shift + alt - z : chunkc tiling::window --send-to-desktop prev
-shift + alt - c : chunkc tiling::window --send-to-desktop next
 shift + alt - 1 : chunkc tiling::window --send-to-desktop 1
 shift + alt - 2 : chunkc tiling::window --send-to-desktop 2
 shift + alt - 3 : chunkc tiling::window --send-to-desktop 3
@@ -48,10 +55,19 @@ shift + alt - 4 : chunkc tiling::window --send-to-desktop 4
 shift + alt - 5 : chunkc tiling::window --send-to-desktop 5
 shift + alt - 6 : chunkc tiling::window --send-to-desktop 6
 
+khd mode desktop prefix on
+khd mode desktop timeout 0.75
+khd mode desktop restore default
+
+alt - d : khd -e "mode activate desktop"
+
+desktop - p : chunkc tiling::window --send-to-desktop prev
+desktop - n : chunkc tiling::window --send-to-desktop next
+
 # send window to desktop and switch desktop
-shift + cmd - x : `id=$(chunkc get _last_active_desktop); chunkc tiling::window -d $id; khd -p "cmd + alt - $id" &> /dev/null`
-shift + cmd - z : chunkc tiling::window -d prev; khd -p "cmd + alt - z"
-shift + cmd - c : chunkc tiling::window -d next; khd -p "cmd + alt - c"
+# shift + cmd - x : `id=$(chunkc get _last_active_desktop); chunkc tiling::window -d $id; khd -p "cmd + alt - $id" &> /dev/null`
+# shift + cmd - z : chunkc tiling::window -d prev; khd -p "cmd + alt - z"
+# shift + cmd - c : chunkc tiling::window -d next; khd -p "cmd + alt - c"
 shift + cmd - 1 : chunkc tiling::window -d 1; khd -p "alt - 1"
 shift + cmd - 2 : chunkc tiling::window -d 2; khd -p "alt - 2"
 shift + cmd - 3 : chunkc tiling::window -d 3; khd -p "alt - 3"
@@ -76,17 +92,26 @@ ctrl + cmd - 1  : chunkc tiling::window --send-to-monitor 1; chunkc tiling::moni
 ctrl + cmd - 2  : chunkc tiling::window --send-to-monitor 2; chunkc tiling::monitor -f 2
 ctrl + cmd - 3  : chunkc tiling::window --send-to-monitor 3; chunkc tiling::monitor -f 3
 
+# Activate resize mode
+alt - s                 :    khd -e "mode activate resize"
+
+resize - t : khd -e "mode activate default"
+resize + shift - r : khd -e "reload"
+
+# equalize size of windows
+resize - r : chunkc tiling::desktop --equalize
+
 # increase region size
-shift + alt - a : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge west
-shift + alt - s : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge south
-shift + alt - w : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge north
-shift + alt - d : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge east
+resize - h : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge west
+resize - j : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge south
+resize - k : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge north
+resize - l : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge east
 
 # decrease region size
-shift + cmd - a : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge west
-shift + cmd - s : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge south
-shift + cmd - w : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge north
-shift + cmd - d : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge east
+resize + shift - h : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge west
+resize + shift - j : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge south
+resize + shift - k : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge north
+resize + shift - l : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge east
 
 # set insertion point for focused container
 ctrl + alt - f : chunkc tiling::window --use-insertion-point cancel
@@ -105,7 +130,7 @@ alt - y : chunkc tiling::desktop --mirror vertical
 alt - x : chunkc tiling::desktop --mirror horizontal
 
 # toggle desktop offset
-alt - a : chunkc tiling::desktop --toggle offset
+resize - o : chunkc tiling::desktop --toggle offset
 
 # toggle window fullscreen
 alt - f : chunkc tiling::window --toggle fullscreen
@@ -138,9 +163,9 @@ ctrl + alt - w : chunkc tiling::desktop --deserialize ~/.chunkwm_layouts/dev_1
 
 # remap caps-lock to escape for this config only !!!
 # macos sierra can also perform this remap for a given keyboard
-- capslock : khd -p "- escape"
+# - capslock : khd -p "- escape"
 
 # key remap for norwegian layout \ { }
-cmd - 7 : khd -p "shift + alt - 7"
-cmd - 8 : khd -p "shift + alt - 8"
-cmd - 9 : khd -p "shift + alt - 9"
+# cmd - 7 : khd -p "shift + alt - 7"
+# cmd - 8 : khd -p "shift + alt - 8"
+#cmd - 9 : khd -p "shift + alt - 9"

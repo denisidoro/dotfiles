@@ -1,4 +1,4 @@
-command: "echo $(/usr/local/bin/chunkc tiling::query --desktop id) - $(/usr/local/bin/chunkc tiling::query --window owner)"
+command: "echo $(/usr/local/bin/chunkc tiling::query --desktop id) - $(chunkc tiling::query --desktop mode) - $(/usr/local/bin/khd -e 'print mode') - $(/usr/local/bin/chunkc tiling::query --window owner)"
 
 refreshFrequency: 1000 # ms
 

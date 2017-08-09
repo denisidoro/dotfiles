@@ -8,16 +8,26 @@ source $DOTFILES/scripts/core/main.sh
  #? 0.1.0
 ##?
 ##? Usage:
-##?    wm (start|stop)
+##?    wm (start|stop|toggle)
 
 eval_docopts "$@"
+
+if $toggle; then
+  if ps aux | grep -q "[/]bin/khd"; then
+    start=false
+    stop=true
+  else
+    start=true
+    stop=false
+  fi
+fi
 
 if $start; then
   brew services start khd || brew services restart khd
   brew services start crisidev/chunkwm/chunkwm || brew services restart crisidev/chunkwm/chunkwm
   open "/Applications/Übersicht.app"
-elif $stop; 
-  ps aux | grep -ie bersicht | awk '{print $2}' | xargs kill -9 2> /dev/null
+elif $stop; then
+  ps aux | grep -ie "[b]ersicht" | awk '{print $2}' | xargs kill -9 2> /dev/null
   brew services stop crisidev/chunkwm/chunkwm
   brew services stop khd
 fi
