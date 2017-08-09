@@ -5,6 +5,16 @@ local.properties
 *credential*
 *password*
 
+# ZSH
+.zcompdump*
+.zsh-update
+
+# History files
+.*history
+
+# Project directories
+.idea
+
 # OS
 .Trashes
 .DS_Store
@@ -15,16 +25,6 @@ Thumbs.db
 ehthumbs.db
 .Spotlight-V100
 *~
-
-# ZSH
-.zcompdump*
-.zsh-update
-
-# History files
-.*history
-
-# Project directories
-.idea
 
 # Vim
 Powerline_*.cache
@@ -41,6 +41,8 @@ Powerline_*.cache
 *.o
 *.so
 *.pyc
+*.bundle
+*.bundle.meta
 
 # Package managers
 node_modules/
@@ -60,3 +62,4 @@ brew/
 *.log
 *.sql
 *.sqlite
+*.db
