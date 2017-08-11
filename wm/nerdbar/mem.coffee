@@ -10,7 +10,7 @@ style: """
   color: #D5C4A1
   font: 11px Osaka-Mono
   right: 192px
-  top: 6px
+  bottom: 6px
   span
     color: #9C9486
 """

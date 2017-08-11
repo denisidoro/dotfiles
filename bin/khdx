@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# set -euo pipefail
+
+export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+source $DOTFILES/scripts/core/main.sh 
+
+##? Performs keybinding-related operations
+ #? 0.2.0
+##?
+##? Usage:
+##?    khdx desktop (next|previous|tab)
+##?    khdx monitor tab
+
+eval_docopts "$@"
+
+function move_to_desktop() {
+	local target_desktop="$1"
+	khd -p "alt - ${target_desktop}" &>/dev/null
+}
+
+if $desktop; then
+
+	current_desktop="$(chunkc tiling::query --desktop id)"
+	total_desktops=$(defaults read com.apple.spaces | grep name | wc -l)
+
+	# Go to previous desktop
+	if $previous && [[ $current_desktop > 1 ]]; then
+		move_to_desktop $(( $current_desktop - 1 ))
+
+	# Go to next desktop	
+	elif $next && [[ $current_desktop < total_desktops ]]; then
+		move_to_desktop $(( $current_desktop + 1 ))
+
+	# Tab desktop	
+	elif $tab; then
+		id=$(chunkc get _last_active_desktop)
+		move_to_desktop "$id"
+	fi
+
+elif $monitor; then
+
+	# Tab monitor
+	if $tab; then
+		id=$(chunkc tiling::query --monitor id); 
+		if [ $id -eq 1 ]; then 
+			n=2
+		else 
+			n=1
+		fi
+		chunkc tiling::monitor -f $n &> /dev/null
+	fi
+
+fi
+

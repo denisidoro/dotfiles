@@ -10,5 +10,5 @@ style: """
   color: #458588
   font: 11px Osaka-Mono
   right: 10px
-  top: 6px
+  bottom: 6px
 """
