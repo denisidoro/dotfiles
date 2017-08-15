@@ -20,6 +20,7 @@ source $DOTFILES/shell/aliases/browsing.zsh
 source $DOTFILES/shell/aliases/coding.zsh
 source $DOTFILES/shell/aliases/tmux.zsh
 source $DOTFILES/shell/aliases/git.zsh
+source $DOTFILES/shell/aliases/notification.zsh
 
 # setup key bindings
 source $DOTFILES/shell/bindings/fzf.zsh
