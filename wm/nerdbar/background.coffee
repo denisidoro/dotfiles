@@ -1,6 +1,8 @@
-refreshFrequency: false
+command: """
+	$HOME/.dotfiles/bin/dot -d environment resources fontawesome
+"""
 
-render: (output) -> ""
+refreshFrequency: false
 
 style: """
   top: 0
@@ -9,4 +11,9 @@ style: """
   width: 100%
   background-color: #171717
   z-index: -1
+"""
+
+render: (output) -> """
+	<link rel="stylesheet" type="text/css" href="/nerdbar.widget/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="/nerdbar.widget/base.css">
 """
