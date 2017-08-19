@@ -1,14 +1,17 @@
-command: "date +\"%a %d %b\""
+command: """
+	date +\"%a %d %b\"
+"""
 
-refreshFrequency: 10000
+refreshFrequency: 60000
 
-render: (output) ->
-  "#{output}"
+render: -> """
+  <i class='fa fa-calendar-o'></i>
+  <span class="amount"></span>
+"""
 
 style: """
-  -webkit-font-smoothing: antialiased
-  color: #B16286
-  font: 11px Osaka-Mono
   right: 60px
-  bottom: 6px
 """
+
+update: (output, el) ->
+	$(el).find(".amount").text output

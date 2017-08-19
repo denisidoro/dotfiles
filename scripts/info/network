@@ -8,13 +8,22 @@ source $DOTFILES/scripts/core/main.sh
  #? 0.1.0
 ##?
 ##? Usage:
-##?    info [--fast]
+##?    info ip [--fast]
+##?    info traffic
 ##?
 ##? Options:
 ##?     --fast   Fast response with the external IP only
 
 eval_docopts "$@"
 
-$fast \
-	&& dig +short myip.opendns.com @resolver1.opendns.com \
-	|| curl -s ifconfig.me/all.json | jq
+function get_traffic() {
+	netstat -w1 & sleep 1.5; kill $!
+}
+
+if $ip; then
+	$fast \
+		&& dig +short myip.opendns.com @resolver1.opendns.com \
+		|| curl -s ifconfig.me/all.json | jq
+elif $traffic; then
+	get_traffic | tail -n1 | awk '{print $3 " " $6}'
+fi

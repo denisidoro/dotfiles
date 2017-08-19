@@ -1,3 +1,4 @@
 local/
 *.pyc
 modules/pushbullet/
+font*.css

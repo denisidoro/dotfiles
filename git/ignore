@@ -63,3 +63,6 @@ brew/
 *.sql
 *.sqlite
 *.db
+
+# Temporary files
+.#*

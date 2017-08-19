@@ -1,14 +1,17 @@
-command: "date +\"%H:%M\""
+command: """
+	date +\"%H:%M\"
+"""
 
-refreshFrequency: 10000 # ms
+refreshFrequency: 10000
 
-render: (output) ->
-  "#{output}"
+render: -> """
+  <i class='fa fa-clock-o'></i>
+  <span class="amount"></span>
+"""
 
 style: """
-  -webkit-font-smoothing: antialiased
-  color: #458588
-  font: 11px Osaka-Mono
   right: 10px
-  bottom: 6px
 """
+
+update: (output, el) ->
+	$(el).find(".amount").text output

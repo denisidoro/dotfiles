@@ -1,18 +1,19 @@
 command: """
-	ESC=$(printf \"\e\")
-	ps -A -o %cpu \
-    | awk '{s+=$1} END {printf(\"%.2f\",s/8);}'
+	df -h \
+		| grep /dev/disk1 \
+		| awk '{print $5}' \
+		| sed 's/.$//'
 """
 
-refreshFrequency: 3500
+refreshFrequency: 60000
 
 render: -> """
-	<i class='fa fa-tasks'></i>
+	<i class='fa fa-hdd-o'></i>
 	<span class="amount"></span>
 """
 
 style: """
-	right: 225px
+	right: 260px
 """
 
 update: (output, el) ->

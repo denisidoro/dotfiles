@@ -14,11 +14,11 @@ source $DOTFILES/scripts/environment/core.sh
 
 eval_docopts "$@"
 
-  $apps && { 
-    cask_install "cask-apps"; 
-  };
-  $dev && {
-    $android && { cask_install "cask-java" "cask-android"; }
-    $clojure && { cask_install "cask-java" && brew_install "leiningen"; }
-  }
+$apps && { 
+	cask_install "cask-apps"; 
+};
+$dev && {
+	$android && { cask_install "cask-java" "cask-android"; }
+	$clojure && { cask_install "cask-java" && brew_install "leiningen"; }
+}
 

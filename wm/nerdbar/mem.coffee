@@ -1,16 +1,20 @@
-command: "ESC=`printf \"\e\"`; ps -A -o %mem | awk '{s+=$1} END {print \"\" s}'"
+command: """
+	ESC=$(printf \"\e\")
+	ps -A -o %mem \
+    | awk '{s+=$1} END {print \"\" s}'
+"""
 
-refreshFrequency: 30000 # ms
+refreshFrequency: 2500
 
-render: (output) ->
-  "mem <span>#{output}</span>"
+render: (output) -> """
+	<i class='fa fa-database'></i>
+	<span class="amount"></span>
+"""
 
 style: """
-  -webkit-font-smoothing: antialiased
-  color: #D5C4A1
-  font: 11px Osaka-Mono
-  right: 192px
-  bottom: 6px
-  span
-    color: #9C9486
+	right: 185px
 """
+
+update: (output, el) ->
+	n = parseFloat(((Number) output).toFixed())
+	$(el).find(".amount").text n

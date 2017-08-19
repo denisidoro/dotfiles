@@ -1,4 +1,9 @@
-command: "echo $(/usr/local/bin/chunkc tiling::query --desktop id) - $(chunkc tiling::query --desktop mode) - $(/usr/local/bin/khd -e 'print mode') - $(/usr/local/bin/chunkc tiling::query --window owner) - $(/usr/local/bin/chunkc tiling::query --window name)"
+command: """
+  echo $(/usr/local/bin/chunkc tiling::query --desktop id) - \
+     $(/usr/local/bin/khd -e 'print mode') - \
+     $(/usr/local/bin/chunkc tiling::query --window owner) - \
+     $(/usr/local/bin/chunkc tiling::query --window name)
+"""
 
 refreshFrequency: 1000 # ms
 
@@ -13,6 +18,6 @@ style: """
   left: 10px
   overflow: hidden
   text-overflow: ellipsis
-  bottom: 0px
+  top: 0px
   width: 500px
 """

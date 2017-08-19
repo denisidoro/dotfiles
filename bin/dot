@@ -93,8 +93,8 @@ elif [[ $# -eq 1 ]]; then
 	find_context "$contexts" "$context_query"
 	list_paths_for_context "$paths" "$CTX" | xargs -I % -d '\n' basename "%"
 
-# Executes a command
-elif [[ $# -gt 1 ]]; then
+# Executes a command by substring
+elif [[ $# -gt 1 ]] && [ "$1" != "-d" ]; then
 
 	paths="$(list_command_paths)"
 	context_query="$1"; cmd_query="$2"
@@ -102,8 +102,16 @@ elif [[ $# -gt 1 ]]; then
 	find_context "$contexts" "$context_query"
 	find_command "$paths" "$CTX" "$cmd_query"
 
-	shift
-	shift
+	shift 2
 	"${DOTFILES}/scripts/${CTX}/${CMD}" "$@"
+
+# Executes a command directly
+else
+
+	ctx="$2"
+	cmd="$3"
+
+	shift 3
+	"${DOTFILES}/scripts/${ctx}/${cmd}" "$@"
 
 fi

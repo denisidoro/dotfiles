@@ -1,16 +1,36 @@
-command: "pmset -g batt | egrep '([0-9]+\%).*' -o --colour=auto | cut -f1 -d';'"
+command: """
+	pmset -g batt \
+		| egrep '([0-9]+\%).*' -o --colour=auto \
+		| cut -f1 -d';' \
+		| sed 's/.$//'
+"""
 
-refreshFrequency: 150000 # ms
+refreshFrequency: 150000
 
-render: (output) ->
-  "<i>⚡</i>#{output}"
+render: (output) -> """
+  <i class='fa fa-battery-full'></i>
+  <span class='amount'></span>
+"""
 
 style: """
-  -webkit-font-smoothing: antialiased
-  font: 10px Osaka-Mono
-  bottom: 4px
-  right: 145px
-  color: #FABD2F
-  span
-    color: #9C9486
+  right: 140px
 """
+
+update: (output, el) ->
+	n = (Number) output
+	$(".amount", el).text n
+	$icon = $(".fa", el)
+	$icon.removeClass()
+	$icon.addClass("fa #{@batteryIcon(n)}")
+
+batteryIcon: (percentage) =>
+  return if percentage > 90
+    "fa-battery-full"
+  else if percentage > 70
+    "fa-battery-three-quarters"
+  else if percentage > 40
+    "fa-battery-half"
+  else if percentage > 20
+    "fa-battery-quarter"
+  else
+    "fa-battery-empty"
