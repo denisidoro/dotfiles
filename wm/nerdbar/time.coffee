@@ -10,7 +10,7 @@ render: -> """
 """
 
 style: """
-  right: 10px
+  right: 0.5%
 """
 
 update: (output, el) ->
