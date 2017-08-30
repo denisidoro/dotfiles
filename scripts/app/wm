@@ -32,7 +32,7 @@ if $stop; then
 fi
 
 if $start; then
-  brew services restart khd || brew services start khd
-  brew services restart crisidev/chunkwm/chunkwm || brew services start crisidev/chunkwm/chunkwm
+  brew services start khd
+  brew services start crisidev/chunkwm/chunkwm
   open "/Applications/Übersicht.app"
 fi

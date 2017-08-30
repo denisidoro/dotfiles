@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
 # absolute path to the directory to use when loading a plugin
-chunkc core::plugin_dir ~/.chunkwm_plugins
+chunkc core::plugin_dir /usr/local/opt/chunkwm/share/chunkwm/plugins
 
 # monitor the specified plugin_dir and automatically reload any *.so
 chunkc core::hotload 0
  
 # global configs
 chunkc set global_desktop_mode           bsp
-chunkc set global_desktop_offset_top     20
+chunkc set global_desktop_offset_top     18
 chunkc set global_desktop_offset_bottom  0
 chunkc set global_desktop_offset_left    0
 chunkc set global_desktop_offset_right   0
-chunkc set global_desktop_offset_gap     1
+chunkc set global_desktop_offset_gap     0
 
 # offset and gap incremental step
 chunkc set desktop_padding_step_size     10.0
@@ -26,7 +26,7 @@ chunkc set bsp_split_ratio               0.5
 chunkc set window_region_locked          1
 
 # focus
-chunkc set window_focus_cycle            none
+chunkc set window_focus_cycle            all
 chunkc set mouse_follows_focus           1
 
 # float
@@ -60,9 +60,10 @@ chunkc core::load tiling.so
 chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --state tile
 chunkc tiling::rule --owner Finder --name Copy --state float
 chunkc tiling::rule --owner iTerm2 --subrole AXDialog --state tile
+chunkc tiling::rule --owner kitty --subrole AXDialog --state tile
 chunkc tiling::rule --owner \"qemu-system-x86_64\" --state float
-chunkc tiling::rule --owner \"Google Chrome\" --desktop 2
-chunkc tiling::rule --owner Emacs --state tile --desktop 3
-chunkc tiling::rule --owner \"Sublime Text\" --desktop 3
+chunkc tiling::rule --owner Emacs --state tile --desktop 8
+#chunkc tiling::rule --owner \"Google Chrome\" --desktop 2
+#chunkc tiling::rule --owner \"Sublime Text\" --desktop 3
 chunkc tiling::rule --owner Spotify --desktop 5
 chunkc tiling::rule --owner Slack --desktop 6
