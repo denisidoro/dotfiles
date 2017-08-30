@@ -66,3 +66,4 @@ brew/
 
 # Temporary files
 .#*
+.lumo_cache

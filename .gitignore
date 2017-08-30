@@ -2,3 +2,4 @@ local/
 *.pyc
 modules/pushbullet/
 font*.css
+.lumo_cache
