@@ -4,8 +4,9 @@ command: """
           set theArtist to artist of theTrack
           set theName to name of theTrack
           return theArtist & "|" & theName
-      end tell')"
-  echo "$theArtist - $theName"
+      end tell')" \
+      && echo "$theArtist - $theName" \
+      || echo ""
 """
 
 refreshFrequency: 5000
@@ -16,7 +17,8 @@ render: -> """
 """
 
 style: """
-  left: 0px
+  width: 100%
+  text-align: center
 """
 
 update: (output, el) ->

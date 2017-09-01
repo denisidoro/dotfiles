@@ -265,7 +265,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup 'trailing
    ))
 
 (defun dotspacemacs/user-init ()
@@ -284,6 +284,10 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  (let ((path "~/dev/nu/nudev/ides/emacs/nu.el"))
+    (when (file-exists-p path)
+      (load path)))
+
   (mapcar (lambda (mode-hook)
             (add-hook mode-hook 'paredit-mode))
           '(lisp-mode-hook
@@ -293,6 +297,8 @@ you should place your code here."
             cider-mode-hook
             scheme-mode-hook
             ielm-mode-hook))
+
+   (spacemacs/toggle-automatic-symbol-highlight)
 
   )
 

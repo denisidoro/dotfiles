@@ -10,8 +10,8 @@ render: -> """
 """
 
 style: """
-  width: 2.75%
-  right: 19.5%
+  width: 40px
+  right: 270px
   .unit
     font: 6px Osaka-Mono
 """

@@ -13,8 +13,8 @@ render: (output) -> """
 """
 
 style: """
-  width: 2.75%
-  right: 9.5%
+  width: 40px
+  right: 130px
 """
 
 update: (output, el) ->

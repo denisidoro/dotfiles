@@ -33,6 +33,10 @@ move - h : chunkc tiling::window --send-to-desktop prev
 move - l : chunkc tiling::window --send-to-desktop next
 move - j : chunkc tiling::window --send-to-monitor prev
 move - k : chunkc tiling::window --send-to-monitor next
+move + shift - h : chunkc tiling::window --send-to-desktop prev; `$HOME/.dotfiles/bin/khdx desktop tab`
+move + shift - l : chunkc tiling::window --send-to-desktop next; `$HOME/.dotfiles/bin/khdx desktop tab`
+move + shift - j : chunkc tiling::window --send-to-monitor prev; chunkc tiling::monitor -f prev
+move + shift - k : chunkc tiling::window --send-to-monitor next; chunkc tiling::monitor -f next
 move - 1 : chunkc tiling::window -d 1
 move - 2 : chunkc tiling::window -d 2
 move - 3 : chunkc tiling::window -d 3
@@ -40,7 +44,7 @@ move - 4 : chunkc tiling::window -d 4
 move - 5 : chunkc tiling::window -d 5
 move - 6 : chunkc tiling::window -d 6
 move - 7 : chunkc tiling::window -d 7
-move - 8 : chunkc tiling::window -d 8
+move - 8 : chunkc tiling::window -d 8	
 move - 9 : chunkc tiling::window -d 9
 move + shift - 1 : chunkc tiling::window -d 1; khd -p "alt - 1"
 move + shift - 2 : chunkc tiling::window -d 2; khd -p "alt - 2"
