@@ -6,6 +6,15 @@ export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 source "$DOTFILES/scripts/core/main.sh"
 export CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 
+##? Calls scripts
+ #? 1.0.0
+##?
+##? Usage:
+##?    dot
+##?    dot <context>
+##?    dot <context> <cmd> [<args>...]
+##?    dot -d <context> <cmd> [<args>...]
+
 function list_command_paths() {
 	find "$DOTFILES/scripts" -maxdepth 2 -executable -type f \
 		| grep -v core \

@@ -22,7 +22,7 @@ update: (output, el) ->
     mode = args[2].replace /^\s+|\s+$/g, ""
     if monitorId == 1
         if mode != "default"
-            out = "#{monitorId} - #{mode}"
+            out = "#{desktopId} - #{mode}"
         else
-            out = monitorId
+            out = desktopId
         $(el).find(".amount").text out
