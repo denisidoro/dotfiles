@@ -13,7 +13,7 @@ source $DOTFILES/scripts/core/main.sh
 ##? Examples:
 ##?    file ./foo.txt
 
-eval_docopts "$@"
+docopts "$@"
 
 function transfer() { 
 	local path="$1"

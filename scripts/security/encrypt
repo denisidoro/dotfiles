@@ -17,7 +17,7 @@ source $DOTFILES/scripts/core/main.sh
 ##?    encrypt "foo bar"
 ##?    encrypt "foo bar" -a 0
 
-eval_docopts "$@"
+docopts "$@"
 
 function md5_fn {
 	if command_exists md5sum; then

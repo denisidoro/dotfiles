@@ -11,7 +11,7 @@ source $DOTFILES/scripts/environment/core.sh
 ##? Usage:
 ##?    dotfiles
 
-eval_docopts "$@"
+docopts "$@"
 
 DOTBOT_DIR="modules/dotbot"
 DOTBOT_BIN="bin/dotbot"

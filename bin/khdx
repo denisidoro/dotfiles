@@ -11,7 +11,7 @@ source $DOTFILES/scripts/core/main.sh
 ##?    khdx desktop (next|previous|tab)
 ##?    khdx monitor tab
 
-eval_docopts "$@"
+docopts "$@"
 
 function move_to_desktop() {
 	local target_desktop="$1"

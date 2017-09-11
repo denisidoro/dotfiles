@@ -10,7 +10,7 @@ source $DOTFILES/scripts/environment/core.sh
 ##? Usage:
 ##?    matrix
 
-eval_docopts "$@"
+docopts "$@"
 
 lines=$(tput lines)
 cols=$(tput cols)

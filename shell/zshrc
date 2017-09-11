@@ -29,4 +29,4 @@ source $DOTFILES/shell/bindings/fzf.zsh
 include $DOTFILES/local/zshrc
 
 # load non-fundamental stuff
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+include ~/.fzf.zsh

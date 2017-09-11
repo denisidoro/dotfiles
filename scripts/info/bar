@@ -6,8 +6,7 @@ set -euo pipefail
  #? 0.1.0
 ##?
 ##? Usage:
-##?    bar stats
-##?    bar time
+##?    bar all
 
 battery() {
 	pmset -g batt \
@@ -59,14 +58,11 @@ calendar() {
 }
 
 case "${1:-}" in
-	"time")
-		echo "$(clock);$(calendar)"
-		;;
-	"stats")
-		echo "$(battery);$(cpu);$(drive);$(memory);$(volume);$(wifi);$(traffic)"
+	"all")
+		echo "$(clock);$(calendar);$(battery);$(cpu);$(drive);$(memory);$(volume);$(wifi);$(traffic)"
 		;;
 	*)
 		source $DOTFILES/scripts/core/main.sh 
-		eval_docopts "$@"
+		docopts "$@"
 	  	;;
 esac

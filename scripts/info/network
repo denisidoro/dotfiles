@@ -14,7 +14,7 @@ source $DOTFILES/scripts/core/main.sh
 ##? Options:
 ##?     --fast   Fast response with the external IP only
 
-eval_docopts "$@"
+docopts "$@"
 
 function get_traffic() {
 	netstat -w1 & sleep 1.5; kill $!

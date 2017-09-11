@@ -10,3 +10,161 @@ span {
   	font-size: 11px;
     color: #f0f0f0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.powerline {
+  font-family: "Droid Sans Mono for Powerline", "Droid Sans Mono", Mono;
+  list-style: none;
+  padding: 0;
+  display: -webkit-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-box-pack: justify;
+  -o-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-box-lines: single;
+  -webkit-box-lines: single;
+  -o-box-lines: single;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  height: 20px;
+  line-height: 20px;
+  /* center bg-color */
+  background-color: #1a1a1a;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+}
+.powerline a {
+  text-decoration: none;
+}
+.powerline .left,
+.powerline .right {
+  white-space: nowrap;
+  display: -webkit-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+}
+
+/* size transition */
+.powerline .shrinkable {
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  max-width: 2em;
+  -webkit-transition: max-width 1s ease-in-out;
+  -webkit-transition: max-width 1s ease-in-out;
+  -o-transition: max-width 1s ease-in-out;
+  -ms-transition: max-width 1s ease-in-out;
+  transition: max-width 1s ease-in-out;
+}
+.powerline .shrinkable:hover {
+  max-width: 1000px;
+}
+.powerline .center {
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+/* arrows */
+.powerline .left .endsection {
+  position: relative;
+  width: 0;
+  height: 0;
+  border-top: 0.63em solid transparent;
+  border-bottom: 0.63em solid transparent;
+  border-left: 0.63em solid;
+}
+.powerline .right .endsection {
+  position: relative;
+  width: 0;
+  height: 0;
+  border-top: 0.63em solid transparent;
+  border-right: 0.63em solid;
+  border-bottom: 0.63em solid transparent;
+}
+.powerline div:not(.endsection) {
+  padding: 0 14px;
+}
+
+
+
+/* coloring */
+/* TODO: UGH redo markup for easier targeting */
+.powerline .left div:first-child {
+  background-color: #e74c3c;
+}
+.powerline .left div:first-child+.endsection {
+  border-left-color: #e74c3c;
+  background-color: #2a2a2a;
+}
+.powerline .left div:first-child a {
+  color: #f5e11d;
+}
+.powerline .left div:first-child a:first-child {
+  color: #f8f8f8;
+}
+.powerline .left div {
+  background-color: #2a2a2a;
+}
+.powerline .left div+.endsection {
+  border-left-color: #2a2a2a;
+  background-color: #1a1a1a;
+}
+.powerline .left div a {
+  color: #2ecc71;
+}
+.powerline .center {
+  background-color: #1a1a1a;
+}
+.powerline .center a {
+  color: #c0392b;
+}
+.powerline .right .endsection:first-child {
+  border-right-color: #2a2a2a;
+}
+.powerline .right div:nth-child(2) {
+  background-color: #2a2a2a;
+}
+.powerline .right div:nth-child(2) a {
+  color: #2ecc71;
+}
+.powerline .right div:nth-child(2)+.endsection {
+  background-color: #2a2a2a;
+  border-right-color: #e74c3c;
+}
+.powerline .right div:nth-child(2)+.endsection+div {
+  background-color: #e74c3c;
+}
+.powerline .right div:nth-child(2)+.endsection+div a {
+  color: #f8f8f8;
+}

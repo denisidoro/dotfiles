@@ -10,7 +10,7 @@ source $DOTFILES/scripts/core/main.sh
 ##? Usage:
 ##?    weather [<location>]
 
-eval_docopts "$@"
+docopts "$@"
 
 is_empty ${location:-""} \
 	&& curl -s "wttr.in" \

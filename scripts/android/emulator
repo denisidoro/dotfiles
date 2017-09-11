@@ -16,7 +16,7 @@ source $DOTFILES/scripts/environment/core.sh
 ##?    start          Prompts for an emulator and launch it
 ##?    start newest   Starts the emulator with the most recent API
 
-eval_docopts "$@"
+docopts "$@"
 
 function emulator() {
 	"$ANDROID_HOME/tools/emulator" "$@"	

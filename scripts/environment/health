@@ -10,7 +10,7 @@ source $DOTFILES/scripts/core/main.sh
 ##? Usage:
 ##?    health
 
-eval_docopts "$@"
+docopts "$@"
 
 CODE=0
 

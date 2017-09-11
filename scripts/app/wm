@@ -10,7 +10,7 @@ source $DOTFILES/scripts/core/main.sh
 ##? Usage:
 ##?    wm (start|stop|toggle|restart)
 
-eval_docopts "$@"
+docopts "$@"
 
 if $toggle; then
   if ps aux | grep -q "[/]bin/khd"; then

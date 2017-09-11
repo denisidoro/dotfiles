@@ -13,7 +13,7 @@ source $DOTFILES/scripts/core/main.sh
 ##? Examples:
 ##?    alert title message
 
-eval_docopts "$@"
+docopts "$@"
 
 if [ -n $message ]; then
 	[ -n $subtitle ] \

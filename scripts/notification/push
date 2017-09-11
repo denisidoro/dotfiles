@@ -21,7 +21,7 @@ source $DOTFILES/scripts/core/main.sh
 ##?    push moto link http://google.com
 ##?    push moto link title message http://google.com
 
-eval_docopts "$@"
+docopts "$@"
 
 PUSH_DIR="${DOTFILES}/modules/pushbullet"
 PUSH_BIN="${PUSH_DIR}/pushbullet"

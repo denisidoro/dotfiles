@@ -12,7 +12,7 @@ source $DOTFILES/scripts/environment/core.sh
 ##?    osx apps
 ##?    osx dev (android|clojure)
 
-eval_docopts "$@"
+docopts "$@"
 
 $apps && { 
 	cask_install "cask-apps"; 
