@@ -1,43 +1,39 @@
 command: """
-	# $HOME/.dotfiles/bin/dot -d info bar all
-	echo "17:51;Wed 06 Sep;100;79.7;58;51.6;31;nu-office;38062;12141"
+	$HOME/.dotfiles/bin/dot -d info bar all
+	# echo "17:51;Wed 06 Sep;100;79.7;58;51.6;31;nu-office;38062;12141"
 """
 
 refreshFrequency: 100000
 
 render: -> """
-<ul class="powerline">
-  <li class="left">
-    <div><a href="#">* 176 UUU-:</a><a href="#">*scratch*</a></div>
-    <div class="endsection"></div>
-    <div><a href="#">Lizsp</a></div>
-    <div class="shrinkable"><a href="#">Interaction SP Helm Undo-Tree company</a></div>
-    <div class="endsection"></div>
-  </li>
-  <div class="center"><a href="#"> 8e4c32f32ec869fe521fb4d3c0a69406830b4178</a></div>
-  <li class="right">
-    <div class="endsection"></div>
-    <div class="value2"><span id="date"></span></div>
-    <div class="endsection"></div>
-    <div class="value2"><span id="time"></span></div>
-  </li>
-</ul>
+	<!--<i class='fa fa-arrow-down'></i>
+	<span class="down amount"></span><span class="down unit"></span>-->
+
+	<i class='fa fa-volume-up'></i>
+	<span id="volume"></span>
+
+	<i class='fa fa-hdd-o'></i>
+	<span id="drive"></span>
+
+	<i class='fa fa-microchip'></i>
+	<span id="cpu"></span>
+
+	<i class='fa fa-database'></i>
+	<span id="memory"></span>
+
+	<i class='fa fa-battery-full battery'></i>
+	<span id='battery'></span>
+
+	<i class='fa fa-calendar-o'></i>
+	<span id="date"></span>
+	<span id="time"></span>
 """
 
 style: """
-	width: 100%
+	right: 10px
 
-	.value2 {
-		padding-top: 3px
-  		font: 12px Osaka-Mono
-	    color: #f0f0f0;
-	}
-
-	.value2 span {
-		margin-left: -7px
-		margin-right: -7px
-	}
-
+	.fa-calendar-o
+		margin-left: 10px
 """
 
 update: (output, el) ->
@@ -50,6 +46,30 @@ update: (output, el) ->
 	drive = parseFloat(((Number) args[4]).toFixed())
 	memory = parseFloat(((Number) args[5]).toFixed())
 	volume = parseFloat(((Number) args[6]).toFixed())
+	down = parseFloat(((Number) args[8]).toFixed())
 
-	$(el).find("#time").text time
-	$(el).find("#date").text date
+	$("#time", el).text time
+	$("#date", el).text date
+	@updateBattery(battery, el)
+	$("#memory", el).text memory
+	$("#cpu", el).text cpu
+	$("#drive", el).text drive
+	$("#volume", el).text volume
+
+updateBattery: (n, el) ->
+	$("#battery", el).text n
+	$icon = $(".fa.battery", el)
+	$icon.removeClass()
+	$icon.addClass("fa #{@batteryIcon(n)}")
+
+batteryIcon: (n) =>
+  return if n > 90
+    "fa-battery-full"
+  else if n > 70
+    "fa-battery-three-quarters"
+  else if n > 40
+    "fa-battery-half"
+  else if n > 20
+    "fa-battery-quarter"
+  else
+    "fa-battery-empty"
