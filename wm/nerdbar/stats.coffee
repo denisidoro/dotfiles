@@ -3,7 +3,7 @@ command: """
 	# echo "17:51;Wed 06 Sep;100;79.7;58;51.6;31;nu-office;38062;12141"
 """
 
-refreshFrequency: 100000
+refreshFrequency: 10050
 
 render: -> """
 	<!--<i class='fa fa-arrow-down'></i>
@@ -32,8 +32,17 @@ render: -> """
 style: """
 	right: 10px
 
+	.fa
+		margin-left: 2px
+
 	.fa-calendar-o
 		margin-left: 10px
+
+	.color1 { color: rgba(5, 102, 141, 1); }
+	.color2 { color: rgba(2, 128, 144, 1); }
+	.color3 { color: rgba(0, 168, 150, 1); }
+	.color4 { color: rgba(2, 195, 154, 1); }
+	.color5 { color: rgba(240, 243, 189, 1); }
 """
 
 update: (output, el) ->
@@ -46,7 +55,7 @@ update: (output, el) ->
 	drive = parseFloat(((Number) args[4]).toFixed())
 	memory = parseFloat(((Number) args[5]).toFixed())
 	volume = parseFloat(((Number) args[6]).toFixed())
-	down = parseFloat(((Number) args[8]).toFixed())
+	down = (Number) args[8]
 
 	$("#time", el).text time
 	$("#date", el).text date

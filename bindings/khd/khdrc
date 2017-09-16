@@ -28,6 +28,17 @@ khd mode move timeout 0.75
 khd mode move restore default
 alt - d : khd -e "mode activate move"
 
+
+
+
+# alt + cmd - h : chunkc tiling::window --swap west
+# alt + cmd - j : chunkc tiling::window --swap south
+# alt + cmd - k : chunkc tiling::window --swap north
+# alt + cmd - l : chunkc tiling::window --swap east
+
+
+
+
 # Send window to previous desktop
 move - h : chunkc tiling::window --send-to-desktop prev
 move - l : chunkc tiling::window --send-to-desktop next
@@ -238,3 +249,4 @@ cmd + alt + ctrl - k : khd -e "reload"
 
 # desktop - n : `bash ~/.dotfiles/bin/khdx desktop next`
 
+cmd + alt + ctrl - r : khd -e "reload"
