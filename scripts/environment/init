@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export DOTFILES="${DOTFILES:-HOME/.dotfiles}"
+export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 
 ##? Setups the environment
  #? 0.1.1
@@ -34,7 +34,7 @@ install_git_and_python() {
 		brew install git
 		brew install python
 	elif command_exists apt; then
-		sudo add-apt-repository $repository -y git-core/ppa
+		#sudo add-apt-repository $repository -y git-core/ppa
 		sudo apt-get install -y git
 		sudo apt-get install -y python
 	fi
@@ -70,7 +70,7 @@ install_brew_if_on_osx
 install_git_and_python
 set -e
 
-if [ -f "$DOTFILES/dot" ]; then :
+if [ -f "$DOTFILES/bin/dot" ]; then :
 elif [ -f "$DOTFILES" ]; then
 	echo "Backing up existing .dotfiles folder and cloning new .dotfiles..."
         local old_dotfiles=$(mktemp -u -d "${DOTFILES}_XXXX")
