@@ -2,6 +2,8 @@
 # vim: filetype=sh
 set -euo pipefail
 
+export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+
 source $DOTFILES/scripts/core/main.sh 
 source $DOTFILES/scripts/environment/core.sh 
 
@@ -57,8 +59,9 @@ function setup_brew() {
 function install_fzf() {
   echo "Installing fzf..."
   if ! command_exists fzf; then
-    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
-    $HOME/.fzf/install
+    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf \
+      && $HOME/.fzf/install \
+      || true
   fi
 }
 

@@ -2,6 +2,8 @@
 # vim: filetype=sh
 set -euo pipefail
 
+export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+
 source $DOTFILES/scripts/core/main.sh 
 source $DOTFILES/scripts/environment/core.sh
 
