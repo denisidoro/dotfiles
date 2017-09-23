@@ -1,9 +1,9 @@
 Dotfiles
 ===================
 
-Personal dotfiles with [zsh][zsh], [tmux][tmux], [neovim][neovim], [spacemacs][spacemacs], [fzf][fzf], [fasd][fasd] and more.
+Personal dotfiles.
 
-![term_demo](https://cloud.githubusercontent.com/assets/3226564/22981134/b3a3dca4-f382-11e6-9388-b576fbf6dc49.gif)
+![demo](https://user-images.githubusercontent.com/3226564/30768426-c1413f5c-9fdd-11e7-9c04-00e075c5c375.png)
 
 ### Installation
 
@@ -19,10 +19,3 @@ In order to update the dotfiles:
 ```sh
 dot env dotfiles
 ```
-
-[zsh]: http://zsh.sourceforge.net
-[tmux]: https://github.com/tmux/tmux
-[neovim]: https://neovim.io
-[spacemacs]: http://spacemacs.org/
-[fasd]: https://github.com/clvv/fasd
-[fzf]: https://github.com/junegunn/fzf
