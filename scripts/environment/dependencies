@@ -4,8 +4,8 @@ set -euo pipefail
 
 export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 
-source $DOTFILES/scripts/core/main.sh 
-source $DOTFILES/scripts/environment/core.sh 
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/environment/core.sh"
 
 ##? Installs CLI dependencies
  #? 0.3.2

@@ -2,7 +2,7 @@
 # vim: filetype=sh
 set -euo pipefail
 
-source $DOTFILES/scripts/core/main.sh 
+source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Publicly shares a file via transfer.sh
  #? 0.1.0

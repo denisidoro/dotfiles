@@ -6,24 +6,24 @@ export ZPLUG_HOME="${DOTFILES}/modules/zplug"
 export PATH="$DOTFILES/local/bin:$DOTFILES/bin:/usr/local/bin:$PATH"
 
 # load plugins
-source $DOTFILES/shell/plugins/zplug.zsh
+source "${DOTFILES}/shell/plugins/zplug.zsh"
 
 # setup plugins
-source $DOTFILES/shell/plugins/config.zsh
+source "${DOTFILES}/shell/plugins/config.zsh"
 
 # set editor
 export EDITOR='nvim'
 
 # load aliases and helper functions
-source $DOTFILES/shell/aliases/general.zsh
-source $DOTFILES/shell/aliases/browsing.zsh
-source $DOTFILES/shell/aliases/coding.zsh
-source $DOTFILES/shell/aliases/tmux.zsh
-source $DOTFILES/shell/aliases/git.zsh
-source $DOTFILES/shell/aliases/notification.zsh
+source "${DOTFILES}/shell/aliases/general.zsh"
+source "${DOTFILES}/shell/aliases/browsing.zsh"
+source "${DOTFILES}/shell/aliases/coding.zsh"
+source "${DOTFILES}/shell/aliases/tmux.zsh"
+source "${DOTFILES}/shell/aliases/git.zsh"
+source "${DOTFILES}/shell/aliases/notification.zsh"
 
 # setup key bindings
-source $DOTFILES/shell/bindings/fzf.zsh
+source "${DOTFILES}/shell/bindings/fzf.zsh"
 
 # load local custom config
 include $DOTFILES/local/zshrc

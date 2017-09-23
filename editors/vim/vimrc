@@ -19,7 +19,7 @@ if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
 endif
 
 if filereadable(expand("$DOTFILES/editors/vim/bundles"))
-  source $DOTFILES/editors/vim/bundles
+  source "${DOTFILES}/editors/vim/bundles"
 endif
 
 " Load matchit.vim, but only if the user hasn't installed a newer version.

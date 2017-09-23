@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-source $DOTFILES/scripts/core/main.sh 
-source $DOTFILES/scripts/environment/core.sh
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/environment/core.sh"
 
 ##? Matrix effect
  #? 0.1.0

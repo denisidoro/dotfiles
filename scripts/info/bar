@@ -62,7 +62,7 @@ case "${1:-}" in
 		echo "$(clock);$(calendar);$(battery);$(cpu);$(drive);$(memory);$(volume);$(wifi);$(traffic)"
 		;;
 	*)
-		source $DOTFILES/scripts/core/main.sh 
+		source "${DOTFILES}/scripts/core/main.sh"
 		docopts "$@"
 	  	;;
 esac

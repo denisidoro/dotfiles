@@ -2,8 +2,8 @@
 # vim: filetype=sh
 set -euo pipefail
 
-source $DOTFILES/scripts/core/main.sh 
-source $DOTFILES/scripts/environment/core.sh 
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/environment/core.sh"
 
 ##? Setups an OSX environment
  #? 0.1.1
