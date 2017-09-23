@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# For documentation, please refer to 
+# $DOTFILES/scripts/clojure/dot/edn.cljs
+dot clojure cljs --noreturn edn -- "${@:-}"
