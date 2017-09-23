@@ -35,22 +35,12 @@ function check_edn() {
 	local files="$1"
 
 	for file in $(echo "$files" | grep -P '\.((edn))$'); do
-		if command_exists eq2; then
-			set +e
-		    cat "$file" | eq 2> /dev/null
-		    local result=$?
-		    if [ $result -ne 0 ] ; then
-		        not_commited_msg
-		        error "Lint check of EDN object failed\n\tin $git_dir/$file"
-		        cat "$file" | eq
-		        exit 2
+	    cat "$file" | dot clojure edn > /dev/null || {
+	        error "Lint check of EDN object failed\n\tin ${git_dir}/${file}"
+		    if ! prompt_confirmation "Are you sure you want to commit this file anyway?" false; then
+		    	exit 2
 		    fi
-		else
-			error "Your EDN files couldn't be validated"
-			commited_anyway_msg
-			note "Consider running \"npm install -g edn-eq\" before commiting next time"
-		fi
-	    set -e
+		}
 	done
 }
 
