@@ -35,8 +35,8 @@ update_dotfiles_pre() {
   cd $DOTFILES
 
   echo "Attempting to update submodules..."
-  (git pull && git submodule init && git submodule update && git submodule status && \
-    cd "${DOTFILES}" && git submodule update --init --recursive "${DOTBOT_DIR}" || true)
+  (cd "$DOTFILES" && git pull && git submodule init && git submodule update \
+    && git submodule status && git submodule update --init --recursive "${DOTBOT_DIR}" || true)
 
 }
 
