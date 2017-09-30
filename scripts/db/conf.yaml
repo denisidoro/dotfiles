@@ -13,3 +13,4 @@
     ~/.tmux.conf: terminal/tmux/tmux.conf
     ~/.gitconfig: git/config
     ~/.ideavimrc: editors/intellij/ideavimrc
+    ~/.vimrc: editors/vim/vimrc

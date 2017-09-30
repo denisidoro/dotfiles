@@ -86,12 +86,12 @@ update_dotfiles_osx() {
 }
 
 update_dotfiles_linux() {
-  echo "No custom config for Linux yet"
+  echo "Adding necessary files for Linux"
+  update_dotfiles "conf.linux.yaml"
 }
 
 update_dotfiles_arm() {
-  echo "Adding necessary files for ARM"
-  update_dotfiles "conf.arm.yaml"
+  echo "No custom config files for ARM yet"
 }
 
 main "$@"

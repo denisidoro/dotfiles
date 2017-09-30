@@ -1,9 +1,0 @@
-- clean: ['~']
-
-- defaults:
-    link:
-       create: true
-
-- link:
-    ~/.vimrc: editors/vim/vimrc
-    
