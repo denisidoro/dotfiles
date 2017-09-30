@@ -50,6 +50,8 @@ super + {t,shift + t,s,f}
 super + ctrl + {x,y,z}
 	bspc node -g {locked,sticky,private}
 
+
+
 #
 # focus/swap
 #

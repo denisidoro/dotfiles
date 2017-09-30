@@ -7,9 +7,19 @@ bspc monitor -d I II III IV V VI VII VIII IX X
 bspc config border_width         2
 bspc config window_gap          12
 
-bspc config split_ratio          0.52
-bspc config borderless_monocle   true
-bspc config gapless_monocle      true
+bspc config borderless_monocle  true
+bspc config gapless_monocle     true
+bspc config focus_by_distance   true
+
+bspc config remove_unplugged_monitors true
+bspc config ignore_ewmh_focus true
+
+bspc config click_to_focus any
+bspc config pointer_modifier mod4
+bspc config pointer_action1 move
+bspc config pointer_action2 resize_corner
+
+bspc config presel_feedback_color "#FFFFFF"
 
 bspc rule -a Gimp desktop='^8' state=floating follow=on
 bspc rule -a Chromium desktop='^2'
