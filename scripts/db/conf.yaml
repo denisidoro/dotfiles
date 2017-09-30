@@ -10,6 +10,6 @@
     ~/.hushlogin: shell/hushlogin
     ~/.config/nvim/init.vim: editors/nvim/init.vim
     ~/.spacemacs: editors/spacemacs/spacemacs.el
-    ~/.tmux.conf: shell/tmux/tmux.conf
+    ~/.tmux.conf: terminal/tmux/tmux.conf
     ~/.gitconfig: git/config
     ~/.ideavimrc: editors/intellij/ideavimrc
