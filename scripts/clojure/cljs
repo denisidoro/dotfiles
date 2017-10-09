@@ -6,7 +6,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Calls a Clojurescript script
 ##?
 ##? Usage:
-##?    cljs [options] <script> -- <arguments>...
+##?    cljs [options] <script> [-- <arguments>...]
 ##?
 ##? Options:
 ##?    --classpath <classpath>   Colon-delimited list for source directories and JARs
@@ -52,8 +52,8 @@ full_namespace="${namespace}.${script}"
 args=""
 
 # quote variables
-if ! is_empty "${arguments[@]}"; then
-	for arg in "${arguments[@]}"; do
+if ! is_empty "${arguments[@]:-}"; then
+	for arg in "${arguments[@]:-}"; do
 	    escaped_arg="$(echo "$arg" | sed -E 's|\"|\\"|g')"
 	    args="$args \"${escaped_arg}\""
 	done
