@@ -18,7 +18,7 @@ zplug zsh-users/zsh-syntax-highlighting
 
 # Load the theme
 setopt prompt_subst
-zplug "nostophilia/aplos", use:aplos.zsh-theme, defer:3
+zplug "yardnsm/blox-zsh-theme", use:blox.zsh-theme, defer:3
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -32,6 +32,6 @@ fi
 zplug load
 
 # Apply theme hacks
-function prompt_short_dir { echo "%{$fg_bold[yellow]%}$(shrink_path -f)" }
-PROMPT="$(echo $PROMPT | sed -e 's/\$prompt_dir/\$(prompt_short_dir)/')"
+#function prompt_short_dir { echo "%{$fg_bold[yellow]%}$(shrink_path -f)" }
+#PROMPT="$(echo $PROMPT | sed -e 's/\$prompt_dir/\$(prompt_short_dir)/')"
 

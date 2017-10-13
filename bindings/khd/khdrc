@@ -28,18 +28,6 @@ khd mode move timeout 0.75
 khd mode move restore default
 alt - d : khd -e "mode activate move"
 
-
-
-
-# alt + cmd - h : chunkc tiling::window --swap west
-# alt + cmd - j : chunkc tiling::window --swap south
-# alt + cmd - k : chunkc tiling::window --swap north
-# alt + cmd - l : chunkc tiling::window --swap east
-
-
-
-
-# Send window to previous desktop
 move - h : chunkc tiling::window --send-to-desktop prev
 move - l : chunkc tiling::window --send-to-desktop next
 move - j : chunkc tiling::window --send-to-monitor prev
@@ -79,6 +67,7 @@ khd mode application restore default
 alt - a : khd -e "mode activate application"
 
 # open terminal
+alt - return : open -na /Applications/iTerm.app
 application - return : open -na /Applications/iTerm.app
 
 # open Spotify (music)
