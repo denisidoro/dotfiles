@@ -7,15 +7,17 @@ alt - h : chunkc tiling::window --focus west
 alt - j : chunkc tiling::window --focus south
 alt - k : chunkc tiling::window --focus north
 alt - l : chunkc tiling::window --focus east
+alt - m : chunkc tiling::window --focus biggest
+alt - n : chunkc tiling::window --focus next
 
 # focus specific desktop
 # alt - <number> : OSX native keybinding
 
 # tab desktops
-alt - o : `$HOME/.dotfiles/bin/khdx desktop tab`
+# alt - o : `$HOME/.dotfiles/bin/khdx desktop tab`
 
-# tab monitors
-alt - p : `$HOME/.dotfiles/bin/khdx monitor tab`
+# next monitor
+alt - e : chunkc tiling::monitor -f next
 
 
 # =================
@@ -28,14 +30,22 @@ khd mode move timeout 0.75
 khd mode move restore default
 alt - d : khd -e "mode activate move"
 
-move - h : chunkc tiling::window --send-to-desktop prev
-move - l : chunkc tiling::window --send-to-desktop next
-move - j : chunkc tiling::window --send-to-monitor prev
-move - k : chunkc tiling::window --send-to-monitor next
-move + shift - h : chunkc tiling::window --send-to-desktop prev; `$HOME/.dotfiles/bin/khdx desktop tab`
-move + shift - l : chunkc tiling::window --send-to-desktop next; `$HOME/.dotfiles/bin/khdx desktop tab`
-move + shift - j : chunkc tiling::window --send-to-monitor prev; chunkc tiling::monitor -f prev
-move + shift - k : chunkc tiling::window --send-to-monitor next; chunkc tiling::monitor -f next
+move - h : chunkc tiling::window --swap west
+move - j : chunkc tiling::window --swap south
+move - k : chunkc tiling::window --swap north
+move - l : chunkc tiling::window --swap east
+move - m : chunkc tiling::window --swap biggest
+move - n : chunkc tiling::window --swap next
+
+move + shift - h : chunkc tiling::window --warp west
+move + shift - j : chunkc tiling::window --warp south
+move + shift - k : chunkc tiling::window --warp north
+move + shift - l : chunkc tiling::window --warp east
+move + shift - m : chunkc tiling::window --warp biggest
+move + shift - n : chunkc tiling::window --warp next
+
+move - e : `$HOME/.dotfiles/bin/khdx monitor send next`
+
 move - 1 : chunkc tiling::window -d 1
 move - 2 : chunkc tiling::window -d 2
 move - 3 : chunkc tiling::window -d 3
@@ -45,15 +55,6 @@ move - 6 : chunkc tiling::window -d 6
 move - 7 : chunkc tiling::window -d 7
 move - 8 : chunkc tiling::window -d 8	
 move - 9 : chunkc tiling::window -d 9
-move + shift - 1 : chunkc tiling::window -d 1; khd -p "alt - 1"
-move + shift - 2 : chunkc tiling::window -d 2; khd -p "alt - 2"
-move + shift - 3 : chunkc tiling::window -d 4; khd -p "alt - 3"
-move + shift - 4 : chunkc tiling::window -d 4; khd -p "alt - 4"
-move + shift - 5 : chunkc tiling::window -d 5; khd -p "alt - 5"
-move + shift - 6 : chunkc tiling::window -d 6; khd -p "alt - 6"
-move + shift - 7 : chunkc tiling::window -d 7; khd -p "alt - 7"
-move + shift - 8 : chunkc tiling::window -d 8; khd -p "alt - 8"
-move + shift - 9 : chunkc tiling::window -d 9; khd -p "alt - 9"
 
 
 # =================
@@ -67,7 +68,7 @@ khd mode application restore default
 alt - a : khd -e "mode activate application"
 
 # open terminal
-alt - return : open -na /Applications/iTerm.app
+# alt - return : open -na /Applications/iTerm.app
 application - return : open -na /Applications/iTerm.app
 
 # open Spotify (music)
@@ -88,7 +89,7 @@ khd mode layout restore default
 alt - s : khd -e "mode activate layout"
 
 # equalize size of windows
-layout - q : chunkc tiling::desktop --equalize
+alt + o : chunkc tiling::desktop --equalize
 
 # increase region size
 layout - h : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge west
@@ -103,13 +104,13 @@ layout + shift - k : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-w
 layout + shift - l : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge east
 
 # rotate tree
-layout - r : chunkc tiling::desktop --rotate 90
+alt - r : chunkc tiling::desktop --rotate 90
 
 # mirror tree y-axis
-layout - y : chunkc tiling::desktop --mirror vertical
+alt - y : chunkc tiling::desktop --mirror vertical
 
 # mirror tree x-axis
-layout - x : chunkc tiling::desktop --mirror horizontal
+alt - x : chunkc tiling::desktop --mirror horizontal
 
 # toggle desktop offset
 layout - p : chunkc tiling::desktop --toggle offset

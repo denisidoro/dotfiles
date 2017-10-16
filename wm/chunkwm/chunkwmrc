@@ -34,7 +34,7 @@ chunkc set window_float_next             0
 chunkc set window_float_center           1
 
 # mouse interaction
-chunkc set mouse_modifier                fn
+chunkc set mouse_modifier                alt
 
 # chwm-sa (not used at the moment)
 chunkc set window_float_topmost          0
@@ -60,10 +60,12 @@ chunkc core::load tiling.so
 chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --state tile
 chunkc tiling::rule --owner Finder --name Copy --state float
 chunkc tiling::rule --owner iTerm2 --subrole AXDialog --state tile
+chunkc tiling::rule --owner \"Android Studio\" --subrole AXDialog --state tile
+chunkc tiling::rule --owner \"IntelliJ\" --subrole AXDialog --state tile
 chunkc tiling::rule --owner kitty --subrole AXDialog --state tile
 chunkc tiling::rule --owner \"qemu-system-x86_64\" --state float
-#chunkc tiling::rule --owner Emacs --state tile --desktop 8
 chunkc tiling::rule --owner Emacs --state tile
+#chunkc tiling::rule --owner Emacs --state tile --desktop 8
 #chunkc tiling::rule --owner \"Google Chrome\" --desktop 2
 #chunkc tiling::rule --owner \"Sublime Text\" --desktop 3
 # chunkc tiling::rule --owner Spotify --desktop 5
