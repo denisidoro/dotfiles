@@ -10,3 +10,5 @@
     ~/.chunkwmrc: wm/chunkwm/chunkwmrc
     ~/Library/Preferences/kitty/kitty.conf: terminal/kitty/kitty.conf
     ~/Library/Application\ Support/Übersicht/widgets/nerdbar.widget: wm/nerdbar
+    ~/.config/iterm/com.googlecode.iterm2.plist: terminal/iterm/iterm2.plist
+
