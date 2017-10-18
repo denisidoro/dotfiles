@@ -14,7 +14,10 @@ source "${DOTFILES}/shell/plugins/config.zsh"
 # set editor
 export EDITOR='nvim'
 
-# load aliases and helper functions
+# load helper functions 
+source "${DOTFILES}/shell/core.zsh"
+
+# load aliases
 source "${DOTFILES}/shell/aliases/general.zsh"
 source "${DOTFILES}/shell/aliases/browsing.zsh"
 source "${DOTFILES}/shell/aliases/coding.zsh"
