@@ -300,6 +300,11 @@ you should place your code here."
 
    (spacemacs/toggle-automatic-symbol-highlight)
 
+   (setq cider-cljs-lein-repl
+         "(do (require 'figwheel-sidecar.repl-api)
+         (figwheel-sidecar.repl-api/start-figwheel!)
+         (figwheel-sidecar.repl-api/cljs-repl))")
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

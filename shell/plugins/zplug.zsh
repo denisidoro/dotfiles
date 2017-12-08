@@ -18,7 +18,8 @@ zplug zsh-users/zsh-syntax-highlighting
 
 # Load the theme
 setopt prompt_subst
-zplug "yardnsm/blox-zsh-theme", use:blox.zsh-theme, defer:3
+#zplug "yardnsm/blox-zsh-theme", use:blox.zsh-theme, defer:3
+zplug denysdovhan/spaceship-zsh-theme, use:spaceship.zsh, from:github, as:theme
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -35,3 +36,24 @@ zplug load
 #function prompt_short_dir { echo "%{$fg_bold[yellow]%}$(shrink_path -f)" }
 #PROMPT="$(echo $PROMPT | sed -e 's/\$prompt_dir/\$(prompt_short_dir)/')"
 
+
+
+# ORDER
+SPACESHIP_PROMPT_ORDER=(
+  time          # Time stampts section
+  user          # Username section
+  host          # Hostname section
+  dir           # Current directory section
+  git           # Git section (git_branch + git_status)
+  package       # Package version
+  node          # Node.js section
+  docker        # Docker section
+  exec_time     # Execution time
+  line_sep      # Line break
+  vi_mode       # Vi-mode indicator
+  jobs          # Backgound jobs indicator
+  exit_code     # Exit code section
+  char          # Prompt character
+)
+
+SPACESHIP_PROMPT_SYMBOL="λ"

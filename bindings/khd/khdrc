@@ -10,6 +10,12 @@ alt - l : chunkc tiling::window --focus east
 alt - m : chunkc tiling::window --focus biggest
 alt - n : chunkc tiling::window --focus next
 
+# set bsp-insertion point for the focused container
+alt + shift - h : chunkc tiling::window --use-insertion-point west
+alt + shift - j : chunkc tiling::window --use-insertion-point south
+alt + shift - k : chunkc tiling::window --use-insertion-point north
+alt + shift - l : chunkc tiling::window --use-insertion-point east
+
 # focus specific desktop
 # alt - <number> : OSX native keybinding
 
@@ -104,7 +110,7 @@ layout + shift - k : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-w
 layout + shift - l : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge east
 
 # rotate tree
-alt - r : chunkc tiling::desktop --rotate 90
+# alt - r : chunkc tiling::desktop --rotate 90
 
 # mirror tree y-axis
 alt - y : chunkc tiling::desktop --mirror vertical

@@ -6,7 +6,6 @@
 
 - link:
     ~/.zshrc: shell/zshrc
-    ~/.bashrc: shell/bashrc
     ~/.hushlogin: shell/hushlogin
     ~/.config/nvim/init.vim: editors/nvim/init.vim
     ~/.spacemacs: editors/spacemacs/spacemacs.el

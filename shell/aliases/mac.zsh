@@ -1,1 +1,1 @@
-alias o="dot_or_args open"
+alias o="dot_or_args open --"
