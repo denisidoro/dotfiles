@@ -19,3 +19,14 @@ cask_install() {
   done
 }
 
+depth_github_clone() {
+  local user="$1" repo="$2"
+  mkdir -p "$HOME/tmp"
+  git clone "https://github.com/${user}/${repo}" --depth 1 "$HOME/tmp/${repo}"
+}
+
+tmp_make() {
+  local repo="$1"
+  cd "$HOME/tmp/${repo}"
+  make && sudo make install
+}

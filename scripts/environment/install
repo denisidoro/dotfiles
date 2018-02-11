@@ -1,0 +1,125 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -u
+
+export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/environment/core.sh"
+
+##? Installs commands
+ #? 0.3.2
+##?
+##? Usage:
+##?    install (vimplug|tpm|tmuxinator|fzf)
+##?    install gnu
+##?    install kitty
+##?    install bspwm
+
+docopts "$@"
+
+function install_fzf() {
+  printf "Installing fzf... "
+  if ! command_exists fzf; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf \
+      && $HOME/.fzf/install
+    echo "Installed"
+  fi
+  echo "Already installed"
+}
+
+function install_vim_plug() {
+  printf "Installing vim-plug... "
+  if ! is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
+    curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    echo "Installed"
+  fi
+  echo "Already installed"
+}
+
+function install_tpm() {
+  printf "Installing tpm... "
+  if ! is_dir $HOME/.tmux/plugins/tpm; then
+    git clone https://github.com/tmux-plugins/tpm --depth=1 $HOME/.tmux/plugins/tpm
+    echo "Installed"
+  fi
+  echo "Already installed"
+}
+
+function install_tmuxinator() {
+  printf "Installing tmuxinator... "
+  if ! command_exists tmuxinator; then
+    gem install tmuxinator
+    echo "Installed"
+  fi
+  echo "Already installed"
+}
+
+function install_gnu() {
+  printf "Installing gnu commands... "
+  if ! command_exists ggrep; then
+    brew tap homebrew/dupes
+    brew install binutils diffutils ed findutils gawk gnu-indent gnu-sed gnu-tar gnu-which gnutls grep gzip screen watch  wget && brew install wdiff --with-gettext
+    brew install bash emacs m4 make nano file-formula git less openssh rsync unzip
+    echo "Installed"
+  fi
+  echo "Already nstalled"
+}
+
+function install_kitty() {
+  printf "Installing gnu commands... "
+	mkdir -p $HOME/tmp
+  git clone https://github.com/kovidgoyal/kitty --depth 1 $HOME/tmp/kitty
+  cd $HOME/tmp/kitty
+  make
+  sudo make install
+  echo "Installed"
+}
+
+function install_fzf() {
+  echo "Installing fzf..."
+  if ! command_exists fzf; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf \
+      && $HOME/.fzf/install
+  fi
+}
+
+function install_bspwm() {
+  echo "Installing bspwm..."
+  if ! command_exists bspwm; then
+    sudo apt-get install xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev gcc make feh dmenu rofi \
+      libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev
+    depth_github_clone baskerville bspwm
+    depth_github_clone baskerville sxhkd
+    depth_github_clone baskerville xdo
+    depth_github_clone baskerville sutils
+    depth_github_clone baskerville xtitle
+    depth_github_clone LemonBoy bar    
+    exit
+    tmp_make bspwm
+    tmp_make sxhkd
+    tmp_make xdo
+    tmp_make sutils
+    tmp_make xtitle
+    tmp_make bar
+    echo "sxhkd & exec bspwm" >> $HOME/.xinitrc
+    sudo cp "$HOME/tmp/bspwm/contrib/freedesktop/bspwm.desktop" /usr/share/xsessions/   
+  fi
+}
+
+if $kitty; then
+  install_kitty
+elif $vimplug; then
+  install_vim_plug
+elif $tpm; then
+  install_tpm
+elif $tmuxinator; then
+  install_tmuxinator
+elif $gnu; then
+  install_gnu
+elif $fzf; then
+  install_fzf
+elif $bspwm; then
+  install_bspwm
+fi
