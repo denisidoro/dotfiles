@@ -54,6 +54,8 @@ function setup_brew() {
     brew install $package
   done
 
+  dot env install gnu
+
 }
 
 function setup() {
@@ -80,6 +82,7 @@ function setup() {
   dot env install vimplug
   dot env install tpm
   dot env install tmuxinator
+  dot env install spacemacs
 
   set -e
 

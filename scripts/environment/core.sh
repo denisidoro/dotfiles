@@ -19,7 +19,7 @@ cask_install() {
   done
 }
 
-depth_github_clone() {
+shallow_github_clone() {
   local user="$1" repo="$2"
   mkdir -p "$HOME/tmp"
   git clone "https://github.com/${user}/${repo}" --depth 1 "$HOME/tmp/${repo}"
