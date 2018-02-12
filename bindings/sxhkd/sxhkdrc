@@ -43,14 +43,18 @@ super + g
 #
 
 # set the window state
+# super + {t,shift + t,s,f}
+#	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 super + {t,shift + t,s,f}
-	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+    if [ -z "$(bspc query -N -n focused.tiled)" ]; then \                    
+        bspc node focused -t tiled; \                                                
+    else \
+        bspc node focused -t {tiled,pseudo_tiled,floating,fullscreen}; \                                   
+    fi
 
 # set the node flags
 super + ctrl + {x,y,z}
 	bspc node -g {locked,sticky,private}
-
-
 
 #
 # focus/swap
