@@ -14,6 +14,8 @@ xtitle -sf 'T%s\n' > "$PANEL_FIFO" &
 clock -sf 'S%a %H:%M' > "$PANEL_FIFO" &
 bspc subscribe report > "$PANEL_FIFO" &
 
+. "$DOTFILES/wm/lemonbar/panel_colors"
+
 "$DOTFILES/wm/lemonbar/panel_bar" < "$PANEL_FIFO" \
   | lemonbar -a 32 -u 2 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "$PANEL_FONT" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" \
   | sh &
