@@ -19,56 +19,51 @@ source "${DOTFILES}/scripts/environment/core.sh"
 docopts "$@"
 
 function install_fzf() {
-  printf "Installing fzf... "
+  echo "Installing fzf..."
   if ! command_exists fzf; then
     git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf \
       && $HOME/.fzf/install
-    echo "Installed"
   fi
-  echo "Already installed"
+  echo "Installed"
 }
 
 function install_vim_plug() {
-  printf "Installing vim-plug... "
+  echo "Installing vim-plug..."
   if ! is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
     curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    echo "Installed"
   fi
-  echo "Already installed"
+  echo "Installed"
 }
 
 function install_tpm() {
-  printf "Installing tpm... "
+  echo "Installing tpm..."
   if ! is_dir $HOME/.tmux/plugins/tpm; then
     git clone https://github.com/tmux-plugins/tpm --depth=1 $HOME/.tmux/plugins/tpm
-    echo "Installed"
   fi
-  echo "Already installed"
+  echo "Installed"
 }
 
 function install_tmuxinator() {
-  printf "Installing tmuxinator... "
+  echo "Installing tmuxinator..."
   if ! command_exists tmuxinator; then
     gem install tmuxinator
-    echo "Installed"
   fi
-  echo "Already installed"
+  echo "Installed"
 }
 
 function install_gnu() {
-  printf "Installing gnu commands... "
+  echo "Installing gnu commands..."
   if ! command_exists ggrep; then
     brew tap homebrew/dupes
     brew install binutils diffutils ed findutils gawk gnu-indent gnu-sed gnu-tar gnu-which gnutls grep gzip screen watch  wget && brew install wdiff --with-gettext
     brew install bash emacs m4 make nano file-formula git less openssh rsync unzip
-    echo "Installed"
   fi
   echo "Already nstalled"
 }
 
 function install_kitty() {
-  printf "Installing gnu commands... "
+  echo "Installing gnu commands..."
 	mkdir -p $HOME/tmp
   git clone https://github.com/kovidgoyal/kitty --depth 1 $HOME/tmp/kitty
   cd $HOME/tmp/kitty
@@ -83,6 +78,7 @@ function install_fzf() {
     git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf \
       && $HOME/.fzf/install
   fi
+  echo "Installed"
 }
 
 function install_bspwm() {
@@ -96,16 +92,16 @@ function install_bspwm() {
     depth_github_clone baskerville sutils
     depth_github_clone baskerville xtitle
     depth_github_clone LemonBoy bar    
-    exit
     tmp_make bspwm
     tmp_make sxhkd
     tmp_make xdo
     tmp_make sutils
     tmp_make xtitle
     tmp_make bar
-    echo "sxhkd & exec bspwm" >> $HOME/.xinitrc
-    sudo cp "$HOME/tmp/bspwm/contrib/freedesktop/bspwm.desktop" /usr/share/xsessions/   
+    #echo "sxhkd & exec bspwm" >> $HOME/.xinitrc
+    #sudo cp "$HOME/tmp/bspwm/contrib/freedesktop/bspwm.desktop" /usr/share/xsessions/   
   fi
+  echo "Installed"
 }
 
 if $kitty; then
