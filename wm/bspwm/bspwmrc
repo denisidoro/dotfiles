@@ -30,4 +30,4 @@ bspc rule -a Screenkey manage=offd
 feh --randomize --bg-fill ~/Pictures/Wallpapers
 
 [ -e "$PANEL_FIFO" ] && bspc subscribe report > "$PANEL_FIFO" &
-pgrep -x panel > /dev/null || panel &
+pgrep -x panel > /dev/null || "$DOTFILES/wm/lemonbar/panel" &
