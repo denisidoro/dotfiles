@@ -54,8 +54,6 @@ function setup_brew() {
     brew install $package
   done
 
-  dot env install gnu
-
 }
 
 function setup() {

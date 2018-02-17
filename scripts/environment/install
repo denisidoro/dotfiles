@@ -51,7 +51,7 @@ function install_gnu() {
 }
 
 function install_kitty() {
-  echo "Installing gnu commands..."
+  echo "Installing kitty..."
 	mkdir -p $HOME/tmp
   git clone https://github.com/kovidgoyal/kitty --depth 1 $HOME/tmp/kitty
   cd $HOME/tmp/kitty
