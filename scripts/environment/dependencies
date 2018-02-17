@@ -77,7 +77,7 @@ function setup() {
   esac
   
   dot env install fzf
-  dot env install vimplug
+  dot env install spacevim
   dot env install tpm
   dot env install tmuxinator
   dot env install spacemacs

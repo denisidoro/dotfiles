@@ -7,7 +7,7 @@
 - link:
     ~/.zshrc: shell/zshrc
     ~/.hushlogin: shell/hushlogin
-    ~/.config/nvim/init.vim: editors/nvim/init.vim
+    ~/.spacevim: editors/spacevim/init.vimrc
     ~/.spacemacs: editors/spacemacs/spacemacs.el
     ~/.tmux.conf: terminal/tmux/tmux.conf
     ~/.gitconfig: git/config

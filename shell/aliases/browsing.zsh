@@ -2,6 +2,8 @@
 # listing
 # ===============
 
+alias o="dot_or_args open --"
+
 #alias ls='ls --color=auto'
 alias lst="tree -L 2"
 
