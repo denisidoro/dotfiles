@@ -1,0 +1,9 @@
+// Settings in here override those in "Default/Preferences.sublime-settings",
+// and are overridden in turn by syntax-specific settings.
+{
+  "folder_exclude_patterns": ["node_modules", ".svn", ".git", ".hg", ".lumo_cache"],
+  "file_exclude_patterns": ["*.pyc", "*.pyo", "*.exe", "*.dll", "*.obj","*.o", "*.a", "*.lib", "*.so", "*.dylib", "*.ncb", "*.sdf", "*.suo", "*.pdb", "*.idb", ".DS_Store", "*.class", "*.psd", "*.db", "*.sublime-workspace"],
+  "binary_file_patterns": ["generated/*", "*.tbz2", "*.gzip", "*.ttf", "*.tga", "*.dds", "*.ico", "*.eot", "*.pdf", "*.swf", "*.jar", "*.zip"],
+  "tab_size": 2,
+  "translate_tabs_to_spaces": true,
+}

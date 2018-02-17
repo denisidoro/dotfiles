@@ -14,3 +14,4 @@
     ~/.ideavimrc: editors/intellij/ideavimrc
     ~/.vimrc: editors/vim/vimrc
     ~/.gitignore: git/homeignore
+    ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings: editors/sublime/preferences.sublime-settings
