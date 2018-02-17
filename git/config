@@ -27,4 +27,3 @@
   path = ~/.dotfiles/local/gitconfig
 [pull]
   rebase = true
-

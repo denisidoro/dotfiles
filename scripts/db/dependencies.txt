@@ -7,6 +7,11 @@ neovim
 fasd
 ruby
 python
+ranger
+curl
+fasd
+tig
+emacs
 
 brew:
 the_silver_searcher

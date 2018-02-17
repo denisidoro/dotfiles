@@ -16,7 +16,7 @@ source "${DOTFILES}/scripts/environment/core.sh"
 docopts "$@"
 
 function main() {
-	is_osx && gnu_install; 
+	is_osx && dot env install gnu; 
 	setup; 
 }
 
@@ -56,45 +56,6 @@ function setup_brew() {
 
 }
 
-function install_fzf() {
-  echo "Installing fzf..."
-  if ! command_exists fzf; then
-    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf \
-      && $HOME/.fzf/install \
-      || true
-  fi
-}
-
-function install_vim_plug() {
-  echo "Installing vim-plug..."
-  if ! is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
-    curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-    http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  fi
-}
-
-function install_tpm() {
-  echo "Installing tpm..."
-  if ! is_dir $HOME/.tmux/plugins/tpm; then
-    git clone https://github.com/tmux-plugins/tpm --depth=1 $HOME/.tmux/plugins/tpm
-  fi
-}
-
-function install_tmuxinator() {
-  echo "Installing tmuxinator..."
-  if ! command_exists tmuxinator; then
-    gem install tmuxinator
-  fi
-}
-
-function gnu_install() {
-  if ! command_exists ggrep; then
-    brew tap homebrew/dupes
-    brew install binutils diffutils ed findutils gawk gnu-indent gnu-sed gnu-tar gnu-which gnutls grep gzip screen watch  wget && brew install wdiff --with-gettext
-    brew install bash emacs m4 make nano file-formula git less openssh rsync unzip
-  fi
-}
-
 function setup() {
 
   package_manager=$(get_package_manager)
@@ -107,18 +68,21 @@ function setup() {
     echo "Detected package manager: $package_manager"
   fi
 
-  # Invoke platform-specific setup
   set +e
+
+  # Invoke platform-specific setup
   case $package_manager in
     brew) setup_brew;;
     apt) setup_apt;;
   esac
-  set -e
+  
+  dot env install fzf
+  dot env install vimplug
+  dot env install tpm
+  dot env install tmuxinator
+  dot env install spacemacs
 
-  install_fzf
-  install_vim_plug
-  install_tpm
-  install_tmuxinator
+  set -e
 
   # Setup dotfiles
   cd $DOTFILES
