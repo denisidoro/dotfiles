@@ -16,65 +16,54 @@ source "${DOTFILES}/scripts/environment/core.sh"
 docopts "$@"
 
 function install_vimplug() {
-  echo "Installing vimplug..."
   if ! is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
     curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   fi
-  echo "Installed"
 }
 
 function install_spacevim() {
-  bash <(curl -fsSL https://raw.githubusercontent.com/liuchengxu/space-vim/master/install.sh)
+  cat "$HOME/.config/nvim/init.vim" 2> /dev/null \
+    | grep -q "space-vim" 2> /dev/null \
+    || bash <(curl -fsSL https://raw.githubusercontent.com/liuchengxu/space-vim/master/install.sh)
 }
 
 function install_tpm() {
-  echo "Installing tpm..."
   if ! is_dir $HOME/.tmux/plugins/tpm; then
     git clone https://github.com/tmux-plugins/tpm --depth=1 $HOME/.tmux/plugins/tpm
   fi
-  echo "Installed"
 }
 
 function install_tmuxinator() {
-  echo "Installing tmuxinator..."
   if ! command_exists tmuxinator; then
     gem install tmuxinator
   fi
-  echo "Installed"
 }
 
 function install_gnu() {
-  echo "Installing gnu commands..."
   if ! command_exists ggrep; then
     brew tap homebrew/dupes
     brew install binutils diffutils ed findutils gawk gnu-indent gnu-sed gnu-tar gnu-which gnutls grep gzip screen watch  wget && brew install wdiff --with-gettext
     brew install bash emacs m4 make nano file-formula git less openssh rsync unzip
   fi
-  echo "Already installed"
 }
 
 function install_kitty() {
-  echo "Installing kitty..."
 	mkdir -p $HOME/tmp
   git clone https://github.com/kovidgoyal/kitty --depth 1 $HOME/tmp/kitty
   cd $HOME/tmp/kitty
   make
   sudo make install
-  echo "Installed"
 }
 
 function install_fzf() {
-  echo "Installing fzf..."
   if ! command_exists fzf; then
     git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf \
       && $HOME/.fzf/install
   fi
-  echo "Installed"
 }
 
 function install_bspwm() {
-  echo "Installing bspwm..."
   if ! command_exists bspwm; then
     sudo apt-get install xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev gcc make feh dmenu rofi \
       libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev
@@ -93,17 +82,13 @@ function install_bspwm() {
     echo "sxhkd & exec bspwm" >> $HOME/.xinitrc
     sudo cp "$HOME/tmp/bspwm/contrib/freedesktop/bspwm.desktop" /usr/share/xsessions/   
   fi
-  echo "Installed"
 }
 
 function install_spacemacs() {
-  echo "Installing spacemacs..."
   git clone https://github.com/syl20bnr/spacemacs --depth 1 ~/.emacs.d
-  echo "Installed"
 }
 
 function install_watchman() {
-  echo "Installing watchman..."
   if ! command_exists watchman; then
     sudo apt-get install -y autoconf automake build-essential python-dev
     shallow_github_clone facebook watchman
@@ -112,7 +97,6 @@ function install_watchman() {
     ./configure     
     tmp_make watchman
   fi
-  echo "Installed"
 }
 
 function list_commands() {
@@ -121,12 +105,15 @@ function list_commands() {
   note "Available commands"
   echo "$2" \
     | grep -Eo "function install_(\w\w*?)\(" \
-    | sed -E 's/.*_(.*?)\(/\1/g'
+    | sed -E 's/.*_(.*?)\(/\1/g' \
+    | sort
 }
 
 filesource="$(cat "$0")"
 
 echo "$filesource" \
   | grep "function install_${cmd}" &> /dev/null \
+  && echo "Installing ${cmd}..." \
   && "install_${cmd}" \
+  && echo "Installed" \
   || list_commands "$cmd" "$filesource"
