@@ -1,0 +1,15 @@
+### .gitignore for ag searcher and space-vim
+###
+### exception rules aren't used because they
+### won't work with ag
+
+# packages and logs
+node_modules
+.git
+
+# every hidden file/folder except .dotfiles
+/.[0-9a-cA-C]*
+/.[dD][a-nA-N]*
+# !/.dotfiles
+/.[dD][p-zP-Z]*
+/.[e-zE-Z]*

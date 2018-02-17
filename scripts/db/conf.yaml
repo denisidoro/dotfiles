@@ -13,3 +13,4 @@
     ~/.gitconfig: git/config
     ~/.ideavimrc: editors/intellij/ideavimrc
     ~/.vimrc: editors/vim/vimrc
+    ~/.gitignore: git/homeignore
