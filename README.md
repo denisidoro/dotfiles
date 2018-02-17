@@ -10,7 +10,6 @@ Personal dotfiles.
 ```sh
 git clone https://github.com/denisidoro/dotfiles.git ~/.dotfiles
 bash ~/.dotfiles/scripts/environment/init
-bash ~/.dotfiles/scripts/environment/health
 ```
 
 If the setup went OK you should now have the `dot` command in your `$PATH`.

@@ -24,6 +24,10 @@ function install_vimplug() {
   echo "Installed"
 }
 
+function install_spacevim() {
+  bash <(curl -fsSL https://raw.githubusercontent.com/liuchengxu/space-vim/master/install.sh)
+}
+
 function install_tpm() {
   echo "Installing tpm..."
   if ! is_dir $HOME/.tmux/plugins/tpm; then
