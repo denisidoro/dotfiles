@@ -3,19 +3,7 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
-##? Native alert
- #? 0.1.0
-##?
-##? Usage:
-##?    alert <title> <message>
-##?    alert <title> <subtitle> <message>
-##?
-##? Examples:
-##?    alert title message
-
-# docopts "$@"
-
-#!/usr/bin/env bash
+##? TODO: docopts
 
 # how long should the popup remain?
 duration=3
@@ -35,8 +23,9 @@ bar_fg='#ffffffff'
 # font used
 bar_font_1='System San Francisco Display-16'
 bar_font_2='FontAwesome-16'
-# compute all this
+
+# computation
 baropt="-d -g ${barw}x${barh}+${barx}+${bary} -f ${bar_font_1} -f ${bar_font_2} -F${bar_fg} -B${bar_bg}"
 
-#Create the popup and make it live for 3 seconds
+# create the popup and make it live for 3 seconds
 (echo -e "${1}"; sleep ${duration}) | lemonbar ${baropt}
