@@ -42,7 +42,7 @@ update_dotfiles_pre() {
 
 update_dotfiles() {
 
-  CONFIG="$DOTFILES/scripts/db/$1"
+  CONFIG="$DOTFILES/symlinks/$1"
   shift
 
   echo

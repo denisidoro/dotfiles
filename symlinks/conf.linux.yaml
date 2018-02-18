@@ -6,6 +6,5 @@
 
 - link:
     ~/.config/bspwm/bspwmrc: wm/bspwm/bspwmrc
-    ~/.config/polybar/config: wm/polybar/config
     ~/.config/sxhkd/sxhkdrc: bindings/sxhkd/sxhkdrc
     
