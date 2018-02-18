@@ -20,6 +20,7 @@ while read -r line ; do
       IFS=':'
       set -- ${line#?}
       while [ $# -gt 0 ] ; do
+        skip=false
         item=$1
         name=${item#?}
         case $item in
@@ -48,6 +49,7 @@ while read -r line ; do
                 FG=$COLOR_FREE_FG
                 BG=$COLOR_FREE_BG
                 UL=$BG
+                skip=true
                 ;;
               F*)
                 if [ "$on_focused_monitor" ] ; then
@@ -101,11 +103,13 @@ while read -r line ; do
                 fi
                 ;;
             esac
-            wm="${wm}%{F${FG}}%{B${BG}}%{U${UL}}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{B-}%{F-}%{-u}"
+            if ! $skip; then
+              wm="${wm}%{F${FG}}%{B${BG}}%{U${UL}}%{+u}%{A:bspc desktop -f ${name}:} ${name} %{A}%{B-}%{F-}%{-u}"
+            fi
             ;;
           [LTG]*)
             # layout, state and flags
-            wm="${wm}%{F$COLOR_STATE_FG}%{B$COLOR_STATE_BG} ${name} %{B-}%{F-}"
+            # wm="${wm}%{F$COLOR_STATE_FG}%{B$COLOR_STATE_BG} ${name} %{B-}%{F-}"
             ;;
         esac
         shift
