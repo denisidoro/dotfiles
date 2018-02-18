@@ -4,11 +4,17 @@
 
 # terminal emulator
 super + Return
-	mate-terminal
+	urxvt
+
+super + b
+	urxvt -e sh -c 'cd && dir="$(ag --hidden --ignore .git -g "" | xargs dirname | sort -u | fzf +m)" && cd "$dir"; zsh'
+
+super + c
+	google-chrome
 
 # program launcher
 super + @space
-	dmenu_run
+	rofi -show run -terminal urxvt -lines 5
 
 # make sxhkd reload its configuration files:
 super + Escape

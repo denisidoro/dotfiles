@@ -1,8 +1,9 @@
+alias o="dot_or_args open --"
+alias r="dot_or_args ranger --"
+
 # ===============
 # listing
 # ===============
-
-alias o="dot_or_args open --"
 
 #alias ls='ls --color=auto'
 alias lst="tree -L 2"
@@ -65,11 +66,15 @@ fs() {
 
 # fd - cd to selected directory
 fd() {
-  local dir
-  dir=$(find ${1:-.} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf +m) &&
-  cd "$dir"
+  local dir=$(cd "${1:-$HOME}" \
+    && ag --hidden --ignore .git -g "" \
+    | xargs dirname \
+    | sort -u \
+    | fzf +m) \
+    && cd "$dir"
 }
+
+alias fdd="fd ."
 
 # jumping
 alias a='fasd -a'           # any
@@ -85,12 +90,6 @@ alias j='fasd_cd -d'        # cd, same functionality as j in autojump
 #}
 alias zz='fasd_cd -d -i'    # cd with interactive selection
 alias v="fasd -f -e nvim"   # edit file with vim
-
-fl() {
-    local folder=$(locate / | xargs -I {} bash -c 'if [ -d "{}" ]; then echo {}; fi' | fzf-tmux --query="$1" --multi --select-1 --exit-0 --reverse --height 25%) \
-        && cd "$folder"
-}
-
 
 # cf - fuzzy cd from anywhere
 # ex: cf word1 word2 ... (even part of a file name)
