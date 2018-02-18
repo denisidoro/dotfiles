@@ -1,11 +1,13 @@
 #! /bin/sh
 
+# Set keybindings
 sxhkd &
 
+# Set wm config
 bspc monitor -d 1 2 3 4 5 6 7 8 9
 
 bspc config border_width         2
-bspc config window_gap          12
+bspc config window_gap           6
 
 bspc config borderless_monocle  true
 bspc config gapless_monocle     true
@@ -19,7 +21,7 @@ bspc config pointer_modifier mod4
 bspc config pointer_action1 move
 bspc config pointer_action2 resize_corner
 
-bspc config presel_feedback_color "#FFFFFF"
+bspc config presel_feedback_color "#000000"
 
 bspc rule -a Gimp desktop='^8' state=floating follow=on
 bspc rule -a Chromium desktop='^2'
@@ -27,9 +29,12 @@ bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=offd
 
+# Set walppaper
 feh --randomize --bg-fill ~/Pictures/Wallpapers
 
+# Enable mate themes
 mate-settings-daemon &
 
+# Set panel
 [ -e "$PANEL_FIFO" ] && bspc subscribe report > "$PANEL_FIFO" &
 pgrep -x panel > /dev/null || "$DOTFILES/wm/lemonbar/panel" &
