@@ -15,8 +15,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docopts "$@"
 
-if [ -n $message ]; then
-	[ -n $subtitle ] \
+if [ -n "$message" ]; then
+	[ -n "$subtitle" ] \
 		&& osascript -e "display notification \"$message\" with title \"$title\" subtitle \"$subtitle\"" \
 		|| osascript -e "display notification \"$message\" with title \"$title\""
 fi
