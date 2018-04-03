@@ -31,7 +31,7 @@ function newest_emulator() {
 
 function start_emulator() {
 	local identifier="$1"
-	emulator -avd "$identifier" -netdelay none -netspeed full
+	emulator -avd "$identifier" -netdelay none -netspeed full & disown
 }
 
 function start_newest_emulator() {
