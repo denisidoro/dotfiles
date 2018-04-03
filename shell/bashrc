@@ -1,3 +1,32 @@
-if [ -t 1 ]; then
-	exec zsh
-fi
+#if [ -t 1 ]; then
+#       exec zsh
+#fi
+
+function nonzero_return() {
+	RETVAL=$?
+	[ $RETVAL -ne 0 ] && echo "$RETVAL"
+}
+
+# set prompt
+export PS1="\n\[\e[32m\]\w\[\e[m\] \[\e[31m\]$(nonzero_return)\[\e[m\]\n\[\e[33m\]\\$\[\e[m\] "
+
+# set environment
+export DOTFILES=$HOME/.dotfiles
+export ZPLUG_HOME="${DOTFILES}/modules/zplug"
+
+# add folders to PATH
+export PATH="$DOTFILES/local/bin:$DOTFILES/bin:/usr/local/bin:$PATH"
+
+# set editor
+export EDITOR='nvim'
+
+# load helper functions 
+source "${DOTFILES}/shell/core.zsh"
+
+# load aliases
+source "${DOTFILES}/shell/aliases/general.zsh"
+source "${DOTFILES}/shell/aliases/browsing.zsh"
+source "${DOTFILES}/shell/aliases/coding.zsh"
+source "${DOTFILES}/shell/aliases/tmux.zsh"
+source "${DOTFILES}/shell/aliases/git.zsh"
+source "${DOTFILES}/shell/aliases/notification.zsh"

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -u
+
+echo "Initiation setup..."
+
+pkg install tmux neovim curl git openssh termux-packages ncurses-utils python
+
+echo "Setup done!"

@@ -1,8 +1,8 @@
-include() {
+function include() {
     [[ -f "$1" ]] && source "$1"
 }
 
-indexof() { 
+function indexof() { 
 	local readonly index="$1"
 		i=0; 
 	shift
@@ -16,7 +16,7 @@ indexof() {
 	echo -1; 
 }
 
-dot_or_args() {
+function dot_or_args() {
 	local readonly dash_index="$(indexof "--" "$@")"
 		readonly fn="${@:1:$((dash_index-1))}"
 	shift $dash_index
