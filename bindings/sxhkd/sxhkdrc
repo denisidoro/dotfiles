@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + Return
-	urxvt
+	mate-terminal
 
 super + b
 	urxvt -e sh -c 'cd && dir="$(ag --hidden --ignore .git -g "" | xargs dirname | sort -u | fzf +m)" && cd "$dir"; zsh'
