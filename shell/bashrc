@@ -30,3 +30,6 @@ source "${DOTFILES}/shell/aliases/coding.zsh"
 source "${DOTFILES}/shell/aliases/tmux.zsh"
 source "${DOTFILES}/shell/aliases/git.zsh"
 source "${DOTFILES}/shell/aliases/notification.zsh"
+
+# load local custom config
+source $DOTFILES/local/zshrc
