@@ -9,7 +9,6 @@ function script_dir() {
 }
 
 function read_dependencies() {
-
   local file
   file=$(rsrc "db/dependencies.txt")
   echo "$(cat "$file")\n\n"
@@ -29,4 +28,3 @@ function from_dependencies() {
     echo "$dependencies" | grep -Pzo "^$key:\n(.|\n)*?\n{2}" | tail -n +2 | sed '/^$/d'                
   done
 }
-

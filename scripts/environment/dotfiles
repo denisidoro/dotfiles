@@ -18,12 +18,29 @@ docopts "$@"
 DOTBOT_DIR="modules/dotbot"
 DOTBOT_BIN="bin/dotbot"
 
+function has_tag() {
+  contains_string "$@"
+}
+
 function main() {
+  local git_info=$(cd "$(git rev-parse --show-toplevel)" && git log -n 1 --pretty=format:'%ad - %h' --date=format:'%Y-%m-%d %Hh%M')
+  note "Updating dotfiles\n$git_info\n"
+
+  local tags=$(platform_tags)
+  warning "Current config: $tags"
+  echo
+
   update_dotfiles_pre;
   update_dotfiles_common;
-  is_osx && { update_dotfiles_osx; }
-  is_linux && { update_dotfiles_linux; }
-  is_arm && { update_dotfiles_arm; }
+
+  has_tag "$tags" "osx" && { update_dotfiles_osx; }
+  has_tag "$tags" "linux" && { update_dotfiles_linux; }
+  has_tag "$tags" "arm" && { update_dotfiles_arm; }
+  has_tag "$tags" "x86" && { update_dotfiles_x86; }
+  has_tag "$tags" "android" && { update_dotfiles_android; }
+
+  exit 0
+
   update_dotfiles_pos;
 }
 
@@ -36,7 +53,7 @@ update_dotfiles_pre() {
 
   echo "Attempting to update submodules..."
   (cd "$DOTFILES" && git pull && git submodule init && git submodule update \
-    && git submodule status && git submodule update --init --recursive "${DOTBOT_DIR}" || true)
+    && git submodule status && git submodule update --init --recursive "${DOTBOT_DIR}" || true) 2> /dev/null
 
 }
 
@@ -81,17 +98,25 @@ update_dotfiles_common() {
 }
 
 update_dotfiles_osx() {
-  echo "Adding necessary files for OSX"
+  echo "Configuring for OSX..."
   update_dotfiles "conf.osx.yaml"
 }
 
 update_dotfiles_linux() {
-  echo "Adding necessary files for Linux"
+  echo "Configuring for Linux..."
   update_dotfiles "conf.linux.yaml"
 }
 
 update_dotfiles_arm() {
-  echo "No custom config files for ARM yet"
+  echo "No custom config for ARM"
+}
+
+update_dotfiles_x86() {
+  echo "No custom config for x86"
+}
+
+update_dotfiles_android() {
+  echo "No custom config for Android"
 }
 
 main "$@"
