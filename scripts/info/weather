@@ -10,8 +10,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    weather [<location>]
 
-docopts "$@"
+docs::eval "$@"
 
-is_empty ${location:-""} \
+coll::is_empty ${location:-""} \
 	&& curl -s "wttr.in" \
 	|| curl -s "wttr.in/$location"

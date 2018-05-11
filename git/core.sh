@@ -8,7 +8,7 @@ function prompt_if_protected() {
 	local protected_branch="$2"
 	
 	if [ $protected_branch = $current_branch ]; then  
-	    if ! prompt_confirmation "Are you sure you want to push to $protected_branch?" true; then
+	    if ! feedback::confirmation "Are you sure you want to push to $protected_branch?" true; then
 	    	exit 1
 	    fi
 	fi  
@@ -37,7 +37,7 @@ function check_edn() {
 	for file in $(echo "$files" | grep -P '\.((edn))$'); do
 	    cat "$file" | dot clojure edn > /dev/null || {
 	        error "Lint check of EDN object failed\n\tin ${git_dir}/${file}"
-		    if ! prompt_confirmation "Are you sure you want to commit this file anyway?" false; then
+		    if ! feedback::confirmation "Are you sure you want to commit this file anyway?" false; then
 		    	exit 2
 		    fi
 		}
@@ -57,7 +57,7 @@ function match_content() {
 			error "$file matched the \"$name\" blacklist content regex:"
 			echo "$res"
 			if $stop; then		
-			    if ! prompt_confirmation "Are you sure you want to commit anyway?" false; then
+			    if ! feedback::confirmation "Are you sure you want to commit anyway?" false; then
 			    	exit 3
 			    fi
 			else
@@ -80,7 +80,7 @@ function match_filename() {
 			error "$file matched the \"$name\" blacklist filename regex:"
 
 			if $stop; then		
-			    if ! prompt_confirmation "Are you sure you want to commit anyway?" false; then
+			    if ! feedback::confirmation "Are you sure you want to commit anyway?" false; then
 			    	exit 4
 			    fi
 			else

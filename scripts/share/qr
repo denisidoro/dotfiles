@@ -13,6 +13,6 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Examples:
 ##?    qr foo
 
-docopts "$@"
+docs::eval "$@"
 
 echo "$content" | curl -F-=\<- qrenco.de

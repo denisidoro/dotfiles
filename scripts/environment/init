@@ -13,27 +13,27 @@ dot() {
   "$DOTFILES/bin/dot" "$@"
 }
 
-command_exists() {
+platform::command_exists() {
   type "$1" &> /dev/null ;
 }
 
-is_osx() {
+platform::is_osx() {
   [[ `uname -s` == "Darwin" ]]
 }
 
 install_brew_if_on_osx() {
-	if is_osx; then
-		if ! command_exists brew; then
+	if platform::is_osx; then
+		if ! platform::command_exists brew; then
     		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 		fi
 	fi
 }
 
 install_git_and_python() {
-	if command_exists brew; then
+	if platform::command_exists brew; then
 		brew install git
 		brew install python
-	elif command_exists apt; then
+	elif platform::command_exists apt; then
 		#sudo add-apt-repository $repository -y git-core/ppa
 		sudo apt-get install -y git
 		sudo apt-get install -y python

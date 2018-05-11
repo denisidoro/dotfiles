@@ -11,7 +11,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    khdx desktop (focus|send) (next|previous|tab)
 ##?    khdx monitor send (next|previous)
 
-docopts "$@"
+docs::eval "$@"
 
 TOTAL_MONITORS=2
 

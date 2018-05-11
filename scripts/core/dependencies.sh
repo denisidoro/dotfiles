@@ -8,16 +8,16 @@ function script_dir() {
   cd "$(dirname "${BASH_SOURCE[0]}")" && pwd
 }
 
-function read_dependencies() {
+function deps::read() {
   local file
   file=$(rsrc "db/dependencies.txt")
   echo "$(cat "$file")\n\n"
 }
 
-function from_dependencies() {
+function deps::from() {
   # install compatible grep if necessary
-  if is_osx; then
-   if ! command_exists ggrep; then
+  if platform::is_osx; then
+   if ! platform::command_exists ggrep; then
      brew tap homebrew/dupes
      brew install homebrew/dupes/grep
    fi

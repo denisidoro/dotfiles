@@ -42,7 +42,7 @@ function call_global_lumo() {
 
 # install modules if necessary
 # here, the test against neodoc is done because it should always be present
-if ! is_dir "${DOTFILES}/scripts/node_modules/neodoc"; then
+if ! fs::is_dir "${DOTFILES}/scripts/node_modules/neodoc"; then
     pushd "${DOTFILES}/scripts" > /dev/null
     error "Some npm packages are missing" && warning "Performing npm install..." \
         && npm install
@@ -50,9 +50,9 @@ if ! is_dir "${DOTFILES}/scripts/node_modules/neodoc"; then
 fi
 
 # call available lumo binary
-if is_file "$LOCAL_BIN"; then
+if fs::is_file "$LOCAL_BIN"; then
     call_local_lumo "$@"
-elif command_exists lumo; then
+elif platform::command_exists lumo; then
     call_global_lumo "$@"
 elif npm install -g lumo-cljs; then
     call_global_lumo "$@"

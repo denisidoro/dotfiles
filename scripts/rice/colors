@@ -16,7 +16,7 @@ source "${DOTFILES}/scripts/environment/core.sh"
 ##? Usage:
 ##?    colors
 
-docopts "$@"
+docs::eval "$@"
 
 T='gYw'
 

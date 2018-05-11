@@ -14,9 +14,9 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Options:
 ##?     --fast   Fast response with the external IP only
 
-docopts "$@"
+docs::eval "$@"
 
-function get_traffic() {
+function traffic::get() {
 	netstat -w1 & sleep 1.5; kill $!
 }
 
@@ -25,5 +25,5 @@ if $ip; then
 		&& dig +short myip.opendns.com @resolver1.opendns.com \
 		|| curl -s ifconfig.me/all.json | jq
 elif $traffic; then
-	get_traffic | tail -n1 | awk '{print $3 " " $6}'
+	traffic::get | tail -n1 | awk '{print $3 " " $6}'
 fi

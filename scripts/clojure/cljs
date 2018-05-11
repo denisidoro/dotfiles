@@ -41,7 +41,7 @@ function call_cljs() {
 	   --eval "(require '[${namespace} :as ns]) (ns/${fn} $@)"
 }
 
-docopts "$@"
+docs::eval "$@"
 
 # cd to pertinent folder so that the package.json is read
 pushd "${DOTFILES}/scripts" > /dev/null
@@ -52,7 +52,7 @@ full_namespace="${namespace}.${script}"
 args=""
 
 # quote variables
-if ! is_empty "${arguments[@]:-}"; then
+if ! coll::is_empty "${arguments[@]:-}"; then
 	for arg in "${arguments[@]:-}"; do
 	    escaped_arg="$(echo "$arg" | sed -E 's|\"|\\"|g')"
 	    args="$args \"${escaped_arg}\""

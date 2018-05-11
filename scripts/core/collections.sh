@@ -1,11 +1,11 @@
 #!/bin/user/env bash
 
-function is_empty() {
+function coll::is_empty() {
   local var=${1}
   [[ -z ${var} ]]
 }
 
-function contains_element() {
+function coll::contains_element() {
   elements="${@:2}"
   element="${1}"
 
@@ -16,9 +16,3 @@ function contains_element() {
   done
   return 0
 }
-
-function contains_string() {
-  echo "${1}" | grep "${2}" -q
-  echo $?
-}
-

@@ -6,7 +6,7 @@ source "${DOTFILES}/scripts/core/collections.sh"
 source "${DOTFILES}/scripts/core/debug.sh"
 source "${DOTFILES}/scripts/core/dependencies.sh"
 source "${DOTFILES}/scripts/core/documentation.sh"
-source "${DOTFILES}/scripts/core/file.sh"
+source "${DOTFILES}/scripts/core/filesystem.sh"
 source "${DOTFILES}/scripts/core/string.sh"
 source "${DOTFILES}/scripts/core/feedback.sh"
 

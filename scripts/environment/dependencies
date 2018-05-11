@@ -13,10 +13,10 @@ source "${DOTFILES}/scripts/environment/core.sh"
 ##? Usage:
 ##?    dependencies
 
-docopts "$@"
+docs::eval "$@"
 
 function main() {
-	is_osx && dot env install gnu; 
+	platform::is_osx && dot env install gnu; 
 	setup; 
 }
 
@@ -26,7 +26,7 @@ function setup_apt() {
   sudo apt-get install software-properties-common
 
   # Add third-party repositories
-  for repository in $(from_dependencies "apt-repositories")
+  for repository in $(deps::from "apt-repositories")
   do
     sudo add-apt-repository $repository -y
   done
@@ -34,7 +34,7 @@ function setup_apt() {
   sudo apt-get upgrade -y
 
   # Install essential commands
-  for package in $(from_dependencies "brew-apt" "apt")
+  for package in $(deps::from "brew-apt" "apt")
   do 
     sudo apt-get install -y $package
   done
@@ -44,12 +44,12 @@ function setup_apt() {
 function setup_brew() {
 
   # Install brew
-  if ! command_exists brew ; then
+  if ! platform::command_exists brew ; then
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   fi
 
   # Install essential commands
-  for package in $(from_dependencies "brew-apt" "brew")
+  for package in $(deps::from "brew-apt" "brew")
   do
     brew install $package
   done
@@ -58,8 +58,8 @@ function setup_brew() {
 
 function setup() {
 
-  package_manager=$(get_package_manager)
-  dependencies=$(read_dependencies)
+  package_manager=$(platform::package_manager)
+  dependencies=$(deps::read)
 
   if [[ -z "$package_manager" ]]; then
     echo "Unable to find compatible install commands for your platform. Aborting..."
