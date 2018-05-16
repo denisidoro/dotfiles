@@ -24,10 +24,10 @@ function has_tag() {
 
 function main() {
   local git_info=$(cd "$(git rev-parse --show-toplevel)" && git log -n 1 --pretty=format:'%ad - %h' --date=format:'%Y-%m-%d %Hh%M')
-  note "Updating dotfiles\n$git_info\n"
+  log::note "Updating dotfiles\n$git_info\n"
 
   local tags=$(platform::tags)
-  warning "Current config: $tags"
+  log::warning "Current config: $tags"
   echo
 
   update_dotfiles_pre;

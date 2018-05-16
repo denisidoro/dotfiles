@@ -54,7 +54,7 @@ function main() {
 function check_command_available() {
   local cmd="$1"
   if platform::command_exists "$cmd"; then
-    success "$cmd"
+    log::success "$cmd"
   else
     inc_error "$cmd"
   fi
@@ -86,9 +86,9 @@ function check_gnu_commands() {
 
 function check_vim_plug() {
   if fs::is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
-    success "vim-plug"
+    log::success "vim-plug"
   else
-    error "vim-plug"
+    inc_error "vim-plug"
   fi
 }
 
@@ -96,7 +96,7 @@ function check_file() {
   local path="$1"
   local name="$2"
   if fs::is_file "$path"; then
-    success "$name"
+    log::success "$name"
   else
     inc_error "$name"
   fi
@@ -106,7 +106,7 @@ function check_dir() {
   local path="$1"
   local name="$2"
   if fs::is_dir "$path"; then
-    success "$name"
+    log::success "$name"
   else
     inc_error "$name"
   fi
@@ -116,12 +116,12 @@ function check_env() {
   set +u
   [[ -z "${!1}" ]] && {
     inc_error "\$$1"
-  } || success "\$$1"
+  } || log::success "\$$1"
   set -u
 }
 
 function inc_error() {
-  error "$1"
+  log::error "$1"
   CODE=$(($CODE + 1))
 }
 

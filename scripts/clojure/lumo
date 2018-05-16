@@ -44,7 +44,7 @@ function call_global_lumo() {
 # here, the test against neodoc is done because it should always be present
 if ! fs::is_dir "${DOTFILES}/scripts/node_modules/neodoc"; then
     pushd "${DOTFILES}/scripts" > /dev/null
-    error "Some npm packages are missing" && warning "Performing npm install..." \
+    log::error "Some npm packages are missing" && log::warning "Performing npm install..." \
         && npm install
     popd > /dev/null
 fi

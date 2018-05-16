@@ -100,9 +100,9 @@ function install_watchman() {
 }
 
 function list_commands() {
-  error "Unknown command: $1"
+  log::error "Unknown command: $1"
   echo -e
-  note "Available commands"
+  log::note "Available commands"
   echo "$2" \
     | grep -Eo "function install_(\w\w*?)\(" \
     | sed -E 's/.*_(.*?)\(/\1/g' \
