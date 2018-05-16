@@ -11,7 +11,7 @@ source "${DOTFILES}/scripts/environment/core.sh"
 ##? Usage:
 ##?    resources fontawesome
 
-docopts "$@"
+docs::eval "$@"
 
 if $fontawesome; then
 

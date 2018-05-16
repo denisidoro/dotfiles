@@ -21,7 +21,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    push moto link http://google.com
 ##?    push moto link title message http://google.com
 
-docopts "$@"
+docs::eval "$@"
 
 PUSH_DIR="${DOTFILES}/modules/pushbullet"
 PUSH_BIN="${PUSH_DIR}/pushbullet"
@@ -34,7 +34,7 @@ function clone_cli() {
 }
 
 # clone repository if needed
-if ! is_file "$PUSH_BIN"; then
+if ! fs::is_file "$PUSH_BIN"; then
 	clone_cli
 fi
 

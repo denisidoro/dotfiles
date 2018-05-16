@@ -24,7 +24,7 @@ source "${DOTFILES}/scripts/environment/core.sh"
 ##?     clear <package>   	  Clear data given an application package
 ##?     link <uri>   	  	  Dispatches a deep-link
 
-docopts "$@"
+docs::eval "$@"
 
 function devices() {
 	adb devices | tail -n +2 | cut -sf -1

@@ -43,9 +43,9 @@ function _header() {
   printf "%${right}s" '' | tr ' ' =
 }
 
-function header() { _log "\n${bold}${purple}$(_header "$1")${freset}\n"; }
-function success() { _log "${green}✔ %s${freset}\n" "$@"; }
-function error() { _log "${red}✖ %s${freset}\n" "$@"; }
-function warning() { _log "${tan}➜ %s${freset}\n" "$@"; }
-function note() { _log "${underline}${bold}${blue}Note:${freset} ${blue}%s${freset}\n" "$@"; }
+function log::header() { _log "\n${bold}${purple}$(_header "$1")${freset}\n"; }
+function log::success() { _log "${green}✔ %s${freset}\n" "$@"; }
+function log::error() { _log "${red}✖ %s${freset}\n" "$@"; }
+function log::warning() { _log "${tan}➜ %s${freset}\n" "$@"; }
+function log::note() { _log "${underline}${bold}${blue}Note:${freset} ${blue}%s${freset}\n" "$@"; }
 

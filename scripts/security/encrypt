@@ -17,12 +17,12 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    encrypt "foo bar"
 ##?    encrypt "foo bar" -a 0
 
-docopts "$@"
+docs::eval "$@"
 
 function md5_fn {
-	if command_exists md5sum; then
+	if platform::command_exists md5sum; then
 		echo "$1" | md5sum
-	elif command_exists md5; then
+	elif platform::command_exists md5; then
 		echo "$1" | md5
 	else
 		echo "No md5 algorithm available"

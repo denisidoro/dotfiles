@@ -63,6 +63,6 @@ case "${1:-}" in
 		;;
 	*)
 		source "${DOTFILES}/scripts/core/main.sh"
-		docopts "$@"
+		docs::eval "$@"
 	  	;;
 esac

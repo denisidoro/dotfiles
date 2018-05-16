@@ -29,7 +29,7 @@ DIR="$(cd "$( dirname "${BASH_SOURCE[0]}")" && pwd)" # move to core
 IFS=$' \n\t'
 
 trap trap_exit EXIT INT TERM
-docopts "$@"
+docs::eval "$@"
 main
 safe_exit
 

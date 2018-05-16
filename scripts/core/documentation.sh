@@ -5,7 +5,7 @@ function extract_help() {
     grep "^##?" "$file" | cut -c 5-
 }
 
-function docopts() {
+function docs::eval() {
     local readonly file="$0"
     help="$(extract_help "$file")"
     docopts="$DOTFILES/scripts/core/docopts"

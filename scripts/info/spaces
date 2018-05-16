@@ -10,7 +10,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    spaces
 
-docopts "$@"
+docs::eval "$@"
 
 spaces="$(defaults read com.apple.spaces)"
 

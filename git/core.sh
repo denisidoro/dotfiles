@@ -8,7 +8,7 @@ function prompt_if_protected() {
 	local protected_branch="$2"
 	
 	if [ $protected_branch = $current_branch ]; then  
-	    if ! prompt_confirmation "Are you sure you want to push to $protected_branch?" true; then
+	    if ! feedback::confirmation "Are you sure you want to push to $protected_branch?" true; then
 	    	exit 1
 	    fi
 	fi  
@@ -23,7 +23,7 @@ function check_json() {
 	    local result=$?
 	    if [ $result -ne 0 ] ; then
 	        not_commited_msg
-	        error "Lint check of JSON object failed\n\tin $git_dir/$file"
+	        log::error "Lint check of JSON object failed\n\tin $git_dir/$file"
 	        python -mjson.tool "$file"
 	        exit 1
 	    fi
@@ -36,8 +36,8 @@ function check_edn() {
 
 	for file in $(echo "$files" | grep -P '\.((edn))$'); do
 	    cat "$file" | dot clojure edn > /dev/null || {
-	        error "Lint check of EDN object failed\n\tin ${git_dir}/${file}"
-		    if ! prompt_confirmation "Are you sure you want to commit this file anyway?" false; then
+	        log::error "Lint check of EDN object failed\n\tin ${git_dir}/${file}"
+		    if ! feedback::confirmation "Are you sure you want to commit this file anyway?" false; then
 		    	exit 2
 		    fi
 		}
@@ -54,10 +54,10 @@ function match_content() {
 		local res=$(cat "$file" | grep -E --line-number "$pattern");
 		if [ -n "$res" ]; then
 			$stop && { not_commited_msg; }
-			error "$file matched the \"$name\" blacklist content regex:"
+			log::error "$file matched the \"$name\" blacklist content regex:"
 			echo "$res"
 			if $stop; then		
-			    if ! prompt_confirmation "Are you sure you want to commit anyway?" false; then
+			    if ! feedback::confirmation "Are you sure you want to commit anyway?" false; then
 			    	exit 3
 			    fi
 			else
@@ -77,10 +77,10 @@ function match_filename() {
 		local res=$(echo "$file" | grep -E "$pattern");
 		if [ -n "$res" ]; then
 			$stop && { not_commited_msg; }
-			error "$file matched the \"$name\" blacklist filename regex:"
+			log::error "$file matched the \"$name\" blacklist filename regex:"
 
 			if $stop; then		
-			    if ! prompt_confirmation "Are you sure you want to commit anyway?" false; then
+			    if ! feedback::confirmation "Are you sure you want to commit anyway?" false; then
 			    	exit 4
 			    fi
 			else
@@ -103,16 +103,16 @@ function check_conflict() {
 	for file in $(echo "$files"); do
 		local res=$(echo "$file" | egrep '^[><=]{7}( |$)' -H -I --line-number && echo 0 || echo 1)
 		if [ $res == 0 ]; then
-			error "$file still has unresolved conflicts"
+			log::error "$file still has unresolved conflicts"
 		    exit 5
 		fi
 	done
 }
 
 function not_commited_msg() {
-	error "Your changes were not commited"
+	log::error "Your changes were not commited"
 }
 
 function commited_anyway_msg() {
-	warning "Your changes were commited anyway"
+	log::warning "Your changes were commited anyway"
 }

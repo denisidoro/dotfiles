@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-function prompt_confirmation() {
+function feedback::confirmation() {
 	local msg="$1"
 	local default_yes="${2:-true}"
 	local options

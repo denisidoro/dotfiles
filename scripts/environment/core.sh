@@ -6,14 +6,14 @@ dotfiles_folder() {
 }
 
 brew_install() {
-  for repository in "$(from_dependencies "$@")"
+  for repository in "$(deps::from "$@")"
   do
     brew install "$repository"
   done
 }
 
 cask_install() {
-  for repository in "$(from_dependencies "$@")"
+  for repository in "$(deps::from "$@")"
   do
     brew cask install "$repository"
   done

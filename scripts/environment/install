@@ -13,10 +13,10 @@ source "${DOTFILES}/scripts/environment/core.sh"
 ##? Usage:
 ##?    install <cmd>
 
-docopts "$@"
+docs::eval "$@"
 
 function install_vimplug() {
-  if ! is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
+  if ! fs::is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
     curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   fi
@@ -29,19 +29,19 @@ function install_spacevim() {
 }
 
 function install_tpm() {
-  if ! is_dir $HOME/.tmux/plugins/tpm; then
+  if ! fs::is_dir $HOME/.tmux/plugins/tpm; then
     git clone https://github.com/tmux-plugins/tpm --depth=1 $HOME/.tmux/plugins/tpm
   fi
 }
 
 function install_tmuxinator() {
-  if ! command_exists tmuxinator; then
+  if ! platform::command_exists tmuxinator; then
     gem install tmuxinator
   fi
 }
 
 function install_gnu() {
-  if ! command_exists ggrep; then
+  if ! platform::command_exists ggrep; then
     brew tap homebrew/dupes
     brew install binutils diffutils ed findutils gawk gnu-indent gnu-sed gnu-tar gnu-which gnutls grep gzip screen watch  wget && brew install wdiff --with-gettext
     brew install bash emacs m4 make nano file-formula git less openssh rsync unzip
@@ -57,14 +57,14 @@ function install_kitty() {
 }
 
 function install_fzf() {
-  if ! command_exists fzf; then
+  if ! platform::command_exists fzf; then
     git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf \
       && $HOME/.fzf/install
   fi
 }
 
 function install_bspwm() {
-  if ! command_exists bspwm; then
+  if ! platform::command_exists bspwm; then
     sudo apt-get install xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev gcc make feh dmenu rofi \
       libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev
     shallow_github_clone baskerville bspwm
@@ -89,7 +89,7 @@ function install_spacemacs() {
 }
 
 function install_watchman() {
-  if ! command_exists watchman; then
+  if ! platform::command_exists watchman; then
     sudo apt-get install -y autoconf automake build-essential python-dev
     shallow_github_clone facebook watchman
     cd "$HOME/tmp/watchman"
@@ -100,9 +100,9 @@ function install_watchman() {
 }
 
 function list_commands() {
-  error "Unknown command: $1"
+  log::error "Unknown command: $1"
   echo -e
-  note "Available commands"
+  log::note "Available commands"
   echo "$2" \
     | grep -Eo "function install_(\w\w*?)\(" \
     | sed -E 's/.*_(.*?)\(/\1/g' \

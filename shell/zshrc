@@ -31,9 +31,5 @@ source "${DOTFILES}/shell/bindings/fzf.zsh"
 # load local custom config
 include $DOTFILES/local/zshrc
 
-# set IDEs
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/tools
-
 # load non-fundamental stuff
 include ~/.fzf.zsh
