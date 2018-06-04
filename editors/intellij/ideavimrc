@@ -1,2 +1,86 @@
 set hls
 set surround
+
+let mapleader = " "
+
+" ============================================================================
+" key bindings for quickly moving between windows
+" ============================================================================
+nmap <leader>wh <c-w>h
+nmap <leader>wl <c-w>l
+nmap <leader>wk <c-w>k
+nmap <leader>wj <c-w>j
+nmap <leader>wv <c-w>v
+nmap <leader>w/ <c-w>v
+nmap <leader>ws <c-w>s
+nmap <leader>w- <c-w>s
+nmap <leader>wd <c-w>c
+nmap <leader>wm :action HideAllWindows<CR>
+
+vmap <leader>wh <c-w>h
+vmap <leader>wl <c-w>l
+vmap <leader>wk <c-w>k
+vmap <leader>wj <c-w>j
+vmap <leader>wv <c-w>v
+vmap <leader>w/ <c-w>v
+vmap <leader>ws <c-w>s
+vmap <leader>w- <c-w>s
+vmap <leader>wd <c-w>c
+vmap <leader>wm :<Backspace><Backspace><Backspace><Backspace><Backspace>action HideAllWindows<CR>
+
+" ============================================================================
+" expand and collapse
+" ============================================================================
+nmap zO :action ExpandAllRegions<CR>
+nmap zo :action ExpandRegion<CR>
+nmap zc :action CollapseRegion<CR>
+nmap zC :action CollapseAllRegions<CR>
+
+" ============================================================================
+" IDE actions
+" ============================================================================
+
+nmap <leader><Space> :action GotoAction<CR>
+nmap <leader>cc      :action GotoClass<CR>
+nmap <leader>ff      :action GotoFile<CR>
+nmap <leader>ft      :action ActivateProjectToolWindow<CR>
+nmap <leader>fs      :action SaveAll<CR>
+nmap <leader>fd      :action DashLauncherAction<CR>
+nmap <leader>bb      :action RecentFiles<CR>
+nmap <leader>bi      :action ActivateStructureToolWindow<CR>
+nmap <leader>bp      :action FileStructurePopup<cr>
+nmap <leader>bu      :action ReopenClosedTab<CR>
+nmap <leader>dd      :action Debug<CR>
+nmap <leader>dD      :action DebugClass<CR>
+nmap <leader>tt      :action ToggleLineBreakpoint<CR>
+nmap <leader>rr      :action Run<CR>
+nmap <leader>rR      :action RunClass<CR>
+nmap <leader>im      :action ImplementMethods<CR>
+nmap <leader>ee      :action ShowErrorDescription<cr>
+nmap <leader>'       :action ActivateTerminalToolWindow<CR>
+nmap gd              :action GotoDeclaration<cr>
+nmap gh              :action QuickJavaDoc<CR>
+nmap gs              :action GotoSymbol<cr>
+nmap ,=              :action ReformatCode<CR>
+nmap <c-o>           :action Back<cr>
+nmap <c-i>           :action Forward<cr>
+
+" Enter the command-line mode
+nmap <CR> :
+vmap <CR> :
+
+" Reload .ideavimrc
+nmap <leader>R :source ~/.ideavimrc<CR>
+
+" check the action list
+nmap <leader>al :actionlist<CR>
+
+" git
+nmap <leader>gs :action Vcs.QuickListPopupAction<CR>
+nmap <leader>gS :action ActivateVersionControlToolWindow<CR>
+
+" search in project
+nmap <leader>sp :action FindInPath<CR>
+
+" replace in project
+nmap <leader>rp :action ReplaceInPath<CR>
