@@ -1,86 +1,102 @@
-set hls
-set surround
+let mapleader=' '
 
-let mapleader = " "
-
-" ============================================================================
-" key bindings for quickly moving between windows
-" ============================================================================
-nmap <leader>wh <c-w>h
-nmap <leader>wl <c-w>l
-nmap <leader>wk <c-w>k
-nmap <leader>wj <c-w>j
-nmap <leader>wv <c-w>v
-nmap <leader>w/ <c-w>v
-nmap <leader>ws <c-w>s
-nmap <leader>w- <c-w>s
-nmap <leader>wd <c-w>c
-nmap <leader>wm :action HideAllWindows<CR>
-
-vmap <leader>wh <c-w>h
-vmap <leader>wl <c-w>l
-vmap <leader>wk <c-w>k
-vmap <leader>wj <c-w>j
-vmap <leader>wv <c-w>v
-vmap <leader>w/ <c-w>v
-vmap <leader>ws <c-w>s
-vmap <leader>w- <c-w>s
-vmap <leader>wd <c-w>c
-vmap <leader>wm :<Backspace><Backspace><Backspace><Backspace><Backspace>action HideAllWindows<CR>
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set showmode
+set number
+set relativenumber
+set scrolloff=3
+set history=100000
+set clipboard=unnamed
 
 " ============================================================================
-" expand and collapse
+" Ungrouped
 " ============================================================================
-nmap zO :action ExpandAllRegions<CR>
-nmap zo :action ExpandRegion<CR>
-nmap zc :action CollapseRegion<CR>
-nmap zC :action CollapseAllRegions<CR>
+
+" clear the highlighted search result
+nnoremap <Leader>sc :nohlsearch<CR>
+
+nnoremap <Leader>fs :w<CR>
+
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gi :action GotoImplementation<CR>
+
+" project search
+nnoremap <Leader>ps :action SearchEverywhere<CR>
+nnoremap <Leader>pf :action GotoFile<CR>
+
+nnoremap <Leader>fu :action FindUsages<CR>
+
+" Quit visual mode
+vnoremap v <Esc>
+
+" Redo
+nnoremap U <C-r>
+
+" Window operation
+nnoremap <Leader>ww <C-W>w
+nnoremap <Leader>wd <C-W>c
+nnoremap <Leader>wj <C-W>j
+nnoremap <Leader>wk <C-W>k
+nnoremap <Leader>wh <C-W>h
+nnoremap <Leader>wl <C-W>l
+nnoremap <Leader>ws <C-W>s
+nnoremap <Leader>w- <C-W>s
+nnoremap <Leader>wv <C-W>v
+nnoremap <Leader>w/ <C-W>v
+
+nnoremap <Leader>bd :action CloseContent<CR>
+
+nnoremap <Leader>pt :action ActivateProjectToolWindow<CR>
+
+nnoremap <Leader>;; :action CommentByLineComment<CR>
+
+nnoremap <Leader>bb :action ToggleLineBreakpoint<CR>
+nnoremap <Leader>br :action ViewBreakpoints<CR>
+
+nnoremap <Leader>cv :action ChangeView<CR>
+
+nnoremap <Leader>cd :action ChooseDebugConfiguration<CR>
+
+nnoremap <Leader>ga :action GotoAction<CR>
+nnoremap <Leader>gc :action GotoClass<CR>
+nnoremap <Leader>gd :action GotoDeclaration<CR>
+nnoremap <Leader>gf :action GotoFile<CR>
+nnoremap <Leader>gi :action GotoImplementation<CR>
+nnoremap <Leader>gs :action GotoSymbol<CR>
+nnoremap <Leader>gt :action GotoTest<CR>
+
+nnoremap <Leader>fp :action ShowFilePath<CR>
+
+nnoremap <Leader>ic :action InspectCode<CR>
+
+nnoremap <Leader>mv :action ActivateMavenProjectsToolWindow<CR>
+
+nnoremap <Leader>oi :action OptimizeImports<CR>
+
+nnoremap <Leader>pm :action ShowPopupMenu<CR>
+
+nnoremap <Leader>rc :action ChooseRunConfiguration<CR>
+nnoremap <Leader>re :action RenameElement<CR>
+nnoremap <Leader>rf :action RenameFile<CR>
+
+nnoremap <Leader>se :action SearchEverywhere<CR>
+nnoremap <Leader>su :action ShowUsages<CR>
+nnoremap <Leader>tc :action CloseActiveTab<CR>
+
+nnoremap <Leader>tl Vy<CR>:action ActivateTerminalToolWindow<CR>
+vnoremap <Leader>tl y<CR>:action ActivateTerminalToolWindow<CR>
 
 " ============================================================================
 " IDE actions
 " ============================================================================
 
 nmap <leader><Space> :action GotoAction<CR>
-nmap <leader>cc      :action GotoClass<CR>
-nmap <leader>ff      :action GotoFile<CR>
-nmap <leader>ft      :action ActivateProjectToolWindow<CR>
-nmap <leader>fs      :action SaveAll<CR>
-nmap <leader>fd      :action DashLauncherAction<CR>
-nmap <leader>bb      :action RecentFiles<CR>
-nmap <leader>bi      :action ActivateStructureToolWindow<CR>
-nmap <leader>bp      :action FileStructurePopup<cr>
-nmap <leader>bu      :action ReopenClosedTab<CR>
-nmap <leader>dd      :action Debug<CR>
-nmap <leader>dD      :action DebugClass<CR>
-nmap <leader>tt      :action ToggleLineBreakpoint<CR>
-nmap <leader>rr      :action Run<CR>
-nmap <leader>rR      :action RunClass<CR>
-nmap <leader>im      :action ImplementMethods<CR>
-nmap <leader>ee      :action ShowErrorDescription<cr>
-nmap <leader>'       :action ActivateTerminalToolWindow<CR>
-nmap gd              :action GotoDeclaration<cr>
-nmap gh              :action QuickJavaDoc<CR>
-nmap gs              :action GotoSymbol<cr>
-nmap ,=              :action ReformatCode<CR>
-nmap <c-o>           :action Back<cr>
-nmap <c-i>           :action Forward<cr>
-
-" Enter the command-line mode
-nmap <CR> :
-vmap <CR> :
 
 " Reload .ideavimrc
 nmap <leader>R :source ~/.ideavimrc<CR>
 
 " check the action list
 nmap <leader>al :actionlist<CR>
-
-" git
-nmap <leader>gs :action Vcs.QuickListPopupAction<CR>
-nmap <leader>gS :action ActivateVersionControlToolWindow<CR>
-
-" search in project
-nmap <leader>sp :action FindInPath<CR>
-
-" replace in project
-nmap <leader>rp :action ReplaceInPath<CR>
