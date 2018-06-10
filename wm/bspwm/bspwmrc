@@ -29,11 +29,21 @@ bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=offd
 
-# Set walppaper
+# Set wallpaper
 feh --randomize --bg-fill ~/Pictures/Wallpapers
 
 # Enable mate themes
 mate-settings-daemon &
+
+# CapsLock: esc when tapped, hyper when pressed
+# Alt_R: hyper
+xmodmap -e "remove Mod4 = Hyper_L"
+xmodmap -e "keycode 66 = Hyper_L Hyper_R"
+xmodmap -e "keycode 108 = Hyper_L Hyper_R"
+xmodmap -e "clear lock"
+xmodmap -e "clear Mod3"
+xmodmap -e "add Mod3 = Hyper_L"
+xcape -e 'Hyper_L=Escape'
 
 # Set panel
 [ -e "$PANEL_FIFO" ] && bspc subscribe report > "$PANEL_FIFO" &

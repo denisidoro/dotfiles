@@ -12,6 +12,10 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docs::eval "$@"
 
+_format() {
+  echo "$@" | grep -v "New feature" | grep -v Follow
+}
+
 coll::is_empty ${location:-""} \
-	&& curl -s "wttr.in" \
-	|| curl -s "wttr.in/$location"
+	&& _format "$(curl -s "wttr.in/Sao_Paulo")" \
+	|| _format "$(curl -s "wttr.in/$location")"

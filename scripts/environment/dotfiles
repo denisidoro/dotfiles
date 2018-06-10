@@ -19,7 +19,7 @@ DOTBOT_DIR="modules/dotbot"
 DOTBOT_BIN="bin/dotbot"
 
 function has_tag() {
-  string::contains "$@"
+  str::contains "$@"
 }
 
 function main() {

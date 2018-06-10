@@ -1,3 +1,7 @@
+# ===============
+# explorer
+# ===============
+
 alias o="dot_or_args open --"
 alias r="dot_or_args ranger --"
 
@@ -8,14 +12,96 @@ alias r="dot_or_args ranger --"
 #alias ls='ls --color=auto'
 alias lst="tree -L 2"
 
-
 # ===============
 # folders
 # ===============
 
 mkcd() {
-    mkdir -p -- "$1" && cd -P -- "$1"
+    mkdir -p -- "$@" && cd -P -- "$@"
 }
+
+# ===============
+# helpers
+# ===============
+
+function _fzf() {
+    fzf +m
+}
+
+function _best_match() {
+    local lines="$1"
+    shift
+    echo "$lines" \
+        | fzf --filter="$*" \
+        | head -n1
+}
+
+function _list_files() {
+    ag --hidden --ignore .git -g "${1:-}"
+}
+
+function _list_folders() {
+    _list_files \
+        | xargs dirname \
+        | sort -u
+}
+
+function _action_from_fasd() {
+  local fasd_args="$1"
+  local cmd="$2"
+  local selection=$(fasd "$fasd_args" \
+    | awk '{print $2}' \
+    | _fzf) \
+    && [ -n "$selection" ] \
+    && "$cmd" "$selection"
+}
+
+function _cd_file() {
+    cd "$(dirname "$1")"
+}
+
+function _jj() {
+    local cmd="$1"
+    local lines="$2"
+    shift 2
+    if [ $# -gt 0 ]; then
+        "$cmd" "$(_best_match "$lines" "$@")" 
+    else
+        local selection=$(echo "$lines" | _fzf) \
+            && [ -n "$selection" ] \
+            && "$cmd" "$selection"
+    fi
+}
+
+# ===============
+# jumping
+# ===============
+
+j() { 
+    [ $# -gt 0 ] && \
+        fasd_cd -d "$@" \
+        || _action_from_fasd -d "cd" 
+}
+
+jj() { _jj cd "$(_list_folders)" "$@" }
+
+jjf() { _jj _cd_file "$(_list_files)" "$@" }
+
+jv() { 
+    [ $# -gt 0 ] && \
+        fasd -f -e nvim "$@" \
+        || _action_from_fasd -f nvim 
+}
+
+jjv() { _jj nvim "$(_list_files)" "$@" }
+
+js() { 
+    [ $# -gt 0 ] && \
+        fasd -f -e subl "$@" \
+        || _action_from_fasd -f subl 
+}
+
+jjs() { _jj subl "$(_list_files)" "$@" }
 
 # Go up X directories (default 1)
 up() {
@@ -35,77 +121,5 @@ up() {
     fi
 }
 
-# Go up to git repository root
-upr() {
-    cd "$(git rev-parse --show-toplevel)"
-}
-
-function _fq1() {
-    local lines
-    echo $(fzf --filter="$1" | head -n1)
-}
-
-
-# ===============
-# properties
-# ===============
-
-# Determine size of a file or total size of a directory
-fs() {
-    if du -b /dev/null > /dev/null 2>&1; then
-        local arg=-sbh;
-    else
-        local arg=-sh;
-    fi
-    if [[ -n "$@" ]]; then
-        du $arg -- "$@";
-    else
-        du $arg .[^.]* ./*;
-    fi;
-}
-
-# fd - cd to selected directory
-fd() {
-  local dir=$(cd "${1:-$HOME}" \
-    && ag --hidden --ignore .git -g "" \
-    | xargs dirname \
-    | sort -u \
-    | fzf +m) \
-    && cd "$dir"
-}
-
-alias fdd="fd ."
-
-# jumping
-alias a='fasd -a'           # any
-alias s='fasd -si'          # show / search / select
-alias d='fasd -d'           # directory
-alias f='fasd -f'           # file
-alias sd='fasd -sid'        # interactive directory selection
-alias sf='fasd -sif'        # interactive file selection
-alias j='fasd_cd -d'        # cd, same functionality as j in autojump
-#j() {
-#  local dir
-#  dir=$(fasd -Rdl | _fq1 "$1") && cd "$dir"
-#}
-alias zz='fasd_cd -d -i'    # cd with interactive selection
-alias v="fasd -f -e nvim"   # edit file with vim
-
-# cf - fuzzy cd from anywhere
-# ex: cf word1 word2 ... (even part of a file name)
-# zsh autoload function
-cf() {
-    local file
-
-    file="$(locate -0 "$@" | grep -z -vE "~$" | fzf --read0 -0 -1)"
-
-    if [[ -n $file ]]
-    then
-        if [[ -d $file ]]
-        then
-            cd -- $file
-        else
-            cd -- ${file:h}
-        fi
-    fi
-}
+# Go up to project root
+jr() { cd "$(git rev-parse --show-toplevel)" }
