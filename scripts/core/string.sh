@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-function string::capitalize {
+function str::capitalize {
   echo "$(tr '[:lower:]' '[:upper:]' <<< ${1:0:1})${1:1}"
 }
 
-function string::contains() {
+function str::contains() {
 	if [[ "${1}" == *"${2}"* ]]; then
     	return 0
 	else
@@ -12,6 +12,6 @@ function string::contains() {
 	fi
 }
 
-function string::trim_newlines() {
+function str::trim_newlines() {
   tr -d "\n"
 }
