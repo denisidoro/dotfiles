@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/environment/core.sh"
+
+##? Filesystem info
+ #? 0.1.0
+##?
+##? Usage:
+##?    fs size [<path>]
+##?
+##? Examples:
+##?    fs size                Total size of current directory 
+##?    fs size somepath       Size of a file or directory
+
+if du -b /dev/null > /dev/null 2>&1; then
+    arg=-sbh;
+else
+    arg=-sh;
+fi
+shift
+if [[ -n "$@" ]]; then
+    du $arg -- "$@";
+else
+    du $arg .[^.]* ./*;
+fi
