@@ -9,7 +9,8 @@ set number
 set relativenumber
 set scrolloff=3
 set history=100000
-set clipboard=unnamed
+set clipboard=unnamedplus,unnamed   " Integrate with system clipboard
+
 
 " ============================================================================
 " Ungrouped
