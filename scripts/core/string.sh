@@ -11,3 +11,7 @@ function string::contains() {
 	    return 1
 	fi
 }
+
+function string::trim_newlines() {
+  tr -d "\n"
+}
