@@ -136,3 +136,10 @@ layout - x : chunkc tiling::desktop --mirror horizontal
 layout + shift - b : chunkc tiling::desktop --layout bsp
 layout + shift - m : chunkc tiling::desktop --layout monocle
 layout + shift - f : chunkc tiling::desktop --layout float
+
+
+# =================
+# Application
+# =================
+
+alt + ctrl + cmd + shift - return : open -na /Applications/iTerm.app
