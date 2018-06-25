@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Run. Use % to replace the current element in the provided command.
+ #? 0.1.0
+##? 
+##? Usage:
+##?     run [options] -- <command>...
+##? 
+##? Options:
+##?     --parallel parallel  Parallelism level (0 means all shards in parallel) [default: 1]
+##? 
+##? Examples:
+##?     echo 1 2 3 | run --parallel 0 -- echo %
+
+docs::eval "$@"
+
+xargs_command="${command[@]:-}"
+xargs --verbose --max-procs=$parallel --max-args=1 -I% $xargs_command
