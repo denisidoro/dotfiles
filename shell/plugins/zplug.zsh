@@ -18,8 +18,8 @@ zplug zsh-users/zsh-syntax-highlighting
 
 # Load the theme
 # setopt prompt_subst
-#zplug "yardnsm/blox-zsh-theme", use:blox.zsh-theme, defer:3
-zplug denysdovhan/spaceship-zsh-theme, use:spaceship.zsh, from:github, as:theme
+zplug "yardnsm/blox-zsh-theme", use:blox.zsh-theme, defer:3
+#zplug denysdovhan/spaceship-zsh-theme, use:spaceship.zsh, from:github, as:theme
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
