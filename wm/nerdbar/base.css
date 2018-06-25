@@ -1,11 +1,11 @@
-span {
-  	top: 7px;
+span, div {
     color: #f0f0f0;
+    font-size: 14px;
 }
 
 .fa {
   	top: 7px;
-  	font-size: 13px;
+  	font-size: 12px;
     color: #f0f0f0;
 }
 
@@ -18,7 +18,6 @@ span {
 .flex-container {
     width: 100%;
     display: flex;
-    font-size: 12px;
     line-height: 20px;
     flex-direction: row;
     justify-content: space-between;
@@ -30,20 +29,39 @@ span {
 .box {
   padding-left: 0.8em;
   padding-right: 0.8em;
+  padding-top: 0.085em;
+  padding-bottom: 0.085em;
   margin: 0px;
 }
 
 .container {
   margin: 0px;
-  font-size: 12px;
   padding-top: 2px;
   padding-bottom: 2px;
+  color: white;
 }
 
 .battery {
   border: 0px solid;
 }
 
+.wm {
+  color: white;
+  background-color: transparent;
+  display: inline;
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+}
+
+.active {
+  background-color: #61892f;
+  display: inline !important;
+}
+
 .hidden {
   display: none;
+}
+
+.debug {
+  color: white;
 }

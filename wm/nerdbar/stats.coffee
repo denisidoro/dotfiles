@@ -7,15 +7,15 @@ refreshFrequency: 10050
 
 render: -> """
 	<div class="container right">
-		<span class="box down color4">
+		<!--<span class="box down color4">
 			<i class='fa fa-chevron-down'></i>
 			<span id="down">2M</span>
-		</span>
-		<span class="box battery color1">
+		</span>-->
+		<!--<span class="box battery color2">
 			<i class='fa fa-heart'></i>
 			<span id="battery">80%</span>
-		</span>
-		<span class="box time color2">
+		</span>-->
+		<span class="box time color1">
 			<i class='fa fa-clock-o'></i>
 			<span id="time">20:35</span>
 		</span>
@@ -39,22 +39,5 @@ update: (output, el) ->
 	down = (Number) args[8]
 
 	$("#time", el).text time
-	@updateBattery(battery, el)
+	$("#battery", el).text battery
 	
-updateBattery: (n, el) ->
-	$("#battery", el).text n
-	$icon = $(".fa.battery", el)
-	$icon.removeClass()
-	$icon.addClass("fa #{@batteryIcon(n)}")
-
-batteryIcon: (n) =>
-  return if n > 90
-    "fa-battery-full"
-  else if n > 70
-    "fa-battery-three-quarters"
-  else if n > 40
-    "fa-battery-half"
-  else if n > 20
-    "fa-battery-quarter"
-  else
-    "fa-battery-empty"

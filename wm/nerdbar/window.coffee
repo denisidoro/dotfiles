@@ -7,8 +7,12 @@ command: """
 
 refreshFrequency: 1000 # ms
 
-render: (output) ->
-  "#{output}"
+render: -> """
+  <div class="flex-container">
+    <div/>
+    <div class="container box" id="window"/>
+  </div>
+"""
 
 style: """
   -webkit-font-smoothing: antialiased

@@ -1,1 +1,0 @@
-This configuration isn't maintained anymore and is considered deprecated in favor of `editors/spacevim`

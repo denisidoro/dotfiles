@@ -6,10 +6,10 @@ export ZPLUG_HOME="${DOTFILES}/modules/zplug"
 export PATH="$DOTFILES/local/bin:$DOTFILES/bin:/usr/local/bin:$PATH"
 
 # load plugins
-source "${DOTFILES}/shell/plugins/zplug.zsh"
+source "${DOTFILES}/shell/zplug.zsh"
 
-# setup plugins
-source "${DOTFILES}/shell/plugins/config.zsh"
+# setup plugins and commands
+source "${DOTFILES}/shell/config.zsh"
 
 # set editor
 export EDITOR='nvim'
