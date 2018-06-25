@@ -28,17 +28,22 @@ span {
 }
 
 .box {
-  padding-top: 2px;
-  padding-bottom: 2px;
   padding-left: 0.8em;
   padding-right: 0.8em;
   margin: 0px;
 }
 
-.right-box {
+.container {
   margin: 0px;
+  font-size: 12px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .battery {
   border: 0px solid;
+}
+
+.hidden {
+  display: none;
 }

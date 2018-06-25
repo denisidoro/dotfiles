@@ -1,15 +1,24 @@
 command: """
-	monitor_id="$(/usr/local/bin/chunkc tiling::query --monitor id)"
-	desktop_id="$(/usr/local/bin/chunkc tiling::query --desktop id)"
-	mode="$(/usr/local/bin/khd -e 'print mode')"
-    window_name="$(/usr/local/bin/chunkc tiling::query --window owner)"
-	echo "${monitor_id};${desktop_id};${mode};${window_name}"
+    chunkc=/usr/local/bin/chunkc
+	monitor_id="$($chunkc tiling::query --monitor id)"
+    # desktops=$($chunkc tiling::query --desktops-for-monitor $monitor_id)
+	desktop_id="$($chunkc tiling::query --desktop id)"
+    windows=$($chunkc tiling::query --desktop windows | gwc -l)
+	echo "${monitor_id};${desktop_id};${windows}"
 """
 
 refreshFrequency: 2500
 
 render: (output) -> """
-	<span class="amount"></span>
+    <span class="wm hidden" id="wm1"></span>
+    <span class="wm hidden" id="wm2"></span>
+    <span class="wm hidden" id="wm3"></span>
+    <span class="wm hidden" id="wm4"></span>
+    <span class="wm hidden" id="wm5"></span>
+    <span class="wm hidden" id="wm6"></span>
+    <span class="wm hidden" id="wm7"></span>
+    <span class="wm hidden" id="wm8"></span>
+    <span class="wm hidden" id="wm9"></span>
 """
 
 style: """

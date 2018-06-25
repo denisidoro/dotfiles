@@ -6,43 +6,24 @@ command: """
 refreshFrequency: 10050
 
 render: -> """
-	<!--<i class='fa fa-arrow-down'></i>
-	<span class="down amount"></span><span class="down unit"></span>-->
-
-	<i class='fa fa-volume-up'></i>
-	<span id="volume"></span>
-
-	<i class='fa fa-hdd-o'></i>
-	<span id="drive"></span>
-
-	<i class='fa fa-microchip'></i>
-	<span id="cpu"></span>
-
-	<i class='fa fa-database'></i>
-	<span id="memory"></span>
-
-	<i class='fa fa-battery-full battery'></i>
-	<span id='battery'></span>
-
-	<i class='fa fa-calendar-o'></i>
-	<span id="date"></span>
-	<span id="time"></span>
+	<div class="container right">
+		<span class="box down color4">
+			<i class='fa fa-chevron-down'></i>
+			<span id="down">2M</span>
+		</span>
+		<span class="box battery color1">
+			<i class='fa fa-heart'></i>
+			<span id="battery">80%</span>
+		</span>
+		<span class="box time color2">
+			<i class='fa fa-clock-o'></i>
+			<span id="time">20:35</span>
+		</span>
+	</div>
 """
 
 style: """
-	right: 10px
-
-	.fa
-		margin-left: 2px
-
-	.fa-calendar-o
-		margin-left: 10px
-
-	.color1 { color: rgba(5, 102, 141, 1); }
-	.color2 { color: rgba(2, 128, 144, 1); }
-	.color3 { color: rgba(0, 168, 150, 1); }
-	.color4 { color: rgba(2, 195, 154, 1); }
-	.color5 { color: rgba(240, 243, 189, 1); }
+	right: 0px
 """
 
 update: (output, el) ->
@@ -58,13 +39,8 @@ update: (output, el) ->
 	down = (Number) args[8]
 
 	$("#time", el).text time
-	$("#date", el).text date
 	@updateBattery(battery, el)
-	$("#memory", el).text memory
-	$("#cpu", el).text cpu
-	$("#drive", el).text drive
-	$("#volume", el).text volume
-
+	
 updateBattery: (n, el) ->
 	$("#battery", el).text n
 	$icon = $(".fa.battery", el)
