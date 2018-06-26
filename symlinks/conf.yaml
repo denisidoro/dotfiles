@@ -8,11 +8,10 @@
     ~/.zshrc: shell/zshrc
     ~/.bashrc: shell/bashrc
     ~/.hushlogin: shell/hushlogin
-    ~/.spacevim: editors/spacevim/init.vimrc
+    ~/.spacevim: editors/spacevim/spacevim.rc
     ~/.spacemacs: editors/spacemacs/spacemacs.el
     ~/.tmux.conf: terminal/tmux/tmux.conf
     ~/.gitconfig: git/config
-    ~/.ideavimrc: editors/intellij/ideavimrc
-    ~/.vimrc: editors/vim/vimrc
+    ~/.ideavimrc: editors/intellij/ideavim.rc
     ~/.gitignore: git/homeignore
     ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings: editors/sublime/preferences.json

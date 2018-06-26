@@ -19,34 +19,22 @@ zplug zsh-users/zsh-syntax-highlighting
 # Load the theme
 # setopt prompt_subst
 #zplug "yardnsm/blox-zsh-theme", use:blox.zsh-theme, defer:3
-zplug denysdovhan/spaceship-zsh-theme, use:spaceship.zsh, from:github, as:theme
+#zplug denysdovhan/spaceship-zsh-theme, use:spaceship.zsh, from:github, as:theme
+zplug "themes/juanghurtado", from:oh-my-zsh, as:theme
 
 # Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
+#if ! zplug check --verbose; then
+#    printf "Install? [y/N]: "
+#    if read -q; then
+#        echo; zplug install
+#    fi
+#fi
 
 # Source plugins and add commands
 zplug load
 
 # Apply theme hacks
 #function prompt_short_dir { echo "%{$fg_bold[yellow]%}$(shrink_path -f)" }
-#PROMPT="$(echo $PROMPT | sed -e 's/\$prompt_dir/\$(prompt_short_dir)/')"
-
-# ORDER
-SPACESHIP_PROMPT_ORDER=(
-  time          # Time stampts section
-  user          # Username section
-  host          # Hostname section
-  dir           # Current directory section
-  git           # Git section (git_branch + git_status)
-  exec_time     # Execution time
-  line_sep      # Line break
-  exit_code     # Exit code section
-  char          # Prompt character
-)
-
-SPACESHIP_PROMPT_SYMBOL="λ"
+PROMPT='
+%{$GREEN_BOLD%}%{$YELLOW%}%~%u$(parse_git_dirty)$(git_prompt_ahead)%{$RESET_COLOR%}
+%{$BLUE%}λ%{$RESET_COLOR%} '

@@ -9,6 +9,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    osx hidden (show|hide)
 ##?    osx desktop (show|hide)
+##?    osx lock
 ##?
 ##? Examples:
 ##?    osx hidden show
@@ -32,8 +33,14 @@ osx::hide_desktop() {
 	defaults write com.apple.finder CreateDesktop -bool false; killall Finder
 }
 
+osx::lock() {
+	pmset displaysleepnow
+}
+
 if $hidden; then
 	$show && osx::show_hidden_files || osx::hide_hidden_files
 elif $desktop; then
 	$show && osx::show_desktop || osx::hide_desktop
+elif $lock; then
+	osx::lock
 fi
