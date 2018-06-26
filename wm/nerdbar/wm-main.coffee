@@ -1,9 +1,11 @@
 command: """
     chunkc=/usr/local/bin/chunkc
 	monitor_id="$($chunkc tiling::query --monitor id)"
-    desktop_id="$($chunkc tiling::query --desktop id)"
-    windows=$($chunkc tiling::query --desktop windows | wc -l)
-	echo "${monitor_id};${desktop_id};${windows}"
+    if [[ $monitor_id -eq 1 ]]; then
+        desktop_id="$($chunkc tiling::query --desktop id)"
+        windows=$($chunkc tiling::query --desktop windows | wc -l)
+    	echo "${monitor_id};${desktop_id};${windows}"
+    fi
 """
 
 refreshFrequency: 2500
@@ -27,21 +29,23 @@ style: """
 """
 
 update: (output, el) ->
+    if not output
+        return
+
     args = output.split ";"
     monitorId = (Number) args[0]
     desktopId = (Number) args[1]
     windows = (Number) args[2]
 
-    if monitorId == 1
-        i = 1
-        while i <= 9
-            id = "#wm" + i
-            if i == desktopId
-                if windows > 0
-                    $(id).removeClass("hidden")
-                else 
-                    $(id).addClass("hidden")
-                $(id).addClass("active")
+    i = 1
+    while i <= 9
+        id = "#wm" + i
+        if i == desktopId
+            if windows > 0
+                $(id).removeClass("hidden")
             else 
-                $(id).removeClass("active")
-            i += 1
+                $(id).addClass("hidden")
+            $(id).addClass("active")
+        else 
+            $(id).removeClass("active")
+        i += 1

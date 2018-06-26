@@ -16,7 +16,6 @@ span, div {
 .color5 { background-color: #6b6e70; }
 
 .flex-container {
-    width: 100%;
     display: flex;
     line-height: 20px;
     flex-direction: row;
@@ -24,6 +23,11 @@ span, div {
     align-content: stretch;
     align-items: flex-start;    
     color: white;
+}
+
+.full-width {
+  width: 100%;
+  background-color: red;
 }
 
 .box {

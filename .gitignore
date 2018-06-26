@@ -5,3 +5,4 @@ font*.css
 .lumo_cache
 node_modules
 *lock.json
+.cache/
