@@ -83,9 +83,13 @@ j() {
         || _action_from_fasd -d "cd" 
 }
 
-jj() { _jj cd "$(_list_folders)" "$@" }
+jj() { 
+    _jj cd "$(_list_folders)" "$@" 
+}
 
-jjf() { _jj _cd_file "$(_list_files)" "$@" }
+jjf() { 
+    _jj _cd_file "$(_list_files)" "$@" 
+}
 
 jv() { 
     [ $# -gt 0 ] && \
@@ -93,7 +97,9 @@ jv() {
         || _action_from_fasd -f nvim 
 }
 
-jjv() { _jj nvim "$(_list_files)" "$@" }
+jjv() { 
+    _jj nvim "$(_list_files)" "$@" 
+}
 
 js() { 
     [ $# -gt 0 ] && \
@@ -101,7 +107,9 @@ js() {
         || _action_from_fasd -f subl 
 }
 
-jjs() { _jj subl "$(_list_files)" "$@" }
+jjs() {
+    _jj subl "$(_list_files)" "$@" 
+}
 
 # Go up X directories (default 1)
 up() {
@@ -122,4 +130,6 @@ up() {
 }
 
 # Go up to project root
-jr() { cd "$(git rev-parse --show-toplevel)" }
+jr() { 
+    cd "$(git rev-parse --show-toplevel)" 
+}
