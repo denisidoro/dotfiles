@@ -3,7 +3,7 @@ Dotfiles
 
 Personal dotfiles.
 
-![demo](https://user-images.githubusercontent.com/3226564/30768426-c1413f5c-9fdd-11e7-9c04-00e075c5c375.png)
+![demo](https://user-images.githubusercontent.com/3226564/41914829-a8546b8c-792a-11e8-884b-f298414704b7.png)
 
 ### Installation
 
