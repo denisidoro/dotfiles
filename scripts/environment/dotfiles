@@ -26,9 +26,11 @@ function main() {
   local git_info=$(cd "$(git rev-parse --show-toplevel)" && git log -n 1 --pretty=format:'%ad - %h' --date=format:'%Y-%m-%d %Hh%M')
   log::note "Updating dotfiles\n$git_info\n"
 
-  local tags=$(platform::tags)
+  local tags="$(platform::tags)"
   log::warning "Current config: $tags"
   echo
+
+  set +e
 
   update_dotfiles_pre;
   update_dotfiles_common;
@@ -39,9 +41,9 @@ function main() {
   has_tag "$tags" "x86" && { update_dotfiles_x86; }
   has_tag "$tags" "android" && { update_dotfiles_android; }
 
-  exit 0
-
   update_dotfiles_pos;
+
+  set -e
 }
 
 update_dotfiles_pre() {
@@ -70,8 +72,6 @@ update_dotfiles() {
 
 update_dotfiles_pos() {
 
-  set +e
-
   # Neovim
   echo "Installing neovim plugins..."
   nvim +silent +PlugInstall +qall > /dev/null
@@ -85,9 +85,7 @@ update_dotfiles_pos() {
   # ZPlug
   echo "Installing ZPlug plugins..."
   zplug install 2> /dev/null
-
-  set -e
-
+  
   # Cleanup
   popd > /dev/null
 
