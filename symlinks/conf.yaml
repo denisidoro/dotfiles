@@ -13,5 +13,5 @@
     ~/.tmux.conf: terminal/tmux/tmux.conf
     ~/.gitconfig: git/config
     ~/.ideavimrc: editors/intellij/ideavim.rc
-    ~/.gitignore: git/homeignore
+    ~/.gitignore: git/home.ignore
     ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings: editors/sublime/preferences.json

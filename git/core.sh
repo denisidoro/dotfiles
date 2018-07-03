@@ -3,7 +3,7 @@ set -euo pipefail
 
 source "$DOTFILES/scripts/core/main.sh"
 
-function prompt_if_protected() {
+function git::prompt_if_protected() {
 	local current_branch="$1"
 	local protected_branch="$2"
 	
@@ -14,7 +14,7 @@ function prompt_if_protected() {
 	fi  
 }
 
-function check_json() {
+function git::check_json() {
 	local files="$1"
 
 	for file in $(echo "$files" | grep -P '\.((json))$'); do
@@ -22,7 +22,7 @@ function check_json() {
 	    python -mjson.tool "$file" 2>&1 /dev/null
 	    local result=$?
 	    if [ $result -ne 0 ] ; then
-	        not_commited_msg
+	        git::not_commited_msg
 	        log::error "Lint check of JSON object failed\n\tin $git_dir/$file"
 	        python -mjson.tool "$file"
 	        exit 1
@@ -31,7 +31,7 @@ function check_json() {
 	done
 }
 
-function check_edn() {
+function git::check_edn() {
 	local files="$1"
 
 	for file in $(echo "$files" | grep -P '\.((edn))$'); do
@@ -44,7 +44,7 @@ function check_edn() {
 	done
 }
 
-function match_content() {
+function git::match_content() {
 	local files="$1"
 	local name="$2"
 	local pattern="$3"
@@ -61,13 +61,13 @@ function match_content() {
 			    	exit 3
 			    fi
 			else
-				commited_anyway_msg
+				git::commited_anyway_msg
 			fi
 		fi 
 	done
 }
 
-function match_filename() {
+function git::match_filename() {
 	local files="$1"
 	local name="$2"
 	local pattern="$3"
@@ -84,20 +84,20 @@ function match_filename() {
 			    	exit 4
 			    fi
 			else
-				commited_anyway_msg
+				git::commited_anyway_msg
 			fi
 		fi 
 	done
 }
 
-function check_aws() {
+function git::check_aws() {
 	local files="$1"
 
 	match_content "$files" "AWS key ID" "[^A-Z0-9][A-Z0-9]{20}[^A-Z0-9]" true
 	match_content "$files" "AWS key" "[^A-Za-z0-9/+=][A-Za-z0-9/+=]{40}[^A-Za-z0-9/+=]" true
 }
 
-function check_conflict() {
+function git::check_conflict() {
 	local files="$1"
 
 	for file in $(echo "$files"); do
@@ -109,10 +109,10 @@ function check_conflict() {
 	done
 }
 
-function not_commited_msg() {
+function git::not_commited_msg() {
 	log::error "Your changes were not commited"
 }
 
-function commited_anyway_msg() {
+function git::commited_anyway_msg() {
 	log::warning "Your changes were commited anyway"
 }
