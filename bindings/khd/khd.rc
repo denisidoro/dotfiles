@@ -143,6 +143,7 @@ layout + shift - f : chunkc tiling::desktop --layout float
 # =================
 
 alt + ctrl + cmd + shift - return : open -na /Applications/iTerm.app
+alt + ctrl + cmd + shift - b : open -na /Applications/Google\ Chrome.app
 
 
 # =================

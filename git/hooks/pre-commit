@@ -7,8 +7,8 @@ source "$DOTFILES/git/core.sh"
 git_dir=$(git rev-parse --show-toplevel)
 files=$(git diff-index --name-only --diff-filter=ACM --cached HEAD --)
 
-check_json "$files"
-check_edn "$files"
+git::check_json "$files"
+git::check_edn "$files"
 
 if git rev-parse --verify HEAD >/dev/null 2>&1; then
 	against="HEAD"
@@ -19,7 +19,7 @@ fi
 git_diff=$(git diff --cached --name-only "$against")
 existing_diff="$(echo "$git_diff" | perl -ne 'chomp(); if (-e $_) {print "$_\n"}')"
 
-#check_aws "$existing_diff"
-check_conflict "$existing_diff"
-match_filename "$existing_diff" ".*secret.*" true
-match_content "$existing_diff" "code debug" "nu/tap" false
+# git::check_aws "$existing_diff"
+git::check_conflict "$existing_diff"
+git::match_filename "$existing_diff" ".*secret.*" true
+git::match_content "$existing_diff" "code debug" "nu/tap" false

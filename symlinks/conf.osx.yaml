@@ -6,7 +6,7 @@
 
 - link:
     ~/.config/bindings/karabiner.json: bindings/karabiner/karabiner.json
-    ~/.khdrc: bindings/khd/khdrc
+    ~/.khdrc: bindings/khd/khd.rc
     ~/.chunkwmrc: wm/chunkwm/chunkwmrc
     ~/Library/Preferences/kitty/kitty.conf: terminal/kitty/kitty.conf
     ~/Library/Application\ Support/Übersicht/widgets/nerdbar.widget: wm/nerdbar
