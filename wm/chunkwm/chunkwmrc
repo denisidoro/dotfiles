@@ -61,8 +61,10 @@ chunkc core::load border.so
 chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --state tile
 chunkc tiling::rule --owner Finder --name Copy --state float
 chunkc tiling::rule --owner iTerm2 --subrole AXDialog --state tile
+chunkc tiling::rule --owner Krita --state float
+chunkc tiling::rule --owner \"Photoshop CC\" --state float
 chunkc tiling::rule --owner \"Android Studio\" --subrole AXDialog --state tile
-chunkc tiling::rule --owner \"IntelliJ\" --subrole AXDialog --state tile
+chunkc tiling::rule --owner \"IntelliJ IDEA\" --subrole AXDialog --state tile
 chunkc tiling::rule --owner kitty --subrole AXDialog --state tile
 chunkc tiling::rule --owner \"qemu-system-x86_64\" --state float
 chunkc tiling::rule --owner Emacs --state tile
