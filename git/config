@@ -1,2 +1,34 @@
+[push]
+  default = current
+[color]
+  ui = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold # line info
+  old = red # deletions
+  new = green # additions
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[core]
+  excludesfile = ~/.dotfiles/git/ignore
+  hookspath = ~/.dotfiles/git/hooks
+  autocrlf = input
+[fetch]
+  prune = true
+[rebase]
+  autosquash = true
 [include]
   path = ~/.dotfiles/local/gitconfig
+[pull]
+  rebase = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

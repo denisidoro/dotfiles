@@ -36,5 +36,8 @@ zplug load
 # Apply theme hacks
 #function prompt_short_dir { echo "%{$fg_bold[yellow]%}$(shrink_path -f)" }
 PROMPT='
-%{$GREEN_BOLD%}%{$YELLOW%}%~%u$(parse_git_dirty)$(git_prompt_ahead)%{$RESET_COLOR%}
+%{$GREEN_BOLD%}%{$YELLOW%}%~%u %{$GREEN_BOLD%}$(git_current_branch)%{$RESET_COLOR%}
 %{$BLUE%}λ%{$RESET_COLOR%} '
+RPROMPT=''
+# PROMPT='%{$GREEN_BOLD%}%{$YELLOW%}%~%u$(parse_git_dirty)$(git_prompt_ahead)%{$RESET_COLOR%}%{$BLUE%}λ%{$RESET_COLOR%} '
+# RPROMPT='%{$GREEN_BOLD%}$(git_current_branch)$(git_prompt_short_sha)$(git_prompt_status)%{$RESET_COLOR%}'
