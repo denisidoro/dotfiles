@@ -93,8 +93,8 @@ function git::match_filename() {
 function git::check_aws() {
 	local files="$1"
 
-	match_content "$files" "AWS key ID" "[^A-Z0-9][A-Z0-9]{20}[^A-Z0-9]" true
-	match_content "$files" "AWS key" "[^A-Za-z0-9/+=][A-Za-z0-9/+=]{40}[^A-Za-z0-9/+=]" true
+	git::match_content "$files" "AWS key ID" "[^A-Z0-9][A-Z0-9]{20}[^A-Z0-9]" true
+	git::match_content "$files" "AWS key" "[^A-Za-z0-9/+=][A-Za-z0-9/+=]{40}[^A-Za-z0-9/+=]" true
 }
 
 function git::check_conflict() {
