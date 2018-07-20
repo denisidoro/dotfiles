@@ -5,7 +5,7 @@ export DOTFILES="${DOTFILES:-"$HOME/.dotfiles"}"
 source "$DOTFILES/git/core.sh"
 
 git_dir=$(git rev-parse --show-toplevel)
-files=$(git diff-index --name-only --diff-filter=ACM --cached HEAD --)
+files=$(git diff-index --name-only --diff-filter=ACM --cached HEAD -- || echo "")
 
 git::check_json "$files"
 git::check_edn "$files"
@@ -21,5 +21,5 @@ existing_diff="$(echo "$git_diff" | perl -ne 'chomp(); if (-e $_) {print "$_\n"}
 
 # git::check_aws "$existing_diff"
 git::check_conflict "$existing_diff"
-git::match_filename "$existing_diff" ".*secret.*" true
+# git::match_filename "$existing_diff" ".*secret.*" true
 git::match_content "$existing_diff" "code debug" "nu/tap" false

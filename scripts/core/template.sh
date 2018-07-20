@@ -20,12 +20,12 @@ function safe_exit() { # move to core?
   exit ${1:-0}
 }
 
-function trap_exit() { # move to core
+function trap_exit() { # move to core?
   safe_exit
   die "Exit trapped. In function: '${FUNCNAME[*]}'"
 }
 
-DIR="$(cd "$( dirname "${BASH_SOURCE[0]}")" && pwd)" # move to core
+DIR="$(cd "$( dirname "${BASH_SOURCE[0]}")" && pwd)" # move to core?
 IFS=$' \n\t'
 
 trap trap_exit EXIT INT TERM

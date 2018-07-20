@@ -42,7 +42,7 @@ function _list_files() {
 
 function _list_folders() {
     _list_files \
-        | xargs dirname \
+        | xargs -n1 dirname \
         | sort -u
 }
 

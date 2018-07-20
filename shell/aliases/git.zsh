@@ -1,10 +1,10 @@
-alias gcod="git checkout develop || git checkout dev || git checkout development"
+# master
 alias gcom="git checkout master"
+alias gmm="git merge master"
 
-alias gcdr='cd $(git rev-parse --show-toplevel)'
-
-# update repository
-alias gupd="git pull && git submodule init && git submodule update && git submodule status"
+# update
+alias gu="git pull && git submodule init && git submodule update && git submodule status"
+alias gum="git checkout master && git pull && git checkout - && git merge master && git checkout -a"
 
 # git status with tig
 alias tst="tig status"
@@ -12,8 +12,14 @@ alias tst="tig status"
 # git push upstream
 alias gpu='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
 
-# git checkout browsing
-fco() {
+# git push with linting fix
+alias gpfl="lein do cljfmt fix, kibit --replace; gaa; gcam 'Fix lint'; gpu"
+
+# git commit with push
+gcamp() { git commit -am "$1"; gpu }
+
+# git interactive checkout
+gcoo() {
   local tags branches target
   tags=$(
     git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
