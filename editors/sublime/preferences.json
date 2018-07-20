@@ -12,9 +12,15 @@
 		"*.pdf",
 		"*.swf",
 		"*.jar",
-		"*.zip"
+		"*.zip",
+		".svn/", 
+		".git/", 
+		".hg/",
+		"node_modules/", 
+		"bower_components/",
+		".lumo_cache/"
 	],
-	"color_scheme": "Packages/Theme - Spacegray/base16-eighties.dark.tmTheme",
+	"color_scheme": "Packages/Materialize/schemes/Material Spaceblack Oceanic.tmTheme",
 	"file_exclude_patterns":
 	[
 		"*.pyc",
@@ -41,6 +47,7 @@
 	"folder_exclude_patterns":
 	[
 		"node_modules",
+		"bower_components",
 		".svn",
 		".git",
 		".hg",
@@ -50,6 +57,7 @@
 	[
 	],
 	"tab_size": 2,
-	"theme": "Spacegray Eighties.sublime-theme",
+	"theme": "Material Spaceblack.sublime-theme",
+	"word_wrap": true,
 	"translate_tabs_to_spaces": true
 }

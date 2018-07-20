@@ -47,6 +47,7 @@ Powerline_*.cache
 # Package managers
 node_modules/
 brew/
+bower_components/
 
 # Packages
 *.7z
