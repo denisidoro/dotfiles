@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "$DOTFILES/scripts/core/debug.sh"
+
 function feedback::confirmation() {
 	local msg="$1"
 	local default_yes="${2:-true}"
@@ -11,7 +13,8 @@ function feedback::confirmation() {
 		options="(y|N)"
 	fi
 
-    read -p "$msg $options " -n 1 -r < /dev/tty
+    log::warning "$msg"
+    read -p "$options " -n 1 -r < /dev/tty
     local reply="$REPLY"
 
     if [[ -z "$reply" ]]; then

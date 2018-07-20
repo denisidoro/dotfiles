@@ -20,7 +20,9 @@ else
   blue=$(tput setaf 38)
 fi
 
-readonly LOG_FILE="/tmp/$(basename "$0").log"
+if [ -z ${LOG_FILE+x} ]; then
+  readonly LOG_FILE="/tmp/$(basename "$0").log"
+fi
 
 function _log() {
   local template=$1
