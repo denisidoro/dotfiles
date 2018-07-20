@@ -7,4 +7,4 @@
 - link:
     ~/.config/bspwm/bspwmrc: wm/bspwm/bspwmrc
     ~/.config/sxhkd/sxhkdrc: bindings/sxhkd/sxhkd.rc
-  
+    
