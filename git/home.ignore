@@ -5,6 +5,8 @@
 
 # packages and logs
 node_modules
+bower_components
+.idea
 .git
 
 # every hidden file/folder except .dotfiles

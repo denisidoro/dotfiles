@@ -5,7 +5,7 @@ export DOTFILES="${DOTFILES:-"$HOME/.dotfiles"}"
 source "$DOTFILES/git/core.sh"
 
 git_dir=$(git rev-parse --show-toplevel)
-files=$(git diff-index --name-only --diff-filter=ACM --cached HEAD --)
+files=$(git diff-index --name-only --diff-filter=ACM --cached HEAD -- || echo "")
 
 git::check_json "$files"
 git::check_edn "$files"

@@ -18,7 +18,7 @@
                 <deadZone>6000</deadZone>
                 <throttle>positivehalf</throttle>
             </trigger>
-            <button index="9">
+            <button index="6">
                 <setselect>2</setselect>
                 <setselectcondition>while-held</setselectcondition>
             </button>
@@ -26,36 +26,36 @@
         <set index="2">
             <name>Transitory</name>
             <stick index="1">
-                <stickbutton index="5">
-                    <slots>
-                        <slot>
-                            <code>0x1000070</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                    </slots>
-                </stickbutton>
                 <stickbutton index="1">
                     <slots>
                         <slot>
                             <code>0x1000072</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </stickbutton>
+                <stickbutton index="5">
+                    <slots>
+                        <slot>
+                            <code>0x1000070</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
                 </stickbutton>
             </stick>
             <stick index="2">
-                <stickbutton index="5">
-                    <slots>
-                        <slot>
-                            <code>0x1000070</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                    </slots>
-                </stickbutton>
                 <stickbutton index="1">
                     <slots>
                         <slot>
                             <code>0x1000072</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </stickbutton>
+                <stickbutton index="5">
+                    <slots>
+                        <slot>
+                            <code>0x1000070</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
@@ -75,6 +75,10 @@
                     </slot>
                 </slots>
             </button>
+            <button index="6">
+                <setselect>1</setselect>
+                <setselectcondition>while-held</setselectcondition>
+            </button>
             <button index="7">
                 <slots>
                     <slot>
@@ -88,26 +92,23 @@
                 <setselect>3</setselect>
                 <setselectcondition>one-way</setselectcondition>
             </button>
-            <button index="9">
-                <setselect>1</setselect>
-                <setselectcondition>while-held</setselectcondition>
+            <button index="11">
+                <slots>
+                    <slot>
+                        <path>C:/Windows/explorer.exe</path>
+                        <arguments>&quot;C:\Users\Denis\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Games&quot;</arguments>
+                        <mode>execute</mode>
+                    </slot>
+                </slots>
             </button>
         </set>
         <set index="3">
             <name>Desktop</name>
             <stick index="1">
-                <stickbutton index="5">
+                <stickbutton index="3">
                     <slots>
                         <slot>
-                            <code>0x1000015</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                    </slots>
-                </stickbutton>
-                <stickbutton index="7">
-                    <slots>
-                        <slot>
-                            <code>0x1000012</code>
+                            <code>0x1000014</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
@@ -120,10 +121,18 @@
                         </slot>
                     </slots>
                 </stickbutton>
-                <stickbutton index="3">
+                <stickbutton index="7">
                     <slots>
                         <slot>
-                            <code>0x1000014</code>
+                            <code>0x1000012</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </stickbutton>
+                <stickbutton index="5">
+                    <slots>
+                        <slot>
+                            <code>0x1000015</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
@@ -131,18 +140,10 @@
             </stick>
             <stick index="2">
                 <diagonalRange>65</diagonalRange>
-                <stickbutton index="5">
+                <stickbutton index="3">
                     <slots>
                         <slot>
-                            <code>2</code>
-                            <mode>mousemovement</mode>
-                        </slot>
-                    </slots>
-                </stickbutton>
-                <stickbutton index="7">
-                    <slots>
-                        <slot>
-                            <code>3</code>
+                            <code>4</code>
                             <mode>mousemovement</mode>
                         </slot>
                     </slots>
@@ -155,28 +156,36 @@
                         </slot>
                     </slots>
                 </stickbutton>
-                <stickbutton index="3">
+                <stickbutton index="7">
                     <slots>
                         <slot>
-                            <code>4</code>
+                            <code>3</code>
+                            <mode>mousemovement</mode>
+                        </slot>
+                    </slots>
+                </stickbutton>
+                <stickbutton index="5">
+                    <slots>
+                        <slot>
+                            <code>2</code>
                             <mode>mousemovement</mode>
                         </slot>
                     </slots>
                 </stickbutton>
             </stick>
             <dpad index="1">
-                <dpadbutton index="4">
-                    <slots>
-                        <slot>
-                            <code>0x1000070</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                    </slots>
-                </dpadbutton>
                 <dpadbutton index="1">
                     <slots>
                         <slot>
                             <code>0x1000072</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </dpadbutton>
+                <dpadbutton index="4">
+                    <slots>
+                        <slot>
+                            <code>0x1000070</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
