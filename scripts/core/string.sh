@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# vim: filetype=sh
 
 function str::capitalize {
   echo "$(tr '[:lower:]' '[:upper:]' <<< ${1:0:1})${1:1}"
