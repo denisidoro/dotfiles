@@ -4,7 +4,7 @@ alias gmm="git merge master"
 
 # update
 alias gu="git pull && git submodule init && git submodule update && git submodule status"
-alias gum="git checkout master && git pull && git checkout - && git merge master && git checkout -a"
+alias gum="git checkout master && git pull && git checkout - && git merge master && git checkout -v -a"
 
 # git status with tig
 alias tst="tig status"
@@ -16,7 +16,10 @@ alias gpu='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
 alias gpfl="lein do cljfmt fix, kibit --replace; gaa; gcam 'Fix lint'; gpu"
 
 # git commit with push
-gcamp() { git commit -am "$1"; gpu }
+gcamp() { git commit -am "$1"; gpu; }
+
+# preview PR
+gprp() { dot git pr preview; }
 
 # git interactive checkout
 gcoo() {

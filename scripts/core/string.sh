@@ -15,3 +15,7 @@ function str::contains() {
 function str::trim_newlines() {
   tr -d "\n"
 }
+
+function str::last_word() {
+  grep -oE '[^ ]+$'
+}
