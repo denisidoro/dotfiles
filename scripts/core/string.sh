@@ -19,3 +19,7 @@ function str::trim_newlines() {
 function str::last_word() {
   grep -oE '[^ ]+$'
 }
+
+function str::remove_last_char() {
+  echo "${1:0:${#1}-1}"
+}
