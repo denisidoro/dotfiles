@@ -40,10 +40,14 @@ _append() {
   echo "${1}${CYAN}${2}${NC} ${3}\n"
 }
 
+_remove_blank_lines() {
+  cat | sed 's/^ *//; s/ *$//; /^$/d; /^\s*$/d'
+}
+
 declare -A regexes
 regexes=( 
-  ["extension"]="\.(${VIDEO_EXTENSIONS})$"
   ["episode"]="(s?([0-9]{1,2}))([ex]([0-9]{2})(?:[^0-9]|$))"
+  ["extension"]="\.(${VIDEO_EXTENSIONS})$"
   ["year"]="([\[\(]?((?:19[0-9]|20[01])[0-9])[\]\)]?)"
   ["resolution"]="([0-9]{3,4}p)"
   ["codec"]="(xvid|[hx]\.?26[45])"
@@ -65,7 +69,7 @@ regexes=(
   ["size"]="(\d+(?:\.\d+)?(?:GB|MB))"
  )
 
-declare -a orders=("extension" "episode" "year" "resolution" "codec" "group" "region" "extended" "hardcoded" "proper" "repack" "container" "widescreen" "website" "language" "sbs" "unrated" "quality" "sub" "audio" "size");
+declare -a orders=("episode" "extension" "year" "resolution" "codec" "group" "region" "extended" "hardcoded" "proper" "repack" "container" "widescreen" "website" "language" "sbs" "unrated" "quality" "sub" "audio" "size");
 
 reduced_filename="$filename"
 output=""
@@ -88,7 +92,7 @@ reduced_filename="$(_apply_reduced_hacks "$reduced_filename")"
 output="$(echo "$(_append "$output" "reduced" "$reduced_filename")" | sed -E 's/\\n$//')"
 
 if $name; then
-    echo "$reduced_filename"
+    echo "$reduced_filename" | _remove_blank_lines
 else 
-    echo -e "$output"
+    echo -e "$output" | _remove_blank_lines
 fi
