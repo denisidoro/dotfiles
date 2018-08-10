@@ -12,24 +12,41 @@ source "${DOTFILES}/scripts/download/core.sh"
 
 docs::eval "$@"
 
+TV_FOLDER="$HOME/TV"
+
 _video_content() {
   local readonly f="$(cat)"
   local readonly first_call="${1:-true}"
   if fs::is_dir "$f" && ! $first_call; then
     ls "$f" | _video_content false
   else
-    echo "$f" | grep -Eiq '\.(avi|mp4|mov|mkv|mpg)$'
+    echo "$f" | grep -Eiq "\.${VIDEO_EXTENSIONS}$"
   fi
 }
 
-_move_video() {
-  local readonly filename="$(cat)"
-  for t in $HOME/TV\ Shows/*; do
-    echo "$filename $(basename "$t") $(str::levenshtein "$(basename "$t")" "$filename")"
+_tv_folder() {
+  local readonly filename="$(dot down parser video name "$full_filename")"
+  local dist
+  for t in $TV_FOLDER/*; do
+    dist=$(str::filename_levenshtein "$t" "$filename")
+    if [ "$dist" -lt 5 ]; then
+      basename "$t"
+      exit 0
+    fi
+    echo "$filename"
   done
 }
 
+_move_video() {
+  local readonly full_filename="$1";
+  local readonly filename="$(dot down parser video name "$full_filename")"
+  local readonly folder="$(_tv_folder "$filename")"
+  echo "mv $full_filename $folder"
+}
 
-for f in ./*.mov; do
-  echo "$f - $(echo "$f" | _video_content | _move_video || true)"
+for f in ./*; do
+  is_video=$(echo "$f" | _video_content && echo true || echo false)
+  if $is_video; then
+    _move_video "${f:2}"
+  fi
 done
