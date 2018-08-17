@@ -13,6 +13,10 @@ function str::contains() {
 	fi
 }
 
+function str::uppercase() {
+  cat | tr '[:lower:]' '[:upper:]'
+}
+
 function str::trim_newlines() {
   tr -d "\n"
 }

@@ -40,8 +40,10 @@ _dominant_colors() {
 
 _as_printf_color() {
   local readonly color="$1"
+  local c
   [ ${color:0:1} == "#" ] && c=${color:1} || c="$color"
   echo "$c" \
+    | str::uppercase \
     | sed -E 's/([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})/\1\n\2\n\3/' \
     | xargs -I% sh -c "echo 'ibase=16; %' | bc" \
     | tr '\n' ';'
