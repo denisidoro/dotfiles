@@ -32,7 +32,7 @@ row="███████"
 
 _dominant_colors() {
   local readonly filename="$1"
-  convert "$filename" +dither -colors "${num:-5}" -unique-colors txt: \
+  convert "$filename" +dither -colors "${number}" -unique-colors txt: \
     | grep -Eo '#[0-9A-F]{6}' \
     | tr '\n' ' ' \
     | xargs
