@@ -22,7 +22,7 @@ source "${DOTFILES}/scripts/environment/core.sh"
 ##?     install <path>        Installs and APK given its path
 ##?     uninstall <package>   Uninstalls an application package
 ##?     clear <package>   	  Clear data given an application package
-##?     link <uri>   	  	  Dispatches a deep-link
+##?     link <uri>   	  	     Dispatches a deep-link
 
 docs::eval "$@"
 

@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/environment/core.sh"
+
+##? Palette
+ #? 0.2.0
+##?
+##? Usage:
+##?    palette [options] image <filename>
+##?    palette [options] text <filename>
+##?
+##? Options:
+##?    -n --number <num>   Number of dominant colors [default: 5]
+##?    -p --preview        Display on screen
+
+docs::eval "$@"
+
+_extract_colors() {
+  cat \
+    | grep -Eo '#[0-9a-fA-F]{6}' \
+    | tr '\n' ' ' \
+    | xargs
+}
+
+_image_dominant_colors() {
+  local readonly filename="$1"
+  convert "$filename" +dither -colors "${number}" -unique-colors txt: \
+    | _extract_colors
+}
+\
+if $image; then
+  colors="$(_image_dominant_colors "$filename")"
+else
+  colors="$(cat "$filename" | _extract_colors)"
+fi
+
+if $preview; then
+  dot style color print -- "$colors"
+else
+  echo "$colors"
+fi
