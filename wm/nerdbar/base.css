@@ -69,3 +69,7 @@ span, div {
 .debug {
   color: white;
 }
+
+.color-gray {
+  color: gray;
+}
