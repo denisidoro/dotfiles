@@ -9,7 +9,7 @@ span, div {
     color: #f0f0f0;
 }
 
-.color1 { background-color: #61892f; }
+.color1 { background-color: #2391d1; }
 .color2 { background-color: #86c232; }
 .color3 { background-color: #222629; }
 .color4 { background-color: #474b4f; }
@@ -58,7 +58,7 @@ span, div {
 }
 
 .active {
-  background-color: #61892f;
+  background-color: #2391d1;
   display: inline !important;
 }
 
