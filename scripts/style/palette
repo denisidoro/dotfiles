@@ -9,7 +9,8 @@ source "${DOTFILES}/scripts/environment/core.sh"
 ##?
 ##? Usage:
 ##?    palette [options] image <filename>
-##?    palette [options] text <filename>
+##?    palette [options] textfile <filename>
+##?    palette [options] text
 ##?
 ##? Options:
 ##?    -n --number <num>   Number of dominant colors [default: 5]
@@ -29,11 +30,13 @@ _image_dominant_colors() {
   convert "$filename" +dither -colors "${number}" -unique-colors txt: \
     | _extract_colors
 }
-\
+
 if $image; then
   colors="$(_image_dominant_colors "$filename")"
-else
+elif $textfile; then
   colors="$(cat "$filename" | _extract_colors)"
+else
+  colors="$(cat | _extract_colors)"
 fi
 
 if $preview; then

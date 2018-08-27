@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+_transpose() {
+  cat | awk '
+  {
+      for (i=1; i<=NF; i++)  {
+          a[NR,i] = $i
+      }
+  }
+  NF>p { p = NF }
+  END {
+      for(j=1; j<=p; j++) {
+          str=a[1,j]
+          for(i=2; i<=NR; i++){
+              str=str" "a[i,j];
+          }
+          print str
+      }
+  }'
+}
+
+_col() {
+  cat | column -t
+}
+
+_remove_brackets() {
+  cat | sed -E 's/<|>//g'
+}
+
+_bash_code() {
+  cat \
+    | awk '{print $1 "=" $2}' \
+    | sed -E 's/<|>//g'
+}
+
+_all_vars() {
+  local readonly doc="$1"
+  echo "$doc" \
+    | grep -Eo "[$rv2]+" \
+    | grep -v "<"
+}
+
+_regex() {
+  echo "$1" | sed -E "s/<${r0}>/${r0}/g"
+}
+
+# doc="$(cat)"
+doc="$(echo -e "ship move <x> <y>
+ship (create|destroy)
+ship [type] construct")"
+
+rv="a-zA-Z0-9"
+rv2="${rv}<>"
+r0="[${rv}]+"
+r1="(${r0})?\s"
+
+# sed -E "s/\s?\[${r0}\]\s?/${r1}/g"
+docr="$(echo "$doc" | sed -E "s/<${r0}>/${r0}/g")"
+
+IFS=$'\n'
+for p in $doc; do
+  r="$(_regex "$p")"
+  # echo "$p -> $r <- $@"
+  if echo "$@" | grep -Eq "$r"; then
+    match="$p"
+    break
+  fi
+done
+
+# echo "match=${match:-no...}"
+
+
+# echo "$@" | grep -E "$docr"
+
+code1="$(_all_vars "$doc" | awk '{print $0"=false;"}')"
+
+code2="$(echo -e "$match\n$@" \
+  | _col \
+  | _transpose \
+  | awk '{ if ($2 == "") $2="false"; else if (index($1, "|") != 0) $1=$2; if ($2 == $1) $2="true"; print $1"="$2";" }' \
+  | _remove_brackets)"
+
+code="$code1
+$code2"
+echo "$code"
+#exit 0
+
+eval "$code" > /dev/null
+
+echo "-------------------"
+echo "ship: ${ship:-undefined};"
+echo "move: ${move:-undefined};"
+echo "x: ${x:-undefined};"
+echo "y: ${y:-undefined};"
+echo "create: ${create:-undefined};"
+echo "destroy: ${destroy:-undefined};"
+echo "type: ${type:-undefined};"
+echo "construct: ${construct:-undefined};"
+
+# echo -e "ship\nmove\n<x> 10\nconstruct construct" | awk '{ if ($2 == "") $2="false"; else if ($2 == $1) $2="true"; print $1"="$2";" }'
