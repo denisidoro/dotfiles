@@ -4,7 +4,7 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? OSX
- #? 0.1.0
+#?? 0.1.0
 ##?
 ##? Usage:
 ##?    osx hidden (show|hide)
@@ -18,29 +18,33 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 osx::show_hidden_files() {
-	defaults write com.apple.finder AppleShowAllFiles -bool true; killall Finder
+   defaults write com.apple.finder AppleShowAllFiles -bool true
+   killall Finder
 }
 
 osx::hide_hidden_files() {
-	defaults write com.apple.finder AppleShowAllFiles -bool false; killall Finder
+   defaults write com.apple.finder AppleShowAllFiles -bool false
+   killall Finder
 }
 
 osx::show_desktop() {
-	defaults write com.apple.finder CreateDesktop -bool true; killall Finder
+   defaults write com.apple.finder CreateDesktop -bool true
+   killall Finder
 }
 
 osx::hide_desktop() {
-	defaults write com.apple.finder CreateDesktop -bool false; killall Finder
+   defaults write com.apple.finder CreateDesktop -bool false
+   killall Finder
 }
 
 osx::lock() {
-	pmset displaysleepnow
+   pmset displaysleepnow
 }
 
 if $hidden; then
-	$show && osx::show_hidden_files || osx::hide_hidden_files
+   $show && osx::show_hidden_files || osx::hide_hidden_files
 elif $desktop; then
-	$show && osx::show_desktop || osx::hide_desktop
+   $show && osx::show_desktop || osx::hide_desktop
 elif $lock; then
-	osx::lock
+   osx::lock
 fi

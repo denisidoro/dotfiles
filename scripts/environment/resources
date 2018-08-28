@@ -6,7 +6,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/environment/core.sh"
 
 ##? Setups resources
- #? 0.1.1
+#?? 0.1.1
 ##?
 ##? Usage:
 ##?    resources fontawesome
@@ -15,14 +15,14 @@ docs::eval "$@"
 
 if $fontawesome; then
 
-	url="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
-	css="$HOME/.dotfiles/wm/nerdbar/font-awesome.min.css"
+   url="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
+   css="$HOME/.dotfiles/wm/nerdbar/font-awesome.min.css"
 
-	if [[ ! -f "$css" ]]; then
-		mkdir -p "$(dirname "$css")"
-		curl -s "$url" -o "$css"
-	fi
+   if [[ ! -f "$css" ]]; then
+      mkdir -p "$(dirname "$css")"
+      curl -s "$url" -o "$css"
+   fi
 
-	echo "$css"
+   echo "$css"
 
 fi

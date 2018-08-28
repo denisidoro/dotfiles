@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -uo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Source code indentation fixer
+##?
+##? Usage:
+##?    beautify <filename>
+
+docs::eval "$@"
+
+program=nvim
+
+extension="${filename##*.}"
+if echo "$extension" | grep -q '/'; then
+   extension=""
+fi
+
+case "$extension" in
+   *sh) program=shfmt ;;
+   *clj*) program="" ;;
+   *py) program="" ;;
+esac
+
+if [ -z $extension ]; then
+   if cat "$filename" | head -n3 | grep -q "sh$"; then
+      program=shfmt
+   fi
+fi
+
+case "$program" in
+   shfmt) shfmt -w -i 3 -ci -bn "$filename" ;;
+   nvim) nvim --headless --noplugin -n -u NONE -c ':normal gg=G' +wq "$filename" ;;
+esac

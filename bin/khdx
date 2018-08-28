@@ -5,7 +5,7 @@ export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Performs keybinding-related operations
- #? 0.2.0
+#?? 0.2.0
 ##?
 ##? Usage:
 ##?    khdx desktop (focus|send) (next|previous|tab)

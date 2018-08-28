@@ -4,12 +4,12 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Pushbullet API
- #? 0.1.0
+#?? 0.1.0
 ##?
 ##? Usage:
 ##?    push list
 ##?    push <device> note <title> [<message>]
-##?    push <device> link <url> 
+##?    push <device> link <url>
 ##?    push <device> link <title> <url>
 ##?    push <device> link <title> <message> <url>
 ##?    push -- <args>...
@@ -27,22 +27,22 @@ PUSH_DIR="${DOTFILES}/modules/pushbullet"
 PUSH_BIN="${PUSH_DIR}/pushbullet"
 
 function clone_cli() {
-	mkdir -p "$PUSH_DIR"
-	git clone https://github.com/Red5d/pushbullet-bash.git "$PUSH_DIR"
-	cd "$PUSH_DIR"
-	git submodule init && git submodule status && git submodule update --init --recursive "${PUSH_DIR}" || true
+   mkdir -p "$PUSH_DIR"
+   git clone https://github.com/Red5d/pushbullet-bash.git "$PUSH_DIR"
+   cd "$PUSH_DIR"
+   git submodule init && git submodule status && git submodule update --init --recursive "${PUSH_DIR}" || true
 }
 
 # clone repository if needed
 if ! fs::is_file "$PUSH_BIN"; then
-	clone_cli
+   clone_cli
 fi
 
 # adapt input
 if $note || $link; then
-	args=("push" "${@:-}")
+   args=("push" "${@:-}")
 else
-	args="${@:-}"
+   args="${@:-}"
 fi
 
 # call cli

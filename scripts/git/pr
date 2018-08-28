@@ -6,7 +6,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/git.sh"
 
 ##? PR utilities
- #? 0.1.0
+#?? 0.1.0
 ##?
 ##? Usage:
 ##?    pr preview
@@ -14,28 +14,28 @@ source "${DOTFILES}/scripts/core/git.sh"
 docs::eval "$@"
 
 _cleanup_uri() {
-	echo "$1" \
-		| sed 's/git@//g' \
-		| sed 's/\.git//g' \
-		| sed 's|:|/|g'
+   echo "$1" \
+      | sed 's/git@//g' \
+      | sed 's/\.git//g' \
+      | sed 's|:|/|g'
 }
 
 _full_uri() {
-	local readonly uri="$1"
-	local readonly branch="$2"
-	echo "https://${uri}/compare/${branch}?expand=1"
+   local readonly uri="$1"
+   local readonly branch="$2"
+   echo "https://${uri}/compare/${branch}?expand=1"
 }
 
 _get_url() {
-	cd "$(git::root)"
-	cd .git
-	local readonly original_uri="$(cat config \
-		| grep "remote \"origin" -A2 \
-		| grep github \
-		| str::last_word)"
-	local readonly uri="$(_cleanup_uri "$original_uri")"
-	local readonly branch="$(git::current_branch)"
-	_full_uri "$uri" "$branch"
+   cd "$(git::root)"
+   cd .git
+   local readonly original_uri="$(cat config \
+      | grep "remote \"origin" -A2 \
+      | grep github \
+      | str::last_word)"
+   local readonly uri="$(_cleanup_uri "$original_uri")"
+   local readonly branch="$(git::current_branch)"
+   _full_uri "$uri" "$branch"
 }
 
 dot os open browser "$(_get_url)"

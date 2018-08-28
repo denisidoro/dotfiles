@@ -5,7 +5,7 @@ set -uo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Manager window-manager-related features
- #? 0.1.0
+#?? 0.1.0
 ##?
 ##? Usage:
 ##?    wm (start|stop|toggle|restart)
@@ -13,26 +13,26 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 if $toggle; then
-  if ps aux | grep -q "[/]bin/khd"; then
-    start=false
-    stop=true
-  else
-    start=true
-    stop=false
-  fi
+   if ps aux | grep -q "[/]bin/khd"; then
+      start=false
+      stop=true
+   else
+      start=true
+      stop=false
+   fi
 elif $restart; then
-  start=true
-  stop=true
+   start=true
+   stop=true
 fi
 
 if $stop; then
-  ps aux | grep -ie "[b]ersicht" | awk '{print $2}' | xargs kill -9 2> /dev/null
-  brew services stop crisidev/chunkwm/chunkwm
-  brew services stop khd
+   ps aux | grep -ie "[b]ersicht" | awk '{print $2}' | xargs kill -9 2>/dev/null
+   brew services stop crisidev/chunkwm/chunkwm
+   brew services stop khd
 fi
 
 if $start; then
-  brew services start khd
-  brew services start crisidev/chunkwm/chunkwm
-  open "/Applications/Übersicht.app"
+   brew services start khd
+   brew services start crisidev/chunkwm/chunkwm
+   open "/Applications/Übersicht.app"
 fi

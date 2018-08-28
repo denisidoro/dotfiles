@@ -8,7 +8,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/environment/core.sh"
 
 ##? Installs commands
- #? 0.3.2
+#?? 0.3.2
 ##?
 ##? Usage:
 ##?    install <cmd>
@@ -16,104 +16,104 @@ source "${DOTFILES}/scripts/environment/core.sh"
 docs::eval "$@"
 
 function install_vimplug() {
-  if ! fs::is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
-    curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-    http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  fi
+   if ! fs::is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
+      curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+         http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+   fi
 }
 
 function install_spacevim() {
-  cat "$HOME/.config/nvim/init.vim" 2> /dev/null \
-    | grep -q "space-vim" 2> /dev/null \
-    || bash <(curl -fsSL https://raw.githubusercontent.com/liuchengxu/space-vim/master/install.sh)
+   cat "$HOME/.config/nvim/init.vim" 2>/dev/null \
+      | grep -q "space-vim" 2>/dev/null \
+      || bash <(curl -fsSL https://raw.githubusercontent.com/liuchengxu/space-vim/master/install.sh)
 }
 
 function install_tpm() {
-  if ! fs::is_dir $HOME/.tmux/plugins/tpm; then
-    git clone https://github.com/tmux-plugins/tpm --depth=1 $HOME/.tmux/plugins/tpm
-  fi
+   if ! fs::is_dir $HOME/.tmux/plugins/tpm; then
+      git clone https://github.com/tmux-plugins/tpm --depth=1 $HOME/.tmux/plugins/tpm
+   fi
 }
 
 function install_tmuxinator() {
-  if ! platform::command_exists tmuxinator; then
-    gem install tmuxinator
-  fi
+   if ! platform::command_exists tmuxinator; then
+      gem install tmuxinator
+   fi
 }
 
 function install_gnu() {
-  if ! platform::command_exists ggrep; then
-    brew tap homebrew/dupes
-    brew install binutils diffutils ed findutils gawk gnu-indent gnu-sed gnu-tar gnu-which gnutls grep gzip screen watch  wget && brew install wdiff --with-gettext
-    brew install bash emacs m4 make nano file-formula git less openssh rsync unzip
-  fi
+   if ! platform::command_exists ggrep; then
+      brew tap homebrew/dupes
+      brew install binutils diffutils ed findutils gawk gnu-indent gnu-sed gnu-tar gnu-which gnutls grep gzip screen watch wget && brew install wdiff --with-gettext
+      brew install bash emacs m4 make nano file-formula git less openssh rsync unzip
+   fi
 }
 
 function install_kitty() {
-	mkdir -p $HOME/tmp
-  git clone https://github.com/kovidgoyal/kitty --depth 1 $HOME/tmp/kitty
-  cd $HOME/tmp/kitty
-  make
-  sudo make install
+   mkdir -p $HOME/tmp
+   git clone https://github.com/kovidgoyal/kitty --depth 1 $HOME/tmp/kitty
+   cd $HOME/tmp/kitty
+   make
+   sudo make install
 }
 
 function install_fzf() {
-  if ! platform::command_exists fzf; then
-    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf \
-      && $HOME/.fzf/install
-  fi
+   if ! platform::command_exists fzf; then
+      git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf \
+         && $HOME/.fzf/install
+   fi
 }
 
 function install_bspwm() {
-  if ! platform::command_exists bspwm; then
-    sudo apt-get install xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev gcc make feh dmenu rofi \
-      libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev
-    shallow_github_clone baskerville bspwm
-    shallow_github_clone baskerville sxhkd
-    shallow_github_clone baskerville xdo
-    shallow_github_clone baskerville sutils
-    shallow_github_clone baskerville xtitle
-    shallow_github_clone LemonBoy bar    
-    tmp_make bspwm
-    tmp_make sxhkd
-    tmp_make xdo
-    tmp_make sutils
-    tmp_make xtitle
-    tmp_make bar
-    echo "sxhkd & exec bspwm" >> $HOME/.xinitrc
-    sudo cp "$HOME/tmp/bspwm/contrib/freedesktop/bspwm.desktop" /usr/share/xsessions/   
-  fi
+   if ! platform::command_exists bspwm; then
+      sudo apt-get install xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev gcc make feh dmenu rofi \
+         libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev
+      shallow_github_clone baskerville bspwm
+      shallow_github_clone baskerville sxhkd
+      shallow_github_clone baskerville xdo
+      shallow_github_clone baskerville sutils
+      shallow_github_clone baskerville xtitle
+      shallow_github_clone LemonBoy bar
+      tmp_make bspwm
+      tmp_make sxhkd
+      tmp_make xdo
+      tmp_make sutils
+      tmp_make xtitle
+      tmp_make bar
+      echo "sxhkd & exec bspwm" >>$HOME/.xinitrc
+      sudo cp "$HOME/tmp/bspwm/contrib/freedesktop/bspwm.desktop" /usr/share/xsessions/
+   fi
 }
 
 function install_spacemacs() {
-  git clone https://github.com/syl20bnr/spacemacs --depth 1 ~/.emacs.d
+   git clone https://github.com/syl20bnr/spacemacs --depth 1 ~/.emacs.d
 }
 
 function install_watchman() {
-  if ! platform::command_exists watchman; then
-    sudo apt-get install -y autoconf automake build-essential python-dev
-    shallow_github_clone facebook watchman
-    cd "$HOME/tmp/watchman"
-    ./autogen.sh 
-    ./configure     
-    tmp_make watchman
-  fi
+   if ! platform::command_exists watchman; then
+      sudo apt-get install -y autoconf automake build-essential python-dev
+      shallow_github_clone facebook watchman
+      cd "$HOME/tmp/watchman"
+      ./autogen.sh
+      ./configure
+      tmp_make watchman
+   fi
 }
 
 function list_commands() {
-  log::error "Unknown command: $1"
-  echo -e
-  log::note "Available commands"
-  echo "$2" \
-    | grep -Eo "function install_(\w\w*?)\(" \
-    | sed -E 's/.*_(.*?)\(/\1/g' \
-    | sort
+   log::error "Unknown command: $1"
+   echo -e
+   log::note "Available commands"
+   echo "$2" \
+      | grep -Eo "function install_(\w\w*?)\(" \
+      | sed -E 's/.*_(.*?)\(/\1/g' \
+      | sort
 }
 
 filesource="$(cat "$0")"
 
 echo "$filesource" \
-  | grep "function install_${cmd}" &> /dev/null \
-  && echo "Installing ${cmd}..." \
-  && "install_${cmd}" \
-  && echo "Installed" \
-  || list_commands "$cmd" "$filesource"
+   | grep "function install_${cmd}" &>/dev/null \
+   && echo "Installing ${cmd}..." \
+   && "install_${cmd}" \
+   && echo "Installed" \
+   || list_commands "$cmd" "$filesource"

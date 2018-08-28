@@ -5,7 +5,7 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Checks for available commands, config files, etc.
- #? 0.5.0
+#?? 0.5.0
 ##?
 ##? Usage:
 ##?    health
@@ -16,113 +16,113 @@ CODE=0
 
 function main() {
 
-  header "Languages and versioning"
-  check_commands "ruby python git"
+   header "Languages and versioning"
+   check_commands "ruby python git"
 
-  echo
-  header "Shell"
-  check_commands "zsh tmux fasd ag tmuxinator fzf"
-  check_dir "$HOME/.tmux/plugins/tpm" "tpm"
+   echo
+   header "Shell"
+   check_commands "zsh tmux fasd ag tmuxinator fzf"
+   check_dir "$HOME/.tmux/plugins/tpm" "tpm"
 
-  if platform::is_osx; then
-    echo
-    header "GNU commands"
-    check_gnu_commands "sed grep" true
-  fi
+   if platform::is_osx; then
+      echo
+      header "GNU commands"
+      check_gnu_commands "sed grep" true
+   fi
 
-  echo
-  header "Editors"
-  check_commands "vim nvim emacs"
-  check_file "$HOME/.local/share/nvim/site/autoload/plug.vim" "vim-plug"
+   echo
+   header "Editors"
+   check_commands "vim nvim emacs"
+   check_file "$HOME/.local/share/nvim/site/autoload/plug.vim" "vim-plug"
 
-  echo
-  header "Submodules"
-  check_file "$DOTFILES/modules/dotbot/.git" "dotbot"
-  check_file "$DOTFILES/modules/zplug/.git" "zplug"
+   echo
+   header "Submodules"
+   check_file "$DOTFILES/modules/dotbot/.git" "dotbot"
+   check_file "$DOTFILES/modules/zplug/.git" "zplug"
 
-  echo
-  header "Local git"
-  check_file "$DOTFILES/local/gitconfig" "config"
+   echo
+   header "Local git"
+   check_file "$DOTFILES/local/gitconfig" "config"
 
-  echo
-  header "dotfiles"
-  check_env "DOTFILES"
-  check_commands "dot"
+   echo
+   header "dotfiles"
+   check_env "DOTFILES"
+   check_commands "dot"
 
 }
 
 function check_command_available() {
-  local cmd="$1"
-  if platform::command_exists "$cmd"; then
-    log::success "$cmd"
-  else
-    inc_error "$cmd"
-  fi
+   local cmd="$1"
+   if platform::command_exists "$cmd"; then
+      log::success "$cmd"
+   else
+      inc_error "$cmd"
+   fi
 }
 
 function check_gnu_command_available() {
-  local cmd
-  if platform::is_osx; then
-    cmd="g$1"
-  else
-    cmd="$1"
-  fi
-  check_command_available "$cmd"
+   local cmd
+   if platform::is_osx; then
+      cmd="g$1"
+   else
+      cmd="$1"
+   fi
+   check_command_available "$cmd"
 }
 
 function check_commands() {
-  local cmds="$1"
-  for cmd in $cmds; do
+   local cmds="$1"
+   for cmd in $cmds; do
       check_command_available "$cmd"
-  done
+   done
 }
 
 function check_gnu_commands() {
-  local cmds="$1"
-  for cmd in $cmds; do
+   local cmds="$1"
+   for cmd in $cmds; do
       check_gnu_command_available "$cmd"
-  done
+   done
 }
 
 function check_vim_plug() {
-  if fs::is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
-    log::success "vim-plug"
-  else
-    inc_error "vim-plug"
-  fi
+   if fs::is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
+      log::success "vim-plug"
+   else
+      inc_error "vim-plug"
+   fi
 }
 
 function check_file() {
-  local path="$1"
-  local name="$2"
-  if fs::is_file "$path"; then
-    log::success "$name"
-  else
-    inc_error "$name"
-  fi
+   local path="$1"
+   local name="$2"
+   if fs::is_file "$path"; then
+      log::success "$name"
+   else
+      inc_error "$name"
+   fi
 }
 
 function check_dir() {
-  local path="$1"
-  local name="$2"
-  if fs::is_dir "$path"; then
-    log::success "$name"
-  else
-    inc_error "$name"
-  fi
+   local path="$1"
+   local name="$2"
+   if fs::is_dir "$path"; then
+      log::success "$name"
+   else
+      inc_error "$name"
+   fi
 }
 
 function check_env() {
-  set +u
-  [[ -z "${!1}" ]] && {
-    inc_error "\$$1"
-  } || log::success "\$$1"
-  set -u
+   set +u
+   [[ -z "${!1}" ]] && {
+      inc_error "\$$1"
+   } || log::success "\$$1"
+   set -u
 }
 
 function inc_error() {
-  log::error "$1"
-  CODE=$(($CODE + 1))
+   log::error "$1"
+   CODE=$(($CODE + 1))
 }
 
 main "$@"

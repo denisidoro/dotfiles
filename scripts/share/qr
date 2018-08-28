@@ -5,7 +5,7 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Creates a QR code with the specified content
- #? 0.1.0
+#?? 0.1.0
 ##?
 ##? Usage:
 ##?    qr <content>
