@@ -3,66 +3,70 @@
 set -euo pipefail
 
 ##? Outputs info for Ubersicht
- #? 0.1.0
+#?? 0.1.0
 ##?
 ##? Usage:
 ##?    bar all
 
 battery() {
-	pmset -g batt \
-		| egrep '([0-9]+\%).*' -o --colour=auto \
-		| cut -f1 -d';' \
-		| sed 's/.$//'
+   pmset -g batt \
+      | egrep '([0-9]+\%).*' -o --colour=auto \
+      | cut -f1 -d';' \
+      | sed 's/.$//'
 }
 
 cpu() {
-	ps -A -o %cpu \
-		| awk '{s+=$1} END {print s}'
+   ps -A -o %cpu \
+      | awk '{s+=$1} END {print s}'
 }
 
 memory() {
-	ps -A -o %mem \
-    	| awk '{s+=$1} END {print s}'
+   ps -A -o %mem \
+      | awk '{s+=$1} END {print s}'
 }
 
 traffic() {
-	echo "$(netstat -w1 & sleep 1.5; kill $!)" \
-		| tail -n1 \
-		| awk '{print $3 ";" $6}'
+   echo "$(
+      netstat -w1 &
+      sleep 1.5
+      kill $!
+   )" \
+      | tail -n1 \
+      | awk '{print $3 ";" $6}'
 }
 
 volume() {
-	osascript -e 'get volume settings' \
-		| cut -f2 -d':' \
-		| cut -f1 -d',';
+   osascript -e 'get volume settings' \
+      | cut -f2 -d':' \
+      | cut -f1 -d','
 }
 
 drive() {
-	df -h \
-		| grep /dev/disk1 \
-		| awk '{print $5}' \
-		| sed 's/.$//'
+   df -h \
+      | grep /dev/disk1 \
+      | awk '{print $5}' \
+      | sed 's/.$//'
 }
 
 wifi() {
-	/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I \
-		| awk '/ SSID/ {print substr($0, index($0, $2))}'
+   /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I \
+      | awk '/ SSID/ {print substr($0, index($0, $2))}'
 }
 
 clock() {
-	/bin/date '+%H:%M'
+   /bin/date '+%H:%M'
 }
 
 calendar() {
-	/bin/date '+%a %d %b'
+   /bin/date '+%a %d %b'
 }
 
 case "${1:-}" in
-	"all")
-		echo "$(clock);$(calendar);$(battery);$(cpu);$(drive);$(memory);$(volume);$(wifi);$(traffic)"
-		;;
-	*)
-		source "${DOTFILES}/scripts/core/main.sh"
-		docs::eval "$@"
-	  	;;
+   "all")
+      echo "$(clock);$(calendar);$(battery);$(cpu);$(drive);$(memory);$(volume);$(wifi);$(traffic)"
+      ;;
+   *)
+      source "${DOTFILES}/scripts/core/main.sh"
+      docs::eval "$@"
+      ;;
 esac

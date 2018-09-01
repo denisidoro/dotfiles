@@ -18,33 +18,33 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    cljs edn -- get :a
 
 function format_response() {
-	if $noreturn; then
-		local readonly lines="$(echo "$1" | wc -l | xargs)"
-		if [[ $lines < 2 ]]; then
-			echo ""
-		else
-			echo "$1" | tail -n +2
-		fi
-	else
-		echo "$1"
-	fi
+   if $noreturn; then
+      local readonly lines="$(echo "$1" | wc -l | xargs)"
+      if [[ $lines < 2 ]]; then
+         echo ""
+      else
+         echo "$1" | tail -n +2
+      fi
+   else
+      echo "$1"
+   fi
 }
 
 function call_cljs() {
-	local readonly classpath="$1"
-		readonly namespace="$2"
-		readonly fn="$3"
-	shift 3
-	dot clojure lumo \
-	   --auto-cache \
-	   --classpath "${classpath}" \
-	   --eval "(require '[${namespace} :as ns]) (ns/${fn} $@)"
+   local readonly classpath="$1"
+   readonly namespace="$2"
+   readonly fn="$3"
+   shift 3
+   dot clojure lumo \
+      --auto-cache \
+      --classpath "${classpath}" \
+      --eval "(require '[${namespace} :as ns]) (ns/${fn} $@)"
 }
 
 docs::eval "$@"
 
 # cd to pertinent folder so that the package.json is read
-pushd "${DOTFILES}/scripts" > /dev/null
+pushd "${DOTFILES}/scripts" >/dev/null
 
 # set constants
 classpath="${DOTFILES}/scripts/clojure/:${classpath:-}"
@@ -53,10 +53,10 @@ args=""
 
 # quote variables
 if ! coll::is_empty "${arguments[@]:-}"; then
-	for arg in "${arguments[@]:-}"; do
-	    escaped_arg="$(echo "$arg" | sed -E 's|\"|\\"|g')"
-	    args="$args \"${escaped_arg}\""
-	done
+   for arg in "${arguments[@]:-}"; do
+      escaped_arg="$(echo "$arg" | sed -E 's|\"|\\"|g')"
+      args="$args \"${escaped_arg}\""
+   done
 fi
 
 # call script and format it
@@ -65,7 +65,7 @@ exit_code=$?
 format_response "$response"
 
 # cd back to calling folder
-popd > /dev/null
+popd >/dev/null
 
 # forward cljs exit code
 exit $exit_code

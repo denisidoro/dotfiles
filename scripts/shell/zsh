@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 ##? ZSH helpers
- #? 0.1.0
+#?? 0.1.0
 ##?
 ##? Usage:
 ##?    zsh time <filename>   # Analyzes startup time

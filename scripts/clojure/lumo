@@ -15,47 +15,47 @@ LOCAL_BIN="${DOTFILES}/scripts/node_modules/lumo-cljs/bin/lumo"
 MIN_VERSION="1.7.0"
 
 function verlte() {
-    [  "$1" = "$(echo -e "$1\n$2" | sort -V | head -n1)" ]
+   [ "$1" = "$(echo -e "$1\n$2" | sort -V | head -n1)" ]
 }
 
 function verlt() {
-    [ "$1" = "$2" ] && return 1 || verlte $1 $2
+   [ "$1" = "$2" ] && return 1 || verlte $1 $2
 }
 
 function call_local_lumo() {
-    "$LOCAL_BIN" "$@"
+   "$LOCAL_BIN" "$@"
 }
 
 function install_and_run_local_lumo() {
-    npm install lumo-cljs \
-        && call_local_lumo "$@"
+   npm install lumo-cljs \
+      && call_local_lumo "$@"
 }
 
 function call_global_lumo() {
-    v=$(lumo -V 2> /dev/null || echo "0.0.0")
-    if verlt "$v" "$MIN_VERSION"; then
-        install_and_run_local_lumo "$@"
-    else
-        lumo "$@"
-    fi
+   v=$(lumo -V 2>/dev/null || echo "0.0.0")
+   if verlt "$v" "$MIN_VERSION"; then
+      install_and_run_local_lumo "$@"
+   else
+      lumo "$@"
+   fi
 }
 
 # install modules if necessary
 # here, the test against neodoc is done because it should always be present
 if ! fs::is_dir "${DOTFILES}/scripts/node_modules/neodoc"; then
-    pushd "${DOTFILES}/scripts" > /dev/null
-    log::error "Some npm packages are missing" && log::warning "Performing npm install..." \
-        && npm install
-    popd > /dev/null
+   pushd "${DOTFILES}/scripts" >/dev/null
+   log::error "Some npm packages are missing" && log::warning "Performing npm install..." \
+      && npm install
+   popd >/dev/null
 fi
 
 # call available lumo binary
 if fs::is_file "$LOCAL_BIN"; then
-    call_local_lumo "$@"
+   call_local_lumo "$@"
 elif platform::command_exists lumo; then
-    call_global_lumo "$@"
+   call_global_lumo "$@"
 elif npm install -g lumo-cljs; then
-    call_global_lumo "$@"
+   call_global_lumo "$@"
 else
-    install_and_run_local_lumo "$@"
+   install_and_run_local_lumo "$@"
 fi

@@ -6,7 +6,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/environment/core.sh"
 
 ##? Performs commands for each connected Android device
- #? 0.1.0
+#?? 0.1.0
 ##?
 ##? Usage:
 ##?    devices
@@ -27,23 +27,23 @@ source "${DOTFILES}/scripts/environment/core.sh"
 docs::eval "$@"
 
 function devices() {
-	adb devices | tail -n +2 | cut -sf -1
+   adb devices | tail -n +2 | cut -sf -1
 }
 
 if $api; then
-	prop="ro.build.version.release"
+   prop="ro.build.version.release"
 fi
 
 if $prop && [ -n $property ]; then
-	devices | xargs -I % adb -s % shell getprop "$property"
+   devices | xargs -I % adb -s % shell getprop "$property"
 elif $install && [ -n $path ]; then
-	devices | xargs -I % adb -s % install -r "$path"
+   devices | xargs -I % adb -s % install -r "$path"
 elif $uninstall && [ -n $package ]; then
-	devices | xargs -I % adb -s % uninstall "$package"
+   devices | xargs -I % adb -s % uninstall "$package"
 elif $clear && [ -n $package ]; then
-	devices | xargs -I % adb -s % shell pm clear "$package"
+   devices | xargs -I % adb -s % shell pm clear "$package"
 elif $link && [ -n $uri ]; then
-	devices | xargs -I % adb -s % shell am start "$uri"
+   devices | xargs -I % adb -s % shell am start "$uri"
 else
-	devices
+   devices
 fi

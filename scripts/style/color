@@ -5,7 +5,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/environment/core.sh"
 
 ##? Color
- #? 0.2.0
+#?? 0.2.0
 ##?
 ##? Usage:
 ##?    color [options] print -- <rgb>...
@@ -16,34 +16,34 @@ source "${DOTFILES}/scripts/environment/core.sh"
 docs::eval "$@"
 
 _row() {
-  for (( i=0; i<$cols; i++ )); do
-    echo -n "█"
-  done
+   for ((i = 0; i < $cols; i++)); do
+      echo -n "█"
+   done
 }
 
 row="$(_row)"
 rows=$(echo "$cols * 3 / 5" | bc)
 
 _as_printf_color() {
-  local readonly color="$1"
-  local c
-  [ ${color:0:1} == "#" ] && c=${color:1} || c="$color"
-  echo "$c" \
-    | str::uppercase \
-    | sed -E 's/([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})/\1\n\2\n\3/' \
-    | xargs -I% sh -c "echo 'ibase=16; %' | bc" \
-    | tr '\n' ';'
+   local readonly color="$1"
+   local c
+   [ ${color:0:1} == "#" ] && c=${color:1} || c="$color"
+   echo "$c" \
+      | str::uppercase \
+      | sed -E 's/([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})/\1\n\2\n\3/' \
+      | xargs -I% sh -c "echo 'ibase=16; %' | bc" \
+      | tr '\n' ';'
 }
 
 _print_colors() {
-  local i color c
-  for (( i=0; i<$rows; i++ )); do
-    for color in $@; do
-      c="$(_as_printf_color "$color")"
-      printf "\x1b[38;2;${c}m${row}\x1b[0m "
-    done
-    echo 
-  done
+   local i color c
+   for ((i = 0; i < $rows; i++)); do
+      for color in $@; do
+         c="$(_as_printf_color "$color")"
+         printf "\x1b[38;2;${c}m${row}\x1b[0m "
+      done
+      echo
+   done
 }
 
 _print_colors "${rgb[@]}"

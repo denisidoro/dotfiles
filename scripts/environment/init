@@ -4,65 +4,65 @@ set -euo pipefail
 export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 
 ##? Setups the environment
- #? 0.1.1
+#?? 0.1.1
 ##?
 ##? Usage:
 ##?    init
 
 dot() {
-  "$DOTFILES/bin/dot" "$@"
+   "$DOTFILES/bin/dot" "$@"
 }
 
 platform::command_exists() {
-  type "$1" &> /dev/null ;
+   type "$1" &>/dev/null
 }
 
 platform::is_osx() {
-  [[ `uname -s` == "Darwin" ]]
+   [[ $(uname -s) == "Darwin" ]]
 }
 
 install_brew_if_on_osx() {
-	if platform::is_osx; then
-		if ! platform::command_exists brew; then
-    		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-		fi
-	fi
+   if platform::is_osx; then
+      if ! platform::command_exists brew; then
+         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      fi
+   fi
 }
 
 install_git_and_python() {
-	if platform::command_exists brew; then
-		brew install git
-		brew install python
-	elif platform::command_exists apt; then
-		#sudo add-apt-repository $repository -y git-core/ppa
-		sudo apt-get install -y git
-		sudo apt-get install -y python
-	fi
+   if platform::command_exists brew; then
+      brew install git
+      brew install python
+   elif platform::command_exists apt; then
+      #sudo add-apt-repository $repository -y git-core/ppa
+      sudo apt-get install -y git
+      sudo apt-get install -y python
+   fi
 }
 
 clone_repo() {
-	git clone https://github.com/denisidoro/dotfiles.git "$DOTFILES"
+   git clone https://github.com/denisidoro/dotfiles.git "$DOTFILES"
 }
 
 # Displays help if requested
-if [[ ${1:-""} = "-h" ]]; then
-	grep "^##?" "$0" | cut -c 5-
-	exit 0
+if [[ ${1:-""} == "-h" ]]; then
+   grep "^##?" "$0" | cut -c 5-
+   exit 0
 fi
 
 # Pushes the current directory to the stack
-pushd . > /dev/null
+pushd . >/dev/null
 
 echo -e "\e[36mdenisidoro's dotfiles\e[0m\n"
 
 # Prompt confirmation
 echo "This script is untested. Use it at your own risk!"
 read -r -p "Do you want to continue? (Y/n) " response
-response=${response,,} 
+response=${response,,}
 if [[ $response =~ ^(yes|y| ) ]] || [ -z $response ]; then
-  sudo echo "Proceeding with installation..."
+   sudo echo "Proceeding with installation..."
 else
-  exit
+   exit
 fi
 
 set +e
@@ -70,15 +70,16 @@ install_brew_if_on_osx
 install_git_and_python
 set -e
 
-if [ -f "$DOTFILES/bin/dot" ]; then :
+if [ -f "$DOTFILES/bin/dot" ]; then
+   :
 elif [ -f "$DOTFILES" ]; then
-	echo "Backing up existing .dotfiles folder and cloning new .dotfiles..."
-        local old_dotfiles=$(mktemp -u -d "${DOTFILES}_XXXX")
-	mv "$DOTFILES" "$old_dotfiles"
-	clone_repo
-else 
-	echo "No .dotfiles folder found. Installing dependencies and cloning .dotfiles..."
-	clone_repo
+   echo "Backing up existing .dotfiles folder and cloning new .dotfiles..."
+   local old_dotfiles=$(mktemp -u -d "${DOTFILES}_XXXX")
+   mv "$DOTFILES" "$old_dotfiles"
+   clone_repo
+else
+   echo "No .dotfiles folder found. Installing dependencies and cloning .dotfiles..."
+   clone_repo
 fi
 
 cd "$DOTFILES"
@@ -90,5 +91,4 @@ dot environment dependencies
 dot environment dotfiles
 
 # cleanup
-popd > /dev/null
-
+popd >/dev/null

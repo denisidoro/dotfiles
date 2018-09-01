@@ -7,7 +7,7 @@ source "$DOTFILES/scripts/core/main.sh"
 export CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 
 ##? Calls scripts
- #? 1.0.0
+#?? 1.0.0
 ##?
 ##? Usage:
 ##?    dot

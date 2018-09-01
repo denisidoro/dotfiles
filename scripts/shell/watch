@@ -4,20 +4,19 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Run. Use % to replace the current element in the provided command.
- #? 0.1.0
-##? 
+#?? 0.1.0
+##?
 ##? Usage:
 ##?     watch <time> -- <command>...
-##? 
+##?
 ##? Examples:
 ##?     watch 1 -- echo 123
 
 docs::eval "$@"
 
-while [ 1 ]
-do
-  output="$(eval "${command[@]:-}")"
-  clear
-  echo -e "$output"
-  sleep "$time"
+while [ 1 ]; do
+   output="$(eval "${command[@]:-}")"
+   clear
+   echo -e "$output"
+   sleep "$time"
 done
