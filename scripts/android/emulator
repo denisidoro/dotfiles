@@ -6,7 +6,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/environment/core.sh"
 
 ##? Performs operation on an Android emulator
- #? 0.2.1
+#?? 0.2.1
 ##?
 ##? Usage:
 ##?    emulator [list]
@@ -19,38 +19,39 @@ source "${DOTFILES}/scripts/environment/core.sh"
 docs::eval "$@"
 
 function emulator() {
-	"$ANDROID_HOME/tools/emulator" "$@"	
+   "$ANDROID_HOME/tools/emulator" "$@"
 }
 
 function newest_emulator() {
-	local emulators="$1"
-	local newest_api="$(echo "$emulators" | awk -F 'API_' '{print $2}' | sort -r | head -n1 \
-		|| echo "$emulators" | head -n1)"
-	echo "$emulators" | grep "$newest_api" | head -n1
+   local emulators="$1"
+   local newest_api="$(echo "$emulators" | awk -F 'API_' '{print $2}' | sort -r | head -n1 \
+      || echo "$emulators" | head -n1)"
+   echo "$emulators" | grep "$newest_api" | head -n1
 }
 
 function start_emulator() {
-	local identifier="$1"
-	emulator -avd "$identifier" -netdelay none -netspeed full & disown
+   local identifier="$1"
+   emulator -avd "$identifier" -netdelay none -netspeed full &
+   disown
 }
 
 function start_newest_emulator() {
-	local emulators="$1"
-	start_emulator "$(newest_emulator "$emulators")"
+   local emulators="$1"
+   start_emulator "$(newest_emulator "$emulators")"
 }
 
 function prompt_and_start_emulator() {
-	local emulators="$1"
-	local identifier=$(echo "$emulators" | fzf-tmux --reverse --height 25%) 
-	start_emulator "$identifier"
+   local emulators="$1"
+   local identifier=$(echo "$emulators" | fzf-tmux --reverse --height 25%)
+   start_emulator "$identifier"
 }
 
 emulators="$(emulator -list-avds)"
 
 if $start; then
-  	$newest \
-  		&& start_newest_emulator "$emulators" \
-  		|| prompt_and_start_emulator "$emulators"
-else 
-	echo "$emulators"
+   $newest \
+      && start_newest_emulator "$emulators" \
+      || prompt_and_start_emulator "$emulators"
+else
+   echo "$emulators"
 fi

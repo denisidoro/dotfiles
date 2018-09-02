@@ -13,10 +13,10 @@
 		"*.swf",
 		"*.jar",
 		"*.zip",
-		".svn/", 
-		".git/", 
+		".svn/",
+		".git/",
 		".hg/",
-		"node_modules/", 
+		"node_modules/",
 		"bower_components/",
 		".lumo_cache/"
 	],
@@ -53,11 +53,12 @@
 		".hg",
 		".lumo_cache"
 	],
+	"font_size": 11,
 	"ignored_packages":
 	[
 	],
 	"tab_size": 2,
 	"theme": "Material Spaceblack.sublime-theme",
-	"word_wrap": true,
-	"translate_tabs_to_spaces": true
+	"translate_tabs_to_spaces": true,
+	"word_wrap": true
 }

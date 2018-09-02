@@ -5,7 +5,7 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Shows network info
- #? 0.1.0
+#?? 0.1.0
 ##?
 ##? Usage:
 ##?    info ip [--fast]
@@ -17,13 +17,15 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 function traffic::get() {
-	netstat -w1 & sleep 1.5; kill $!
+   netstat -w1 &
+   sleep 1.5
+   kill $!
 }
 
 if $ip; then
-	$fast \
-		&& dig +short myip.opendns.com @resolver1.opendns.com \
-		|| curl -s ifconfig.me/all.json | jq
+   $fast \
+      && dig +short myip.opendns.com @resolver1.opendns.com \
+      || curl -s ifconfig.me/all.json | jq
 elif $traffic; then
-	traffic::get | tail -n1 | awk '{print $3 " " $6}'
+   traffic::get | tail -n1 | awk '{print $3 " " $6}'
 fi

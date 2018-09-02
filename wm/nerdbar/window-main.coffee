@@ -18,7 +18,10 @@ style: """
 """
 
 render: -> """
-  <div class="container box" id="window"></div
+  <div class="container box">
+    <span id="title"></span>
+    <span id="desc" class="color-gray"></span>
+  </div>
 """
 
 update: (output, el) ->
@@ -31,9 +34,6 @@ update: (output, el) ->
   name = args[2]
 
   if owner != "?"
-    txt = $.grep([owner, name], Boolean).join(": ")
-  else
-    txt = "" 
-
-  $("#window", el).text txt
+    $("#title", el).text owner + ": "
+    $("#desc", el).text name
     

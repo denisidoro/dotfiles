@@ -28,4 +28,7 @@ bar_font_2='FontAwesome-16'
 baropt="-d -g ${barw}x${barh}+${barx}+${bary} -f ${bar_font_1} -f ${bar_font_2} -F${bar_fg} -B${bar_bg}"
 
 # create the popup and make it live for 3 seconds
-(echo -e "${1}"; sleep ${duration}) | lemonbar ${baropt}
+(
+   echo -e "${1}"
+   sleep ${duration}
+) | lemonbar ${baropt}

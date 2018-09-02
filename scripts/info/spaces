@@ -5,7 +5,7 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Shows mission control space info
- #? 0.1.0
+#?? 0.1.0
 ##?
 ##? Usage:
 ##?    spaces
@@ -15,15 +15,13 @@ docs::eval "$@"
 spaces="$(defaults read com.apple.spaces)"
 
 echo "$spaces" \
-	| grep -n 'paces =' \
-	| awk '{print $1}' \
-	| sed 's/.$//'
-
+   | grep -n 'paces =' \
+   | awk '{print $1}' \
+   | sed 's/.$//'
 
 echo "$spaces" \
-	| sed -n '73,9999p' 
+   | sed -n '73,9999p'
 
-
-	# | grep -zP "paces\s*=.*?\((.*?)" 
+# | grep -zP "paces\s*=.*?\((.*?)"
 
 # \s*=.*?\((.*?)\)

@@ -4,7 +4,7 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Open files/folders
- #? 0.1.0
+#?? 0.1.0
 ##?
 ##? Usage:
 ##?    open browser <args>...
@@ -15,10 +15,10 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 _open_browser() {
-  open "$@" \
-    || xdg-open "$@" \
-    || google-chrome "$@" \
-    || firefox "$@"
+   open "$@" \
+      || xdg-open "$@" \
+      || google-chrome "$@" \
+      || firefox "$@"
 }
 
 _open_browser "${args[@]:-}"

@@ -104,6 +104,7 @@ set undolevels=1000      " Maximum number of changes that can be undone
 set undoreload=10000     " Maximum number lines to save for undo on a buffer reload
 
 let mapleader=' '
+let maplocalleader=","
 
 " Quit normal mode
 nnoremap <silent> <Leader>q  :q<CR>
@@ -285,6 +286,15 @@ nnoremap <Leader>tc :action CloseActiveTab<CR>
 
 nnoremap <Leader>tl Vy<CR>:action ActivateTerminalToolWindow<CR>
 vnoremap <Leader>tl y<CR>:action ActivateTerminalToolWindow<CR>
+
+
+" ============================================================================
+" Clojure
+" ============================================================================
+
+nmap <Leader>fp {/defn<CR>wi^:private <ESC>
+nmap <Leader>ri gg/require<CR>o          [ :as <Esc>T[i
+
 
 " ============================================================================
 " IDE actions

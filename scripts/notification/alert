@@ -4,7 +4,7 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Native alert
- #? 0.1.0
+#?? 0.1.0
 ##?
 ##? Usage:
 ##?    alert <title> <message>
@@ -16,8 +16,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 if [ -n "$message" ]; then
-	[ -n "$subtitle" ] \
-		&& osascript -e "display notification \"$message\" with title \"$title\" subtitle \"$subtitle\"" \
-		|| osascript -e "display notification \"$message\" with title \"$title\""
+   [ -n "$subtitle" ] \
+      && osascript -e "display notification \"$message\" with title \"$title\" subtitle \"$subtitle\"" \
+      || osascript -e "display notification \"$message\" with title \"$title\""
 fi
-

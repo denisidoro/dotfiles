@@ -15,7 +15,7 @@ chunkc set global_desktop_offset_right   5
 chunkc set global_desktop_offset_gap     5
 
 # offset and gap incremental step
-chunkc set desktop_padding_step_size     10.0
+chunkc set desktop_padding_step_size     12.0
 chunkc set desktop_gap_step_size         5.0
 
 # bsp
@@ -44,9 +44,9 @@ chunkc set window_fade_alpha             0.85
 chunkc set window_fade_duration          0.5
 
 # chunkwm-border 
-chunkc set focused_border_color          0xff61892f
-chunkc set focused_border_width          4
-chunkc set focused_border_radius         0
+chunkc set focused_border_color          0xff2391d1
+chunkc set focused_border_width          6
+chunkc set focused_border_radius         6
 chunkc set focused_border_skip_floating  0
 chunkc set preselect_border_color        0xffffff00
 chunkc set preselect_border_width        4

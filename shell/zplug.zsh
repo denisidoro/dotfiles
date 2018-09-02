@@ -9,7 +9,7 @@ zplug "plugins/git", from:oh-my-zsh
 # Writing
 zplug zsh-users/zsh-autosuggestions
 # zplug zsh-users/zsh-history-substring-search
-zplug zsh-users/zsh-syntax-highlighting
+# zplug zsh-users/zsh-syntax-highlighting
 
 # Versioning
 #zplug "paulirish/git-open", as:command

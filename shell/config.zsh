@@ -15,8 +15,8 @@ eval "$(fasd --init posix-alias zsh-hook)"
 # ===============
 # syntax highlighting
 # ===============
-ZSH_HIGHLIGHT_STYLES[path]='bold'
-ZSH_HIGHLIGHT_STYLES[reserved-word]=none
+# ZSH_HIGHLIGHT_STYLES[path]='bold'
+# ZSH_HIGHLIGHT_STYLES[reserved-word]=none
 
 
 # ===============

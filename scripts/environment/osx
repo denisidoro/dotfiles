@@ -6,7 +6,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/environment/core.sh"
 
 ##? Setups an OSX environment
- #? 0.1.1
+#?? 0.1.1
 ##?
 ##? Usage:
 ##?    osx apps
@@ -14,11 +14,10 @@ source "${DOTFILES}/scripts/environment/core.sh"
 
 docs::eval "$@"
 
-$apps && { 
-	cask_install "cask-apps"; 
-};
-$dev && {
-	$android && { cask_install "cask-java" "cask-android"; }
-	$clojure && { cask_install "cask-java" && brew_install "leiningen"; }
+$apps && {
+   cask_install "cask-apps"
 }
-
+$dev && {
+   $android && { cask_install "cask-java" "cask-android"; }
+   $clojure && { cask_install "cask-java" && brew_install "leiningen"; }
+}

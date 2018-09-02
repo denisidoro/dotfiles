@@ -5,7 +5,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/environment/core.sh"
 
 ##? Matrix effect
- #? 0.1.0
+#?? 0.1.0
 ##?
 ##? Usage:
 ##?    matrix
@@ -39,6 +39,6 @@ echo -e "\e[1;40m"
 clear
 
 while :; do
-  echo $lines $cols $(( $RANDOM % $cols)) $(( $RANDOM % 72 ))
-  sleep 0.05
+   echo $lines $cols $(($RANDOM % $cols)) $(($RANDOM % 72))
+   sleep 0.05
 done | awk "$awkscript"

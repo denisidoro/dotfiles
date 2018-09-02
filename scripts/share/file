@@ -5,7 +5,7 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Publicly shares a file via transfer.sh
- #? 0.1.0
+#?? 0.1.0
 ##?
 ##? Usage:
 ##?    file <path>
@@ -15,19 +15,19 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docs::eval "$@"
 
-function transfer() { 
-	local path="$1"
-	local tmpfile="$(mktemp -t transferXXX)"
+function transfer() {
+   local path="$1"
+   local tmpfile="$(mktemp -t transferXXX)"
 
-	if tty -s; then
-		basefile=$(basename "$path" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); 
-		curl --progress-bar --upload-file "$path" "https://transfer.sh/$basefile" >> $tmpfile; 
-	else 
-		curl --progress-bar --upload-file "-" "https://transfer.sh/$path" >> $tmpfile; 
-	fi; 
+   if tty -s; then
+      basefile=$(basename "$path" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
+      curl --progress-bar --upload-file "$path" "https://transfer.sh/$basefile" >>$tmpfile
+   else
+      curl --progress-bar --upload-file "-" "https://transfer.sh/$path" >>$tmpfile
+   fi
 
-	cat "$tmpfile"
-	rm -f $tmpfile
-}     
+   cat "$tmpfile"
+   rm -f $tmpfile
+}
 
 transfer "$path"
