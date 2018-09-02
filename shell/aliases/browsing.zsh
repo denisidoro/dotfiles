@@ -24,11 +24,11 @@ mkcd() {
 # helpers
 # ===============
 
-function _fzf() {
+function cd::fzf() {
     fzf +m
 }
 
-function _best_match() {
+function cd::best_match() {
     local lines="$1"
     shift
     echo "$lines" \
@@ -36,38 +36,38 @@ function _best_match() {
         | head -n1
 }
 
-function _list_files() {
+function cd::list_files() {
     ag --hidden --ignore .git -g "${1:-}"
 }
 
-function _list_folders() {
-    _list_files \
+function cd::list_folders() {
+    cd::list_files \
         | xargs -n1 dirname \
         | sort -u
 }
 
-function _action_from_fasd() {
+function cd::action_from_fasd() {
   local fasd_args="$1"
   local cmd="$2"
   local selection=$(fasd "$fasd_args" \
     | awk '{print $2}' \
-    | _fzf) \
+    | cd::fzf) \
     && [ -n "$selection" ] \
     && "$cmd" "$selection"
 }
 
-function _cd_file() {
+function cd::cd_file() {
     cd "$(dirname "$1")"
 }
 
-function _jj() {
+function cd::jj() {
     local cmd="$1"
     local lines="$2"
     shift 2
     if [ $# -gt 0 ]; then
-        "$cmd" "$(_best_match "$lines" "$@")" 
+        "$cmd" "$(cd::best_match "$lines" "$@")" 
     else
-        local selection=$(echo "$lines" | _fzf) \
+        local selection=$(echo "$lines" | cd::fzf) \
             && [ -n "$selection" ] \
             && "$cmd" "$selection"
     fi
@@ -80,35 +80,35 @@ function _jj() {
 j() { 
     [ $# -gt 0 ] && \
         fasd_cd -d "$@" \
-        || _action_from_fasd -d "cd" 
+        || cd::action_from_fasd -d "cd" 
 }
 
 jj() { 
-    _jj cd "$(_list_folders)" "$@" 
+    cd::jj cd "$(cd::list_folders)" "$@" 
 }
 
 jjf() { 
-    _jj _cd_file "$(_list_files)" "$@" 
+    cd::jj _cd_file "$(cd::list_files)" "$@" 
 }
 
 jv() { 
     [ $# -gt 0 ] && \
         fasd -f -e nvim "$@" \
-        || _action_from_fasd -f nvim 
+        || cd::action_from_fasd -f nvim 
 }
 
 jjv() { 
-    _jj nvim "$(_list_files)" "$@" 
+    cd::jj nvim "$(cd::list_files)" "$@" 
 }
 
 js() { 
     [ $# -gt 0 ] && \
         fasd -f -e subl "$@" \
-        || _action_from_fasd -f subl 
+        || cd::action_from_fasd -f subl 
 }
 
 jjs() {
-    _jj subl "$(_list_files)" "$@" 
+    cd::jj subl "$(cd::list_files)" "$@" 
 }
 
 # Go up X directories (default 1)
