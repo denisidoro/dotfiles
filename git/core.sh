@@ -4,7 +4,6 @@ set -euo pipefail
 source "$DOTFILES/scripts/core/main.sh"
 source "$DOTFILES/scripts/core/git.sh"
 
-
 function git::prompt_if_protected() {
   local current_branch="$1"
   local protected_branch="$2"
