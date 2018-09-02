@@ -4,3 +4,6 @@
 [submodule "modules/zplug"]
 	path = modules/zplug
 	url = https://github.com/zplug/zplug.git 
+[submodule "modules/docoptsh"]
+	path = modules/docoptsh
+	url = https://github.com/denisidoro/docoptsh
