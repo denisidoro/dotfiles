@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Wraps the clj command
+##?
+##? Usage:
+##?    jvm [<arguments>...]
+##?
+##? Example:
+##?    jvm hiccup
+
+script_name="$1"
+shift
+
+cd "$DOTFILES/scripts/clojure"
+clj -m "${script_name}" "$@"
