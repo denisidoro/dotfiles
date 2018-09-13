@@ -24,7 +24,7 @@
     (re-find #"^-?\d+\.?\d*$" x)
     (read-string x)
 
-    (str/includes? x ":")
+    (re-matches #"^\w[\d\w]*:\w[\d\w]*$" x)
     (-> x (str/replace ":" "/") keyword)
 
     :else
@@ -65,7 +65,7 @@
           (with-attrs attrs)
           (with-content content)))))
 
-(defn xml->hiccup
+(defn xml-map->hiccup
   [xml]
   (->> xml
        xml->hiccup*
@@ -83,4 +83,4 @@
   [xml-str]
   (-> xml-str
       xml-str->map
-      xml->hiccup))
+      xml-map->hiccup))

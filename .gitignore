@@ -6,3 +6,8 @@ font*.css
 node_modules
 *lock.json
 .cache/
+.idea
+*.iml
+target
+.cpcache
+local/
