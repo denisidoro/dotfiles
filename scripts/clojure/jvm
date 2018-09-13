@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Wraps the clj command
+##?
+##? Usage:
+##?    jvm (-f|--fresh) [<arguments>...]
+##?
+##? Example:
+##?    jvm hiccup
+
+case $1 in
+  *-f*) fresh=true; shift;;
+esac
+
+native="$DOTFILES/scripts/clojure/target/native/dot"
+
+if fs::is_file "$native" && [[ ${fresh:-} != true ]]; then
+  if [ -n "${2:-}" ]; then
+    "$native" "${@:-}"
+  else
+    "$native" "$1"
+  fi
+  exit 0
+fi
+
+script_name="$1"
+shift
+
+cd "$DOTFILES/scripts/clojure"
+clj -m "${script_name}" "$@"
