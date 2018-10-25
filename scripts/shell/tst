@@ -3,21 +3,6 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
-##? Run. Use % to replace the current element in the provided command.
-#?? 0.1.0
-##?
-##? Usage:
-##?     ship move <x> <y>
-##?     ship (create|destroy)
-##?     ship [type] construct
 
-docs::eval "$@"
+printf "$(log::color "purple background")hi $(log::color "bold yellow")hello"
 
-# echo "ship: $ship;"
-echo "move: ${move:-undefined};"
-echo "x: ${x:-undefined};"
-echo "y: ${y:-undefined};"
-echo "create: ${create:-undefined};"
-echo "destroy: ${destroy:-undefined};"
-echo "type: ${type:-undefined};"
-echo "construct: ${construct:-undefined};"

@@ -16,7 +16,7 @@ alias gpu='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
 alias gpfl="lein do cljfmt fix, kibit --replace; gaa; gcam 'Fix lint'; gpu"
 
 # git commit with push
-gcamp() { git commit -am "$1"; gpu; }
+gcamp() { git add .; git commit -am "$1"; gpu; }
 
 # preview PR
 gprp() { dot git pr preview; }
