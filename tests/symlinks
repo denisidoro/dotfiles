@@ -3,8 +3,8 @@
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
 source "$ROOT_DIR/scripts/core/main.sh"
 
-SUCCESS_CHAR="✓"
-ERROR_CHAR="☓"
+SUCCESS_TEXT="found!"
+ERROR_TEXT="not found!"
 
 _validate() {
   local readonly filename="$1"
@@ -13,7 +13,7 @@ _validate() {
     | grep '\- link:' -A10000 \
     | tail -n +2 \
     | cut -d':' -f2 \
-    | xargs -I% bash -c 'printf "% "; (test -f % || test -d %) && echo $SUCCESS_CHAR || echo $ERROR_CHAR' 
+    | xargs -I% bash -c 'printf "% "; (test -f % || test -d %) && echo $SUCCESS_TEXT || echo $ERROR_TEXT' 
   echo
 }
 
@@ -24,6 +24,6 @@ done
 
 echo -e "$result" | head -n -2
 
-if [[ $result == *"$ERROR_CHAR"* ]]; then
+if [[ $result == *"$ERROR_TEXT"* ]]; then
   exit 1
 fi
