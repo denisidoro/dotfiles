@@ -19,7 +19,7 @@ jobs:
       - checkout
       - run:
           name: Symlinks
-          command: ./scripts/symlinks
+          command: ./tests/symlinks
 
 workflows:
   version: 2
