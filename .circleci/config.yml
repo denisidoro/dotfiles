@@ -9,7 +9,7 @@ job_defaults: &defaults
       - image: frolvlad/alpine-bash
     working_directory: ~/repo
     environment:
-      ENVIRONMENT: "test"
+      ENVIRONMENT: "test2"
 
 jobs:
   build:
