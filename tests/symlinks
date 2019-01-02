@@ -14,6 +14,7 @@ _validate() {
   echo
 }
 
+cd "$ROOT_DIR"
 result=""
 for f in $(ls "./symlinks/"); do
   result="$result$(_validate "./symlinks/$f")\n\n"

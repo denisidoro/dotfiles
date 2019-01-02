@@ -1,0 +1,13 @@
+div.wrapper, .Card.bordered {
+    background: #171717;
+    color: #d5d5d5;
+    border: 1px solid #404040;
+}
+
+.flex, .cellData {
+    color: #d5d5d5;
+}
+
+.flex-full {
+ background: #171717;   
+}
