@@ -18,7 +18,7 @@ battery() {
 cpu() {
    ps -A -o %cpu \
       | awk '{s+=$1} END {print s}' \
-      | xargs -I% echo "% / 4" \
+      | xargs -I% echo "% / 8" \
       | bc
 }
 
@@ -74,7 +74,11 @@ wifi2() {
    done <<< "$(echo "$services")"
 
    if [ -n "$currentservice" ] ; then
-      currentservice2="$(echo "$currentservice" | tr '[:upper:]' '[:lower:]' | sed 's/-//')"
+      if [[ "$currentservice" =~ ^.*thern.*$ ]]; then
+        currentservice2="eth"
+      else
+        currentservice2="$(echo "$currentservice" | tr '[:upper:]' '[:lower:]' | sed 's/-//')"
+      fi
        echo "$currentservice2;$(networksetup -getairportnetwork $currentsdev | cut -c 24-);$(networksetup -getinfo "Apple USB Ethernet Adapter" | grep "IP address" | grep "\." | cut -c 13-)"
    else
        >&1 echo "none;none;"
@@ -84,10 +88,6 @@ wifi2() {
 
 clock() {
    /bin/date '+%H:%M;%d-%b'
-}
-
-calendar() {
-   /bin/date '+%a %d %b'
 }
 
 case "${1:-}" in

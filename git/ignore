@@ -48,6 +48,8 @@ Powerline_*.cache
 node_modules/
 brew/
 bower_components/
+package-lock.json
+yarn.lock
 
 # Packages
 *.7z
@@ -68,3 +70,6 @@ bower_components/
 # Temporary files
 .#*
 .lumo_cache
+
+# Repl
+.rebel_readline_history
