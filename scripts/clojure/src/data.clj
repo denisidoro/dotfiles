@@ -4,6 +4,8 @@
             [core.xml :as xml]
             [core.print :as print]))
 
+(set! *default-data-reader-fn* tagged-literal)
+
 (def ^:constant version
   "0.1.0")
 

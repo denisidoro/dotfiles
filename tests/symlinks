@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
+source "$ROOT_DIR/scripts/core/main.sh"
+
+_validate() {
+  local readonly filename="$1"
+  log::warning "Validating $filename..."
+  cat "$filename" \
+    | grep '\- link:' -A10000 \
+    | tail -n +2 \
+    | cut -d':' -f2 \
+    | xargs -I% bash -c 'printf "% "; (test -f % || test -d %) && echo ✓ || echo ☓' 
+  echo
+}
+
+cd "$ROOT_DIR"
+result=""
+for f in $(ls "./symlinks/"); do
+  result="$result$(_validate "./symlinks/$f")\n\n"
+done
+
+echo -e "$result" | head -n -2
+
+if [[ $result == *"☓"* ]]; then
+  exit 1
+fi

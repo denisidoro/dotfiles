@@ -4,6 +4,29 @@ cmd + alt + ctrl - r : khd -e "reload"
 
 
 # =================
+# Space focus
+# =================
+alt + ctrl + cmd + shift - 1 : chunkc tiling::desktop --focus 1
+alt + ctrl + cmd + shift - 2 : chunkc tiling::desktop --focus 2
+alt + ctrl + cmd + shift - 3 : chunkc tiling::desktop --focus 3
+alt + ctrl + cmd + shift - 4 : chunkc tiling::desktop --focus 4
+alt + ctrl + cmd + shift - 5 : chunkc tiling::desktop --focus 5
+alt + ctrl + cmd + shift - 6 : chunkc tiling::desktop --focus 6
+alt + ctrl + cmd + shift - 7 : chunkc tiling::desktop --focus 7
+alt + ctrl + cmd + shift - 8 : chunkc tiling::desktop --focus 8
+alt + ctrl + cmd + shift - 9 : chunkc tiling::desktop --focus 9
+
+# show mission control
+alt + ctrl + cmd + shift - 0 : /Applications/Mission\ Control.app/Contents/MacOS/Mission\ Control
+
+# show desktop
+# alt + ctrl + cmd + shift - ' : /Applications/Mission\ Control.app/Contents/MacOS/Mission\ Control 1
+
+# show application windows
+# alt + ctrl + cmd + shift - ç : /Applications/Mission\ Control.app/Contents/MacOS/Mission\ Control 2
+
+
+# =================
 # Window focus
 # =================
 

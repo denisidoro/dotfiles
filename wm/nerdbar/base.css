@@ -31,11 +31,18 @@ span, div {
 }
 
 .box {
-  padding-left: 0.8em;
-  padding-right: 0.8em;
+  padding-left: 0.6em;
+  padding-right: 0.6em;
   padding-top: 0.085em;
   padding-bottom: 0.085em;
   margin: 0px;
+}
+
+.desc {
+  font-size: 0.8em;
+  padding-bottom: 0.3em;
+  color: #a0adc1;
+  margin-left: -0.3em;
 }
 
 .container {

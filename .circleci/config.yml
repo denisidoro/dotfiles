@@ -1,0 +1,28 @@
+# Clojure CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-clojure/ for more details
+#
+version: 2
+
+job_defaults: &defaults
+    docker:
+      - image: frolvlad/alpine-bash
+    working_directory: ~/repo
+    environment:
+      ENVIRONMENT: "test"
+
+jobs:
+  build:
+    <<: *defaults
+    # Download and cache dependencies
+    steps:
+      - checkout
+      - run:
+          name: Symlinks
+          command: ./tests/symlinks
+
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - build

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+DOTFILES="${DOTFILES:-"$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." >/dev/null && pwd)"}"
+
 if [ -z ${DOT_MAIN_IMPORTED+x} ] || ! "${DOT_MAIN_IMPORTED}"; then
    source "${DOTFILES}/scripts/core/platform.sh"
    source "${DOTFILES}/scripts/core/osx_gnu.sh"
