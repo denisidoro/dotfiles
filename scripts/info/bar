@@ -90,9 +90,13 @@ clock() {
    /bin/date '+%H:%M;%d-%b'
 }
 
+_pad() {
+  printf "%02.0f" "$(cat)"
+}
+
 case "${1:-}" in
    "all")
-      echo "$(clock);$(battery);$(cpu);$(memory);$(volume);$(wifi2)"
+      echo "$(clock);$(battery | _pad);$(cpu | _pad);$(memory | _pad);$(volume | _pad);$(wifi2)"
       ;;
    *)
       source "${DOTFILES}/scripts/core/main.sh"
