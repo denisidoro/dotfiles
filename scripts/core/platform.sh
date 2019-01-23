@@ -12,6 +12,10 @@ function platform::is_linux() {
    [[ $(uname -s) == "Linux" ]]
 }
 
+function platform::is_bash_for_win() {
+   grep -qE "(Microsoft|WSL)" /proc/version &> /dev/null
+}
+
 function platform::is_arm() {
    [[ $(uname -a | grep -q "armv" || echo 1) -eq 0 ]]
 }
