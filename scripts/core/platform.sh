@@ -12,7 +12,7 @@ function platform::is_linux() {
    [[ $(uname -s) == "Linux" ]]
 }
 
-function platform::is_bash_for_win() {
+function platform::is_wsl() {
    grep -qE "(Microsoft|WSL)" /proc/version &> /dev/null
 }
 
@@ -43,6 +43,7 @@ function platform::tags() {
    if platform::is_arm; then tags="${tags}arm "; fi
    if platform::is_x86; then tags="${tags}x86 "; fi
    if platform::is_android; then tags="${tags}android "; fi
+   if platform::is_wsl; then tags="${tags}wsl "; fi
    echo "$tags"
 }
 

@@ -8,6 +8,7 @@ export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 ##?
 ##? Usage:
 ##?    init
+##?    init brew
 
 dot() {
    "$DOTFILES/bin/dot" "$@"
@@ -61,11 +62,12 @@ clone_repo() {
 }
 
 # Displays help if requested
-if [[ ${1:-""} == "-h" ]]; then
+if [[ ${1:-} == "-h" ]] || [[ ${1:-} == "--help" ]]; then
    grep "^##?" "$0" | cut -c 5-
    exit 0
 fi
 
+# Shortcut for installing brew
 if [[ ${1:-} == "brew" ]]; then
   install_brew
 fi
