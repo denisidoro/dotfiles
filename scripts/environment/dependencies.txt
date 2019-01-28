@@ -4,7 +4,7 @@ git
 python
 neovim
 
-[mini]
+[dev]
 zsh
 unzip
 tmux
@@ -16,7 +16,8 @@ the_silver_searcher
 bat
 htop
 
-[dev]
+[programming]
+emacs
 clojure
 leiningen
 node
