@@ -21,22 +21,38 @@ platform::is_osx() {
    [[ $(uname -s) == "Darwin" ]]
 }
 
-install_brew_if_on_osx() {
-   if platform::is_osx; then
-      if ! platform::command_exists brew; then
-         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+install_brew_osx() {
+   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+}
+
+install_brew_linux() {
+   sudo apt update && sudo apt-get install -y build-essential curl file git \
+      || sudo yum groupinstall 'Development Tools' && sudo yum install curl file git
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+   test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+   test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+   test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+   echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+}
+
+install_brew() {
+   if ! platform::command_exists brew; then
+      echo "Installing brew"
+      if platform::is_osx; then
+         install_brew_osx
+      else
+         install_brew_linux
       fi
    fi
 }
 
-install_git_and_python() {
-   if platform::command_exists brew; then
+install_essentials() {
+   if ! platform::command_exists git; then
+      echo "Installing git"
       brew install git
+   elif ! platform::command_exists python; then
+      echo "Installing python"
       brew install python
-   elif platform::command_exists apt; then
-      #sudo add-apt-repository $repository -y git-core/ppa
-      sudo apt-get install -y git
-      sudo apt-get install -y python
    fi
 }
 
@@ -48,6 +64,10 @@ clone_repo() {
 if [[ ${1:-""} == "-h" ]]; then
    grep "^##?" "$0" | cut -c 5-
    exit 0
+fi
+
+if [[ ${1:-} == "brew" ]]; then
+  install_brew
 fi
 
 # Pushes the current directory to the stack
@@ -66,8 +86,8 @@ else
 fi
 
 set +e
-install_brew_if_on_osx
-install_git_and_python
+install_brew
+install_essentials
 set -e
 
 if [ -f "$DOTFILES/bin/dot" ]; then
@@ -85,10 +105,10 @@ fi
 cd "$DOTFILES"
 
 # install necessary dependencies
-dot environment dependencies
+dot environment install batch mini
 
 # invoke dotfiles symlinking
-dot environment dotfiles
+dot environment update
 
 # cleanup
 popd >/dev/null

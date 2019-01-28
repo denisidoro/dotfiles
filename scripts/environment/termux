@@ -2,7 +2,7 @@
 # vim: filetype=sh
 set -u
 
-echo "Initiation setup..."
+echo "Initiating setup..."
 
 pkg install tmux neovim curl git openssh termux-packages ncurses-utils python
 

@@ -6,15 +6,11 @@ dotfiles_folder() {
 }
 
 brew_install() {
-   for repository in "$(deps::from "$@")"; do
-      brew install "$repository"
-   done
+   brew install "$@"
 }
 
 cask_install() {
-   for repository in "$(deps::from "$@")"; do
-      brew cask install "$repository"
-   done
+    brew cask install "$@"
 }
 
 shallow_github_clone() {
@@ -27,4 +23,16 @@ tmp_make() {
    local repo="$1"
    cd "$HOME/tmp/${repo}"
    make && sudo make install
+}
+
+function deps::read() {
+   local file
+   file=$(rsrc "environment/dependencies.txt")
+   echo "$(cat "$file")\n\n"
+}
+
+function deps::from() {
+   for key in "$@"; do
+     deps::read | grep -Pzo "\[$key\]\s+(.|\n)*?($|\n{2})" | tail -n +2 | sed '/^$/d'
+   done
 }
