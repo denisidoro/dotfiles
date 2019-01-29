@@ -29,6 +29,8 @@ style: """
 """
 
 update: (output, el) ->
+    # $(".box").on 'click', => @run "/usr/local/bin/chunkc tiling::desktop --focus 4"
+
     if not output
         return
 
@@ -49,3 +51,5 @@ update: (output, el) ->
         else 
             $(id).removeClass("active")
         i += 1
+
+
