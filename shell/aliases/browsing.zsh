@@ -77,6 +77,16 @@ function cd::jj() {
 # jumping
 # ===============
 
+fasd_cd() {
+  if [ $# -le 1 ]; then
+    fasd "$@"
+  else
+    local _fasd_ret="$(fasd -e echo "$@")"
+    [ -z "$_fasd_ret" ] && return
+    [ -d "$_fasd_ret" ] && cd "$_fasd_ret" || echo "$_fasd_ret"
+  fi
+}
+
 j() { 
     [ $# -gt 0 ] && \
         fasd_cd -d "$@" \

@@ -16,36 +16,37 @@ CODE=0
 
 function main() {
 
-   header "Languages and versioning"
-   check_commands "ruby python git"
-
    echo
-   header "Shell"
-   check_commands "zsh tmux fasd ag tmuxinator fzf"
+   log::header "Shell"
+   check_commands "ruby python git zsh tmux fasd ag tmuxinator fzf curl"
    check_dir "$HOME/.tmux/plugins/tpm" "tpm"
 
    if platform::is_osx; then
       echo
-      header "GNU commands"
+      log::header "GNU commands"
       check_gnu_commands "sed grep" true
    fi
 
    echo
-   header "Editors"
+   log::header "Editors"
    check_commands "vim nvim emacs"
    check_file "$HOME/.local/share/nvim/site/autoload/plug.vim" "vim-plug"
 
    echo
-   header "Submodules"
+   log::header "Submodules"
    check_file "$DOTFILES/modules/dotbot/.git" "dotbot"
    check_file "$DOTFILES/modules/zplug/.git" "zplug"
 
    echo
-   header "Local git"
+   log::header "Local git"
    check_file "$DOTFILES/local/gitconfig" "config"
 
    echo
-   header "dotfiles"
+   log::header "Misc"
+   check_commands "unzip ranger tig ag bat htop clojure lein node"
+
+   echo
+   log::header "dotfiles"
    check_env "DOTFILES"
    check_commands "dot"
 

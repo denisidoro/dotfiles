@@ -7,13 +7,18 @@ export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/environment/core.sh"
 
-##? Installs commands
+##? Installs dependencies
 #?? 0.3.2
 ##?
 ##? Usage:
-##?    install <cmd>
+##?    install batch <group>
+##?    install <dep>
 
 docs::eval "$@"
+
+function install_brew() {
+  dot env init brew
+}
 
 function install_vimplug() {
    if ! fs::is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
@@ -44,22 +49,17 @@ function install_gnu() {
    if ! platform::command_exists ggrep; then
       brew tap homebrew/dupes
       brew install binutils diffutils ed findutils gawk gnu-indent gnu-sed gnu-tar gnu-which gnutls grep gzip screen watch wget && brew install wdiff --with-gettext
-      brew install bash emacs m4 make nano file-formula git less openssh rsync unzip
+      brew install bash m4 make nano file-formula git less openssh rsync unzip
    fi
 }
 
 function install_kitty() {
-   mkdir -p $HOME/tmp
-   git clone https://github.com/kovidgoyal/kitty --depth 1 $HOME/tmp/kitty
-   cd $HOME/tmp/kitty
-   make
-   sudo make install
-}
-
-function install_fzf() {
-   if ! platform::command_exists fzf; then
-      git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf \
-         && $HOME/.fzf/install
+   if ! platform::command_exists kitty; then
+      mkdir -p $HOME/tmp
+     git clone https://github.com/kovidgoyal/kitty --depth 1 $HOME/tmp/kitty
+     cd $HOME/tmp/kitty
+     make
+     sudo make install
    fi
 }
 
@@ -85,7 +85,9 @@ function install_bspwm() {
 }
 
 function install_spacemacs() {
-   git clone https://github.com/syl20bnr/spacemacs --depth 1 ~/.emacs.d
+    if ls ~/.emacs.d/ | grep -q spacemacs || false; then
+      git clone https://github.com/syl20bnr/spacemacs --depth 1 ~/.emacs.d
+    fi
 }
 
 function install_watchman() {
@@ -99,21 +101,44 @@ function install_watchman() {
    fi
 }
 
-function list_commands() {
-   log::error "Unknown command: $1"
+function list_dependencies() {
+   log::error "Unknown dependency: $1"
    echo -e
-   log::note "Available commands"
+   log::note "Available dependencies"
    echo "$2" \
       | grep -Eo "function install_(\w\w*?)\(" \
       | sed -E 's/.*_(.*?)\(/\1/g' \
       | sort
 }
 
+function keep_uninstalled() {
+  for dep in $(cat); do
+    if ! platform::command_exists $dep; then
+      echo $dep
+    fi
+  done
+}
+
+function as_line() {
+  tr '\n' ' '
+}
+
+function batch_install() {
+  brew install $(cat)
+}
+
+if $batch; then
+  deps::from "$group" | as_line \
+    | keep_uninstalled | as_line \
+    | batch_install
+  exit 0
+fi
+
 filesource="$(cat "$0")"
 
 echo "$filesource" \
-   | grep "function install_${cmd}" &>/dev/null \
-   && echo "Installing ${cmd}..." \
-   && "install_${cmd}" \
+   | grep "function install_${dep}" &>/dev/null \
+   && echo "Installing ${dep}..." \
+   && "install_${dep}" \
    && echo "Installed" \
-   || list_commands "$cmd" "$filesource"
+   || list_dependencies "$dep" "$filesource"
