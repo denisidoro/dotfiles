@@ -40,6 +40,7 @@ function main() {
    has_tag "$tags" "arm" && { update_dotfiles_arm; }
    has_tag "$tags" "x86" && { update_dotfiles_x86; }
    has_tag "$tags" "android" && { update_dotfiles_android; }
+   has_tag "$tags" "wsl" && { update_dotfiles_wsl; }
 
    update_dotfiles_pos
 
@@ -48,8 +49,27 @@ function main() {
 
 update_dotfiles_pre() {
 
+   local TEMPFILE fullname email
+
    echo "Setting folder architecture..."
-   mkdir -p "$DOTFILES/local/bin"
+
+   TEMPFILE="$DOTFILES/local/bin"
+   mkdir -p "$TEMPFILE"
+
+   TEMPFILE="$DOTFILES/local/zshrc"
+   if ! fs::is_file "$TEMPFILE"; then
+    echo "export DOTFILES_DOCOPTSH=false" > "$TEMPFILE"
+   fi
+
+   TEMPFILE="$DOTFILES/local/gitconfig"
+   if ! fs::is_file "$TEMPFILE"; then
+    echo "What is your name?"
+    read fullname
+    echo "What is your email?"
+    read email
+    echo -e "[user]\nname = $fullname\nemail = $email" > "$TEMPFILE"
+   fi
+
    pushd . >/dev/null
    cd $DOTFILES
 
@@ -103,6 +123,11 @@ update_dotfiles_osx() {
 update_dotfiles_linux() {
    echo "Configuring for Linux..."
    update_dotfiles "conf.linux.yaml"
+}
+
+update_dotfiles_wsl() {
+   echo "Configuring for WSL..."
+   echo "No custom config for WSL"
 }
 
 update_dotfiles_arm() {
