@@ -34,4 +34,7 @@ source "${DOTFILES}/shell/aliases/notification.zsh"
 # load local custom config
 source $DOTFILES/local/zshrc
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# load fzf
+if [[ ${DOTFILES_FZF_BASH:-false} == true ]]; then
+    [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+fi
