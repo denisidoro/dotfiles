@@ -10,6 +10,7 @@
     ~/.chunkwmrc: wm/chunkwm/chunkwmrc
     ~/Library/Preferences/kitty/kitty.conf: terminal/kitty/kitty.conf
     ~/Library/Application Support/Übersicht/widgets/nerdbar.widget: wm/nerdbar
+    ~/Library/Application Support/Code/User/settings.json: editors/vscode/settings.json
     ~/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings: editors/sublime/preferences.json
     ~/.config/iterm/com.googlecode.iterm2.plist: terminal/iterm/iterm2.plist
 
