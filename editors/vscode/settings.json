@@ -1,7 +1,28 @@
 {
-    "vim.leader": "<space>",
     "editor.fontSize": 12,
     "window.zoomLevel": 0.2,
+
+    "files.autoSave": "onWindowChange",
+
+    "workbench.colorTheme": "Material Theme Ocean High Contrast",
+    "workbench.activityBar.visible": true,
+    "workbench.iconTheme": "eq-material-theme-icons-ocean",
+    
+    "vim.easymotion": true,
+    "vim.leader": "<space>",
+
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [
+                "f",
+                "d"
+            ],
+            "after": [
+                "<Esc>"
+            ]
+        }
+    ],
+
     "vim.normalModeKeyBindings": [
         {
             "before": [
@@ -1074,20 +1095,5 @@
                 }
             ]
         }
-    ],
-    "vim.insertModeKeyBindings": [
-        {
-            "before": [
-                "f",
-                "d"
-            ],
-            "after": [
-                "<Esc>"
-            ]
-        }
-    ],
-    "vim.easymotion": true,
-    "workbench.colorTheme": "Material Theme Ocean High Contrast",
-    "workbench.activityBar.visible": false,
-    "workbench.iconTheme": "eq-material-theme-icons-ocean"
+    ]
 }
