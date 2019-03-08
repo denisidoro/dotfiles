@@ -26,7 +26,7 @@ elif $restart; then
 fi
 
 if $stop; then
-   ps aux | grep -ie "[b]ersicht" | awk '{print $2}' | xargs kill -9 2>/dev/null
+   # ps aux | grep -ie "[b]ersicht" | awk '{print $2}' | xargs kill -9 2>/dev/null
    brew services stop crisidev/chunkwm/chunkwm
    brew services stop khd
 fi
@@ -34,5 +34,5 @@ fi
 if $start; then
    brew services start khd
    brew services start crisidev/chunkwm/chunkwm
-   open "/Applications/Übersicht.app"
+   # open "/Applications/Übersicht.app"
 fi

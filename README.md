@@ -3,7 +3,7 @@ Dotfiles
 
 Personal dotfiles.
 
-![demo](https://user-images.githubusercontent.com/3226564/41914829-a8546b8c-792a-11e8-884b-f298414704b7.png)
+![Demo](https://user-images.githubusercontent.com/3226564/54047455-d5997200-41b5-11e9-8db7-e9c3ae62328d.png)
 
 ### Installation
 
@@ -16,5 +16,5 @@ If the setup went OK you should now have the `dot` command in your `$PATH`.
 
 In order to update the dotfiles:
 ```sh
-dot env dotfiles
+dot env update
 ```

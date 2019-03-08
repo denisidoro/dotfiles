@@ -5,11 +5,14 @@
     "files.autoSave": "onWindowChange",
 
     "workbench.colorTheme": "Material Theme Ocean High Contrast",
-    "workbench.activityBar.visible": true,
+    "workbench.activityBar.visible": false,
     "workbench.iconTheme": "eq-material-theme-icons-ocean",
     
     "vim.easymotion": true,
     "vim.leader": "<space>",
+
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
 
     "vim.insertModeKeyBindings": [
         {
