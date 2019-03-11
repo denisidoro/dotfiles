@@ -1,0 +1,47 @@
+[
+    {
+        "parserType": "Glob",
+        "configTitle": "Nintendo Wii U - Cemu",
+        "steamCategory": "${Wii U}",
+        "executableLocation": "D:\\ROMs\\WiiUUSBHelper\\DATA\\EMULATORS\\Cemu\\BIN\\Cemu.exe",
+        "executableModifier": "\"${exePath}\"",
+        "romDirectory": "D:\\Emulators\\WiiU_USB_Helper\\DATA\\EMULATORS\\Cemu\\GAMES",
+        "steamDirectory": "D:\\Steam",
+        "startInDirectory": "",
+        "titleModifier": "${fuzzyTitle}",
+        "executableArgs": "-f -g \"${filePath}\"",
+        "appendArgsToExecutable": true,
+        "onlineImageQueries": "${${fuzzyTitle}}",
+        "imagePool": "${fuzzyTitle}",
+        "imageProviders": [
+            "SteamGridDB"
+        ],
+        "defaultImage": "",
+        "localImages": "",
+        "localIcons": "${dir}/../*${/\\[.*?\\]/g|${title}|}*/meta/iconTex.tga",
+        "disabled": false,
+        "advanced": false,
+        "userAccounts": {
+            "specifiedAccounts": "",
+            "skipWithMissingDataDir": true,
+            "useCredentials": true
+        },
+        "parserInputs": {
+            "glob": "${title}/*/*@(.rpx|.RPX)",
+            "glob-regex": null
+        },
+        "titleFromVariable": {
+            "limitToGroups": "",
+            "caseInsensitiveVariables": false,
+            "skipFileIfVariableWasNotFound": false,
+            "tryToMatchTitle": false
+        },
+        "fuzzyMatch": {
+            "use": true,
+            "replaceDiacritics": true,
+            "removeCharacters": true,
+            "removeBrackets": true
+        },
+        "version": 2
+    }
+]
