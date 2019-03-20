@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/git.sh"
+
+##? Get all repos from a user
+#?? 0.1.0
+##?
+##? Usage:
+##?    repos [options] <user>
+##?
+##? Options:
+##?    -p --pages <pages>     [default: 1]
+
+docs::eval "$@"
+
+_url() {
+   local readonly p="$1"
+   if [[ $p > 1 ]]; then
+      echo "https://github.com/${user}?page=$p"
+   else 
+      echo "https://github.com/${user}"
+   fi
+}
+
+_raw_repo_links() {
+   for p in $(seq 1 $pages); do 
+      curl -s $(_url $p) | grep -E 'stargazers'; 
+   done
+}
+
+_raw_repo_links | awk -F'/' '{print $3}'
