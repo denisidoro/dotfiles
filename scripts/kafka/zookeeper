@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
+source "${DIR}/core.sh"
+
+case $1 in
+  "migration") bin="zookeeper-security-migration";;
+  "start") bin="zookeeper-server-stop";;
+  "stop") bin="zookeeper-server-stop";;
+  "shell") bin="zookeeper-shell";;
+  *) kafka::invalid "$@";;
+esac
+
+kafka::call "$bin" "$@"

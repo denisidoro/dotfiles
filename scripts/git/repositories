@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
+# set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/git.sh"
@@ -19,15 +19,15 @@ docs::eval "$@"
 _url() {
    local readonly p="$1"
    if [[ $p > 1 ]]; then
-      echo "https://github.com/${user}?page=$p"
+      echo "https://github.com/${user}?page=$p&access_token=$GITHUB_TOKEN"
    else 
-      echo "https://github.com/${user}"
+      echo "https://github.com/${user}?access_token=$GITHUB_TOKEN"
    fi
 }
 
 _raw_repo_links() {
-   for p in $(seq 1 $pages); do 
-      curl -s $(_url $p) | grep -E 'stargazers'; 
+   for p in $(seq 2 $pages); do 
+      curl $(_url $p) | grep -E 'stargazers'; 
    done
 }
 
