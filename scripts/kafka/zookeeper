@@ -5,10 +5,15 @@ source "${DIR}/core.sh"
 
 case $1 in
   "migration") bin="zookeeper-security-migration";;
-  "start") bin="zookeeper-server-stop";;
+  "start") 
+    bin="zookeeper-server-start"
+    if [ "$#" -eq 1 ]; then 
+      arg="$KAFKA_HOME/config/zookeeper.properties"; 
+    fi
+    ;;
   "stop") bin="zookeeper-server-stop";;
   "shell") bin="zookeeper-shell";;
   *) kafka::invalid "$@";;
 esac
 
-kafka::call "$bin" "$@"
+kafka::call "$bin" "$@" "$arg"

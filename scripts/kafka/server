@@ -4,11 +4,15 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 source "${DIR}/core.sh"
 
 case $1 in
-  "start") bin="kafka-server-start";;
+  "start") 
+    bin="kafka-server-start"
+    if [ "$#" -eq 1 ]; then 
+      arg="$KAFKA_HOME/config/server.properties"; 
+    fi
+    ;;
   "stop") bin="kafka-server-stop";;
   *) kafka::invalid "$@";;
 esac
 
-kafka::call "$bin" "$@"
-
+kafka::call "$bin" "$@" "$arg"
 
