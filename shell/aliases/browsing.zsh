@@ -121,6 +121,10 @@ jjs() {
     cd::jj subl "$(cd::list_files)" "$@" 
 }
 
+jn() {
+    cd "$WORK_HOME" && cd::jj cd "$(ls "$WORK_HOME")" "$@"
+}
+
 # Go up X directories (default 1)
 up() {
     if [[ "$#" -ne 1 ]]; then

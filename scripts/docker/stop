@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+# set -uo pipefail
+
+# source "${DOTFILES}/scripts/core/main.sh"
+
+##? Stop containers
+#?? 0.1.0
+##?
+##? Usage:
+##?    stop
+
+# docs::eval "$@"
+
+docker stop $(docker ps -aq)

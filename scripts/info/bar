@@ -55,6 +55,11 @@ wifi() {
       | awk '/ SSID/ {print substr($0, index($0, $2))}'
 }
 
+wifi_data() {
+  echo ""
+  # echo "$(networksetup -getairportnetwork $currentsdev | cut -c 24-);$(networksetup -getinfo "Apple USB Ethernet Adapter" | grep "IP address" | grep "\." | cut -c 13-)"
+}
+
 wifi2() {
    services=$(networksetup -listnetworkserviceorder | grep 'Hardware Port')
 
@@ -73,13 +78,13 @@ wifi2() {
        fi
    done <<< "$(echo "$services")"
 
-   if [ -n "$currentservice" ] ; then
-      if [[ "$currentservice" =~ ^.*thern.*$ ]]; then
-        currentservice2="eth"
-      else
-        currentservice2="$(echo "$currentservice" | tr '[:upper:]' '[:lower:]' | sed 's/-//')"
-      fi
-       echo "$currentservice2;$(networksetup -getairportnetwork $currentsdev | cut -c 24-);$(networksetup -getinfo "Apple USB Ethernet Adapter" | grep "IP address" | grep "\." | cut -c 13-)"
+   if [ -n "${currentservice:-}" ] ; then
+          case $currentservice in
+          *thern*) currentservice2="eth";;
+          *Wi-Fi*) currentservice2="wifi";; 
+          *) currentservice2="$currentservice";;
+       esac
+       echo "$currentservice2;$(wifi_data)"
    else
        >&1 echo "none;none;"
        exit 1
@@ -90,9 +95,13 @@ clock() {
    /bin/date '+%H:%M;%d-%b'
 }
 
+_pad() {
+  printf "%02.0f" "$(cat)"
+}
+
 case "${1:-}" in
    "all")
-      echo "$(clock);$(battery);$(cpu);$(memory);$(volume);$(wifi2)"
+      echo "$(clock);$(battery | _pad);$(cpu | _pad);$(memory | _pad);$(volume | _pad);$(wifi2)"
       ;;
    *)
       source "${DOTFILES}/scripts/core/main.sh"

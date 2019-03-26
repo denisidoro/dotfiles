@@ -47,10 +47,10 @@ update: (output, el) ->
 
 	time = args[0]
 	date = args[1]
-	battery = parseFloat(((Number) args[2]).toFixed())
-	cpu = parseFloat(((Number) args[3]).toFixed())
-	memory = parseFloat(((Number) args[4]).toFixed())
-	volume = parseFloat(((Number) args[5]).toFixed())
+	battery = args[2]
+	cpu = args[3]
+	memory = args[4]
+	volume = args[5]
 	network = args[6]
 
 	$("#time", el).text time
