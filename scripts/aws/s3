@@ -24,7 +24,7 @@ _read() {
   case $extension in
     json) echo "$content" | jq -C . | bat -p;;
     edn) echo "$content" | dot cloj edn | bat -p;; 
-    *) echo -e "$content\n" | bat -p -l "$extension";;
+    *) echo -e "$content" | bat -p -l "$extension";;
   esac
 }
 
@@ -78,6 +78,7 @@ _loop() {
   elif [ -z "${p:-}" ]; then
       exit 1
   else
+      printf "${purple}file:${freset} ${green}$next${freset}"
       _read "$next" "$(aws s3 cp "$next" -)"
       echo
       _loop "$pwd"
