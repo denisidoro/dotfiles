@@ -67,7 +67,7 @@ _loop() {
 
   local readonly result="$(aws s3 ls "$pwd")"
   local readonly lines="$(echo -e "${_dotdot}\n${result}" | _last_column)"
-  local readonly line="$(echo "$lines" | tail -r | _fzf)"
+  local readonly line="$(echo "$lines" | sort -r | _fzf)"
   local readonly p="$(echo "$line" | _last_column)"
   local readonly next="${pwd}${p}"
 
