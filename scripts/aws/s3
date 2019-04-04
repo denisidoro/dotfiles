@@ -17,14 +17,23 @@ docs::eval "$@"
 _dot="                               ."
 _dotdot="${_dot}."
 
+_less() {
+  local readonly extension="${1:-}"
+  if [ -x "$(command -v bat)" ]; then
+    bat -p -l "$extension"
+  else
+    less -R
+  fi
+}
+
 _read() {
   local readonly path="$1"
   local readonly content="$2"
   local readonly extension="${path##*.}"
   case $extension in
-    json) echo "$content" | jq -C . | bat -p;;
-    edn) echo "$content" | dot cloj edn | bat -p;; 
-    *) echo -e "$content" | bat -p -l "$extension";;
+    json) echo "$content" | jq -C . | _less;;
+    edn|clj|cljs) echo "$content" | nu cloj edn | _less;; 
+    *) echo -e "$content" | _less "$extension";;
   esac
 }
 
@@ -67,7 +76,7 @@ _loop() {
 
   local readonly result="$(aws s3 ls "$pwd")"
   local readonly lines="$(echo -e "${_dotdot}\n${result}" | _last_column)"
-  local readonly line="$(echo "$lines" | sort -r | _fzf)"
+  local readonly line="$(echo "$lines" | tail -r | _fzf)"
   local readonly p="$(echo "$line" | _last_column)"
   local readonly next="${pwd}${p}"
 
@@ -79,6 +88,7 @@ _loop() {
       exit 1
   else
       printf "${purple}file:${freset} ${green}$next${freset}"
+      echo
       _read "$next" "$(aws s3 cp "$next" -)"
       echo
       _loop "$pwd"
@@ -86,3 +96,4 @@ _loop() {
 }
 
 _loop "s3://${bucket}"
+
