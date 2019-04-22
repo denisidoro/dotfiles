@@ -14,6 +14,8 @@ _validate() {
   echo
 }
 
+echo "Test case: all symlinks are valid"
+
 cd "$ROOT_DIR"
 result=""
 for f in $(ls "./symlinks/"); do

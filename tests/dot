@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
+
+res="$("${ROOT_DIR}/bin/dot" env health)"
+
+echo "Test case: dot <ctx> <cmd> works"
+
+echo "$res" | grep "Editors" || exit 1

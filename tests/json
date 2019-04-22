@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
+source "$ROOT_DIR/scripts/core/main.sh"
+
+_install_jq() {
+  brew install jq || apk add jq || apt install jq
+}
+
+echo "Test case: all JSONs are syntactically valid"
+
+cd "$ROOT_DIR"
+
+platform::command_exists jq \
+  || _install_jq
+
+git ls-files \
+  | grep '.json' \
+  | xargs jq .
