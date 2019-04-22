@@ -4,8 +4,8 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
 export DOTFILES="${DOTFILES:-$ROOT_DIR}"
 source "${DOTFILES}/scripts/core/main.sh"
 
-res="$("${DOTFILES}/bin/dot" env health)"
+log::warning "Test case: scripts/environment/init starts"
 
-log::warning "Test case: dot <ctx> <cmd> works"
-
-echo "$res" | grep "====" || exit 1
+echo no | "${DOTFILES}/environment/init" \
+  | grep risk \
+  || exit 1

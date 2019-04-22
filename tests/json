@@ -2,19 +2,19 @@
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
 export DOTFILES="${DOTFILES:-$ROOT_DIR}"
-source "${ROOT_DIR}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/main.sh"
 
 _install_jq() {
   brew install jq || apk add jq || apt install jq
 }
 
-echo "Test case: all JSONs are syntactically valid"
+log::warning "Test case: all JSONs are syntactically valid"
 
-cd "$ROOT_DIR"
+cd "$DOTFILES"
 
 platform::command_exists jq \
   || _install_jq
 
-git ls-files \
-  | grep '.json' \
+find . -iname "*.json" \
+  | grep -Ev 'node_modules|cache|modules/|lock.json' \
   | xargs jq .

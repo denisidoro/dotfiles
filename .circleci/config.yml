@@ -10,25 +10,38 @@ job_defaults: &defaults
     working_directory: ~/repo
     environment:
       ENVIRONMENT: "test"
+      TERM: "dumb"
 
 jobs:
-  test:
+  symlinks:
     <<: *defaults
-    # Download and cache dependencies
     steps:
       - checkout
-      - run:
-          name: Dot
-          command: ./tests/dot
-      - run:
-          name: Symlinks
-          command: ./tests/symlinks
-      - run:
-          name: JSON
-          command: ./tests/json
+      - run: ./tests/symlinks
+
+  json:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: ./tests/json
+
+  bashrc:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: ./tests/bashrc
+
+  init:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: ./tests/init
 
 workflows:
   version: 2
   run-tests:
     jobs:
-      - test
+      - symlinks
+      - json
+      - bashrc
+      - init

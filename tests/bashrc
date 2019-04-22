@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
+export DOTFILES="${DOTFILES:-$ROOT_DIR}"
+source "${DOTFILES}/scripts/core/main.sh"
+
+log::warning "Test case: sourcing bashrc doesn't throw an exception"
+
+cd "$DOTFILES"
+bashrc_path="$(cat "symlinks/conf.yaml" | grep bashrc | awk '{print $2}')"
+source "$bashrc_path"
