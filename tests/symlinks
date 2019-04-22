@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
+export DOTFILES="${DOTFILES:-$ROOT_DIR}"
 source "$ROOT_DIR/scripts/core/main.sh"
 
 _validate() {
@@ -14,7 +15,9 @@ _validate() {
   echo
 }
 
-cd "$ROOT_DIR"
+log::warning "Test case: all symlinks are valid"
+
+cd "$DOTFILES"
 result=""
 for f in $(ls "./symlinks/"); do
   result="$result$(_validate "./symlinks/$f")\n\n"

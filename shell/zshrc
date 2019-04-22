@@ -49,3 +49,5 @@ include ~/.fzf.zsh
 # exec 2>&3 3>&-
 
 export PATH=/Users/denis/.local/bin:$PATH
+
+source "$HOME/dev/beavr/shell/widget.zsh"

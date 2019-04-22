@@ -3,8 +3,6 @@
     "window.zoomLevel": 0.2,
 
     "files.autoSave": "onWindowChange",
-
-    "workbench.colorTheme": "Material Theme Ocean High Contrast",
     "workbench.activityBar.visible": false,
     "workbench.iconTheme": "eq-material-theme-icons-ocean",
     
@@ -13,7 +11,7 @@
 
     "workbench.editor.enablePreview": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
-
+    
     "vim.insertModeKeyBindings": [
         {
             "before": [
@@ -1098,5 +1096,8 @@
                 }
             ]
         }
-    ]
+    ],
+    "workbench.colorCustomizations": {},
+    "materialTheme.accent": "Remove accents",
+    "workbench.colorTheme": "Material Theme Darker High Contrast"
 }
