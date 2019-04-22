@@ -10,6 +10,6 @@ _dot() {
   "${DOTFILES}/bin/dot" -d "$@"
 }
 
-echo no | _dot -d "environment" "init" \
+echo no | _dot "environment" "init" \
   | grep risk \
   || exit 1
