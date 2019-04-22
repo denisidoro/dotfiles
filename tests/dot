@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
+source "${ROOT_DIR}/scripts/core/main.sh"
 
 res="$("${ROOT_DIR}/bin/dot" env health)"
 
 echo "Test case: dot <ctx> <cmd> works"
 
-echo "$res" | grep "Editors" || exit 1
+echo "$res" | grep "====" || exit 1
