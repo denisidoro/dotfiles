@@ -6,12 +6,14 @@ source "${DOTFILES}/tests/core.sh"
 
 log::warning "Test case: all YAMLs are syntactically valid"
 
-cd "$DOTFILES"
-
 _find_yamls() {
   find . -iname "*.yaml"
   find . -iname "*.yml"
 }
+
+cd "$DOTFILES"
+
+submodule::clone
 
 _find_yamls \
   | grep -Ev 'node_modules|cache|modules/|lock.json' \
