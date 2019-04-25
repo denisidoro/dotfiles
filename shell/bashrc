@@ -39,3 +39,4 @@ source $DOTFILES/local/zshrc
 if [[ ${DOTFILES_FZF_BASH:-false} == true ]]; then
     [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 fi
+

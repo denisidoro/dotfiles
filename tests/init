@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
+export DOTFILES="${DOTFILES:-$ROOT_DIR}"
+source "${DOTFILES}/scripts/core/main.sh"
+
+log::warning "Test case: scripts/environment/init starts"
+
+_dot() {
+  "${DOTFILES}/bin/dot" -d "$@"
+}
+
+echo no | _dot "environment" "init" \
+  | grep risk \
+  || exit 1
