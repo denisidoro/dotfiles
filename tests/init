@@ -6,6 +6,6 @@ source "${DOTFILES}/tests/core.sh"
 
 log::warning "Test case: scripts/environment/init starts"
 
-echo no | _dot "environment" "init" \
+echo no | dot::call "environment" "init" \
   | grep risk \
   && test::success || test::fail

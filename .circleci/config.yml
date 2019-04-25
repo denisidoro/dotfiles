@@ -21,12 +21,18 @@ jobs:
 
   json:
     <<: *defaults
+    post:
+      - git submodule sync --recursive
+      - git submodule update --recursive --init
     steps:
       - checkout
       - run: ./tests/json
 
   yaml:
     <<: *defaults
+    post:
+      - git submodule sync --recursive
+      - git submodule update --recursive --init
     steps:
       - checkout
       - run: ./tests/yaml
