@@ -19,7 +19,7 @@ dot::call() {
 }
 
 submodule::clone() {
-  if ! fs::is_dir "${DOTFILES}/modules/json-sh"; then
+  if ! fs::is_file "${DOTFILES}/modules/json-sh/JSON.sh"; then
     git submodule sync --recursive
     git submodule update --recursive --init
   fi
