@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Source code indentation fixer
+##?
+##? Usage:
+##?    parser json [<path>]
+##?    parser yaml [<path>]
+
+docs::eval "$@"
+
+if [[ -n $path ]]; then
+  content="$(cat "$path")"
+else
+  content="$(cat)"
+fi
+
+if $json; then 
+  echo "$content" | "${DOTFILES}/modules/json-sh/JSON.sh" > /dev/null
+else
+  source "${DOTFILES}/modules/bash-yaml/script/yaml.sh" 
+  parse_yaml <(echo "$content") > /dev/null
+fi
