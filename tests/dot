@@ -4,7 +4,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
 export DOTFILES="${DOTFILES:-$ROOT_DIR}"
 source "${DOTFILES}/tests/core.sh"
 
-res="$("${DOTFILES}/bin/dot" env health)"
+res="$(dot::call env health)"
 
 log::warning "Test case: dot <ctx> <cmd> works"
 
