@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
+export DOTFILES="${DOTFILES:-$ROOT_DIR}"
+source "${DOTFILES}/tests/core.sh"
+
+log::warning "Test case: all YAMLs are syntactically valid"
+
+cd "$DOTFILES"
+
+_find_yamls() {
+  find . -iname "*.yaml"
+  find . -iname "*.yml"
+}
+
+_find_yamls \
+  | grep -Ev 'node_modules|cache|modules/|lock.json' \
+  | xargs -I% dot code parser yaml % \
+  && test::success || test::fail

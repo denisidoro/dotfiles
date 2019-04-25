@@ -2,7 +2,7 @@
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
 export DOTFILES="${DOTFILES:-$ROOT_DIR}"
-source "$ROOT_DIR/scripts/core/main.sh"
+source "${DOTFILES}/tests/core.sh"
 
 _validate() {
   local readonly filename="$1"
@@ -24,7 +24,8 @@ for f in $(ls "./symlinks/"); do
 done
 
 echo -e "$result" | head -n -2
+echo
 
-if [[ $result == *"☓"* ]]; then
-  exit 1
-fi
+echo $result \
+  | grep -qv "☓" \
+  && test::success || test::fail

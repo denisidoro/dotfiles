@@ -2,10 +2,12 @@
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
 export DOTFILES="${DOTFILES:-$ROOT_DIR}"
-source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/tests/core.sh"
 
 log::warning "Test case: sourcing bashrc doesn't throw an exception"
 
 cd "$DOTFILES"
 bashrc_path="$(cat "symlinks/conf.yaml" | grep bashrc | awk '{print $2}')"
-source "$bashrc_path"
+
+source "$bashrc_path" \
+  && test::success || test::fail
