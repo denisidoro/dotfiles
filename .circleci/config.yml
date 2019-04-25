@@ -13,17 +13,23 @@ job_defaults: &defaults
       TERM: "dumb"
 
 jobs:
-  symlinks:
+  symlink:
     <<: *defaults
     steps:
       - checkout
-      - run: ./tests/symlinks
+      - run: ./tests/symlink
 
-  json:
+  parse:
     <<: *defaults
     steps:
       - checkout
-      - run: ./tests/json
+      - run: apk add git
+      - run: 
+          name: JSON
+          command: ./tests/json
+      - run: 
+          name: YAML
+          command: ./tests/yaml
 
   bashrc:
     <<: *defaults
@@ -41,7 +47,7 @@ workflows:
   version: 2
   run-tests:
     jobs:
-      - symlinks
-      - json
+      - symlink
+      - parse
       - bashrc
       - init

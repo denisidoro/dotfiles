@@ -4,22 +4,18 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
 export DOTFILES="${DOTFILES:-$ROOT_DIR}"
 source "${DOTFILES}/tests/core.sh"
 
-_install_jq() {
-  brew install jq || apk add jq || apt install jq
-}
+log::warning "Test case: all YAMLs are syntactically valid"
 
-_install_jq_if_necessary() {
-  platform::command_exists jq \
-    || _install_jq
+_find_yamls() {
+  find . -iname "*.yaml"
+  find . -iname "*.yml"
 }
-
-log::warning "Test case: all JSONs are syntactically valid"
 
 cd "$DOTFILES"
 
 submodule::clone
 
-find . -iname "*.json" \
+_find_yamls \
   | grep -Ev 'node_modules|cache|modules/|lock.json' \
-  | xargs -I% "$DOT_PATH" -d code parser json % \
+  | xargs -I% "$DOT_PATH" -d code parser yaml % \
   && test::success || test::fail

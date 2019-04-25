@@ -37,7 +37,7 @@ install_brew_linux() {
 }
 
 install_brew() {
-   if ! platform::command_exists brew; then
+   if ! platform::command_exists brew && ! fs::is_dir /home/linuxbrew; then
       echo "Installing brew"
       if platform::is_osx; then
          install_brew_osx
@@ -107,7 +107,7 @@ fi
 cd "$DOTFILES"
 
 # install necessary dependencies
-dot environment install batch mini
+dot environment install batch nano
 
 # invoke dotfiles symlinking
 dot environment update
