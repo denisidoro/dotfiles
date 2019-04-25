@@ -25,6 +25,7 @@ jobs:
       - checkout
       - run: apk add git
       - run: ./tests/json
+      - run: exit 2
       - run: ./tests/yaml
 
   bashrc:
