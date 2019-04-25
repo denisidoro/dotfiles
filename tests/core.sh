@@ -17,3 +17,10 @@ dot::call() {
     "$DOT_PATH" -d "$@"
   fi
 }
+
+submodule::clone() {
+  if ! function fs::is_dir "${DOTFILES}/modules/json-sh"; then
+    git submodule sync --recursive
+    git submodule update --recursive --init
+  fi
+}
