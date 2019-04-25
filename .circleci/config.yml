@@ -19,16 +19,12 @@ jobs:
       - checkout
       - run: ./tests/symlink
 
-  json:
+  parse:
     <<: *defaults
     steps:
       - checkout
+      - run: apk add git
       - run: ./tests/json
-
-  yaml:
-    <<: *defaults
-    steps:
-      - checkout
       - run: ./tests/yaml
 
   bashrc:
@@ -48,7 +44,6 @@ workflows:
   run-tests:
     jobs:
       - symlink
-      - json
-      - yaml
+      - parse
       - bashrc
       - init
