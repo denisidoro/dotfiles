@@ -24,9 +24,12 @@ jobs:
     steps:
       - checkout
       - run: apk add git
-      - run: ./tests/json
-      - run: exit 2
-      - run: ./tests/yaml
+      - run: 
+          name: JSON
+          command: ./tests/json
+      - run: 
+          name: YAML
+          command: ./tests/yaml
 
   bashrc:
     <<: *defaults
