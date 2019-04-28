@@ -51,13 +51,12 @@ drive() {
 }
 
 wifi() {
-   /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I \
+   "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I" \
       | awk '/ SSID/ {print substr($0, index($0, $2))}'
 }
 
 wifi_data() {
   echo ""
-  # echo "$(networksetup -getairportnetwork $currentsdev | cut -c 24-);$(networksetup -getinfo "Apple USB Ethernet Adapter" | grep "IP address" | grep "\." | cut -c 13-)"
 }
 
 wifi2() {
@@ -66,13 +65,12 @@ wifi2() {
    while read line; do
        sname=$(echo $line | awk -F  "(, )|(: )|[)]" '{print $2}')
        sdev=$(echo $line | awk -F  "(, )|(: )|[)]" '{print $4}')
-       # echo "Current service: $sname, $sdev, $currentservice"
        if [ -n "$sdev" ]; then
            ifconfig $sdev 2>/dev/null | grep 'status: active' > /dev/null 2>&1
            rc="$?"
            if [ "$rc" -eq 0 ]; then
                currentservice="$sname"
-          currentsdev="$sdev"
+               currentsdev="$sdev"
                break
            fi
        fi
@@ -81,7 +79,7 @@ wifi2() {
    if [ -n "${currentservice:-}" ] ; then
           case $currentservice in
           *thern*) currentservice2="eth";;
-          *Wi-Fi*) currentservice2="wifi";; 
+          *Wi-Fi*) currentservice2="wifi";;
           *) currentservice2="$currentservice";;
        esac
        echo "$currentservice2;$(wifi_data)"

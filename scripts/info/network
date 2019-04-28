@@ -16,7 +16,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docs::eval "$@"
 
-function traffic::get() {
+traffic::get() {
    netstat -w1 &
    sleep 1.5
    kill $!

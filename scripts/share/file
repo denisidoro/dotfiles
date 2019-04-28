@@ -15,7 +15,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docs::eval "$@"
 
-function transfer() {
+transfer() {
    local path="$1"
    local tmpfile="$(mktemp -t transferXXX)"
 

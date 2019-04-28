@@ -26,7 +26,7 @@ source "${DOTFILES}/scripts/environment/core.sh"
 
 docs::eval "$@"
 
-function devices() {
+devices() {
    adb devices | tail -n +2 | cut -sf -1
 }
 

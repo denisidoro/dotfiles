@@ -15,7 +15,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 docker run \
-  -v "$(dot shell realpath "$path"):/app" \
-  --rm \
-  golang:1.12.1-alpine3.9 \
-  bash -c 'cd /app && go get -d && go build'
+   -v "$(dot shell realpath "$path"):/app" \
+   --rm \
+   golang:1.12.1-alpine3.9 \
+   bash -c 'cd /app && go get -d && go build'

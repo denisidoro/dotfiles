@@ -18,11 +18,11 @@ docs::eval "$@"
 DOTBOT_DIR="modules/dotbot"
 DOTBOT_BIN="bin/dotbot"
 
-function has_tag() {
+has_tag() {
    str::contains "$@"
 }
 
-function main() {
+main() {
    local git_info=$(cd "$DOTFILES" && git log -n 1 --pretty=format:'%ad - %h' --date=format:'%Y-%m-%d %Hh%M')
    log::note "Updating dotfiles\n$git_info\n"
 
@@ -58,16 +58,16 @@ update_dotfiles_pre() {
 
    TEMPFILE="$DOTFILES/local/zshrc"
    if ! fs::is_file "$TEMPFILE"; then
-    echo "export DOTFILES_DOCOPTSH=false" > "$TEMPFILE"
+      echo "export DOTFILES_DOCOPTSH=false" > "$TEMPFILE"
    fi
 
    TEMPFILE="$DOTFILES/local/gitconfig"
    if ! fs::is_file "$TEMPFILE"; then
-    echo "What is your name?"
-    read fullname
-    echo "What is your email?"
-    read email
-    echo -e "[user]\nname = $fullname\nemail = $email" > "$TEMPFILE"
+      echo "What is your name?"
+      read fullname
+      echo "What is your email?"
+      read email
+      echo -e "[user]\nname = $fullname\nemail = $email" > "$TEMPFILE"
    fi
 
    pushd . >/dev/null

@@ -69,7 +69,7 @@ fi
 
 # Shortcut for installing brew
 if [[ ${1:-} == "brew" ]]; then
-  install_brew
+   install_brew
 fi
 
 # Pushes the current directory to the stack

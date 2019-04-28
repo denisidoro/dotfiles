@@ -18,81 +18,81 @@ _dot="                               ."
 _dotdot="${_dot}."
 
 _less() {
-  local readonly extension="${1:-}"
-  if [ -x "$(command -v bat)" ]; then
-    bat -p -l "$extension"
-  else
-    less -R
-  fi
+   local readonly extension="${1:-}"
+   if [ -x "$(command -v bat)" ]; then
+      bat -p -l "$extension"
+   else
+      less -R
+   fi
 }
 
 _read() {
-  local readonly path="$1"
-  local readonly content="$2"
-  local readonly extension="${path##*.}"
-  case $extension in
-    json) echo "$content" | jq -C . | _less;;
-    edn|clj|cljs) echo "$content" | nu cloj edn | _less;; 
-    *) echo -e "$content" | _less "$extension";;
-  esac
+   local readonly path="$1"
+   local readonly content="$2"
+   local readonly extension="${path##*.}"
+   case $extension in
+      json) echo "$content" | jq -C . | _less ;;
+      edn|clj|cljs) echo "$content" | nu cloj edn | _less ;;
+      *) echo -e "$content" | _less "$extension" ;;
+   esac
 }
 
 _last_column() {
-  awk '{print $(NF)}'
+   awk '{print $(NF)}'
 }
 
 _up() {
-  sed -E 's|(.*)/(.+)|\1|'
+   sed -E 's|(.*)/(.+)|\1|'
 }
 
 _format_lines() {
-  local readonly lines="$(cat)"
-  while read -r line; do
-    local readonly name="$(echo "$line" | awk '{print $(NF)}')"
-    # printf "${purple}${name}${freset}\n"
-    echo "$name" | _last_column
-  done <<< "$lines"
+   local readonly lines="$(cat)"
+   while read -r line; do
+      local readonly name="$(echo "$line" | awk '{print $(NF)}')"
+      # printf "${purple}${name}${freset}\n"
+      echo "$name" | _last_column
+   done <<< "$lines"
 }
 
 _fzf() {
-  fzf --reverse --ansi --tac --height 10 --inline-info
+   fzf --reverse --ansi --tac --height 10 --inline-info
 }
 
 _with_one_ending_slash() {
-  local readonly path="$1"
-  case "$path" in
-    s3://) echo "$path";;
-    s3:/) echo "${path}/";;
-    *//) echo "${path::-1}";;
-    */) echo "$path";;
-    *) echo "${path}/";;
-  esac
+   local readonly path="$1"
+   case "$path" in
+      s3://) echo "$path" ;;
+      s3:/) echo "${path}/" ;;
+      *//) echo "${path::-1}" ;;
+      */) echo "$path" ;;
+      *) echo "${path}/" ;;
+   esac
 }
 
 _loop() {
-  local readonly pwd="$(_with_one_ending_slash "$1")"
-  echo -e "\033[1A"
-  printf "${purple}path:${freset} ${green}$pwd${freset}"
+   local readonly pwd="$(_with_one_ending_slash "$1")"
+   echo -e "\033[1A"
+   printf "${purple}path:${freset} ${green}$pwd${freset}"
 
-  local readonly result="$(aws s3 ls "$pwd")"
-  local readonly lines="$(echo -e "${_dotdot}\n${result}" | _last_column)"
-  local readonly line="$(echo "$lines" | tail -r | _fzf)"
-  local readonly p="$(echo "$line" | _last_column)"
-  local readonly next="${pwd}${p}"
+   local readonly result="$(aws s3 ls "$pwd")"
+   local readonly lines="$(echo -e "${_dotdot}\n${result}" | _last_column)"
+   local readonly line="$(echo "$lines" | tail -r | _fzf)"
+   local readonly p="$(echo "$line" | _last_column)"
+   local readonly next="${pwd}${p}"
 
-  if [[ "$p" == */ || "$pwd" == "s3://" ]]; then
+   if [[ "$p" == */ || "$pwd" == "s3://" ]]; then
       _loop "$next"
-  elif [[ "$p" == ".." ]]; then
+   elif [[ "$p" == ".." ]]; then
       _loop "$(echo "$pwd" | _up)"
-  elif [ -z "${p:-}" ]; then
+   elif [ -z "${p:-}" ]; then
       exit 1
-  else
+   else
       printf "${purple}file:${freset} ${green}$next${freset}"
       echo
       _read "$next" "$(aws s3 cp "$next" -)"
       echo
       _loop "$pwd"
-  fi
+   fi
 }
 
 _loop "s3://${bucket}"

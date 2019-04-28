@@ -34,40 +34,40 @@ log_bold=1
 log_underline=4
 
 log::color() {
-  local bg=false
-  case "$@" in
-    *reset*) echo "\e[0m"; exit 0;;
-    *black*) color=$log_black;;
-    *red*) color=$log_red;;
-    *green*) color=$log_green;;
-    *yellow*) color=$log_yellow;;
-    *blue*) color=$log_blue;;
-    *purple*) color=$log_purple;;
-    *cyan*) color=$log_cyan;;
-    *white*) color=$log_white;;
-  esac
-  case "$@" in
-    *regular*) mod=$log_regular;;
-    *bold*) mod=$log_bold;;
-    *underline*) mod=$log_underline;;
-  esac
-  case "$@" in
-    *background*) bg=true;;
-    *bg*) bg=true;;
-  esac
+   local bg=false
+   case "$@" in
+      *reset*) echo "\e[0m"; exit 0 ;;
+      *black*) color=$log_black ;;
+      *red*) color=$log_red ;;
+      *green*) color=$log_green ;;
+      *yellow*) color=$log_yellow ;;
+      *blue*) color=$log_blue ;;
+      *purple*) color=$log_purple ;;
+      *cyan*) color=$log_cyan ;;
+      *white*) color=$log_white ;;
+   esac
+   case "$@" in
+      *regular*) mod=$log_regular ;;
+      *bold*) mod=$log_bold ;;
+      *underline*) mod=$log_underline ;;
+   esac
+   case "$@" in
+      *background*) bg=true ;;
+      *bg*) bg=true ;;
+   esac
 
-  if $bg; then
-   echo "\e[${color}m" 
-  else 
-   echo "\e[${mod:-$log_regular};${color}m" 
-  fi
+   if $bg; then
+      echo "\e[${color}m"
+   else
+      echo "\e[${mod:-$log_regular};${color}m"
+   fi
 }
 
 if [ -z ${LOG_FILE+x} ]; then
    readonly LOG_FILE="/tmp/$(basename "$0").log"
 fi
 
-function _log() {
+_log() {
    local template=$1
    shift
    if ${log_to_file:-false}; then
@@ -77,7 +77,7 @@ function _log() {
    fi
 }
 
-function _header() {
+_header() {
    local TOTAL_CHARS=60
    local total=$TOTAL_CHARS-2
    local size=${#1}
@@ -88,8 +88,8 @@ function _header() {
    printf "%${right}s" '' | tr ' ' =
 }
 
-function log::header() { _log "\n${bold}${purple}$(_header "$1")${freset}\n"; }
-function log::success() { _log "${green}✔ %s${freset}\n" "$@"; }
-function log::error() { _log "${red}✖ %s${freset}\n" "$@"; }
-function log::warning() { _log "${tan}➜ %s${freset}\n" "$@"; }
-function log::note() { _log "${underline}${bold}${blue}Note:${freset} ${blue}%s${freset}\n" "$@"; }
+log::header() { _log "\n${bold}${purple}$(_header "$1")${freset}\n"; }
+log::success() { _log "${green}✔ %s${freset}\n" "$@"; }
+log::error() { _log "${red}✖ %s${freset}\n" "$@"; }
+log::warning() { _log "${tan}➜ %s${freset}\n" "$@"; }
+log::note() { _log "${underline}${bold}${blue}Note:${freset} ${blue}%s${freset}\n" "$@"; }

@@ -4,9 +4,9 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 source "${DIR}/core.sh"
 
 case $1 in
-  "consumer") bin="kafka-console-consumer";;
-  "producer") bin="kafka-console-producer";;
-  *) kafka::invalid "$@";;
+   "consumer") bin="kafka-console-consumer" ;;
+   "producer") bin="kafka-console-producer" ;;
+   *) kafka::invalid "$@" ;;
 esac
 
 kafka::call "$bin" "$@"

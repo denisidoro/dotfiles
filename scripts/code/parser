@@ -12,17 +12,17 @@ type="$1"
 path="${2:-}"
 
 if [[ -n $path ]]; then
-  content="$(cat "$path")"
+   content="$(cat "$path")"
 else
-  content="$(cat)"
+   content="$(cat)"
 fi
 
 case $type in
-  j*)
-    echo "$content" | "${DOTFILES}/modules/json-sh/JSON.sh" > /dev/null
-    ;;
-  y*)
-    source "${DOTFILES}/modules/bash-yaml/script/yaml.sh" 
-    parse_yaml <(echo "$content") > /dev/null
-    ;;
+   j*)
+      echo "$content" | "${DOTFILES}/modules/json-sh/JSON.sh" > /dev/null
+      ;;
+   y*)
+      source "${DOTFILES}/modules/bash-yaml/script/yaml.sh"
+      parse_yaml <(echo "$content") > /dev/null
+      ;;
 esac

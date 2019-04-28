@@ -7,22 +7,31 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Source code indentation fixer
 ##?
 ##? Usage:
-##?    beautify [options] <filename>
-##?
-##? Options:
-##?    -l --language <language>    Programming language
+##?    beautify <filename>
 
 docs::eval "$@"
 
-_all_dotfiles_sh() {
-	find "$DOTFILES/scripts" -maxdepth 2 -executable -type f
-	find "$DOTFILES/scripts/core" -maxdepth 2 -type f
+language=fallback
+
+_all_dotfiles_files_to_format() {
+   find "$DOTFILES/scripts" -maxdepth 2 -executable -type f
+   find "$DOTFILES/scripts/core" -maxdepth 2 -type f
+}
+
+_dedupe() {
+   sort -u
+}
+
+_filter() {
+   grep -v '.py\|beautify\|docopts\|clojure/compile\|info/bar\|vscode'
 }
 
 if [[ $filename = "self" ]]; then
-    _all_dotfiles_sh | sort -u | grep -v '.py' \
-    	| xargs dot code beautify
-	exit 0
+   _all_dotfiles_files_to_format \
+      | _dedupe \
+      | _filter \
+      | xargs -I% dot code beautify %
+   exit 0
 fi
 
 extension="${filename##*.}"
@@ -42,8 +51,16 @@ if [ -z $extension ]; then
    fi
 fi
 
+log::warning "converting $filename as $language"
 case "$language" in
-   sh_old) shfmt -w -i 3 -ci -bn "$filename" ;;
-   sh) beautysh.py -i 3 -s paronly -f "$filename"; sed -i -e 's/() ::/::/g' "$filename";
-   *) nvim --headless --noplugin -n -u NONE -c ':normal gg=G' +wq "$filename" ;;
+   sh_old)
+      shfmt -w -i 3 -ci -bn "$filename"
+      ;;
+   sh)
+      beautysh.py -i 3 -s paronly -f "$filename"
+      sed -i -e 's/::/::/g' "$filename"
+      ;;
+   *)
+      nvim --headless --noplugin -n -u NONE -c ':normal gg=G' +wq "$filename"
+      ;;
 esac

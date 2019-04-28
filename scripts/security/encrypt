@@ -19,7 +19,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docs::eval "$@"
 
-function md5_fn() {
+md5_fn() {
    if platform::command_exists md5sum; then
       echo "$1" | md5sum
    elif platform::command_exists md5; then
@@ -30,11 +30,11 @@ function md5_fn() {
    fi
 }
 
-function algo_0() {
+algo_0() {
    md5_fn "$1" | base64 | cut -c -16
 }
 
-function algo_1() {
+algo_1() {
    md5_fn "$1"
 }
 

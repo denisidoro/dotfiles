@@ -1,11 +1,11 @@
 #!/bin/user/env bash
 
-function coll::is_empty() {
+coll::is_empty() {
    local var=${1}
    [[ -z ${var} ]]
 }
 
-function coll::contains_element() {
+coll::contains_element() {
    elements="${@:2}"
    element="${1}"
 
