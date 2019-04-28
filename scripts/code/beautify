@@ -14,9 +14,11 @@ docs::eval "$@"
 language=fallback
 
 _all_dotfiles_files_to_format() {
-   find "$DOTFILES/scripts" -maxdepth 2 -executable -type f
-   find "$DOTFILES/bin" -maxdepth 2 -executable -type f
-   find "$DOTFILES/scripts/core" -maxdepth 2 -type f
+   find "${DOTFILES}/scripts" -maxdepth 2 -executable -type f
+   find "${DOTFILES}/bin" -maxdepth 2 -executable -type f
+   find "${DOTFILES}/scripts/core" -maxdepth 2 -type f
+   find "${DOTFILES}/shell" -maxdepth 3 -type f
+   find "${DOTFILES}/tests" -maxdepth 2 -type f
 }
 
 _dedupe() {
@@ -24,7 +26,7 @@ _dedupe() {
 }
 
 _filter() {
-   grep -v '.py\|beautify\|docopts\|clojure/compile\|info/bar\|vscode'
+   grep -v '.py\|beautify\|docopts\|clojure/compile\|info/bar\|vscode\|hushlogin'
 }
 
 if [[ $filename = "self" ]]; then

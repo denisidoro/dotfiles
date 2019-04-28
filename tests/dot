@@ -9,4 +9,4 @@ res="$(dot::call env health)"
 log::warning "Test case: dot <ctx> <cmd> works"
 
 echo "$res" | grep "====" \
-  && test::success || test::fail
+   && test::success || test::fail

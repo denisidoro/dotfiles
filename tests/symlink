@@ -5,14 +5,14 @@ export DOTFILES="${DOTFILES:-$ROOT_DIR}"
 source "${DOTFILES}/tests/core.sh"
 
 _validate() {
-  local readonly filename="$1"
-  log::warning "Validating $filename..."
-  cat "$filename" \
-    | grep '\- link:' -A10000 \
-    | tail -n +2 \
-    | cut -d':' -f2 \
-    | xargs -I% bash -c 'printf "% "; (test -f % || test -d %) && echo ✓ || echo ☓' 
-  echo
+   local readonly filename="$1"
+   log::warning "Validating $filename..."
+   cat "$filename" \
+      | grep '\- link:' -A10000 \
+      | tail -n +2 \
+      | cut -d':' -f2 \
+      | xargs -I% bash -c 'printf "% "; (test -f % || test -d %) && echo ✓ || echo ☓'
+   echo
 }
 
 log::warning "Test case: all symlinks are valid"
@@ -20,12 +20,12 @@ log::warning "Test case: all symlinks are valid"
 cd "$DOTFILES"
 result=""
 for f in $(ls "./symlinks/"); do
-  result="$result$(_validate "./symlinks/$f")\n\n"
+   result="$result$(_validate "./symlinks/$f")\n\n"
 done
 
 echo -e "$result" | head -n -2
 echo
 
 echo $result \
-  | grep -qv "☓" \
-  && test::success || test::fail
+   | grep -qv "☓" \
+   && test::success || test::fail

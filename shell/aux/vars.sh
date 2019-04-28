@@ -8,4 +8,4 @@ export ZPLUG_HOME="${DOTFILES}/modules/zplug"
 export EDITOR='nvim'
 
 # add folders to PATH
-export PATH="$DOTFILES/local/bin:$DOTFILES/bin:/usr/local/bin:${PATH}"
+export PATH="${DOTFILES}/local/bin:${DOTFILES}/bin:/usr/local/bin:${PATH}"

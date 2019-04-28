@@ -5,12 +5,12 @@ export DOTFILES="${DOTFILES:-$ROOT_DIR}"
 source "${DOTFILES}/tests/core.sh"
 
 _install_jq() {
-  brew install jq || apk add jq || apt install jq
+   brew install jq || apk add jq || apt install jq
 }
 
 _install_jq_if_necessary() {
-  platform::command_exists jq \
-    || _install_jq
+   platform::command_exists jq \
+      || _install_jq
 }
 
 log::warning "Test case: all JSONs are syntactically valid"
@@ -18,6 +18,6 @@ log::warning "Test case: all JSONs are syntactically valid"
 cd "$DOTFILES"
 
 find . -iname "*.json" \
-  | grep -Ev 'node_modules|cache|modules/|lock.json' \
-  | xargs -I% "$DOT_PATH" -d code parser json % \
-  && test::success || test::fail
+   | grep -Ev 'node_modules|cache|modules/|lock.json' \
+   | xargs -I% "$DOT_PATH" -d code parser json % \
+   && test::success || test::fail

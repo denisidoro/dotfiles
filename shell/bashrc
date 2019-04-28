@@ -11,7 +11,7 @@ export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 # load vars
 source "${DOTFILES}/shell/aux/vars.sh"
 
-# load helper functions 
+# load helper functions
 source "${DOTFILES}/shell/aux/core.zsh"
 
 # load aliases
@@ -25,5 +25,5 @@ source "${DOTFILES}/local/zshrc"
 
 # load fzf
 if [[ ${DOTFILES_FZF_BASH:-false} == true ]]; then
-    [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+   [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 fi

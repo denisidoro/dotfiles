@@ -7,5 +7,5 @@ source "${DOTFILES}/tests/core.sh"
 log::warning "Test case: scripts/environment/init starts"
 
 echo no | "$DOT_PATH" -d "environment" "init" \
-  | grep risk \
-  && test::success || test::fail
+   | grep risk \
+   && test::success || test::fail

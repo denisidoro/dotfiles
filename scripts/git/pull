@@ -13,17 +13,17 @@ source "${DOTFILES}/scripts/core/git.sh"
 ##?    pull master <args>...
 
 _master() {
-   git checkout master 
-   git pull 
-   git checkout - 
-   git merge master 
+   git checkout master
+   git pull
+   git checkout -
+   git merge master
    git checkout -v -a
 }
 
 _module() {
-   git pull 
-   git submodule init 
-   git submodule update 
+   git pull
+   git submodule init
+   git submodule update
    git submodule status
 }
 
@@ -31,6 +31,6 @@ cmd="$1"
 shift
 
 case $cmd in
-   master) _master "$@";;
-   *module) _module "$@";;
+   master) _master "$@" ;;
+   *module) _module "$@" ;;
 esac

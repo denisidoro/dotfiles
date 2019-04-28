@@ -9,7 +9,7 @@ export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # ===============
-# fasd 
+# fasd
 # ===============
 eval "$(fasd --init posix-alias zsh-hook)"
 

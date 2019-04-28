@@ -22,7 +22,7 @@ source "${DOTFILES}/shell/aux/zplug.zsh"
 # setup plugins and commands
 source "${DOTFILES}/shell/aux/config.zsh"
 
-# load helper functions 
+# load helper functions
 source "${DOTFILES}/shell/aux/core.zsh"
 
 # load aliases

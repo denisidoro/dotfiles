@@ -18,11 +18,11 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 _open() {
-	if platform::is_osx; then
-		open "$@"
-	else
-		xdg-open "$@"
-	fi
+   if platform::is_osx; then
+      open "$@"
+   else
+      xdg-open "$@"
+   fi
 }
 
 _open_browser() {
@@ -32,7 +32,7 @@ _open_browser() {
 }
 
 if $browser; then
-	_open_browser "${args[@]:-}"
+   _open_browser "${args[@]:-}"
 else
-	_open "${args[@]:-}"
+   _open "${args[@]:-}"
 fi

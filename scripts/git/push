@@ -20,22 +20,22 @@ _upstream() {
 
 _with_linting() {
    lein do cljfmt fix, kibit --replace # TODO: use "code beautify"
-   git add .
-   git commit -am 'Fix linting'
-   _upstream
-}
+      git add .
+      git commit -am 'Fix linting'
+      _upstream
+   }
 
-_commit_first() {
-	git add .
-	git commit -am "$1"
-	_upstream
-}
+   _commit_first() {
+      git add .
+      git commit -am "$1"
+      _upstream
+   }
 
-cmd="$1"
-shift
+   cmd="$1"
+   shift
 
-case $cmd in
-   commit) _commit_first "$@";;
-   upstream) _upstream "$@";;
-   lint*) _with_linting "$@";;
-esac
+   case $cmd in
+      commit) _commit_first "$@" ;;
+      upstream) _upstream "$@" ;;
+      lint*) _with_linting "$@" ;;
+   esac
