@@ -7,7 +7,10 @@ source "${DOTFILES}/scripts/core/main.sh"
 #?? 0.1.0
 ##?
 ##? Usage:
-##?    open browser <args>...
+##?    open [options] <args>...
+##?
+##? Options:
+##?    -b --browser    Launch in a browser
 ##?
 ##? Examples:
 ##?    open browser http://google.com
@@ -28,4 +31,8 @@ _open_browser() {
       || firefox "$@"
 }
 
-_open_browser "${args[@]:-}"
+if $browser; then
+	_open_browser "${args[@]:-}"
+else
+	_open "${args[@]:-}"
+fi

@@ -1,0 +1,146 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Jump to files, folders or editing
+#?? 0.1.0
+##?
+##? Usage:
+##?    jump (global|local|work|file) <args>...
+##?    jump (up|root) <args>...
+##?    jump edit (global|local) <editor> <args>...
+
+function cd::fzf() {
+    fzf +m
+}
+
+function cd::best_match() {
+    local lines="$1"
+    shift
+    echo "$lines" \
+        | fzf --filter="$*" \
+        | head -n1
+}
+
+function cd::list_files() {
+    ag --hidden --ignore .git -g "${1:-}"
+}
+
+function cd::list_folders() {
+    cd::list_files \
+        | xargs -n1 dirname \
+        | sort -u
+}
+
+function cd::action_from_fasd() {
+  local fasd_args="$1"
+  local cmd="$2"
+  local selection=$(fasd "$fasd_args" \
+    | awk '{print $2}' \
+    | cd::fzf) \
+    && [ -n "$selection" ] \
+    && "$cmd" "$selection"
+}
+
+function cd::cd_file() {
+    cd "$(dirname "$1")"
+}
+
+function cd::jj() {
+    local cmd="$1"
+    local lines="$2"
+    shift 2
+    if [ $# -gt 0 ]; then
+        "$cmd" "$(cd::best_match "$lines" "$@")" 
+    else
+        local selection=$(echo "$lines" | cd::fzf) \
+            && [ -n "$selection" ] \
+            && "$cmd" "$selection"
+    fi
+}
+
+fasd_cd() {
+  if [ $# -le 1 ]; then
+    fasd "$@"
+  else
+    local _fasd_ret="$(fasd -e echo "$@")"
+    [ -z "$_fasd_ret" ] && return
+    [ -d "$_fasd_ret" ] && cd "$_fasd_ret" || echo "$_fasd_ret"
+  fi
+}
+
+global_folder() { 
+    [ $# -gt 0 ] && \
+        fasd_cd -d "$@" \
+        || cd::action_from_fasd -d "cd" 
+}
+
+folder() { 
+    cd::jj cd "$(cd::list_folders)" "$@" 
+}
+
+folder_for_file() { 
+    cd::jj cd::cd_file "$(cd::list_files)" "$@" 
+}
+
+edit_global_file() { 
+    local readonly editor="$1"
+    shift
+
+    [ $# -gt 0 ] && \
+        fasd -f -e "$editor" "$@" \
+        || cd::action_from_fasd -f "$editor" 
+}
+
+edit_file() {
+    local readonly editor="$1"
+    shift
+
+    cd::jj "$editor" "$(cd::list_files)" "$@" 
+}
+
+work_folder() {
+    cd "$WORK_HOME" && cd::jj cd "$(ls "$WORK_HOME")" "$@"
+}
+
+# Go up X directories (default 1)
+folder_up() {
+    if [[ "$#" -ne 1 ]]; then
+        cd ..
+    else
+        local d=""
+        limit=$1
+        for ((i=1 ; i <= limit ; i++)); do
+            d="$d/.."
+        done
+        d="$(echo "$d" | sed 's/^\///')"
+        cd "$d"
+    fi
+}
+
+# Go up to project root
+git_root() { 
+    cd "$(git rev-parse --show-toplevel)" 
+}
+
+cmd="$1"
+shift
+
+case "$cmd" in
+	"local") folder "$@" && pwd;;
+	"work") work_folder "$@" && pwd;;
+	"file") folder_for_file "$@" && pwd;;
+	"up") folder_up "$@" && pwd;;
+	"root") git_root "$@" && pwd;;
+    "edit")
+        scope="$1"
+        editor="$2"
+        shift 2
+        case "$scope" in
+        	"local") edit_file "$editor" "$@";;
+        	*) edit_global_file "$editor" "$@";;
+		esac
+		;;
+	*) global_folder "$@" && pwd;;
+esac		

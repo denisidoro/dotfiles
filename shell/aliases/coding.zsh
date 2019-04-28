@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+
 alias vim='nvim'
 alias subl='subl -a'
 alias s="dot_or_args subl -a --"

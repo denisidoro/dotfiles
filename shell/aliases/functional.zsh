@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# vim: filetype=sh
 
 fold() {
   funct="$@"

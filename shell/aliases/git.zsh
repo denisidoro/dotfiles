@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+
 # master
 alias gcom="git checkout master"
 alias gmm="git merge master"

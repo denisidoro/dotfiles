@@ -38,4 +38,4 @@ _get_url() {
    _full_uri "$uri" "$branch"
 }
 
-dot shell open browser "$(_get_url)"
+dot shell open --browser "$(_get_url)"

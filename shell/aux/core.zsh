@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+
 function include() {
     [[ -f "$1" ]] && source "$1"
 }
@@ -14,6 +17,11 @@ function indexof() {
 		((i++)); 
 	done; 
 	echo -1; 
+}
+
+function nonzero_return() {
+	RETVAL=$?
+	[ $RETVAL -ne 0 ] && echo "$RETVAL"
 }
 
 function dot_or_args() {
