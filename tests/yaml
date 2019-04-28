@@ -13,8 +13,6 @@ _find_yamls() {
 
 cd "$DOTFILES"
 
-submodule::clone
-
 _find_yamls \
   | grep -Ev 'node_modules|cache|modules/|lock.json' \
   | xargs -I% "$DOT_PATH" -d code parser yaml % \
