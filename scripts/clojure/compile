@@ -10,19 +10,19 @@ cd "${DOTFILES}/scripts/clojure"
 reflection="$(pwd)/reflection.json"
 
 lein do "compile :all uberjar"
-   cd "target"
+cd "target"
 
-   jar="$(pwd)/$(ls | grep "standalone")"
-   mkdir "native" || true
-   cd "native"
+jar="$(pwd)/$(ls | grep "standalone")"
+mkdir "native" || true
+cd "native"
 
-   JAVA_HOME="$JAVA_HOME" \
-      "$NATIVE_IMAGE_BIN" \
-      -H:+ReportUnsupportedElementsAtRuntime \
-      "-H:ReflectionConfigurationFiles=$reflection" \
-      -jar "$jar"
+JAVA_HOME="$JAVA_HOME" \
+   "$NATIVE_IMAGE_BIN" \
+   -H:+ReportUnsupportedElementsAtRuntime \
+   "-H:ReflectionConfigurationFiles=$reflection" \
+   -jar "$jar"
 
-   bin="$(ls | grep "standalone")"
-   mv "$bin" "dot"
+bin="$(ls | grep "standalone")"
+mv "$bin" "dot"
 
-   cd "$CALLING_DIR"
+cd "$CALLING_DIR"
