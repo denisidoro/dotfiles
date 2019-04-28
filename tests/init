@@ -6,11 +6,11 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
 export DOTFILES="${DOTFILES:-$ROOT_DIR}"
 source "${DOTFILES}/tests/core.sh"
 
-test::fact "scripts/environment/init starts"
-
 _output() {
    echo no | "$DOT_PATH" -d "environment" "init"
 }
+
+test::fact "scripts/environment/init starts"
 
 echo "$(_output)" \
    | grep risk \
