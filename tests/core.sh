@@ -17,10 +17,3 @@ dot::call() {
     "$DOT_PATH" -d "$@"
   fi
 }
-
-submodule::clone() {
-  if ! fs::is_file "${DOTFILES}/modules/json-sh/JSON.sh"; then
-    git submodule update --init modules/json-sh
-    git submodule update --init modules/bash-yaml
-  fi
-}

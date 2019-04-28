@@ -17,8 +17,6 @@ log::warning "Test case: all JSONs are syntactically valid"
 
 cd "$DOTFILES"
 
-submodule::clone
-
 find . -iname "*.json" \
   | grep -Ev 'node_modules|cache|modules/|lock.json' \
   | xargs -I% "$DOT_PATH" -d code parser json % \
