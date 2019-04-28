@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Open files/folders
+#?? 0.1.0
+##?
+##? Usage:
+##?    open [options] <args>...
+##?
+##? Options:
+##?    -b --browser    Launch in a browser
+##?
+##? Examples:
+##?    open browser http://google.com
+
+docs::eval "$@"
+
+_open() {
+   if platform::is_osx; then
+      open "$@"
+   else
+      xdg-open "$@"
+   fi
+}
+
+_open_browser() {
+   _open "$@" \
+      || google-chrome "$@" \
+      || firefox "$@"
+}
+
+if $browser; then
+   _open_browser "${args[@]:-}"
+else
+   _open "${args[@]:-}"
+fi

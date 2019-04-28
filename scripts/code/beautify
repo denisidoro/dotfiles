@@ -14,8 +14,11 @@ docs::eval "$@"
 language=fallback
 
 _all_dotfiles_files_to_format() {
-   find "$DOTFILES/scripts" -maxdepth 2 -executable -type f
-   find "$DOTFILES/scripts/core" -maxdepth 2 -type f
+   find "${DOTFILES}/scripts" -maxdepth 2 -executable -type f
+   find "${DOTFILES}/bin" -maxdepth 2 -executable -type f
+   find "${DOTFILES}/scripts/core" -maxdepth 2 -type f
+   find "${DOTFILES}/shell" -maxdepth 3 -type f
+   find "${DOTFILES}/tests" -maxdepth 2 -type f
 }
 
 _dedupe() {
@@ -23,7 +26,7 @@ _dedupe() {
 }
 
 _filter() {
-   grep -v '.py\|beautify\|docopts\|clojure/compile\|info/bar\|vscode'
+   grep -v '.py\|beautify\|docopts\|clojure/compile\|info/bar\|vscode\|hushlogin'
 }
 
 if [[ $filename = "self" ]]; then
@@ -51,7 +54,7 @@ if [ -z $extension ]; then
    fi
 fi
 
-log::warning "converting $filename as $language"
+log::warning "formatting $filename as <${language}>"
 case "$language" in
    sh_old)
       shfmt -w -i 3 -ci -bn "$filename"

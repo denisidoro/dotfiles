@@ -1,3 +1,6 @@
+#!/usr/bin/env zsh
+# vim: filetype=sh
+
 # startup time instrumentation start
 # zmodload zsh/datetime
 # setopt PROMPT_SUBST
@@ -7,47 +10,33 @@
 # exec 3>&2 2>$logfile
 # setopt XTRACE
 
-# set environment
-export DOTFILES=$HOME/.dotfiles
-export ZPLUG_HOME="${DOTFILES}/modules/zplug"
+# dotfiles
+export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 
-# add folders to PATH
-export PATH="$DOTFILES/local/bin:$DOTFILES/bin:/usr/local/bin:$PATH"
+# load vars
+source "${DOTFILES}/shell/aux/vars.sh"
 
 # load plugins
-source "${DOTFILES}/shell/zplug.zsh"
+source "${DOTFILES}/shell/aux/zplug.zsh"
 
 # setup plugins and commands
-source "${DOTFILES}/shell/config.zsh"
+source "${DOTFILES}/shell/aux/config.zsh"
 
-# set editor
-export EDITOR='nvim'
-
-# load helper functions 
-source "${DOTFILES}/shell/core.zsh"
+# load helper functions
+source "${DOTFILES}/shell/aux/core.zsh"
 
 # load aliases
-source "${DOTFILES}/shell/aliases/general.zsh"
-source "${DOTFILES}/shell/aliases/browsing.zsh"
-source "${DOTFILES}/shell/aliases/coding.zsh"
-source "${DOTFILES}/shell/aliases/tmux.zsh"
-source "${DOTFILES}/shell/aliases/git.zsh"
-source "${DOTFILES}/shell/aliases/notification.zsh"
-# source "${DOTFILES}/shell/aliases/functional.zsh"
+source "${DOTFILES}/shell/aliases/core.sh"
 
 # setup key bindings
 source "${DOTFILES}/shell/bindings/fzf.zsh"
 
 # load local custom config
-include $DOTFILES/local/zshrc
+include "${DOTFILES}/local/zshrc"
 
 # load non-fundamental stuff
-include ~/.fzf.zsh
+include "${HOME}/.fzf.zsh"
 
 # startup time instrumentation end
 # unsetopt XTRACE
 # exec 2>&3 3>&-
-
-export PATH=/Users/denis/.local/bin:$PATH
-
-source "$HOME/dev/beavr/shell/widget.zsh"

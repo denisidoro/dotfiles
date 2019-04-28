@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
 export DOTFILES="${DOTFILES:-$ROOT_DIR}"
 source "${DOTFILES}/tests/core.sh"
 
-log::warning "Test case: scripts/environment/init starts"
+_output() {
+   echo no | "$DOT_PATH" -d "environment" "init"
+}
 
-echo no | "$DOT_PATH" -d "environment" "init" \
-  | grep risk \
-  && test::success || test::fail
+test::fact "scripts/environment/init starts"
+
+echo "$(_output)" \
+   | grep risk \
+   && test::success || test::fail

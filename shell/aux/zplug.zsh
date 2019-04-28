@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+
 source $ZPLUG_HOME/init.zsh
 
 # Bundles from oh-my-zsh

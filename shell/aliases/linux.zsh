@@ -1,4 +1,4 @@
-function open() {
-	xdg-open "${@:-}" </dev/null >/dev/null 2>&1 \
-		& disown
-}
+#!/usr/bin/env bash
+# vim: filetype=sh
+
+open() { dot shell open "$@" & disown; }
