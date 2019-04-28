@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
 export DOTFILES="${DOTFILES:-$ROOT_DIR}"
 source "${DOTFILES}/tests/core.sh"
 
-log::warning "Test case: all YAMLs are syntactically valid"
+test::case "all YAMLs are syntactically valid"
 
 _find_yamls() {
    find . -iname "*.yaml"

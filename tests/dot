@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
 export DOTFILES="${DOTFILES:-$ROOT_DIR}"
@@ -6,7 +8,7 @@ source "${DOTFILES}/tests/core.sh"
 
 res="$(dot::call env health)"
 
-log::warning "Test case: dot <ctx> <cmd> works"
+test::case "dot <ctx> <cmd> works"
 
 echo "$res" | grep "====" \
    && test::success || test::fail

@@ -11,11 +11,11 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    jump (up|root) <args>...
 ##?    jump edit (global|local) <editor> <args>...
 
-cd::fzf() {
+_fzf() {
    fzf +m
 }
 
-cd::best_match() {
+best_match() {
    local lines="$1"
    shift
    echo "$lines" \
@@ -23,38 +23,36 @@ cd::best_match() {
       | head -n1
 }
 
-cd::list_files() {
+list_files() {
    ag --hidden --ignore .git -g "${1:-}"
 }
 
-cd::list_folders() {
-   cd::list_files \
+list_folders() {
+   list_files \
       | xargs -n1 dirname \
       | sort -u
 }
 
-cd::action_from_fasd() {
+action_from_fasd() {
    local fasd_args="$1"
    local cmd="$2"
-   local selection=$(fasd "$fasd_args" \
-         | awk '{print $2}' \
-      | cd::fzf) \
+   local selection=$(fasd "$fasd_args" | awk '{print $2}' | _fzf) \
       && [ -n "$selection" ] \
       && "$cmd" "$selection"
 }
 
-cd::cd_file() {
+cd_file() {
    cd "$(dirname "$1")"
 }
 
-cd::jj() {
+jj() {
    local cmd="$1"
    local lines="$2"
    shift 2
    if [ $# -gt 0 ]; then
-      "$cmd" "$(cd::best_match "$lines" "$@")"
+      "$cmd" "$(best_match "$lines" "$@")"
    else
-      local selection=$(echo "$lines" | cd::fzf) \
+      local selection=$(echo "$lines" | _fzf) \
          && [ -n "$selection" ] \
          && "$cmd" "$selection"
    fi
@@ -73,15 +71,15 @@ fasd_cd() {
 global_folder() {
    [ $# -gt 0 ] && \
       fasd_cd -d "$@" \
-      || cd::action_from_fasd -d "cd"
+      || action_from_fasd -d "cd"
 }
 
 folder() {
-   cd::jj cd "$(cd::list_folders)" "$@"
+   jj cd "$(list_folders)" "$@"
 }
 
 folder_for_file() {
-   cd::jj cd::cd_file "$(cd::list_files)" "$@"
+   jj cd_file "$(list_files)" "$@"
 }
 
 edit_global_file() {
@@ -90,18 +88,18 @@ edit_global_file() {
 
    [ $# -gt 0 ] && \
       fasd -f -e "$editor" "$@" \
-      || cd::action_from_fasd -f "$editor"
+      || action_from_fasd -f "$editor"
 }
 
 edit_file() {
    local readonly editor="$1"
    shift
 
-   cd::jj "$editor" "$(cd::list_files)" "$@"
+   jj "$editor" "$(list_files)" "$@"
 }
 
 work_folder() {
-   cd "$WORK_HOME" && cd::jj cd "$(ls "$WORK_HOME")" "$@"
+   cd "$WORK_HOME" && jj cd "$(ls "$WORK_HOME")" "$@"
 }
 
 # Go up X directories (default 1)
