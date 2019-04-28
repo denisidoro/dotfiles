@@ -17,7 +17,7 @@ else
    content="$(cat)"
 fi
 
-_submodule::clone() {
+submodule::clone() {
    local readonly module="$1"
    local readonly probe_file="$2"
    local readonly probe_path="${DOTFILES}/modules/${module}/${probe_file}"  
@@ -28,11 +28,11 @@ _submodule::clone() {
 
 case $type in
    j*)
-      _submodule::clone "json-sh" "JSON.sh"
+      submodule::clone "json-sh" "JSON.sh"
       echo "$content" | "${DOTFILES}/modules/json-sh/JSON.sh" > /dev/null
       ;;
    y*)
-      _submodule::clone "bash-yaml" "script/yaml.sh"
+      submodule::clone "bash-yaml" "script/yaml.sh"
       source "${DOTFILES}/modules/bash-yaml/script/yaml.sh"
       parse_yaml <(echo "$content") > /dev/null
       ;;
