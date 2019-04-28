@@ -8,7 +8,7 @@ source "${DOTFILES}/tests/core.sh"
 
 res="$(dot::call env health)"
 
-test::case "dot <ctx> <cmd> works"
+test::fact "dot <ctx> <cmd> works"
 
 echo "$res" | grep "====" \
    && test::success || test::fail

@@ -126,11 +126,11 @@ cmd="$1"
 shift
 
 case "$cmd" in
-   "local") folder "$@" && pwd;;
-   "work") work_folder "$@" && pwd;;
-   "file") folder_for_file "$@" && pwd;;
-   "up") folder_up "$@" && pwd;;
-   "root") git_root "$@" && pwd;;
+   "local") folder "$@" && pwd ;;
+   "work") work_folder "$@" && pwd ;;
+   "file") folder_for_file "$@" && pwd ;;
+   "up") folder_up "$@" && pwd ;;
+   "root") git_root "$@" && pwd ;;
    "edit")
       scope="$1"
       editor="$2"
@@ -140,5 +140,5 @@ case "$cmd" in
          *) edit_global_file "$editor" "$@" ;;
       esac
       ;;
-   *) global_folder "$@" && pwd;;
+   *) global_folder "$@" && pwd ;;
 esac

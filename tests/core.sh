@@ -13,7 +13,7 @@ test::success() {
    log::success "PASSED!"
 }
 
-test::case() {
+test::fact() {
    log::warning "Test case: $@"
 }
 

@@ -6,7 +6,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
 export DOTFILES="${DOTFILES:-$ROOT_DIR}"
 source "${DOTFILES}/tests/core.sh"
 
-test::case "all JSONs are syntactically valid"
+test::fact "all JSONs are syntactically valid"
 
 cd "$DOTFILES"
 

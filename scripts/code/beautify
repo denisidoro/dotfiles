@@ -54,7 +54,7 @@ if [ -z $extension ]; then
    fi
 fi
 
-log::warning "converting $filename as $language"
+log::warning "formatting $filename as <${language}>"
 case "$language" in
    sh_old)
       shfmt -w -i 3 -ci -bn "$filename"

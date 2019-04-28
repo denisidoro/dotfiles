@@ -17,7 +17,7 @@ _validate() {
    echo
 }
 
-test::case "all symlinks are valid"
+test::fact "all symlinks are valid"
 
 cd "$DOTFILES"
 result=""
