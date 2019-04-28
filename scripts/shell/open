@@ -14,14 +14,18 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docs::eval "$@"
 
+_open() {
+	if platform::is_osx; then
+		open "$@"
+	else
+		xdg-open "$@"
+	fi
+}
+
 _open_browser() {
-   if platform::command_exists open; then
-      open "$@"
-   else 
-      xdg-open "$@" \
-         || google-chrome "$@" \
-         || firefox "$@"
-   fi
+   _open "$@" \
+      || google-chrome "$@" \
+      || firefox "$@"
 }
 
 _open_browser "${args[@]:-}"
