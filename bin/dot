@@ -6,7 +6,7 @@ export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 source "$DOTFILES/scripts/core/main.sh"
 export CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 
-##? Calls scripts
+##? A hub for an all-purpose set of scripts
 #?? 1.0.0
 ##?
 ##? Usage:
@@ -15,112 +15,112 @@ export CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 ##?    dot <context> <cmd> [<args>...]
 ##?    dot -d <context> <cmd> [<args>...]
 
-function list_command_paths() {
-	find "$DOTFILES/scripts" -maxdepth 2 -executable -type f \
-		| grep -v core \
-		| sort
+list_command_paths() {
+   find "$DOTFILES/scripts" -maxdepth 2 -executable -type f \
+      | grep -v core \
+      | sort
 }
 
-function list_contexts() {
-	local paths="$1"
-	echo "$paths" \
-		| xargs -I % -d '\n' sh -c 'basename $(dirname %)' \
-		| uniq
+list_contexts() {
+   local paths="$1"
+   echo "$paths" \
+      | xargs -I % -d '\n' sh -c 'basename $(dirname %)' \
+      | uniq
 }
 
-function list_paths_for_context() {
-	local paths="$1"; local context="$2"
-	echo "$paths" \
-		| grep "$context/"
+list_paths_for_context() {
+   local paths="$1"; local context="$2"
+   echo "$paths" \
+      | grep "$context/"
 }
 
-function list_commands_for_context() {
-	local paths="$1"; local context="$2"
+list_commands_for_context() {
+   local paths="$1"; local context="$2"
 
-	echo "$paths" \
-		| grep "$context/" \
-		| xargs -I % -d '\n' basename "%"
+   echo "$paths" \
+      | grep "$context/" \
+      | xargs -I % -d '\n' basename "%"
 }
 
-function find_match() {
-	local candidates="$1"
-	local query="$2"
-	local matches="$(echo "$candidates" | grep $query)"
-	local count="$(echo "$matches" | wc -l)"
-	if [[ -z "${matches}" ]]; then
-		echo -e "No matches for $query\n\nPossible values:\n$candidates"
-		exit 1
-	elif [ $count -gt 1 ]; then
-		echo -e "Multiple matches for $query:\n$matches"
-		exit 2
-	else 
-		RESPONSE=$(echo "$matches" | head -n 1)
-	fi
+find_match() {
+   local candidates="$1"
+   local query="$2"
+   local matches="$(echo "$candidates" | grep $query)"
+   local count="$(echo "$matches" | wc -l)"
+   if [[ -z "${matches}" ]]; then
+      echo -e "No matches for $query\n\nPossible values:\n$candidates"
+      exit 1
+   elif [ $count -gt 1 ]; then
+      echo -e "Multiple matches for $query:\n$matches"
+      exit 2
+   else
+      RESPONSE=$(echo "$matches" | head -n 1)
+   fi
 }
 
-function find_context() {
-	local contexts="$1"; local query="$2"
-	find_match "$contexts" "$query"
-	CTX=$RESPONSE
+find_context() {
+   local contexts="$1"; local query="$2"
+   find_match "$contexts" "$query"
+   CTX=$RESPONSE
 }
 
-function find_command() {
-	local paths="$1"; local context="$2"; local query="$3"
-	local commands=$(list_commands_for_context "$paths" "$context")
-	find_match "$commands" "$query"
-	CMD=$(basename $RESPONSE)
+find_command() {
+   local paths="$1"; local context="$2"; local query="$3"
+   local commands=$(list_commands_for_context "$paths" "$context")
+   find_match "$commands" "$query"
+   CMD=$(basename $RESPONSE)
 }
 
-function fzf_prompt() {
-	local paths="$1"
-	match="$(echo "$paths" \
+fzf_prompt() {
+   local paths="$1"
+   match="$(echo "$paths" \
 			| xargs -I % sh -c 'echo "$(basename $(dirname %)) $(basename %)"' \
 			| fzf-tmux --height 50% --preview 'dot $(echo {} | cut -d" " -f 1) $(echo {} | cut -d" " -f 2) -h')"
-	printf "$match " 
-	read args
-	if coll::is_empty "$args"; then
-		dot $match
-	else
-		dot $match "$args"
-	fi
+   printf "$match "
+   read args
+   if coll::is_empty "$args"; then
+      dot $match
+   else
+      dot $match "$args"
+   fi
 }
 
-# Shows available contexts
-# or prompts for a command if fzf is installed
 if [[ $# -eq 0 ]]; then
+   # Shows available contexts
+   # or prompts for a command if fzf is installed
 
-	platform::command_exists fzf \
-		&& fzf_prompt "$(list_command_paths)" \
-		|| list_contexts "$(list_command_paths)"
+   platform::command_exists fzf \
+      && fzf_prompt "$(list_command_paths)" \
+      || list_contexts "$(list_command_paths)"
 
-# Shows available commands for a given context
 elif [[ $# -eq 1 ]]; then
+   # Shows available commands for a given context
 
-	context_query="$1"
-	paths="$(list_command_paths)"
-	contexts="$(list_contexts "$paths")"
-	find_context "$contexts" "$context_query"
-	list_paths_for_context "$paths" "$CTX" | xargs -I % -d '\n' basename "%"
+   context_query="$1"
+   paths="$(list_command_paths)"
+   contexts="$(list_contexts "$paths")"
+   find_context "$contexts" "$context_query"
+   list_paths_for_context "$paths" "$CTX" | xargs -I % -d '\n' basename "%"
 
-# Executes a command by substring
 elif [[ $# -gt 1 ]] && [ "$1" != "-d" ]; then
+   # Executes a command by substring
 
-	paths="$(list_command_paths)"
-	context_query="$1"; cmd_query="$2"
-	contexts="$(list_contexts "$paths")"
-	find_context "$contexts" "$context_query"
-	find_command "$paths" "$CTX" "$cmd_query"
+   paths="$(list_command_paths)"
+   context_query="$1"; cmd_query="$2"
+   contexts="$(list_contexts "$paths")"
+   find_context "$contexts" "$context_query"
+   find_command "$paths" "$CTX" "$cmd_query"
 
-	shift 2
-	"${DOTFILES}/scripts/${CTX}/${CMD}" "$@"
+   shift 2
+   "${DOTFILES}/scripts/${CTX}/${CMD}" "$@"
 
-# Executes a command directly
 else
+   # Executes a command directly
 
-	ctx="$2"
-	cmd="$3"
+   ctx="$2"
+   cmd="$3"
 
-	shift 3
-	"${DOTFILES}/scripts/${ctx}/${cmd}" "$@"
+   shift 3
+   "${DOTFILES}/scripts/${ctx}/${cmd}" "$@"
 
 fi

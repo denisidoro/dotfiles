@@ -15,42 +15,42 @@ docs::eval "$@"
 
 TOTAL_MONITORS=2
 
-function focus_desktop() {
-	local target="$1"
-	khd -p "alt - ${target}" &>/dev/null
+focus_desktop() {
+   local target="$1"
+   khd -p "alt - ${target}" &>/dev/null
 }
 
-function send_to_monitor() {
-	local target="$1"
-	chunkc tiling::window --send-to-monitor ${target} &>/dev/null
+send_to_monitor() {
+   local target="$1"
+   chunkc tiling::window --send-to-monitor ${target} &>/dev/null
 }
 
-function current_monitor() {
-	chunkc tiling::query --monitor id
+current_monitor() {
+   chunkc tiling::query --monitor id
 }
 
-function overflow() {
-	local readonly min="$1"
-		readonly v="$2"
-		readonly max="$3"
-	if [[ $v < $min ]]; then
-		echo $max;
-	elif [[ $v > $max ]]; then
-		echo $min;
-	else
-		echo $v;
-	fi
+overflow() {
+   local readonly min="$1"
+   readonly v="$2"
+   readonly max="$3"
+   if [[ $v < $min ]]; then
+      echo $max;
+   elif [[ $v > $max ]]; then
+      echo $min;
+   else
+      echo $v;
+   fi
 }
 
 if $monitor; then
 
-	current=$(current_monitor)
-	if $next; then
-		id=$(( $current + 1 ))
-	elif $prev; then
-		id=$(( $current - 1 ))
-	fi
-	send_to_monitor $(overflow 1 $id $TOTAL_MONITORS)
+   current=$(current_monitor)
+   if $next; then
+      id=$(( $current + 1 ))
+   elif $prev; then
+      id=$(( $current - 1 ))
+   fi
+   send_to_monitor $(overflow 1 $id $TOTAL_MONITORS)
 
 fi
 

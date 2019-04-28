@@ -15,6 +15,7 @@ language=fallback
 
 _all_dotfiles_files_to_format() {
    find "$DOTFILES/scripts" -maxdepth 2 -executable -type f
+   find "$DOTFILES/bin" -maxdepth 2 -executable -type f
    find "$DOTFILES/scripts/core" -maxdepth 2 -type f
 }
 

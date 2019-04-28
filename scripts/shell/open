@@ -15,10 +15,13 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 _open_browser() {
-   open "$@" \
-      || xdg-open "$@" \
-      || google-chrome "$@" \
-      || firefox "$@"
+   if platform::command_exists open; then
+      open "$@"
+   else 
+      xdg-open "$@" \
+         || google-chrome "$@" \
+         || firefox "$@"
+   fi
 }
 
 _open_browser "${args[@]:-}"
