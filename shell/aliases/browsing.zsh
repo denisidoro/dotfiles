@@ -9,7 +9,7 @@ alias r="dot_or_args ranger --"
 # listing
 # ===============
 
-#alias ls='ls --color=auto'
+alias ls='ls --color=auto'
 alias lst="tree -L 2"
 
 # ===============

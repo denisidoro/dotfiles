@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/git.sh"
+
+##? Git push helpers
+#?? 0.1.0
+##?
+##? Usage:
+##?    push upstream <args>...
+##?    push lint <args>...
+##?    push commit <args>...
+
+_upstream() {
+   local readonly branch="$(git rev-parse --abbrev-ref HEAD)"
+   git push -u origin "$branch"
+}
+
+_with_linting() {
+   lein do cljfmt fix, kibit --replace # TODO: use "code beautify"
+   git add .
+   git commit -am 'Fix linting'
+   _upstream
+}
+
+_commit_first() {
+	git add .
+	git commit -am "$1"
+	_upstream
+}
+
+cmd="$1"
+shift
+
+case $cmd in
+   commit) _commit_first "$@";;
+   upstream) _upstream "$@";;
+   lint*) _with_linting "$@";;
+esac
