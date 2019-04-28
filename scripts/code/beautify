@@ -7,11 +7,23 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Source code indentation fixer
 ##?
 ##? Usage:
-##?    beautify <filename>
+##?    beautify [options] <filename>
+##?
+##? Options:
+##?    -l --language <language>    Programming language
 
 docs::eval "$@"
 
-program=nvim
+_all_dotfiles_sh() {
+	find "$DOTFILES/scripts" -maxdepth 2 -executable -type f
+	find "$DOTFILES/scripts/core" -maxdepth 2 -type f
+}
+
+if [[ $filename = "self" ]]; then
+    _all_dotfiles_sh | sort -u | grep -v '.py' \
+    	| xargs dot code beautify
+	exit 0
+fi
 
 extension="${filename##*.}"
 if echo "$extension" | grep -q '/'; then
@@ -19,18 +31,19 @@ if echo "$extension" | grep -q '/'; then
 fi
 
 case "$extension" in
-   *sh) program=shfmt ;;
-   *clj*) program="" ;;
-   *py) program="" ;;
+   *sh) language=sh ;;
+   *clj*) language="clj" ;;
+   *py) language="python" ;;
 esac
 
 if [ -z $extension ]; then
    if cat "$filename" | head -n3 | grep -q "sh$"; then
-      program=shfmt
+      language=sh
    fi
 fi
 
-case "$program" in
-   shfmt) shfmt -w -i 3 -ci -bn "$filename" ;;
-   nvim) nvim --headless --noplugin -n -u NONE -c ':normal gg=G' +wq "$filename" ;;
+case "$language" in
+   sh_old) shfmt -w -i 3 -ci -bn "$filename" ;;
+   sh) beautysh.py -i 3 -s paronly -f "$filename"; sed -i -e 's/() ::/::/g' "$filename";
+   *) nvim --headless --noplugin -n -u NONE -c ':normal gg=G' +wq "$filename" ;;
 esac
