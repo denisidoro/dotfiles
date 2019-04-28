@@ -20,14 +20,14 @@ _url() {
    local readonly p="$1"
    if [[ $p > 1 ]]; then
       echo "https://github.com/${user}?page=$p&access_token=$GITHUB_TOKEN"
-   else 
+   else
       echo "https://github.com/${user}?access_token=$GITHUB_TOKEN"
    fi
 }
 
 _raw_repo_links() {
-   for p in $(seq 2 $pages); do 
-      curl $(_url $p) | grep -E 'stargazers'; 
+   for p in $(seq 2 $pages); do
+      curl $(_url $p) | grep -E 'stargazers';
    done
 }
 

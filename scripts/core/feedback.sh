@@ -2,7 +2,7 @@
 
 source "$DOTFILES/scripts/core/debug.sh"
 
-function feedback::confirmation() {
+feedback::confirmation() {
    local msg="$1"
    local default_yes="${2:-true}"
    local options

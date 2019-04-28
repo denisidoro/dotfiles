@@ -1,42 +1,42 @@
 #!/usr/bin/env bash
 
-function platform::command_exists() {
+platform::command_exists() {
    type "$1" &>/dev/null
 }
 
-function platform::is_osx() {
+platform::is_osx() {
    [[ $(uname -s) == "Darwin" ]]
 }
 
-function platform::is_linux() {
+platform::is_linux() {
    [[ $(uname -s) == "Linux" ]]
 }
 
-function platform::is_wsl() {
+platform::is_wsl() {
    grep -qE "(Microsoft|WSL)" /proc/version &> /dev/null
 }
 
-function platform::is_arm() {
+platform::is_arm() {
    [[ $(uname -a | grep -q "armv" || echo 1) -eq 0 ]]
 }
 
-function platform::is_x86() {
+platform::is_x86() {
    [[ $(uname -a | grep -q "x86" || echo 1) -eq 0 ]]
 }
 
-function platform::is_android() {
+platform::is_android() {
    [[ $(uname -a | grep -q "Android" || echo 1) -eq 0 ]]
 }
 
-function platform::package_manager() {
+platform::package_manager() {
    if platform::command_exists brew; then
       echo "brew"
    elif platform::command_exists apt; then
       echo "apt"
-   else echo ""; fi
+else echo ""; fi
 }
 
-function platform::tags() {
+platform::tags() {
    local tags="$(platform::package_manager) "
    if platform::is_osx; then tags="${tags}osx "; fi
    if platform::is_linux; then tags="${tags}linux "; fi
@@ -48,6 +48,6 @@ function platform::tags() {
 }
 
 if ! platform::command_exists dot; then
-   function dot() { "$DOTFILES/bin/dot" "$@"; }
+   dot() { "$DOTFILES/bin/dot" "$@"; }
    export -f dot
 fi

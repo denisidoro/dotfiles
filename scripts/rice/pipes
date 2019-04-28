@@ -113,9 +113,9 @@ tput civis
 tput clear
 # any key press exits the loop and this script
 while
-   REPLY=
-   read -t 0.0$((1000 / f)) -n 1 2>/dev/null
-   [[ -z $REPLY ]]
+REPLY=
+read -t 0.0$((1000 / f)) -n 1 2>/dev/null
+[[ -z $REPLY ]]
 do
    for ((i = 1; i <= p; i++)); do
       # New position:

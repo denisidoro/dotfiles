@@ -11,7 +11,28 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docs::eval "$@"
 
-program=nvim
+language=fallback
+
+_all_dotfiles_files_to_format() {
+   find "$DOTFILES/scripts" -maxdepth 2 -executable -type f
+   find "$DOTFILES/scripts/core" -maxdepth 2 -type f
+}
+
+_dedupe() {
+   sort -u
+}
+
+_filter() {
+   grep -v '.py\|beautify\|docopts\|clojure/compile\|info/bar\|vscode'
+}
+
+if [[ $filename = "self" ]]; then
+   _all_dotfiles_files_to_format \
+      | _dedupe \
+      | _filter \
+      | xargs -I% dot code beautify %
+   exit 0
+fi
 
 extension="${filename##*.}"
 if echo "$extension" | grep -q '/'; then
@@ -19,18 +40,27 @@ if echo "$extension" | grep -q '/'; then
 fi
 
 case "$extension" in
-   *sh) program=shfmt ;;
-   *clj*) program="" ;;
-   *py) program="" ;;
+   *sh) language=sh ;;
+   *clj*) language="clj" ;;
+   *py) language="python" ;;
 esac
 
 if [ -z $extension ]; then
    if cat "$filename" | head -n3 | grep -q "sh$"; then
-      program=shfmt
+      language=sh
    fi
 fi
 
-case "$program" in
-   shfmt) shfmt -w -i 3 -ci -bn "$filename" ;;
-   nvim) nvim --headless --noplugin -n -u NONE -c ':normal gg=G' +wq "$filename" ;;
+log::warning "converting $filename as $language"
+case "$language" in
+   sh_old)
+      shfmt -w -i 3 -ci -bn "$filename"
+      ;;
+   sh)
+      beautysh.py -i 3 -s paronly -f "$filename"
+      sed -i -e 's/::/::/g' "$filename"
+      ;;
+   *)
+      nvim --headless --noplugin -n -u NONE -c ':normal gg=G' +wq "$filename"
+      ;;
 esac

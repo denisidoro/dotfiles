@@ -10,17 +10,17 @@ import "" # todo
 ##? Usage
 ##?    script args
 
-function main() {
+main() {
    echo -n
 }
 
-function safe_exit() { # move to core?
+safe_exit() { # move to core?
    echo -n
    trap - INT TERM EXIT
    exit ${1:-0}
 }
 
-function trap_exit() { # move to core?
+trap_exit() { # move to core?
    safe_exit
    die "Exit trapped. In function: '${FUNCNAME[*]}'"
 }

@@ -17,32 +17,32 @@ docs::eval "$@"
 BASE="$HOME/.npm/node_modules"
 
 _symlink() {
-  local readonly from="$1"
-  local readonly to="$BASE/$2"
-  if [ -d "$to" ]; then
-    echo "$to already exists"
-  else
-    mkdir -p "$to"
-    mv "$from" "$to"
-    ln -s "$to" "$from"
-  fi
+   local readonly from="$1"
+   local readonly to="$BASE/$2"
+   if [ -d "$to" ]; then
+      echo "$to already exists"
+   else
+      mkdir -p "$to"
+      mv "$from" "$to"
+      ln -s "$to" "$from"
+   fi
 }
 
 _get_version() {
-  local readonly root="$1"  
-  cat "${root}/package.json" | jq -r .version \
-    || echo "unknown"
+   local readonly root="$1"
+   cat "${root}/package.json" | jq -r .version \
+      || echo "unknown"
 }
 
 _move_folders() {
-  local readonly root="$1"
-  if [ -d "$root/node_modules" ]; then
-    for d in $(ls "$root/node_modules"); do
-      _move_folders "$root/node_modules/$d"
-      local readonly version="$(_get_version "$root/node_modules/$d")"
-      _symlink "$(pwd)/$root/node_modules/$d" "$root/$d/$version"
-    done
-  fi
+   local readonly root="$1"
+   if [ -d "$root/node_modules" ]; then
+      for d in $(ls "$root/node_modules"); do
+         _move_folders "$root/node_modules/$d"
+         local readonly version="$(_get_version "$root/node_modules/$d")"
+         _symlink "$(pwd)/$root/node_modules/$d" "$root/$d/$version"
+      done
+   fi
 }
 
 _move_folders .

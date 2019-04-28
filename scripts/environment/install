@@ -16,36 +16,36 @@ source "${DOTFILES}/scripts/environment/core.sh"
 
 docs::eval "$@"
 
-function install_brew() {
-  dot env init brew
+install_brew() {
+   dot env init brew
 }
 
-function install_vimplug() {
+install_vimplug() {
    if ! fs::is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
       curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs \
          http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
    fi
 }
 
-function install_spacevim() {
+install_spacevim() {
    cat "$HOME/.config/nvim/init.vim" 2>/dev/null \
       | grep -q "space-vim" 2>/dev/null \
       || bash <(curl -fsSL https://raw.githubusercontent.com/liuchengxu/space-vim/master/install.sh)
 }
 
-function install_tpm() {
+install_tpm() {
    if ! fs::is_dir $HOME/.tmux/plugins/tpm; then
       git clone https://github.com/tmux-plugins/tpm --depth=1 $HOME/.tmux/plugins/tpm
    fi
 }
 
-function install_tmuxinator() {
+install_tmuxinator() {
    if ! platform::command_exists tmuxinator; then
       gem install tmuxinator
    fi
 }
 
-function install_gnu() {
+install_gnu() {
    if ! platform::command_exists ggrep; then
       brew tap homebrew/dupes
       brew install binutils diffutils ed findutils gawk gnu-indent gnu-sed gnu-tar gnu-which gnutls grep gzip screen watch wget && brew install wdiff --with-gettext
@@ -53,17 +53,17 @@ function install_gnu() {
    fi
 }
 
-function install_kitty() {
+install_kitty() {
    if ! platform::command_exists kitty; then
       mkdir -p $HOME/tmp
-     git clone https://github.com/kovidgoyal/kitty --depth 1 $HOME/tmp/kitty
-     cd $HOME/tmp/kitty
-     make
-     sudo make install
+      git clone https://github.com/kovidgoyal/kitty --depth 1 $HOME/tmp/kitty
+      cd $HOME/tmp/kitty
+      make
+      sudo make install
    fi
 }
 
-function install_bspwm() {
+install_bspwm() {
    if ! platform::command_exists bspwm; then
       sudo apt-get install xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev gcc make feh dmenu rofi \
          libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev
@@ -84,13 +84,13 @@ function install_bspwm() {
    fi
 }
 
-function install_spacemacs() {
-    if ls ~/.emacs.d/ | grep -q spacemacs || false; then
+install_spacemacs() {
+   if ls ~/.emacs.d/ | grep -q spacemacs || false; then
       git clone https://github.com/syl20bnr/spacemacs --depth 1 ~/.emacs.d
-    fi
+   fi
 }
 
-function install_watchman() {
+install_watchman() {
    if ! platform::command_exists watchman; then
       sudo apt-get install -y autoconf automake build-essential python-dev
       shallow_github_clone facebook watchman
@@ -101,7 +101,7 @@ function install_watchman() {
    fi
 }
 
-function list_dependencies() {
+list_dependencies() {
    log::error "Unknown dependency: $1"
    echo -e
    log::note "Available dependencies"
@@ -111,27 +111,27 @@ function list_dependencies() {
       | sort
 }
 
-function keep_uninstalled() {
-  for dep in $(cat); do
-    if ! platform::command_exists $dep; then
-      echo $dep
-    fi
-  done
+keep_uninstalled() {
+   for dep in $(cat); do
+      if ! platform::command_exists $dep; then
+         echo $dep
+      fi
+   done
 }
 
-function as_line() {
-  tr '\n' ' '
+as_line() {
+   tr '\n' ' '
 }
 
-function batch_install() {
-  brew install $(cat)
+batch_install() {
+   brew install $(cat)
 }
 
 if $batch; then
-  deps::from "$group" | as_line \
-    | keep_uninstalled | as_line \
-    | batch_install
-  exit 0
+   deps::from "$group" | as_line \
+      | keep_uninstalled | as_line \
+      | batch_install
+   exit 0
 fi
 
 filesource="$(cat "$0")"

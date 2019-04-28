@@ -26,7 +26,7 @@ docs::eval "$@"
 PUSH_DIR="${DOTFILES}/modules/pushbullet"
 PUSH_BIN="${PUSH_DIR}/pushbullet"
 
-function clone_cli() {
+clone_cli() {
    mkdir -p "$PUSH_DIR"
    git clone https://github.com/Red5d/pushbullet-bash.git "$PUSH_DIR"
    cd "$PUSH_DIR"

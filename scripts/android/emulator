@@ -18,29 +18,29 @@ source "${DOTFILES}/scripts/environment/core.sh"
 
 docs::eval "$@"
 
-function emulator() {
+emulator() {
    "$ANDROID_HOME/tools/emulator" "$@"
 }
 
-function newest_emulator() {
+newest_emulator() {
    local emulators="$1"
    local newest_api="$(echo "$emulators" | awk -F 'API_' '{print $2}' | sort -r | head -n1 \
       || echo "$emulators" | head -n1)"
    echo "$emulators" | grep "$newest_api" | head -n1
 }
 
-function start_emulator() {
+start_emulator() {
    local identifier="$1"
    emulator -avd "$identifier" -netdelay none -netspeed full &
    disown
 }
 
-function start_newest_emulator() {
+start_newest_emulator() {
    local emulators="$1"
    start_emulator "$(newest_emulator "$emulators")"
 }
 
-function prompt_and_start_emulator() {
+prompt_and_start_emulator() {
    local emulators="$1"
    local identifier=$(echo "$emulators" | fzf-tmux --reverse --height 25%)
    start_emulator "$identifier"

@@ -14,7 +14,7 @@ docs::eval "$@"
 
 CODE=0
 
-function main() {
+main() {
 
    echo
    log::header "Shell"
@@ -52,7 +52,7 @@ function main() {
 
 }
 
-function check_command_available() {
+check_command_available() {
    local cmd="$1"
    if platform::command_exists "$cmd"; then
       log::success "$cmd"
@@ -61,7 +61,7 @@ function check_command_available() {
    fi
 }
 
-function check_gnu_command_available() {
+check_gnu_command_available() {
    local cmd
    if platform::is_osx; then
       cmd="g$1"
@@ -71,21 +71,21 @@ function check_gnu_command_available() {
    check_command_available "$cmd"
 }
 
-function check_commands() {
+check_commands() {
    local cmds="$1"
    for cmd in $cmds; do
       check_command_available "$cmd"
    done
 }
 
-function check_gnu_commands() {
+check_gnu_commands() {
    local cmds="$1"
    for cmd in $cmds; do
       check_gnu_command_available "$cmd"
    done
 }
 
-function check_vim_plug() {
+check_vim_plug() {
    if fs::is_file $HOME/.local/share/nvim/site/autoload/plug.vim; then
       log::success "vim-plug"
    else
@@ -93,7 +93,7 @@ function check_vim_plug() {
    fi
 }
 
-function check_file() {
+check_file() {
    local path="$1"
    local name="$2"
    if fs::is_file "$path"; then
@@ -103,7 +103,7 @@ function check_file() {
    fi
 }
 
-function check_dir() {
+check_dir() {
    local path="$1"
    local name="$2"
    if fs::is_dir "$path"; then
@@ -113,7 +113,7 @@ function check_dir() {
    fi
 }
 
-function check_env() {
+check_env() {
    set +u
    [[ -z "${!1}" ]] && {
       inc_error "\$$1"
@@ -121,7 +121,7 @@ function check_env() {
    set -u
 }
 
-function inc_error() {
+inc_error() {
    log::error "$1"
    CODE=$(($CODE + 1))
 }
