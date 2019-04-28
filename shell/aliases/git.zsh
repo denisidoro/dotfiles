@@ -15,9 +15,6 @@ alias tst="tig status"
 # git push upstream
 alias gpu="dot git push upstream"
 
-# git push with linting fix
-alias gpfl="dot git push lint"
-
 # git commit with push
 alias gcamp="dot git push commit"
 

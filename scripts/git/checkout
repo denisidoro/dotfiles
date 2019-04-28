@@ -47,8 +47,8 @@ _target() {
       | grep . \
       | tac \
       | _fzf "$@"
-   }
-      
+}
+
 _checkout() {
    local tags branches target
    tags=$(_tags "$@") || return
