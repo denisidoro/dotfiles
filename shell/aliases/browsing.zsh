@@ -26,12 +26,12 @@ mkcd() {
 # ===============
 # jumping
 # ===============
-j() { local readonly f="$(dot shell jump global "$@")" && cd "$f" }
-jj() { local readonly f="$(dot shell jump local "$@")" && cd "$f" }
-jn() { local readonly f="$(dot shell jump work "$@")" && cd "$f" }
-jjf() { local readonly f="$(dot shell jump file "$@")" && cd "$f" }
-up() { local readonly f="$(dot shell jump up "$@")" && cd "$f" }
-jr() { local readonly f="$(dot shell jump root "$@")" && cd "$f" }
+j() { local readonly f="$(dot shell jump global "$@")" && cd "$f"; }
+jj() { local readonly f="$(dot shell jump local "$@")" && cd "$f"; }
+jn() { local readonly f="$(dot shell jump work "$@")" && cd "$f"; }
+jjf() { local readonly f="$(dot shell jump file "$@")" && cd "$f"; }
+up() { local readonly f="$(dot shell jump up "$@")" && cd "$f"; }
+jr() { local readonly f="$(dot shell jump root "$@")" && cd "$f"; }
 alias jv="dot shell jump edit global nvim"
 alias jjv="dot shell jump edit local nvim"
 alias js="dot shell jump edit global subl"
