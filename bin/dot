@@ -43,6 +43,19 @@ list_commands_for_context() {
       | xargs -I % -d '\n' basename "%"
 }
 
+exact_match() {
+   local readonly query="$1"
+   local readonly matches="$2"
+
+   for m in $matches; do
+      if [[ "$m" = "$query" ]]; then
+         return 0
+      fi
+   done
+
+   exit 1
+}
+
 find_match() {
    local candidates="$1"
    local query="$2"
@@ -51,7 +64,7 @@ find_match() {
    if [[ -z "${matches}" ]]; then
       echo -e "No matches for $query\n\nPossible values:\n$candidates"
       exit 1
-   elif [ $count -gt 1 ]; then
+   elif [ $count -gt 1 ] && ! exact_match "$query" "$matches"; then
       echo -e "Multiple matches for $query:\n$matches"
       exit 2
    else
