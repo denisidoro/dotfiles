@@ -23,6 +23,8 @@ _commit_first() {
    _upstream
 }
 
+echo hi
+
 cmd="$1"
 shift
 
