@@ -10,7 +10,7 @@ export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 ##?    init
 ##?    init brew
 
-dot() {
+_dot() {
    "$DOTFILES/bin/dot" "$@"
 }
 
@@ -107,10 +107,10 @@ fi
 cd "$DOTFILES"
 
 # install necessary dependencies
-dot environment install batch nano
+_dot environment install batch nano
 
 # invoke dotfiles symlinking
-dot environment update
+_dot environment update
 
 # cleanup
 popd >/dev/null
