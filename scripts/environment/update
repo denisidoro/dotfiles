@@ -49,25 +49,30 @@ main() {
 
 update_dotfiles_pre() {
 
-   local TEMPFILE fullname email
+   local TEMP_PATH fullname email docoptsh
 
    echo "Setting folder architecture..."
 
-   TEMPFILE="$DOTFILES/local/bin"
-   mkdir -p "$TEMPFILE"
+   TEMP_PATH="$DOTFILES/local/bin"
+   mkdir -p "$TEMP_PATH"
 
-   TEMPFILE="$DOTFILES/local/zshrc"
-   if ! fs::is_file "$TEMPFILE"; then
-      echo "export DOTFILES_DOCOPTSH=false" > "$TEMPFILE"
+   TEMP_PATH="$DOTFILES/local/zshrc"
+   if platform::command_exists python;
+      docoptsh=false
+   else
+      docoptsh=true
+   fi
+   if ! fs::is_file "$TEMP_PATH"; then
+      echo "export DOTFILES_DOCOPTSH=${docoptsh}" > "$TEMP_PATH"
    fi
 
-   TEMPFILE="$DOTFILES/local/gitconfig"
-   if ! fs::is_file "$TEMPFILE"; then
+   TEMP_PATH="$DOTFILES/local/gitconfig"
+   if ! fs::is_file "$TEMP_PATH"; then
       echo "What is your name?"
       read fullname
       echo "What is your email?"
       read email
-      echo -e "[user]\nname = $fullname\nemail = $email" > "$TEMPFILE"
+      echo -e "[user]\nname = $fullname\nemail = $email" > "$TEMP_PATH"
    fi
 
    pushd . >/dev/null
