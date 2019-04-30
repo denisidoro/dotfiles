@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-set -euo pipefail
 
 export DOTFILES="${DOTFILES:-"$HOME/.dotfiles"}"
-source "$DOTFILES/git/core.sh"
-
-current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
-git::prompt_if_protected "$current_branch" "master"
+"${DOTFILES}/bin/dot" -d git pre-push "$@"
