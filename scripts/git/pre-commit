@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/git.sh"
+source "${DOTFILES}/scripts/git/aux/hooks.sh"
+
+git_dir=$(git rev-parse --show-toplevel)
+files=$(git diff-index --name-only --diff-filter=ACM --cached HEAD -- || echo "")
+
+git::check_json "$files"
+
+if git rev-parse --verify HEAD >/dev/null 2>&1; then
+	against="HEAD"
+else
+	against=$(git hash-object -t tree /dev/null)
+fi
+
+git_diff=$(git diff --cached --name-only "$against")
+existing_diff="$(echo "$git_diff" | perl -ne 'chomp(); if (-e $_) {print "$_\n"}')"
+
+git::check_conflict "$existing_diff"
+git::match_content "$existing_diff" "code debug" "nu/tap" false
