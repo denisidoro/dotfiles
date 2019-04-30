@@ -27,7 +27,7 @@ tmp_make() {
 
 function deps::read() {
    local file
-   file=$(rsrc "environment/dependencies.txt")
+   file=$(rsrc "environment/aux/dependencies.txt")
    echo "$(cat "$file")\n\n"
 }
 
