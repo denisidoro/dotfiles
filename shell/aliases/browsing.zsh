@@ -12,7 +12,7 @@ alias r="dot_or_args ranger --"
 # listing
 # ===============
 
-alias ls='ls --color=auto'
+# alias ls='ls --color=auto'
 alias lst="tree -L 2"
 
 # ===============
@@ -34,5 +34,5 @@ up() { local readonly f="$(dot -d shell jump up "$@")" && cd "$f"; }
 jr() { local readonly f="$(dot -d shell jump root "$@")" && cd "$f"; }
 alias jv="dot -d shell jump edit global nvim"
 alias jjv="dot -d shell jump edit local nvim"
-alias js="dot -d shell jump edit global subl"
-alias jjs="dot -d shell jump edit local subl"
+alias js="dot -d shell jump edit global code"
+alias jjs="dot -d shell jump edit local code"
