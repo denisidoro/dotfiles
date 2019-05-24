@@ -7,7 +7,11 @@
     "workbench.iconTheme": "eq-material-theme-icons-ocean",
     
     "vim.easymotion": true,
-    "vim.leader": "<space>",
+    "vim.sneak": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
 
     "workbench.editor.enablePreview": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,

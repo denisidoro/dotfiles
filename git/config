@@ -33,12 +33,13 @@
 
 [rebase]
   autosquash = true
+	autoStash = true
 
 [include]
   path = ~/.dotfiles/local/gitconfig
 
 [pull]
-  rebase = true
+	rebase = true
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
