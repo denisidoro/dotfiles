@@ -60,7 +60,7 @@ case "$language" in
       shfmt -w -i 3 -ci -bn "$filename"
       ;;
    sh)
-      beautysh.py -i 3 -s paronly -f "$filename"
+      beautysh -i 3 -s paronly -f "$filename"
       sed -i -e 's/::/::/g' "$filename"
       ;;
    *)
