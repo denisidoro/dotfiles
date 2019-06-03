@@ -2,7 +2,6 @@
 set -eo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/environment/core.sh"
 
 ##? Palette
 #?? 0.2.0

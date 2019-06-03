@@ -61,7 +61,8 @@ find_match() {
    local query="$2"
    local matches="$(echo "$candidates" | grep $query)"
    local count="$(echo "$matches" | wc -l)"
-   if exact_match "$query" "$matches"; then
+   local exact="$(exact_match "$query" "$matches" || echo "")"
+   if [[ ! -z "${exact}" ]]; then
       RESPONSE="$query"
    elif [[ -z "${matches}" ]]; then
       echo -e "No matches for $query\n\nPossible values:\n$candidates"

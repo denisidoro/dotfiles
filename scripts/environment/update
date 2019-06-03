@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 set -euo pipefail
-
 export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 
 source "${DOTFILES}/scripts/core/main.sh"
@@ -57,7 +56,7 @@ update_dotfiles_pre() {
    mkdir -p "$TEMP_PATH"
 
    TEMP_PATH="$DOTFILES/local/zshrc"
-   if platform::command_exists python;
+   if platform::command_exists python; then
       docoptsh=false
    else
       docoptsh=true
