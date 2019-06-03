@@ -2,5 +2,5 @@
 # vim: filetype=sh
 
 open() { 
-   dot -d shell open "$@" & disown
- }
+  dot -d shell open "$@" & disown
+}
