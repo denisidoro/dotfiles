@@ -18,8 +18,8 @@ _upstream() {
 }
 
 _commit_first() {
-   git add .
-   git commit -am "$1"
+   git add . || true
+   git commit -am "$1" || true
    _upstream
 }
 

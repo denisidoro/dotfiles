@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-export DOTFILES="${DOTFILES:-"$HOME/.dotfiles"}"
-"${DOTFILES}/bin/dot" -d git pre-commit "$@"
+dot -d git pre-commit "$@"

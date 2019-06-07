@@ -3,7 +3,6 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/environment/core.sh"
 
 ##? Performs operation on an Android emulator
 #?? 0.2.1
