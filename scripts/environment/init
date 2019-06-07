@@ -69,8 +69,8 @@ case "${1:-}" in
    -h) show_help; exit 0;;
    --help) show_help; exit 0;;
    "brew") install_brew; exit 0;;
-   "nano") install_stuff="false";; 
-   *) install_stuff="true";;
+   "nano") install_stuff=false;; 
+   *) install_stuff=true;;
 esac
 
 # Pushes the current directory to the stack
@@ -87,6 +87,8 @@ if [[ $response =~ ^(yes|y| ) ]] || [ -z $response ]; then
 else
    exit
 fi
+
+echo "install_stuff: $install_stuff"
 
 if $install_stuff; then
    set +e
