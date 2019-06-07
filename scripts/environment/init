@@ -9,6 +9,7 @@ export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 ##? Usage:
 ##?    init
 ##?    init nano
+##?    init brew
 
 _dot() {
    "$DOTFILES/bin/dot" "$@"
