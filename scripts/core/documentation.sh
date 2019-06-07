@@ -9,7 +9,7 @@ docs::eval() {
    local readonly file="$0"
    help="$(extract_help "$file")"
 
-   if [[ ${DOTFILES_DOCOPTSH:-false} == true ]]; then
+   if [[ ${DOTFILES_DOCOPTS:-python} == "bash" ]]; then
       docopts="$DOTFILES/modules/docoptsh/docoptsh"
    else
       docopts="$DOTFILES/scripts/core/docopts"

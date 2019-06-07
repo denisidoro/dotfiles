@@ -1,8 +1,10 @@
 ﻿[nano]
 curl
 git
-python
 neovim
+
+[mini]
+python
 
 [dev]
 zsh
