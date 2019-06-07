@@ -22,7 +22,7 @@ has_tag() {
 }
 
 main() {
-   local git_info=$(cd "$DOTFILES" && git log -n 1 --pretty=format:'%ad - %h' --date=format:'%Y-%m-%d %Hh%M')
+   local git_info=$(cd "$DOTFILES" && git log -n 1 --pretty=format:'%ad - %h' --date=format:'%Y-%m-%d %Hh%M' || echo "unknown version")
    log::note "Updating dotfiles\n$git_info\n"
 
    local tags="$(platform::tags)"
@@ -57,21 +57,43 @@ update_dotfiles_pre() {
 
    TEMP_PATH="$DOTFILES/local/zshrc"
    if platform::command_exists python; then
-      docoptsh=false
+      docopts="python"
    else
-      docoptsh=true
+      docopts="bash"
    fi
    if ! fs::is_file "$TEMP_PATH"; then
-      echo "export DOTFILES_DOCOPTSH=${docoptsh}" > "$TEMP_PATH"
+      echo "export DOTFILES_DOCOPTS=${docopts}" >> "$TEMP_PATH"
    fi
 
    TEMP_PATH="$DOTFILES/local/gitconfig"
    if ! fs::is_file "$TEMP_PATH"; then
-      echo "What is your name?"
+      printf "What is your name? "
       read fullname
-      echo "What is your email?"
+      printf "What is your email? "
       read email
-      echo -e "[user]\nname = $fullname\nemail = $email" > "$TEMP_PATH"
+      echo -e "[user]\nname = $fullname\nemail = $email" >> "$TEMP_PATH"
+   fi
+
+   # TODO: call reusable functions
+   TEMP_PATH="$HOME/.bashrc"
+   if fs::is_file "$TEMP_PATH"; then
+     echo "It seems you already have $TEMP_PATH and it's not a symlink"
+     printf "Do you want to remove it? "
+     read answer
+     if echo "$answer" | grep -E '^[Yy]$' >/dev/null; then
+       rm "$TEMP_PATH"
+     fi
+   fi
+ 
+   # TODO: call reusable functions
+   TEMP_PATH="$HOME/.zshrc"
+   if fs::is_file "$TEMP_PATH"; then
+     echo "It seems you already have $TEMP_PATH and it's not a symlink"
+     printf "Do you want to remove it? "
+     read answer
+     if echo "$answer" | grep -E '^[Yy]$' >/dev/null; then
+       rm "$TEMP_PATH"
+     fi
    fi
 
    pushd . >/dev/null
@@ -97,18 +119,24 @@ update_dotfiles() {
 update_dotfiles_pos() {
 
    # Neovim
-   echo "Installing neovim plugins..."
-   nvim +silent +PlugInstall +qall >/dev/null
+   if platform::command_exists nvim; then
+     echo "Installing neovim plugins..."
+     nvim +silent +PlugInstall +qall >/dev/null
+   fi
 
    # Tmux
-   echo "Installing tpm plugins..."
-   export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
-   bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/install_plugins" >/dev/null
-   bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/update_plugins" all >/dev/null
+   if platform::command_exists tmux; then
+     echo "Installing tpm plugins..."
+     export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
+     bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/install_plugins" >/dev/null
+     bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/update_plugins" all >/dev/null
+   fi
 
    # ZPlug
-   echo "Installing ZPlug plugins..."
-   zplug install 2>/dev/null
+   if platform::command_exists zplug; then
+     echo "Installing ZPlug plugins..."
+     zplug install 2>/dev/null
+   fi
 
    # Cleanup
    popd >/dev/null

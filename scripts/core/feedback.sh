@@ -13,9 +13,11 @@ feedback::confirmation() {
       options="(y|N)"
    fi
 
+   echo
    log::warning "$msg"
    read -p "$options " -n 1 -r </dev/tty
    local reply="$REPLY"
+   echo
 
    if [[ -z "$reply" ]]; then
       if $default_yes; then

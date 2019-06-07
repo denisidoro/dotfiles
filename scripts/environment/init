@@ -8,6 +8,7 @@ export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 ##?
 ##? Usage:
 ##?    init
+##?    init nano
 ##?    init brew
 
 _dot() {
@@ -61,16 +62,17 @@ clone_repo() {
    git clone https://github.com/denisidoro/dotfiles.git "$DOTFILES"
 }
 
-# Displays help if requested
-if [[ ${1:-} == "-h" ]] || [[ ${1:-} == "--help" ]]; then
+show_help() {
    grep "^##?" "$0" | cut -c 5-
-   exit 0
-fi
+}
 
-# Shortcut for installing brew
-if [[ ${1:-} == "brew" ]]; then
-   install_brew
-fi
+case "${1:-}" in
+   -h) show_help; exit 0;;
+   --help) show_help; exit 0;;
+   "brew") install_brew; exit 0;;
+   "nano") install_stuff=false;; 
+   *) install_stuff=true;;
+esac
 
 # Pushes the current directory to the stack
 pushd . >/dev/null
@@ -87,10 +89,12 @@ else
    exit
 fi
 
-set +e
-install_brew
-install_essentials
-set -e
+if $install_stuff; then
+   set +e
+   install_brew
+   install_essentials
+   set -e
+fi
 
 if [ -f "$DOTFILES/bin/dot" ]; then
    :
@@ -107,7 +111,9 @@ fi
 cd "$DOTFILES"
 
 # install necessary dependencies
-_dot environment install batch nano
+if $install_stuff; then
+   _dot environment install batch nano
+fi
 
 # invoke dotfiles symlinking
 _dot environment update
