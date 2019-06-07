@@ -8,7 +8,7 @@ export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 ##?
 ##? Usage:
 ##?    init
-##?    init brew
+##?    init nano
 
 _dot() {
    "$DOTFILES/bin/dot" "$@"
@@ -87,10 +87,18 @@ else
    exit
 fi
 
-set +e
-install_brew
-install_essentials
-set -e
+if [[ "${1:-}" = "mini" ]]; then
+   install_stuff="false"
+else
+   install_stuff="true"
+fi
+
+if $install_stuff; then
+   set +e
+   install_brew
+   install_essentials
+   set -e
+fi
 
 if [ -f "$DOTFILES/bin/dot" ]; then
    :
@@ -107,7 +115,9 @@ fi
 cd "$DOTFILES"
 
 # install necessary dependencies
-_dot environment install batch nano
+if $install_stuff; then
+   _dot environment install batch nano
+fi
 
 # invoke dotfiles symlinking
 _dot environment update

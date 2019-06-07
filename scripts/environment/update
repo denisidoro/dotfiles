@@ -56,7 +56,7 @@ update_dotfiles_pre() {
    mkdir -p "$TEMP_PATH"
 
    TEMP_PATH="$DOTFILES/local/zshrc"
-   if platform::command_exists python;
+   if platform::command_exists python; then
       docopts="python"
    else
       docopts="bash"
@@ -67,11 +67,33 @@ update_dotfiles_pre() {
 
    TEMP_PATH="$DOTFILES/local/gitconfig"
    if ! fs::is_file "$TEMP_PATH"; then
-      echo "What is your name?"
+      printf "What is your name? "
       read fullname
-      echo "What is your email?"
+      printf "What is your email? "
       read email
       echo -e "[user]\nname = $fullname\nemail = $email" >> "$TEMP_PATH"
+   fi
+
+   # TODO: call reusable functions
+   TEMP_PATH="$HOME/.bashrc"
+   if fs::is_file "$TEMP_PATH" && ; then
+     echo "It seems you already have $TEMP_PATH and it's not a symlink"
+     printf "Do you want to remove it? "
+     read answer
+     if echo "$answer" | grep -E '^[Yy]$' >/dev/null; then
+       rm "$TEMP_PATH"
+     fi
+   fi
+ 
+   # TODO: call reusable functions
+   TEMP_PATH="$HOME/.zshrc"
+   if fs::is_file "$TEMP_PATH" && ; then
+     echo "It seems you already have $TEMP_PATH and it's not a symlink"
+     printf "Do you want to remove it? "
+     read answer
+     if echo "$answer" | grep -E '^[Yy]$' >/dev/null; then
+       rm "$TEMP_PATH"
+     fi
    fi
 
    pushd . >/dev/null
