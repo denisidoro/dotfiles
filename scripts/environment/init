@@ -88,8 +88,6 @@ else
    exit
 fi
 
-echo "install_stuff: $install_stuff"
-
 if $install_stuff; then
    set +e
    install_brew

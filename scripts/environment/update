@@ -76,7 +76,7 @@ update_dotfiles_pre() {
 
    # TODO: call reusable functions
    TEMP_PATH="$HOME/.bashrc"
-   if fs::is_file "$TEMP_PATH" && ; then
+   if fs::is_file "$TEMP_PATH"; then
      echo "It seems you already have $TEMP_PATH and it's not a symlink"
      printf "Do you want to remove it? "
      read answer
@@ -87,7 +87,7 @@ update_dotfiles_pre() {
  
    # TODO: call reusable functions
    TEMP_PATH="$HOME/.zshrc"
-   if fs::is_file "$TEMP_PATH" && ; then
+   if fs::is_file "$TEMP_PATH"; then
      echo "It seems you already have $TEMP_PATH and it's not a symlink"
      printf "Do you want to remove it? "
      read answer
