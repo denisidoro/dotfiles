@@ -61,16 +61,17 @@ clone_repo() {
    git clone https://github.com/denisidoro/dotfiles.git "$DOTFILES"
 }
 
-# Displays help if requested
-if [[ ${1:-} == "-h" ]] || [[ ${1:-} == "--help" ]]; then
+show_help() {
    grep "^##?" "$0" | cut -c 5-
-   exit 0
-fi
+}
 
-# Shortcut for installing brew
-if [[ ${1:-} == "brew" ]]; then
-   install_brew
-fi
+case "${1:-}" in
+   -h) show_help; exit 0;;
+   --help) show_help; exit 0;;
+   "brew") install_brew; exit 0;;
+   "nano") install_stuff="false";; 
+   *) install_stuff="true";;
+esac
 
 # Pushes the current directory to the stack
 pushd . >/dev/null
@@ -85,12 +86,6 @@ if [[ $response =~ ^(yes|y| ) ]] || [ -z $response ]; then
    sudo echo "Proceeding with installation..."
 else
    exit
-fi
-
-if [[ "${1:-}" = "mini" ]]; then
-   install_stuff="false"
-else
-   install_stuff="true"
 fi
 
 if $install_stuff; then
