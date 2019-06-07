@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? MySQL helper utilities
+##?
+##? Usage:
+##?   mysql backup <username> <database> <path> 
+##?   mysql import <username> <database> <path> 
+##?
+##? Examples:
+##?   mysql backup root mydb backup.sql 
+##?   mysql import root mydb backup.sql 
+
+docs::eval "$@"
+
+if $backup; then
+  mysqldump -u "$username" -p "$database" > "$path"
+elif $import;
+  mysqldump -u "$username" -p "$database" < "$path"
+fi
