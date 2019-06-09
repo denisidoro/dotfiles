@@ -30,10 +30,15 @@ if $list; then
    exit 0
 fi
 
-if $prompt && _list | xargs which; then
+if _list | xargs which; then
+   log::note "All dependencies already installed for the batch $name"
+   exit 0
+fi
+
+if $prompt; then
    log::warning "There are missing dependencies for the batch $name"
    if ! feedback::confirmation "Do you want to install it?"; then
-       exit 1
+      exit 1
    fi
 fi
 
