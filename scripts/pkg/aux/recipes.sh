@@ -32,11 +32,17 @@ _brew_osx() {
 _brew_linux() {
    sudo apt update && sudo apt-get install -y build-essential curl file git \
       || sudo yum groupinstall 'Development Tools' && sudo yum install curl file git
+
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+   
    test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
    test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
    test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >> ~/.bash_profile
    echo "eval \$($(brew --prefix)/bin/brew shellenv)" >> ~/.profile
+}
+
+_brew_apt() {
+   sudo apt install linuxbrew-wrapper
 }
 
 recipe::brew() {
@@ -44,6 +50,8 @@ recipe::brew() {
       log::note "Installing brew..."
       if platform::is_osx; then
          _brew_osx
+      elif platform::command_exists apt; then
+         _brew_apt || _brew_linux
       else
          _brew_linux
       fi
@@ -192,5 +200,12 @@ recipe::ag() {
 # ==============================
 
 recipe::nvim() {
-   dot pkg add neovim
+   if platform::command_exists brew; then
+      brew install neovim
+   else
+      cd "$HOME"
+      sudo curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+      chmod u+x nvim.appimage
+      sudo mv nvim.appimage /usr/local/nvim
+   fi
 }
