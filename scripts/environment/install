@@ -21,6 +21,18 @@ clone_repo() {
 # Pushes the current directory to the stack
 pushd . >/dev/null
 
+first_time=false
+
+# Prompt confirmation
+echo "This script is untested. Use it at your own risk!"
+read -r -p "Do you want to continue? (Y/n) " response
+response=${response,,}
+if [[ $response =~ ^(yes|y| ) ]] || [ -z $response ]; then
+   sudo echo "Proceeding with installation..."
+else
+   exit
+fi
+
 if [ -f "$DOTFILES/bin/dot" ]; then
    :
 elif [ -f "$DOTFILES" ]; then
@@ -28,9 +40,11 @@ elif [ -f "$DOTFILES" ]; then
    old_dotfiles=$(mktemp -u -d "${DOTFILES}_XXXX")
    mv "$DOTFILES" "$old_dotfiles"
    clone_repo
+   first_time=true
 else
    echo "No .dotfiles folder found. Installing dependencies and cloning .dotfiles..."
    clone_repo
+   first_time=true
 fi
 
 cd "$DOTFILES"
@@ -40,3 +54,7 @@ _dot environment update
 
 # cleanup
 popd >/dev/null
+
+if $first_time; then
+   exec "$SHELL"
+fi
