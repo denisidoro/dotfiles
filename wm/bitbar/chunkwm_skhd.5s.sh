@@ -8,7 +8,7 @@
 # <bitbar.dependencies>brew,chunkwm,skhd</bitbar.dependencies>
 
 export PATH=/usr/local/bin:$PATH
-export DOTFILES=${DOTFILES:-$HOME/.dotfiles}
+export DOTFILES=${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." >/dev/null && pwd)}
 
 case "$1" in
   stop) "$DOTFILES/bin/dot" app wm stop ;;

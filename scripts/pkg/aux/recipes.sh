@@ -9,7 +9,7 @@ step::shallow_github_clone() {
    local readonly user="$1" 
    local readonly repo="$2"
    mkdir -p "$TEMP_FOLDER"
-   git clone "https://github.com/${user}/${repo}" --depth 1 "${TEMP_FOLDER}/${repo}"
+   git clone "https://github.com/${user}/${repo}" --depth 1 "${TEMP_FOLDER}/${repo}" || true
 }
 
 step::make() {

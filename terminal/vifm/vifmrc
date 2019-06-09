@@ -108,7 +108,6 @@ set statusline="  %t%= %A %10u:%-7g %15s %20d  "
 
 " :mark mark /full/directory/path [filename]
 
-mark b ~/bin/
 mark h ~/
 
 " ------------------------------------------------------------------------------
@@ -133,6 +132,10 @@ command! make !!make %a
 command! mkcd :mkdir %a | cd %a
 command! vgrep vim "+grep %a"
 command! reload :write | restart
+
+command! jumpj :set noquickview | :execute 'cd "'.system('dot -d shell jump global 2>/dev/tty ').'"%IU' | redraw
+
+nnoremap <c-j> :jumpj<cr>
 
 " ------------------------------------------------------------------------------
 

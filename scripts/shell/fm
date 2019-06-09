@@ -56,7 +56,7 @@ _fzf() {
      --ansi \
      --reverse \
      --height 20 \
-     --preview "/home/dns/.dotfiles/bin/dot -d shell fm preview {}"
+     --preview "$DOTFILES -d shell fm preview {}"
 }
 
 _strip() {
