@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+install_brew_osx() {
+   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+}
+
+install_brew_linux() {
+   sudo apt update && sudo apt-get install -y build-essential curl file git \
+      || sudo yum groupinstall 'Development Tools' && sudo yum install curl file git
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+   test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+   test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+   test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >> ~/.bash_profile
+   echo "eval \$($(brew --prefix)/bin/brew shellenv)" >> ~/.profile
+}
+
+if ! platform::command_exists brew && ! fs::is_dir /home/linuxbrew && feedback::confirmation "Do you want to install brew?"; then
+   log::note "Installing brew"
+   if platform::is_osx; then
+      install_brew_osx
+   else
+      install_brew_linux
+   fi
+fi

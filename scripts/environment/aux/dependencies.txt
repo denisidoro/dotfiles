@@ -14,25 +14,12 @@ fasd
 ranger
 fasd
 tig
-the_silver_searcher
+ag
 bat
 htop
 
 [programming]
-emacs
 clojure
 leiningen
 node
 ruby
-
-[cask-apps]
-google-chrome
-sublime-text
-iterm2
-vlc
-flux
-karabiner-elements
-
-[cask-mobile]
-android-file-transfer
-android-studio

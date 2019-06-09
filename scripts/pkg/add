@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -u
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Install dependencies, abstracting away package managers
+##? and custom recipes
+##?
+##? Usage:
+##?    add <deps>...
+
+recipes="$(recipe::list)"
+pkg="$(platform::main_package_manager)"
+
+echo "$recipes"
+echo "$pkg"

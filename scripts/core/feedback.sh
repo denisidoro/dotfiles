@@ -3,9 +3,9 @@
 source "$DOTFILES/scripts/core/debug.sh"
 
 feedback::confirmation() {
-   local msg="$1"
-   local default_yes="${2:-true}"
-   local options
+   local readonly msg="$1"
+   local readonly default_yes="${2:-true}"
+   local readonly options
 
    if $default_yes; then
       options="(Y|n)"
@@ -33,4 +33,13 @@ feedback::confirmation() {
    else
       return 1
    fi
+}
+
+feedback::text() {
+
+   local readonly question="$1"
+   printf "$1 " >&2
+   read answer
+   echo "$answer"
+
 }

@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 set -euo pipefail
-export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && cd ../.. && pwd)"
+export DOTFILES="${DOTFILES:-$ROOT_DIR}"
+
+DOTBOT_DIR="modules/dotbot"
+DOTBOT_BIN="bin/dotbot"
+
+LOCAL_BIN="${DOTFILES}/local/bin"
+LOCAL_ZSHRC="${DOTFILES}/local/zshrc"
+LOCAL_GITCONFIG="${DOTFILES}/local/gitconfig"
 
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/environment/aux/core.sh"
@@ -12,102 +21,153 @@ source "${DOTFILES}/scripts/environment/aux/core.sh"
 ##? Usage:
 ##?    dotfiles
 
-docs::eval "$@"
 
-DOTBOT_DIR="modules/dotbot"
-DOTBOT_BIN="bin/dotbot"
+# ==============================
+# Helpers
+# ==============================
 
 has_tag() {
    str::contains "$@"
 }
 
-main() {
-   local git_info=$(cd "$DOTFILES" && git log -n 1 --pretty=format:'%ad - %h' --date=format:'%Y-%m-%d %Hh%M' || echo "unknown version")
-   log::note "Updating dotfiles\n$git_info\n"
-
-   local tags="$(platform::tags)"
-   log::warning "Current config: $tags"
-   echo
-
-   set +e
-
-   update_dotfiles_pre
-   update_dotfiles_common
-
-   has_tag "$tags" "osx" && { update_dotfiles_osx; }
-   has_tag "$tags" "linux" && { update_dotfiles_linux; }
-   has_tag "$tags" "arm" && { update_dotfiles_arm; }
-   has_tag "$tags" "x86" && { update_dotfiles_x86; }
-   has_tag "$tags" "android" && { update_dotfiles_android; }
-   has_tag "$tags" "wsl" && { update_dotfiles_wsl; }
-
-   update_dotfiles_pos
-
-   set -e
+get_git_info() {
+  cd "$DOTFILES" 
+  git log -n 1 --pretty=format:'%ad - %h' --date=format:'%Y-%m-%d %Hh%M' \
+     || echo "unknown version"
 }
 
-update_dotfiles_pre() {
 
-   local TEMP_PATH fullname email docoptsh
+# ==============================
+# Filesystem
+# ==============================
 
-   echo "Setting folder architecture..."
+setup_folders_and_files() {
 
-   TEMP_PATH="$DOTFILES/local/bin"
-   mkdir -p "$TEMP_PATH"
+   log::note "Setting up folder and file hierarchy..."
+   mkdir -p "$LOCAL_BIN" || true
+   touch "$LOCAL_ZSHRC" || true
+   touch "$LOCAL_GITCONFIG" || true
 
-   TEMP_PATH="$DOTFILES/local/zshrc"
-   if platform::command_exists python; then
-      docopts="python"
-   else
-      docopts="bash"
-   fi
-   if ! fs::is_file "$TEMP_PATH"; then
-      echo "export DOTFILES_DOCOPTS=${docopts}" >> "$TEMP_PATH"
-   fi
+}
 
-   TEMP_PATH="$DOTFILES/local/gitconfig"
-   if ! fs::is_file "$TEMP_PATH"; then
-      printf "What is your name? "
-      read fullname
-      printf "What is your email? "
-      read email
-      echo -e "[user]\nname = $fullname\nemail = $email" >> "$TEMP_PATH"
-   fi
 
-   # TODO: call reusable functions
-   TEMP_PATH="$HOME/.bashrc"
-   if fs::is_file "$TEMP_PATH"; then
-     echo "It seems you already have $TEMP_PATH and it's not a symlink"
-     printf "Do you want to remove it? "
-     read answer
-     if echo "$answer" | grep -E '^[Yy]$' >/dev/null; then
-       rm "$TEMP_PATH"
-     fi
-   fi
+# ==============================
+# Submodules
+# ==============================
+
+update_submodules() {
+
+   log::note "Attempting to update submodules..."
+   cd "$DOTFILES"
+   git pull 
+   git submodule init 
+   git submodule update
+   git submodule status
+   git submodule update --init --recursive "${DOTBOT_DIR}" 
+
+}
+
+
+# ==============================
+# Prompts
+# ==============================
+
+setup_git_credentials() {
  
-   # TODO: call reusable functions
-   TEMP_PATH="$HOME/.zshrc"
-   if fs::is_file "$TEMP_PATH"; then
-     echo "It seems you already have $TEMP_PATH and it's not a symlink"
-     printf "Do you want to remove it? "
-     read answer
-     if echo "$answer" | grep -E '^[Yy]$' >/dev/null; then
+   if ! grep -q "email" "$LOCAL_GITCONFIG" 2> /dev/null; then
+      log::warning "Your git credentials aren't setup"
+      local readonly fullname="$(feedback::text "What is your name?")"
+      local readonly email="$(feedback::text "What is your email?")"
+      echo -e "[user]\n   name = $fullname\n   email = $email" > "$LOCAL_GITCONFIG"
+   fi
+
+}
+
+setup_docopts() {
+ 
+   if ! platform::command_exists python; then
+      log::warning "Python isn't installed"
+      if ! feedback::confirmation "Do you want to use bash for docopts?"; then
+         echo "export DOTFILES_DOCOPTS=bash" >> "$TEMP_PATH"
+      fi
+   fi
+
+}
+
+replace_file() {
+ 
+   local readonly FILE_PATH="$1"
+   if fs::is_file "$FILE_PATH"; then
+     echo "${FILE_PATH} already exists and it's not a symlink"
+     if feedback::confirmation "Do you want to remove it?"; then
        rm "$TEMP_PATH"
      fi
    fi
 
-   pushd . >/dev/null
-   cd $DOTFILES
+}
 
-   echo "Attempting to update submodules..."
-   (cd "$DOTFILES" && git pull && git submodule init && git submodule update \
-      && git submodule status && git submodule update --init --recursive "${DOTBOT_DIR}" || true) 2>/dev/null
+install_brew() {
+ 
+   local readonly FILE_PATH="$1"
+   if fs::is_file "$FILE_PATH"; then
+     echo "${FILE_PATH} already exists and it's not a symlink"
+     if feedback::confirmation "Do you want to remove it?"; then
+       rm "$TEMP_PATH"
+     fi
+   fi
 
 }
+
+
+# ==============================
+# Plugins
+# ==============================
+
+install_nvim_plugins() {
+
+   if platform::command_exists nvim && feedback::confirmation "Do you want to install neovim plugins?"; then
+     log::note "Installing neovim plugins..."
+     nvim +silent +PlugInstall +qall >/dev/null
+   fi
+
+}
+
+install_tmux_plugins() {
+
+   if platform::command_exists tmux && feedback::confirmation "Do you want to install tmux plugins?"; then
+     log::note "Installing tpm plugins..."
+     export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
+     bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/install_plugins" >/dev/null
+     bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/update_plugins" all >/dev/null
+   fi
+
+}
+
+install_zplug_plugins() {
+
+   if platform::command_exists zplug && feedback::confirmation "Do you want to install tmux plugins?"; then
+     log::note "Installing ZPlug plugins..."
+     zplug install 2>/dev/null
+   fi
+
+}
+
+install_brew() {
+   dot pkg brew
+}
+
+install_packages() {
+   echo TODO
+}
+
+
+# ==============================
+# Symlinks and custom configs
+# ==============================
 
 update_dotfiles() {
 
-   CONFIG="$DOTFILES/symlinks/$1"
+   local readonly CONFIG="${DOTFILES}/symlinks/${1}"
    shift
 
    echo
@@ -116,62 +176,76 @@ update_dotfiles() {
 
 }
 
-update_dotfiles_pos() {
-
-   # Neovim
-   if platform::command_exists nvim; then
-     echo "Installing neovim plugins..."
-     nvim +silent +PlugInstall +qall >/dev/null
-   fi
-
-   # Tmux
-   if platform::command_exists tmux; then
-     echo "Installing tpm plugins..."
-     export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
-     bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/install_plugins" >/dev/null
-     bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/update_plugins" all >/dev/null
-   fi
-
-   # ZPlug
-   if platform::command_exists zplug; then
-     echo "Installing ZPlug plugins..."
-     zplug install 2>/dev/null
-   fi
-
-   # Cleanup
-   popd >/dev/null
-
-}
-
 update_dotfiles_common() {
    update_dotfiles "conf.yaml"
 }
 
 update_dotfiles_osx() {
-   echo "Configuring for OSX..."
+   log::note "Configuring for OSX..."
    update_dotfiles "conf.osx.yaml"
 }
 
 update_dotfiles_linux() {
-   echo "Configuring for Linux..."
+   log::note "Configuring for Linux..."
    update_dotfiles "conf.linux.yaml"
 }
 
 update_dotfiles_wsl() {
-   echo "Configuring for WSL..."
-   echo "No custom config for WSL"
+   log::note "Configuring for WSL..."
+   log::note "No custom config for WSL"
 }
 
 update_dotfiles_arm() {
-   echo "No custom config for ARM"
+   log::note "Configuring for ARM..."
+   log::note "No custom config for ARM"
 }
 
 update_dotfiles_x86() {
-   echo "No custom config for x86"
+   log::note "Configuring for x86..."
+   log::note "No custom config for x86"
 }
 
 update_dotfiles_android() {
-   echo "No custom config for Android"
+   log::note "Configuring for Android..."
+   log::note "Installing essential dependencies..."
+   pkg install tmux neovim curl git openssh termux-packages ncurses-utils python
 }
 
-main "$@"
+
+# ==============================
+# Main
+# ==============================
+
+git_info="$(get_git_info)"
+log::note "Updating dotfiles\n${git_info}\n"
+echo
+
+tags="$(platform::tags)"
+log::note "Current config: $tags"
+echo
+
+set +e
+
+update_submodules 2>/dev/null || true 
+setup_folders_and_files
+setup_git_credentials
+setup_docopts
+replace_file "${HOME}/.bashrc"
+replace_file "${HOME}/.zshrc"
+
+log::note "Setting symlinks..."
+has_tag "$tags" "osx" && { update_dotfiles_osx; }
+has_tag "$tags" "linux" && { update_dotfiles_linux; }
+has_tag "$tags" "arm" && { update_dotfiles_arm; }
+has_tag "$tags" "x86" && { update_dotfiles_x86; }
+has_tag "$tags" "android" && { update_dotfiles_android; }
+has_tag "$tags" "wsl" && { update_dotfiles_wsl; }
+
+install_brew
+install_packages
+
+install_nvim_plugins
+install_tmux_plugins
+install_zplug_plugins
+
+set -e
