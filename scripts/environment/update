@@ -32,6 +32,7 @@ replace_file "${HOME}/.bashrc"
 replace_file "${HOME}/.zshrc"
 
 log::note "Setting symlinks..."
+update_dotfiles_common
 has_tag "$tags" "osx" && { update_dotfiles_osx; }
 has_tag "$tags" "linux" && { update_dotfiles_linux; }
 has_tag "$tags" "arm" && { update_dotfiles_arm; }
