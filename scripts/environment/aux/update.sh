@@ -85,7 +85,7 @@ setup_docopts() {
 replace_file() {
  
    local readonly FILE_PATH="$1"
-   if [[ fs::is_file "$FILE_PATH" && ! -L "$FILE_PATH" ]]; then
+   if fs::is_file "$FILE_PATH" && ! test -L "$FILE_PATH"; then
      log::warning "${FILE_PATH} already exists and it's not a symlink"
      if feedback::confirmation "Do you want to remove it?"; then
        rm "$FILE_PATH"
