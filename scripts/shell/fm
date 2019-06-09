@@ -18,6 +18,8 @@ case "${1:-}" in
   "preview") preview=true; line="${2:-}";;
 esac
 
+DOT="${DOTFILES}/bin/dot"
+
 _less() {
    local readonly extension="${1:-}"
    if [ -x "$(command -v bat)" ]; then
@@ -56,7 +58,7 @@ _fzf() {
      --ansi \
      --reverse \
      --height 20 \
-     --preview "$DOTFILES -d shell fm preview {}"
+     --preview "$DOT -d shell fm preview {}"
 }
 
 _strip() {
