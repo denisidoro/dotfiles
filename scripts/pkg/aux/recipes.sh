@@ -30,8 +30,11 @@ _brew_osx() {
 }
 
 _brew_linux() {
-   sudo apt update && sudo apt-get install -y build-essential curl file git \
-      || sudo yum groupinstall 'Development Tools' && sudo yum install curl file git
+   if platform::command_exists apt; then
+     sudo apt update && sudo apt-get install -y build-essential curl file git
+   elif platform::command_exists yum; then
+     sudo yum groupinstall 'Development Tools' && sudo yum install curl file git
+   fi
 
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
    
@@ -42,6 +45,7 @@ _brew_linux() {
 }
 
 _brew_apt() {
+   sudo apt update
    sudo apt install linuxbrew-wrapper
 }
 
