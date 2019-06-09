@@ -8,23 +8,55 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    fm
 ##?    fm edit <line>
+##?    fm preview <line>
 
-docs::eval "$@"
+# input parsing
+edit=false
+preview=false
+case "${1:-}" in
+  "edit") edit=true; line="${2:-}";;
+  "preview") preview=true; line="${2:-}";;
+esac
+
+_less() {
+   local readonly extension="${1:-}"
+   if [ -x "$(command -v bat)" ]; then
+      bat -p -l "$extension"
+   else
+      less -R
+   fi
+}
+
+_cat() {
+   local readonly path="$1"
+   local readonly content="$(cat "$1")"
+   local readonly extension="${path##*.}"
+
+   case $extension in
+      json) echo "$content" | jq -C . | _less;;
+   esac
+
+   if echo "$content" | tail -n +2 | grep -q sh; then
+      echo -e "$content" | _less "sh" 
+   fi
+
+   echo -e "$content" | _less "$extension"
+}
 
 _ls() {
    if platform::command_exists colorls; then
-      colorls -lah --sd --color=always | tail -n +2
+      colorls -a1 --color=always | cut -c5- | tail -n +2
    else
-      ls -laH --color=always | tail -n +2
+      ls -a1 --color=always | tail -n +2
    fi 
 }
 
 _fzf() {
-   fzf \
+   fzf-tmux \
      --ansi \
      --reverse \
-     --height 10 \
-     --bind='ctrl-o:execute(dot shell fm edit {})+abort' # TODO
+     --height 20 \
+     --preview "/home/dns/.dotfiles/bin/dot -d shell fm preview {}"
 }
 
 _strip() {
@@ -53,9 +85,15 @@ _browse() {
 
 }
 
-if $edit; then
-   $EDITOR "$(echo "$line" | _strip)"
-   exit 0
+if $preview; then
+  name="$(echo "$line" | _strip)"
+  path="$name"
+  if fs::is_dir "$path"; then
+     ls "$path"
+  elif fs::is_file "$path"; then
+     _cat "$path"
+  fi
+  exit 0
 fi
 
 path="$(_browse)"
