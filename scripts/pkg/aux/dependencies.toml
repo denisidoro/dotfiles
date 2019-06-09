@@ -1,14 +1,14 @@
-﻿[nano]
+[nano]
 curl
 git
-neovim
+nvim
 
 [mini]
 python
+unzip
 
 [dev]
 zsh
-unzip
 tmux
 fasd
 ranger

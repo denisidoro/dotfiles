@@ -2,6 +2,26 @@
 # vim: filetype=sh
 
 # ==============================
+# Helpers
+# ==============================
+
+TEMP_FOLDER="${HOME}/tmp"
+
+step::shallow_github_clone() {
+   local readonly user="$1" 
+   local readonly repo="$2"
+   mkdir -p "$TEMP_FOLDER"
+   git clone "https://github.com/${user}/${repo}" --depth 1 "${TEMP_FOLDER}/${repo}"
+}
+
+step::make() {
+   local repo="$1"
+   cd "${TEMP_FOLDER}/${repo}"
+   make && sudo make install
+}
+
+
+# ==============================
 # Homebrew
 # ==============================
 
@@ -59,7 +79,7 @@ recipe::spacevim() {
 # ==============================
 
 recipe::tpm() {
-   if ! fs::is_dir $HOME/.tmux/plugins/tpm; then
+   if ! fs::is_dir "$HOME/.tmux/plugins/tpm"; then
       git clone https://github.com/tmux-plugins/tpm --depth=1 $HOME/.tmux/plugins/tpm
    fi
 }
@@ -159,7 +179,18 @@ recipe::watchman() {
 # ==============================
 
 recipe::ag() {
-   apt-get install silversearcher-ag \
-      || brew install the_silver_searcher \
-      || yum install the_silver_searcher
+   if ! platform::command_exists ag; then
+      apt-get install silversearcher-ag \
+         || brew install the_silver_searcher \
+         || yum install the_silver_searcher
+   fi
+}
+
+
+# ==============================
+# nvim
+# ==============================
+
+recipe::nvim() {
+   dot pkg add neovim
 }
