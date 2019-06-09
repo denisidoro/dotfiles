@@ -76,7 +76,7 @@ setup_docopts() {
    if ! platform::command_exists python; then
       log::warning "Python isn't installed"
       if ! feedback::confirmation "Do you want to use bash for docopts?"; then
-         echo "export DOTFILES_DOCOPTS=bash" >> "$TEMP_PATH"
+         echo "export DOTFILES_DOCOPTS=bash" >> "$LOCAL_ZSHRC"
       fi
    fi
 
@@ -88,22 +88,18 @@ replace_file() {
    if fs::is_file "$FILE_PATH"; then
      echo "${FILE_PATH} already exists and it's not a symlink"
      if feedback::confirmation "Do you want to remove it?"; then
-       rm "$TEMP_PATH"
+       rm "$FILE_PATH"
      fi
    fi
 
 }
 
 install_brew() {
- 
-   local readonly FILE_PATH="$1"
-   if fs::is_file "$FILE_PATH"; then
-     echo "${FILE_PATH} already exists and it's not a symlink"
-     if feedback::confirmation "Do you want to remove it?"; then
-       rm "$TEMP_PATH"
-     fi
-   fi
+   dot pkg add brew
+}
 
+install_packages() {
+   echo TODO
 }
 
 
@@ -138,14 +134,6 @@ install_zplug_plugins() {
      zplug install 2>/dev/null
    fi
 
-}
-
-install_brew() {
-   dot pkg add brew
-}
-
-install_packages() {
-   echo TODO
 }
 
 
