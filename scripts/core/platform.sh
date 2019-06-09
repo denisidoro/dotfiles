@@ -28,16 +28,8 @@ platform::is_android() {
    [[ $(uname -a | grep -q "Android" || echo 1) -eq 0 ]]
 }
 
-platform::package_manager() {
-   if platform::command_exists brew; then
-      echo "brew"
-   elif platform::command_exists apt; then
-      echo "apt"
-else echo ""; fi
-}
-
 platform::tags() {
-   local tags="$(platform::package_manager) "
+   local tags=""
    if platform::is_osx; then tags="${tags}osx "; fi
    if platform::is_linux; then tags="${tags}linux "; fi
    if platform::is_arm; then tags="${tags}arm "; fi
@@ -48,6 +40,6 @@ platform::tags() {
 }
 
 if ! platform::command_exists dot; then
-   dot() { "$DOTFILES/bin/dot" "$@"; }
+   dot() { "$DOTFILES/bin/dot" -d "$@"; }
    export -f dot
 fi

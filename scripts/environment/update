@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 set -euo pipefail
-export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && cd ../.. && pwd)"
+export DOTFILES="${DOTFILES:-$ROOT_DIR}"
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/environment/aux/core.sh"
+source "${DOTFILES}/scripts/environment/aux/update.sh"
 
 ##? Updates submodules, dotfiles and attempts to do some setup
 #?? 0.3.0
@@ -12,166 +14,41 @@ source "${DOTFILES}/scripts/environment/aux/core.sh"
 ##? Usage:
 ##?    dotfiles
 
-docs::eval "$@"
+git_info="$(get_git_info)"
+log::note "Updating dotfiles\n${git_info}\n"
+echo
 
-DOTBOT_DIR="modules/dotbot"
-DOTBOT_BIN="bin/dotbot"
+tags="$(platform::tags)"
+log::note "Current config: $tags"
+echo
 
-has_tag() {
-   str::contains "$@"
-}
+set +e
 
-main() {
-   local git_info=$(cd "$DOTFILES" && git log -n 1 --pretty=format:'%ad - %h' --date=format:'%Y-%m-%d %Hh%M' || echo "unknown version")
-   log::note "Updating dotfiles\n$git_info\n"
+update_submodules 2>/dev/null || true 
+setup_folders_and_files
+setup_git_credentials
+setup_docopts
+replace_file "${HOME}/.bashrc"
+replace_file "${HOME}/.zshrc"
 
-   local tags="$(platform::tags)"
-   log::warning "Current config: $tags"
-   echo
+log::note "Setting symlinks..."
+update_dotfiles_common
+has_tag "$tags" "osx" && { update_dotfiles_osx; }
+has_tag "$tags" "linux" && { update_dotfiles_linux; }
+has_tag "$tags" "arm" && { update_dotfiles_arm; }
+has_tag "$tags" "x86" && { update_dotfiles_x86; }
+has_tag "$tags" "android" && { update_dotfiles_android; }
+has_tag "$tags" "wsl" && { update_dotfiles_wsl; }
 
-   set +e
+install_brew
+install_batch "nano"
+install_batch "mini"
+install_batch "dev"
 
-   update_dotfiles_pre
-   update_dotfiles_common
+setup_nvim_fallback
 
-   has_tag "$tags" "osx" && { update_dotfiles_osx; }
-   has_tag "$tags" "linux" && { update_dotfiles_linux; }
-   has_tag "$tags" "arm" && { update_dotfiles_arm; }
-   has_tag "$tags" "x86" && { update_dotfiles_x86; }
-   has_tag "$tags" "android" && { update_dotfiles_android; }
-   has_tag "$tags" "wsl" && { update_dotfiles_wsl; }
+install_nvim_plugins
+install_tmux_plugins
+install_zplug_plugins
 
-   update_dotfiles_pos
-
-   set -e
-}
-
-update_dotfiles_pre() {
-
-   local TEMP_PATH fullname email docoptsh
-
-   echo "Setting folder architecture..."
-
-   TEMP_PATH="$DOTFILES/local/bin"
-   mkdir -p "$TEMP_PATH"
-
-   TEMP_PATH="$DOTFILES/local/zshrc"
-   if platform::command_exists python; then
-      docopts="python"
-   else
-      docopts="bash"
-   fi
-   if ! fs::is_file "$TEMP_PATH"; then
-      echo "export DOTFILES_DOCOPTS=${docopts}" >> "$TEMP_PATH"
-   fi
-
-   TEMP_PATH="$DOTFILES/local/gitconfig"
-   if ! fs::is_file "$TEMP_PATH"; then
-      printf "What is your name? "
-      read fullname
-      printf "What is your email? "
-      read email
-      echo -e "[user]\nname = $fullname\nemail = $email" >> "$TEMP_PATH"
-   fi
-
-   # TODO: call reusable functions
-   TEMP_PATH="$HOME/.bashrc"
-   if fs::is_file "$TEMP_PATH"; then
-     echo "It seems you already have $TEMP_PATH and it's not a symlink"
-     printf "Do you want to remove it? "
-     read answer
-     if echo "$answer" | grep -E '^[Yy]$' >/dev/null; then
-       rm "$TEMP_PATH"
-     fi
-   fi
- 
-   # TODO: call reusable functions
-   TEMP_PATH="$HOME/.zshrc"
-   if fs::is_file "$TEMP_PATH"; then
-     echo "It seems you already have $TEMP_PATH and it's not a symlink"
-     printf "Do you want to remove it? "
-     read answer
-     if echo "$answer" | grep -E '^[Yy]$' >/dev/null; then
-       rm "$TEMP_PATH"
-     fi
-   fi
-
-   pushd . >/dev/null
-   cd $DOTFILES
-
-   echo "Attempting to update submodules..."
-   (cd "$DOTFILES" && git pull && git submodule init && git submodule update \
-      && git submodule status && git submodule update --init --recursive "${DOTBOT_DIR}" || true) 2>/dev/null
-
-}
-
-update_dotfiles() {
-
-   CONFIG="$DOTFILES/symlinks/$1"
-   shift
-
-   echo
-   "${DOTFILES}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${DOTFILES}" -c "${CONFIG}" "${@}"
-   echo
-
-}
-
-update_dotfiles_pos() {
-
-   # Neovim
-   if platform::command_exists nvim; then
-     echo "Installing neovim plugins..."
-     nvim +silent +PlugInstall +qall >/dev/null
-   fi
-
-   # Tmux
-   if platform::command_exists tmux; then
-     echo "Installing tpm plugins..."
-     export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
-     bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/install_plugins" >/dev/null
-     bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/update_plugins" all >/dev/null
-   fi
-
-   # ZPlug
-   if platform::command_exists zplug; then
-     echo "Installing ZPlug plugins..."
-     zplug install 2>/dev/null
-   fi
-
-   # Cleanup
-   popd >/dev/null
-
-}
-
-update_dotfiles_common() {
-   update_dotfiles "conf.yaml"
-}
-
-update_dotfiles_osx() {
-   echo "Configuring for OSX..."
-   update_dotfiles "conf.osx.yaml"
-}
-
-update_dotfiles_linux() {
-   echo "Configuring for Linux..."
-   update_dotfiles "conf.linux.yaml"
-}
-
-update_dotfiles_wsl() {
-   echo "Configuring for WSL..."
-   echo "No custom config for WSL"
-}
-
-update_dotfiles_arm() {
-   echo "No custom config for ARM"
-}
-
-update_dotfiles_x86() {
-   echo "No custom config for x86"
-}
-
-update_dotfiles_android() {
-   echo "No custom config for Android"
-}
-
-main "$@"
+set -e

@@ -19,6 +19,9 @@ export JAVA_TOOLS_OPTIONS='-Dfile.encoding="UTF-8"'
 # Clojure
 export LEIN_SUPPRESS_USER_LEVEL_REPO_WARNINGS=true
 
+# package management
+export HOMEBREW_NO_AUTO_UPDATE=1
+
 # dev
 export DEV_HOME="$HOME/dev"
 

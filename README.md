@@ -9,7 +9,7 @@ Personal dotfiles.
 
 ```sh
 git clone https://github.com/denisidoro/dotfiles.git ~/.dotfiles
-~/.dotfiles/scripts/environment/init
+~/.dotfiles/scripts/environment/install
 ```
 
 If the setup went OK you should now have the `dot` command in your `$PATH`.
@@ -17,5 +17,5 @@ If the setup went OK you should now have the `dot` command in your `$PATH`.
 ### Updating
 
 ```sh
-dot env update
+dot env install
 ```

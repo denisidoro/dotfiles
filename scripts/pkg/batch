@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/pkg/aux/batch.sh"
+
+##? Install multiple dependencies
+##?
+##? Usage:
+##?    batch list <name>
+##?    batch prompt <name>
+##?    batch <name>
+
+# input parsing
+list=false
+prompt=false
+case "${1:-}" in
+   list) list=true; shift;;
+   prompt) prompt=true; shift;;
+esac
+name="$1"
+
+_list() {
+   batch::dependencies "$name" | xargs | tr ' ' '\n'
+}
+
+if $list; then
+   _list
+   exit 0
+fi
+
+if _list | xargs which > /dev/null; then
+   log::note "All dependencies already installed for the batch $name"
+   exit 0
+fi
+
+if $prompt; then
+   log::warning "There are missing dependencies for the batch $name"
+   if ! feedback::confirmation "Do you want to install it?"; then
+      exit 1
+   fi
+fi
+
+deps="$(batch::dependencies "$name" | str::join)"
+dot pkg add "${deps[@]}"

@@ -7,10 +7,10 @@ export DOTFILES="${DOTFILES:-$ROOT_DIR}"
 source "${DOTFILES}/tests/aux/core.sh"
 
 _output() {
-   echo no | "$DOT_PATH" -d "environment" "init"
+   echo no | "$DOT_PATH" -d "environment" "install"
 }
 
-test::fact "scripts/environment/init starts"
+test::fact "The installation scripts starts"
 
 echo "$(_output)" \
    | grep risk \
