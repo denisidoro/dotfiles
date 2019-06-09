@@ -6,7 +6,7 @@
 # ===============
 
 alias o="dot_or_args open --"
-alias r="dot_or_args ranger --"
+alias f="dot_or_args vifm --"
 
 # ===============
 # listing
@@ -32,6 +32,8 @@ jn() { local readonly f="$(dot -d shell jump work "$@")" && cd "$f"; }
 jjf() { local readonly f="$(dot -d shell jump file "$@")" && cd "$f"; }
 up() { local readonly f="$(dot -d shell jump up "$@")" && cd "$f"; }
 jr() { local readonly f="$(dot -d shell jump root "$@")" && cd "$f"; }
+jr() { local readonly f="$(dot -d shell jump root "$@")" && cd "$f"; }
+fd() { local readonly f="$(dot -d shell fm "$@")" && cd "$f"; }
 alias jv="dot -d shell jump edit global nvim"
 alias jjv="dot -d shell jump edit local nvim"
 alias js="dot -d shell jump edit global code"

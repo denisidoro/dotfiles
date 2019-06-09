@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Simple file manager
+##?
+##? Usage:
+##?    fm
+##?    fm edit <line>
+
+docs::eval "$@"
+
+_ls() {
+   if platform::command_exists colorls; then
+      colorls -lah --sd --color=always | tail -n +2
+   else
+      ls -laH --color=always | tail -n +2
+   fi 
+}
+
+_fzf() {
+   fzf \
+     --ansi \
+     --reverse \
+     --height 10 \
+     --bind='ctrl-o:execute(dot shell fm edit {})+abort' # TODO
+}
+
+_strip() {
+   rev \
+      | xargs \
+      | cut -d' ' -f1 \
+      | rev
+}
+
+_browse() {
+
+   local readonly name="$(_ls | _fzf | _strip)"
+   local readonly path="$(pwd)/${name}"
+
+   if [[ -z "$name" ]]; then
+      echo "$path"
+      exit 0
+   fi
+
+   if fs::is_dir "$path"; then
+      cd "$path"
+      _browse
+   elif fs::is_file "$path"; then
+      dot os open "$path"
+   fi
+
+}
+
+if $edit; then
+   $EDITOR "$(echo "$line" | _strip)"
+   exit 0
+fi
+
+path="$(_browse)"
+if fs::is_dir "$path"; then
+  echo "$path"
+else
+   exit 1
+fi
