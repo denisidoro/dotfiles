@@ -1,10 +1,10 @@
 [nano]
 curl
 git
-nvim
 
 [mini]
 python
+nvim
 unzip
 
 [dev]

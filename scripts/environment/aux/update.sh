@@ -94,12 +94,26 @@ replace_file() {
 
 }
 
+setup_nvim_fallback() {
+   
+   if ! platform::command_exists nvim; then
+     log::warning "nvim isn't installed"
+     if feedback::confirmation "Do you want to setup a fallback?"; then
+        if ! platform::command_exists vim; then
+           ln -s "$(which vi)" /usr/bin/vim || true
+        fi
+        ln -s "$(which vim)" /usr/bin/nvim
+     fi
+   fi
+
+}
+
 install_brew() {
    dot pkg add brew
 }
 
-install_packages() {
-   echo TODO
+install_batch() {
+   dot pkg batch prompt "$1"
 }
 
 

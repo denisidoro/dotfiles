@@ -41,7 +41,11 @@ has_tag "$tags" "android" && { update_dotfiles_android; }
 has_tag "$tags" "wsl" && { update_dotfiles_wsl; }
 
 install_brew
-install_packages
+install_batch "nano"
+install_batch "mini"
+install_batch "dev"
+
+setup_nvim_fallback
 
 install_nvim_plugins
 install_tmux_plugins
