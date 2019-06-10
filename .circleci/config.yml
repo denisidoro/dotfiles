@@ -26,22 +26,22 @@ jobs:
       - run: apk add git
       - run: 
           name: JSON
-          command: ./tests/json
+          command: ./bin/dot -d environment test json
       - run: 
           name: YAML
-          command: ./tests/yaml
+          command: ./bin/dot -d environment test yaml
 
   bashrc:
     <<: *defaults
     steps:
       - checkout
-      - run: ./tests/bashrc
+      - run: ./bin/dot -d environment test bashrc
 
   init:
     <<: *defaults
     steps:
       - checkout
-      - run: ./tests/init
+      - run: ./bin/dot -d environment test init
 
 workflows:
   version: 2

@@ -217,6 +217,8 @@ filetype *.html,*.htm links, lynx
 " Object
 filetype *.o nm %f | less
 
+fileviewer *.json,*.md,*.edn,*clj*,*.xml,*.yaml,*.yml env -uCOLORTERM bat --color always --wrap never --pager never %c -p
+
 " Man page
 filetype *.[1-8] gtbl %c | groff -Tascii -man | less
 fileviewer *.[1-8] gtbl %c | groff -Tascii -man | col -b
@@ -427,3 +429,37 @@ nnoremap <f8> :delete<cr>
 " Block particular shortcut
 "
 " nnoremap <left> <nop>
+
+
+
+
+" iceberg
+" by puven12
+"
+" This colorscheme is based on iceberg colorscheme for vim
+" by cocopon
+
+highlight clear
+
+highlight Win cterm=none ctermfg=255 ctermbg=234
+highlight Directory cterm=bold ctermfg=109 ctermbg=default
+highlight Link cterm=bold ctermfg=216 ctermbg=234
+highlight BrokenLink cterm=bold ctermfg=red ctermbg=239
+highlight Socket cterm=bold ctermfg=green ctermbg=default
+highlight Device cterm=bold ctermfg=red ctermbg=default
+highlight Fifo cterm=bold ctermfg=150 ctermbg=default
+highlight Executable cterm=none ctermfg=150 ctermbg=default
+highlight Selected cterm=none ctermfg=255 ctermbg=236
+highlight CurrLine cterm=reverse
+highlight TopLine cterm=none ctermfg=255 ctermbg=234
+highlight TopLineSel cterm=bold ctermfg=110 ctermbg=default
+highlight StatusLine cterm=none ctermfg=240 ctermbg=235
+highlight WildMenu cterm=underline,reverse ctermfg=255 ctermbg=black
+highlight CmdLine cterm=none ctermfg=255 ctermbg=234
+highlight ErrorMsg cterm=none ctermfg=203 ctermbg=234
+highlight Border cterm=none ctermfg=black ctermbg=234
+highlight JobLine cterm=bold,reverse ctermfg=black ctermbg=255
+highlight SuggestBox cterm=bold ctermfg=default ctermbg=default
+highlight CmpMismatch cterm=bold ctermfg=255 ctermbg=red
+highlight AuxWin cterm=bold,underline,reverse,standout ctermfg=default ctermbg=default
+

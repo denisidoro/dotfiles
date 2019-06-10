@@ -6,7 +6,7 @@
 # ===============
 
 alias o="dot_or_args open --"
-alias f="dot_or_args vifm --"
+f() { dot_or_args vifm -- "$@"; clear; }
 
 # ===============
 # listing

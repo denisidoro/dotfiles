@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Run tests
+##?
+##? Usage:
+##?    test <suite>
+
+suite="$1"
+bash "${DOTFILES}/scripts/environment/tests/${suite}.sh"
+

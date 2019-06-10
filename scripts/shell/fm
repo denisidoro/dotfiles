@@ -58,7 +58,9 @@ _fzf() {
      --ansi \
      --reverse \
      --height 20 \
-     --preview "$DOT -d shell fm preview {}"
+     --preview "$DOT -d shell fm preview {}" \
+     --bind "ctrl-m:execute:
+                echo "{}" | less -R"
 }
 
 _strip() {
@@ -70,7 +72,8 @@ _strip() {
 
 _browse() {
 
-   local readonly name="$(_ls | _fzf | _strip)"
+   local readonly selection="$(_ls | _fzf)"
+   local readonly name
    local readonly path="$(pwd)/${name}"
 
    if [[ -z "$name" ]]; then
