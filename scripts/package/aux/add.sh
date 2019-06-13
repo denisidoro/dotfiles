@@ -46,7 +46,7 @@ filter::without_recipe() {
 }
 
 str::join() {
-   tr '\n' ' '
+   tr '\n' ' ' | xargs
 }
 
 str::multiline() {

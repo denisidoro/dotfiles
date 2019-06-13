@@ -14,7 +14,6 @@ export CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 ##?    dot
 ##?    dot <context>
 ##?    dot <context> <cmd> [<args>...]
-##?    dot <context> <cmd> [<args>...]
 
 list_command_paths() {
    find "$DOTFILES/scripts" -maxdepth 2 -executable -type f \

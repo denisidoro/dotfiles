@@ -3,6 +3,7 @@ set -euo pipefail
 
 export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 REPO="https://github.com/denisidoro/dotfiles.git"
+BIN_DOT="${DOTFILES}/bin/dot"
 
 ##? Setups the environment
 #?? 0.3.0
@@ -11,7 +12,7 @@ REPO="https://github.com/denisidoro/dotfiles.git"
 ##?    init
 
 _dot() {
-   "${DOTFILES}/bin/dot" "$@"
+   "$BIN_DOT" "$@"
 }
 
 clone_repo() {
@@ -33,7 +34,7 @@ else
    exit
 fi
 
-if [ -f "$DOTFILES/bin/dot" ]; then
+if [ -f "$BIN_DOT" ]; then
    :
 elif [ -f "$DOTFILES" ]; then
    echo "Backing up existing .dotfiles folder and cloning new .dotfiles..."
