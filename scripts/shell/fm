@@ -29,7 +29,7 @@ _ls() {
 _fzf() {
    local readonly ctrl_h="ctrl-h:execute(echo ..)+abort"
    local readonly ctrl_space="ctrl-space:abort"
-   local readonly ctrl_p="ctrl-p:execute($DOT_BIN shell less {} | less -R > /dev/tty)"
+   local readonly ctrl_p="ctrl-p:execute(dpt shell less {} | less -R > /dev/tty)"
    local readonly ctrl_e="ctrl-e:execute(vim {} < /dev/tty > /dev/tty)"
    local readonly bind="${ctrl_h},${ctrl_space},${ctrl_p},${ctrl_e}"
 
@@ -40,7 +40,7 @@ _fzf() {
       --inline-info \
       --header "$(pwd)" \
       --height 20 \
-      --preview "$DOT_BIN shell fm preview {}" \
+      --preview "dot shell fm preview {}" \
       --bind "$bind"
 }
 
