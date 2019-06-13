@@ -40,6 +40,6 @@ platform::tags() {
 }
 
 if ! platform::command_exists dot; then
-   dot() { "$DOTFILES/bin/dot" "$@"; }
+   dot() { "$DOT_BIN" "$@"; }
    export -f dot
 fi

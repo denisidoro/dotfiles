@@ -4,7 +4,7 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/environment/aux/test.sh"
 
-res="$(dot::call environment health)"
+res="$(dot environment health)"
 
 test::fact "dot <ctx> <cmd> works"
 

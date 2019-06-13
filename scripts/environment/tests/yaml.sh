@@ -15,5 +15,5 @@ cd "$DOTFILES"
 
 _find_yamls \
    | grep -Ev 'node_modules|cache|modules/|lock.json' \
-   | xargs -I% "$DOT_BIN" code parser yaml % \
+   | xargs -I% dot code parser yaml % \
    && test::success || test::fail
