@@ -12,5 +12,5 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 sed -E 's/(\w)\s+/\1%/' \
-  | column -s% -t \
-  | sed 's/%/ /'
+   | column -s% -t \
+   | sed 's/%/ /'

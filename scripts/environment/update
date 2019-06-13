@@ -21,7 +21,7 @@ echo
 
 set +e
 
-update_submodules 2>/dev/null || true 
+update_submodules 2>/dev/null || true
 setup_folders_and_files
 setup_git_credentials
 setup_docopts

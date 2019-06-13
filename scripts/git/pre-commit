@@ -10,9 +10,9 @@ files=$(git diff-index --name-only --diff-filter=ACM --cached HEAD -- || echo ""
 git::check_json "$files"
 
 if git rev-parse --verify HEAD >/dev/null 2>&1; then
-	against="HEAD"
+   against="HEAD"
 else
-	against=$(git hash-object -t tree /dev/null)
+   against=$(git hash-object -t tree /dev/null)
 fi
 
 git_diff=$(git diff --cached --name-only "$against")

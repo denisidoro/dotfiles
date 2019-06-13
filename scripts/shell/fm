@@ -14,8 +14,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 edit=false
 preview=false
 case "${1:-}" in
-  "edit") edit=true; line="${2:-}";;
-  "preview") preview=true; line="${2:-}";;
+   "edit") edit=true; line="${2:-}" ;;
+   "preview") preview=true; line="${2:-}" ;;
 esac
 
 _ls() {
@@ -23,7 +23,7 @@ _ls() {
       colorls -a1 --color=always | cut -c5- | tail -n +2
    else
       ls -a1 --color=always | tail -n +2
-   fi 
+   fi
 }
 
 _fzf() {
@@ -34,14 +34,14 @@ _fzf() {
    local readonly bind="${ctrl_h},${ctrl_space},${ctrl_p},${ctrl_e}"
 
    fzf-tmux \
-     --ansi \
-     --cycle \
-     --layout=reverse \
-     --inline-info \
-     --header "$(pwd)" \
-     --height 20 \
-     --preview "$DOT_BIN shell fm preview {}" \
-     --bind "$bind"
+      --ansi \
+      --cycle \
+      --layout=reverse \
+      --inline-info \
+      --header "$(pwd)" \
+      --height 20 \
+      --preview "$DOT_BIN shell fm preview {}" \
+      --bind "$bind"
 }
 
 _strip() {
@@ -72,21 +72,21 @@ _browse() {
 }
 
 if $preview; then
-  name="$(echo "$line" | _strip)"
-  path="$name"
-  if fs::is_dir "$path"; then
-     ls "$path"
-  elif fs::is_file "$path"; then
-     dot shell less "$path" --color=always
-  fi
-  exit 0
+   name="$(echo "$line" | _strip)"
+   path="$name"
+   if fs::is_dir "$path"; then
+      ls "$path"
+   elif fs::is_file "$path"; then
+      dot shell less "$path" --color=always
+   fi
+   exit 0
 fi
 
 _browse
 
 path="$(_browse)"
 if fs::is_dir "$path"; then
-  echo "$path"
+   echo "$path"
 else
    exit 1
 fi
