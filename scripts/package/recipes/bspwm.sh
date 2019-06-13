@@ -2,7 +2,7 @@
 # vim: filetype=sh
 set -euo pipefail
 
-source "${DOTFILES}/scripts/pkg/aux/recipes.sh"
+source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 if ! platform::command_exists bspwm; then
    sudo apt-get install xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev gcc make feh dmenu rofi \

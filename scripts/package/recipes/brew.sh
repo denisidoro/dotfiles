@@ -2,7 +2,7 @@
 # vim: filetype=sh
 set -euo pipefail
 
-source "${DOTFILES}/scripts/pkg/aux/recipes.sh"
+source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 _brew_osx() {
    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"

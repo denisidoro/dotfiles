@@ -102,6 +102,20 @@ fzf_prompt() {
    fi
 }
 
+_alias() {
+   case "$1" in
+      env) echo environment;;
+      clj) echo clojure;;
+      down) echo download;;
+      pkg) echo package;;
+      emu) echo emulation;;
+      and) echo android;;
+      sec) echo security;;
+      sh) echo shell;;
+      *) echo "$1";;
+   esac
+}
+
 if [[ $# -eq 0 ]]; then
    # Shows available contexts
    # or prompts for a command if fzf is installed
@@ -113,7 +127,7 @@ if [[ $# -eq 0 ]]; then
 elif [[ $# -eq 1 ]]; then
    # Shows available commands for a given context
 
-   context_query="$1"
+   context_query="$(_alias $1)"
    paths="$(list_command_paths)"
    contexts="$(list_contexts "$paths")"
    find_context "$contexts" "$context_query"
@@ -122,7 +136,7 @@ elif [[ $# -eq 1 ]]; then
 else
    # Executes a command directly
 
-   ctx="$1"
+   ctx="$(_alias $1)"
    cmd="$2"
 
    shift 2

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-RECIPES_FOLDER="${DOTFILES}/scripts/pkg/recipes"
+RECIPES_FOLDER="${DOTFILES}/scripts/package/recipes"
 
 platform::main_package_manager() {
    if platform::is_osx; then

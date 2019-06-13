@@ -3,7 +3,7 @@
 set -u
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/pkg/aux/add.sh"
+source "${DOTFILES}/scripts/package/aux/add.sh"
 
 ##? Install dependencies, abstracting away package managers
 ##? and custom recipes
