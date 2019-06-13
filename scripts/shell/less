@@ -3,13 +3,8 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
-##? Jump to files, folders or editing
+##? cat/pager utility abstraction
 #?? 0.1.0
-##?
-##? Usage:
-##?    jump (global|local|work|file) <args>...
-##?    jump (up|root) <args>...
-##?    jump edit (global|local) <editor> <args>...
 
 # argument parsing
 args=()
@@ -27,7 +22,7 @@ done
 
 # fallback in case of missing binaries
 if ! platform::command_exists bat; then
-   less "$@"
+   less -R "$@"
    exit 0
 fi
 
@@ -35,9 +30,8 @@ fi
 language=""
 if [[ -n "${filename:-}" ]]; then
    language="${filename##*.}"
-   args+=("--language")
-   args+=("$language")
+   args+=("--language=${language}")
 fi
 
 # call
-bat "${args[@]}" --plain
+bat --plain --color=always "${args[@]}"
