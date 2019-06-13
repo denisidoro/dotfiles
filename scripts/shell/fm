@@ -18,8 +18,6 @@ case "${1:-}" in
   "preview") preview=true; line="${2:-}";;
 esac
 
-DOT="${DOTFILES}/bin/dot"
-
 _less() {
    local readonly extension="${1:-}"
    if [ -x "$(command -v bat)" ]; then
@@ -53,14 +51,24 @@ _ls() {
    fi 
 }
 
+# TODO: 
+# --bind "ctrl-m:execute:echo "{}" | less -R"
 _fzf() {
+   local readonly ctrl_h="ctrl-h:execute(echo ..)+abort"
+   local readonly ctrl_space="ctrl-space:abort"
+   local readonly ctrl_p="ctrl-p:execute(cat {} | less -R > /dev/tty)"
+   local readonly ctrl_e="ctrl-e:execute(vim {} < /dev/tty > /dev/tty)"
+   local readonly bind="${ctrl_h},${ctrl_space},${ctrl_p},${ctrl_e}"
+
    fzf-tmux \
      --ansi \
-     --reverse \
+     --cycle \
+     --layout=reverse \
+     --inline-info \
+     --header "$(pwd)" \
      --height 20 \
-     --preview "$DOT -d shell fm preview {}" \
-     --bind "ctrl-m:execute:
-                echo "{}" | less -R"
+     --preview "$DOT_BIN shell fm preview {}" \
+     --bind "$bind"
 }
 
 _strip() {
@@ -73,7 +81,7 @@ _strip() {
 _browse() {
 
    local readonly selection="$(_ls | _fzf)"
-   local readonly name
+   local readonly name="$(echo "$selection" | _strip)"
    local readonly path="$(pwd)/${name}"
 
    if [[ -z "$name" ]]; then
@@ -100,6 +108,8 @@ if $preview; then
   fi
   exit 0
 fi
+
+_browse
 
 path="$(_browse)"
 if fs::is_dir "$path"; then

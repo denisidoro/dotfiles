@@ -19,7 +19,7 @@ test::fact() {
 
 dot::call() {
    if platform::command_exists dot; then
-      dot -d "$@"
+      dot "$@"
    else
       "$DOT_PATH" -d "$@"
    fi

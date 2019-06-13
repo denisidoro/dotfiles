@@ -14,7 +14,7 @@ export CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 ##?    dot
 ##?    dot <context>
 ##?    dot <context> <cmd> [<args>...]
-##?    dot -d <context> <cmd> [<args>...]
+##?    dot <context> <cmd> [<args>...]
 
 list_command_paths() {
    find "$DOTFILES/scripts" -maxdepth 2 -executable -type f \
@@ -119,25 +119,13 @@ elif [[ $# -eq 1 ]]; then
    find_context "$contexts" "$context_query"
    list_paths_for_context "$paths" "$CTX" | xargs -I % -d '\n' basename "%"
 
-elif [[ $# -gt 1 ]] && [ "$1" != "-d" ]; then
-   # Executes a command by substring
-
-   paths="$(list_command_paths)"
-   context_query="$1"; cmd_query="$2"
-   contexts="$(list_contexts "$paths")"
-   find_context "$contexts" "$context_query"
-   find_command "$paths" "$CTX" "$cmd_query"
-
-   shift 2
-   "${DOTFILES}/scripts/${CTX}/${CMD}" "$@"
-
 else
    # Executes a command directly
 
-   ctx="$2"
-   cmd="$3"
+   ctx="$1"
+   cmd="$2"
 
-   shift 3
+   shift 2
    "${DOTFILES}/scripts/${ctx}/${cmd}" "$@"
 
 fi

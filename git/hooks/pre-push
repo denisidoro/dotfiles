@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-dot -d git pre-push "$@"
+dot git pre-push "$@"

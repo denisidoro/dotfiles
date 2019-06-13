@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Jump to files, folders or editing
+#?? 0.1.0
+##?
+##? Usage:
+##?    jump (global|local|work|file) <args>...
+##?    jump (up|root) <args>...
+##?    jump edit (global|local) <editor> <args>...
+
+# argument parsing
+args=()
+variable=""
+for arg in $@; do
+   if [[ $arg == "--filename" ]]; then
+      variable="filename"
+   elif [[ -n $variable ]]; then
+      eval "$variable"='"$arg"'
+      variable=""
+   else
+      args+=("$arg")
+   fi
+done
+
+# fallback in case of missing binaries
+if ! platform::command_exists bat; then
+   less "$@"
+   exit 0
+fi
+
+# language inference
+language=""
+if [[ -n "${filename:-}" ]]; then
+   language="${filename##*.}"
+   args+=("--language")
+   args+=("$language")
+fi
+
+# call
+bat "${args[@]}" --plain

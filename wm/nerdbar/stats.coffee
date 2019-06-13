@@ -1,5 +1,5 @@
 command: """
-	$HOME/.dotfiles/bin/dot -d info bar all
+	$HOME/.dotfiles/bin/dot info bar all
 	# echo "21:44;01-Jan;94;31.9;40.9;62;Wi-Fi;KitKat"
 """
 

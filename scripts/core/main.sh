@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 if [ -z ${DOT_MAIN_IMPORTED+x} ] || ! "${DOT_MAIN_IMPORTED}"; then
+   export DOT_BIN="${DOTFILES}/bin/dot"
    source "${DOTFILES}/scripts/core/platform.sh"
    source "${DOTFILES}/scripts/core/osx_gnu.sh"
    source "${DOTFILES}/scripts/core/collections.sh"

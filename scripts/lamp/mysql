@@ -7,17 +7,17 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? MySQL helper utilities
 ##?
 ##? Usage:
-##?   mysql backup <username> <database> <path> 
+##?   mysql export <username> <database> <path> 
 ##?   mysql import <username> <database> <path> 
 ##?
 ##? Examples:
-##?   mysql backup root mydb backup.sql 
+##?   mysql export root mydb backup.sql 
 ##?   mysql import root mydb backup.sql 
 
 docs::eval "$@"
 
-if $backup; then
+if $export; then
   mysqldump -u "$username" -p "$database" > "$path"
 elif $import;
-  mysqldump -u "$username" -p "$database" < "$path"
+  mysql -u "$username" -p "$database" < "$path"
 fi

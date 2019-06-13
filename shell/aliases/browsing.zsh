@@ -6,7 +6,8 @@
 # ===============
 
 alias o="dot_or_args open --"
-f() { dot_or_args vifm -- "$@"; clear; }
+unalias f
+alias f="dot_or_args vifm --"
 
 # ===============
 # listing
@@ -26,15 +27,15 @@ mkcd() {
 # ===============
 # jumping
 # ===============
-j() { local readonly f="$(dot -d shell jump global "$@")" && cd "$f"; }
-jj() { local readonly f="$(dot -d shell jump local "$@")" && cd "$f"; }
-jn() { local readonly f="$(dot -d shell jump work "$@")" && cd "$f"; }
-jjf() { local readonly f="$(dot -d shell jump file "$@")" && cd "$f"; }
-up() { local readonly f="$(dot -d shell jump up "$@")" && cd "$f"; }
-jr() { local readonly f="$(dot -d shell jump root "$@")" && cd "$f"; }
-jr() { local readonly f="$(dot -d shell jump root "$@")" && cd "$f"; }
-fd() { local readonly f="$(dot -d shell fm "$@")" && cd "$f"; }
-alias jv="dot -d shell jump edit global nvim"
-alias jjv="dot -d shell jump edit local nvim"
-alias js="dot -d shell jump edit global code"
-alias jjs="dot -d shell jump edit local code"
+j() { local readonly f="$(dot shell jump global "$@")" && cd "$f"; }
+jj() { local readonly f="$(dot shell jump local "$@")" && cd "$f"; }
+jn() { local readonly f="$(dot shell jump work "$@")" && cd "$f"; }
+jjf() { local readonly f="$(dot shell jump file "$@")" && cd "$f"; }
+up() { local readonly f="$(dot shell jump up "$@")" && cd "$f"; }
+jr() { local readonly f="$(dot shell jump root "$@")" && cd "$f"; }
+jr() { local readonly f="$(dot shell jump root "$@")" && cd "$f"; }
+fd() { local readonly f="$(dot shell fm "$@")" && cd "$f"; }
+alias jv="dot shell jump edit global nvim"
+alias jjv="dot shell jump edit local nvim"
+alias js="dot shell jump edit global code"
+alias jjs="dot shell jump edit local code"
