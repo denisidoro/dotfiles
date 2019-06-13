@@ -5,7 +5,7 @@ set -euo pipefail
 source "${DOTFILES}/scripts/environment/aux/test.sh"
 
 _output() {
-   echo no | "$DOT_PATH" -d "environment" "install"
+   echo no | "$DOT_BIN" "environment" "install"
 }
 
 test::fact "The installation scripts starts"

@@ -10,5 +10,5 @@ cd "$DOTFILES"
 
 find . -iname "*.json" \
    | grep -Ev 'node_modules|cache|modules/|lock.json' \
-   | xargs -I% "$DOT_PATH" -d code parser json % \
+   | xargs -I% "$DOT_BIN" code parser json % \
    && test::success || test::fail
