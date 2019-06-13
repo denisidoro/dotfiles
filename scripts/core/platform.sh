@@ -40,7 +40,7 @@ platform::tags() {
 }
 
 if ! platform::command_exists dot; then
-   echo "Exporting dot command"
-   dot() { "$DOT_BIN" "$@"; }
-   export -f dot
+   # dot() { "$DOT_BIN" "$@"; }
+   # export -f dot
+   export PATH="${DOTFILES}/bin/:${PATH}"
 fi
