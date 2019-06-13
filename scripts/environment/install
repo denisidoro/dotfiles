@@ -11,7 +11,7 @@ REPO="https://github.com/denisidoro/dotfiles.git"
 ##?    init
 
 _dot() {
-   "${DOTFILES}/bin/dot" -d "$@"
+   "${DOTFILES}/bin/dot" "$@"
 }
 
 clone_repo() {
