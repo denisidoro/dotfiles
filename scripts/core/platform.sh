@@ -40,7 +40,5 @@ platform::tags() {
 }
 
 if ! platform::command_exists dot; then
-   # dot() { "$DOT_BIN" "$@"; }
-   # export -f dot
    export PATH="${DOTFILES}/bin/:${PATH}"
 fi
