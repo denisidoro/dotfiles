@@ -2,9 +2,7 @@
 # vim: filetype=sh
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)"
-export DOTFILES="${DOTFILES:-$ROOT_DIR}"
-source "${DOTFILES}/tests/aux/core.sh"
+source "${DOTFILES}/scripts/environment/aux/test.sh"
 
 test::fact "sourcing bashrc doesn't throw an exception"
 

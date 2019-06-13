@@ -3,7 +3,7 @@
 set -u
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/pkg/aux/add.sh"
+source "${DOTFILES}/scripts/package/aux/add.sh"
 
 ##? Install dependencies, abstracting away package managers
 ##? and custom recipes
@@ -16,17 +16,17 @@ recipes_as_regex="$(recipe::list | xargs | str::regex)"
 
 deps_with_recipe="$(filter::with_recipe "$deps" "$recipes_as_regex" | str::join)"
 for dep in $deps_with_recipe; do
-  log::note "Installing $dep..."
-  recipe::install "$dep"
-done 
+   log::note "Installing $dep..."
+   recipe::install "$dep"
+done
 
 deps_without_recipe="$(filter::without_recipe "$deps" "$recipes_as_regex" | str::join)"
 if [[ -n "$deps_without_recipe" ]]; then
    log::note "Installing $deps_without_recipe"
    pkg="$(platform::main_package_manager)"
    if [[ "$pkg" = "brew" ]]; then
-   	 "$pkg" install "${deps_without_recipe[@]}"
+      "$pkg" install "${deps_without_recipe[@]}"
    else
-   	 sudo "$pkg" install "${deps_without_recipe[@]}"
+      sudo "$pkg" install "${deps_without_recipe[@]}"
    fi
 fi

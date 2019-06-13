@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? cat/pager utility abstraction
+#?? 0.1.0
+
+# argument parsing
+args=()
+variable=""
+for arg in $@; do
+   if [[ $arg == "--filename" ]]; then
+      variable="filename"
+   elif [[ -n $variable ]]; then
+      eval "$variable"='"$arg"'
+      variable=""
+   else
+      args+=("$arg")
+   fi
+done
+
+# fallback in case of missing binaries
+if ! platform::command_exists bat; then
+   less -R "$@"
+   exit 0
+fi
+
+# language inference
+language=""
+if [[ -n "${filename:-}" ]]; then
+   language="${filename##*.}"
+   args+=("--language=${language}")
+fi
+
+# call
+bat --plain --color=always "${args[@]}"

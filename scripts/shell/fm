@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Simple file manager
+##?
+##? Usage:
+##?    fm
+##?    fm edit <line>
+##?    fm preview <line>
+
+# input parsing
+edit=false
+preview=false
+case "${1:-}" in
+   "edit") edit=true; line="${2:-}" ;;
+   "preview") preview=true; line="${2:-}" ;;
+esac
+
+_ls() {
+   if platform::command_exists colorls; then
+      colorls -a1 --color=always | cut -c5- | tail -n +2
+   else
+      ls -a1 --color=always | tail -n +2
+   fi
+}
+
+_fzf() {
+   local readonly ctrl_h="ctrl-h:execute(echo ..)+abort"
+   local readonly ctrl_space="ctrl-space:abort"
+   local readonly ctrl_p="ctrl-p:execute(dpt shell less {} | less -R > /dev/tty)"
+   local readonly ctrl_e="ctrl-e:execute(vim {} < /dev/tty > /dev/tty)"
+   local readonly bind="${ctrl_h},${ctrl_space},${ctrl_p},${ctrl_e}"
+
+   fzf-tmux \
+      --ansi \
+      --cycle \
+      --layout=reverse \
+      --inline-info \
+      --header "$(pwd)" \
+      --height 20 \
+      --preview "dot shell fm preview {}" \
+      --bind "$bind"
+}
+
+_strip() {
+   rev \
+      | xargs \
+      | cut -d' ' -f1 \
+      | rev
+}
+
+_browse() {
+
+   local readonly selection="$(_ls | _fzf)"
+   local readonly name="$(echo "$selection" | _strip)"
+   local readonly path="$(pwd)/${name}"
+
+   if [[ -z "$name" ]]; then
+      echo "$path"
+      exit 0
+   fi
+
+   if fs::is_dir "$path"; then
+      cd "$path"
+      _browse
+   elif fs::is_file "$path"; then
+      dot os open "$path"
+   fi
+
+}
+
+if $preview; then
+   name="$(echo "$line" | _strip)"
+   path="$name"
+   if fs::is_dir "$path"; then
+      ls "$path"
+   elif fs::is_file "$path"; then
+      dot shell less "$path" --color=always
+   fi
+   exit 0
+fi
+
+_browse
+
+path="$(_browse)"
+if fs::is_dir "$path"; then
+   echo "$path"
+else
+   exit 1
+fi

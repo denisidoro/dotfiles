@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Run tests
+##?
+##? Usage:
+##?    test <suite>
+
+suite="$1"
+bash "${DOTFILES}/scripts/environment/tests/${suite}.sh"
+

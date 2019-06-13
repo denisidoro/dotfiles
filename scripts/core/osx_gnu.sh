@@ -7,6 +7,7 @@ if platform::is_osx && platform::command_exists ggrep; then
    grep() { ggrep "$@"; }
    head() { ghead "$@"; }
    mktemp() { gmktemp "$@"; }
+   ls() { gls "$@"; }
    date() { gdate "$@"; }
    shred() { gshred "$@"; }
    cut() { gcut "$@"; }

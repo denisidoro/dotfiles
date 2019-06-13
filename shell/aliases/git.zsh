@@ -6,20 +6,20 @@ alias gcom="git checkout master"
 alias gmm="git merge master"
 
 # update
-alias gu="dot -d git pull module"
-alias gum="dot -d git pull master"
+alias gu="dot git pull module"
+alias gum="dot git pull master"
 
 # git status with tig
 alias tst="tig status"
 
 # git push upstream
-alias gpu="dot -d git push upstream"
+alias gpu="dot git push upstream"
 
 # git commit with push
-alias gcamp="dot -d git push commit"
+alias gcamp="dot git push commit"
 
 # preview PR
-alias gprp="dot -d git pr preview"
+alias gprp="dot git pr preview"
 
 # git interactive checkout
-alias gcoo="dot -d git checkout"
+alias gcoo="dot git checkout"

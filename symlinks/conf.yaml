@@ -14,6 +14,7 @@
     ~/.gitconfig: git/config
     ~/.ideavimrc: editors/intellij/ideavim.rc
     ~/.gitignore: git/home.ignore
+    ~/.vifm/vifmrc: terminal/vifm/vifmrc
     ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings: editors/sublime/preferences.json
     ~/.clojure/deps.edn: languages/clojure/deps.edn
     ~/.lein/profiles.clj: languages/clojure/profiles.clj

@@ -3,7 +3,7 @@
 set -euo pipefail
 IFS=$' \n\t'
 
-export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)}"
 source "$DOTFILES/scripts/core/main.sh"
 export CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 
@@ -14,7 +14,7 @@ export CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 ##?    dot
 ##?    dot <context>
 ##?    dot <context> <cmd> [<args>...]
-##?    dot -d <context> <cmd> [<args>...]
+##?    dot <context> <cmd> [<args>...]
 
 list_command_paths() {
    find "$DOTFILES/scripts" -maxdepth 2 -executable -type f \
@@ -102,6 +102,20 @@ fzf_prompt() {
    fi
 }
 
+_alias() {
+   case "$1" in
+      env) echo environment;;
+      clj) echo clojure;;
+      down) echo download;;
+      pkg) echo package;;
+      emu) echo emulation;;
+      and) echo android;;
+      sec) echo security;;
+      sh) echo shell;;
+      *) echo "$1";;
+   esac
+}
+
 if [[ $# -eq 0 ]]; then
    # Shows available contexts
    # or prompts for a command if fzf is installed
@@ -113,31 +127,19 @@ if [[ $# -eq 0 ]]; then
 elif [[ $# -eq 1 ]]; then
    # Shows available commands for a given context
 
-   context_query="$1"
+   context_query="$(_alias $1)"
    paths="$(list_command_paths)"
    contexts="$(list_contexts "$paths")"
    find_context "$contexts" "$context_query"
    list_paths_for_context "$paths" "$CTX" | xargs -I % -d '\n' basename "%"
 
-elif [[ $# -gt 1 ]] && [ "$1" != "-d" ]; then
-   # Executes a command by substring
-
-   paths="$(list_command_paths)"
-   context_query="$1"; cmd_query="$2"
-   contexts="$(list_contexts "$paths")"
-   find_context "$contexts" "$context_query"
-   find_command "$paths" "$CTX" "$cmd_query"
-
-   shift 2
-   "${DOTFILES}/scripts/${CTX}/${CMD}" "$@"
-
 else
    # Executes a command directly
 
-   ctx="$2"
-   cmd="$3"
+   ctx="$(_alias $1)"
+   cmd="$2"
 
-   shift 3
+   shift 2
    "${DOTFILES}/scripts/${ctx}/${cmd}" "$@"
 
 fi

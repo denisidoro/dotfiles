@@ -9,3 +9,8 @@ fs::is_dir() {
    local dir=${1}
    [[ -d ${dir} ]]
 }
+
+fs::realpath() {
+   local readonly relative_path="$1"
+   echo "$(cd "$(dirname "$relative_path")"; pwd)/$(basename "$relative_path")"
+}

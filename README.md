@@ -17,5 +17,5 @@ If the setup went OK you should now have the `dot` command in your `$PATH`.
 ### Updating
 
 ```sh
-dot env install
+dot env update
 ```

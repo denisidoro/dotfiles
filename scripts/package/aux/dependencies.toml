@@ -6,12 +6,11 @@ git
 python
 nvim
 unzip
+vifm
 
 [dev]
 zsh
 tmux
-fasd
-ranger
 fasd
 tig
 ag

@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-RECIPES_FILE="${DOTFILES}/scripts/pkg/aux/recipes.sh"
-source "$RECIPES_FILE"
+RECIPES_FOLDER="${DOTFILES}/scripts/package/recipes"
 
 platform::main_package_manager() {
    if platform::is_osx; then
@@ -25,14 +24,13 @@ platform::main_package_manager() {
 }
 
 recipe::list() {
-  cat "${RECIPES_FILE}" \
-    | grep recipe:: \
-    | sed -E 's/recipe::(.*?)\(.*/\1/g'
+  ls "${RECIPES_FOLDER}" \
+    | sed 's/.sh//g'
 }
 
 recipe::install() {
    local readonly dep="$1"
-   "recipe::${dep}"
+   bash "${RECIPES_FOLDER}/${dep}.sh"
 }
 
 filter::with_recipe() {

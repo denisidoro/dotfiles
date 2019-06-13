@@ -16,8 +16,8 @@ docs::eval() {
 
    if [[ ${DOTFILES_DOCOPTS:-python} == "bash" ]]; then
       if _get_awk_version | head -n1 | grep -q mawk 2> /dev/null; then
-        echo "Parsing docopts with mawk won't work. Please install gawk or python"
-        exit 666
+         echo "Parsing docopts with mawk won't work. Please install gawk or python"
+         exit 666
       fi
       docopts="$DOTFILES/modules/docoptsh/docoptsh"
    else
