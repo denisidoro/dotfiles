@@ -22,4 +22,4 @@ alias gcamp="dot git push commit"
 alias gprp="dot git pr preview"
 
 # git interactive checkout
-alias gcoo="dot git checkout"
+alias gcoo="dot git checkout prompt"

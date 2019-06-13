@@ -8,7 +8,10 @@ source "${DOTFILES}/scripts/core/git.sh"
 #?? 0.1.0
 ##?
 ##? Usage:
-##?    checkout
+##?    checkout prompt
+##?    checkout latest
+
+docs::eval "$@"
 
 _tags() {
    git tag \
@@ -56,4 +59,10 @@ _checkout() {
    git checkout $(echo "$target" | awk '{print $2}')
 }
 
-_checkout "$@"
+if $prompt; then
+   _checkout "$@"
+elif $latest
+    git branch --sort=-committerdate \
+       | head -n1 \
+       | cut -c3-
+fi
