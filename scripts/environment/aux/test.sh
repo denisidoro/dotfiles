@@ -15,11 +15,3 @@ test::success() {
 test::fact() {
    log::warning "Test case: $@"
 }
-
-dot::call() {
-   if platform::command_exists dot; then
-      dot "$@"
-   else
-      "$DOT_BIN" "$@"
-   fi
-}
