@@ -36,7 +36,9 @@ url="$(url::get)"
 if platform::command_exists wget; then
    wget "$url" --output-document docopts
 else
-   curl -O "$url" --output docopts
+   curl -O "$url"
+   filename="$(ls | head -n1)"
+   mv "$filename" "docopts"
 fi
 
 sudo chmod +x "${folder}/docopts"
