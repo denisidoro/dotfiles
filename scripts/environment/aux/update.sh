@@ -31,7 +31,7 @@ get_git_info() {
 
 setup_folders_and_files() {
 
-   echo log::note "Setting up folder and file hierarchy..."
+   log::note "Setting up folder and file hierarchy..."
    mkdir -p "$LOCAL_BIN" || true
    touch "$LOCAL_ZSHRC" || true
    touch "$LOCAL_GITCONFIG" || true
@@ -45,7 +45,7 @@ setup_folders_and_files() {
 
 update_submodules() {
 
-   echo log::note "Attempting to update submodules..."
+   log::note "Attempting to update submodules..."
    cd "$DOTFILES"
    git pull 
    git submodule init 
@@ -150,7 +150,7 @@ install_batch() {
 install_nvim_plugins() {
 
    if platform::command_exists nvim && feedback::confirmation "Do you want to install neovim plugins?"; then
-     echo log::note "Installing neovim plugins..."
+     log::note "Installing neovim plugins..."
      nvim +silent +PlugInstall +qall >/dev/null
    fi
 
@@ -159,7 +159,7 @@ install_nvim_plugins() {
 install_tmux_plugins() {
 
    if platform::command_exists tmux && feedback::confirmation "Do you want to install tmux plugins?"; then
-     echo log::note "Installing tpm plugins..."
+     log::note "Installing tpm plugins..."
      export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
      bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/install_plugins" >/dev/null
      bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/update_plugins" all >/dev/null
@@ -170,7 +170,7 @@ install_tmux_plugins() {
 install_zplug_plugins() {
 
    if platform::command_exists zplug && feedback::confirmation "Do you want to install tmux plugins?"; then
-     echo log::note "Installing ZPlug plugins..."
+     log::note "Installing ZPlug plugins..."
      zplug install 2>/dev/null
    fi
 
