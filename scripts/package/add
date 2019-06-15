@@ -12,6 +12,8 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 ##? Usage:
 ##?    add <deps>...
 
+docs::eval "$@"
+
 deps="$(echo "$@" | str::multiline)"
 recipes_as_regex="$(recipe::list | xargs | str::regex)"
 

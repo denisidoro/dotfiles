@@ -24,8 +24,9 @@ echo
 set +e
 
 setup_sudo_fallback
+dot pkg update 2> /dev/null
 
-update_submodules 2>/dev/null || true
+update_submodules 2> /dev/null || true
 setup_folders_and_files
 setup_git_credentials
 setup_docopts

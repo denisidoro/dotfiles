@@ -27,17 +27,14 @@ if docopts --version 2> /dev/null | grep -q golang; then
    recipe::abort_installed "docopts-go"
 fi
 
+dot pkg add wget
+
 folder="$(recipe::folder docopts-go)"
 mkdir -p "$folder" || true
 cd "$folder"
 
 url="$(url::get)"
-
-if platform::command_exists wget; then
-   wget "$url" --output-document docopts
-else
-   curl -O "$url" --location --output docopts
-fi
+wget "$url" --output-document docopts
 
 sudo chmod +x "${folder}/docopts"
 sudo mv "${folder}/docopts" "/usr/local/bin/docopts"
