@@ -34,10 +34,32 @@ feedback::confirmation() {
 }
 
 feedback::text() {
-
    local readonly question="$1"
    printf "$1 " >&2
    read answer
    echo "$answer"
+}
 
+feedback::select_option() {
+   if platform::command_exists fzf; then
+      fzf "$@"
+   else 
+      local readonly options="$(cat)"
+      local readonly digits="$(printf "$options" | wc -l | wc -m | xargs -I% echo "% - 1" | bc || echo 2)"
+      echo "$options" | awk "{printf(\"%${digits}d %s\n\", NR, \$0)}"
+      echo
+
+      local selection="$(feedback::text "Select a number:" <> /dev/tty)"
+
+      local index=1
+      for option in $options; do
+         if [[ $index = "$selection" ]]; then
+            selection="$option"
+            break
+         fi
+         index=$((index + 1))
+      done
+
+      echo "$selection"
+   fi
 }

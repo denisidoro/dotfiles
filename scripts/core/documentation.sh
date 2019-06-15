@@ -48,8 +48,8 @@ docs::eval() {
 
 docs::eval_help() {
    local readonly file="$0"
-
-   case "${@:-1:-}" in
+   
+   case "${!#:-}" in
       -h|--help) extract_help "$file"; exit 0;;
       --version) _compose_version "$file"; exit 0;;
    esac
