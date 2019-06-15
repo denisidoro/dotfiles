@@ -32,7 +32,12 @@ mkdir -p "$folder" || true
 cd "$folder"
 
 url="$(url::get)"
-wget "$url" --output-document docopts
+
+if platform::command_exists wget; then
+   wget "$url" --output-document docopts
+else
+   curl "$url" --output docopts
+fi
 
 sudo chmod +x "${folder}/docopts"
 sudo mv "${folder}/docopts" "/usr/local/bin/docopts"

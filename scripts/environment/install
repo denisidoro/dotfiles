@@ -29,7 +29,7 @@ echo "This script is untested. Use it at your own risk!"
 read -r -p "Do you want to continue? (Y/n) " response
 response=${response,,}
 if [[ $response =~ ^(yes|y| ) ]] || [ -z $response ]; then
-   sudo echo "Proceeding with installation..."
+   echo "Proceeding with installation..."
 else
    exit
 fi

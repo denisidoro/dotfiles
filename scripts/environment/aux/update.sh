@@ -128,6 +128,7 @@ setup_sudo_fallback() {
         mkdir -p /usr/local/bin || true
         mkdir -p /tmp/dotfiles || true
         echo -e '#!/usr/bin/env bash\n\n"$@"' > /tmp/dotfiles/sudo
+        chmod +x /tmp/dotfiles/sudo
         mv /tmp/dotfiles/sudo /usr/local/bin/sudo
      fi
    fi
