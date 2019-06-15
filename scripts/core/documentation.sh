@@ -21,7 +21,7 @@ docs::eval() {
    local readonly file="$0"
    local readonly help="$(extract_help "$file")"
 
-   case ${DOTFILES_DOCOPTS:-python} in
+   case ${DOT_DOCOPTS:-python} in
       bash)
          if _get_awk_version | head -n1 | grep -q mawk 2> /dev/null; then
             echo "Parsing docopts with mawk won't work"

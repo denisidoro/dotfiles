@@ -73,10 +73,9 @@ setup_git_credentials() {
 
 setup_docopts() {
  
-   if ! platform::command_exists python; then
-      log::warning "Python isn't installed"
-      if ! feedback::confirmation "Do you want to use bash for docopts?"; then
-         echo "export DOTFILES_DOCOPTS=bash" >> "$LOCAL_ZSHRC"
+   if [[ -z "${DOT_DOCOPTS:-}" ]]; then
+      local readonly backend="$(echo "bash python go" | tr ' ' '\n' | feedback::select_option "What backend do you want for docopts?")"
+         echo "export DOT_DOCOPTS=$backend" >> "$LOCAL_ZSHRC"
       fi
    fi
 

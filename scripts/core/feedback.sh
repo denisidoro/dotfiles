@@ -40,26 +40,43 @@ feedback::text() {
    echo "$answer"
 }
 
+feedback::select_option_fallback() {
+   local readonly options="$1"
+   local readonly question="$2"
+   
+   local readonly digits="$(printf "$options" | wc -l | wc -m | xargs -I% echo "% - 1" | bc || echo 2)"
+   echo "$options" | awk "{printf(\"%${digits}d %s\n\", NR, \$0)}" > /dev/tty
+   echo
+
+   local selection="$(feedback::text "$question" <> /dev/tty)"
+
+   local index=1
+   for option in $options; do
+      if [[ $index = "$selection" ]]; then
+         selection="$option"
+         break
+      fi
+      index=$((index + 1))
+   done
+
+   echo "$selection"
+}
+
 feedback::select_option() {
+   local readonly options="$(cat)"
+   local readonly question="${1:-Select a number}"
+   
    if platform::command_exists fzf; then
-      fzf "$@"
+      local height="$(echo "$options" | wc -l)"
+      height="$((height + 1))"
+      echo "$options" \
+         | fzf-tmux \
+              --height "$height" \
+              --inline-info \
+              --header "$question" \
+              --reverse
    else 
-      local readonly options="$(cat)"
-      local readonly digits="$(printf "$options" | wc -l | wc -m | xargs -I% echo "% - 1" | bc || echo 2)"
-      echo "$options" | awk "{printf(\"%${digits}d %s\n\", NR, \$0)}"
-      echo
-
-      local selection="$(feedback::text "Select a number:" <> /dev/tty)"
-
-      local index=1
-      for option in $options; do
-         if [[ $index = "$selection" ]]; then
-            selection="$option"
-            break
-         fi
-         index=$((index + 1))
-      done
-
-      echo "$selection"
+      feedback::select_option_fallback "$options" "$question" \
+         | tail -n1
    fi
 }
