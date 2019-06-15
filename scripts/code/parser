@@ -19,11 +19,11 @@ fi
 
 case $type in
    j*)
-      dot pkg add json-sh > /dev/null
+      dot pkg add json-sh &> /dev/null
       echo "$content" | "${DOTFILES}/modules/json-sh/JSON.sh" > /dev/null
       ;;
    y*)
-      dot pkg add bash-yaml > /dev/null
+      dot pkg add bash-yaml &> /dev/null
       source "${DOTFILES}/modules/bash-yaml/script/yaml.sh"
       parse_yaml <(echo "$content") > /dev/null
       ;;

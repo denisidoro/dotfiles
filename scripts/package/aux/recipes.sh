@@ -15,9 +15,9 @@ github::url() {
    local readonly repo="$2"
 
    if platform::command_exists ssh; then
-      "git@github.com:${user}/${repo}.git"
+      echo "git@github.com:${user}/${repo}.git"
    else
-      "https://github.com/${user}/${repo}"
+      echo "https://github.com/${user}/${repo}"
    fi
 }
 
@@ -66,6 +66,7 @@ recipe::clone_as_submodule() {
    local readonly user="$1"
    local readonly repo="$2"
    local readonly module="${3:-$repo}"
+
    local readonly module_path="${MODULES_FOLDER}/${module}"
    git clone "$(github::url $user $repo)" --depth 1 "$module_path"
 }
