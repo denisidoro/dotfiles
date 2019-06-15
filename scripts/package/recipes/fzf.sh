@@ -4,9 +4,9 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
-step::abort_if_installed fzf
+recipe::abort_if_installed fzf
 
-pm="$(step::main_package_manager)"
+pm="$(recipe::main_package_manager)"
 
 if [[ $pm = "brew" ]]; then
 	brew install fzf
@@ -14,6 +14,6 @@ if [[ $pm = "brew" ]]; then
 	exit 0
 esac
 
-step::shallow_github_clone junegunn fzf
+recipe::shallow_github_clone junegunn fzf
 cd "$TEMP_FOLDER/fzf"
 ./install

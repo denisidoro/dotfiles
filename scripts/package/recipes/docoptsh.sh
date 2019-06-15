@@ -8,7 +8,7 @@ user="denisidoro"
 repo="docoptsh"
 
 if recipe::has_submodule $repo "docoptsh"; then
-	step::abort_installed $repo
+	recipe::abort_installed $repo
 fi
 
 recipe::clone_as_submodule $user $repo

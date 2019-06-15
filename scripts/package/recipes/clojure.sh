@@ -4,9 +4,9 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
-step::abort_if_installed clojure
+recipe::abort_if_installed clojure
 
-pm="$(step::main_package_manager)"
+pm="$(recipe::main_package_manager)"
 
 if [[ $pm = "brew" ]]; then
 	brew install clojure

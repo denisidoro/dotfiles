@@ -24,7 +24,7 @@ url::get() {
 }
 
 if docopts --version 2> /dev/null | grep -q golang; then
-   step::abort_installed "docopts-go"
+   recipe::abort_installed "docopts-go"
 fi
 
 folder="$(recipe::folder docopts-go)"

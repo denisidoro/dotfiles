@@ -5,7 +5,7 @@ set -euo pipefail
 source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 if cat "$HOME/.config/nvim/init.vim" 2>/dev/null | grep -q "space-vim" 2>/dev/null; then
-   step::abort_installed "spacevim"
+   recipe::abort_installed "spacevim"
 fi
 
 bash <(curl -fsSL https://raw.githubusercontent.com/liuchengxu/space-vim/master/install.sh)

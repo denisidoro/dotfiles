@@ -21,7 +21,7 @@ github::url() {
    fi
 }
 
-step::shallow_github_clone() {
+recipe::shallow_github_clone() {
    local readonly user="$1" 
    local readonly repo="$2"
    local readonly folder="$(recipe::folder "$repo")"
@@ -29,22 +29,22 @@ step::shallow_github_clone() {
    git clone "$(github::url $user $repo)" --depth 1 "$folder" || true
 }
 
-step::make() {
+recipe::make() {
    local readonly repo="$1"
    cd "$(recipe::folder "$repo")"
    make && sudo make install
 }
 
-step::abort_installed() {
+recipe::abort_installed() {
    local readonly cmd="$1"
    log::warning "${cmd} already installed"
    exit 0
 }
 
-step::abort_if_installed() {
+recipe::abort_if_installed() {
    local readonly cmd="$1"
    if platform::command_exists "$cmd"; then
-      step::abort_installed "$cmd"
+      recipe::abort_installed "$cmd"
    fi
 }
 

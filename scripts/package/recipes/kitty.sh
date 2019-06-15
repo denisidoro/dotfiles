@@ -4,7 +4,7 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
-step::abort_if_installed kitty
+recipe::abort_if_installed kitty
 
-step::shallow_github_clone kovidgoyal kitty
-step::make kitty
+recipe::shallow_github_clone kovidgoyal kitty
+recipe::make kitty

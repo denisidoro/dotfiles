@@ -4,7 +4,7 @@
 source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 if fs::is_file "$HOME/.local/share/nvim/site/autoload/plug.vim"; then
-   step::abort_installed "vimplug"
+   recipe::abort_installed "vimplug"
 fi
 
 curl -fLo "$HOME/.local/share/nvim/site/autoload/plug.vim" --create-dirs \

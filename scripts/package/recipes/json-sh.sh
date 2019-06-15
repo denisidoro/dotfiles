@@ -9,7 +9,7 @@ repo="JSON.sh"
 cmd="json-sh"
 
 if recipe::has_submodule $cmd "JSON.sh"; then
-	step::abort_installed $cmd
+	recipe::abort_installed $cmd
 fi
 
 recipe::clone_as_submodule $user $repo $cmd

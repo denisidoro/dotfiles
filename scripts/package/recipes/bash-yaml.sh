@@ -8,7 +8,7 @@ user="jasperes"
 repo="bash-yaml"
 
 if recipe::has_submodule $repo "script/yaml.sh"; then
-	step::abort_installed $repo
+	recipe::abort_installed $repo
 fi
 
 recipe::clone_as_submodule $user $repo

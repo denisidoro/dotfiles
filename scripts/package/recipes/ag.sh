@@ -4,9 +4,9 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
-step::abort_if_installed ag
+recipe::abort_if_installed ag
 
-case "$(step::main_package_manager)" in
+case "$(recipe::main_package_manager)" in
 	apt) sudo apt-get install silversearcher-ag && exit 0;;
 	brew) brew install the_silver_searcher && exit 0;;
 esac
