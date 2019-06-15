@@ -21,6 +21,7 @@ echo
 
 set +e
 
+setup_sudo_fallback
 update_submodules 2>/dev/null || true
 setup_folders_and_files
 setup_git_credentials

@@ -73,7 +73,9 @@ setup_git_credentials() {
 
 setup_docopts() {
  
-   if [[ -z "${DOT_DOCOPTS:-}" ]]; then
+   if [[ -n "${DOT_DOCOPTS:-}" ]]; then
+      return 0
+   else
       local readonly backend="$(echo "bash python go" | tr ' ' '\n' | feedback::select_option "What backend do you want for docopts?")"
    fi
 
@@ -113,6 +115,20 @@ setup_nvim_fallback() {
            ln -s "$(which vi)" /usr/bin/vim || true
         fi
         ln -s "$(which vim)" /usr/bin/nvim
+     fi
+   fi
+
+}
+
+setup_sudo_fallback() {
+   
+   if ! platform::command_exists sudo; then
+     log::warning "the sudo command doesn't exist in this system"
+     if feedback::confirmation "Do you want to setup a fallback?"; then
+        mkdir -p /usr/local/bin || true
+        mkdir -p /tmp/dotfiles || true
+        echo -e '#!/usr/bin/env bash\n\n"$@"' > /tmp/dotfiles/sudo
+        mv /tmp/dotfiles/sudo /usr/local/bin/sudo
      fi
    fi
 
