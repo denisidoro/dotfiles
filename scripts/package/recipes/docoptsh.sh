@@ -7,7 +7,7 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 user="denisidoro"
 repo="docoptsh"
 
-if recipe::has_submodule $repo; then
+if recipe::has_submodule $repo "docoptsh"; then
 	step::abort_installed $repo
 fi
 

@@ -39,8 +39,16 @@ step::abort_if_installed() {
 
 recipe::has_submodule() {
    local readonly module="$1"
+   local readonly probe_file="${2:-}"
+
    local readonly module_path="${MODULES_FOLDER}/${module}"
-   fs::is_dir "$module_path"
+
+   if [[ -n $probe_file ]]; then
+      local readonly probe_path="${module_path}/${probe_file}"
+      fs::is_file "$probe_path"
+   else
+      fs::is_dir "$module_path"
+   fi
 }
 
 recipe::clone_as_submodule() {

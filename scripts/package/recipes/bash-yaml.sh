@@ -7,7 +7,7 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 user="jasperes"
 repo="bash-yaml"
 
-if recipe::has_submodule $repo; then
+if recipe::has_submodule $repo "script/yaml.sh"; then
 	step::abort_installed $repo
 fi
 

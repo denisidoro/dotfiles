@@ -8,7 +8,7 @@ user="dominictarr"
 repo="JSON.sh"
 cmd="json-sh"
 
-if recipe::has_submodule $cmd; then
+if recipe::has_submodule $cmd "JSON.sh"; then
 	step::abort_installed $cmd
 fi
 
