@@ -15,7 +15,7 @@ step::shallow_github_clone() {
    local readonly repo="$2"
    local readonly folder="$(recipe::folder "$repo")"
    mkdir -p "$folder" || true
-   git clone "https://github.com/${user}/${repo}" --depth 1 "$folder" || true
+   git clone "git@github.com/${user}/${repo}.git" --depth 1 "$folder" || true
 }
 
 step::make() {
@@ -53,8 +53,8 @@ recipe::has_submodule() {
 
 recipe::clone_as_submodule() {
    local readonly user="$1"
-   local readonly original_repo="$2"
-   local readonly repo="${3:-$original_repo}"
-   local readonly module_path="${MODULES_FOLDER}/${repo}"
+   local readonly repo="$2"
+   local readonly module="${3:-$repo}"
+   local readonly module_path="${MODULES_FOLDER}/${module}"
    git clone "git@github.com/${user}/${repo}.git" --depth 1 "$module_path"
 }
