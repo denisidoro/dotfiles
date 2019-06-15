@@ -233,3 +233,12 @@ update_dotfiles_android() {
    log::note "Installing essential dependencies..."
    pkg install tmux neovim curl git openssh termux-packages ncurses-utils python
 }
+
+update_dotfiles_fallback() {
+  
+   log::error "Python isn't installed so symlinking won't work correctly"
+   log::note "Fallbacking to essential symlinks..."
+   ln -s "${DOTFILES}/shell/bashrc" "${HOME}/.bashrc" || true
+   ln -s "${DOTFILES}/shell/zshrc" "${HOME}/.zshrc" || true
+
+}
