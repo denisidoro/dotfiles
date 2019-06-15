@@ -31,7 +31,7 @@ get_git_info() {
 
 setup_folders_and_files() {
 
-   log::note "Setting up folder and file hierarchy..."
+   echo log::note "Setting up folder and file hierarchy..."
    mkdir -p "$LOCAL_BIN" || true
    touch "$LOCAL_ZSHRC" || true
    touch "$LOCAL_GITCONFIG" || true
@@ -45,7 +45,7 @@ setup_folders_and_files() {
 
 update_submodules() {
 
-   log::note "Attempting to update submodules..."
+   echo log::note "Attempting to update submodules..."
    cd "$DOTFILES"
    git pull 
    git submodule init 
@@ -150,7 +150,7 @@ install_batch() {
 install_nvim_plugins() {
 
    if platform::command_exists nvim && feedback::confirmation "Do you want to install neovim plugins?"; then
-     log::note "Installing neovim plugins..."
+     echo log::note "Installing neovim plugins..."
      nvim +silent +PlugInstall +qall >/dev/null
    fi
 
@@ -159,7 +159,7 @@ install_nvim_plugins() {
 install_tmux_plugins() {
 
    if platform::command_exists tmux && feedback::confirmation "Do you want to install tmux plugins?"; then
-     log::note "Installing tpm plugins..."
+     echo log::note "Installing tpm plugins..."
      export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
      bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/install_plugins" >/dev/null
      bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/update_plugins" all >/dev/null
@@ -170,7 +170,7 @@ install_tmux_plugins() {
 install_zplug_plugins() {
 
    if platform::command_exists zplug && feedback::confirmation "Do you want to install tmux plugins?"; then
-     log::note "Installing ZPlug plugins..."
+     echo log::note "Installing ZPlug plugins..."
      zplug install 2>/dev/null
    fi
 
@@ -197,31 +197,37 @@ update_dotfiles_common() {
 }
 
 update_dotfiles_osx() {
+  
    log::note "Configuring for OSX..."
    update_dotfiles "conf.osx.yaml"
 }
 
 update_dotfiles_linux() {
+  
    log::note "Configuring for Linux..."
    update_dotfiles "conf.linux.yaml"
 }
 
 update_dotfiles_wsl() {
+  
    log::note "Configuring for WSL..."
    log::note "No custom config for WSL"
 }
 
 update_dotfiles_arm() {
+  
    log::note "Configuring for ARM..."
    log::note "No custom config for ARM"
 }
 
 update_dotfiles_x86() {
+  
    log::note "Configuring for x86..."
    log::note "No custom config for x86"
 }
 
 update_dotfiles_android() {
+  
    log::note "Configuring for Android..."
    log::note "Installing essential dependencies..."
    pkg install tmux neovim curl git openssh termux-packages ncurses-utils python
