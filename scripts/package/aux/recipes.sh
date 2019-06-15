@@ -10,12 +10,23 @@ recipe::folder() {
    echo "$TEMP_FOLDER/${1}"
 }
 
+github::url() {
+   local readonly user="$1" 
+   local readonly repo="$2"
+
+   if platform::command_exists ssh; then
+      "git@github.com:${user}/${repo}.git"
+   else
+      "https://github.com/${user}/${repo}"
+   fi
+}
+
 step::shallow_github_clone() {
    local readonly user="$1" 
    local readonly repo="$2"
    local readonly folder="$(recipe::folder "$repo")"
    mkdir -p "$folder" || true
-   git clone "git@github.com:${user}/${repo}.git" --depth 1 "$folder" || true
+   git clone "$(github::url $user $repo)" --depth 1 "$folder" || true
 }
 
 step::make() {
@@ -56,5 +67,5 @@ recipe::clone_as_submodule() {
    local readonly repo="$2"
    local readonly module="${3:-$repo}"
    local readonly module_path="${MODULES_FOLDER}/${module}"
-   git clone "git@github.com:${user}/${repo}.git" --depth 1 "$module_path"
+   git clone "$(github::url $user $repo)" --depth 1 "$module_path"
 }
