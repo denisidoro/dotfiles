@@ -75,9 +75,20 @@ setup_docopts() {
  
    if [[ -z "${DOT_DOCOPTS:-}" ]]; then
       local readonly backend="$(echo "bash python go" | tr ' ' '\n' | feedback::select_option "What backend do you want for docopts?")"
-         echo "export DOT_DOCOPTS=$backend" >> "$LOCAL_ZSHRC"
-      fi
    fi
+
+   if [[ -z "${backend:-}" ]]; then
+      log::error "Invalid option"
+      exit 3
+   fi
+
+   echo "export DOT_DOCOPTS=$backend" >> "$LOCAL_ZSHRC"
+
+   case $backend in
+      go) dot pkg add docopts-go;;
+      python) dot pkg add python;;
+      bash) dot pkg add docoptsh;;
+   esac
 
 }
 

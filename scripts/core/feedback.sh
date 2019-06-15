@@ -68,7 +68,7 @@ feedback::select_option() {
    
    if platform::command_exists fzf; then
       local height="$(echo "$options" | wc -l)"
-      height="$((height + 1))"
+      height="$((height + 2))"
       echo "$options" \
          | fzf-tmux \
               --height "$height" \

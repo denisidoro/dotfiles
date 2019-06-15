@@ -23,7 +23,7 @@ platform::main_package_manager() {
 
 recipe::list() {
   ls "${RECIPES_FOLDER}" \
-    | sed 's/.sh//g'
+    | sed 's/\.sh//g'
 }
 
 recipe::install() {

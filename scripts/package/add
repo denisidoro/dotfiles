@@ -19,13 +19,15 @@ mkdir -p "$TEMP_FOLDER" 2> /dev/null || true
 
 deps_with_recipe="$(filter::with_recipe "$deps" "$recipes_as_regex" | str::join)"
 for dep in $deps_with_recipe; do
-   log::note "Installing $dep..."
+   echo
+   log::note "Installing ${dep} using custom recipe..."
    recipe::install "$dep"
 done
 
 deps_without_recipe="$(filter::without_recipe "$deps" "$recipes_as_regex" | str::join)"
 if [[ -n "$deps_without_recipe" ]]; then
-   log::note "Installing $deps_without_recipe"
+   echo
+   log::note "Installing ${deps_without_recipe} using system's package manager..."
    pkg="$(platform::main_package_manager)"
    if [[ "$pkg" = "brew" ]]; then
       "$pkg" install "${deps_without_recipe[@]}"

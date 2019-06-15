@@ -2,19 +2,8 @@
 	path = modules/dotbot
 	url = https://github.com/anishathalye/dotbot
 	shallow = true
+	
 [submodule "modules/zplug"]
 	path = modules/zplug
 	url = https://github.com/zplug/zplug.git 
-	shallow = true
-[submodule "modules/docoptsh"]
-	path = modules/docoptsh
-	url = https://github.com/denisidoro/docoptsh
-	shallow = true
-[submodule "modules/json-sh"]
-	path = modules/json-sh
-	url = https://github.com/dominictarr/JSON.sh
-	shallow = true
-[submodule "modules/bash-yaml"]
-	path = modules/bash-yaml
-	url = https://github.com/jasperes/bash-yaml
 	shallow = true
