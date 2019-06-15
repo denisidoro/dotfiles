@@ -56,5 +56,5 @@ recipe::clone_as_submodule() {
    local readonly original_repo="$2"
    local readonly repo="${3:-$original_repo}"
    local readonly module_path="${MODULES_FOLDER}/${repo}"
-   git clone "https://github.com/${user}/${repo}" --depth 1 "$module_path"
+   git clone "http://github.com/${user}/${repo}" --depth 1 "$module_path"
 }
