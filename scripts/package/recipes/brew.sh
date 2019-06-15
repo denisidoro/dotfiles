@@ -28,7 +28,7 @@ _brew_apt() {
    sudo apt install linuxbrew-wrapper
 }
 
-if platform::command_exists brew || fs::is_dir /home/linuxbrew;; then
+if platform::command_exists brew || fs::is_dir /home/linuxbrew; then
    recipe::abort_installed brew
 fi
 
