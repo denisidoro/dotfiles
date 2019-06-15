@@ -10,6 +10,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    fm edit <line>
 ##?    fm preview <line>
 
+docs::eval_help "$@"
+
 # input parsing
 edit=false
 preview=false
@@ -36,7 +38,7 @@ _fzf() {
    fzf-tmux \
       --ansi \
       --cycle \
-      --layout=reverse \
+      --reverse \
       --inline-info \
       --header "$(pwd)" \
       --height 20 \

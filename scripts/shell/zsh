@@ -6,6 +6,8 @@
 ##? Usage:
 ##?    zsh time <filename>   # Analyzes startup time
 
+docs::eval_help "$@"
+
 if [[ "$1" = "time" ]]; then
    shift
 else

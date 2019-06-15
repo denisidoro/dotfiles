@@ -6,6 +6,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? cat/pager utility abstraction
 #?? 0.1.0
 
+docs::eval_help "$@"
+
 # argument parsing
 args=()
 variable=""

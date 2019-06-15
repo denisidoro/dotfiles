@@ -8,8 +8,6 @@ platform::main_package_manager() {
       echo "brew"
    elif platform::command_exists apt; then
       echo "apt"
-   elif platform::command_exists apt-get; then
-      echo "apt-get"
    elif platform::command_exists yum; then
       echo "yum"
    elif platform::command_exists dnf; then

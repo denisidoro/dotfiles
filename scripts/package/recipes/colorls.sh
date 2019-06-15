@@ -4,9 +4,7 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
-if platform::command_exists colorls; then
-   exit 0
-fi
+step::abort_if_installed colorls
 
 gem install colorls \
    || sudo gem install colorls

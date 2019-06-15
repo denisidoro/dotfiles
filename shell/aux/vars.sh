@@ -23,7 +23,8 @@ export LEIN_SUPPRESS_USER_LEVEL_REPO_WARNINGS=true
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 # dev
-export DEV_HOME="$HOME/dev"
+export DEV_HOME="${HOME}/dev"
 
 # PATH
 export PATH="${DOTFILES}/local/bin:${DOTFILES}/bin:/usr/local/bin:${PATH}"
+export GOPATH="${DEV_HOME}/go"

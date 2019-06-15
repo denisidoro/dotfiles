@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/documentation.sh"
 
 ##? Jump to files, folders or editing
 #?? 0.1.0
@@ -10,6 +10,8 @@ set -euo pipefail
 ##?    jump (global|local|work|file) <args>...
 ##?    jump (up|root) <args>...
 ##?    jump edit (global|local) <editor> <args>...
+
+docs::eval_help "$@"
 
 _fzf() {
    fzf +m

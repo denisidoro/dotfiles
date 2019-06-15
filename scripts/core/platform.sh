@@ -24,6 +24,10 @@ platform::is_x86() {
    [[ $(uname -a | grep -q "x86" || echo 1) -eq 0 ]]
 }
 
+platform::is_64bits() {
+   [[ $(uname -a | grep -q "x86_64" || echo 1) -eq 0 ]]
+}
+
 platform::is_android() {
    [[ $(uname -a | grep -q "Android" || echo 1) -eq 0 ]]
 }
@@ -34,6 +38,7 @@ platform::tags() {
    if platform::is_linux; then tags="${tags}linux "; fi
    if platform::is_arm; then tags="${tags}arm "; fi
    if platform::is_x86; then tags="${tags}x86 "; fi
+   if platform::is_64bits; then tags="${tags}64bits "; fi
    if platform::is_android; then tags="${tags}android "; fi
    if platform::is_wsl; then tags="${tags}wsl "; fi
    echo "$tags"

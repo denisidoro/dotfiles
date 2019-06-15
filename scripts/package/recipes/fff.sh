@@ -4,9 +4,7 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
-if platform::command_exists fff; then
-   exit 0
-fi
+step::abort_if_installed fff
 
 step::shallow_github_clone dylanaraps fff
 step::make fff
