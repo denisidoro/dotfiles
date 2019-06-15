@@ -4,7 +4,7 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
-recipe::abort_installed vifm
+recipe::abort_if_installed vifm
 
 dot pkg add libncurses5-dev || true
 dot pkg add libncursesw5-dev || true

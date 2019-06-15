@@ -6,10 +6,10 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 user="dominictarr"
 repo="JSON.sh"
-cmd="json-sh"
+module="json-sh"
 
-if recipe::has_submodule $cmd "JSON.sh"; then
-	recipe::abort_installed $cmd
+if recipe::has_submodule $module "JSON.sh"; then
+	recipe::abort_installed $module
 fi
 
-recipe::clone_as_submodule $user $repo $cmd
+recipe::clone_as_submodule $user $repo $module
