@@ -3,7 +3,7 @@ set -euo pipefail
 
 export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 REPO="https://github.com/denisidoro/dotfiles.git"
-BIN_DOT="${DOTFILES}/bin/dot"
+DOT_BIN="${DOTFILES}/bin/dot"
 
 ##? Setups the environment
 #?? 0.3.0
@@ -12,7 +12,7 @@ BIN_DOT="${DOTFILES}/bin/dot"
 ##?    init
 
 _dot() {
-   "$BIN_DOT" "$@"
+   "$DOT_BIN" "$@"
 }
 
 clone_repo() {
@@ -22,30 +22,18 @@ clone_repo() {
 # Pushes the current directory to the stack
 pushd . >/dev/null
 
-first_time=false
+first_time=true
 
-# Prompt confirmation
-echo "This script is untested. Use it at your own risk!"
-read -r -p "Do you want to continue? (Y/n) " response
-response=${response,,}
-if [[ $response =~ ^(yes|y| ) ]] || [ -z $response ]; then
-   echo "Proceeding with installation..."
-else
-   exit
-fi
-
-if [ -f "$BIN_DOT" ]; then
-   :
+if [ -f "$DOT_BIN" ]; then
+   first_time=false
 elif [ -f "$DOTFILES" ]; then
    echo "Backing up existing .dotfiles folder and cloning new .dotfiles..."
    old_dotfiles=$(mktemp -u -d "${DOTFILES}_XXXX")
    mv "$DOTFILES" "$old_dotfiles"
    clone_repo
-   first_time=true
 else
    echo "No .dotfiles folder found. Installing dependencies and cloning .dotfiles..."
    clone_repo
-   first_time=true
 fi
 
 cd "$DOTFILES"

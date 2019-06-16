@@ -2,11 +2,15 @@
 # vim: filetype=sh
 set -euo pipefail
 
+source "${DOTFILES}/scripts/core/documentation.sh"
+
 ##? Outputs info for Ubersicht
 #?? 0.1.0
 ##?
 ##? Usage:
 ##?    bar all
+
+docs::eval_help "$@"
 
 battery() {
    pmset -g batt \

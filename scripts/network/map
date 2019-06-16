@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Map ports
+#?? 0.1.0
+##?
+##? Usage:
+##?    map [<target>]
+
+docs::eval "$@"
+
+sudo nmap –sS –sV -O "${target:-localhost}"

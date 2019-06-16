@@ -12,7 +12,7 @@ source "${DOTFILES}/scripts/package/aux/batch.sh"
 ##?    batch prompt <name>
 ##?    batch <name>
 
-docs::eval "$@"
+docs::eval_help "$@"
 
 # input parsing
 list=false

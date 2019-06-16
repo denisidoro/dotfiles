@@ -11,7 +11,7 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 ##? Usage:
 ##?    update [<args>...]
 
-docs::eval "$@"
+docs::eval_help "$@"
 
 pkg="$(platform::main_package_manager)"
 $pkg "update" "$@"

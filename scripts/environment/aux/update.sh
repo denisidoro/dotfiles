@@ -57,6 +57,17 @@ update_submodules() {
 
 
 # ==============================
+# Fixes
+# ==============================
+
+fix_locales() {
+  if locale > /dev/null | grep -q annot; then
+    locale-gen en_US en_US.UTF-8
+  fi 
+}
+
+
+# ==============================
 # Prompts
 # ==============================
 
@@ -109,10 +120,10 @@ replace_file() {
 setup_nvim_fallback() {
    
    if ! platform::command_exists nvim; then
-     log::warning "nvim isn't installed"
+     log::warning "neovim isn't installed"
      if feedback::confirmation "Do you want to setup a fallback?"; then
         if ! platform::command_exists vim; then
-           ln -s "$(which vi)" /usr/bin/vim || true
+           ln -s "$(which vi)" "/usr/bin/vim" || true
         fi
         ln -s "$(which vim)" /usr/bin/nvim
      fi
@@ -198,37 +209,31 @@ update_dotfiles_common() {
 }
 
 update_dotfiles_osx() {
-  
    log::note "Configuring for OSX..."
    update_dotfiles "conf.osx.yaml"
 }
 
 update_dotfiles_linux() {
-  
    log::note "Configuring for Linux..."
    update_dotfiles "conf.linux.yaml"
 }
 
 update_dotfiles_wsl() {
-  
    log::note "Configuring for WSL..."
    log::note "No custom config for WSL"
 }
 
 update_dotfiles_arm() {
-  
    log::note "Configuring for ARM..."
    log::note "No custom config for ARM"
 }
 
 update_dotfiles_x86() {
-  
    log::note "Configuring for x86..."
    log::note "No custom config for x86"
 }
 
 update_dotfiles_android() {
-  
    log::note "Configuring for Android..."
    log::note "Installing essential dependencies..."
    pkg install tmux neovim curl git openssh termux-packages ncurses-utils python
@@ -236,7 +241,6 @@ update_dotfiles_android() {
 
 update_dotfiles_fallback() {
   
-   log::error "Python isn't installed so symlinking won't work correctly"
    log::note "Fallbacking to essential symlinks..."
    ln -s "${DOTFILES}/shell/bashrc" "${HOME}/.bashrc" || true
    ln -s "${DOTFILES}/shell/zshrc" "${HOME}/.zshrc" || true
