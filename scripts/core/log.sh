@@ -92,4 +92,4 @@ log::header() { _log "\n${bold}${purple}$(_header "$1")${freset}\n"; }
 log::success() { _log "${green}✔ %s${freset}\n" "$@"; }
 log::error() { _log "${red}✖ %s${freset}\n" "$@"; }
 log::warning() { _log "${tan}➜ %s${freset}\n" "$@"; }
-log::note() { _log "${underline}${bold}${blue}Note:${freset} ${blue}%s${freset}\n" "$@"; }
+log::note() { _log "${blue}%s${freset}\n" "$@"; }

@@ -5,11 +5,6 @@ extract_help() {
    grep "^##?" "$file" | cut -c 5-
 }
 
-_get_awk_version() {
-   awk -Wversion 2> /dev/null \
-      || awk --version
-}
-
 _compose_version() {
    local readonly file="$1"
    local readonly version_code=$(grep "^#??" "$file" | cut -c 5- || echo "unversioned")
@@ -23,11 +18,6 @@ docs::eval() {
 
    case ${DOT_DOCOPTS:-python} in
       bash)
-         if _get_awk_version | head -n1 | grep -q mawk 2> /dev/null; then
-            echo "Parsing docopts with mawk won't work"
-            echo 'Please run "dot pkg add (gawk|python|docopts-go)"'
-            exit 666
-         fi
          docopts="${DOTFILES}/modules/docoptsh/docoptsh"
          ;;
       python)

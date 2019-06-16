@@ -26,5 +26,4 @@ _fzf() {
 docs::eval_help "$@"
 
 repl_alias="$(_aliases | _fzf)"
-echo "$repl_alias"
 clj "-A:${repl_alias}"

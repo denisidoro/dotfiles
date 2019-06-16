@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source "$DOTFILES/scripts/core/debug.sh"
-
 feedback::confirmation() {
    local readonly msg="$1"
    local readonly default_yes="${2:-true}"
@@ -72,6 +70,7 @@ feedback::select_option() {
       echo "$options" \
          | fzf-tmux \
               --height "$height" \
+              --cycle \
               --inline-info \
               --header "$question" \
               --reverse

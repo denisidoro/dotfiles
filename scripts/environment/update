@@ -45,6 +45,7 @@ setup_docopts
 replace_file "${HOME}/.bashrc"
 replace_file "${HOME}/.zshrc"
 
+echo
 log::note "Setting symlinks..."
 if $has_python; then
 	update_dotfiles_common 

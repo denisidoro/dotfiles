@@ -31,6 +31,7 @@ get_git_info() {
 
 setup_folders_and_files() {
 
+   echo
    log::note "Setting up folder and file hierarchy..."
    mkdir -p "$LOCAL_BIN" || true
    touch "$LOCAL_ZSHRC" || true
@@ -45,6 +46,7 @@ setup_folders_and_files() {
 
 update_submodules() {
 
+   echo
    log::note "Attempting to update submodules..."
    cd "$DOTFILES"
    git pull 
@@ -74,7 +76,8 @@ fix_locales() {
 setup_git_credentials() {
  
    if ! grep -q "email" "$LOCAL_GITCONFIG" 2> /dev/null; then
-      log::warning "Your git credentials aren't setup"
+      echo
+      log::note "Your git credentials aren't setup"
       local readonly fullname="$(feedback::text "What is your name?")"
       local readonly email="$(feedback::text "What is your email?")"
       echo -e "[user]\n   name = $fullname\n   email = $email" > "$LOCAL_GITCONFIG"
@@ -87,6 +90,7 @@ setup_docopts() {
    if [[ -n "${DOT_DOCOPTS:-}" ]]; then
       return 0
    else
+      echo
       local readonly backend="$(echo "bash python go" | tr ' ' '\n' | feedback::select_option "What backend do you want for docopts?")"
    fi
 
@@ -120,6 +124,7 @@ replace_file() {
 setup_nvim_fallback() {
    
    if ! platform::command_exists nvim; then
+     echo
      log::warning "neovim isn't installed"
      if feedback::confirmation "Do you want to setup a fallback?"; then
         if ! platform::command_exists vim; then
@@ -134,6 +139,7 @@ setup_nvim_fallback() {
 setup_sudo_fallback() {
    
    if ! platform::command_exists sudo; then
+     echo
      log::warning "the sudo command doesn't exist in this system"
      if feedback::confirmation "Do you want to setup a fallback?"; then
         mkdir -p /usr/local/bin || true
@@ -161,7 +167,7 @@ install_batch() {
 
 install_nvim_plugins() {
 
-   if platform::command_exists nvim && feedback::confirmation "Do you want to install neovim plugins?"; then
+   if platform::command_exists nvim && echo && feedback::confirmation "Do you want to install neovim plugins?"; then
      log::note "Installing neovim plugins..."
      nvim +silent +PlugInstall +qall >/dev/null
    fi
@@ -170,7 +176,7 @@ install_nvim_plugins() {
 
 install_tmux_plugins() {
 
-   if platform::command_exists tmux && feedback::confirmation "Do you want to install tmux plugins?"; then
+   if platform::command_exists tmux && echo && feedback::confirmation "Do you want to install tmux plugins?"; then
      log::note "Installing tpm plugins..."
      export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
      bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/install_plugins" >/dev/null
@@ -181,7 +187,7 @@ install_tmux_plugins() {
 
 install_zplug_plugins() {
 
-   if platform::command_exists zplug && feedback::confirmation "Do you want to install tmux plugins?"; then
+   if platform::command_exists zplug && echo && feedback::confirmation "Do you want to install tmux plugins?"; then
      log::note "Installing ZPlug plugins..."
      zplug install 2>/dev/null
    fi
@@ -205,6 +211,7 @@ update_dotfiles() {
 }
 
 update_dotfiles_common() {
+   echo
    update_dotfiles "conf.yaml"
 }
 
@@ -240,9 +247,8 @@ update_dotfiles_android() {
 }
 
 update_dotfiles_fallback() {
-  
+   echo
    log::note "Fallbacking to essential symlinks..."
    ln -s "${DOTFILES}/shell/bashrc" "${HOME}/.bashrc" || true
    ln -s "${DOTFILES}/shell/zshrc" "${HOME}/.zshrc" || true
-
 }

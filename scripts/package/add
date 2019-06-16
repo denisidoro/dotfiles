@@ -11,8 +11,14 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 ##?
 ##? Usage:
 ##?    add <deps>...
+##?    add --force-pm <deps>...
 
 docs::eval "$@"
+
+if [[ ${1:-} = "--force-pm" ]]; then
+   force_pm=true
+   shift
+fi
 
 deps="$(echo "$@" | str::multiline)"
 recipes_as_regex="$(recipe::list | xargs | str::regex)"
@@ -29,13 +35,13 @@ done
 deps_without_recipe="$(filter::without_recipe "$deps" "$recipes_as_regex" | str::join)"
 if [[ -n "$deps_without_recipe" ]]; then
    echo
-   log::note "Installing ${deps_without_recipe} using system's package manager..."
    pkg="$(platform::main_package_manager)"
-   if [[ "$pkg" = "brew" ]]; then
-      "$pkg" install "${deps_without_recipe[@]}"
-   else
-      sudo "$pkg" install "${deps_without_recipe[@]}"
-   fi
+   log::note "Installing ${deps_without_recipe} using ${pkg}..."
+   case "$pkg" in
+      brew) $pkg install "${deps_without_recipe[@]}";;
+      apk) $pkg add "${deps_without_recipe[@]}";;
+      *) sudo "$pkg" install "${deps_without_recipe[@]}";;
+   esac
 fi
 
 rm -rf "$TEMP_FOLDER" || true

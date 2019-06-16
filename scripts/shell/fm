@@ -20,6 +20,8 @@ case "${1:-}" in
    "preview") preview=true; line="${2:-}" ;;
 esac
 
+COMMAND_PREFIX="FS_COMMAND/"
+
 _ls() {
    if platform::command_exists colorls; then
       colorls -a1 --color=always | cut -c5- | tail -n +2
@@ -32,8 +34,9 @@ _fzf() {
    local readonly ctrl_h="ctrl-h:execute(echo ..)+abort"
    local readonly ctrl_space="ctrl-space:abort"
    local readonly ctrl_p="ctrl-p:execute(dpt shell less {} | less -R > /dev/tty)"
-   local readonly ctrl_e="ctrl-e:execute(vim {} < /dev/tty > /dev/tty)"
-   local readonly bind="${ctrl_h},${ctrl_space},${ctrl_p},${ctrl_e}"
+   local readonly ctrl_e="ctrl-e:execute(vim {} <> /dev/tty)"
+   local readonly ctrl_o="ctrl-o:execute(echo ${COMMAND_PREFIX}vifm)+abort"
+   local readonly bind="${ctrl_h},${ctrl_space},${ctrl_p},${ctrl_e},${ctrl_o}"
 
    fzf-tmux \
       --ansi \
@@ -53,16 +56,30 @@ _strip() {
       | rev
 }
 
-_browse() {
+_command_vifm() {
+   vifm .
+   echo "$(pwd)"
+   exit 0
+}
 
-   local readonly selection="$(_ls | _fzf)"
-   local readonly name="$(echo "$selection" | _strip)"
-   local readonly path="$(pwd)/${name}"
+_command_unknown() {
+   log::error "Unknown command"
+   exit 42
+}
 
-   if [[ -z "$name" ]]; then
-      echo "$path"
-      exit 0
+_handle_command() {
+   local readonly name="$1"
+
+   if echo "$name" | grep -q "$COMMAND_PREFIX"; then
+      case "$(echo "$name" | sed "s|${COMMAND_PREFIX}||")" in
+         vifm) _command_vifm;;
+         *) _command_unknown;;
+      esac
    fi
+}
+
+_open() {
+   local readonly path="$1"
 
    if fs::is_dir "$path"; then
       cd "$path"
@@ -70,17 +87,35 @@ _browse() {
    elif fs::is_file "$path"; then
       dot os open "$path"
    fi
-
 }
 
-if $preview; then
-   name="$(echo "$line" | _strip)"
-   path="$name"
+_browse() {
+   local readonly selection="$(_ls | _fzf)"
+   local readonly name="$(echo "$selection" | _strip)"
+   local readonly path="$(pwd)/${name}"
+
+   _handle_command "$name"
+
+   if [[ -z "$name" ]]; then
+      echo "$path"
+      exit 0
+   fi
+
+   _open "$path"
+}
+
+_preview() {
+   local readonly name="$(echo "$line" | _strip)"
+   local readonly path="$name"
    if fs::is_dir "$path"; then
       ls "$path"
    elif fs::is_file "$path"; then
       dot shell less "$path" --color=always
    fi
+}
+
+if $preview; then
+   _preview
    exit 0
 fi
 

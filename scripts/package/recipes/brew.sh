@@ -33,6 +33,7 @@ if platform::command_exists brew || fs::is_dir /home/linuxbrew; then
 fi
 
 if feedback::confirmation "Do you want to install brew?"; then
+   
    log::note "Installing brew..."
    if platform::is_osx; then
       _brew_osx
@@ -41,4 +42,7 @@ if feedback::confirmation "Do you want to install brew?"; then
    else
       _brew_linux
    fi
+
+   brew update || (brew vendor-install ruby && brew update)
+
 fi

@@ -36,4 +36,8 @@ if [[ -n "${filename:-}" ]]; then
 fi
 
 # call
-bat --plain --color=always "${args[@]}"
+if [[ -n "${args[@]:-}" ]]; then
+   bat --plain --color=always "${args[@]}"
+else
+   bat --plain --color=always
+fi
