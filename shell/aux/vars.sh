@@ -33,5 +33,10 @@ export GOPATH="${DEV_HOME}/go"
 # package management
 export HOMEBREW_NO_AUTO_UPDATE=1
 
+# FZF
+export FZF_DEFAULT_OPTS='--height 70% --layout=reverse --border --inline-info'
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
 # PATH
 export PATH="${DOTFILES}/local/bin:${DOTFILES}/bin:/usr/local/bin:${PATH}"

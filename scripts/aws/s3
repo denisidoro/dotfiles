@@ -1,99 +1,206 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
-##? S3 browser
-#?? 0.1.0
+##? Simple file manager
 ##?
 ##? Usage:
-##?    s3 <bucket>
-##?
-##? Examples:
-##?    s3 mybucket
+##?    s3
+##?    s3 edit <line>
+##?    s3 view <line>
+##?    s3 preview <line>
 
-docs::eval "$@"
+docs::eval_help "$@"
 
-_dot="                               ."
-_dotdot="${_dot}."
 
-_less() {
-   local readonly extension="${1:-}"
-   if [ -x "$(command -v bat)" ]; then
-      bat -p -l "$extension"
+# ===============
+# input parsing
+# ===============
+edit=false
+view=false
+preview=false
+case "${1:-}" in
+   edit) edit=true; line="${2:-}" ;;
+   view) view=true; line="${2:-}" ;;
+   preview) preview=true; line="${2:-}" ;;
+esac
+
+
+# ===============
+# string
+# ===============
+
+str::last_word() {
+   rev \
+      | xargs \
+      | cut -d' ' -f1 \
+      | rev
+}
+
+str::resolve_dots() {
+   local readonly path="$(cat)"
+   
+   dirs=()
+   for p in $(echo "$path" | tr '/' '\n'); do
+     case $p in
+      .) ;;
+      ..) unset 'dirs[${#dirs[@]}-1]';;
+      *) dirs+=("$p");;
+     esac
+   done
+
+   if s3::is_dir "$path"; then
+      dirs+=("")
+   fi
+
+   echo "${dirs[@]:-}" | tr ' ' '/'
+}
+
+str::remove_double_slashes() {
+   sed 's|//|/|g'
+}
+
+str::slash_hacks() {
+   echo "$1" | str::remove_double_slashes | str::resolve_dots 
+}
+
+str::is_full_path() {
+   grep -Eq '.+?\/.+'
+}
+
+str::only_dots() {
+   grep -Eq '\.+\/?'
+}
+
+str::without_prefix() {
+   echo "$1" | sed 's|s3://||'
+}
+
+
+# ===============
+# s3
+# ===============
+
+s3::path() {
+   local readonly folder="${1:-}"
+   local path
+
+   if echo "$folder" | str::only_dots; then
+      path="${DOT_FM_PWD}/${folder}"
+   elif echo "$folder" | str::is_full_path "$folder"; then
+      path="$folder"
+   elif [[ -n "$folder" ]]; then
+      path="${DOT_FM_PWD}/${folder}"
    else
-      less -R
+      path="$DOT_FM_PWD"
+   fi
+   
+   str::slash_hacks "$path"
+}
+
+s3::ls_hiding_previous() {
+   aws s3 ls "$(s3::path "${1:-}")" | awk '{print $NF}'
+}
+
+s3::ls() {
+   if [[ -n $DOT_FM_PWD ]]; then
+      echo "../"
+   fi
+   s3::ls_hiding_previous "${1:-}"
+}
+
+s3::cd() {
+   export DOT_FM_PWD="$(s3::path "${1:-}")"
+}
+
+s3::is_dir() {
+   test ${1: -1} = "/" && return 0 || return 1
+}
+
+s3::open() {
+   local readonly path="$1"
+
+   if s3::is_dir "$path"; then
+      s3::cd "$path"
+      action::browse
    fi
 }
 
-_read() {
-   local readonly path="$1"
-   local readonly content="$2"
+
+# ===============
+# fzf
+# ===============
+
+fzf::bindings() {
+   echo "ctrl-h:execute(echo ..)+abort"
+   echo "ctrl-space:abort"
+   echo "ctrl-v:execute(dot aws s3 view {})"
+   printf "ctrl-e:execute(dot aws s3 edit {})"
+}
+
+fzf::call() {
+   fzf-tmux \
+      --ansi \
+      --cycle \
+      --reverse \
+      --inline-info \
+      --header "$DOT_FM_PWD" \
+      --preview "dot aws s3 preview {}" \
+      --bind "$(fzf::bindings | tr '\n' ',')"
+}
+
+
+# ===============
+# action
+# ===============
+
+action::browse() {
+   local readonly selection="$(s3::ls | fzf::call)"
+   local readonly name="$(echo "$selection" | str::last_word)"
+   
+   if [[ -n "$name" ]]; then
+      s3::open "$name"
+   fi
+}
+
+action::edit() {
+   local readonly path="$(echo "$line" | str::last_word)"
+
    local readonly extension="${path##*.}"
-   case $extension in
-      json) echo "$content" | jq -C . | _less ;;
-      edn|clj|cljs) echo "$content" | nu cloj edn | _less ;;
-      *) echo -e "$content" | _less "$extension" ;;
-   esac
+   local readonly tmpfile=$(mktemp --suffix ".${extension:-txt}")
+   local readonly remote_path="s3://$(s3::path "$path")"
+
+   aws s3 cp --quiet "$remote_path" "$tmpfile"
+   "$EDITOR" "$tmpfile"
+   aws s3 cp "$tmpfile" "$remote_path"
 }
 
-_last_column() {
-   awk '{print $(NF)}'
-}
+action::view() {
+   local readonly path="$(echo "$line" | str::last_word)"
 
-_up() {
-   sed -E 's|(.*)/(.+)|\1|'
-}
-
-_format_lines() {
-   local readonly lines="$(cat)"
-   while read -r line; do
-      local readonly name="$(echo "$line" | awk '{print $(NF)}')"
-      # printf "${purple}${name}${freset}\n"
-      echo "$name" | _last_column
-   done <<< "$lines"
-}
-
-_fzf() {
-   fzf --reverse --ansi --tac --height 10 --inline-info
-}
-
-_with_one_ending_slash() {
-   local readonly path="$1"
-   case "$path" in
-      s3://) echo "$path" ;;
-      s3:/) echo "${path}/" ;;
-      *//) echo "${path::-1}" ;;
-      */) echo "$path" ;;
-      *) echo "${path}/" ;;
-   esac
-}
-
-_loop() {
-   local readonly pwd="$(_with_one_ending_slash "$1")"
-   echo -e "\033[1A"
-   printf "${purple}path:${freset} ${green}$pwd${freset}"
-
-   local readonly result="$(aws s3 ls "$pwd")"
-   local readonly lines="$(echo -e "${_dotdot}\n${result}" | _last_column)"
-   local readonly line="$(echo "$lines" | tail -r | _fzf)"
-   local readonly p="$(echo "$line" | _last_column)"
-   local readonly next="${pwd}${p}"
-
-   if [[ "$p" == */ || "$pwd" == "s3://" ]]; then
-      _loop "$next"
-   elif [[ "$p" == ".." ]]; then
-      _loop "$(echo "$pwd" | _up)"
-   elif [ -z "${p:-}" ]; then
-      exit 1
+   if s3::is_dir "$path"; then
+      s3::ls_hiding_previous "$path"
    else
-      printf "${purple}file:${freset} ${green}$next${freset}"
-      echo
-      _read "$next" "$(aws s3 cp "$next" -)"
-      echo
-      _loop "$pwd"
+      aws s3 cp --quiet "s3://$(s3::path "$path")" - \
+         | dot shell less --filename "$path" 
    fi
 }
 
-_loop "s3://${bucket}"
+# ===============
+# main
+# ===============
 
+export DOT_FM_PWD="${DOT_FM_PWD:-$(str::without_prefix "${1:-}")}"
+
+if $view; then
+   action::view < /dev/tty > /dev/tty
+elif $preview; then
+   action::view
+elif $edit; then
+   action::edit < /dev/tty > /dev/tty
+elif $preview; then
+   action::preview
+else
+   action::browse
+fi

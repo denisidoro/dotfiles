@@ -24,6 +24,7 @@ case "${1:-}" in
    edit) edit=true; line="${2:-}" ;;
    view) view=true; line="${2:-}" ;;
    preview) preview=true; line="${2:-}" ;;
+   s3://*) dot aws s3 "$@"; exit 0 ;;
 esac
 
 

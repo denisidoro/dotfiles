@@ -37,7 +37,7 @@ fi
 
 # call
 if [[ -n "${args[@]:-}" ]]; then
-   bat --plain --color=always "${args[@]}"
+   bat --plain --color=always "${args[@]}" | less -R
 else
-   bat --plain --color=always
+   bat --plain --color=always | less -R
 fi
