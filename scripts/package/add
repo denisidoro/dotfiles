@@ -38,9 +38,9 @@ if [[ -n "$deps_without_recipe" ]]; then
    pkg="$(platform::main_package_manager)"
    log::note "Installing ${deps_without_recipe} using ${pkg}..."
    case "$pkg" in
-      brew) $pkg install "${deps_without_recipe[@]}";;
-      apk) $pkg add "${deps_without_recipe[@]}";;
-      *) sudo "$pkg" install "${deps_without_recipe[@]}";;
+      brew) $pkg install "${deps_without_recipe[@]}" ;;
+      apk) $pkg add "${deps_without_recipe[@]}" ;;
+      *) sudo "$pkg" install "${deps_without_recipe[@]}" ;;
    esac
 fi
 

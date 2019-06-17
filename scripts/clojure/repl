@@ -4,23 +4,23 @@ set -uo pipefail
 
 source "${DOTFILES}/scripts/core/documentation.sh"
 
-##? Start a Clojure REPL using deps aliases 
+##? Start a Clojure REPL using deps aliases
 #?? 0.1.0
 ##?
 ##? Usage:
 ##?    repl
 
 _aliases() {
-	cat "${HOME}/.clojure/deps.edn" \
-	   | dot clojure data -o json \
-	   | jq -r '.aliases | keys | .[]'	
+   cat "${HOME}/.clojure/deps.edn" \
+      | dot clojure data -o json \
+      | jq -r '.aliases | keys | .[]'
 }
 
 _fzf() {
-	fzf-tmux \
-	   --height=15 \
-	   --reverse \
-	   --inline-info
+   fzf-tmux \
+      --height=15 \
+      --reverse \
+      --inline-info
 }
 
 docs::eval_help "$@"

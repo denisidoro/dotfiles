@@ -110,8 +110,8 @@ cmd::handle() {
 
    if echo "$name" | grep -q "$CMD_PREFIX"; then
       case "$(echo "$name" | sed "s|${CMD_PREFIX}||")" in
-         vifm) cmd::vifm;;
-         *) cmd::unknown;;
+         vifm) cmd::vifm ;;
+         *) cmd::unknown ;;
       esac
    fi
 }

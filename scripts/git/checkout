@@ -61,8 +61,8 @@ _checkout() {
 
 if $prompt; then
    _checkout "$@"
-elif $latest
-    git branch --sort=-committerdate \
-       | head -n1 \
-       | cut -c3-
+elif $latest; then
+   git branch --sort=-committerdate \
+      | head -n1 \
+      | cut -c3-
 fi

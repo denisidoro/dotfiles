@@ -41,7 +41,7 @@ feedback::text() {
 feedback::select_option_fallback() {
    local readonly options="$1"
    local readonly question="$2"
-   
+
    local readonly digits="$(printf "$options" | wc -l | wc -m | xargs -I% echo "% - 1" | bc || echo 2)"
    echo "$options" | awk "{printf(\"%${digits}d %s\n\", NR, \$0)}" > /dev/tty
    echo
@@ -63,18 +63,18 @@ feedback::select_option_fallback() {
 feedback::select_option() {
    local readonly options="$(cat)"
    local readonly question="${1:-Select a number}"
-   
+
    if platform::command_exists fzf; then
       local height="$(echo "$options" | wc -l)"
       height="$((height + 2))"
       echo "$options" \
          | fzf-tmux \
-              --height "$height" \
-              --cycle \
-              --inline-info \
-              --header "$question" \
-              --reverse
-   else 
+         --height "$height" \
+         --cycle \
+         --inline-info \
+         --header "$question" \
+         --reverse
+   else
       feedback::select_option_fallback "$options" "$question" \
          | tail -n1
    fi
