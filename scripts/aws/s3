@@ -145,6 +145,7 @@ fzf::call() {
       --cycle \
       --reverse \
       --inline-info \
+      --height '100%' \
       --header "$DOT_FM_PWD" \
       --preview "dot aws s3 preview {}" \
       --bind "$(fzf::bindings | tr '\n' ',')"
