@@ -9,8 +9,8 @@
 ```
 enter: open file or browse directory
 ctrl-c or ctrl-space: abort and cd to current folder
-ctrl-e: edit file in `$EDITOR`
-ctrl-v: view file with `$PAGER`
+ctrl-e: edit file in $EDITOR
+ctrl-v: view file with $PAGER
 ctrl-o: browse directory with another file manager
 ```
 
@@ -21,7 +21,7 @@ git clone https://github.com/denisidoro/dotfiles.git ~/.dotfiles
 ```
 
 Then set a function in your .bashrc-like such as:
-```
+```bash
 fd () {
   local readonly f="$(dot shell fm "$@")"
   if [ -d "$f" ]; then
