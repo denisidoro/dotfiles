@@ -4,7 +4,7 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
-if ! platform::command_exists kitty; then
-   step::shallow_github_clone kovidgoyal kitty
-   step::make kitty
-fi
+recipe::abort_if_installed kitty
+
+recipe::shallow_github_clone kovidgoyal kitty
+recipe::make kitty

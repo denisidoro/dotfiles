@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -u
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/package/aux/add.sh"
+source "${DOTFILES}/scripts/package/aux/recipes.sh"
+
+##? Updates dependency list, abstracting away package managers
+##?
+##? Usage:
+##?    update [<args>...]
+
+docs::eval_help "$@"
+
+pkg="$(platform::main_package_manager)"
+$pkg "update" "$@"

@@ -14,7 +14,6 @@ export CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 ##?    dot
 ##?    dot <context>
 ##?    dot <context> <cmd> [<args>...]
-##?    dot <context> <cmd> [<args>...]
 
 list_command_paths() {
    find "$DOTFILES/scripts" -maxdepth 2 -executable -type f \
@@ -103,16 +102,18 @@ fzf_prompt() {
 }
 
 _alias() {
-   case "$1" in
-      env) echo environment;;
+   local readonly arg="$1"
+   case "$arg" in
+      and) echo android;;
       clj) echo clojure;;
       down) echo download;;
-      pkg) echo package;;
       emu) echo emulation;;
-      and) echo android;;
+      env) echo environment;;
+      net) echo network;;
+      pkg) echo package;;
       sec) echo security;;
       sh) echo shell;;
-      *) echo "$1";;
+      *) echo "$arg";;
    esac
 }
 

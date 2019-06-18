@@ -4,6 +4,6 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
-if ! platform::command_exists tmuxinator; then
-   gem install tmuxinator
-fi
+recipe::abort_if_installed tmuxinator
+
+gem install tmuxinator

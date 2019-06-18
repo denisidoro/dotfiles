@@ -13,7 +13,7 @@
     ~/.tmux.conf: terminal/tmux/tmux.conf
     ~/.gitconfig: git/config
     ~/.ideavimrc: editors/intellij/ideavim.rc
-    ~/.gitignore: git/home.ignore
+    ~/.gitignore: git/agignore
     ~/.vifm/vifmrc: terminal/vifm/vifmrc
     ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings: editors/sublime/preferences.json
     ~/.clojure/deps.edn: languages/clojure/deps.edn

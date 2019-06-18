@@ -50,4 +50,3 @@ workflows:
       - symlink
       - parse
       - bashrc
-      - init

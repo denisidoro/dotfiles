@@ -8,8 +8,6 @@ platform::main_package_manager() {
       echo "brew"
    elif platform::command_exists apt; then
       echo "apt"
-   elif platform::command_exists apt-get; then
-      echo "apt-get"
    elif platform::command_exists yum; then
       echo "yum"
    elif platform::command_exists dnf; then
@@ -25,7 +23,7 @@ platform::main_package_manager() {
 
 recipe::list() {
   ls "${RECIPES_FOLDER}" \
-    | sed 's/.sh//g'
+    | sed 's/\.sh//g'
 }
 
 recipe::install() {
@@ -36,17 +34,23 @@ recipe::install() {
 filter::with_recipe() {
    local readonly deps="$1"
    local readonly regex="$2"
-   echo "$deps" | grep -E "$regex"
+   if ! ${force_pm:-false}; then
+     echo "$deps" | grep -E "$regex"
+   fi
 }
 
 filter::without_recipe() {
    local readonly deps="$1"
    local readonly regex="$2"
-   echo "$deps" | grep -Ev "$regex"
+   if ${force_pm:-true}; then
+      echo "$deps"
+   else
+      echo "$deps" | grep -Ev "$regex"
+   fi
 }
 
 str::join() {
-   tr '\n' ' '
+   tr '\n' ' ' | xargs
 }
 
 str::multiline() {

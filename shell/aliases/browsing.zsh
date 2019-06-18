@@ -6,7 +6,7 @@
 # ===============
 
 alias o="dot_or_args open --"
-unalias f
+unalias f &> /dev/null
 alias f="dot_or_args vifm --"
 
 # ===============

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Call arbitrary core functions
+#?? 0.1.0
+
+docs::eval_help "$@"
+
+"$@"

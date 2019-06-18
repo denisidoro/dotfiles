@@ -18,6 +18,6 @@ docs::eval "$@"
 
 if $export; then
    mysqldump -u "$username" -p "$database" > "$path"
-elif $import
+elif $import; then
    mysql -u "$username" -p "$database" < "$path"
 fi

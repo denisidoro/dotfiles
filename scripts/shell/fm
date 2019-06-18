@@ -8,17 +8,45 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    fm
 ##?    fm edit <line>
+##?    fm view <line>
 ##?    fm preview <line>
 
+docs::eval_help "$@"
+
+
+# ===============
 # input parsing
+# ===============
 edit=false
+view=false
 preview=false
 case "${1:-}" in
-   "edit") edit=true; line="${2:-}" ;;
-   "preview") preview=true; line="${2:-}" ;;
+   edit) edit=true; line="${2:-}" ;;
+   view) view=true; line="${2:-}" ;;
+   preview) preview=true; line="${2:-}" ;;
+   s3://*) dot aws s3 "$@"; exit 0 ;;
 esac
 
-_ls() {
+
+# ===============
+# helpers
+# ===============
+
+CMD_PREFIX="FS_COMMAND/"
+
+str::last_word() {
+   rev \
+      | xargs \
+      | cut -d' ' -f1 \
+      | rev
+}
+
+
+# ===============
+# fs
+# ===============
+
+fs::ls() {
    if platform::command_exists colorls; then
       colorls -a1 --color=always | cut -c5- | tail -n +2
    else
@@ -26,67 +54,116 @@ _ls() {
    fi
 }
 
-_fzf() {
-   local readonly ctrl_h="ctrl-h:execute(echo ..)+abort"
-   local readonly ctrl_space="ctrl-space:abort"
-   local readonly ctrl_p="ctrl-p:execute(dpt shell less {} | less -R > /dev/tty)"
-   local readonly ctrl_e="ctrl-e:execute(vim {} < /dev/tty > /dev/tty)"
-   local readonly bind="${ctrl_h},${ctrl_space},${ctrl_p},${ctrl_e}"
+fs::open() {
+   local readonly path="$1"
 
+   if fs::is_dir "$path"; then
+      cd "$path"
+      action::browse
+   elif fs::is_file "$path"; then
+      dot os open "$path"
+   fi
+}
+
+
+# ===============
+# fzf
+# ===============
+
+fzf::bindings() {
+   echo "ctrl-h:execute(echo ..)+abort"
+   echo "ctrl-space:abort"
+   echo "ctrl-v:execute(dot shell fm view {})"
+   echo "ctrl-e:execute(dot shell fm edit {})"
+   printf "ctrl-o:execute(echo ${CMD_PREFIX}vifm)+abort"
+}
+
+fzf::call() {
    fzf-tmux \
       --ansi \
       --cycle \
-      --layout=reverse \
+      --reverse \
       --inline-info \
       --header "$(pwd)" \
       --height 20 \
       --preview "dot shell fm preview {}" \
-      --bind "$bind"
+      --bind "$(fzf::bindings | tr '\n' ',')"
 }
 
-_strip() {
-   rev \
-      | xargs \
-      | cut -d' ' -f1 \
-      | rev
+
+# ===============
+# cmd
+# ===============
+
+cmd::vifm() {
+   vifm .
+   echo "$(pwd)"
+   exit 0
 }
 
-_browse() {
+cmd::unknown() {
+   log::error "Unknown command"
+   exit 42
+}
 
-   local readonly selection="$(_ls | _fzf)"
-   local readonly name="$(echo "$selection" | _strip)"
+cmd::handle() {
+   local readonly name="$1"
+
+   if echo "$name" | grep -q "$CMD_PREFIX"; then
+      case "$(echo "$name" | sed "s|${CMD_PREFIX}||")" in
+         vifm) cmd::vifm ;;
+         *) cmd::unknown ;;
+      esac
+   fi
+}
+
+
+# ===============
+# action
+# ===============
+
+action::browse() {
+   local readonly selection="$(fs::ls | fzf::call)"
+   local readonly name="$(echo "$selection" | str::last_word)"
    local readonly path="$(pwd)/${name}"
+
+   cmd::handle "$name"
 
    if [[ -z "$name" ]]; then
       echo "$path"
       exit 0
    fi
 
-   if fs::is_dir "$path"; then
-      cd "$path"
-      _browse
-   elif fs::is_file "$path"; then
-      dot os open "$path"
-   fi
-
+   fs::open "$path"
 }
 
-if $preview; then
-   name="$(echo "$line" | _strip)"
-   path="$name"
+action::edit() {
+   local readonly path="$(echo "$line" | str::last_word)"
+   "$EDITOR" "$path"
+}
+
+action::view() {
+   local readonly path="$(echo "$line" | str::last_word)"
    if fs::is_dir "$path"; then
       ls "$path"
    elif fs::is_file "$path"; then
-      dot shell less "$path" --color=always
+      dot shell less "$path"
    fi
-   exit 0
-fi
+}
 
-_browse
 
-path="$(_browse)"
-if fs::is_dir "$path"; then
-   echo "$path"
+# ===============
+# main
+# ===============
+
+if $view; then
+   action::view < /dev/tty > /dev/tty
+elif $preview; then
+   action::view
+elif $edit; then
+   action::edit < /dev/tty > /dev/tty
+elif $preview; then
+   action::preview
 else
-   exit 1
+   action::browse
 fi

@@ -4,6 +4,8 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
+recipe::abort_if_installed nvim
+
 if platform::command_exists brew; then
    brew install neovim
 else

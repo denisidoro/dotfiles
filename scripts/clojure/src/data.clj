@@ -23,7 +23,7 @@
     -e --eval <eval>       Arbitrary function
 
   Examples:
-    echo '{:foo 123}' | data edn
+    echo '{:foo 123}' | data
     echo '{\"a\": 123}' | data -i json -c
     echo '[:head]' | data -o xml
     echo '<head/>' | data -i xml
@@ -31,7 +31,9 @@
     echo '{:foo 123}' | data -e '#(-> % :foo inc)'")
 
 (defn -main [& args]
-  (let [options   (doc/parse help-string version args)
+  (let [options   (if (-> args first seq)
+                     (doc/parse help-string version args)
+                     {})
         parser    slurp
         input-f   (-> options :--input first)
         output-f  (-> options :--output first)
