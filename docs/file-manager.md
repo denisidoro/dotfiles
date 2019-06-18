@@ -23,7 +23,7 @@ git clone https://github.com/denisidoro/dotfiles.git ~/.dotfiles
 Then set a function in your .bashrc-like such as:
 ```bash
 fd () {
-  local readonly f="$("${HOME}/.dotfiles" shell fm "$@")"
+  local readonly f="$("${HOME}/.dotfiles/bin/dot" shell fm "$@")"
   if [ -d "$f" ]; then
     cd "$f"
   fi
