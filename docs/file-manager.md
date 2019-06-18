@@ -6,11 +6,13 @@
 
 ### Commands
 
+```
 enter: open file or browse directory
 ctrl-c or ctrl-space: abort and cd to current folder
 ctrl-e: edit file in `$EDITOR`
 ctrl-v: view file with `$PAGER`
 ctrl-o: browse directory with another file manager
+```
 
 ### Installation
 
