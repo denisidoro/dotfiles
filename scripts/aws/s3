@@ -77,6 +77,14 @@ str::without_prefix() {
    echo "$1" | sed 's|s3://||'
 }
 
+str::with_trailing_slash() {
+   if [[ -n $DOT_FM_PWD ]]; then
+      cat
+   else
+      sed 's|.*|&/|'
+   fi
+}
+
 
 # ===============
 # s3
@@ -100,7 +108,7 @@ s3::path() {
 }
 
 s3::ls_hiding_previous() {
-   aws s3 ls "$(s3::path "${1:-}")" | awk '{print $NF}'
+   aws s3 ls "$(s3::path "${1:-}")" | awk '{print $NF}' | str::with_trailing_slash
 }
 
 s3::ls() {
@@ -115,7 +123,12 @@ s3::cd() {
 }
 
 s3::is_dir() {
-   test ${1: -1} = "/" && return 0 || return 1
+   local readonly path="${1:- }"
+   if [[ ${path: -1} = "/" ]]; then
+      return 0
+   else
+      return 1
+   fi
 }
 
 s3::open() {

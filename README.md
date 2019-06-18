@@ -1,7 +1,7 @@
 Dotfiles
 ===================
 
-Personal dotfiles.
+Awesome personal dotfiles.
 
 ![Demo](https://user-images.githubusercontent.com/3226564/54047455-d5997200-41b5-11e9-8db7-e9c3ae62328d.png)
 

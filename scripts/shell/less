@@ -22,9 +22,13 @@ for arg in $@; do
    fi
 done
 
+_less() {
+   less -R "$@"
+}
+
 # fallback in case of missing binaries
 if ! platform::command_exists bat; then
-   less -R "$@"
+   _less "$@"
    exit 0
 fi
 
@@ -36,8 +40,8 @@ if [[ -n "${filename:-}" ]]; then
 fi
 
 # call
-if [[ -n "${args[@]:-}" ]]; then
-   bat --plain --color=always "${args[@]}" | less -R
-else
-   bat --plain --color=always | less -R
-fi
+case $language in
+   json) jq -C . | _less;;
+   # edn) cat | dot clj data -c | _less;;
+   *) bat --plain --color=always "${args[@]}" | _less;;
+esac
