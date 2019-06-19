@@ -60,6 +60,7 @@ _checkout() {
 }
 
 if $prompt; then
+   shift
    _checkout "$@"
 elif $latest; then
    git branch --sort=-committerdate \
