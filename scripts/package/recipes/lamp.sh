@@ -51,17 +51,6 @@ recipe::httpd2() {
    sudo systemctl restart php-fpm
 }
 
-recipe::phpmyadmin() {
-   log::warning "Setting up phpMyAdmin..."
-   cd /var/www/html
-   log::warning "Downloading zip..."
-   wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz
-   log::warning "Extracting zip..."
-   mkdir phpMyAdmin && tar -xvzf phpMyAdmin-latest-all-languages.tar.gz -C phpMyAdmin --strip-components 1
-   log::warning "Cleaning up..."
-   rm phpMyAdmin-latest-all-languages.tar.gz
-}
-
 if fs::is_dir "/var/www/html/phpMyAdmin"; then
    recipe::abort_installed LAMP
 fi
@@ -75,5 +64,5 @@ if ! platform::command_exists php; then
    recipe::httpd
 else
    recipe::httpd2
-   recipe::phpmyadmin 
+   dot pkg add phpMyAdmin 
 fi

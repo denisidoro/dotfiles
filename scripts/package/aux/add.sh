@@ -34,19 +34,13 @@ recipe::install() {
 filter::with_recipe() {
    local readonly deps="$1"
    local readonly regex="$2"
-   if ! ${force_pm:-false}; then
-     echo "$deps" | grep -E "$regex"
-   fi
+   echo "$deps" | grep -E "$regex"
 }
 
 filter::without_recipe() {
    local readonly deps="$1"
    local readonly regex="$2"
-   if ${force_pm:-true}; then
-      echo "$deps"
-   else
-      echo "$deps" | grep -Ev "$regex"
-   fi
+   echo "$deps" | grep -Ev "$regex"
 }
 
 str::join() {

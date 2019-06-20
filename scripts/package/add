@@ -10,38 +10,55 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 ##? and custom recipes
 ##?
 ##? Usage:
-##?    add <deps>...
-##?    add --force-pm <deps>...
+##?    add [options] <deps>...
+##?    
+##? Options:
+##?    -y --yes                Skip prompt
+##?    -p --package-manager    Force package-manager, skipping any custom recipe   
 
-docs::eval "$@"
+docs::eval_help "$@"
 
-if [[ ${1:-} = "--force-pm" ]]; then
-   force_pm=true
-   shift
-fi
+package_manager="$(platform::main_package_manager)"
 
-deps="$(echo "$@" | str::multiline)"
+deps_arr=()
+opts_arr=()
+force_package_manager=false
+for arg in $@; do
+   case $arg in
+      -p|--package-manager) force_package_manager=true;;
+      -y|--yes) [[ $package_manager != "brew" ]] && opts_arr+=("$arg");;
+      *) deps_arr+=("$arg");;
+   esac
+done
+
+deps="$(echo "${deps_arr[@]}" | str::multiline)"
 recipes_as_regex="$(recipe::list | xargs | str::regex)"
 
 mkdir -p "$TEMP_FOLDER" 2> /dev/null || true
 
-deps_with_recipe="$(filter::with_recipe "$deps" "$recipes_as_regex" | str::join)"
-for dep in $deps_with_recipe; do
-   echo
-   log::note "Installing ${dep} using custom recipe..."
-   recipe::install "$dep"
-done
+if $force_package_manager; then
+   deps_without_recipe="$(echo "$deps" | str::join)"
+else 
+   deps_without_recipe="$(filter::without_recipe "$deps_arr" "$recipes_as_regex" | str::join)"
+fi
 
-deps_without_recipe="$(filter::without_recipe "$deps" "$recipes_as_regex" | str::join)"
 if [[ -n "$deps_without_recipe" ]]; then
    echo
-   pkg="$(platform::main_package_manager)"
-   log::note "Installing ${deps_without_recipe} using ${pkg}..."
-   case "$pkg" in
-      brew) $pkg install "${deps_without_recipe[@]}" ;;
-      apk) $pkg add "${deps_without_recipe[@]}" ;;
-      *) sudo "$pkg" install "${deps_without_recipe[@]}" ;;
+   log::note "Installing ${deps_without_recipe} using ${package_manager}..."
+   case "$package_manager" in
+      brew) $package_manager install "${opts_arr[@]}" "${deps_without_recipe[@]}" ;;
+      apk) $package_manager add "${opts_arr[@]}" "${deps_without_recipe[@]}" ;;
+      *) sudo "$package_manager" install "${opts_arr[@]}" "${deps_without_recipe[@]}" ;;
    esac
+fi
+
+if ! $force_package_manager; then
+   deps_with_recipe="$(filter::with_recipe "$deps" "$recipes_as_regex" | str::join)"
+   for dep in $deps_with_recipe; do
+      echo
+      log::note "Installing ${dep} using custom recipe..."
+      recipe::install "$dep"
+   done
 fi
 
 rm -rf "$TEMP_FOLDER" || true
