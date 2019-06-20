@@ -128,9 +128,9 @@ setup_nvim_fallback() {
      log::warning "neovim isn't installed"
      if feedback::confirmation "Do you want to setup a fallback?"; then
         if ! platform::command_exists vim; then
-           ln -s "$(which vi)" "/usr/bin/vim" || true
+           sudo ln -s "$(which vi)" "/usr/bin/vim" || true
         fi
-        ln -s "$(which vim)" /usr/bin/nvim
+        sudo ln -s "$(which vim)" /usr/bin/nvim
      fi
    fi
 
