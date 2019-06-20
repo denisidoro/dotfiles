@@ -32,7 +32,7 @@ if $list; then
    exit 0
 fi
 
-if _list | xargs -I% which % > /dev/null; then
+if _list | xargs which > /dev/null; then
    log::note "All dependencies already installed for the batch $name"
    exit 0
 fi
