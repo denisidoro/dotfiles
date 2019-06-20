@@ -32,6 +32,10 @@ platform::is_android() {
    [[ $(uname -a | grep -q "Android" || echo 1) -eq 0 ]]
 }
 
+platform::is_ami2() {
+   [[ $(uname -a | grep -q "Amazon Linux release 2" || echo 1) -eq 0 ]]
+}
+
 platform::tags() {
    local tags=""
    if platform::is_osx; then tags="${tags}osx "; fi

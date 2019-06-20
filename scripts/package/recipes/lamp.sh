@@ -2,21 +2,14 @@
 # vim: filetype=sh
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/main.sh"
-
-##? Setups an Amazon Linux 2 AMI instance with a LAMP stack
-##?
-##? Usage:
-##?    setup <step>
-
-docs::eval "$@"
+source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 _prompt() {
    log::warning "$1"
    read -p "Press enter to continue"
 }
 
-step_httpd() {
+recipe::httpd() {
    log::warning "Updating packages..."
    sudo yum update -y
    log::warning "Installing php and mariadb..."
@@ -33,10 +26,10 @@ step_httpd() {
    log::warning "Changing groups..."
    sudo usermod -a -G apache ec2-user
    php --version
-   _prompt "Please log out and ssh in again"
+   _prompt "Please log out, ssh in and run this command again"
 }
 
-step_httpd2() {
+recipe::httpd2() {
    groups
    log::warning "Changing groups..."
    sudo chown -R ec2-user:apache /var/www
@@ -58,23 +51,7 @@ step_httpd2() {
    sudo systemctl restart php-fpm
 }
 
-step_sendy() {
-   log::warning "Setting up sendy..."
-   _prompt "Make sure $HOME/sendy.zip is available"
-   unzip sendy.zip -d /var/www/html
-   mv /var/www/html/sendy/* /var/www/html/
-   rm -rf /var/www/html/sendy
-   ls /var/www/html/
-   chmod -R 777 /var/www/html/uploads
-   vim /var/www/html/includes/config.php
-   cp "${DOTFILES}/scripts/lamp/aux/sendy.htaccess" "/var/www/html/.htaccess"
-   log::warning "Setting cron..."
-   (crontab -l 2>/dev/null; echo "*/1 * * * * php /var/www/html/autoresponders.php > /dev/null 2>&1") | crontab -
-   (crontab -l 2>/dev/null; echo "*/5 * * * * php /var/www/html/scheduled.php > /dev/null 2>&1") | crontab -
-   (crontab -l 2>/dev/null; echo "*/1 * * * * php /var/www/html/import-csv.php > /dev/null 2>&1") | crontab -
-}
-
-step_phpmyadmin() {
+recipe::phpmyadmin() {
    log::warning "Setting up phpMyAdmin..."
    cd /var/www/html
    log::warning "Downloading zip..."
@@ -85,10 +62,18 @@ step_phpmyadmin() {
    rm phpMyAdmin-latest-all-languages.tar.gz
 }
 
-case $step in
-   "httpd") step_httpd ;;
-   "httpd2") step_httpd2 ;;
-   "sendy") step_sendy ;;
-   "phpmyadmin") step_phpmyadmin ;;
-   *) echo "Bad step"; exit 1 ;;
-esac
+if fs::is_dir "/var/www/html/phpMyAdmin"; then
+   recipe::abort_installed LAMP
+fi
+
+if ! platform::is_ami2; then
+   log::error "Recipe only available to Amazon Linux AMI 2"
+   exit 45
+fi
+
+if ! platform::command_exists php; then
+   recipe::httpd
+else
+   recipe::httpd2
+   recipe::phpmyadmin 
+fi
