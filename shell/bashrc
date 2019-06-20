@@ -16,6 +16,7 @@ source "${DOTFILES}/shell/aux/core.zsh"
 
 # load aliases
 source "${DOTFILES}/shell/aliases/core.sh"
+source "${DOTFILES}/shell/aliases/git_fallback.zsh"
 
 # set prompt
 export PS1="\n\[\e[32m\]\w\[\e[m\] \[\e[31m\]$(nonzero_return)\[\e[m\]\n\[\e[33m\]\\$\[\e[m\] "
