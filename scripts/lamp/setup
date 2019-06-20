@@ -16,7 +16,7 @@ _prompt() {
    read -p "Press enter to continue"
 }
 
-step_0() {
+step_httpd() {
    log::warning "Updating packages..."
    sudo yum update -y
    log::warning "Installing php and mariadb..."
@@ -36,7 +36,7 @@ step_0() {
    _prompt "Please log out and ssh in again"
 }
 
-step_1() {
+step_httpd2() {
    groups
    log::warning "Changing groups..."
    sudo chown -R ec2-user:apache /var/www
@@ -46,14 +46,13 @@ step_1() {
    echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
    _prompt "Check if phpinfo.php works"
    rm /var/www/html/phpinfo.php
-   _prompt "Starting mariadb..."
+   log::warning "Starting mariadb..."
    sudo systemctl start mariadb
-   _prompt "Setting up mariadb..."
+   log::warning "Setting up mariadb..."
    sudo mysql_secure_installation
    ls /var/www/html
    log::warning "Starting manual edits..."
    sudo vim /etc/httpd/conf/httpd.conf
-   # sudo vim /var/www/html/.htaccess
    log::warning "Restarting LAMP..."
    sudo systemctl restart httpd
    sudo systemctl restart php-fpm
@@ -61,13 +60,14 @@ step_1() {
 
 step_sendy() {
    log::warning "Setting up sendy..."
-   _prompt "Make sure $HOME/sendy.zip and $HOME/htaccess are available"
+   _prompt "Make sure $HOME/sendy.zip is available"
    unzip sendy.zip -d /var/www/html
    mv /var/www/html/sendy/* /var/www/html/
    rm -rf /var/www/html/sendy
    ls /var/www/html/
    chmod -R 777 /var/www/html/uploads
    vim /var/www/html/includes/config.php
+   cp "${DOTFILES}/scripts/lamp/aux/sendy.htaccess" "/var/www/html/.htaccess"
 }
 
 step_phpmyadmin() {
@@ -82,8 +82,8 @@ step_phpmyadmin() {
 }
 
 case $step in
-   "0") step_0 ;;
-   "1") step_1 ;;
+   "httpd") step_httpd ;;
+   "httpd2") step_httpd2 ;;
    "sendy") step_sendy ;;
    "phpmyadmin") step_phpmyadmin ;;
    *) echo "Bad step"; exit 1 ;;
