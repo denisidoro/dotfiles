@@ -60,7 +60,7 @@ if ! platform::is_ami2; then
    exit 45
 fi
 
-if ! platform::command_exists php; then
+if ! fs::is_dir "/var/www/html"; then
    recipe::httpd
 else
    recipe::httpd2
