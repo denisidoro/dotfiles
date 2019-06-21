@@ -46,9 +46,9 @@ if [[ -n "$deps_without_recipe" ]]; then
    echo
    log::note "Installing ${deps_without_recipe} using ${package_manager}..."
    case "$package_manager" in
-      brew) $package_manager install "${opts_arr[@]}" "${deps_without_recipe[@]}" ;;
-      apk) $package_manager add "${opts_arr[@]}" "${deps_without_recipe[@]}" ;;
-      *) sudo "$package_manager" install "${opts_arr[@]}" "${deps_without_recipe[@]}" ;;
+      brew) $package_manager install "${opts_arr[@]:-}" "${deps_without_recipe[@]}" ;;
+      apk) $package_manager add "${opts_arr[@]:-}" "${deps_without_recipe[@]}" ;;
+      *) sudo "$package_manager" install "${opts_arr[@]:-}" "${deps_without_recipe[@]}" ;;
    esac
 fi
 
