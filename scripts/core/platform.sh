@@ -33,7 +33,8 @@ platform::is_android() {
 }
 
 platform::is_ami2() {
-   [[ $(uname -a | grep -q "Amazon Linux release 2" || echo 1) -eq 0 ]]
+   local readonly txt="$(uname -a)"
+   [[ $(echo "$txt" | grep -q "Amazon Linux release 2" || echo "$txt" | grep -q "amaz2" || echo 1) -eq 0 ]]
 }
 
 platform::tags() {
