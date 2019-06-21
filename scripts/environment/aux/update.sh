@@ -41,50 +41,6 @@ setup_folders_and_files() {
 
 
 # ==============================
-# git
-# ==============================
-
-project_status() {
-  local readonly UPSTREAM="${1:-'@{u}'}"
-  local readonly LOCAL="$(git rev-parse @)"
-  local readonly REMOTE="$(git rev-parse "$UPSTREAM")"
-  local readonly BASE="$(git merge-base @ "$UPSTREAM")"
-
-  if [ $LOCAL = $REMOTE ]; then
-    echo "synced"
-  elif [ $LOCAL = $BASE ]; then
-    echo "behind"
-  elif [ $REMOTE = $BASE ]; then
-    echo "ahead"
-  else
-    echo "diverged"
-  fi
-}
-
-self_update() {
-  git fetch
-  if [[ $(project_status) = "behind" ]]; then
-     cd "$DOTFILES"
-     log::note "Attempting to update itself..."
-     git pull && exit 0 || log::error "Failed" 
-  fi
-}
-
-update_submodules() {
-
-   echo
-   log::note "Attempting to update submodules..."
-   cd "$DOTFILES"
-   git pull 
-   git submodule init 
-   git submodule update
-   git submodule status
-   git submodule update --init --recursive "${DOTBOT_DIR}" 
-
-}
-
-
-# ==============================
 # Fixes
 # ==============================
 
@@ -277,4 +233,49 @@ update_dotfiles_fallback() {
    log::note "Fallbacking to essential symlinks..."
    ln -s "${DOTFILES}/shell/bashrc" "${HOME}/.bashrc" || true
    ln -s "${DOTFILES}/shell/zshrc" "${HOME}/.zshrc" || true
+}
+
+
+
+# ==============================
+# git
+# ==============================
+
+self_update() {
+  git fetch
+  if [[ $(project_status) = "behind" ]]; then
+     cd "$DOTFILES"
+     log::note "Attempting to update itself..."
+     git pull && exit 0 || log::error "Failed" 
+  fi
+}
+
+update_submodules() {
+
+   echo
+   log::note "Attempting to update submodules..."
+   cd "$DOTFILES"
+   git pull 
+   git submodule init 
+   git submodule update
+   git submodule status
+   git submodule update --init --recursive "${DOTBOT_DIR}" 
+
+}
+
+project_status() {
+  local readonly UPSTREAM=${1:-'@{u}'}
+  local readonly LOCAL=$(git rev-parse @)
+  local readonly REMOTE=$(git rev-parse "$UPSTREAM")
+  local readonly BASE=$(git merge-base @ "$UPSTREAM")
+
+  if [[ "$LOCAL" = "$REMOTE" ]]; then
+    echo "synced"
+  elif [[ "$LOCAL" = "$BASE" ]]; then
+    echo "behind"
+  elif [[ "$REMOTE" = "$BASE" ]]; then
+    echo "ahead"
+  else
+    echo "diverged"
+  fi
 }

@@ -27,16 +27,12 @@ _list() {
    batch::dependencies "$name" | xargs | tr ' ' '\n'
 }
 
-_all_installed() {
-   _list | xargs which && return 0 || return 1
-}
-
 if $list; then
    _list
    exit 0
 fi
 
-if _all_installed &> /dev/null; then
+if _list | xargs which &> /dev/null; then
    log::note "All dependencies already installed for the batch $name"
    exit 0
 fi

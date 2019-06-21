@@ -17,5 +17,3 @@ batch::dependencies() {
 str::join() {
    tr '\n' ' '
 }
-
-cat ${DOTFILES}/scripts/package/aux/dependencies.ini | grep -zo "\[mini\].*"

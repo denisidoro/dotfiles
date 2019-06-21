@@ -50,7 +50,7 @@ esac
 if [[ -n "$deps_without_recipe" ]]; then
    echo
    log::note "Installing ${deps_without_recipe} using ${package_manager}..."
-   sudo "$package_manager" "$install_cmd" "${opts_arr[@]:-}" "${deps_without_recipe[@]:-}" ;;
+   sudo "$package_manager" "$install_cmd" "${opts_arr[@]:-}" "${deps_without_recipe[@]:-}"
 fi
 
 if ! $force_package_manager; then
