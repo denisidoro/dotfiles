@@ -31,7 +31,7 @@ for arg in $@; do
    esac
 done
 
-deps="$(echo "${deps_arr[@]}" | str::multiline)"
+deps="$(echo "${deps_arr[@]:-}" | str::multiline)"
 recipes_as_regex="$(recipe::list | xargs | str::regex)"
 
 mkdir -p "$TEMP_FOLDER" 2> /dev/null || true
@@ -39,7 +39,7 @@ mkdir -p "$TEMP_FOLDER" 2> /dev/null || true
 if $force_package_manager; then
    deps_without_recipe="$(echo "$deps" | str::join)"
 else 
-   deps_without_recipe="$(filter::without_recipe "$deps_arr" "$recipes_as_regex" | str::join)"
+   deps_without_recipe="$(filter::without_recipe "${deps_arr[@]:-}" "$recipes_as_regex" | str::join)"
 fi
 
 if [[ -n "$deps_without_recipe" ]]; then
