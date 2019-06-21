@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Lint own files
+#?? 0.1.0
+##?
+##? Usage:
+##?    lint
+
+docs::eval_help "$@"
+
+dot code beautify self

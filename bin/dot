@@ -106,9 +106,11 @@ _alias() {
    case "$arg" in
       and) echo android;;
       clj) echo clojure;;
-      down) echo download;;
-      emu) echo emulation;;
+      game) echo gaming;;
+      js) echo javascript;;
       env) echo environment;;
+      self) echo environment;;
+      mac) echo osx;;
       net) echo network;;
       pkg) echo package;;
       sec) echo security;;

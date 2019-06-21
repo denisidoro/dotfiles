@@ -4,6 +4,8 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Simple file manager
+##? 
+##? It may be called via dot shell fm
 ##?
 ##? Usage:
 ##?    s3

@@ -1,5 +1,0 @@
-#!/usr/bin/env node
-
-var settings = require('../../editors/vscode/settings.json');
-
-console.log(settings["vim.normalModeKeyBindings"].map(kb => {kb.before: kb.after}));
