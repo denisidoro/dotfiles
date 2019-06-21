@@ -23,6 +23,8 @@ echo
 
 set +e
 
+self_update
+
 has_python=true
 if ! platform::command_exists python; then
    has_python=false

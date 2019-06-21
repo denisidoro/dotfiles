@@ -42,14 +42,15 @@ else
    deps_without_recipe="$(filter::without_recipe "${deps_arr[@]:-}" "$recipes_as_regex" | str::join)"
 fi
 
+case "$package_manager" in
+   apk) install_cmd="add";;
+   *) install_cmd="install";;
+esac
+
 if [[ -n "$deps_without_recipe" ]]; then
    echo
    log::note "Installing ${deps_without_recipe} using ${package_manager}..."
-   case "$package_manager" in
-      brew) $package_manager install "${opts_arr[@]:-}" "${deps_without_recipe[@]}" ;;
-      apk) $package_manager add "${opts_arr[@]:-}" "${deps_without_recipe[@]}" ;;
-      *) sudo "$package_manager" install "${opts_arr[@]:-}" "${deps_without_recipe[@]}" ;;
-   esac
+   sudo "$package_manager" "$install_cmd" "${opts_arr[@]:-}" "${deps_without_recipe[@]:-}" ;;
 fi
 
 if ! $force_package_manager; then

@@ -34,7 +34,7 @@ export GOPATH="${DEV_HOME}/go"
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 # fzf
-export FZF_DEFAULT_OPTS='--height 70% --layout=reverse --border --inline-info --cycle'
+export FZF_DEFAULT_OPTS='--height 70% --reverse --border --inline-info --cycle'
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 

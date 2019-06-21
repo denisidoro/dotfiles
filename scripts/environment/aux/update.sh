@@ -41,8 +41,34 @@ setup_folders_and_files() {
 
 
 # ==============================
-# Submodules
+# git
 # ==============================
+
+project_status() {
+  local readonly UPSTREAM="${1:-'@{u}'}"
+  local readonly LOCAL="$(git rev-parse @)"
+  local readonly REMOTE="$(git rev-parse "$UPSTREAM")"
+  local readonly BASE="$(git merge-base @ "$UPSTREAM")"
+
+  if [ $LOCAL = $REMOTE ]; then
+    echo "synced"
+  elif [ $LOCAL = $BASE ]; then
+    echo "behind"
+  elif [ $REMOTE = $BASE ]; then
+    echo "ahead"
+  else
+    echo "diverged"
+  fi
+}
+
+self_update() {
+  git fetch
+  if [[ $(project_status) = "behind" ]]; then
+     cd "$DOTFILES"
+     log::note "Attempting to update itself..."
+     git pull && exit 0 || log::error "Failed" 
+  fi
+}
 
 update_submodules() {
 
