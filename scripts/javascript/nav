@@ -25,14 +25,32 @@ preview=false
 case "${1:-}" in
    edit) edit=true; path="${2:-}" ;;
    view) view=true; path="${2:-}" ;;
-   preview) preview=true; _cwd="$2"; path="$3" ;;
+   preview) preview=true; _cwd="$2"; path="${3:-}" ;;
 esac
+
 
 # ===============
 # string
 # ===============
 
-path::resolve_dots() {
+str::remove_double_slashes() {
+   sed 's|//|/|g'
+}
+
+str::remove_trailing_slash() {
+   sed 's:/*$::'
+}
+
+
+# ===============
+# path
+# ===============
+
+path::is_root() {
+   [[ "$1" = "/" ]]
+}
+
+path::parse_dots() {
    local readonly path="$(cat)"
    
    dirs=()
@@ -49,52 +67,31 @@ path::resolve_dots() {
      | str::remove_trailing_slash
 }
 
-str::remove_double_slashes() {
-   sed 's|//|/|g'
-}
-
-# ===============
-# s3
-# ===============
-
-str::remove_trailing_slash() {
-   sed 's:/*$::'
-}
-
 path::fallback_to_root() {
    local readonly path="$(cat)"
-   if [[ -n "$path" ]]; then
+   if [[ -n $path ]]; then
       echo "$path"
    else
       echo "/"
    fi
 }
 
-nav::resolve() {
+path::resolve() {
    local readonly folder="${1:-}"
    echo "${cwd}/${folder}" \
       | str::remove_double_slashes \
-      | path::resolve_dots \
+      | path::parse_dots 2> /dev/null \
       | path::fallback_to_root
 }
 
-path::canonical_to_jq() {
-   printf "$1" \
-     | tr '/' '\n' \
-     | sed -E 's/(^[0-9]+$)/\[\1\]/' \
-     | tr '\n' '.' \
-     | sed 's/\.\[/\[/g'
-}
 
-nav::ls() {
-   local readonly path="${1:-$cwd}"
-   local readonly jq_path=$(path::canonical_to_jq "$path")
-   echo "$json" | jq "$jq_path | keys | .[]" | sed 's/\"//g'
-}
+# ===============
+# nav
+# ===============
 
 nav::ls_with_up() {
-   if [[ $cwd != "/" ]]; then
-      echo ..
+   if ! path::is_root "$cwd"; then
+      echo '..'
    fi
    nav::ls
 }
@@ -103,21 +100,26 @@ nav::cd() {
    cwd="$1"
 }
 
-nav::is_navigable() {
-   local readonly path="$1"
-   nav::ls "$path" &> /dev/null \
-      && return 0 \
-      || return 1
-}
-
 nav::open() {
    local readonly path="$1"
 
    if nav::is_navigable "$path"; then
       nav::cd "$path"
+      nav::browse
+   else
+      nav::browse
+   fi
+}
+
+nav::browse() {
+   local readonly selection="$(nav::ls_with_up | fzf::call)"
+   
+   if [[ -z "$selection" ]]; then
+      exit 0
    fi
 
-   action::browse
+   local readonly path="$(path::resolve "$selection")"
+   nav::open "$path"
 }
 
 
@@ -146,28 +148,41 @@ fzf::call() {
 
 
 # ===============
-# action
+# implementation
 # ===============
 
-action::browse() {
-   local readonly selection="$(nav::ls_with_up | fzf::call)"
-   
-   if [[ -z "$selection" ]]; then
-      exit 0
-   fi
-
-   local readonly path="$(nav::resolve "$selection")"
-   nav::open "$path"
+path::canonical_to_jq() {
+   printf "$1" \
+     | tr '/' '\n' \
+     | sed -E 's/(^[0-9]+$)/\[\1\]/' \
+     | tr '\n' '.' \
+     | sed 's/\.\[/\[/g'
 }
 
-
-action::view() {
+nav::is_navigable() {
    local readonly path="$1"
-   local readonly absolute_path="$(nav::resolve "$path")"
+   nav::ls "$path" &> /dev/null \
+      && return 0 \
+      || return 1
+}
+
+nav::view() {
+   local readonly path="$1"
+   local readonly absolute_path="$(path::resolve "$path")"
    local readonly jq_path="$(path::canonical_to_jq "$absolute_path")"
 
    echo "$json" | jq -C "$jq_path" | less -R
 }
+
+nav::ls() {
+   local readonly path="${1:-$cwd}"
+   local readonly jq_path=$(path::canonical_to_jq "$path")
+   echo "$json" | jq "$jq_path | keys | .[]" | sed 's/\"//g'
+}
+
+
+
+
 
 # ===============
 # main
@@ -177,19 +192,19 @@ declare cwd
 if [[ -n "${_cwd:-}" ]]; then
    nav::cd "$_cwd"
 else 
-   cwd="/profiles/0/fn_function_keys"
+   cwd="/"
 fi
 
 declare json="$(cat "$DOTFILES/bindings/karabiner/karabiner.json")"
 
 if $view; then
-   action::view < /dev/tty > /dev/tty
+   nav::view < /dev/tty > /dev/tty
 elif $preview; then
-   action::view "$path"
+   nav::view "$path"
 elif $edit; then
-   action::edit < /dev/tty > /dev/tty
+   nav::edit < /dev/tty > /dev/tty
 elif $preview; then
-   action::preview
+   nav::preview
 else
-   action::browse
+   nav::browse
 fi
