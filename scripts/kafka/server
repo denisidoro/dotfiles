@@ -2,6 +2,14 @@
 
 source "${DOTFILES}/scripts/kafka/aux/core.sh"
 
+##? Kafka server helpers
+#?? 0.1.0
+##?
+##? Usage:
+##?    server
+
+docs::eval_help "$@"
+
 case $1 in
    "start")
       bin="kafka-server-start"

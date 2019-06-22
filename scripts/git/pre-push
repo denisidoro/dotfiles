@@ -4,5 +4,13 @@ source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/git.sh"
 source "${DOTFILES}/scripts/git/aux/hooks.sh"
 
+##? Git pre-push hooks
+#?? 0.2.0
+##?
+##? Usage:
+##?    pre-commit
+
+docs::eval_help "$@"
+
 current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
 git::prompt_if_protected "$current_branch" "master"

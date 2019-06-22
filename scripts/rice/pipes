@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
-# pipes.sh: Animated pipes terminal screensaver.
-#
-# This modified version is maintained at:
-#
-#   https://github.com/pipeseroni/pipes.sh
 
-VERSION=1.2.0
+source "${DOTFILES}/scripts/core/documentation.sh"
+
+##? Animated pipes terminal screensaver
+##?
+##? based on https://github.com/pipeseroni/pipes.sh 
+#?? 0.1.0
+##?
+##? Usage:
+##?    zookeeper
+
+docs::eval_help "$@"
 
 M=32768
 p=1
@@ -68,7 +73,7 @@ while getopts "p:t:f:s:r:RBChv" arg; do
          echo -e " -B \t\tno bold effect."
          echo -e " -C \t\tno color."
          echo -e " -h\t\thelp (this screen)."
-         echo -e " -v\t\tprint version number.\n"
+         # echo -e " -v\t\tprint version number.\n"
          exit 0
          ;;
       v)

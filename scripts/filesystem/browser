@@ -73,8 +73,8 @@ fs::open() {
 fzf::bindings() {
    echo "ctrl-h:execute(echo ..)+abort"
    echo "ctrl-space:abort"
-   echo "ctrl-v:execute(dot shell browser view {})"
-   echo "ctrl-e:execute(dot shell browser edit {})"
+   echo "ctrl-v:execute(dot fs browser view {})"
+   echo "ctrl-e:execute(dot fs browser edit {})"
    printf "ctrl-o:execute(echo ${CMD_PREFIX}vifm)+abort"
 }
 
@@ -85,8 +85,8 @@ fzf::call() {
       --reverse \
       --inline-info \
       --header "$(pwd)" \
-      --height 20 \
-      --preview "dot shell browser preview {}" \
+      --height '100%' \
+      --preview "dot fs browser preview {}" \
       --bind "$(fzf::bindings | tr '\n' ',')"
 }
 

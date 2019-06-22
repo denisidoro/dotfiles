@@ -14,6 +14,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    size                Total size of current directory
 ##?    size somepath       Size of a file or directory
 
+docs::eval_help "$@"
+
 if du -b /dev/null >/dev/null 2>&1; then
    arg=-sbh
 else

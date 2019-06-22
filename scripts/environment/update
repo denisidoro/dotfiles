@@ -34,7 +34,7 @@ if ! platform::command_exists python; then
 fi
 
 setup_sudo_fallback
-dot pkg update 2> /dev/null || true
+# dot pkg update 2> /dev/null || true
 fix_locales
 
 if $has_python; then

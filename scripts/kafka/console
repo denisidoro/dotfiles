@@ -2,6 +2,14 @@
 
 source "${DOTFILES}/scripts/kafka/aux/core.sh"
 
+##? Kafka console helpers
+#?? 0.1.0
+##?
+##? Usage:
+##?    console
+
+docs::eval_help "$@"
+
 case $1 in
    "consumer") bin="kafka-console-consumer" ;;
    "producer") bin="kafka-console-producer" ;;

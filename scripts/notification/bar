@@ -3,7 +3,13 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
-##? TODO: docopts
+##? Alerts using WM's bar
+#?? 0.1.0
+##?
+##? Usage:
+##?    bar <msg>
+
+docs::eval_help "$@"
 
 # how long should the popup remain?
 duration=3

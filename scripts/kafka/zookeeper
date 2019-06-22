@@ -2,6 +2,14 @@
 
 source "${DOTFILES}/scripts/kafka/aux/core.sh"
 
+##? Zookeeper helpers
+#?? 0.1.0
+##?
+##? Usage:
+##?    zookeeper
+
+docs::eval_help "$@"
+
 case $1 in
    "migration") bin="zookeeper-security-migration" ;;
    "start")

@@ -4,6 +4,14 @@ source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/git.sh"
 source "${DOTFILES}/scripts/git/aux/hooks.sh"
 
+##? Git pre-commit hooks
+#?? 0.2.0
+##?
+##? Usage:
+##?    pre-commit
+
+docs::eval_help "$@"
+
 git_dir=$(git rev-parse --show-toplevel)
 files=$(git diff-index --name-only --diff-filter=ACM --cached HEAD -- || echo "")
 

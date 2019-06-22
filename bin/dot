@@ -5,7 +5,7 @@ IFS=$' \n\t'
 
 export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)}"
 source "$DOTFILES/scripts/core/main.sh"
-export CALLING_DIR="${CALLING_DIR:-"$PWD"}"
+CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 
 ##? A hub for an all-purpose set of scripts
 #?? 1.0.0

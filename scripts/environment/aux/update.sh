@@ -20,6 +20,7 @@ has_tag() {
 
 get_git_info() {
   cd "$DOTFILES" 
+
   git log -n 1 --pretty=format:'%ad - %h' --date=format:'%Y-%m-%d %Hh%M' \
      || echo "unknown version"
 }
@@ -275,6 +276,8 @@ update_dotfiles_fallback() {
 # ==============================
 
 self_update() {
+  cd "$DOTFILES"
+  
   git fetch
   if [[ $(project_status) = "behind" ]]; then
      cd "$DOTFILES"
@@ -297,6 +300,8 @@ update_submodules() {
 }
 
 project_status() {
+  cd "$DOTFILES"
+
   local readonly UPSTREAM=${1:-'@{u}'}
   local readonly LOCAL=$(git rev-parse @)
   local readonly REMOTE=$(git rev-parse "$UPSTREAM")

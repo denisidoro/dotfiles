@@ -12,6 +12,8 @@ source "${DOTFILES}/scripts/core/git.sh"
 ##?    push lint <args>...
 ##?    push commit <args>...
 
+docs::eval_help "$@"
+
 _upstream() {
    local readonly branch="$(git rev-parse --abbrev-ref HEAD)"
    git push -u origin "$branch"
