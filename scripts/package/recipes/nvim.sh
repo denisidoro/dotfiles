@@ -13,7 +13,7 @@ fi
 
 dot pkg add --package-manager neovim && recipe::abort_if_installed nvim
 
-cd "$HOME"
+cd "/tmp"
 curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
 chmod u+x nvim.appimage
 sudo mv nvim.appimage /usr/local/nvim

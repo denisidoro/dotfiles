@@ -146,6 +146,7 @@ else
    cmd="$2"
 
    shift 2
+   export DOT_TRACE=${TRACE:-false}
    "${DOTFILES}/scripts/${ctx}/${cmd}" "$@"
 
 fi

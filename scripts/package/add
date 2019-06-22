@@ -13,46 +13,80 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 ##?    add [options] <deps>...
 ##?    
 ##? Options:
-##?    -y --yes                Skip prompt
+##?    -a --ask                Ask for confirmation
 ##?    -p --package-manager    Force package-manager, skipping any custom recipe   
 
 docs::eval_help "$@"
 
-package_manager="$(platform::main_package_manager)"
+_cleanup() {
+   rm -rf "$TEMP_FOLDER" || true
+}
 
+trap _cleanup SIGINT
+
+# parse args
 deps_arr=()
-opts_arr=()
 force_package_manager=false
+ask=false
 for arg in $@; do
    case $arg in
       -p|--package-manager) force_package_manager=true;;
-      -y|--yes) [[ $package_manager != "brew" ]] && opts_arr+=("$arg");;
+      -a|--ask) ask=true;;
+      -*) log::error "Invalid option: $arg"; exit 1;;
       *) deps_arr+=("$arg");;
    esac
 done
 
+# temp setup
+mkdir -p "$TEMP_FOLDER" 2> /dev/null || true
+
+# dependency list 
 deps="$(echo "${deps_arr[@]:-}" | str::multiline)"
 recipes_as_regex="$(recipe::list | xargs | str::regex)"
 
-mkdir -p "$TEMP_FOLDER" 2> /dev/null || true
-
+# get deps that will use the system's package manager
 if $force_package_manager; then
    deps_without_recipe="$(echo "$deps" | str::join)"
 else 
    deps_without_recipe="$(filter::without_recipe "${deps_arr[@]:-}" "$recipes_as_regex" | str::join)"
 fi
 
-case "$package_manager" in
-   apk) install_cmd="add";;
-   *) install_cmd="install";;
-esac
-
+# use the system's package manager
 if [[ -n "$deps_without_recipe" ]]; then
+
+   # get main package manager
+   package_manager="$(platform::main_package_manager)"
+
    echo
    log::note "Installing ${deps_without_recipe} using ${package_manager}..."
-   sudo "$package_manager" "$install_cmd" "${opts_arr[@]:-}" "${deps_without_recipe[@]:-}"
+
+   args=()
+
+   # args build: sudo or not
+   case $package_manager in
+      brew) ;;
+      *) args+=("sudo");;
+   esac
+
+   # args build: package manager
+   args+=("$package_manager")
+
+   # args build: install command
+   case $package_manager in
+      apk) args+=("add");;
+      *) args+=("install");;
+   esac
+
+   # args build: ask or not
+   if ! $ask; then
+      args+=("-y")
+   fi
+
+   # call
+   "${args[@]}" "${deps_without_recipe[@]:-}"
 fi
 
+# use custom recipes, if allowed
 if ! $force_package_manager; then
    deps_with_recipe="$(filter::with_recipe "$deps" "$recipes_as_regex" | str::join)"
    for dep in $deps_with_recipe; do
@@ -61,5 +95,3 @@ if ! $force_package_manager; then
       recipe::install "$dep"
    done
 fi
-
-rm -rf "$TEMP_FOLDER" || true
