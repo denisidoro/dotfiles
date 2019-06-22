@@ -47,6 +47,8 @@ setup_folders_and_files() {
 
 fix_locales() {
   if locale > /dev/null | grep -q annot; then
+    echo
+    log::note "Fixing locales..."
     locale-gen en_US en_US.UTF-8
   fi 
 }
@@ -110,6 +112,9 @@ setup_nvim_fallback() {
      echo
      log::warning "neovim isn't installed"
      if feedback::confirmation "Do you want to setup a fallback?"; then
+        if ! platform::command_exists vi && ! platform::command_exists vim; then
+           dot pkg add vim
+        fi
         if ! platform::command_exists vim; then
            sudo ln -s "$(which vi)" "/usr/bin/vim" || true
         fi

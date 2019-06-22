@@ -10,16 +10,18 @@ source "${DOTFILES}/scripts/package/aux/batch.sh"
 ##? Usage:
 ##?    batch list <name>
 ##?    batch prompt <name>
-##?    batch <name>
+##?    batch add <name>
 
 docs::eval_help "$@"
 
 # input parsing
 list=false
 prompt=false
+add=false
 case "${1:-}" in
    list) list=true; shift ;;
    prompt) prompt=true; shift ;;
+   add) add=true; shift ;;
 esac
 name="$1"
 

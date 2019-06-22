@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/git.sh"
+
+##? Sign all commits
+#?? 0.1.0
+##?
+##? Usage:
+##?    sign
+
+docs::eval_help "$@"
+
+git rebase master -S -f
