@@ -79,9 +79,10 @@ nav::resolve() {
 }
 
 path::canonical_to_jq() {
-   echo "$1" \
-     | tr '/' '.' \
-     | sed -E 's/([0-9]+)/\[\1\]/g' \
+   printf "$1" \
+     | tr '/' '\n' \
+     | sed -E 's/(^[0-9]+$)/\[\1\]/' \
+     | tr '\n' '.' \
      | sed 's/\.\[/\[/g'
 }
 
@@ -138,7 +139,7 @@ fzf::call() {
       --height '100%' \
       --header "$cwd" \
       --preview "dot js nav preview $cwd {}" \
-      --preview-window 'right:70%' \
+      --preview-window 'right:60%' \
       --nth 1 \
       --bind "$(fzf::bindings | tr '\n' ',')"
 }
@@ -165,10 +166,6 @@ action::view() {
    local readonly absolute_path="$(nav::resolve "$path")"
    local readonly jq_path="$(path::canonical_to_jq "$absolute_path")"
 
-   echo "$absolute_path"
-   echo
-   echo "$jq_path"
-   echo
    echo "$json" | jq -C "$jq_path" | less -R
 }
 
@@ -180,7 +177,7 @@ declare cwd
 if [[ -n "${_cwd:-}" ]]; then
    nav::cd "$_cwd"
 else 
-   cwd="/profiles"
+   cwd="/profiles/0/fn_function_keys"
 fi
 
 declare json="$(cat "$DOTFILES/bindings/karabiner/karabiner.json")"
