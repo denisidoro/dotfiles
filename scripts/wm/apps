@@ -4,7 +4,7 @@ set -uo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
-##? Manager window-manager-related features
+##? Manage window-manager-related features
 #?? 0.1.0
 ##?
 ##? Usage:
