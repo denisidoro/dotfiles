@@ -108,6 +108,7 @@ _alias() {
       clj) echo clojure;;
       game) echo gaming;;
       js) echo javascript;;
+      json) echo javascript;;
       env) echo environment;;
       self) echo environment;;
       mac) echo osx;;

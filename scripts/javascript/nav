@@ -1,0 +1,198 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Simple js nav file manager
+##? 
+##? It may be called via dot fs browser
+##?
+##? Usage:
+##?    s3
+##?    s3 edit <path>
+##?    s3 view <cwd> <path>
+##?    s3 preview <cwd> <path>
+
+docs::eval_help "$@"
+
+
+# ===============
+# input parsing
+# ===============
+edit=false
+view=false
+preview=false
+case "${1:-}" in
+   edit) edit=true; path="${2:-}" ;;
+   view) view=true; path="${2:-}" ;;
+   preview) preview=true; _cwd="$2"; path="$3" ;;
+esac
+
+# ===============
+# string
+# ===============
+
+path::resolve_dots() {
+   local readonly path="$(cat)"
+   
+   dirs=()
+   for p in $(echo "$path" | tr '/' '\n'); do
+     case $p in
+      .) ;;
+      ..) unset 'dirs[${#dirs[@]}-1]';;
+      *) dirs+=("$p");;
+     esac
+   done
+
+   echo "/${dirs[@]:-}" \
+     | tr ' ' '/' \
+     | str::remove_trailing_slash
+}
+
+str::remove_double_slashes() {
+   sed 's|//|/|g'
+}
+
+# ===============
+# s3
+# ===============
+
+str::remove_trailing_slash() {
+   sed 's:/*$::'
+}
+
+path::fallback_to_root() {
+   local readonly path="$(cat)"
+   if [[ -n "$path" ]]; then
+      echo "$path"
+   else
+      echo "/"
+   fi
+}
+
+nav::resolve() {
+   local readonly folder="${1:-}"
+   echo "${cwd}/${folder}" \
+      | str::remove_double_slashes \
+      | path::resolve_dots \
+      | path::fallback_to_root
+}
+
+path::canonical_to_jq() {
+   echo "$1" \
+     | tr '/' '.' \
+     | sed -E 's/([0-9]+)/\[\1\]/g' \
+     | sed 's/\.\[/\[/g'
+}
+
+nav::ls() {
+   local readonly path="${1:-$cwd}"
+   local readonly jq_path=$(path::canonical_to_jq "$path")
+   echo "$json" | jq "$jq_path | keys | .[]" | sed 's/\"//g'
+}
+
+nav::ls_with_up() {
+   if [[ $cwd != "/" ]]; then
+      echo ..
+   fi
+   nav::ls
+}
+
+nav::cd() {
+   cwd="$1"
+}
+
+nav::is_navigable() {
+   local readonly path="$1"
+   nav::ls "$path" &> /dev/null \
+      && return 0 \
+      || return 1
+}
+
+nav::open() {
+   local readonly path="$1"
+
+   if nav::is_navigable "$path"; then
+      nav::cd "$path"
+   fi
+
+   action::browse
+}
+
+
+# ===============
+# fzf
+# ===============
+
+fzf::bindings() {
+   echo "ctrl-h:execute(echo ..)+abort"
+   printf "ctrl-space:abort"
+}
+
+fzf::call() {
+   fzf-tmux \
+      --ansi \
+      --cycle \
+      --reverse \
+      --inline-info \
+      --height '100%' \
+      --header "$cwd" \
+      --preview "dot js nav preview $cwd {}" \
+      --preview-window 'right:70%' \
+      --nth 1 \
+      --bind "$(fzf::bindings | tr '\n' ',')"
+}
+
+
+# ===============
+# action
+# ===============
+
+action::browse() {
+   local readonly selection="$(nav::ls_with_up | fzf::call)"
+   
+   if [[ -z "$selection" ]]; then
+      exit 0
+   fi
+
+   local readonly path="$(nav::resolve "$selection")"
+   nav::open "$path"
+}
+
+
+action::view() {
+   local readonly path="$1"
+   local readonly absolute_path="$(nav::resolve "$path")"
+   local readonly jq_path="$(path::canonical_to_jq "$absolute_path")"
+
+   echo "$absolute_path"
+   echo
+   echo "$jq_path"
+   echo
+   echo "$json" | jq -C "$jq_path" | less -R
+}
+
+# ===============
+# main
+# ===============
+
+declare cwd
+if [[ -n "${_cwd:-}" ]]; then
+   nav::cd "$_cwd"
+else 
+   cwd="/profiles"
+fi
+
+declare json="$(cat "$DOTFILES/bindings/karabiner/karabiner.json")"
+
+if $view; then
+   action::view < /dev/tty > /dev/tty
+elif $preview; then
+   action::view "$path"
+elif $edit; then
+   action::edit < /dev/tty > /dev/tty
+elif $preview; then
+   action::preview
+else
+   action::browse
+fi
