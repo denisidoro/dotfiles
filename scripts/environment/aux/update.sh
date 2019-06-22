@@ -71,10 +71,10 @@ setup_docopts() {
  
    if [[ -n "${DOT_DOCOPTS:-}" ]]; then
       return 0
-   else
-      echo
-      local readonly backend="$(echo "bash python go" | tr ' ' '\n' | feedback::select_option "What backend do you want for docopts?")"
    fi
+   
+   echo
+   local readonly backend="$(echo "bash python go" | tr ' ' '\n' | feedback::select_option "What backend do you want for docopts?")"
 
    if [[ -z "${backend:-}" ]]; then
       log::error "Invalid option"
@@ -96,8 +96,8 @@ replace_file() {
    local readonly FILE_PATH="$1"
    if fs::is_file "$FILE_PATH" && ! test -L "$FILE_PATH"; then
      log::warning "${FILE_PATH} already exists and it's not a symlink"
-     if feedback::confirmation "Do you want to remove it?"; then
-       rm "$FILE_PATH"
+     if feedback::confirmation "Do you want to backup and stop using it?"; then
+       mv "$FILE_PATH" "${FILE_PATH}.bak"
      fi
    fi
 
@@ -131,6 +131,40 @@ setup_sudo_fallback() {
         mv /tmp/dotfiles/sudo /usr/local/bin/sudo
      fi
    fi
+
+}
+
+use_fzf() {
+ 
+   if [[ -n "${DOT_FZF:-}" ]]; then
+      return 0
+   fi
+   
+   use=false
+   echo
+   if feedback::confirmation "Do you want to use FZF?"; then
+      dot pkg add fzf
+      use=true
+   fi
+
+   echo "export DOT_FZF=$use" >> "$LOCAL_ZSHRC"
+
+}
+
+use_fasd() {
+ 
+   if [[ -n "${DOT_FASD:-}" ]]; then
+      return 0
+   fi
+   
+   use=false
+   echo
+   if feedback::confirmation "Do you want to use FASD?"; then
+      dot pkg add fasd
+      use=true
+   fi
+
+   echo "export DOT_FASD=$use" >> "$LOCAL_ZSHRC"
 
 }
 

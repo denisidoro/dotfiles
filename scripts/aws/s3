@@ -3,9 +3,9 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
-##? Simple file manager
+##? Simple AWS S3 file manager
 ##? 
-##? It may be called via dot shell fm
+##? It may be called via dot fs browser
 ##?
 ##? Usage:
 ##?    s3

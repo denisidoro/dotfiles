@@ -6,10 +6,10 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Simple file manager
 ##?
 ##? Usage:
-##?    fm
-##?    fm edit <line>
-##?    fm view <line>
-##?    fm preview <line>
+##?    browser
+##?    browser edit <line>
+##?    browser view <line>
+##?    browser preview <line>
 
 docs::eval_help "$@"
 
@@ -73,8 +73,8 @@ fs::open() {
 fzf::bindings() {
    echo "ctrl-h:execute(echo ..)+abort"
    echo "ctrl-space:abort"
-   echo "ctrl-v:execute(dot shell fm view {})"
-   echo "ctrl-e:execute(dot shell fm edit {})"
+   echo "ctrl-v:execute(dot shell browser view {})"
+   echo "ctrl-e:execute(dot shell browser edit {})"
    printf "ctrl-o:execute(echo ${CMD_PREFIX}vifm)+abort"
 }
 
@@ -86,7 +86,7 @@ fzf::call() {
       --inline-info \
       --header "$(pwd)" \
       --height 20 \
-      --preview "dot shell fm preview {}" \
+      --preview "dot shell browser preview {}" \
       --bind "$(fzf::bindings | tr '\n' ',')"
 }
 

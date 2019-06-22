@@ -72,4 +72,7 @@ install_nvim_plugins
 install_tmux_plugins
 install_zplug_plugins
 
+use_fzf
+use_fasd
+
 set -e

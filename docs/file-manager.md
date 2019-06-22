@@ -1,6 +1,6 @@
 ## File manager
 
-`dot shell fm` offers a quick way to browse and jump between folders directly from the terminal.
+`dot fs browser` offers a quick way to browse and jump between folders directly from the terminal.
 
 ![Demo](https://user-images.githubusercontent.com/3226564/59693889-05491480-91be-11e9-89dc-b5827cc15a20.gif)
 
@@ -11,6 +11,7 @@ enter: open file or browse directory
 ctrl-c or ctrl-space: abort and cd to current folder
 ctrl-e: edit file in $EDITOR
 ctrl-v: view file with $PAGER
+ctrl-h: go up one directory
 ctrl-o: browse directory with another file manager
 ```
 
@@ -23,7 +24,7 @@ git clone https://github.com/denisidoro/dotfiles.git ~/.dotfiles
 Then set a function in your .bashrc-like such as:
 ```bash
 fd () {
-  local readonly f="$("${HOME}/.dotfiles/bin/dot" shell fm "$@")"
+  local readonly f="$("${HOME}/.dotfiles/bin/dot" fs browser "$@")"
   if [ -d "$f" ]; then
     cd "$f"
   fi

@@ -8,11 +8,11 @@ source "${DOTFILES}/scripts/core/main.sh"
 #?? 0.1.0
 ##?
 ##? Usage:
-##?    fs size [<path>]
+##?    size [<path>]
 ##?
 ##? Examples:
-##?    fs size                Total size of current directory
-##?    fs size somepath       Size of a file or directory
+##?    size                Total size of current directory
+##?    size somepath       Size of a file or directory
 
 if du -b /dev/null >/dev/null 2>&1; then
    arg=-sbh

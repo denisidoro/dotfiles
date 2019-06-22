@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Shows network traffic
+#?? 0.1.0
+##?
+##? Usage:
+##?    traffic
+
+docs::eval "$@"
+
+traffic::get() {
+   netstat -w1 &
+   sleep 1.5
+   kill $!
+}
+
+traffic::get | tail -n1 | awk '{print $3 " " $6}'

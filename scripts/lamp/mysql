@@ -7,17 +7,24 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? MySQL helper utilities
 ##?
 ##? Usage:
-##?   mysql export <username> <database> <path>
-##?   mysql import <username> <database> <path>
+##?   mysql [options] export <database> <path>
+##?   mysql [options] import <database> <path>
+##?   mysql [options] db create <database>
+##?
+##? Options:
+##?   -u --user       User [default: root]
 ##?
 ##? Examples:
 ##?   mysql export root mydb backup.sql
 ##?   mysql import root mydb backup.sql
+##?   mysql db create mydb
 
 docs::eval "$@"
 
-if $export; then
-   mysqldump -u "$username" -p "$database" > "$path"
+if $db; then
+   mysql -u "$user" -e "create database $database character set UTF8mb4 collate utf8mb4_bin"
+elif $export; then
+   mysqldump -u "$user" -p "$database" > "$path"
 elif $import; then
-   mysql -u "$username" -p "$database" < "$path"
+   mysql -u "$user" -p "$database" < "$path"
 fi

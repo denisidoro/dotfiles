@@ -115,6 +115,8 @@ _alias() {
       pkg) echo package;;
       sec) echo security;;
       sh) echo shell;;
+      fs) echo filesystem;;
+      sensor) echo sensors;;
       *) echo "$arg";;
    esac
 }

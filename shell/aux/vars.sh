@@ -38,6 +38,13 @@ export FZF_DEFAULT_OPTS='--height 70% --reverse --border --inline-info --cycle'
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+# hightlighting
+# ZSH_HIGHLIGHT_STYLES[path]='bold'
+# ZSH_HIGHLIGHT_STYLES[reserved-word]=none
+
+# autosuggestions
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+
 # security
 export GPG_TTY=$(tty)
 

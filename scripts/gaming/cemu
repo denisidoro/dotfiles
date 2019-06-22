@@ -9,7 +9,8 @@ source "${DOTFILES}/scripts/download/core.sh"
 ##? Usage:
 ##?    cemu gen
 
-SAVE_BASE="/mnt/d/Emulators/Cemu/mlc01/usr/"
+CEMU_DIR="${CEMU_DIR:-/mnt/d/Emulators/Cemu}"
+SAVE_BASE="${CEMU_DIR}/mlc01/usr/"
 
 _gen_list() {
 	date +'%Y-%m-%d'
