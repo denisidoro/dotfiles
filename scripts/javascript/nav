@@ -205,6 +205,9 @@ nav::ls() {
 # main
 # ===============
 
+echo $0
+exit 
+
 nav::cd "$cwd"
 
 case $action in 
