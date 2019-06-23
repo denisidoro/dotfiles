@@ -9,24 +9,15 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?
 ##? Usage:
 ##?    s3
-##?    s3 __view <cwd> <path>
-##?    s3 __preview <cwd> <path>
 
 docs::eval_help "$@"
 
+# ===============
+# input
+# ===============
 
-# ===============
-# input parsing
-# ===============
-declare cwd
-declare path
-declare action
-readonly first_arg="${1:-}"
-case $first_arg in
-   __*) action="$(echo "$first_arg" | sed 's/__//')" ;;
-esac
-if [[ -n ${action:-} ]]; then
-  shift
+input::parse_double_dashes() {
+  readonly first_arg="${1:-}"
   variable=""
   for arg in $@; do
      if [[ $arg = --* ]]; then
@@ -38,12 +29,10 @@ if [[ -n ${action:-} ]]; then
         args+=("$arg")
      fi
   done
-fi
-action="${action:-browse}"
-cwd="${cwd:-/}"
-
-declare json="$(cat "$DOTFILES/bindings/karabiner/karabiner.json")"
-
+  action="${action:-browse}"
+  cwd="${cwd:-/}"
+  path="${path:-}" 
+}
 
 # ===============
 # string
@@ -79,8 +68,7 @@ path::parse_dots() {
    done
 
    echo "/${dirs[@]:-}" \
-     | tr ' ' '/' \
-     | str::remove_trailing_slash
+     | tr ' ' '/'
 }
 
 path::fallback_to_root() {
@@ -97,6 +85,9 @@ path::resolve() {
    echo "${cwd}/${folder}" \
       | str::remove_double_slashes \
       | path::parse_dots 2> /dev/null \
+      | str::remove_trailing_slash \
+      | path::fallback_to_root \
+      || echo "" \
       | path::fallback_to_root
 }
 
@@ -105,7 +96,7 @@ path::resolve() {
 # nav
 # ===============
 
-nav::ls_with_up() {
+nav::ls_with_dot_dot() {
    if ! path::is_root "$cwd"; then
       echo '..'
    fi
@@ -119,16 +110,21 @@ nav::cd() {
 nav::open() {
    local readonly path="$1"
 
-   if nav::is_navigable "$path"; then
+   if path::is_navigable "$path"; then
       nav::cd "$path"
-      nav::browse
+      action::browse
    else
-      nav::browse
+      action::browse
    fi
 }
 
-nav::browse() {
-   local readonly selection="$(nav::ls_with_up | fzf::call)"
+
+# ===============
+# action
+# ===============
+
+action::browse() {
+   local readonly selection="$(nav::ls_with_dot_dot | fzf::call)"
    
    if [[ -z "$selection" ]]; then
       exit 0
@@ -138,14 +134,26 @@ nav::browse() {
    nav::open "$path"
 }
 
+action::handle() {
+  case $action in 
+     view) action::view "$path" < /dev/tty > /dev/tty;;
+     preview) action::view "$path";;
+     browse) action::browse;;
+  esac
+}
+
 
 # ===============
 # fzf
 # ===============
 
+fzf::view_args() {
+  printf " "
+}
+
 fzf::bindings() {
    echo "ctrl-h:execute(echo ..)+abort"
-   echo "ctrl-v:execute(dot js nav __view --cwd "$cwd" --path {})"
+   echo "ctrl-v:execute($0 --action view --cwd $cwd --path {} $(fzf::view_args))"
    printf "ctrl-space:abort"
 }
 
@@ -155,9 +163,9 @@ fzf::call() {
       --cycle \
       --reverse \
       --inline-info \
-      --height '100%' \
+      --height '80%' \
       --header "$cwd" \
-      --preview "dot js nav __preview --cwd $cwd --path {}" \
+      --preview "$0 --action preview --cwd $cwd --path {} $(fzf::view_args)" \
       --preview-window 'right:60%' \
       --nth 1 \
       --bind "$(fzf::bindings | tr '\n' ',')"
@@ -169,35 +177,46 @@ fzf::call() {
 # ===============
 
 path::canonical_to_jq() {
-   printf "$1" \
+   local readonly path="$1"
+
+   printf "$path" \
      | tr '/' '\n' \
      | sed -E 's/(^[0-9]+$)/\[\1\]/' \
      | tr '\n' '.' \
      | sed 's/\.\[/\[/g'
 }
 
-nav::is_navigable() {
+path::is_navigable() {
    local readonly path="$1"
+
    nav::ls "$path" &> /dev/null \
       && return 0 \
       || return 1
 }
 
-nav::view() {
+action::view() {
    local readonly path="$1"
+
    local readonly absolute_path="$(path::resolve "$path")"
    local readonly jq_path="$(path::canonical_to_jq "$absolute_path")"
 
-   echo "$json" | jq -C "$jq_path" | less -R
+   cat "$json" \
+      | jq -C "$jq_path"
 }
 
 nav::ls() {
    local readonly path="${1:-$cwd}"
+
    local readonly jq_path=$(path::canonical_to_jq "$path")
-   echo "$json" | jq "$jq_path | keys | .[]" | sed 's/\"//g'
+
+   cat "$json" \
+      | jq "$jq_path | keys | .[]" \
+      | sed 's/\"//g'
 }
 
-
+fzf::view_args() {
+  printf "\-\-json $json"
+}
 
 
 
@@ -205,13 +224,18 @@ nav::ls() {
 # main
 # ===============
 
-echo $0
-exit 
+cleanup() {
+   rm "$json"
+}
+
+input::parse_double_dashes "$@"
+
+if [[ -z "${json:-}" ]]; then
+  readonly json="$(mktemp --suffix ".json")"
+  trap cleanup EXIT INT TERM
+  cat > "$json"
+fi
 
 nav::cd "$cwd"
+action::handle
 
-case $action in 
-   view) nav::view "$path" < /dev/tty > /dev/tty;;
-   preview) nav::view "$path";;
-   browse) nav::browse;;
-esac
