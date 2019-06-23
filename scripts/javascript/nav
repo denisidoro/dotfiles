@@ -9,9 +9,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?
 ##? Usage:
 ##?    s3
-##?    s3 edit <path>
-##?    s3 view <cwd> <path>
-##?    s3 preview <cwd> <path>
+##?    s3 __view <cwd> <path>
+##?    s3 __preview <cwd> <path>
 
 docs::eval_help "$@"
 
@@ -19,14 +18,31 @@ docs::eval_help "$@"
 # ===============
 # input parsing
 # ===============
-edit=false
-view=false
-preview=false
-case "${1:-}" in
-   edit) edit=true; path="${2:-}" ;;
-   view) view=true; _cwd="$2"; path="${3:-}" ;;
-   preview) preview=true; _cwd="$2"; path="${3:-}" ;;
+declare cwd
+declare path
+declare action
+readonly first_arg="${1:-}"
+case $first_arg in
+   __*) action="$(echo "$first_arg" | sed 's/__//')" ;;
 esac
+if [[ -n ${action:-} ]]; then
+  shift
+  variable=""
+  for arg in $@; do
+     if [[ $arg = --* ]]; then
+        variable="$(echo "$arg" | sed 's/\-\-//')"
+     elif [[ -n $variable ]]; then
+        eval "$variable"='"$arg"'
+        variable=""
+     else
+        args+=("$arg")
+     fi
+  done
+fi
+action="${action:-browse}"
+cwd="${cwd:-/}"
+
+declare json="$(cat "$DOTFILES/bindings/karabiner/karabiner.json")"
 
 
 # ===============
@@ -129,7 +145,7 @@ nav::browse() {
 
 fzf::bindings() {
    echo "ctrl-h:execute(echo ..)+abort"
-   echo "ctrl-v:execute(dot js nav view "$cwd" {})"
+   echo "ctrl-v:execute(dot js nav __view --cwd "$cwd" --path {})"
    printf "ctrl-space:abort"
 }
 
@@ -141,7 +157,7 @@ fzf::call() {
       --inline-info \
       --height '100%' \
       --header "$cwd" \
-      --preview "dot js nav preview $cwd {}" \
+      --preview "dot js nav __preview --cwd $cwd --path {}" \
       --preview-window 'right:60%' \
       --nth 1 \
       --bind "$(fzf::bindings | tr '\n' ',')"
@@ -189,23 +205,10 @@ nav::ls() {
 # main
 # ===============
 
-declare cwd
-if [[ -n "${_cwd:-}" ]]; then
-   nav::cd "$_cwd"
-else 
-   cwd="/"
-fi
+nav::cd "$cwd"
 
-declare json="$(cat "$DOTFILES/bindings/karabiner/karabiner.json")"
-
-if $view; then
-   nav::view "$path" < /dev/tty > /dev/tty
-elif $preview; then
-   nav::view "$path"
-elif $edit; then
-   nav::edit < /dev/tty > /dev/tty
-elif $preview; then
-   nav::preview
-else
-   nav::browse
-fi
+case $action in 
+   view) nav::view "$path" < /dev/tty > /dev/tty;;
+   preview) nav::view "$path";;
+   browse) nav::browse;;
+esac
