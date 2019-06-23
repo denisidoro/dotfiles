@@ -21,7 +21,3 @@ echo "$spaces" \
 
 echo "$spaces" \
    | sed -n '73,9999p'
-
-# | grep -zP "paces\s*=.*?\((.*?)"
-
-# \s*=.*?\((.*?)\)

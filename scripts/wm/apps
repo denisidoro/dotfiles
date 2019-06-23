@@ -4,11 +4,11 @@ set -uo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
-##? Manager window-manager-related features
+##? Manage window-manager-related features
 #?? 0.1.0
 ##?
 ##? Usage:
-##?    wm (start|stop|toggle|restart)
+##?    apps (start|stop|toggle|restart)
 
 docs::eval "$@"
 
@@ -26,13 +26,11 @@ elif $restart; then
 fi
 
 if $stop; then
-   # ps aux | grep -ie "[b]ersicht" | awk '{print $2}' | xargs kill -9 2>/dev/null
-   brew services stop crisidev/chunkwm/chunkwm
-   brew services stop khd
+   brew services stop crisidev/chunkwm/chunkwm || true
+   brew services stop khd || true 
 fi
 
 if $start; then
    brew services start khd
    brew services start crisidev/chunkwm/chunkwm
-   # open "/Applications/Übersicht.app"
 fi

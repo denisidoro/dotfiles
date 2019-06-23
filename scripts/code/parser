@@ -8,6 +8,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    parser json [<path>]
 ##?    parser yaml [<path>]
 
+docs::eval_help "$@"
+
 type="$1"
 path="${2:-}"
 

@@ -19,23 +19,25 @@ source "${DOTFILES}/shell/aux/vars.sh"
 # load plugins
 source "${DOTFILES}/shell/aux/zplug.zsh"
 
-# setup plugins and commands
-source "${DOTFILES}/shell/aux/config.zsh"
-
 # load helper functions
 source "${DOTFILES}/shell/aux/core.zsh"
 
 # load aliases
 source "${DOTFILES}/shell/aliases/core.sh"
 
-# setup key bindings
-source "${DOTFILES}/shell/bindings/fzf.zsh"
-
 # load local custom config
-include "${DOTFILES}/local/zshrc"
+source "${DOTFILES}/local/zshrc"
 
-# load non-fundamental stuff
-include "${HOME}/.fzf.zsh"
+# fzf
+if ${DOT_FZF:-false}; then
+	source "${DOTFILES}/shell/bindings/fzf.zsh"
+	include "${HOME}/.fzf.zsh"
+fi
+
+# fasd
+if ${DOT_FASD:-false}; then
+	eval "$(fasd --init posix-alias zsh-hook)"
+fi
 
 # startup time instrumentation end
 # unsetopt XTRACE

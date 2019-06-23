@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/documentation.sh"
 source "${DOTFILES}/scripts/core/git.sh"
 
 ##? Git pull helpers
@@ -10,6 +10,8 @@ source "${DOTFILES}/scripts/core/git.sh"
 ##? Usage:
 ##?    pull module <args>...
 ##?    pull master <args>...
+
+docs::eval_help "$@"
 
 _master() {
    git checkout master

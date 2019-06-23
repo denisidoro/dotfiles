@@ -8,9 +8,12 @@ recipe::abort_if_installed nvim
 
 if platform::command_exists brew; then
    brew install neovim
-else
-   cd "$HOME"
-   sudo curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
-   chmod u+x nvim.appimage
-   sudo mv nvim.appimage /usr/local/nvim
+   exit 0
 fi
+
+dot pkg add --package-manager neovim && recipe::abort_if_installed nvim
+
+cd "/tmp"
+curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+chmod u+x nvim.appimage
+sudo mv nvim.appimage /usr/local/nvim

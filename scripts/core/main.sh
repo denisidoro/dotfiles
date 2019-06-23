@@ -12,3 +12,7 @@ if [ -z ${DOT_MAIN_IMPORTED+x} ] || ! "${DOT_MAIN_IMPORTED}"; then
    source "${DOTFILES}/scripts/core/feedback.sh"
    readonly DOT_MAIN_IMPORTED=true
 fi
+
+if ${DOT_TRACE:-false}; then 
+   set -x
+fi

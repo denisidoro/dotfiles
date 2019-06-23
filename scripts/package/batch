@@ -10,16 +10,18 @@ source "${DOTFILES}/scripts/package/aux/batch.sh"
 ##? Usage:
 ##?    batch list <name>
 ##?    batch prompt <name>
-##?    batch <name>
+##?    batch add <name>
 
 docs::eval_help "$@"
 
 # input parsing
 list=false
 prompt=false
+add=false
 case "${1:-}" in
    list) list=true; shift ;;
    prompt) prompt=true; shift ;;
+   add) add=true; shift ;;
 esac
 name="$1"
 
@@ -32,7 +34,7 @@ if $list; then
    exit 0
 fi
 
-if _list | xargs which > /dev/null; then
+if _list | xargs which &> /dev/null; then
    log::note "All dependencies already installed for the batch $name"
    exit 0
 fi
@@ -45,4 +47,4 @@ if $prompt; then
 fi
 
 deps="$(batch::dependencies "$name" | str::join)"
-dot pkg add "${deps[@]}"
+dot pkg add "$deps"

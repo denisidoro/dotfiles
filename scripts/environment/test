@@ -8,6 +8,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    test <suite>
 
+docs::eval_help "$@"
+
 suite="$1"
 bash "${DOTFILES}/scripts/environment/tests/${suite}.sh"
 

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Show/hide hidden files in Finder
+#?? 0.1.0
+##?
+##? Usage:
+##?    finder (show|hide)
+##?
+##? Examples:
+##?    osx hidden show
+##?    osx desktop hide
+
+docs::eval "$@"
+
+osx::show_hidden_files() {
+   defaults write com.apple.finder AppleShowAllFiles -bool true
+   killall Finder
+}
+
+osx::hide_hidden_files() {
+   defaults write com.apple.finder AppleShowAllFiles -bool false
+   killall Finder
+}
+
+$show \
+   && osx::show_hidden_files \
+   || osx::hide_hidden_files

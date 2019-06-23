@@ -20,6 +20,7 @@ has_tag() {
 
 get_git_info() {
   cd "$DOTFILES" 
+
   git log -n 1 --pretty=format:'%ad - %h' --date=format:'%Y-%m-%d %Hh%M' \
      || echo "unknown version"
 }
@@ -41,29 +42,13 @@ setup_folders_and_files() {
 
 
 # ==============================
-# Submodules
-# ==============================
-
-update_submodules() {
-
-   echo
-   log::note "Attempting to update submodules..."
-   cd "$DOTFILES"
-   git pull 
-   git submodule init 
-   git submodule update
-   git submodule status
-   git submodule update --init --recursive "${DOTBOT_DIR}" 
-
-}
-
-
-# ==============================
 # Fixes
 # ==============================
 
 fix_locales() {
   if locale > /dev/null | grep -q annot; then
+    echo
+    log::note "Fixing locales..."
     locale-gen en_US en_US.UTF-8
   fi 
 }
@@ -89,10 +74,10 @@ setup_docopts() {
  
    if [[ -n "${DOT_DOCOPTS:-}" ]]; then
       return 0
-   else
-      echo
-      local readonly backend="$(echo "bash python go" | tr ' ' '\n' | feedback::select_option "What backend do you want for docopts?")"
    fi
+   
+   echo
+   local readonly backend="$(echo "bash python go" | tr ' ' '\n' | feedback::select_option "What backend do you want for docopts?")"
 
    if [[ -z "${backend:-}" ]]; then
       log::error "Invalid option"
@@ -114,8 +99,8 @@ replace_file() {
    local readonly FILE_PATH="$1"
    if fs::is_file "$FILE_PATH" && ! test -L "$FILE_PATH"; then
      log::warning "${FILE_PATH} already exists and it's not a symlink"
-     if feedback::confirmation "Do you want to remove it?"; then
-       rm "$FILE_PATH"
+     if feedback::confirmation "Do you want to backup and stop using it?"; then
+       mv "$FILE_PATH" "${FILE_PATH}.bak"
      fi
    fi
 
@@ -127,10 +112,13 @@ setup_nvim_fallback() {
      echo
      log::warning "neovim isn't installed"
      if feedback::confirmation "Do you want to setup a fallback?"; then
-        if ! platform::command_exists vim; then
-           ln -s "$(which vi)" "/usr/bin/vim" || true
+        if ! platform::command_exists vi && ! platform::command_exists vim; then
+           dot pkg add vim
         fi
-        ln -s "$(which vim)" /usr/bin/nvim
+        if ! platform::command_exists vim; then
+           sudo ln -s "$(which vi)" "/usr/bin/vim" || true
+        fi
+        sudo ln -s "$(which vim)" /usr/bin/nvim
      fi
    fi
 
@@ -149,6 +137,40 @@ setup_sudo_fallback() {
         mv /tmp/dotfiles/sudo /usr/local/bin/sudo
      fi
    fi
+
+}
+
+use_fzf() {
+ 
+   if [[ -n "${DOT_FZF:-}" ]]; then
+      return 0
+   fi
+   
+   use=false
+   echo
+   if feedback::confirmation "Do you want to use FZF?"; then
+      dot pkg add fzf
+      use=true
+   fi
+
+   echo "export DOT_FZF=$use" >> "$LOCAL_ZSHRC"
+
+}
+
+use_fasd() {
+ 
+   if [[ -n "${DOT_FASD:-}" ]]; then
+      return 0
+   fi
+   
+   use=false
+   echo
+   if feedback::confirmation "Do you want to use FASD?"; then
+      dot pkg add fasd
+      use=true
+   fi
+
+   echo "export DOT_FASD=$use" >> "$LOCAL_ZSHRC"
 
 }
 
@@ -251,4 +273,52 @@ update_dotfiles_fallback() {
    log::note "Fallbacking to essential symlinks..."
    ln -s "${DOTFILES}/shell/bashrc" "${HOME}/.bashrc" || true
    ln -s "${DOTFILES}/shell/zshrc" "${HOME}/.zshrc" || true
+}
+
+
+# ==============================
+# git
+# ==============================
+
+self_update() {
+  cd "$DOTFILES"
+  
+  git fetch
+  if [[ $(project_status) = "behind" ]]; then
+     cd "$DOTFILES"
+     log::note "Attempting to update itself..."
+     git pull && exit 0 || log::error "Failed" 
+  fi
+}
+
+update_submodules() {
+
+   echo
+   log::note "Attempting to update submodules..."
+   cd "$DOTFILES"
+   git pull 
+   git submodule init 
+   git submodule update
+   git submodule status
+   git submodule update --init --recursive "${DOTBOT_DIR}" 
+
+}
+
+project_status() {
+  cd "$DOTFILES"
+
+  local readonly UPSTREAM=${1:-'@{u}'}
+  local readonly LOCAL=$(git rev-parse @)
+  local readonly REMOTE=$(git rev-parse "$UPSTREAM")
+  local readonly BASE=$(git merge-base @ "$UPSTREAM")
+
+  if [[ "$LOCAL" = "$REMOTE" ]]; then
+    echo "synced"
+  elif [[ "$LOCAL" = "$BASE" ]]; then
+    echo "behind"
+  elif [[ "$REMOTE" = "$BASE" ]]; then
+    echo "ahead"
+  else
+    echo "diverged"
+  fi
 }

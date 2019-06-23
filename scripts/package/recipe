@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/package/aux/add.sh"
+source "${DOTFILES}/scripts/package/aux/recipes.sh"
+
+##? Lists custom recipes
+##?
+##? Usage:
+##?    recipe list
+
+docs::eval_help "$@"
+
+recipe::list

@@ -13,5 +13,5 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 docs::eval_help "$@"
 
-pkg="$(platform::main_package_manager)"
-$pkg "update" "$@"
+package_manager="$(platform::main_package_manager)"
+$package_manager "update" "$@"

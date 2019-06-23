@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/documentation.sh"
 source "${DOTFILES}/scripts/core/git.sh"
 
 ##? Git push helpers
@@ -11,6 +11,8 @@ source "${DOTFILES}/scripts/core/git.sh"
 ##?    push upstream <args>...
 ##?    push lint <args>...
 ##?    push commit <args>...
+
+docs::eval_help "$@"
 
 _upstream() {
    local readonly branch="$(git rev-parse --abbrev-ref HEAD)"

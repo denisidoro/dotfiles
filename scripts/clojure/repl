@@ -10,6 +10,8 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 ##? Usage:
 ##?    repl
 
+docs::eval_help "$@"
+
 _aliases() {
    cat "${HOME}/.clojure/deps.edn" \
       | dot clojure data -o json \

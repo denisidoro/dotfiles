@@ -8,7 +8,6 @@
     ~/.config/bindings/karabiner.json: bindings/karabiner/karabiner.json
     ~/.khdrc: bindings/khd/khd.rc
     ~/.chunkwmrc: wm/chunkwm/chunkwmrc
-    ~/Library/Preferences/kitty/kitty.conf: terminal/kitty/kitty.conf
     ~/Library/Application Support/Übersicht/widgets/nerdbar.widget: wm/nerdbar
     ~/Library/Application Support/Code/User/settings.json: editors/vscode/settings.json
     ~/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings: editors/sublime/preferences.json

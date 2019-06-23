@@ -5,7 +5,7 @@ IFS=$' \n\t'
 
 export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)}"
 source "$DOTFILES/scripts/core/main.sh"
-export CALLING_DIR="${CALLING_DIR:-"$PWD"}"
+CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 
 ##? A hub for an all-purpose set of scripts
 #?? 1.0.0
@@ -106,13 +106,19 @@ _alias() {
    case "$arg" in
       and) echo android;;
       clj) echo clojure;;
-      down) echo download;;
-      emu) echo emulation;;
+      game) echo gaming;;
+      js) echo javascript;;
+      json) echo javascript;;
       env) echo environment;;
+      self) echo environment;;
+      mac) echo osx;;
       net) echo network;;
       pkg) echo package;;
       sec) echo security;;
       sh) echo shell;;
+      fs) echo filesystem;;
+      sensor) echo sensors;;
+      not) echo notification;;
       *) echo "$arg";;
    esac
 }
@@ -141,6 +147,7 @@ else
    cmd="$2"
 
    shift 2
+   export DOT_TRACE=${TRACE:-false}
    "${DOTFILES}/scripts/${ctx}/${cmd}" "$@"
 
 fi

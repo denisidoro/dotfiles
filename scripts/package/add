@@ -10,38 +10,91 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 ##? and custom recipes
 ##?
 ##? Usage:
-##?    add <deps>...
-##?    add --force-pm <deps>...
+##?    add [options] <deps>...
+##?    
+##? Options:
+##?    -a --ask                Ask for confirmation
+##?    -p --package-manager    Force package-manager, skipping any custom recipe   
 
-docs::eval "$@"
+docs::eval_help "$@"
 
-if [[ ${1:-} = "--force-pm" ]]; then
-   force_pm=true
-   shift
-fi
+_cleanup() {
+   rm -rf "$TEMP_FOLDER" || true
+}
 
-deps="$(echo "$@" | str::multiline)"
-recipes_as_regex="$(recipe::list | xargs | str::regex)"
+trap _cleanup SIGINT
 
-mkdir -p "$TEMP_FOLDER" 2> /dev/null || true
-
-deps_with_recipe="$(filter::with_recipe "$deps" "$recipes_as_regex" | str::join)"
-for dep in $deps_with_recipe; do
-   echo
-   log::note "Installing ${dep} using custom recipe..."
-   recipe::install "$dep"
+# parse args
+deps_arr=()
+force_package_manager=false
+ask=false
+for arg in $@; do
+   case $arg in
+      -p|--package-manager) force_package_manager=true;;
+      -a|--ask) ask=true;;
+      -*) log::error "Invalid option: $arg"; exit 1;;
+      *) deps_arr+=("$arg");;
+   esac
 done
 
-deps_without_recipe="$(filter::without_recipe "$deps" "$recipes_as_regex" | str::join)"
-if [[ -n "$deps_without_recipe" ]]; then
-   echo
-   pkg="$(platform::main_package_manager)"
-   log::note "Installing ${deps_without_recipe} using ${pkg}..."
-   case "$pkg" in
-      brew) $pkg install "${deps_without_recipe[@]}" ;;
-      apk) $pkg add "${deps_without_recipe[@]}" ;;
-      *) sudo "$pkg" install "${deps_without_recipe[@]}" ;;
-   esac
+# temp setup
+mkdir -p "$TEMP_FOLDER" 2> /dev/null || true
+
+# dependency list 
+deps="$(echo "${deps_arr[@]:-}" | str::multiline)"
+recipes_as_regex="$(recipe::list | xargs | str::regex)"
+
+# get deps that will use the system's package manager
+if $force_package_manager; then
+   deps_without_recipe="$(echo "$deps" | str::join)"
+else 
+   deps_without_recipe="$(filter::without_recipe "${deps_arr[@]:-}" "$recipes_as_regex" | str::join)"
 fi
 
-rm -rf "$TEMP_FOLDER" || true
+# use the system's package manager
+if [[ -n "$deps_without_recipe" ]]; then
+
+   # get main package manager
+   package_manager="$(platform::main_package_manager)"
+
+   echo
+   log::note "Installing ${deps_without_recipe} using ${package_manager}..."
+
+   args=()
+
+   # args build: sudo or not
+   case $package_manager in
+      brew) ;;
+      *) args+=("sudo");;
+   esac
+
+   # args build: package manager
+   args+=("$package_manager")
+
+   # args build: install command
+   case $package_manager in
+      apk) args+=("add");;
+      *) args+=("install");;
+   esac
+
+   # args build: ask or not
+   if ! $ask; then
+      case $package_manager in 
+         brew) ;;
+         *) args+=("-y");;
+      esac
+   fi
+
+   # call
+   "${args[@]}" "${deps_without_recipe[@]:-}"
+fi
+
+# use custom recipes, if allowed
+if ! $force_package_manager; then
+   deps_with_recipe="$(filter::with_recipe "$deps" "$recipes_as_regex" | str::join)"
+   for dep in $deps_with_recipe; do
+      echo
+      log::note "Installing ${dep} using custom recipe..."
+      recipe::install "$dep"
+   done
+fi

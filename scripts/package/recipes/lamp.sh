@@ -2,26 +2,19 @@
 # vim: filetype=sh
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/main.sh"
-
-##? Setups an Amazon Linux 2 AMI instance with a LAMP stack
-##?
-##? Usage:
-##?    setup <step>
-
-docs::eval "$@"
+source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 _prompt() {
    log::warning "$1"
    read -p "Press enter to continue"
 }
 
-step_0() {
+recipe::httpd() {
    log::warning "Updating packages..."
    sudo yum update -y
    log::warning "Installing php and mariadb..."
    sudo amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
-   sudo amazon-linux-extras install php7.2-xml
+   sudo amazon-linux-extras install 
    cat /etc/system-release
    sudo yum install -y httpd mariadb-server mod_ssl
    sudo yum install -y php72-xml || sudo yum install -y php7.2-xml || sudo yum install -y php-xml || sudo yum install -y php7.0-xml || sudo yum install -y php70-xml
@@ -33,10 +26,10 @@ step_0() {
    log::warning "Changing groups..."
    sudo usermod -a -G apache ec2-user
    php --version
-   _prompt "Please log out and ssh in again"
+   _prompt "Please log out, ssh in and run this command again"
 }
 
-step_1() {
+recipe::httpd2() {
    groups
    log::warning "Changing groups..."
    sudo chown -R ec2-user:apache /var/www
@@ -46,45 +39,30 @@ step_1() {
    echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
    _prompt "Check if phpinfo.php works"
    rm /var/www/html/phpinfo.php
-   _prompt "Starting mariadb..."
+   log::warning "Starting mariadb..."
    sudo systemctl start mariadb
-   _prompt "Setting up mariadb..."
+   log::warning "Setting up mariadb..."
    sudo mysql_secure_installation
    ls /var/www/html
    log::warning "Starting manual edits..."
    sudo vim /etc/httpd/conf/httpd.conf
-   # sudo vim /var/www/html/.htaccess
    log::warning "Restarting LAMP..."
    sudo systemctl restart httpd
    sudo systemctl restart php-fpm
 }
 
-step_sendy() {
-   log::warning "Setting up sendy..."
-   _prompt "Make sure $HOME/sendy.zip and $HOME/htaccess are available"
-   unzip sendy.zip -d /var/www/html
-   mv /var/www/html/sendy/* /var/www/html/
-   rm -rf /var/www/html/sendy
-   ls /var/www/html/
-   chmod -R 777 /var/www/html/uploads
-   vim /var/www/html/includes/config.php
-}
+if fs::is_dir "/var/www/html/phpMyAdmin"; then
+   recipe::abort_installed LAMP
+fi
 
-step_phpmyadmin() {
-   log::warning "Setting up phpMyAdmin..."
-   cd /var/www/html
-   log::warning "Downloading zip..."
-   wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz
-   log::warning "Extracting zip..."
-   mkdir phpMyAdmin && tar -xvzf phpMyAdmin-latest-all-languages.tar.gz -C phpMyAdmin --strip-components 1
-   log::warning "Cleaning up..."
-   rm phpMyAdmin-latest-all-languages.tar.gz
-}
+if ! platform::is_ami2; then
+   log::error "Recipe only available to Amazon Linux AMI 2"
+   exit 45
+fi
 
-case $step in
-   "0") step_0 ;;
-   "1") step_1 ;;
-   "sendy") step_sendy ;;
-   "phpmyadmin") step_phpmyadmin ;;
-   *) echo "Bad step"; exit 1 ;;
-esac
+if ! fs::is_dir "/var/www/html"; then
+   recipe::httpd
+else
+   recipe::httpd2
+   dot pkg add phpMyAdmin 
+fi

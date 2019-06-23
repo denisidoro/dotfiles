@@ -124,7 +124,7 @@ command! mkcd :mkdir %a | cd %a
 command! vgrep vim "+grep %a"
 command! reload :write | restart
 
-command! jumpj :set noquickview | :execute 'cd "'.system('dot shell jump global 2>/dev/tty ').'"%IU' | redraw
+command! jumpj :set noquickview | :execute 'cd "'.system('dot fs jump global 2>/dev/tty ').'"%IU' | redraw
 
 " ------------------------------------------------------------------------------
 " > PREVIEW

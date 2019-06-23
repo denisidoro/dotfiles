@@ -3,14 +3,15 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/recipes.sh"
+source "${DOTFILES}/scripts/package/aux/add.sh"
 
 recipe::abort_if_installed ag
 
-case "$(recipe::main_package_manager)" in
-	apt) sudo apt-get install silversearcher-ag && exit 0;;
-	brew) brew install the_silver_searcher && exit 0;;
-esac
+if [[ "$(recipe::main_package_manager)" = "brew" ]]; then
+	brew install the_silver_searcher
+	exit 0
+fi
 
-dot pkg add the_silver_searcher \
-   || dot pkg add silversearcher-ag \
+dot pkg add silversearcher-ag \
+   || dot pkg add the_silver_searcher \
    || dot pkg add the_silver_searcher

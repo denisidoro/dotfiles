@@ -3,6 +3,14 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
+##? Compiles clj scripts to binaries with GraalVM
+##? for faster access
+##?
+##? Usage:
+##?    compile
+
+docs::eval_help "$@"
+
 JAVA_HOME=${JAVA_HOME:-"/Library/Java/JavaVirtualMachines/jdk1.8.0_92.jdk/Contents/Home"}
 NATIVE_IMAGE_BIN="${NATIVE_IMAGE_BIN:-$HOME/Applications/graalvm-ee-1.0.0-rc6/Contents/Home/bin/native-image}"
 

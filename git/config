@@ -2,6 +2,7 @@
   excludesfile = ~/.dotfiles/git/ignore
   hookspath = ~/.dotfiles/git/hooks
   autocrlf = input
+  ignorecase = false
 
 [push]
   default = current

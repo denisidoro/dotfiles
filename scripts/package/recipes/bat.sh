@@ -24,7 +24,7 @@ url::get() {
 
 recipe::abort_if_installed bat
 
-dot pkg add --force-pm bat && recipe::abort_if_installed bat
+dot pkg add --package-manager bat && recipe::abort_if_installed bat
 
 dot pkg add wget
 

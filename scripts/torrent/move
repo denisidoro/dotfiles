@@ -10,11 +10,11 @@ source "${DOTFILES}/scripts/download/aux/core.sh"
 ##? Usage:
 ##?    move
 
-docs::eval "$@"
+docs::eval_help "$@"
 
-DOWNLOADS_FOLDER="$HOME/Downloads/test"
-TV_FOLDER="$HOME/TV"
-MOVIES_FOLDER="$HOME/Movies"
+DOWNLOADS_FOLDER="${DOWNLOADS_FOLDER:-"$HOME/Downloads/test"}"
+TV_FOLDER="${TV_FOLDER:-$HOME/TV}"
+MOVIES_FOLDER="${MOVIES_FOLDER:-$HOME/Movies}"
 
 _video_content() {
    local readonly f="$(cat)"

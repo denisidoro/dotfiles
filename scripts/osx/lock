@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Lock
+#?? 0.1.0
+##?
+##? Usage:
+##?    lock
+
+docs::eval_help "$@"
+
+pmset displaysleepnow

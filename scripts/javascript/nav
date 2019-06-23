@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/nav.sh"
+
+##? JSON navigator
+##? 
+##? Usage:
+##?    nav [<path>]
+
+docs::eval_help "$@"
+
+cleanup() {
+   rm "$json"
+}
+
+path::all() {
+   cat "$json" \
+     | jq -rc 'path(..)|[.[]|tostring]|join("/")' \
+     | xargs -I% echo '/%'
+}
+
+path::canonical_to_jq() {
+   local readonly path="$1"
+
+   printf "$path" \
+     | tr '/' '\n' \
+     | sed -E 's/(^[0-9]+$)/\[\1\]/' \
+     | tr '\n' '.' \
+     | sed 's/\.\[/\[/g'
+}
+
+path::is_navigable() {
+   local readonly path="$1"
+
+   nav::ls "$path" &> /dev/null
+}
+
+nav::ls() {
+   local readonly path="${1:-$cwd}"
+
+   local readonly jq_path=$(path::canonical_to_jq "$path")
+
+   cat "$json" \
+      | jq "$jq_path | keys | .[]" \
+      2> /dev/null\
+      | sed 's/\"//g' \
+      || printf ''
+}
+
+action::view() {
+   local readonly path="$1"
+
+   local readonly absolute_path="$(path::resolve "$path")"
+   local readonly jq_path="$(path::canonical_to_jq "$absolute_path")"
+
+   cat "$json" \
+      | jq -C "$jq_path" \
+      2> /dev/null \
+      | ${PAGER:-less} \
+      || printf ''
+}
+
+fzf::default_args() {
+  echo "--json $json"
+}
+
+# ===============
+# main
+# ===============
+
+input::parse "$@"
+
+if [[ $action = "browse" ]] && [[ -z "${json:-}" ]]; then
+  readonly json="$(mktemp --suffix ".json")"
+  trap cleanup EXIT INT TERM
+  cat > "$json"
+fi
+
+nav::cd "$cwd"
+action::handle
