@@ -30,7 +30,7 @@ Click [here](https://www.katacoda.com/denisidoro/scenarios/navigators).
 
 Only a few lines of bash glue are necessary to implement new navigators.
 
-Please use [this implementation](https://github.com/denisidoro/dotfiles/blob/master/scripts/js/nav) as reference.
+Please use [this implementation](https://github.com/denisidoro/dotfiles/blob/master/scripts/javascript/nav) as reference.
 
 
 ---
