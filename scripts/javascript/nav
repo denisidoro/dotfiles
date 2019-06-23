@@ -2,179 +2,25 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/nav.sh"
 
-##? Simple js nav file manager
+##? JSON navigator
 ##? 
-##? It may be called via dot fs browser
-##?
 ##? Usage:
-##?    s3
+##?    nav [<path>]
 
 docs::eval_help "$@"
 
-# ===============
-# input
-# ===============
-
-input::parse_double_dashes() {
-  readonly first_arg="${1:-}"
-  variable=""
-  for arg in $@; do
-     if [[ $arg = --* ]]; then
-        variable="$(echo "$arg" | sed 's/\-\-//')"
-     elif [[ -n $variable ]]; then
-        eval "$variable"='"$arg"'
-        variable=""
-     else
-        args+=("$arg")
-     fi
-  done
-  action="${action:-browse}"
-  cwd="${cwd:-/}"
-  path="${path:-}" 
+cleanup() {
+   rm "$json"
 }
 
-# ===============
-# string
-# ===============
-
-str::remove_double_slashes() {
-   sed 's|//|/|g'
+# TODO: use this
+path::all() {
+   cat "$json" \
+     | jq -rc 'path(..)|[.[]|tostring]|join("/")' \
+     | xargs -I% echo '/%'
 }
-
-str::remove_trailing_slash() {
-   sed 's:/*$::'
-}
-
-
-# ===============
-# path
-# ===============
-
-path::is_root() {
-   [[ "$1" = "/" ]]
-}
-
-path::parse_dots() {
-   local readonly path="$(cat)"
-   
-   dirs=()
-   for p in $(echo "$path" | tr '/' '\n'); do
-     case $p in
-      .) ;;
-      ..) unset 'dirs[${#dirs[@]}-1]';;
-      *) dirs+=("$p");;
-     esac
-   done
-
-   echo "/${dirs[@]:-}" \
-     | tr ' ' '/'
-}
-
-path::fallback_to_root() {
-   local readonly path="$(cat)"
-   if [[ -n $path ]]; then
-      echo "$path"
-   else
-      echo "/"
-   fi
-}
-
-path::resolve() {
-   local readonly folder="${1:-}"
-   echo "${cwd}/${folder}" \
-      | str::remove_double_slashes \
-      | path::parse_dots 2> /dev/null \
-      | str::remove_trailing_slash \
-      | path::fallback_to_root \
-      || echo "" \
-      | path::fallback_to_root
-}
-
-
-# ===============
-# nav
-# ===============
-
-nav::ls_with_dot_dot() {
-   if ! path::is_root "$cwd"; then
-      echo '..'
-   fi
-   nav::ls
-}
-
-nav::cd() {
-   cwd="$1"
-}
-
-nav::open() {
-   local readonly path="$1"
-
-   if path::is_navigable "$path"; then
-      nav::cd "$path"
-      action::browse
-   else
-      action::browse
-   fi
-}
-
-
-# ===============
-# action
-# ===============
-
-action::browse() {
-   local readonly selection="$(nav::ls_with_dot_dot | fzf::call)"
-   
-   if [[ -z "$selection" ]]; then
-      exit 0
-   fi
-
-   local readonly path="$(path::resolve "$selection")"
-   nav::open "$path"
-}
-
-action::handle() {
-  case $action in 
-     view) action::view "$path" < /dev/tty > /dev/tty;;
-     preview) action::view "$path";;
-     browse) action::browse;;
-  esac
-}
-
-
-# ===============
-# fzf
-# ===============
-
-fzf::view_args() {
-  printf " "
-}
-
-fzf::bindings() {
-   echo "ctrl-h:execute(echo ..)+abort"
-   echo "ctrl-v:execute($0 --action view --cwd $cwd --path {} $(fzf::view_args))"
-   printf "ctrl-space:abort"
-}
-
-fzf::call() {
-   fzf-tmux \
-      --ansi \
-      --cycle \
-      --reverse \
-      --inline-info \
-      --height '80%' \
-      --header "$cwd" \
-      --preview "$0 --action preview --cwd $cwd --path {} $(fzf::view_args)" \
-      --preview-window 'right:60%' \
-      --nth 1 \
-      --bind "$(fzf::bindings | tr '\n' ',')"
-}
-
-
-# ===============
-# implementation
-# ===============
 
 path::canonical_to_jq() {
    local readonly path="$1"
@@ -189,19 +35,7 @@ path::canonical_to_jq() {
 path::is_navigable() {
    local readonly path="$1"
 
-   nav::ls "$path" &> /dev/null \
-      && return 0 \
-      || return 1
-}
-
-action::view() {
-   local readonly path="$1"
-
-   local readonly absolute_path="$(path::resolve "$path")"
-   local readonly jq_path="$(path::canonical_to_jq "$absolute_path")"
-
-   cat "$json" \
-      | jq -C "$jq_path"
+   nav::ls "$path" &> /dev/null
 }
 
 nav::ls() {
@@ -214,23 +48,29 @@ nav::ls() {
       | sed 's/\"//g'
 }
 
-fzf::view_args() {
-  printf "\-\-json $json"
+action::view() {
+   local readonly path="$1"
+
+   local readonly absolute_path="$(path::resolve "$path")"
+   local readonly jq_path="$(path::canonical_to_jq "$absolute_path")"
+
+   cat "$json" \
+      | jq -C "$jq_path" \
+      | ${PAGER:-less}
 }
 
-
+fzf::default_args() {
+  echo "--json $json"
+}
 
 # ===============
 # main
 # ===============
 
-cleanup() {
-   rm "$json"
-}
+declare json
+input::parse "$@"
 
-input::parse_double_dashes "$@"
-
-if [[ -z "${json:-}" ]]; then
+if [[ $action = "browse" ]] && [[ -z "${json:-}" ]]; then
   readonly json="$(mktemp --suffix ".json")"
   trap cleanup EXIT INT TERM
   cat > "$json"
