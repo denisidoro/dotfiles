@@ -8,7 +8,7 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 #?? 0.1.0
 ##?
 ##? Usage:
-##?    zookeeper
+##?    pipes
 
 docs::eval_help "$@"
 

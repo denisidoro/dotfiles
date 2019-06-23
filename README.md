@@ -12,7 +12,7 @@ git clone https://github.com/denisidoro/dotfiles.git ~/.dotfiles
 ~/.dotfiles/bin/dot <args>... # eg: ~/.dotfiles/bin/dot rice pipes
 ```
 
-### Installing with full experience 
+### Installing the full experience 
 
 ```sh
 git clone https://github.com/denisidoro/dotfiles.git ~/.dotfiles
@@ -29,7 +29,7 @@ dot self update
 
 ### Overriding configs
 
-Edit the files accordingly:
+Edit the following files accordingly:
 
 ```
 shell: ~/.dotfiles/local/zshrc

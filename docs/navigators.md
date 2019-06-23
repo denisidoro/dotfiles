@@ -7,7 +7,7 @@ Here is a demo of a JSON navigator:
 
 Note: please refer to the [main README](https://github.com/denisidoro/dotfiles/blob/master/README.md) for installation instructions.
 
-## Default commands
+### Default commands
 
 ```
 enter: browse path
@@ -17,11 +17,11 @@ ctrl-j: jump to path
 ctrl-h: go up one path
 ```
 
-## Creating custom navigators
+### Creating custom navigators
 
 Only a few lines of bash glue are necessary to implement new navigators.
 
-Please refer to [this implementation](https://github.com/denisidoro/dotfiles/blob/master/scripts/js/nav) for reference.
+Please use [this implementation](https://github.com/denisidoro/dotfiles/blob/master/scripts/js/nav) as reference.
 
 
 ---
