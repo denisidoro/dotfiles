@@ -3,9 +3,12 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
+# TODO: use this 
+# source "${DOTFILES}/scripts/core/nav.sh"
+
 ##? Simple AWS S3 file manager
 ##? 
-##? It may be called via dot fs browser
+##? It may be called via dot fs nav
 ##?
 ##? Usage:
 ##?    s3

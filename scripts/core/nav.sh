@@ -87,6 +87,10 @@ path::resolve() {
       | path::fallback_to_root
 }
 
+path::is_navigable() {
+   return 0
+}
+
 
 # ===============
 # nav
@@ -175,7 +179,7 @@ fzf::call() {
       --reverse \
       --no-sort \
       --inline-info \
-      --height '100%' \
+      --height '90%' \
       --no-border \
       --header "$cwd" \
       --preview "$0 --action preview --cwd $cwd --path {} $(fzf::default_args)" \

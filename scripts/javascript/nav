@@ -15,7 +15,6 @@ cleanup() {
    rm "$json"
 }
 
-# TODO: use this
 path::all() {
    cat "$json" \
      | jq -rc 'path(..)|[.[]|tostring]|join("/")' \
@@ -45,7 +44,9 @@ nav::ls() {
 
    cat "$json" \
       | jq "$jq_path | keys | .[]" \
-      | sed 's/\"//g'
+      2> /dev/null\
+      | sed 's/\"//g' \
+      || printf ''
 }
 
 action::view() {
@@ -56,7 +57,9 @@ action::view() {
 
    cat "$json" \
       | jq -C "$jq_path" \
-      | ${PAGER:-less}
+      2> /dev/null \
+      | ${PAGER:-less} \
+      || printf ''
 }
 
 fzf::default_args() {
@@ -67,7 +70,6 @@ fzf::default_args() {
 # main
 # ===============
 
-declare json
 input::parse "$@"
 
 if [[ $action = "browse" ]] && [[ -z "${json:-}" ]]; then
@@ -78,4 +80,3 @@ fi
 
 nav::cd "$cwd"
 action::handle
-

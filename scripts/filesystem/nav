@@ -3,6 +3,9 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
+# TODO: use this 
+# source "${DOTFILES}/scripts/core/nav.sh"
+
 ##? Simple file manager
 ##?
 ##? Usage:
@@ -73,8 +76,8 @@ fs::open() {
 fzf::bindings() {
    echo "ctrl-h:execute(echo ..)+abort"
    echo "ctrl-space:abort"
-   echo "ctrl-v:execute(dot fs browser view {})"
-   echo "ctrl-e:execute(dot fs browser edit {})"
+   echo "ctrl-v:execute(dot fs nav view {})"
+   echo "ctrl-e:execute(dot fs nav edit {})"
    printf "ctrl-o:execute(echo ${CMD_PREFIX}vifm)+abort"
 }
 
@@ -86,7 +89,7 @@ fzf::call() {
       --inline-info \
       --header "$(pwd)" \
       --height '100%' \
-      --preview "dot fs browser preview {}" \
+      --preview "dot fs nav preview {}" \
       --bind "$(fzf::bindings | tr '\n' ',')"
 }
 
