@@ -18,6 +18,10 @@ ctrl-j: jump to path
 ctrl-h: go up one path
 ```
 
+### Live demo
+
+Click [here](https://www.katacoda.com/denisidoro/scenarios/navigators).
+
 ### Dependencies
 
 [fzf](https://github.com/junegunn/fzf) is required for all commands to work.
