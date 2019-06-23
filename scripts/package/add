@@ -79,7 +79,10 @@ if [[ -n "$deps_without_recipe" ]]; then
 
    # args build: ask or not
    if ! $ask; then
-      args+=("-y")
+      case $package_manager in 
+         brew) ;;
+         *) args+=("-y");;
+      esac
    fi
 
    # call

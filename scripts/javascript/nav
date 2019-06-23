@@ -24,7 +24,7 @@ view=false
 preview=false
 case "${1:-}" in
    edit) edit=true; path="${2:-}" ;;
-   view) view=true; path="${2:-}" ;;
+   view) view=true; _cwd="$2"; path="${3:-}" ;;
    preview) preview=true; _cwd="$2"; path="${3:-}" ;;
 esac
 
@@ -129,6 +129,7 @@ nav::browse() {
 
 fzf::bindings() {
    echo "ctrl-h:execute(echo ..)+abort"
+   echo "ctrl-v:execute(dot js nav view "$cwd" {})"
    printf "ctrl-space:abort"
 }
 
@@ -198,7 +199,7 @@ fi
 declare json="$(cat "$DOTFILES/bindings/karabiner/karabiner.json")"
 
 if $view; then
-   nav::view < /dev/tty > /dev/tty
+   nav::view "$path" < /dev/tty > /dev/tty
 elif $preview; then
    nav::view "$path"
 elif $edit; then
