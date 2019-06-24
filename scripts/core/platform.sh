@@ -48,7 +48,3 @@ platform::tags() {
    if platform::is_wsl; then tags="${tags}wsl "; fi
    echo "$tags"
 }
-
-if ! platform::command_exists dot; then
-   export PATH="${DOTFILES}/bin/:${PATH}"
-fi

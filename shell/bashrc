@@ -26,7 +26,7 @@ source "${DOTFILES}/local/zshrc"
 
 # fzf
 if ${DOT_FZF:-false}; then
-	source "${HOME}/.fzf.bash"
+	source "${HOME}/.fzf.bash" || true
 fi
 
 # fasd

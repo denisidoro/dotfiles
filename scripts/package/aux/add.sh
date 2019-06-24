@@ -8,6 +8,11 @@ platform::main_package_manager() {
       echo "brew"
    elif platform::command_exists apt; then
       echo "apt"
+   elif platform::command_exists apt-get; then
+      local readonly apt_get_path="$(which apt-get)"
+      local readonly apt_path="$(echo "$apt_get_path" | sed 's/-get//')"
+      sudo ln -s "$apt_get_path" "$apt_path"
+      echo "apt"
    elif platform::command_exists yum; then
       echo "yum"
    elif platform::command_exists dnf; then

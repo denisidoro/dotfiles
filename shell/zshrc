@@ -31,7 +31,7 @@ source "${DOTFILES}/local/zshrc"
 # fzf
 if ${DOT_FZF:-false}; then
 	source "${DOTFILES}/shell/bindings/fzf.zsh"
-	include "${HOME}/.fzf.zsh"
+	source "${HOME}/.fzf.zsh" || true
 fi
 
 # fasd
