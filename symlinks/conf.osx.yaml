@@ -5,8 +5,8 @@
        create: true
 
 - link:
-    ~/.config/bindings/karabiner.json: bindings/karabiner/karabiner.json
-    ~/.khdrc: bindings/khd/khd.rc
+    ~/.config/karabiner/karabiner.json: peripherals/karabiner/karabiner.json
+    ~/.khdrc: peripherals/khd/khd.rc
     ~/.chunkwmrc: wm/chunkwm/chunkwmrc
     ~/Library/Application Support/Übersicht/widgets/nerdbar.widget: wm/nerdbar
     ~/Library/Application Support/Code/User/settings.json: editors/vscode/settings.json
