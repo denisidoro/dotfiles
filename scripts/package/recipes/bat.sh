@@ -15,9 +15,9 @@ url::get() {
    local readonly tags="$(platform::tags)"
    local suffix
    case $tags in
-      *arm*) suffix="arm64";;
-      *64bits*) suffix="amd64";;
-      *) suffix="i386";;
+      *arm*) suffix="arm64" ;;
+      *64bits*) suffix="amd64" ;;
+      *) suffix="i386" ;;
    esac
    url::generate "$suffix"
 }

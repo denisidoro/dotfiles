@@ -19,6 +19,6 @@ if ! ${DOT_MAIN_SOURCED:-false} ; then
    readonly DOT_MAIN_SOURCED=true
 fi
 
-if ${DOT_TRACE:-false}; then 
+if ${DOT_TRACE:-false}; then
    set -x
 fi

@@ -11,14 +11,14 @@ export PATH=/usr/local/bin:$PATH
 export DOTFILES=${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." >/dev/null && pwd)}
 
 case "$1" in
-  stop) "$DOTFILES/bin/dot" app wm stop ;;
-  restart) "$DOTFILES/bin/dot" app wm stop ;;
+   stop) "$DOTFILES/bin/dot" app wm stop ;;
+   restart) "$DOTFILES/bin/dot" app wm stop ;;
 esac
 
 #desktop="$(/usr/local/bin/chunkc tiling::query --desktop id)"
 #if [[ $desktop < 6 ]]; then
 #  desktop_display_1=$desktop
-#else 
+#else
 #  desktop_display_2=$desktop
 #fi
 #echo "${desktop_display_1:-no}:${desktop_display_2:-no}"

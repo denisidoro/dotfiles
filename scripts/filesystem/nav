@@ -3,7 +3,7 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
-# TODO: use this 
+# TODO: use this
 # source "${DOTFILES}/scripts/core/nav.sh"
 
 ##? Simple file manager

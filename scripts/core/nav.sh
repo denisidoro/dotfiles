@@ -5,28 +5,28 @@
 # ===============
 
 input::parse_cwd() {
-  if [[ $action = "browse" ]] && [[ $# -gt 0 ]] && [[ $CWD = "/" ]]; then
-     CWD="$1"
-  fi
+   if [[ $action = "browse" ]] && [[ $# -gt 0 ]] && [[ $CWD = "/" ]]; then
+      CWD="$1"
+   fi
 }
 
 input::parse() {
-  readonly first_arg="${1:-}"
-  variable=""
-  for arg in $@; do
-     if [[ $arg = --* ]]; then
-        variable="$(echo "$arg" | sed 's/\-\-//')"
-     elif [[ -n $variable ]]; then
-        eval "$variable"='"$arg"'
-        variable=""
-     else
-        args+=("$arg")
-     fi
-  done
-  action="${action:-browse}"
-  CWD="${cwd:-/}"
-  path="${path:-}" 
-  input::parse_cwd "$@"
+   readonly first_arg="${1:-}"
+   variable=""
+   for arg in $@; do
+      if [[ $arg = --* ]]; then
+         variable="$(echo "$arg" | sed 's/\-\-//')"
+      elif [[ -n $variable ]]; then
+         eval "$variable"='"$arg"'
+         variable=""
+      else
+         args+=("$arg")
+      fi
+   done
+   action="${action:-browse}"
+   CWD="${cwd:-/}"
+   path="${path:-}"
+   input::parse_cwd "$@"
 }
 
 
@@ -53,18 +53,18 @@ path::is_root() {
 
 path::parse_dots() {
    local readonly path="$(cat)"
-   
+
    dirs=()
    for p in $(echo "$path" | tr '/' '\n'); do
-     case $p in
-      .) ;;
-      ..) unset 'dirs[${#dirs[@]}-1]';;
-      *) dirs+=("$p");;
-     esac
+      case $p in
+         .) ;;
+         ..) unset 'dirs[${#dirs[@]}-1]' ;;
+         *) dirs+=("$p") ;;
+      esac
    done
 
    echo "/${dirs[@]:-}" \
-     | tr ' ' '/'
+      | tr ' ' '/'
 }
 
 path::fallback_to_root() {
@@ -125,7 +125,7 @@ nav::open() {
 
 action::browse() {
    local readonly selection="$(nav::ls_with_dot_dot | fzf::call)"
-   
+
    if [[ -z "$selection" ]]; then
       exit 0
    fi
@@ -135,19 +135,19 @@ action::browse() {
 }
 
 action::handle() {
-  case $action in 
-     preview) action::view "$(path::resolve "$path")";;
-     browse) action::browse;;
-     jump) action::jump;;
-     view) action::view "$(path::resolve "$path")" < /dev/tty > /dev/tty;;
-  esac
+   case $action in
+      preview) action::view "$(path::resolve "$path")" ;;
+      browse) action::browse ;;
+      jump) action::jump ;;
+      view) action::view "$(path::resolve "$path")" < /dev/tty > /dev/tty ;;
+   esac
 }
 
 action::jump() {
-  local readonly path="$(path::all | fzf::call --preview-window 'down:33%')"
-  local args=()
-  IFS=' ' read -r -a args <<< $(fzf::default_args)
-  "$0" --action browse "${args[@]:-}" --cwd "$path"
+   local readonly path="$(path::all | fzf::call --preview-window 'down:33%')"
+   local args=()
+   IFS=' ' read -r -a args <<< $(fzf::default_args)
+   "$0" --action browse "${args[@]:-}" --cwd "$path"
 }
 
 
@@ -156,11 +156,11 @@ action::jump() {
 # ===============
 
 fzf::default_args() {
-  printf ''
+   printf ''
 }
 
 fzf::extra_bindings() {
-  printf ''
+   printf ''
 }
 
 fzf::bindings() {
@@ -195,7 +195,7 @@ fzf::call() {
 # ===============
 
 # path::is_navigable()
-# nav::ls() 
+# nav::ls()
 # action::view()
 # fzf::default_args()
 # fzf::extra_bindings()

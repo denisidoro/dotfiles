@@ -14,7 +14,7 @@ recipe::httpd() {
    sudo yum update -y
    log::warning "Installing php and mariadb..."
    sudo amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
-   sudo amazon-linux-extras install 
+   sudo amazon-linux-extras install
    cat /etc/system-release
    sudo yum install -y httpd mariadb-server mod_ssl
    sudo yum install -y php72-xml || sudo yum install -y php7.2-xml || sudo yum install -y php-xml || sudo yum install -y php7.0-xml || sudo yum install -y php70-xml
@@ -64,5 +64,5 @@ if ! fs::is_dir "/var/www/html"; then
    recipe::httpd
 else
    recipe::httpd2
-   dot pkg add phpMyAdmin 
+   dot pkg add phpMyAdmin
 fi

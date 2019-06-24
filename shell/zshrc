@@ -30,13 +30,13 @@ source "${DOTFILES}/local/zshrc"
 
 # fzf
 if ${DOT_FZF:-false}; then
-	source "${DOTFILES}/shell/bindings/fzf.zsh"
-	source "${HOME}/.fzf.zsh" || true
+   source "${DOTFILES}/shell/bindings/fzf.zsh"
+   source "${HOME}/.fzf.zsh" || true
 fi
 
 # fasd
 if ${DOT_FASD:-false}; then
-	eval "$(fasd --init posix-alias zsh-hook)"
+   eval "$(fasd --init posix-alias zsh-hook)"
 fi
 
 # startup time instrumentation end

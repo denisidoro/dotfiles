@@ -11,7 +11,7 @@ recipe::folder() {
 }
 
 github::url() {
-   local readonly user="$1" 
+   local readonly user="$1"
    local readonly repo="$2"
 
    if platform::command_exists ssh; then
@@ -22,7 +22,7 @@ github::url() {
 }
 
 recipe::shallow_github_clone() {
-   local readonly user="$1" 
+   local readonly user="$1"
    local readonly repo="$2"
    local readonly folder="$(recipe::folder "$repo")"
    mkdir -p "$folder" || true

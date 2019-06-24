@@ -26,10 +26,10 @@ source "${DOTFILES}/local/zshrc"
 
 # fzf
 if ${DOT_FZF:-false}; then
-	source "${HOME}/.fzf.bash" || true
+   source "${HOME}/.fzf.bash" || true
 fi
 
 # fasd
 if ${DOT_FASD:-false}; then
-	eval "$(fasd --init posix-alias bash-hook)"
+   eval "$(fasd --init posix-alias bash-hook)"
 fi

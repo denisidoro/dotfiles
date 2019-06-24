@@ -8,4 +8,4 @@ if fs::is_file "$HOME/.local/share/nvim/site/autoload/plug.vim"; then
 fi
 
 curl -fLo "$HOME/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
-  http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+   http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

@@ -5,7 +5,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/nav.sh"
 
 ##? JSON navigator
-##? 
+##?
 ##? Usage:
 ##?    nav [<path>]
 
@@ -17,18 +17,18 @@ cleanup() {
 
 path::all() {
    cat "$json" \
-     | jq -rc 'path(..)|[.[]|tostring]|join("/")' \
-     | xargs -I% echo '/%'
+      | jq -rc 'path(..)|[.[]|tostring]|join("/")' \
+      | xargs -I% echo '/%'
 }
 
 path::canonical_to_jq() {
    local readonly path="$1"
 
    printf "$path" \
-     | tr '/' '\n' \
-     | sed -E 's/(^[0-9]+$)/\[\1\]/' \
-     | tr '\n' '.' \
-     | sed 's/\.\[/\[/g'
+      | tr '/' '\n' \
+      | sed -E 's/(^[0-9]+$)/\[\1\]/' \
+      | tr '\n' '.' \
+      | sed 's/\.\[/\[/g'
 }
 
 path::is_navigable() {
@@ -61,7 +61,7 @@ action::view() {
 }
 
 fzf::default_args() {
-  echo "--json $json"
+   echo "--json $json"
 }
 
 # ===============
@@ -71,9 +71,9 @@ fzf::default_args() {
 input::parse "$@"
 
 if [[ $action = "browse" ]] && [[ -z "${json:-}" ]]; then
-  readonly json="$(mktemp --suffix ".json")"
-  trap cleanup EXIT INT TERM
-  cat > "$json"
+   readonly json="$(mktemp --suffix ".json")"
+   trap cleanup EXIT INT TERM
+   cat > "$json"
 fi
 
 nav::cd "$CWD"

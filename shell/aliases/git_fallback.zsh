@@ -3,26 +3,26 @@
 # based on https://github.com/ohmybash/oh-my-bash/blob/master/plugins/git/git.plugin.sh
 
 current_branch() {
-  git_current_branch
+   git_current_branch
 }
 
 current_repository() {
-  if ! $_omb_git_git_cmd rev-parse --is-inside-work-tree &> /dev/null; then
-    return
-  fi
-  echo $($_omb_git_git_cmd remote -v | cut -d':' -f 2)
+   if ! $_omb_git_git_cmd rev-parse --is-inside-work-tree &> /dev/null; then
+      return
+   fi
+   echo $($_omb_git_git_cmd remote -v | cut -d':' -f 2)
 }
 
-_git_log_prettily(){
-  if ! [ -z $1 ]; then
-    git log --pretty=$1
-  fi
+_git_log_prettily() {
+   if ! [ -z $1 ]; then
+      git log --pretty=$1
+   fi
 }
 
 work_in_progress() {
-  if $(git log -n 1 2>/dev/null | grep -q -c "\-\-wip\-\-"); then
-    echo "WIP!!"
-  fi
+   if $(git log -n 1 2>/dev/null | grep -q -c "\-\-wip\-\-"); then
+      echo "WIP!!"
+   fi
 }
 
 alias g='git'
@@ -75,7 +75,7 @@ alias gd='git diff'
 #alias gdt='git diff-tree --no-commit-id --name-only -r'
 #alias gdw='git diff --word-diff'
 
-#gdv() { 
+#gdv() {
 #   git diff -w "$@" | view -
 #}
 

@@ -11,10 +11,10 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 ##?
 ##? Usage:
 ##?    add [options] <deps>...
-##?    
+##?
 ##? Options:
 ##?    -a --ask                Ask for confirmation
-##?    -p --package-manager    Force package-manager, skipping any custom recipe   
+##?    -p --package-manager    Force package-manager, skipping any custom recipe
 
 docs::eval_help "$@"
 
@@ -30,24 +30,24 @@ force_package_manager=false
 ask=false
 for arg in $@; do
    case $arg in
-      -p|--package-manager) force_package_manager=true;;
-      -a|--ask) ask=true;;
-      -*) log::error "Invalid option: $arg"; exit 1;;
-      *) deps_arr+=("$arg");;
+      -p|--package-manager) force_package_manager=true ;;
+      -a|--ask) ask=true ;;
+      -*) log::error "Invalid option: $arg"; exit 1 ;;
+      *) deps_arr+=("$arg") ;;
    esac
 done
 
 # temp setup
 mkdir -p "$TEMP_FOLDER" 2> /dev/null || true
 
-# dependency list 
+# dependency list
 deps="$(echo "${deps_arr[@]:-}" | str::multiline)"
 recipes_as_regex="$(recipe::list | xargs | str::regex)"
 
 # get deps that will use the system's package manager
 if $force_package_manager; then
    deps_without_recipe="$(echo "$deps" | str::join)"
-else 
+else
    deps_without_recipe="$(filter::without_recipe "${deps_arr[@]:-}" "$recipes_as_regex" | str::join)"
 fi
 
@@ -65,7 +65,7 @@ if [[ -n "$deps_without_recipe" ]]; then
    # args build: sudo or not
    case $package_manager in
       brew) ;;
-      *) args+=("sudo");;
+      *) args+=("sudo") ;;
    esac
 
    # args build: package manager
@@ -73,15 +73,15 @@ if [[ -n "$deps_without_recipe" ]]; then
 
    # args build: install command
    case $package_manager in
-      apk) args+=("add");;
-      *) args+=("install");;
+      apk) args+=("add") ;;
+      *) args+=("install") ;;
    esac
 
    # args build: ask or not
    if ! $ask; then
-      case $package_manager in 
+      case $package_manager in
          brew) ;;
-         *) args+=("-y");;
+         *) args+=("-y") ;;
       esac
    fi
 

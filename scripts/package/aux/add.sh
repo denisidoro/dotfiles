@@ -21,14 +21,14 @@ platform::main_package_manager() {
       echo "apk"
    elif platform::is_android; then
       echo "pkg"
-   else 
+   else
       echo "brew"
    fi
 }
 
 recipe::list() {
-  ls "${RECIPES_FOLDER}" \
-    | sed 's/\.sh//g'
+   ls "${RECIPES_FOLDER}" \
+      | sed 's/\.sh//g'
 }
 
 recipe::install() {
