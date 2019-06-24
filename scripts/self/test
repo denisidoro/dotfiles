@@ -11,5 +11,5 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval_help "$@"
 
 suite="$1"
-bash "${DOTFILES}/scripts/environment/tests/${suite}.sh"
+bash "${DOTFILES}/scripts/self/tests/${suite}.sh"
 

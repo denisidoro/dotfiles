@@ -2,10 +2,10 @@
 # vim: filetype=sh
 set -euo pipefail
 
-source "${DOTFILES}/scripts/environment/aux/test.sh"
+source "${DOTFILES}/scripts/self/aux/test.sh"
 
 _output() {
-   echo no | dot environment install
+   echo no | dot self install
 }
 
 test::fact "The installation scripts starts"

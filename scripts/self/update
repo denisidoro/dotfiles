@@ -3,7 +3,7 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/environment/aux/update.sh"
+source "${DOTFILES}/scripts/self/aux/update.sh"
 
 ##? Updates submodules, dotfiles and attempts to do some setup
 #?? 0.3.0

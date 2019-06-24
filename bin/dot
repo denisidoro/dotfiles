@@ -109,8 +109,8 @@ _alias() {
       game) echo gaming;;
       js) echo javascript;;
       json) echo javascript;;
-      env) echo environment;;
-      self) echo environment;;
+      environment) echo self;;
+      env) echo self;;
       mac) echo osx;;
       net) echo network;;
       pkg) echo package;;

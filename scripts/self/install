@@ -39,7 +39,7 @@ fi
 cd "$DOTFILES"
 
 # call setup
-_dot environment update
+_dot self update
 
 # cleanup
 popd >/dev/null
