@@ -5,7 +5,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 VIDEO_EXTENSIONS="avi|mp4|mov|mkv|mpg|3gp|asf|flv|m4v|rm|rmvb|swf|wmv|webm|mp2|mpeg|mpv|ogg|m4p"
 
-function str::levenshtein() {
+str::levenshtein() {
    if [ "$#" -ne "2" ]; then
       echo "Usage: $0 word1 word2" >&2
    elif [ "${#1}" -lt "${#2}" ]; then
@@ -37,6 +37,6 @@ function str::levenshtein() {
    fi
 }
 
-function str::filename_levenshtein() {
+str::filename_levenshtein() {
    str::levenshtein "$(basename $1)" "$(basename $2)"
 }

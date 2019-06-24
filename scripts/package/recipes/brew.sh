@@ -10,13 +10,13 @@ _brew_osx() {
 
 _brew_linux() {
    if platform::command_exists apt; then
-     sudo apt update && sudo apt-get install -y build-essential curl file git
+      sudo apt update && sudo apt-get install -y build-essential curl file git
    elif platform::command_exists yum; then
-     sudo yum groupinstall 'Development Tools' && sudo yum install curl file git
+      sudo yum groupinstall 'Development Tools' && sudo yum install curl file git
    fi
 
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-   
+
    test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
    test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
    test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >> ~/.bash_profile
@@ -33,7 +33,7 @@ if platform::command_exists brew || fs::is_dir /home/linuxbrew; then
 fi
 
 if feedback::confirmation "Do you want to install brew?"; then
-   
+
    log::note "Installing brew..."
    if platform::is_osx; then
       _brew_osx

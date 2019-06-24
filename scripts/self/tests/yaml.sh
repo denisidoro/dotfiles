@@ -2,7 +2,7 @@
 # vim: filetype=sh
 set -euo pipefail
 
-source "${DOTFILES}/scripts/environment/aux/test.sh"
+source "${DOTFILES}/scripts/self/aux/test.sh"
 
 test::fact "all YAMLs are syntactically valid"
 

@@ -3,11 +3,11 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
-# TODO: use this 
+# TODO: use this
 # source "${DOTFILES}/scripts/core/nav.sh"
 
 ##? Simple AWS S3 file manager
-##? 
+##?
 ##? It may be called via dot fs nav
 ##?
 ##? Usage:
@@ -45,14 +45,14 @@ str::last_word() {
 
 str::resolve_dots() {
    local readonly path="$(cat)"
-   
+
    dirs=()
    for p in $(echo "$path" | tr '/' '\n'); do
-     case $p in
-      .) ;;
-      ..) unset 'dirs[${#dirs[@]}-1]';;
-      *) dirs+=("$p");;
-     esac
+      case $p in
+         .) ;;
+         ..) unset 'dirs[${#dirs[@]}-1]' ;;
+         *) dirs+=("$p") ;;
+      esac
    done
 
    if s3::is_dir "$path"; then
@@ -67,7 +67,7 @@ str::remove_double_slashes() {
 }
 
 str::slash_hacks() {
-   echo "$1" | str::remove_double_slashes | str::resolve_dots 
+   echo "$1" | str::remove_double_slashes | str::resolve_dots
 }
 
 str::is_full_path() {
@@ -108,7 +108,7 @@ s3::path() {
    else
       path="$DOT_FM_PWD"
    fi
-   
+
    str::slash_hacks "$path"
 }
 
@@ -177,7 +177,7 @@ fzf::call() {
 action::browse() {
    local readonly selection="$(s3::ls | fzf::call)"
    local readonly name="$(echo "$selection" | str::last_word)"
-   
+
    if [[ -n "$name" ]]; then
       s3::open "$name"
    fi
@@ -202,7 +202,7 @@ action::view() {
       s3::ls_hiding_previous "$path"
    else
       aws s3 cp --quiet "s3://$(s3::path "$path")" - \
-         | dot shell less --filename "$path" 
+         | dot shell less --filename "$path"
    fi
 }
 

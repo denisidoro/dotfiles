@@ -4,7 +4,7 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 
 ##? Animated pipes terminal screensaver
 ##?
-##? based on https://github.com/pipeseroni/pipes.sh 
+##? based on https://github.com/pipeseroni/pipes.sh
 #?? 0.1.0
 ##?
 ##? Usage:

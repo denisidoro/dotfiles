@@ -1,5 +1,5 @@
 command: """
-	$HOME/.dotfiles/bin/dot environment resources fontawesome
+	$HOME/.dotfiles/bin/dot self resources fontawesome
 """
 
 refreshFrequency: false

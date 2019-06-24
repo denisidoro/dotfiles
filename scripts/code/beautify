@@ -47,7 +47,8 @@ fi
 case "$extension" in
    *sh) language=sh ;;
    *clj*) language="clj" ;;
-   *py) language="python" ;;
+   *py*) language="python" ;;
+   *json*) language="json" ;;
 esac
 
 if [ -z $extension ]; then
@@ -63,7 +64,10 @@ case "$language" in
       ;;
    sh)
       beautysh -i 3 -s paronly -f "$filename"
-      sed -i -e 's/::/::/g' "$filename"
+      sed -i -e 's/() ::/::/g' "$filename"
+      ;;
+   json)
+      echo "$(cat "$filename" | jq .)" > "$filename"
       ;;
    *)
       nvim --headless --noplugin -n -u NONE -c ':normal gg=G' +wq "$filename"

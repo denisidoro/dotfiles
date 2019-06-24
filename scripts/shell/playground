@@ -17,8 +17,8 @@ echo
 f::list 1 2 3 | f::foldl λ var1 var2 → 'echo $var1 $var2'
 echo
 ls \
-  | tr ' ' '\n' \
-  | f::filter λ x → 'echo $x | grep -q s' \
-  | f::map λ x → 'ls $x' \
-  | f::map λ x → 'add_prefix $x' \
-  | f::join ', ' [ ]
+   | tr ' ' '\n' \
+   | f::filter λ x → 'echo $x | grep -q s' \
+   | f::map λ x → 'ls $x' \
+   | f::map λ x → 'add_prefix $x' \
+   | f::join ', ' [ ]

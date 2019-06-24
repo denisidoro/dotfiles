@@ -8,13 +8,13 @@ source "${DOTFILES}/scripts/download/aux/core.sh"
 #?? 0.1.0
 ##?
 ##? Usage:
-##?    move
+##?    organize
 
 docs::eval_help "$@"
 
-DOWNLOADS_FOLDER="${DOWNLOADS_FOLDER:-"$HOME/Downloads/test"}"
-TV_FOLDER="${TV_FOLDER:-$HOME/TV}"
-MOVIES_FOLDER="${MOVIES_FOLDER:-$HOME/Movies}"
+DOWNLOADS_HOME="${DOWNLOADS_HOME:-"$HOME/Downloads/test"}"
+TV_HOME="${TV_HOME:-$HOME/TV}"
+MOVIES_HOME="${MOVIES_HOME:-$HOME/Movies}"
 
 _video_content() {
    local readonly f="$(cat)"
@@ -29,7 +29,7 @@ _video_content() {
 _tv_folder() {
    local readonly filename="$(dot down parser video name "$full_filename")"
    local dist
-   cd "$TV_FOLDER"
+   cd "$TV_HOME"
    for t in *; do
       dist=$(str::filename_levenshtein "$t" "$filename")
       if [ "$dist" -lt 5 ]; then
@@ -47,13 +47,13 @@ _move_video() {
    local readonly filename="$(echo "$info" | grep reduced | gsed -E 's/.*?\[0m\s(.*)/\1/')"
    if $is_tv; then
       local readonly folder="$(_tv_folder "$filename")"
-      echo "mv \"${DOWNLOADS_FOLDER}/${full_filename}\" \"${TV_FOLDER}/${folder}\""
+      echo "mv \"${DOWNLOADS_HOME}/${full_filename}\" \"${TV_HOME}/${folder}\""
    else
-      echo "mv \"${DOWNLOADS_FOLDER}/${full_filename}\" \"${MOVIES_FOLDER}/${filename}\""
+      echo "mv \"${DOWNLOADS_HOME}/${full_filename}\" \"${MOVIES_HOME}/${filename}\""
    fi
 }
 
-pushd "$DOWNLOADS_FOLDER" >/dev/null
+pushd "$DOWNLOADS_HOME" >/dev/null
 
 SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")

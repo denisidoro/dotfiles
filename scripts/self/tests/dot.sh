@@ -2,9 +2,9 @@
 # vim: filetype=sh
 set -euo pipefail
 
-source "${DOTFILES}/scripts/environment/aux/test.sh"
+source "${DOTFILES}/scripts/self/aux/test.sh"
 
-res="$(dot environment health)"
+res="$(dot self health)"
 
 test::fact "dot <ctx> <cmd> works"
 

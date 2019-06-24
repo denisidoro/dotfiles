@@ -17,9 +17,9 @@ docs::eval() {
    local readonly help="$(extract_help "$file")"
 
    case ${DOT_DOCOPTS:-python} in
-      bash) docopts="${DOTFILES}/modules/docoptsh/docoptsh";;
-      python) docopts="${DOTFILES}/scripts/core/docopts";;
-      go) docopts="docopts";;
+      bash) docopts="${DOTFILES}/modules/docoptsh/docoptsh" ;;
+      python) docopts="${DOTFILES}/scripts/core/docopts" ;;
+      go) docopts="docopts" ;;
    esac
 
    if [[ ${1:-} == "--version" ]]; then

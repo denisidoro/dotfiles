@@ -23,19 +23,12 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docs::eval "$@"
 
-PUSH_DIR="${DOTFILES}/modules/pushbullet"
-PUSH_BIN="${PUSH_DIR}/pushbullet"
-
-clone_cli() {
-   mkdir -p "$PUSH_DIR"
-   git clone https://github.com/Red5d/pushbullet-bash.git "$PUSH_DIR"
-   cd "$PUSH_DIR"
-   git submodule init && git submodule status && git submodule update --init --recursive "${PUSH_DIR}" || true
-}
+PUSHBULLET_HOME="${PUSHBULLET_HOME:-${DOTFILES}/modules/pushbullet}"
+PUSHBULLET_BIN="${PUSHBULLET_HOME}/pushbullet"
 
 # clone repository if needed
-if ! fs::is_file "$PUSH_BIN"; then
-   clone_cli
+if ! fs::is_file "$PUSHBULLET_BIN"; then
+   dot pkg pushbullet-bash
 fi
 
 # adapt input
@@ -46,4 +39,4 @@ else
 fi
 
 # call cli
-bash "$PUSH_BIN" "${args[@]:-}"
+bash "$PUSHBULLET_BIN" "${args[@]:-}"

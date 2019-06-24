@@ -27,7 +27,7 @@ fi
 
 if $stop; then
    brew services stop crisidev/chunkwm/chunkwm || true
-   brew services stop khd || true 
+   brew services stop khd || true
 fi
 
 if $start; then
