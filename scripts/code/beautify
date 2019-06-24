@@ -64,7 +64,7 @@ case "$language" in
       ;;
    sh)
       beautysh -i 3 -s paronly -f "$filename"
-      sed -i -e 's/::/::/g' "$filename"
+      sed -i -e 's/() ::/::/g' "$filename"
       ;;
    json)
       echo "$(cat "$filename" | jq .)" > "$filename"
