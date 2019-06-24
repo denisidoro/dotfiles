@@ -20,5 +20,3 @@ if platform::is_osx && platform::command_exists ggrep; then
    xargs() { gxargs "$@"; }
    export -f sed awk find head mktemp date shred cut tr od cp cat sort kill xargs
 fi
-
-

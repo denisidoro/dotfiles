@@ -47,8 +47,8 @@ fi
 case "$extension" in
    *sh) language=sh ;;
    *clj*) language="clj" ;;
-   *py) language="python" ;;
-   json) language="json" ;;
+   *py*) language="python" ;;
+   *json*) language="json" ;;
 esac
 
 if [ -z $extension ]; then
