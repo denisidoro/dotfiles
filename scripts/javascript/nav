@@ -38,7 +38,7 @@ path::is_navigable() {
 }
 
 nav::ls() {
-   local readonly path="${1:-$cwd}"
+   local readonly path="${1:-$CWD}"
 
    local readonly jq_path=$(path::canonical_to_jq "$path")
 
@@ -76,5 +76,5 @@ if [[ $action = "browse" ]] && [[ -z "${json:-}" ]]; then
   cat > "$json"
 fi
 
-nav::cd "$cwd"
+nav::cd "$CWD"
 action::handle

@@ -13,9 +13,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 _format() {
-   echo "$@" | grep -v "New feature" | grep -v Follow
+   grep -v "New feature" | grep -v Follow
 }
 
-coll::is_empty ${location:-""} \
-   && _format "$(curl -s "wttr.in/Sao_Paulo")" \
-   || _format "$(curl -s "wttr.in/$location")"
+location="${location:-Sao_Paulo}"
+curl -s "wttr.in/${location}" | _format
