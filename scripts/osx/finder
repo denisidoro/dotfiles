@@ -10,8 +10,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    finder (show|hide)
 ##?
 ##? Examples:
-##?    osx hidden show
-##?    osx desktop hide
+##?    finder show
+##?    finder hide
 
 docs::eval "$@"
 
