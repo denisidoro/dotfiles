@@ -9,15 +9,15 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?   mysql [options] export <database> <path>
 ##?   mysql [options] import <database> <path>
-##?   mysql [options] db create <database>
+##?   mysql [options] create <database>
 ##?
 ##? Options:
 ##?   -u --user       User [default: root]
 ##?
 ##? Examples:
-##?   mysql export root mydb backup.sql
-##?   mysql import root mydb backup.sql
-##?   mysql db create mydb
+##?   mysql export mydb backup.sql
+##?   mysql import mydb backup.sql --user myuser
+##?   mysql create mydb
 
 docs::eval "$@"
 
