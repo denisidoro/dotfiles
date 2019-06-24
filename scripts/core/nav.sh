@@ -26,7 +26,7 @@ input::parse() {
   action="${action:-browse}"
   cwd="${cwd:-/}"
   path="${path:-}" 
-  # input::parse_cwd "$@"
+  input::parse_cwd "$@"
 }
 
 
@@ -136,10 +136,10 @@ action::browse() {
 
 action::handle() {
   case $action in 
-     preview) action::view "$path";;
+     preview) action::view "$(path::resolve "$path")";;
      browse) action::browse;;
      jump) action::jump;;
-     view) action::view "$path" < /dev/tty > /dev/tty;;
+     view) action::view "$(path::resolve "$path")" < /dev/tty > /dev/tty;;
   esac
 }
 

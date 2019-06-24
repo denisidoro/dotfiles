@@ -3,7 +3,7 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
-##? NPM helpers
+##? npm helpers
 #?? 0.1.0
 ##?
 ##? Usage:

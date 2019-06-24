@@ -45,15 +45,13 @@ nav::ls() {
    cat "$json" \
       | jq "$jq_path | keys | .[]" \
       2> /dev/null\
-      | sed 's/\"//g' \
-      || printf ''
+      | sed 's/\"//g'
 }
 
 action::view() {
    local readonly path="$1"
 
-   local readonly absolute_path="$(path::resolve "$path")"
-   local readonly jq_path="$(path::canonical_to_jq "$absolute_path")"
+   local readonly jq_path="$(path::canonical_to_jq "$path")"
 
    cat "$json" \
       | jq -C "$jq_path" \
