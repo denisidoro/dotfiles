@@ -24,7 +24,7 @@ input::parse() {
       fi
    done
    action="${action:-browse}"
-   CWD="${cwd:-/}"
+   CWD="${cwd:-$(path::start)}"
    path="${path:-}"
    input::parse_cwd "$@"
 }
@@ -49,6 +49,10 @@ str::remove_trailing_slash() {
 
 path::is_root() {
    [[ "$1" = "/" ]]
+}
+
+path::start() {
+   echo "/"
 }
 
 path::parse_dots() {
@@ -134,12 +138,22 @@ action::browse() {
    nav::open "$path"
 }
 
+action::handle_abort() {
+   log::error "Invalid action: ${action:-unknown}"
+   exit 1
+}
+
+action::handle_extra() {
+   action::handle_abort "$@"
+}
+
 action::handle() {
    case $action in
       preview) action::view "$(path::resolve "$path")" ;;
       browse) action::browse ;;
       jump) action::jump ;;
       view) action::view "$(path::resolve "$path")" < /dev/tty > /dev/tty ;;
+      *) action::handle_extra "$@" ;;
    esac
 }
 
