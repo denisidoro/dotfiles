@@ -55,6 +55,10 @@ action::fm() {
    vifm "."
 }
 
+action::before_exit() {
+   echo "$CWD"
+}
+
 action::handle_extra() {
    case $action in
       edit) action::edit "$(path::resolve "$path")" < /dev/tty > /dev/tty ;;
@@ -68,10 +72,5 @@ action::handle_extra() {
 # ===============
 
 input::parse "$@"
-
-#if [[ $action = "browse" ]]; then
-#  echo TODO
-#fi
-
 nav::cd "$CWD"
 action::handle

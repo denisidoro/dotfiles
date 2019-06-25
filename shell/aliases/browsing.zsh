@@ -27,14 +27,15 @@ mkcd() {
 # ===============
 # jumping
 # ===============
-j() { local readonly f="$(dot fs jump global "$@")" && cd "$f"; }
-jj() { local readonly f="$(dot fs jump local "$@")" && cd "$f"; }
-jn() { local readonly f="$(dot fs jump work "$@")" && cd "$f"; }
-jjf() { local readonly f="$(dot fs jump file "$@")" && cd "$f"; }
-up() { local readonly f="$(dot fs jump up "$@")" && cd "$f"; }
-jr() { local readonly f="$(dot fs jump root "$@")" && cd "$f"; }
-jr() { local readonly f="$(dot fs jump root "$@")" && cd "$f"; }
-fd() { local readonly f="$(dot fs nav "$@")" && cd "$f"; }
+_safe_cd() { [[ -d "${1:-}" ]] && cd "$1"; }
+j() { _safe_cd "$(dot fs jump global "$@")"; }
+jj() { _safe_cd "$(dot fs jump local "$@")"; }
+jn() { _safe_cd "$(dot fs jump work "$@")"; }
+jjf() { _safe_cd "$(dot fs jump file "$@")"; }
+up() { _safe_cd "$(dot fs jump up "$@")"; }
+jr() { _safe_cd "$(dot fs jump root "$@")"; }
+jr() { _safe_cd "$(dot fs jump root "$@")"; }
+fd() { _safe_cd "$(dot fs nav "$@")"; }
 alias jv="dot fs jump edit global nvim"
 alias jjv="dot fs jump edit local nvim"
 alias js="dot fs jump edit global code"

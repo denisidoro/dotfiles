@@ -24,7 +24,7 @@ input::parse() {
       fi
    done
    action="${action:-browse}"
-   CWD="${cwd:-$(path::start)}"
+   CWD="${cwd:-$(path::start "$action" "$first_arg")}"
    path="${path:-}"
    input::parse_cwd "$@"
 }
@@ -52,7 +52,14 @@ path::is_root() {
 }
 
 path::start() {
-   echo "/"
+   local readonly action="$1"
+   local readonly arg="${2:-}"
+
+   if [[ $action = "browse" ]] && [[ -n "$arg" ]]; then
+      echo "$arg"
+   else
+      echo "/"
+   fi
 }
 
 path::parse_dots() {
@@ -127,10 +134,15 @@ nav::open() {
 # action
 # ===============
 
+action::before_exit() {
+   exit 0
+}
+
 action::browse() {
    local readonly selection="$(nav::ls_with_dot_dot | fzf::call)"
 
    if [[ -z "$selection" ]]; then
+      action::before_exit "$selection"
       exit 0
    fi
 
