@@ -34,6 +34,17 @@ input::parse() {
 # string
 # ===============
 
+str::starts_with_slash() {
+   [[ "${1:-}" = '/*'* ]]
+}
+
+str::ends_with_slash() {
+   case "${1:-}" in
+      */) return 0 ;;
+      *) return 1 ;;
+   esac
+}
+
 str::remove_double_slashes() {
    sed 's|//|/|g'
 }
@@ -41,7 +52,6 @@ str::remove_double_slashes() {
 str::remove_trailing_slash() {
    sed 's:/*$::'
 }
-
 
 # ===============
 # path
@@ -74,8 +84,12 @@ path::parse_dots() {
       esac
    done
 
-   echo "/${dirs[@]:-}" \
-      | tr ' ' '/'
+   local readonly base="$(echo "/${dirs[@]:-}" | tr ' ' '/')"
+   if [[ "$path" = *.. ]] || path::is_navigable "$path"; then
+      echo "${base}/"
+   else
+      echo "$base"
+   fi
 }
 
 path::fallback_to_root() {
@@ -87,6 +101,7 @@ path::fallback_to_root() {
    fi
 }
 
+# TODO: check if remove_trailing_slash is necessary
 path::resolve() {
    local readonly folder="${1:-}"
    echo "${CWD}/${folder}" \
@@ -94,6 +109,7 @@ path::resolve() {
       | path::parse_dots 2> /dev/null \
       | str::remove_trailing_slash \
       | path::fallback_to_root \
+      | str::remove_double_slashes \
       || echo "" \
       | path::fallback_to_root
 }
@@ -139,7 +155,8 @@ action::before_exit() {
 }
 
 action::browse() {
-   local readonly selection="$(nav::ls_with_dot_dot | fzf::call)"
+   LIST="$(nav::ls_with_dot_dot)"
+   local readonly selection="$(echo "$LIST" | fzf::call)"
 
    if [[ -z "$selection" ]]; then
       action::before_exit "$selection"
@@ -160,8 +177,9 @@ action::handle_extra() {
 }
 
 action::handle() {
+   LIST=456
    case $action in
-      preview) action::view "$(path::resolve "$path")" ;;
+      preview) echo "@: $@"; echo "----"; action::view "$(path::resolve "$path")" ;;
       browse) action::browse ;;
       jump) action::jump ;;
       view) action::view "$(path::resolve "$path")" < /dev/tty > /dev/tty ;;
@@ -214,7 +232,6 @@ fzf::call() {
       --bind "$(fzf::bindings | tr '\n' ',')" \
       "$@"
 }
-
 
 # ===============
 # abstract
