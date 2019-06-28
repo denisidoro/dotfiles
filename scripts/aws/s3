@@ -4,31 +4,23 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/nav.sh"
 
-##? JSON navigator
+##? AWS S3 navigator
 ##?
 ##? Usage:
 ##?    nav [<path>]
 
 docs::eval_help "$@"
 
-# in order to bypass nav.sh and take the trailing slash
-# under consideration for path::is_navigable
-str::remove_trailing_slash() {
-   cat
-}
-
-str::really_remove_trailing_slash() {
-   sed 's:/*$::'
-}
-
 s3::path() {
    local readonly path="$1"
    printf "s3:/"
-   echo "$1/" | str::remove_double_slashes
+   echo "$path/" \
+     | str::remove_double_slashes
 }
 
-path::all() {
-   echo "TODO"
+s3::file_path() {
+   s3::path "$@" \
+     | str::remove_trailing_slash
 }
 
 path::is_navigable() {
@@ -52,7 +44,7 @@ action::view() {
       nav::ls "$path" \
          | less -R
    else
-      aws s3 cp "$(s3::path "$path" | str::really_remove_trailing_slash)" - \
+      aws s3 cp "$(s3::file_path "$path")" - \
          | dot shell less --filename "$path" \
          | less -R
    fi
@@ -67,7 +59,7 @@ action::edit() {
 
    local readonly extension="${path##*.}"
    local readonly tmpfile=$(mktemp --suffix ".${extension:-txt}")
-   local readonly remote_path="$(s3::path "$path" | str::really_remove_trailing_slash)"
+   local readonly remote_path="$(s3::file_path "$path")"
 
    aws s3 cp --quiet "$remote_path" "$tmpfile"
    "$EDITOR" "$tmpfile"
@@ -79,6 +71,16 @@ action::handle_extra() {
       edit) action::edit "$(path::resolve "$path")" < /dev/tty > /dev/tty ;;
       *) action::abort "$@" ;;
    esac
+}
+
+# in order to bypass trailing slash stripping when resolving the path
+path::intermediate_hacks() {
+   local readonly path="$(cat)"
+   if str::starts_with_slash "$path"; then
+      echo "$path"
+   else
+      echo "/${path}"
+   fi
 }
 
 # ===============

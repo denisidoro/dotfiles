@@ -24,7 +24,7 @@ input::parse() {
       fi
    done
    action="${action:-browse}"
-   CWD="${cwd:-$(path::start "$action" "$first_arg")}"
+   CWD="${cwd:-$(path::start "$action" "$first_arg" | str::add_leading_slash)}"
    path="${path:-}"
    input::parse_cwd "$@"
 }
@@ -35,7 +35,9 @@ input::parse() {
 # ===============
 
 str::starts_with_slash() {
-   [[ "${1:-}" = '/*'* ]]
+   local readonly txt="${1:-}"
+   local readonly first_char="${txt:0:1}"
+   [[ $first_char = "/" ]]
 }
 
 str::ends_with_slash() {
@@ -51,6 +53,15 @@ str::remove_double_slashes() {
 
 str::remove_trailing_slash() {
    sed 's:/*$::'
+}
+
+str::add_leading_slash() {
+   local readonly path="$(cat)"
+   if str::starts_with_slash "$path"; then
+      echo "$path"
+   else
+      echo "/${path}"
+   fi
 }
 
 # ===============
@@ -101,14 +112,18 @@ path::fallback_to_root() {
    fi
 }
 
-# TODO: check if remove_trailing_slash is necessary
+path::intermediate_hacks() {
+   str::remove_trailing_slash "$@"
+}
+
 path::resolve() {
    local readonly folder="${1:-}"
    echo "${CWD}/${folder}" \
       | str::remove_double_slashes \
       | path::parse_dots 2> /dev/null \
-      | str::remove_trailing_slash \
+      | path::intermediate_hacks \
       | path::fallback_to_root \
+      | str::add_leading_slash \
       | str::remove_double_slashes \
       || echo "" \
       | path::fallback_to_root
@@ -118,10 +133,18 @@ path::is_navigable() {
    return 0
 }
 
+path::all() {
+   echo "TODO: path::all"
+}
+
 
 # ===============
 # nav
 # ===============
+
+nav::ls() {
+   echo "TODO: nav::ls"
+}
 
 nav::ls_with_dot_dot() {
    if ! path::is_root "$CWD"; then
@@ -155,8 +178,7 @@ action::before_exit() {
 }
 
 action::browse() {
-   LIST="$(nav::ls_with_dot_dot)"
-   local readonly selection="$(echo "$LIST" | fzf::call)"
+   local readonly selection="$(nav::ls_with_dot_dot | fzf::call)"
 
    if [[ -z "$selection" ]]; then
       action::before_exit "$selection"
@@ -176,10 +198,13 @@ action::handle_extra() {
    action::handle_abort "$@"
 }
 
+action::view() {
+   echo "TODO: action::view"
+}
+
 action::handle() {
-   LIST=456
    case $action in
-      preview) echo "@: $@"; echo "----"; action::view "$(path::resolve "$path")" ;;
+      preview) action::view "$(path::resolve "$path")" ;;
       browse) action::browse ;;
       jump) action::jump ;;
       view) action::view "$(path::resolve "$path")" < /dev/tty > /dev/tty ;;
@@ -232,13 +257,3 @@ fzf::call() {
       --bind "$(fzf::bindings | tr '\n' ',')" \
       "$@"
 }
-
-# ===============
-# abstract
-# ===============
-
-# path::is_navigable()
-# nav::ls()
-# action::view()
-# fzf::default_args()
-# fzf::extra_bindings()
