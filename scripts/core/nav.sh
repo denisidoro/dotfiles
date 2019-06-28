@@ -24,7 +24,7 @@ input::parse() {
       fi
    done
    action="${action:-browse}"
-   CWD="${cwd:-$(path::start "$action" "$first_arg" | str::add_leading_slash)}"
+   CWD="${cwd:-$(path::start "$action" "$first_arg" | path::hacks)}"
    path="${path:-}"
    input::parse_cwd "$@"
 }
@@ -61,6 +61,15 @@ str::add_leading_slash() {
       echo "$path"
    else
       echo "/${path}"
+   fi
+}
+
+str::add_trailing_slash() {
+   local readonly path="$(cat)"
+   if str::ends_with_slash "$path"; then
+      echo "$path"
+   else
+      echo "${path}/"
    fi
 }
 
@@ -116,17 +125,22 @@ path::intermediate_hacks() {
    str::remove_trailing_slash "$@"
 }
 
+path::hacks() {
+   path::intermediate_hacks \
+      | path::fallback_to_root \
+      | str::add_leading_slash \
+      | str::remove_double_slashes \
+      | path::fallback_to_root \
+      || echo "" \
+      | path::fallback_to_root
+}
+
 path::resolve() {
    local readonly folder="${1:-}"
    echo "${CWD}/${folder}" \
       | str::remove_double_slashes \
       | path::parse_dots 2> /dev/null \
-      | path::intermediate_hacks \
-      | path::fallback_to_root \
-      | str::add_leading_slash \
-      | str::remove_double_slashes \
-      || echo "" \
-      | path::fallback_to_root
+      | path::hacks
 }
 
 path::is_navigable() {
