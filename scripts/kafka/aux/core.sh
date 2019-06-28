@@ -1,3 +1,5 @@
+source "${DOTFILES}/scripts/core/documentation.sh"
+
 kafka::call() {
    local readonly bin="$1"
    shift 2
