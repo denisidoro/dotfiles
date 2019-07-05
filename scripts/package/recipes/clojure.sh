@@ -6,7 +6,7 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 recipe::abort_if_installed clojure
 
-dot pkg add  clojure \
+dot pkg add clojure \
    && recipe::abort_if_installed clojure \
    || true
 

@@ -10,23 +10,34 @@ recipe::folder() {
    echo "$TEMP_FOLDER/${1}"
 }
 
-github::url() {
+git::url() {
    local readonly user="$1"
    local readonly repo="$2"
+   local readonly host="${DOT_GIT_HOST:-github.com}"
 
    if platform::command_exists ssh; then
-      echo "git@github.com:${user}/${repo}.git"
+      echo "git@${host}:${user}/${repo}.git"
    else
-      echo "https://github.com/${user}/${repo}"
+      echo "https://${host}/${user}/${repo}"
    fi
 }
 
-recipe::shallow_github_clone() {
+recipe::shallow_git_clone() {
    local readonly user="$1"
    local readonly repo="$2"
    local readonly folder="$(recipe::folder "$repo")"
    mkdir -p "$folder" || true
-   git clone "$(github::url $user $repo)" --depth 1 "$folder" || true
+   git clone "$(git::url $user $repo)" --depth 1 "$folder" || true
+}
+
+recipe::shallow_github_clone() {
+   export DOT_GIT_HOST="github.com"
+   recipe::shallow_git_clone "$@"
+}
+
+recipe::shallow_gitlab_clone() {
+   export DOT_GIT_HOST="gitlab.com"
+   recipe::shallow_git_clone "$@"
 }
 
 recipe::make() {
@@ -68,5 +79,5 @@ recipe::clone_as_submodule() {
    local readonly module="${3:-$repo}"
 
    local readonly module_path="${MODULES_FOLDER}/${module}"
-   git clone "$(github::url $user $repo)" --depth 1 "$module_path"
+   git clone "$(git::url $user $repo)" --depth 1 "$module_path"
 }

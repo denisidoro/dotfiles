@@ -11,7 +11,6 @@ if ! ${DOT_MAIN_SOURCED:-false} ; then
    fi
    source "${DOTFILES}/scripts/core/collections.sh"
    source "${DOTFILES}/scripts/core/log.sh"
-   source "${DOTFILES}/scripts/core/dependencies.sh"
    source "${DOTFILES}/scripts/core/documentation.sh"
    source "${DOTFILES}/scripts/core/filesystem.sh"
    source "${DOTFILES}/scripts/core/string.sh"

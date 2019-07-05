@@ -38,6 +38,11 @@ fi
 
 cd "$DOTFILES"
 
+# Android bootstrap
+if uname -a | grep -q "ndroid"; then
+   pkg install ncurses-utils
+fi
+
 # call setup
 _dot self update
 
