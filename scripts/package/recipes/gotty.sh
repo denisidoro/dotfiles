@@ -15,12 +15,12 @@ url::get() {
    local readonly tags="$(platform::tags)"
    local suffix
    case $tags in
-      *osx*64bits*) suffix="darwin_386";;
-      *64bits*osx*) suffix="darwin_386";;
-      *osx*) suffix="darwin_amd64";;
-      *arm*) suffix="linux_arm";;
-      *64bits*) suffix="linux_amd64";;
-      *) suffix="linux_386";;
+      *osx*64bits*) suffix="darwin_386" ;;
+      *64bits*osx*) suffix="darwin_386" ;;
+      *osx*) suffix="darwin_amd64" ;;
+      *arm*) suffix="linux_arm" ;;
+      *64bits*) suffix="linux_amd64" ;;
+      *) suffix="linux_386" ;;
    esac
    url::generate "$suffix"
 }

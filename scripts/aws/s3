@@ -15,12 +15,12 @@ s3::path() {
    local readonly path="$1"
    printf "s3:/"
    echo "$path/" \
-     | str::remove_double_slashes
+      | str::remove_double_slashes
 }
 
 s3::file_path() {
    s3::path "$@" \
-     | str::remove_trailing_slash
+      | str::remove_trailing_slash
 }
 
 path::is_navigable() {
@@ -52,7 +52,7 @@ action::view() {
 
 fzf::extra_bindings() {
    echo "ctrl-e:execute($0 --action edit --cwd $CWD --path {})"
- }
+}
 
 action::edit() {
    local readonly path="$1"

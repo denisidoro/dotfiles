@@ -78,7 +78,7 @@ setup_termux() {
 
 has_busybox_only() {
    mktemp --help 2>&1 \
-     | grep -q BusyBox 
+      | grep -q BusyBox
 }
 
 
