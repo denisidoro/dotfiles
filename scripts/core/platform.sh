@@ -37,6 +37,11 @@ platform::is_ami2() {
    [[ $(echo "$txt" | grep -q "Amazon Linux release 2" || echo "$txt" | grep -q "amzn2" || echo 1) -eq 0 ]]
 }
 
+platform::has_stubbed_sudo() {
+   sudo --help 2> /dev/null \
+      | grep -q "stub"
+}
+
 platform::tags() {
    local tags=""
    if platform::is_osx; then tags="${tags}osx "; fi

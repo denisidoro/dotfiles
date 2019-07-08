@@ -10,7 +10,7 @@ dot pkg add libncurses5-dev || true
 dot pkg add libncursesw5-dev || true
 
 recipe::shallow_github_clone vifm vifm
-cd "$TEMP_FOLDER/vifm"
+cd "$TMP_DIR/vifm"
 ./scripts/fix-timestamps || true
 ./configure
 recipe::make "vifm"

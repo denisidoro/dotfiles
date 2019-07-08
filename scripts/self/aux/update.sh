@@ -6,9 +6,12 @@ DOTBOT_DIR="modules/dotbot"
 DOTBOT_BIN="bin/dotbot"
 
 LOCAL_BIN="${DOTFILES}/local/bin"
+LOCAL_TMP="${DOTFILES}/local/tmp"
 LOCAL_ZSHRC="${DOTFILES}/local/zshrc"
 LOCAL_GITCONFIG="${DOTFILES}/local/gitconfig"
 
+TMP_DIR="$(fs::tmp)"
+BIN_DIR="$(fs::bin)"
 
 # ==============================
 # Helpers
@@ -35,6 +38,7 @@ setup_folders_and_files() {
    echo
    log::note "Setting up folder and file hierarchy..."
    mkdir -p "$LOCAL_BIN" || true
+   mkdir -p "$LOCAL_TMP" || true
    touch "$LOCAL_ZSHRC" || true
    touch "$LOCAL_GITCONFIG" || true
 
@@ -46,10 +50,29 @@ setup_folders_and_files() {
 # ==============================
 
 fix_locales() {
-   if locale > /dev/null | grep -q annot; then
+   if locale > /dev/null | grep -q annot && platform::command_exists locale-gen; then
       echo
       log::note "Fixing locales..."
       locale-gen en_US en_US.UTF-8
+   fi
+}
+
+setup_termux_proot() {
+   if platform::is_android && ! fs::is_dir /bin; then
+      pkg install proot
+      termux-chroot
+   fi
+}
+
+has_busybox_only() {
+   mktemp --help 2>&1 \
+     | grep -q BusyBox 
+}
+
+setup_termux_coreutils() {
+   if platform::is_android && has_busybox_only; then
+      apt install coreutils
+      pkg install util-linux
    fi
 }
 
@@ -116,9 +139,9 @@ setup_docopts() {
                dot pkg add vim
             fi
             if ! platform::command_exists vim; then
-               sudo ln -s "$(which vi)" "/usr/bin/vim" || true
+               sudo ln -s "$(which vi)" "${BIN_DIR}/vim" || true
             fi
-            sudo ln -s "$(which vim)" /usr/bin/nvim
+            sudo ln -s "$(which vim)" "${BIN_DIR}/nvim"
          fi
       fi
 
@@ -130,11 +153,11 @@ setup_docopts() {
          echo
          log::warning "the sudo command doesn't exist in this system"
          if feedback::confirmation "Do you want to setup a fallback?"; then
-            mkdir -p /usr/local/bin || true
-            mkdir -p /tmp/dotfiles || true
-            echo -e '#!/usr/bin/env bash\n\n"$@"' > /tmp/dotfiles/sudo
-            chmod +x /tmp/dotfiles/sudo
-            mv /tmp/dotfiles/sudo /usr/local/bin/sudo
+            mkdir -p "$TMP_BIN" || true
+            mkdir -p "$TMP_DIR" || true
+            echo -e '#!/usr/bin/env bash\n\n"${DOTFILES}/bin/dot" shell identity "$@"' > "${TMP_DIR}/sudo"
+            chmod +x "${TMP_DIR}/sudo"
+            mv "${TMP_DIR}/sudo" "${BIN_DIR}/sudo"
          fi
       fi
 

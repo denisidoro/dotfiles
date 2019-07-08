@@ -3,11 +3,11 @@
 
 source "${DOTFILES}/scripts/core/main.sh"
 
-TEMP_FOLDER="/tmp/dotfiles"
+TMP_DIR="$(fs::tmp)"
 MODULES_FOLDER="${DOTFILES}/modules"
 
 recipe::folder() {
-   echo "$TEMP_FOLDER/${1}"
+   echo "$TMP_DIR/${1}"
 }
 
 git::url() {

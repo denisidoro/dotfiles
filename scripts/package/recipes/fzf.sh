@@ -16,5 +16,5 @@ if [[ $package_manager = "brew" ]]; then
 fi
 
 recipe::shallow_github_clone junegunn fzf
-cd "$TEMP_FOLDER/fzf"
+cd "$TMP_DIR/fzf"
 ./install

@@ -11,7 +11,7 @@ dot pkg add clojure \
    || true
 
 CLJ_VERSION="1.10.1.447"
-CLJ_FOLDER="$TEMP_FOLDER/clojure"
+CLJ_FOLDER="$TMP_DIR/clojure"
 
 pushd
 mkdir -p "$CLJ_FOLDER" || true
