@@ -155,7 +155,7 @@ setup_docopts() {
          echo
          log::warning "the sudo command doesn't exist in this system"
          if feedback::confirmation "Do you want to setup a fallback?"; then
-            mkdir -p "$TMP_BIN" || true
+            mkdir -p "$BIN_DIR" || true
             mkdir -p "$TMP_DIR" || true
             ln -s "${LOCAL_BIN}/\$" "${BIN_DIR}/sudo"
          fi

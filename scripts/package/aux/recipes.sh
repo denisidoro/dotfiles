@@ -31,12 +31,12 @@ recipe::shallow_git_clone() {
 }
 
 recipe::shallow_github_clone() {
-   export DOT_GIT_HOST="github.com"
+   export DOT_GIT_HOST="${DOT_GIT_HOST:-github.com}"
    recipe::shallow_git_clone "$@"
 }
 
 recipe::shallow_gitlab_clone() {
-   export DOT_GIT_HOST="gitlab.com"
+   export DOT_GIT_HOST="${DOT_GIT_HOST:-gitlab.com}"
    recipe::shallow_git_clone "$@"
 }
 
