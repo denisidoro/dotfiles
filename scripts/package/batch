@@ -14,6 +14,11 @@ source "${DOTFILES}/scripts/package/aux/batch.sh"
 
 docs::eval_help "$@"
 
+if [[ $# < 1 ]]; then
+   "$0" --help
+   exit 0
+fi
+
 # input parsing
 list=false
 prompt=false

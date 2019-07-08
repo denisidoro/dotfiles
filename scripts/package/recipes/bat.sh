@@ -33,5 +33,5 @@ mkdir -p "$folder" || true
 cd "$folder"
 
 url="$(url::get)"
-wget "$url" --output-document bat
+wget "$url" -O bat
 sudo dpkg -i bat

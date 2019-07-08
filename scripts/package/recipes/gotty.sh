@@ -39,7 +39,7 @@ mkdir -p "$folder" || true
 cd "$folder"
 
 url="$(url::get)"
-wget "$url" --output-document gotty.tar.gz
+wget "$url" -O gotty.tar.gz
 
 tar -zxvf gotty.tar.gz
 sudo mv "./gotty" "$(fs::bin)/gotty"

@@ -57,23 +57,28 @@ fix_locales() {
    fi
 }
 
-setup_termux_proot() {
-   if platform::is_android && ! fs::is_dir /bin; then
+setup_termux() {
+   if ! platform::is_android; then
+      return 0
+   fi
+   # in order to skip $PREFIX/bin, for example
+   if ! fs::is_dir /bin; then
       pkg install proot
       termux-chroot
+   fi
+   # probably first time running it so let's add more stuff as well
+   if has_busybox_only; then
+      pkg install unstable-repo || true
+      apt install coreutils || true
+      pkg install util-linux || true
+      pkg install termux-packages || true
+      pkg install ncurses-utils || true
    fi
 }
 
 has_busybox_only() {
    mktemp --help 2>&1 \
      | grep -q BusyBox 
-}
-
-setup_termux_coreutils() {
-   if platform::is_android && has_busybox_only; then
-      apt install coreutils
-      pkg install util-linux
-   fi
 }
 
 
@@ -136,7 +141,7 @@ setup_docopts() {
          log::warning "neovim isn't installed"
          if feedback::confirmation "Do you want to setup a fallback?"; then
             if ! platform::command_exists vi && ! platform::command_exists vim; then
-               dot pkg add vim
+               dot pkg add nvim
             fi
             if platform::command_exists vi && ! platform::command_exists vim; then
                sudo ln -s "$(which vi)" "${BIN_DIR}/vim" || true
@@ -233,7 +238,7 @@ setup_docopts() {
 
    install_zplug_plugins() {
 
-      if platform::command_exists zplug && echo && feedback::confirmation "Do you want to install tmux plugins?"; then
+      if platform::command_exists zplug && echo && feedback::confirmation "Do you want to install zplug plugins?"; then
          log::note "Installing ZPlug plugins..."
          zplug install 2>/dev/null
       fi
@@ -289,7 +294,6 @@ setup_docopts() {
    update_dotfiles_android() {
       log::note "Configuring for Android..."
       log::note "Installing essential dependencies..."
-      pkg install tmux neovim curl git openssh termux-packages ncurses-utils python
    }
 
    update_dotfiles_fallback() {

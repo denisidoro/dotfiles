@@ -18,6 +18,11 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 docs::eval_help "$@"
 
+if [[ $# < 1 ]]; then
+   "$0" --help
+   exit 0
+fi
+
 _cleanup() {
    rm -rf "$TMP_DIR" || true
 }
