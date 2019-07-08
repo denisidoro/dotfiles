@@ -16,7 +16,7 @@ fs::realpath() {
 }
 
 fs::tmp() {
-   if platform::has_stubbed_sudo; then
+   if platform::is_android; then
       local folder="${DOTFILES}/local/tmp"
    else
       local folder="/tmp/dotfiles"
@@ -26,7 +26,7 @@ fs::tmp() {
 }
 
 fs::bin() {
-   if platform::has_stubbed_sudo; then
+   if platform::is_android; then
       local folder="${DOTFILES}/local/bin"
    else
       local folder="/usr/local/bin"
