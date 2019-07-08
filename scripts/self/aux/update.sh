@@ -12,6 +12,7 @@ LOCAL_GITCONFIG="${DOTFILES}/local/gitconfig"
 
 TMP_DIR="$(fs::tmp)"
 BIN_DIR="$(fs::bin)"
+MAIN_BIN_DIR="${DOTFILES}/bin"
 
 # ==============================
 # Helpers
@@ -162,7 +163,7 @@ setup_docopts() {
          if feedback::confirmation "Do you want to setup a fallback?"; then
             mkdir -p "$BIN_DIR" || true
             mkdir -p "$TMP_DIR" || true
-            cp "${BIN_DIR}/\$" "${LOCAL_BIN}/sudo"
+            cp "${MAIN_BIN_DIR}/\$" "${LOCAL_BIN}/sudo"
             chmod +x "${LOCAL_BIN}/sudo" || true
          fi
       fi
