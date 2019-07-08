@@ -7,7 +7,7 @@ TMP_DIR="$(fs::tmp)"
 MODULES_FOLDER="${DOTFILES}/modules"
 
 recipe::folder() {
-   echo "$TMP_DIR/${1}"
+   echo "${TMP_DIR}/${1}"
 }
 
 git::url() {
