@@ -1,5 +1,20 @@
 #!/usr/bin/env bash
 
-export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)}"
+_get_root_folder() {
+  local readonly folder="${1:-}"
+  if [ -z "$folder" ]; then
+     echo "${HOME}/.dotfiles"
+  fi
+  cd "$folder"
+  if [ -f "./bin/dot" ]; then
+    echo "$folder"
+    exit 0
+  else
+    _get_root_folder "$(cd "${folder}/.." && pwd)"
+  fi
+}
 
-"${DOTFILES}/bin/dot" shell identity "$@"
+this_folder="$(dirname "${BASH_SOURCE[0]}")"
+root_folder="$(_get_root_folder "$this_folder")"
+
+"${root_folder}/bin/dot" shell identity "$@"

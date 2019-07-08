@@ -157,7 +157,8 @@ setup_docopts() {
          if feedback::confirmation "Do you want to setup a fallback?"; then
             mkdir -p "$BIN_DIR" || true
             mkdir -p "$TMP_DIR" || true
-            ln -s "${LOCAL_BIN}/\$" "${BIN_DIR}/sudo"
+            cp "${LOCAL_BIN}/\$" "${BIN_DIR}/sudo"
+            chmod +x "${BIN_DIR}/sudo" || true
          fi
       fi
 
