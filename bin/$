@@ -1,16 +1,18 @@
 #!/usr/bin/env bash
 
+# in order to make it work with any folder in $DOTFILES
 _get_root_folder() {
   local readonly folder="${1:-}"
   if [ -z "$folder" ]; then
      echo "${HOME}/.dotfiles"
+     exit 0
   fi
   cd "$folder"
   if [ -f "./bin/dot" ]; then
     echo "$folder"
     exit 0
   else
-    _get_root_folder "$(cd "${folder}/.." && pwd)"
+    _get_root_folder "$(cd "${folder}/.." && pwd || echo "")"
   fi
 }
 
