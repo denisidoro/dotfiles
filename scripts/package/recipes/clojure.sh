@@ -6,12 +6,12 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 recipe::abort_if_installed clojure
 
-dot pkg add  clojure \
+dot pkg add clojure \
    && recipe::abort_if_installed clojure \
    || true
 
 CLJ_VERSION="1.10.1.447"
-CLJ_FOLDER="$TEMP_FOLDER/clojure"
+CLJ_FOLDER="$TMP_DIR/clojure"
 
 pushd
 mkdir -p "$CLJ_FOLDER" || true

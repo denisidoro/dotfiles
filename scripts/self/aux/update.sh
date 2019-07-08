@@ -6,9 +6,12 @@ DOTBOT_DIR="modules/dotbot"
 DOTBOT_BIN="bin/dotbot"
 
 LOCAL_BIN="${DOTFILES}/local/bin"
+LOCAL_TMP="${DOTFILES}/local/tmp"
 LOCAL_ZSHRC="${DOTFILES}/local/zshrc"
 LOCAL_GITCONFIG="${DOTFILES}/local/gitconfig"
 
+TMP_DIR="$(fs::tmp)"
+BIN_DIR="$(fs::bin)"
 
 # ==============================
 # Helpers
@@ -35,6 +38,7 @@ setup_folders_and_files() {
    echo
    log::note "Setting up folder and file hierarchy..."
    mkdir -p "$LOCAL_BIN" || true
+   mkdir -p "$LOCAL_TMP" || true
    touch "$LOCAL_ZSHRC" || true
    touch "$LOCAL_GITCONFIG" || true
 
@@ -46,11 +50,35 @@ setup_folders_and_files() {
 # ==============================
 
 fix_locales() {
-   if locale > /dev/null | grep -q annot; then
+   if platform::command_exists locale-gen && locale > /dev/null | grep -q annot; then
       echo
       log::note "Fixing locales..."
       locale-gen en_US en_US.UTF-8
    fi
+}
+
+setup_termux() {
+   if ! platform::is_android; then
+      return 0
+   fi
+   # in order to skip $PREFIX/bin, for example
+   if ! fs::is_dir /bin; then
+      pkg install proot
+      termux-chroot
+   fi
+   # probably first time running it so let's add more stuff as well
+   if has_busybox_only; then
+      pkg install unstable-repo || true
+      apt install coreutils || true
+      pkg install util-linux || true
+      pkg install termux-packages || true
+      pkg install ncurses-utils || true
+   fi
+}
+
+has_busybox_only() {
+   mktemp --help 2>&1 \
+      | grep -q BusyBox
 }
 
 
@@ -113,12 +141,14 @@ setup_docopts() {
          log::warning "neovim isn't installed"
          if feedback::confirmation "Do you want to setup a fallback?"; then
             if ! platform::command_exists vi && ! platform::command_exists vim; then
-               dot pkg add vim
+               dot pkg add nvim
             fi
-            if ! platform::command_exists vim; then
-               sudo ln -s "$(which vi)" "/usr/bin/vim" || true
+            if platform::command_exists vi && ! platform::command_exists vim; then
+               sudo ln -s "$(which vi)" "${BIN_DIR}/vim" || true
+            elif platform::command_exists vim; then
+               sudo ln -s "$(which vim)" "${BIN_DIR}/vim" || true
             fi
-            sudo ln -s "$(which vim)" /usr/bin/nvim
+            sudo ln -s "$(which vim)" "${BIN_DIR}/nvim"
          fi
       fi
 
@@ -130,11 +160,10 @@ setup_docopts() {
          echo
          log::warning "the sudo command doesn't exist in this system"
          if feedback::confirmation "Do you want to setup a fallback?"; then
-            mkdir -p /usr/local/bin || true
-            mkdir -p /tmp/dotfiles || true
-            echo -e '#!/usr/bin/env bash\n\n"$@"' > /tmp/dotfiles/sudo
-            chmod +x /tmp/dotfiles/sudo
-            mv /tmp/dotfiles/sudo /usr/local/bin/sudo
+            mkdir -p "$BIN_DIR" || true
+            mkdir -p "$TMP_DIR" || true
+            cp "${LOCAL_BIN}/\$" "${BIN_DIR}/sudo"
+            chmod +x "${BIN_DIR}/sudo" || true
          fi
       fi
 
@@ -209,7 +238,7 @@ setup_docopts() {
 
    install_zplug_plugins() {
 
-      if platform::command_exists zplug && echo && feedback::confirmation "Do you want to install tmux plugins?"; then
+      if platform::command_exists zplug && echo && feedback::confirmation "Do you want to install zplug plugins?"; then
          log::note "Installing ZPlug plugins..."
          zplug install 2>/dev/null
       fi
@@ -265,7 +294,6 @@ setup_docopts() {
    update_dotfiles_android() {
       log::note "Configuring for Android..."
       log::note "Installing essential dependencies..."
-      pkg install tmux neovim curl git openssh termux-packages ncurses-utils python
    }
 
    update_dotfiles_fallback() {

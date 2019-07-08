@@ -9,7 +9,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?
 ##? Usage:
 ##?    emulator [list]
-##?    emulator start [--newest]
+##?    emulator start [newest]
 ##?
 ##? Options:
 ##?    start          Prompts for an emulator and launch it

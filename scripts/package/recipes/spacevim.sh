@@ -8,4 +8,5 @@ if cat "$HOME/.config/nvim/init.vim" 2>/dev/null | grep -q "space-vim" 2>/dev/nu
    recipe::abort_installed spacevim
 fi
 
+dot pkg add curl nvim
 bash <(curl -fsSL https://raw.githubusercontent.com/liuchengxu/space-vim/master/install.sh)

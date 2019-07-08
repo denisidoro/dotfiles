@@ -34,7 +34,7 @@ mkdir -p "$folder" || true
 cd "$folder"
 
 url="$(url::get)"
-wget "$url" --output-document docopts
+wget "$url" -O docopts
 
 sudo chmod +x "${folder}/docopts"
-sudo mv "${folder}/docopts" "/usr/local/bin/docopts"
+sudo mv "${folder}/docopts" "$(fs::bin)/docopts"

@@ -56,7 +56,7 @@ action::view() {
    cat "$json" \
       | jq -C "$jq_path" \
       2> /dev/null \
-      | ${PAGER:-less} \
+      | less -R -+S \
       || printf ''
 }
 

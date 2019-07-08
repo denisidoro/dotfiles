@@ -42,7 +42,7 @@ feedback::select_option_fallback() {
    local readonly options="$1"
    local readonly question="$2"
 
-   local readonly digits="$(printf "$options" | wc -l | wc -m | xargs -I% echo "% - 1" | bc || echo 2)"
+   local readonly digits="$(printf "$options" | wc -l | wc -m | xargs -I% echo "% - 1" | bc 2> /dev/null || echo 2)"
    echo "$options" | awk "{printf(\"%${digits}d %s\n\", NR, \$0)}" > /dev/tty
    echo
 

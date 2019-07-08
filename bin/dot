@@ -117,7 +117,6 @@ _alias() {
       sec) echo security;;
       sh) echo shell;;
       fs) echo filesystem;;
-      sensor) echo sensors;;
       not) echo notification;;
       *) echo "$arg";;
    esac

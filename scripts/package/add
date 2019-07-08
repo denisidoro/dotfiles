@@ -18,8 +18,13 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 docs::eval_help "$@"
 
+if [[ $# < 1 ]]; then
+   "$0" --help
+   exit 0
+fi
+
 _cleanup() {
-   rm -rf "$TEMP_FOLDER" || true
+   rm -rf "$TMP_DIR" || true
 }
 
 trap _cleanup SIGINT
@@ -36,19 +41,22 @@ for arg in $@; do
       *) deps_arr+=("$arg") ;;
    esac
 done
+deps_str="${deps_arr[@]:-}"
+
+errors=0
 
 # temp setup
-mkdir -p "$TEMP_FOLDER" 2> /dev/null || true
+mkdir -p "$TMP_DIR" 2> /dev/null || true
 
 # dependency list
-deps="$(echo "${deps_arr[@]:-}" | str::multiline)"
+deps="$(echo "$deps_str" | str::multiline)"
 recipes_as_regex="$(recipe::list | xargs | str::regex)"
 
 # get deps that will use the system's package manager
 if $force_package_manager; then
    deps_without_recipe="$(echo "$deps" | str::join)"
 else
-   deps_without_recipe="$(filter::without_recipe "${deps_arr[@]:-}" "$recipes_as_regex" | str::join)"
+   deps_without_recipe="$(filter::without_recipe "$deps_str" "$recipes_as_regex" | str::join)"
 fi
 
 # use the system's package manager
@@ -56,9 +64,6 @@ if [[ -n "$deps_without_recipe" ]]; then
 
    # get main package manager
    package_manager="$(platform::main_package_manager)"
-
-   echo
-   log::note "Installing ${deps_without_recipe} using ${package_manager}..."
 
    args=()
 
@@ -86,7 +91,16 @@ if [[ -n "$deps_without_recipe" ]]; then
    fi
 
    # call
-   "${args[@]}" "${deps_without_recipe[@]:-}"
+   for dep in ${deps_without_recipe[@]:-}; do
+      if platform::command_exists "$dep"; then
+         echo
+         log::note "$dep already installed"
+      else
+         echo
+         log::note "Installing $dep using ${package_manager}..."
+         "${args[@]}" "$dep" || errors=$((errors + 1))
+      fi
+   done
 fi
 
 # use custom recipes, if allowed
@@ -98,3 +112,5 @@ if ! $force_package_manager; then
       recipe::install "$dep"
    done
 fi
+
+exit $errors

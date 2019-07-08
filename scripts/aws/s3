@@ -2,207 +2,84 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/nav.sh"
 
-# TODO: use this
-# source "${DOTFILES}/scripts/core/nav.sh"
-
-##? Simple AWS S3 file manager
-##?
-##? It may be called via dot fs nav
+##? AWS S3 navigator
 ##?
 ##? Usage:
-##?    s3
-##?    s3 edit <line>
-##?    s3 view <line>
-##?    s3 preview <line>
+##?    nav [<path>]
 
 docs::eval_help "$@"
 
-
-# ===============
-# input parsing
-# ===============
-edit=false
-view=false
-preview=false
-case "${1:-}" in
-   edit) edit=true; line="${2:-}" ;;
-   view) view=true; line="${2:-}" ;;
-   preview) preview=true; line="${2:-}" ;;
-esac
-
-
-# ===============
-# string
-# ===============
-
-str::last_word() {
-   rev \
-      | xargs \
-      | cut -d' ' -f1 \
-      | rev
-}
-
-str::resolve_dots() {
-   local readonly path="$(cat)"
-
-   dirs=()
-   for p in $(echo "$path" | tr '/' '\n'); do
-      case $p in
-         .) ;;
-         ..) unset 'dirs[${#dirs[@]}-1]' ;;
-         *) dirs+=("$p") ;;
-      esac
-   done
-
-   if s3::is_dir "$path"; then
-      dirs+=("")
-   fi
-
-   echo "${dirs[@]:-}" | tr ' ' '/'
-}
-
-str::remove_double_slashes() {
-   sed 's|//|/|g'
-}
-
-str::slash_hacks() {
-   echo "$1" | str::remove_double_slashes | str::resolve_dots
-}
-
-str::is_full_path() {
-   grep -Eq '.+?\/.+'
-}
-
-str::only_dots() {
-   grep -Eq '\.+\/?'
-}
-
-str::without_prefix() {
-   echo "$1" | sed 's|s3://||'
-}
-
-str::with_trailing_slash() {
-   if [[ -n $DOT_FM_PWD ]]; then
-      cat
-   else
-      sed 's|.*|&/|'
-   fi
-}
-
-
-# ===============
-# s3
-# ===============
-
 s3::path() {
-   local readonly folder="${1:-}"
-   local path
-
-   if echo "$folder" | str::only_dots; then
-      path="${DOT_FM_PWD}/${folder}"
-   elif echo "$folder" | str::is_full_path "$folder"; then
-      path="$folder"
-   elif [[ -n "$folder" ]]; then
-      path="${DOT_FM_PWD}/${folder}"
-   else
-      path="$DOT_FM_PWD"
-   fi
-
-   str::slash_hacks "$path"
+   local readonly path="$1"
+   printf "s3:/"
+   echo "$path/" \
+      | str::remove_double_slashes
 }
 
-s3::ls_hiding_previous() {
-   aws s3 ls "$(s3::path "${1:-}")" | awk '{print $NF}' | str::with_trailing_slash
+s3::file_path() {
+   s3::path "$@" \
+      | str::remove_trailing_slash
 }
 
-s3::ls() {
-   if [[ -n $DOT_FM_PWD ]]; then
-      echo "../"
-   fi
-   s3::ls_hiding_previous "${1:-}"
-}
-
-s3::cd() {
-   export DOT_FM_PWD="$(s3::path "${1:-}")"
-}
-
-s3::is_dir() {
-   local readonly path="${1:- }"
-   if [[ ${path: -1} = "/" ]]; then
+path::is_navigable() {
+   local readonly path="$1"
+   if path::is_root "$CWD"; then
       return 0
-   else
-      return 1
    fi
+   str::ends_with_slash "$path"
 }
 
-s3::open() {
+nav::ls() {
+   local readonly path="${1:-$CWD}"
+   aws s3 ls "$(s3::path "$path")" \
+      | awk '{print $NF}'
+}
+
+action::view() {
    local readonly path="$1"
 
-   if s3::is_dir "$path"; then
-      s3::cd "$path"
-      action::browse
+   if path::is_navigable "$path"; then
+      nav::ls "$path" \
+         | less -R
+   else
+      aws s3 cp "$(s3::file_path "$path")" - \
+         | dot shell less --filename "$path" \
+         | less -R
    fi
 }
 
-
-# ===============
-# fzf
-# ===============
-
-fzf::bindings() {
-   echo "ctrl-h:execute(echo ..)+abort"
-   echo "ctrl-space:abort"
-   echo "ctrl-v:execute(dot aws s3 view {})"
-   printf "ctrl-e:execute(dot aws s3 edit {})"
-}
-
-fzf::call() {
-   fzf-tmux \
-      --ansi \
-      --cycle \
-      --reverse \
-      --inline-info \
-      --height '100%' \
-      --header "$DOT_FM_PWD" \
-      --preview "dot aws s3 preview {}" \
-      --bind "$(fzf::bindings | tr '\n' ',')"
-}
-
-
-# ===============
-# action
-# ===============
-
-action::browse() {
-   local readonly selection="$(s3::ls | fzf::call)"
-   local readonly name="$(echo "$selection" | str::last_word)"
-
-   if [[ -n "$name" ]]; then
-      s3::open "$name"
-   fi
+fzf::extra_bindings() {
+   echo "ctrl-e:execute($0 --action edit --cwd $CWD --path {})"
 }
 
 action::edit() {
-   local readonly path="$(echo "$line" | str::last_word)"
+   local readonly path="$1"
 
    local readonly extension="${path##*.}"
    local readonly tmpfile=$(mktemp --suffix ".${extension:-txt}")
-   local readonly remote_path="s3://$(s3::path "$path")"
+   local readonly remote_path="$(s3::file_path "$path")"
 
    aws s3 cp --quiet "$remote_path" "$tmpfile"
    "$EDITOR" "$tmpfile"
    aws s3 cp "$tmpfile" "$remote_path"
 }
 
-action::view() {
-   local readonly path="$(echo "$line" | str::last_word)"
+action::handle_extra() {
+   case $action in
+      edit) action::edit "$(path::resolve "$path")" < /dev/tty > /dev/tty ;;
+      *) action::abort "$@" ;;
+   esac
+}
 
-   if s3::is_dir "$path"; then
-      s3::ls_hiding_previous "$path"
+# in order to bypass trailing slash stripping when resolving the path
+path::intermediate_hacks() {
+   local readonly path="$(cat)"
+   if str::starts_with_slash "$path"; then
+      echo "$path"
    else
-      aws s3 cp --quiet "s3://$(s3::path "$path")" - \
-         | dot shell less --filename "$path"
+      echo "/${path}"
    fi
 }
 
@@ -210,16 +87,6 @@ action::view() {
 # main
 # ===============
 
-export DOT_FM_PWD="${DOT_FM_PWD:-$(str::without_prefix "${1:-}")}"
-
-if $view; then
-   action::view < /dev/tty > /dev/tty
-elif $preview; then
-   action::view
-elif $edit; then
-   action::edit < /dev/tty > /dev/tty
-elif $preview; then
-   action::preview
-else
-   action::browse
-fi
+input::parse "$@"
+nav::cd "$CWD"
+action::handle "$@"
