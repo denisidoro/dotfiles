@@ -6,6 +6,8 @@ RECIPES_FOLDER="${DOTFILES}/scripts/package/recipes"
 platform::main_package_manager() {
    if platform::is_osx; then
       echo "brew"
+   if platform::is_android; then
+      echo "pkg"
    elif platform::command_exists apt; then
       echo "apt"
    elif platform::command_exists apt-get; then
@@ -19,8 +21,6 @@ platform::main_package_manager() {
       echo "dnf"
    elif platform::command_exists apk; then
       echo "apk"
-   elif platform::is_android; then
-      echo "pkg"
    else
       echo "brew"
    fi

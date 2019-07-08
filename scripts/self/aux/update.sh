@@ -138,8 +138,10 @@ setup_docopts() {
             if ! platform::command_exists vi && ! platform::command_exists vim; then
                dot pkg add vim
             fi
-            if ! platform::command_exists vim; then
+            if platform::command_exists vi && ! platform::command_exists vim; then
                sudo ln -s "$(which vi)" "${BIN_DIR}/vim" || true
+            elif platform::command_exists vim; then
+               sudo ln -s "$(which vim)" "${BIN_DIR}/vim" || true
             fi
             sudo ln -s "$(which vim)" "${BIN_DIR}/nvim"
          fi
@@ -155,9 +157,7 @@ setup_docopts() {
          if feedback::confirmation "Do you want to setup a fallback?"; then
             mkdir -p "$TMP_BIN" || true
             mkdir -p "$TMP_DIR" || true
-            echo -e '#!/usr/bin/env bash\n\n"${DOTFILES}/bin/dot" shell identity "$@"' > "${TMP_DIR}/sudo"
-            chmod +x "${TMP_DIR}/sudo"
-            mv "${TMP_DIR}/sudo" "${BIN_DIR}/sudo"
+            ln -s "${LOCAL_BIN}/\$" "${BIN_DIR}/sudo"
          fi
       fi
 

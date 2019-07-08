@@ -87,9 +87,14 @@ if [[ -n "$deps_without_recipe" ]]; then
 
    # call
    for dep in ${deps_without_recipe[@]:-}; do
-      echo
-      log::note "Installing $dep using ${package_manager}..."
-      "${args[@]}" "$dep" || errors=$((errors + 1))
+      if platform::command_exists "$dep"; then
+         echo
+         log::note "$dep already installed"
+      else
+         echo
+         log::note "Installing $dep using ${package_manager}..."
+         "${args[@]}" "$dep" || errors=$((errors + 1))
+      fi
    done
 fi
 

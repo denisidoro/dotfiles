@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-"$@"
+export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)}"
+
+"${DOTFILES}/bin/dot" shell identity "$@"
