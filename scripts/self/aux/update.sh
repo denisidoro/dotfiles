@@ -50,7 +50,7 @@ setup_folders_and_files() {
 # ==============================
 
 fix_locales() {
-   if locale > /dev/null | grep -q annot && platform::command_exists locale-gen; then
+   if platform::command_exists locale-gen && locale > /dev/null | grep -q annot; then
       echo
       log::note "Fixing locales..."
       locale-gen en_US en_US.UTF-8
