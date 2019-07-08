@@ -8,7 +8,7 @@ REPO_TAG="2.0.0-alpha.3"
 
 url::generate() {
    local readonly suffix="$1"
-   echo "https://github.com/yudai/gotty/releases/download/v${REPO_TAG}/${REPO_TAG}_${suffix}.tar.gz"
+   echo "https://github.com/yudai/gotty/releases/download/v${REPO_TAG}/gotty_${REPO_TAG}_${suffix}.tar.gz"
 }
 
 url::get() {
