@@ -9,7 +9,9 @@ Awesome personal dotfiles.
 
 ```sh
 git clone https://github.com/denisidoro/dotfiles.git ~/.dotfiles
-~/.dotfiles/bin/dot <args>... # eg: ~/.dotfiles/bin/dot rice pipes
+echo 'alias dot=$HOME/.dotfiles/bin/dot' >> $HOME/.bashrc
+exec $SHELL
+dot <args>... # eg: dot rice pipes
 ```
 
 ### Installing the full experience 
@@ -17,9 +19,8 @@ git clone https://github.com/denisidoro/dotfiles.git ~/.dotfiles
 ```sh
 git clone https://github.com/denisidoro/dotfiles.git ~/.dotfiles
 ~/.dotfiles/bin/dot self install
+dot <args>... # eg: dot rice pipes
 ```
-
-If the setup finished successfully, you should now have the `dot` command in your `$PATH`.
 
 ### Updating
 

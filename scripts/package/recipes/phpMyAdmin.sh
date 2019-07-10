@@ -8,6 +8,8 @@ if fs::is_dir "/var/www/html/phpMyAdmin"; then
    recipe::abort_installed phpMyAdmin
 fi
 
+dot pkg add wget
+
 log::warning "Setting up phpMyAdmin..."
 cd /var/www/html
 log::warning "Downloading zip..."

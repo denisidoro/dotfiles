@@ -19,6 +19,9 @@ if ! platform::is_ami2; then
 fi
 
 log::warning "Setting up sendy..."
+
+dot pkg add unzip
+
 _prompt "Make sure $HOME/sendy.zip is available"
 cd $HOME
 unzip sendy.zip -d /var/www/html
