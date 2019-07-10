@@ -33,6 +33,11 @@ export GOPATH="${DEV_HOME}/go"
 # package management
 export HOMEBREW_NO_AUTO_UPDATE=1
 
+# fasd/z.lua
+export _ZL_CMD=j
+# export _ZL_DATA="${DOTFILES}/modules/.z_lua"
+export _ZL_MATCH_MODE=1
+
 # fzf
 export FZF_DEFAULT_OPTS='--height 70% --reverse --border --inline-info --cycle'
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'

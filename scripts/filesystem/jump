@@ -13,13 +13,35 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 
 docs::eval_help "$@"
 
+export PROMPT_COMMAND=""
+eval "$(lua "${DOTFILES}/modules/z.lua/z.lua" --init bash)"
+
 _fzf() {
    fzf +m
+}
+
+fasd() {
+   set +e
+   _zlua "$@"
+   set -e
+}
+
+_fasd_suggestions() {
+   fasd -l "${@:-}" \
+      | awk '{print $NF}'
+}
+
+files_for_folders() {
+   for folder in $(cat); do
+     find "$folder" -maxdepth 2 -type f \
+       | xargs -I% echo "$folder/%"
+   done
 }
 
 best_match() {
    local lines="$1"
    shift
+
    echo "$lines" \
       | fzf --filter="$*" \
       | head -n1
@@ -35,77 +57,65 @@ list_folders() {
       | sort -u
 }
 
-action_from_fasd() {
-   local fasd_args="$1"
-   local cmd="$2"
-   local selection=$(fasd "$fasd_args" | awk '{print $2}' | _fzf) \
-      && [ -n "$selection" ] \
-      && "$cmd" "$selection"
-}
-
 cd_file() {
-   cd "$(dirname "$1")"
+   local readonly filepath="$1"
+
+   cd "$(dirname "$filepath")"
 }
 
-jj() {
+_jump() {
    local cmd="$1"
    local lines="$2"
    shift 2
+
    if [ $# -gt 0 ]; then
       "$cmd" "$(best_match "$lines" "$@")"
    else
-      local selection=$(echo "$lines" | _fzf) \
-         && [ -n "$selection" ] \
-         && "$cmd" "$selection"
+      local readonly selection="$(echo "$lines" | _fzf)"
+      if [ -n "$selection" ]; then
+         "$cmd" "$selection"
+      fi
    fi
 }
 
-fasd_cd() {
-   if [ $# -le 1 ]; then
+jump_to_global_folder() {
+   if [ $# -gt 0 ]; then
       fasd "$@"
    else
-      local _fasd_ret="$(fasd -e echo "$@")"
-      [ -z "$_fasd_ret" ] && return
-      [ -d "$_fasd_ret" ] && cd "$_fasd_ret" || echo "$_fasd_ret"
+      _jump cd "$(_fasd_suggestions)"
    fi
 }
 
-global_folder() {
-   [ $# -gt 0 ] && \
-      fasd_cd -d "$@" \
-      || action_from_fasd -d "cd"
+jump_to_folder() {
+   _jump cd "$(list_folders)"
 }
 
-folder() {
-   jj cd "$(list_folders)" "$@"
-}
-
-folder_for_file() {
-   jj cd_file "$(list_files)" "$@"
+jump_to_folder_for_file() {
+   _jump cd_file "$(list_files)"
 }
 
 edit_global_file() {
    local readonly editor="$1"
    shift
 
-   [ $# -gt 0 ] && \
-      fasd -f -e "$editor" "$@" \
-      || action_from_fasd -f "$editor"
+   local readonly files="$(_fasd_suggestions "$@" | files_for_folders)"
+   _jump "$editor" "$files"
 }
 
 edit_file() {
    local readonly editor="$1"
    shift
 
-   jj "$editor" "$(list_files)" "$@"
+   _jump "$editor" "$(list_files)" "$@"
 }
 
-work_folder() {
-   cd "$WORK_HOME" && jj cd "$(ls "$WORK_HOME")" "$@"
+jump_to_work_folder() {
+   cd "$WORK_HOME"
+   _jump cd "$(ls)" "$@"
 }
 
-# Go up X directories (default 1)
-folder_up() {
+# Go up X directories (default: 1)
+cd_up() {
    if [[ "$#" -ne 1 ]]; then
       cd ..
    else
@@ -120,7 +130,7 @@ folder_up() {
 }
 
 # Go up to project root
-git_root() {
+cd_to_git_root() {
    cd "$(git rev-parse --show-toplevel)"
 }
 
@@ -128,15 +138,15 @@ cmd="$1"
 shift
 
 case "$cmd" in
-   "local") folder "$@" && pwd ;;
-   "work") work_folder "$@" && pwd ;;
-   "file") folder_for_file "$@" && pwd ;;
-   "up") folder_up "$@" && pwd ;;
-   "root") git_root "$@" && pwd ;;
+   "local") jump_to_folder "$@" && pwd ;;
+   "work") jump_to_work_folder "$@" && pwd ;;
+   "file") jump_to_folder_for_file "$@" && pwd ;;
+   "up") cd_up "$@" && pwd ;;
+   "root") cd_to_git_root "$@" && pwd ;;
    "edit")
       scope="$1"
-      editor="$2"
-      shift 2
+      editor="${2:-$EDITOR}"
+      shift 2 || shift 1
       case "$scope" in
          "local") edit_file "$editor" "$@" ;;
          *) edit_global_file "$editor" "$@" ;;
