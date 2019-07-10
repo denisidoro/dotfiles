@@ -13,16 +13,15 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 
 docs::eval_help "$@"
 
-   export PROMPT_COMMAND=""
-   export _ZL_CD="cd"
-   export _ZL_ECHO="1"
-   eval "$(lua "${DOTFILES}/modules/z.lua/z.lua" --init bash)"
-
 _fzf() {
    fzf --no-sort +m
 }
 
 fasd() {
+   export PROMPT_COMMAND=""
+   export _ZL_CD="cd"
+   export _ZL_ECHO="1"
+   eval "$(lua "${DOTFILES}/modules/z.lua/z.lua" --init bash)"
    set +e
    _zlua "$@"
    set -e
