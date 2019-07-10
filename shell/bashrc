@@ -31,5 +31,5 @@ fi
 
 # fasd
 if ${DOT_FASD:-false}; then
-    eval "$(lua "${DOTFILES}/modules/z.lua/z.lua" --init bash enhanced once)"
+   eval "$(lua "${DOTFILES}/modules/z.lua/z.lua" --init bash enhanced once)"
 fi

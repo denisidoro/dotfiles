@@ -34,8 +34,8 @@ _fasd_suggestions() {
 
 files_for_folders() {
    for folder in $(cat); do
-     find "$folder" -maxdepth 1 -type f \
-       | xargs -I% echo "$folder/%"
+      find "$folder" -maxdepth 1 -type f \
+         | xargs -I% echo "$folder/%"
    done
 }
 
@@ -44,7 +44,7 @@ best_match() {
    shift
 
    echo "$lines" \
-      | fzf --filter="$*" \
+      | _fzf --filter="$*" \
       | head -n1
 }
 
