@@ -13,11 +13,13 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 
 docs::eval_help "$@"
 
-export PROMPT_COMMAND=""
-eval "$(lua "${DOTFILES}/modules/z.lua/z.lua" --init bash)"
+   export PROMPT_COMMAND=""
+   export _ZL_CD="cd"
+   export _ZL_ECHO="1"
+   eval "$(lua "${DOTFILES}/modules/z.lua/z.lua" --init bash)"
 
 _fzf() {
-   fzf +m
+   fzf --no-sort +m
 }
 
 fasd() {
@@ -33,7 +35,7 @@ _fasd_suggestions() {
 
 files_for_folders() {
    for folder in $(cat); do
-     find "$folder" -maxdepth 2 -type f \
+     find "$folder" -maxdepth 1 -type f \
        | xargs -I% echo "$folder/%"
    done
 }
@@ -138,11 +140,11 @@ cmd="$1"
 shift
 
 case "$cmd" in
-   "local") jump_to_folder "$@" && pwd ;;
-   "work") jump_to_work_folder "$@" && pwd ;;
-   "file") jump_to_folder_for_file "$@" && pwd ;;
-   "up") cd_up "$@" && pwd ;;
-   "root") cd_to_git_root "$@" && pwd ;;
+   "local") jump_to_folder "$@" >/dev/null && pwd ;;
+   "work") jump_to_work_folder "$@" >/dev/null && pwd ;;
+   "file") jump_to_folder_for_file "$@" >/dev/null && pwd ;;
+   "up") cd_up "$@" >/dev/null && pwd ;;
+   "root") cd_to_git_root "$@" >/dev/null && pwd ;;
    "edit")
       scope="$1"
       editor="${2:-$EDITOR}"
@@ -152,5 +154,5 @@ case "$cmd" in
          *) edit_global_file "$editor" "$@" ;;
       esac
       ;;
-   *) global_folder "$@" && pwd ;;
+   *) jump_to_global_folder "$@" >/dev/null && pwd ;;
 esac

@@ -34,7 +34,7 @@ export GOPATH="${DEV_HOME}/go"
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 # fasd/z.lua
-export _ZL_CMD=j
+export _ZL_CMD=zlua
 # export _ZL_DATA="${DOTFILES}/modules/.z_lua"
 export _ZL_MATCH_MODE=1
 
