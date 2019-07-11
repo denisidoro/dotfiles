@@ -69,15 +69,14 @@ ssh_args() {
    echo "$id"
 }
 
-names="$(get_names)"
-name="$(echo "$names" | fzf)"
+name="$(get_names | fzf)"
 
 args=()
 for arg in $(ssh_args "$name"); do
   args+=("$arg")
 done
 
-log::note "Performing the following command..."
+log::note "ssh'ing into $name..."
 echo "ssh ${args[@]}"
 
 ssh "${args[@]}"
