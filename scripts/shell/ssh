@@ -7,10 +7,11 @@ source "${DOTFILES}/scripts/core/main.sh"
 #?? 0.1.0
 ##?
 ##? Usage:
-##?    ssh
+##?    ssh [<query>]
 ##?
 ##? Examples:
 ##?    ssh
+##?    ssh galaxy
 
 docs::eval "$@"
 
@@ -34,14 +35,19 @@ eval_str() {
    fi
 }
 
-field() { 
+field() {
    local readonly config="$1"
    local readonly fieldname="$2"
 
    echo "$config" \
-     | jq -r ".${fieldname}" \
-     | eval_str \
-     || echo ""
+      | jq -r ".${fieldname}" \
+      | eval_str \
+      || echo ""
+}
+
+best_match() {
+   fzf --filter="$*" \
+      | head -n1
 }
 
 ssh_args() {
@@ -69,11 +75,15 @@ ssh_args() {
    echo "$id"
 }
 
-name="$(get_names | fzf)"
+if [ -n "$query" ]; then
+   name="$(get_names | best_match "$query")"
+else
+   name="$(get_names | fzf)"
+fi
 
 args=()
 for arg in $(ssh_args "$name"); do
-  args+=("$arg")
+   args+=("$arg")
 done
 
 log::note "ssh'ing into $name..."

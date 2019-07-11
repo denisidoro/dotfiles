@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Sets password authentication for SSH
+#?? 0.1.0
+##?
+##? Usage:
+##?    ssh password enable
+##?    ssh password disable
+
+docs::eval "$@"
+
+FILEPATH="${PREFIX}/etc/ssh/sshd_config"
+
+sed_str() {
+   if $enable; then
+      local readonly bool=true
+   else
+      local readonly bool=false
+   fi
+   echo "s/PasswordAuthentication.*/PasswordAuthentication ${bool}/g"
+}
+
+sed -Ei "$(sed_str)" "$FILEPATH"
