@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -uo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Gets cover for books
+##?
+##? Usage:
+##?    cover [options] <query>
+##?
+##? Options:
+##?    -d --display   Show image instead of printing the URL
+
+docs::eval "$@"
+
+urlencode() {
+    local data
+    if [[ $# != 1 ]]; then
+        echo "Usage: $0 string-to-urlencode"
+        return 1
+    fi
+    data="$(curl -s -o /dev/null -w %{url_effective} --get --data-urlencode "$1" "")"
+    if [[ $? != 3 ]]; then
+        echo "Unexpected error" 1>&2
+        return 2
+    fi
+    echo "${data##/?}"
+    return 0
+}
+
+get_json() {
+  local readonly query="$(urlencode "$1")"
+
+  curl -s \
+    "https://www.googleapis.com/books/v1/volumes?q=$query" \
+    -H 'Accept: application/json, text/javascript, */*; q=0.01' \
+    -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36' \
+    -H 'DNT: 1'
+}
+
+thumbnail() {
+  jq -r '.items | first | .volumeInfo.imageLinks.thumbnail'
+}
+
+big() {
+  sed 's/oom=1/oom=0/g'
+}
+
+url="$(get_json "$query" | thumbnail | big)"
+
+if $display; then
+  wget -qO- "$url" | imgcat
+else
+  echo "$url"
+fi
+
+
