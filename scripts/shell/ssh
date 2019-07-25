@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? ssh into known machines
+#?? 0.1.0
+##?
+##? Usage:
+##?    ssh [<query>]
+##?
+##? Examples:
+##?    ssh
+##?    ssh galaxy
+
+docs::eval "$@"
+
+LIST="${DOTFILES}/local/machines.json"
+
+get_names() {
+   cat "$LIST" \
+      | jq -r '.machines | map(.name) | .[]'
+}
+
+get_config() {
+   local readonly name="$1"
+   cat "$LIST" \
+      | jq -r ".machines | .[] | select(.name==\"${name}\")"
+}
+
+eval_str() {
+   local readonly txt="$(cat)"
+   if [[ $txt != "null" ]]; then
+      eval "echo $txt"
+   fi
+}
+
+field() {
+   local readonly config="$1"
+   local readonly fieldname="$2"
+
+   echo "$config" \
+      | jq -r ".${fieldname}" \
+      | eval_str \
+      || echo ""
+}
+
+best_match() {
+   fzf --filter="$*" \
+      | head -n1
+}
+
+ssh_args() {
+   local readonly name="$1"
+
+   local readonly config="$(get_config "$name")"
+   local readonly hostname="$(field "$config" hostname)"
+   local readonly ip="$(field "$config" ip)"
+   local readonly user="$(field "$config" user)"
+   local readonly uri="$(field "$config" uri)"
+   local readonly key="$(field "$config" key)"
+   local readonly port="$(field "$config" port)"
+
+   if [ -n "$hostname" ]; then
+      local readonly id="$hostname"
+   elif [ -n "$uri" ]; then
+      local readonly id="$uri"
+   else [ -n "$ip" ];
+      local readonly id="$ip"
+   fi
+
+   [ -n "$key" ] && echo -n " -i $key "
+   [ -n "$port" ] && echo -n " -p $port "
+   [ -n "$user" ] && echo -n "${user}@"
+   echo "$id"
+}
+
+if [ -n "$query" ]; then
+   name="$(get_names | best_match "$query")"
+else
+   name="$(get_names | fzf)"
+fi
+
+args=()
+for arg in $(ssh_args "$name"); do
+   args+=("$arg")
+done
+
+log::note "ssh'ing into $name..."
+echo "ssh ${args[@]}"
+
+ssh "${args[@]}"

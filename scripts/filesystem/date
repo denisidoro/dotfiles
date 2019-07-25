@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Changes the file creation time
+#?? 0.1.0
+##?
+##? Usage:
+##?    date add <filepath> <days>
+##?    date add <filepath> <days> <hours> [<minutes>]
+
+docs::eval "$@"
+
+hours=${hours:-0}
+minutes=${minutes:-0}
+
+epoch_to_date() {
+   printf '%(%F %T)T\n' "$1"
+}
+
+get_creation_time() {
+   stat -f '%m' "$1"
+}
+
+get_target_time() {
+   local readonly current_time="$1"
+
+   local readonly minutes_to_add=$(echo "$days * 24 * 60 + $hours * 60 + $minutes" | bc)
+   local readonly seconds_to_add=$(($minutes_to_add * 60))
+
+   echo $(($current_time + $seconds_to_add))
+}
+
+current_time=$(get_creation_time "$filepath")
+target_time=$(get_target_time "$current_time")
+filename="$(basename "$filepath")"
+
+green="$(log::color green)"
+yellow="$(log::color yellow)"
+reset="$(log::color reset)"
+
+echo -e "$green[${filename}]$reset from $yellow$(epoch_to_date $current_time)$reset to $yellow$(epoch_to_date $target_time)$reset?"

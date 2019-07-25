@@ -11,7 +11,7 @@ export EDITOR='nvim'
 export BROWSER='google-chrome'
 
 # default pager
-export PAGER='less -R'
+export PAGER='less'
 
 # locale
 export LANG=en_US.UTF-8
@@ -33,16 +33,21 @@ export GOPATH="${DEV_HOME}/go"
 # package management
 export HOMEBREW_NO_AUTO_UPDATE=1
 
+# fasd/z.lua/jump
+export _ZL_CMD=zlua
+# export _ZL_DATA="${DOTFILES}/modules/.z_lua"
+export _ZL_MATCH_MODE=1
+
 # fzf
 export FZF_DEFAULT_OPTS='--height 70% --reverse --border --inline-info --cycle'
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-# hightlighting
+# shell prompt hightlighting
 # ZSH_HIGHLIGHT_STYLES[path]='bold'
 # ZSH_HIGHLIGHT_STYLES[reserved-word]=none
 
-# autosuggestions
+# shell prompt autosuggestions
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 
 # security

@@ -15,11 +15,14 @@ git::url() {
    local readonly repo="$2"
    local readonly host="${DOT_GIT_HOST:-github.com}"
 
-   if platform::command_exists ssh; then
-      echo "git@${host}:${user}/${repo}.git"
-   else
-      echo "https://${host}/${user}/${repo}"
-   fi
+   # TODO: handle case where there is ssh but it isn't set
+   echo "https://${host}/${user}/${repo}"
+
+   # if platform::command_exists ssh; then
+   #   echo "git@${host}:${user}/${repo}.git"
+   # else
+   #   echo "https://${host}/${user}/${repo}"
+   # fi
 }
 
 recipe::shallow_git_clone() {

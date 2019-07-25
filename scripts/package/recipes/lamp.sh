@@ -44,8 +44,9 @@ recipe::httpd2() {
    log::warning "Setting up mariadb..."
    sudo mysql_secure_installation
    ls /var/www/html
-   log::warning "Starting manual edits..."
-   sudo vim /etc/httpd/conf/httpd.conf
+   log::warning "Allowing overrides..."
+   sudo sed -i 's/AllowOverride None/AllowOverride All/g' /etc/httpd/conf/httpd.conf
+   sudo sed -i 's/AllowOverride none/AllowOverride All/g' /etc/httpd/conf/httpd.conf
    log::warning "Restarting LAMP..."
    sudo systemctl restart httpd
    sudo systemctl restart php-fpm
