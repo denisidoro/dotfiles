@@ -24,7 +24,7 @@ dot pkg add unzip
 
 sendy_zip_url="https://sendy.co/download/?license=${SENDY_KEY}"
 
-_prompt "Downloading sendy.zip"
+log::warning "Downloading sendy.zip"
 cd $HOME
 curl -o sendy.zip -O -J -L "$sendy_zip_url"
 unzip sendy.zip -d /var/www/html
@@ -33,7 +33,7 @@ rm -rf /var/www/html/sendy
 ls /var/www/html/
 chmod -R 777 /var/www/html/uploads
 log::warning "Setting db..."
-dot lamp mysql db create sendy
+dot lamp mysql create sendy
 vim /var/www/html/includes/config.php
 cp "${DOTFILES}/scripts/package/resources/sendy/htaccess" "/var/www/html/.htaccess"
 log::warning "Setting cron..."
