@@ -12,7 +12,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?   mysql [options] create <database>
 ##?
 ##? Options:
-##?   -u --user       User [default: root]
+##?   -u --user <user>       User [default: root]
 ##?
 ##? Examples:
 ##?   mysql export mydb backup.sql
