@@ -29,10 +29,11 @@ mv /var/www/html/sendy/* /var/www/html/
 rm -rf /var/www/html/sendy
 ls /var/www/html/
 chmod -R 777 /var/www/html/uploads
+log::warning "Setting db..."
+dot lamp mysql db create sendy
 vim /var/www/html/includes/config.php
 cp "${DOTFILES}/scripts/package/resources/sendy/htaccess" "/var/www/html/.htaccess"
 log::warning "Setting cron..."
 (crontab -l 2>/dev/null; echo "*/1 * * * * php /var/www/html/autoresponders.php > /dev/null 2>&1") | crontab -
 (crontab -l 2>/dev/null; echo "*/5 * * * * php /var/www/html/scheduled.php > /dev/null 2>&1") | crontab -
 (crontab -l 2>/dev/null; echo "*/1 * * * * php /var/www/html/import-csv.php > /dev/null 2>&1") | crontab -
-
