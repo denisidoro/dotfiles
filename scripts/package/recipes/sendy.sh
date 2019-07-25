@@ -20,7 +20,7 @@ fi
 
 log::warning "Setting up sendy..."
 
-dot pkg add unzip
+dot pkg add unzip curl
 
 sendy_zip_url="https://sendy.co/download/?license=${SENDY_KEY}"
 
