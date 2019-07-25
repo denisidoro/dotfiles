@@ -70,6 +70,7 @@ if [[ -n "$deps_without_recipe" ]]; then
    # args build: sudo or not
    case $package_manager in
       brew) ;;
+      pkg) ;;
       *) args+=("sudo") ;;
    esac
 

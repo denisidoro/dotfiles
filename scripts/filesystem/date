@@ -9,6 +9,10 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    date add <filepath> <days>
 ##?    date add <filepath> <days> <hours> [<minutes>]
+##?
+##? Examples:
+##?    date add photo.jpg 365 20 10
+##?    ls | xargs -I% date add % 365
 
 docs::eval "$@"
 
@@ -17,6 +21,38 @@ minutes=${minutes:-0}
 
 epoch_to_date() {
    printf '%(%F %T)T\n' "$1"
+}
+
+only_digits() {
+   sed 's/[^0-9]*//g'
+}
+
+epoch_to_touchdate() {
+   local readonly epoch=$1
+   local readonly date=$(epoch_to_date $epoch)
+   printf "${date::-2}" | only_digits
+   printf '.'
+   echo "${date: -2}"
+}
+
+epoch_to_filedate() {
+   local readonly epoch=$1
+   local readonly date=$(epoch_to_date $epoch)
+   printf "${date::-8}" 
+   printf '_'
+   echo "${date: -8}"
+}
+
+get_new_filepath() {
+   local readonly filepath="$1"
+   local readonly target_time=$2
+
+   local readonly extension="${filepath##*.}"
+   
+   printf "$(cd "$(dirname "$filepath")" && pwd)/"
+   printf "$(epoch_to_filedate $target_time).${extension}" | sed 's/[^0-9_]*//g'
+   printf '.'
+   echo "$extension"
 }
 
 get_creation_time() {
@@ -32,12 +68,29 @@ get_target_time() {
    echo $(($current_time + $seconds_to_add))
 }
 
+prompt_text() {
+   local readonly filepath="$1"
+
+   local readonly filename="$(basename "$filepath")"
+
+   local readonly green="$(log::color green)"
+   local readonly yellow="$(log::color yellow)"
+   local readonly reset="$(log::color reset)"
+
+   echo "$green[${filename}]$reset from $yellow$(epoch_to_date $current_time)$reset to $yellow$(epoch_to_date $target_time)$reset?"
+}
+
+should_rename() {
+   [[ $1 == 20* ]]
+}
+
 current_time=$(get_creation_time "$filepath")
 target_time=$(get_target_time "$current_time")
-filename="$(basename "$filepath")"
+touchdate="$(epoch_to_touchdate $target_time)"
 
-green="$(log::color green)"
-yellow="$(log::color yellow)"
-reset="$(log::color reset)"
-
-echo -e "$green[${filename}]$reset from $yellow$(epoch_to_date $current_time)$reset to $yellow$(epoch_to_date $target_time)$reset?"
+if feedback::confirmation "$(prompt_text "$filepath")"; then
+   touch -a -m -t $touchdate "$filepath"
+   if should_rename "$filepath"; then
+      mv "$filepath" "$(get_new_filepath "$filepath" "$target_time")"
+   fi
+fi
