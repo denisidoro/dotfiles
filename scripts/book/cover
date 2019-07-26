@@ -16,29 +16,29 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 get_json() {
-  local readonly query="$(str::urlencode "$1")"
+   local readonly query="$(str::urlencode "$1")"
 
-  curl -s \
-    "https://www.googleapis.com/books/v1/volumes?q=$query" \
-    -H 'Accept: application/json, text/javascript, */*; q=0.01' \
-    -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36' \
-    -H 'DNT: 1'
+   curl -s \
+      "https://www.googleapis.com/books/v1/volumes?q=$query" \
+      -H 'Accept: application/json, text/javascript, */*; q=0.01' \
+      -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36' \
+      -H 'DNT: 1'
 }
 
 thumbnail() {
-  jq -r '.items | first | .volumeInfo.imageLinks.thumbnail'
+   jq -r '.items | first | .volumeInfo.imageLinks.thumbnail'
 }
 
 big() {
-  sed "s/oom=1/oom=${zoom}/g"
+   sed "s/oom=1/oom=${zoom}/g"
 }
 
 url="$(get_json "$query" | thumbnail | big)"
 
 if $display; then
-  wget -qO- "$url" | imgcat
+   wget -qO- "$url" | imgcat
 else
-  echo "$url"
+   echo "$url"
 fi
 
 

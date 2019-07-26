@@ -38,7 +38,7 @@ epoch_to_touchdate() {
 epoch_to_filedate() {
    local readonly epoch=$1
    local readonly date=$(epoch_to_date $epoch)
-   printf "${date::-8}" 
+   printf "${date::-8}"
    printf '_'
    echo "${date: -8}"
 }
@@ -48,7 +48,7 @@ get_new_filepath() {
    local readonly target_time=$2
 
    local readonly extension="${filepath##*.}"
-   
+
    printf "$(cd "$(dirname "$filepath")" && pwd)/"
    printf "$(epoch_to_filedate $target_time).${extension}" | sed 's/[^0-9_]*//g'
    printf '.'
