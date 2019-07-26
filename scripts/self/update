@@ -36,7 +36,10 @@ fi
 setup_sudo_fallback
 # dot pkg update 2> /dev/null || true
 fix_locales
-setup_termux
+
+if platform::is_android; then
+   dot pkg add termux-essentials
+fi
 
 if $has_python; then
    update_submodules 2> /dev/null || true

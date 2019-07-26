@@ -10,27 +10,13 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    cover [options] <query>
 ##?
 ##? Options:
-##?    -d --display   Show image instead of printing the URL
+##?    -d --display       Show image instead of printing the URL
+##?    -z --zoom <zoom>   Zoom level [default: 0]
 
 docs::eval "$@"
 
-urlencode() {
-    local data
-    if [[ $# != 1 ]]; then
-        echo "Usage: $0 string-to-urlencode"
-        return 1
-    fi
-    data="$(curl -s -o /dev/null -w %{url_effective} --get --data-urlencode "$1" "")"
-    if [[ $? != 3 ]]; then
-        echo "Unexpected error" 1>&2
-        return 2
-    fi
-    echo "${data##/?}"
-    return 0
-}
-
 get_json() {
-  local readonly query="$(urlencode "$1")"
+  local readonly query="$(str::urlencode "$1")"
 
   curl -s \
     "https://www.googleapis.com/books/v1/volumes?q=$query" \
@@ -44,7 +30,7 @@ thumbnail() {
 }
 
 big() {
-  sed 's/oom=1/oom=0/g'
+  sed "s/oom=1/oom=${zoom}/g"
 }
 
 url="$(get_json "$query" | thumbnail | big)"

@@ -30,8 +30,8 @@ log::warning "Downloading zip file..."
 cd $HOME
 curl -o yourls.zip -O -J -L "$zip_url"
 unzip yourls.zip -d /var/www/html
-# mv /var/www/html/yourls/* /var/www/html/
-# rm -rf /var/www/html/yourls
+mv "/var/www/html/YOURLS-${VERSION}/*" /var/www/html/
+rm -rf /var/www/html/yourls
 cd /var/www/html/
 ls
 cp user/config-sample.php user/config.php
