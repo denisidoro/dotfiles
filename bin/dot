@@ -118,6 +118,7 @@ _alias() {
       sh) echo shell;;
       fs) echo filesystem;;
       not) echo notification;;
+      google) echo search;;
       *) echo "$arg";;
    esac
 }

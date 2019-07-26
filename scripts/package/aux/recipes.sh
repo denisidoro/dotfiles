@@ -85,4 +85,9 @@ recipe::clone_as_submodule() {
    local readonly module_path="${MODULES_FOLDER}/${module}"
    git::url $user $repo
    git clone "$(git::url $user $repo)" --depth 1 "$module_path"
+
+   cd "$module_path"
+   git submodule init &2> /dev/null \
+     && git submodule update &2> /dev/null \
+     || true
 }

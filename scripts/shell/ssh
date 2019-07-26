@@ -17,9 +17,17 @@ docs::eval "$@"
 
 LIST="${DOTFILES}/local/machines.json"
 
-get_names() {
+color="$(log::color green)"
+
+get_descriptions() {
    cat "$LIST" \
-      | jq -r '.machines | map(.name) | .[]'
+      | jq -r '.machines | map(.name + ", " + .dns) | .[]' \
+      | column -t -s ','
+}
+
+get_name() {
+   sed -E 's/(.*)\s\s*.*/\1/' \
+      | xargs
 }
 
 get_config() {
@@ -76,9 +84,9 @@ ssh_args() {
 }
 
 if [ -n "$query" ]; then
-   name="$(get_names | best_match "$query")"
+   name="$(get_descriptions | best_match "$query" | get_name)"
 else
-   name="$(get_names | fzf)"
+   name="$(get_descriptions | fzf | get_name)"
 fi
 
 args=()

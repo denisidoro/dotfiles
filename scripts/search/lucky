@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Opens a webpage directly via DuckDuckGo's "feeling lucky"
+#?? 0.1.0
+##?
+##? Usage:
+##?    lucky <query>
+
+docs::eval "$@"
+
+url="https://duckduckgo.com/?q=%21+$(str::urlencode "$query")&ia=web"
+
+dot sh open --browser "$url"

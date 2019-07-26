@@ -23,13 +23,10 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docs::eval "$@"
 
-PUSHBULLET_HOME="${PUSHBULLET_HOME:-${DOTFILES}/modules/pushbullet}"
-PUSHBULLET_BIN="${PUSHBULLET_HOME}/pushbullet"
+PUSHBULLET_HOME="${PUSHBULLET_HOME:-${DOTFILES}/modules/pushbullet-bash}"
 
 # clone repository if needed
-if ! fs::is_file "$PUSHBULLET_BIN"; then
-   dot pkg pushbullet-bash
-fi
+dot pkg add pushbullet-bash &> /dev/null
 
 # adapt input
 if $note || $link; then
@@ -39,4 +36,5 @@ else
 fi
 
 # call cli
-bash "$PUSHBULLET_BIN" "${args[@]:-}"
+cd "$PUSHBULLET_HOME"
+bash ./pushbullet "${args[@]:-}" 2> /dev/null
