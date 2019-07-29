@@ -10,8 +10,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    push list
 ##?    push <device> note <title> [<message>]
 ##?    push <device> link <url>
-##?    push <device> link <title> <url>
-##?    push <device> link <title> <message> <url>
+##?    push <device> link <title> [<message>] <url>
 ##?    push -- <args>...
 ##?
 ##? Examples:
@@ -25,16 +24,25 @@ docs::eval "$@"
 
 PUSHBULLET_HOME="${PUSHBULLET_HOME:-${DOTFILES}/modules/pushbullet-bash}"
 
+best_match() {
+  "$0" list \
+    | fzf --filter="$*" \
+    | head -n1
+}
+
 # clone repository if needed
 dot pkg add pushbullet-bash &> /dev/null
 
 # adapt input
 if $note || $link; then
-   args=("push" "${@:-}")
+   device="$(best_match "$1")"
+   shift
+   args=("push" "$device" "${@:-}")
 else
    args="${@:-}"
 fi
 
 # call cli
 cd "$PUSHBULLET_HOME"
-bash ./pushbullet "${args[@]:-}" 2> /dev/null
+
+bash ./pushbullet "${args[@]:-}"
