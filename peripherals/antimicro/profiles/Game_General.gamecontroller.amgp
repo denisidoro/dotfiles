@@ -20,40 +20,44 @@
                 <setselect>2</setselect>
                 <setselectcondition>while-held</setselectcondition>
             </button>
+            <button index="7">
+                <setselect>2</setselect>
+                <setselectcondition>while-held</setselectcondition>
+            </button>
         </set>
         <set index="2">
             <name>Transitory</name>
             <stick index="1">
-                <stickbutton index="1">
-                    <slots>
-                        <slot>
-                            <code>0x1000072</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                    </slots>
-                </stickbutton>
                 <stickbutton index="5">
                     <slots>
                         <slot>
                             <code>0x1000070</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </stickbutton>
+                <stickbutton index="1">
+                    <slots>
+                        <slot>
+                            <code>0x1000072</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
                 </stickbutton>
             </stick>
             <stick index="2">
-                <stickbutton index="1">
-                    <slots>
-                        <slot>
-                            <code>0x1000072</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                    </slots>
-                </stickbutton>
                 <stickbutton index="5">
                     <slots>
                         <slot>
                             <code>0x1000070</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </stickbutton>
+                <stickbutton index="1">
+                    <slots>
+                        <slot>
+                            <code>0x1000072</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
@@ -65,26 +69,13 @@
             <trigger index="2">
                 <throttle>positivehalf</throttle>
             </trigger>
-            <button index="5">
-                <slots>
-                    <slot>
-                        <path>D:/Portable/Kodi/KodiPortable.exe</path>
-                        <mode>execute</mode>
-                    </slot>
-                </slots>
-            </button>
             <button index="6">
                 <setselect>1</setselect>
                 <setselectcondition>while-held</setselectcondition>
             </button>
             <button index="7">
-                <slots>
-                    <slot>
-                        <path>D:/Steam/Steam.exe</path>
-                        <arguments>-bigpicture</arguments>
-                        <mode>execute</mode>
-                    </slot>
-                </slots>
+                <setselect>1</setselect>
+                <setselectcondition>while-held</setselectcondition>
             </button>
             <button index="8">
                 <setselect>3</setselect>
@@ -111,10 +102,10 @@
                         </slot>
                     </slots>
                 </stickbutton>
-                <stickbutton index="1">
+                <stickbutton index="5">
                     <slots>
                         <slot>
-                            <code>0x1000013</code>
+                            <code>0x1000015</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
@@ -127,10 +118,10 @@
                         </slot>
                     </slots>
                 </stickbutton>
-                <stickbutton index="5">
+                <stickbutton index="1">
                     <slots>
                         <slot>
-                            <code>0x1000015</code>
+                            <code>0x1000013</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
@@ -138,9 +129,6 @@
             </stick>
             <stick index="2">
                 <diagonalRange>65</diagonalRange>
-                <stickbutton index="8">
-                    <mouseacceleration>easing-quadratic</mouseacceleration>
-                </stickbutton>
                 <stickbutton index="3">
                     <mouseacceleration>easing-quadratic</mouseacceleration>
                     <extraacceleration>true</extraacceleration>
@@ -152,29 +140,6 @@
                     </slots>
                 </stickbutton>
                 <stickbutton index="2">
-                    <mouseacceleration>easing-quadratic</mouseacceleration>
-                </stickbutton>
-                <stickbutton index="1">
-                    <mouseacceleration>easing-quadratic</mouseacceleration>
-                    <extraacceleration>true</extraacceleration>
-                    <slots>
-                        <slot>
-                            <code>1</code>
-                            <mode>mousemovement</mode>
-                        </slot>
-                    </slots>
-                </stickbutton>
-                <stickbutton index="7">
-                    <mouseacceleration>easing-quadratic</mouseacceleration>
-                    <extraacceleration>true</extraacceleration>
-                    <slots>
-                        <slot>
-                            <code>3</code>
-                            <mode>mousemovement</mode>
-                        </slot>
-                    </slots>
-                </stickbutton>
-                <stickbutton index="6">
                     <mouseacceleration>easing-quadratic</mouseacceleration>
                 </stickbutton>
                 <stickbutton index="5">
@@ -190,20 +155,46 @@
                 <stickbutton index="4">
                     <mouseacceleration>easing-quadratic</mouseacceleration>
                 </stickbutton>
-            </stick>
-            <dpad index="1">
-                <dpadbutton index="1">
+                <stickbutton index="7">
+                    <mouseacceleration>easing-quadratic</mouseacceleration>
+                    <extraacceleration>true</extraacceleration>
                     <slots>
                         <slot>
-                            <code>0x1000072</code>
-                            <mode>keyboard</mode>
+                            <code>3</code>
+                            <mode>mousemovement</mode>
                         </slot>
                     </slots>
-                </dpadbutton>
+                </stickbutton>
+                <stickbutton index="6">
+                    <mouseacceleration>easing-quadratic</mouseacceleration>
+                </stickbutton>
+                <stickbutton index="8">
+                    <mouseacceleration>easing-quadratic</mouseacceleration>
+                </stickbutton>
+                <stickbutton index="1">
+                    <mouseacceleration>easing-quadratic</mouseacceleration>
+                    <extraacceleration>true</extraacceleration>
+                    <slots>
+                        <slot>
+                            <code>1</code>
+                            <mode>mousemovement</mode>
+                        </slot>
+                    </slots>
+                </stickbutton>
+            </stick>
+            <dpad index="1">
                 <dpadbutton index="4">
                     <slots>
                         <slot>
                             <code>0x1000070</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </dpadbutton>
+                <dpadbutton index="1">
+                    <slots>
+                        <slot>
+                            <code>0x1000072</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
@@ -275,7 +266,7 @@
                 <setselect>1</setselect>
                 <setselectcondition>one-way</setselectcondition>
             </button>
-            <button index="7">
+            <button index="9">
                 <setselect>5</setselect>
                 <setselectcondition>one-way</setselectcondition>
             </button>
@@ -320,10 +311,10 @@
                         </slot>
                     </slots>
                 </stickbutton>
-                <stickbutton index="1">
+                <stickbutton index="5">
                     <slots>
                         <slot>
-                            <code>0x1000013</code>
+                            <code>0x1000015</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
@@ -336,10 +327,10 @@
                         </slot>
                     </slots>
                 </stickbutton>
-                <stickbutton index="5">
+                <stickbutton index="1">
                     <slots>
                         <slot>
-                            <code>0x1000015</code>
+                            <code>0x1000013</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
@@ -347,9 +338,6 @@
             </stick>
             <stick index="2">
                 <diagonalRange>65</diagonalRange>
-                <stickbutton index="8">
-                    <mouseacceleration>easing-quadratic</mouseacceleration>
-                </stickbutton>
                 <stickbutton index="3">
                     <mouseacceleration>easing-quadratic</mouseacceleration>
                     <extraacceleration>true</extraacceleration>
@@ -361,29 +349,6 @@
                     </slots>
                 </stickbutton>
                 <stickbutton index="2">
-                    <mouseacceleration>easing-quadratic</mouseacceleration>
-                </stickbutton>
-                <stickbutton index="1">
-                    <mouseacceleration>easing-quadratic</mouseacceleration>
-                    <extraacceleration>true</extraacceleration>
-                    <slots>
-                        <slot>
-                            <code>1</code>
-                            <mode>mousemovement</mode>
-                        </slot>
-                    </slots>
-                </stickbutton>
-                <stickbutton index="7">
-                    <mouseacceleration>easing-quadratic</mouseacceleration>
-                    <extraacceleration>true</extraacceleration>
-                    <slots>
-                        <slot>
-                            <code>3</code>
-                            <mode>mousemovement</mode>
-                        </slot>
-                    </slots>
-                </stickbutton>
-                <stickbutton index="6">
                     <mouseacceleration>easing-quadratic</mouseacceleration>
                 </stickbutton>
                 <stickbutton index="5">
@@ -399,20 +364,34 @@
                 <stickbutton index="4">
                     <mouseacceleration>easing-quadratic</mouseacceleration>
                 </stickbutton>
-            </stick>
-            <dpad index="1">
-                <dpadbutton index="8">
+                <stickbutton index="7">
+                    <mouseacceleration>easing-quadratic</mouseacceleration>
+                    <extraacceleration>true</extraacceleration>
                     <slots>
                         <slot>
-                            <code>0x1000023</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                        <slot>
-                            <code>0x1000012</code>
-                            <mode>keyboard</mode>
+                            <code>3</code>
+                            <mode>mousemovement</mode>
                         </slot>
                     </slots>
-                </dpadbutton>
+                </stickbutton>
+                <stickbutton index="6">
+                    <mouseacceleration>easing-quadratic</mouseacceleration>
+                </stickbutton>
+                <stickbutton index="8">
+                    <mouseacceleration>easing-quadratic</mouseacceleration>
+                </stickbutton>
+                <stickbutton index="1">
+                    <mouseacceleration>easing-quadratic</mouseacceleration>
+                    <extraacceleration>true</extraacceleration>
+                    <slots>
+                        <slot>
+                            <code>1</code>
+                            <mode>mousemovement</mode>
+                        </slot>
+                    </slots>
+                </stickbutton>
+            </stick>
+            <dpad index="1">
                 <dpadbutton index="2">
                     <slots>
                         <slot>
@@ -425,18 +404,6 @@
                         </slot>
                     </slots>
                 </dpadbutton>
-                <dpadbutton index="1">
-                    <slots>
-                        <slot>
-                            <code>0x1000021</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                        <slot>
-                            <code>0x54</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                    </slots>
-                </dpadbutton>
                 <dpadbutton index="4">
                     <slots>
                         <slot>
@@ -445,6 +412,30 @@
                         </slot>
                         <slot>
                             <code>0x57</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </dpadbutton>
+                <dpadbutton index="8">
+                    <slots>
+                        <slot>
+                            <code>0x1000023</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                        <slot>
+                            <code>0x1000012</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </dpadbutton>
+                <dpadbutton index="1">
+                    <slots>
+                        <slot>
+                            <code>0x1000021</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                        <slot>
+                            <code>0x54</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
@@ -572,10 +563,10 @@
                         </slot>
                     </slots>
                 </stickbutton>
-                <stickbutton index="1">
+                <stickbutton index="5">
                     <slots>
                         <slot>
-                            <code>0x1000013</code>
+                            <code>0x1000015</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
@@ -588,28 +579,16 @@
                         </slot>
                     </slots>
                 </stickbutton>
-                <stickbutton index="5">
+                <stickbutton index="1">
                     <slots>
                         <slot>
-                            <code>0x1000015</code>
+                            <code>0x1000013</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
                 </stickbutton>
             </stick>
             <dpad index="1">
-                <dpadbutton index="8">
-                    <slots>
-                        <slot>
-                            <code>0x1000022</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                        <slot>
-                            <code>0x1000012</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                    </slots>
-                </dpadbutton>
                 <dpadbutton index="2">
                     <slots>
                         <slot>
@@ -622,18 +601,6 @@
                         </slot>
                     </slots>
                 </dpadbutton>
-                <dpadbutton index="1">
-                    <slots>
-                        <slot>
-                            <code>0x1000022</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                        <slot>
-                            <code>0x1000013</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                    </slots>
-                </dpadbutton>
                 <dpadbutton index="4">
                     <slots>
                         <slot>
@@ -642,6 +609,30 @@
                         </slot>
                         <slot>
                             <code>0x1000015</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </dpadbutton>
+                <dpadbutton index="8">
+                    <slots>
+                        <slot>
+                            <code>0x1000022</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                        <slot>
+                            <code>0x1000012</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </dpadbutton>
+                <dpadbutton index="1">
+                    <slots>
+                        <slot>
+                            <code>0x1000022</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                        <slot>
+                            <code>0x1000013</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
