@@ -8,14 +8,16 @@ source "${DOTFILES}/scripts/core/main.sh"
 #?? 0.1.0
 ##?
 ##? Usage:
-##?    encrypt <content> [--algorithm <algo>]
+##?    encrypt [options]
 ##?
 ##? Options:
-##?    -a --algorithm <algo>   Encryption algorithm [default: 0]
+##?    -a --algorithm <algo>   Encryption algorithm [default: 256]
+##?    -p --pass <pass>        Password
 ##?
 ##? Examples:
-##?    encrypt "foo bar"
-##?    encrypt "foo bar" -a 0
+##?    echo 123 | encrypt "foo bar"
+##?    echo 123 | encrypt "foo bar" -a 0
+##?    echo 123 | encrypt "foo bar" -a 256 -p swordfish
 
 docs::eval "$@"
 
@@ -38,13 +40,27 @@ algo_1() {
    md5_fn "$1"
 }
 
+algo_256() {
+   local readonly content="$1"
+   local readonly pass="$2"
+
+   echo "$content" | openssl enc -aes-256-cbc -a -k "$pass"
+}
+
+content="$(cat)"
+
 case "$algorithm" in
-   "0") algo_fn="algo_0" ;;
-   "1") algo_fn="algo_1" ;;
+   0) 
+      algo_0 "$content"
+      ;;
+   1) 
+      algo_1 "$content"
+      ;;
+   256) 
+      algo_256 "$content" "${pass:-}"
+      ;;
    *)
       echo "Invalid algorithm"
       exit 1
       ;;
 esac
-
-$algo_fn "$content"
