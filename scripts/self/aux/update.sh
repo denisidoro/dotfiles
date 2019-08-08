@@ -51,7 +51,7 @@ setup_folders_and_files() {
 # ==============================
 
 fix_locales() {
-   if platform::command_exists locale-gen && locale > /dev/null | grep -q annot; then
+   if platform::command_exists locale-gen; then
       echo
       log::note "Fixing locales..."
       locale-gen en_US en_US.UTF-8
@@ -141,6 +141,7 @@ setup_docopts() {
             mkdir -p "$TMP_DIR" || true
             cp "${MAIN_BIN_DIR}/\$" "${LOCAL_BIN}/sudo"
             chmod +x "${LOCAL_BIN}/sudo" || true
+            export PATH="${LOCAL_BIN}:${PATH}"
          fi
       fi
 
