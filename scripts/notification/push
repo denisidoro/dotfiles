@@ -8,35 +8,79 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?
 ##? Usage:
 ##?    push list
-##?    push <device> note <title> [<message>]
-##?    push <device> link <url>
-##?    push <device> link <title> <url>
-##?    push <device> link <title> <message> <url>
-##?    push -- <args>...
+##?    push note <device> <title> [<message>]
+##?    push url <device> <uri>
+##?    push url <device> <title> [<message>] <uri>
+##?    push app <device> <name>
+##?    push shot <device>
+##?    push write <device> <text>
+##?    push raw <args>...
 ##?
 ##? Examples:
 ##?    push list
-##?    push -- list
-##?    push moto note title message
-##?    push moto link http://google.com
-##?    push moto link title message http://google.com
+##?    push note
+##?    push url moto http://google.com
+##?    push app Gmail
 
 docs::eval "$@"
 
-PUSHBULLET_HOME="${PUSHBULLET_HOME:-${DOTFILES}/modules/pushbullet}"
-PUSHBULLET_BIN="${PUSHBULLET_HOME}/pushbullet"
+PUSHBULLET_HOME="${PUSHBULLET_HOME:-${DOTFILES}/modules/pushbullet-bash}"
 
-# clone repository if needed
-if ! fs::is_file "$PUSHBULLET_BIN"; then
-   dot pkg pushbullet-bash
-fi
+best_match() {
+   "$0" list \
+      | fzf --filter="$*" \
+      | head -n1
+}
 
-# adapt input
-if $note || $link; then
-   args=("push" "${@:-}")
-else
-   args="${@:-}"
-fi
+build_msg() {
+   local readonly type="$1"
+   local readonly txt="${2:-null}"
+   echo "${type};${txt}"
+}
+
+call_api() {
+   cd "$PUSHBULLET_HOME"
+   bash ./pushbullet "${@:-}"
+}
 
 # call cli
-bash "$PUSHBULLET_BIN" "${args[@]:-}"
+if [[ ${#args[@]} > 0 ]]; then
+   call_api "${args[@]:-}"
+   exit 0
+fi
+
+if [ -n "${device:-}" ]; then
+   device="$(best_match "$device")"
+fi
+
+if $list; then
+   args=("list")
+elif $url; then
+   args=("push" "$device" "link")
+   [ -n "${title:-}" ] && args+=("$title")
+   [ -n "${message:-}" ] && args+=("$message")
+   [ -n "${uri:-}" ] && args+=("$uri")
+else
+   args=("push" "$device" "note")
+   if $note; then
+      [ -n "${title:-}" ] && args+=("$title")
+      [ -n "${message:-}" ] && args+=("$message")
+   elif $app; then
+      args+=("$(build_msg app "$name")")
+   elif $shot; then
+      args+=("$(build_msg shot)")
+   elif $write; then
+      args+=("$(build_msg write "$text")")
+   elif $say; then
+      args+=("$(build_msg say "$text")")
+   fi
+fi
+
+# clone repository if needed
+dot pkg add pushbullet-bash &> /dev/null
+
+# call cli
+if ! $list; then
+   log::warning "${args[@]:-}"
+fi
+call_api "${args[@]:-}"

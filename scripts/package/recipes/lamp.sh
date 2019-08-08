@@ -41,6 +41,8 @@ recipe::httpd2() {
    rm /var/www/html/phpinfo.php
    log::warning "Starting mariadb..."
    sudo systemctl start mariadb
+   sudo systemctl enable mariadb
+   sudo systemctl is-enabled mariadb
    log::warning "Setting up mariadb..."
    sudo mysql_secure_installation
    ls /var/www/html

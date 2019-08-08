@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Decrypts content
+#?? 0.1.0
+##?
+##? Usage:
+##?    decrypt [options]
+##?
+##? Options:
+##?    -a --algorithm <algo>   decryption algorithm [default: 256]
+##?    -p --pass <pass>        Password
+##?
+##? Examples:
+##?    echo U2FsdG= | decrypt "foo bar"
+##?    echo U2FsdG= | decrypt "foo bar" -a 0
+##?    echo U2FsdG= | decrypt "foo bar" -a 256 -p swordfish
+
+docs::eval "$@"
+
+algo_0() {
+   log::error "Impossible to decrypt"
+   exit 1
+}
+
+algo_1() {
+   log::error "Impossible to decrypt"
+   exit 1
+}
+
+algo_256() {
+   local readonly content="$1"
+   local readonly pass="$2"
+
+   echo "$content" | openssl enc -aes-256-cbc -a -d -k "$pass"
+}
+
+content="$(cat)"
+
+case "$algorithm" in
+   0)
+      algo_0 "$content"
+      ;;
+   1)
+      algo_1 "$content"
+      ;;
+   256)
+      algo_256 "$content" "$pass"
+      ;;
+   *)
+      echo "Invalid algorithm"
+      exit 1
+      ;;
+esac

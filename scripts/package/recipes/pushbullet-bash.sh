@@ -4,5 +4,11 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
-PUSHBULLET_HOME="${PUSHBULLET_HOME:-${DOTFILES}/modules/pushbullet}"
-git clone https://github.com/Red5d/pushbullet-bash.git "$PUSHBULLET_HOME" --depth 1 || true
+user="Red5d"
+repo="pushbullet-bash"
+
+if recipe::has_submodule $repo "pushbullet"; then
+   recipe::abort_installed $repo
+fi
+
+recipe::clone_as_submodule $user $repo

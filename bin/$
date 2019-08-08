@@ -19,9 +19,4 @@ _get_root_folder() {
 this_folder="$(dirname "${BASH_SOURCE[0]}")"
 root_folder="$(_get_root_folder "$this_folder")"
 
-# hack to avoid the sudo alias
-case ${1:-} in
-   DOTFILES=*) shift ;;
-esac
-
 "${root_folder}/bin/dot" shell identity "$@"

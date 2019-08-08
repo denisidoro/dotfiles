@@ -12,7 +12,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?   mysql [options] create <database>
 ##?
 ##? Options:
-##?   -u --user       User [default: root]
+##?   -u --user <user>       User [default: root]
 ##?
 ##? Examples:
 ##?   mysql export mydb backup.sql
@@ -21,8 +21,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docs::eval "$@"
 
-if $db; then
-   mysql -u "$user" -e "create database $database character set UTF8mb4 collate utf8mb4_bin"
+if $create; then
+   mysql -u "$user" -p -e "create database $database character set UTF8mb4 collate utf8mb4_bin"
 elif $export; then
    mysqldump -u "$user" -p "$database" > "$path"
 elif $import; then

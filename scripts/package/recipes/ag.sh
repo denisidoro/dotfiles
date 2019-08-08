@@ -13,5 +13,4 @@ if [[ "$(recipe::main_package_manager)" = "brew" ]]; then
 fi
 
 dot pkg add silversearcher-ag \
-   || dot pkg add the_silver_searcher \
    || dot pkg add the_silver_searcher

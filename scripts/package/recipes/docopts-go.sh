@@ -31,6 +31,7 @@ dot pkg add wget
 
 folder="$(recipe::folder docopts-go)"
 mkdir -p "$folder" || true
+sudo chmod 777 "$folder" || true
 cd "$folder"
 
 url="$(url::get)"

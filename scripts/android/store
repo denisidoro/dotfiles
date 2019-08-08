@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Open Play Store profile pages
+#?? 0.1.0
+##?
+##? Usage:
+##?    store <queries>...
+
+docs::eval "$@"
+
+for query in "${queries[@]}"; do
+   dot search lucky "$query site:play.google.com"
+done

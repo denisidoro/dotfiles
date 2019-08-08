@@ -17,8 +17,8 @@ prompt=false
 latest=false
 
 case "${1:-}" in
-   prompt) prompt=true;;
-   latest) latest=true;;
+   prompt) prompt=true ;;
+   latest) latest=true ;;
 esac
 
 _tags() {

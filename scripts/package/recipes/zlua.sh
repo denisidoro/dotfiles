@@ -6,7 +6,7 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 dot pkg add lua
 
-user="kywind3000"
+user="skywind3000"
 repo="z.lua"
 
 if recipe::has_submodule $repo "z.lua"; then
