@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+cmd="cat ./peripherals/karabiner/karabiner.json | jq {q} -C"
+
+echo '.' | fzf \
+  --ansi \
+  --print-query \
+  --query="$default_query" \
+  --preview="$cmd" \
+  --preview-window='up:99%' \
+  < /dev/null

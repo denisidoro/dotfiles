@@ -39,3 +39,7 @@ str::urlencode() {
    echo "${data##/?}"
    return 0
 }
+
+str:::without_line_break() {
+  echo -n "$(cat)"
+}
