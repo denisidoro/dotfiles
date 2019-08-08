@@ -41,13 +41,13 @@ algo_256() {
 content="$(cat)"
 
 case "$algorithm" in
-   0) 
+   0)
       algo_0 "$content"
       ;;
-   1) 
+   1)
       algo_1 "$content"
       ;;
-   256) 
+   256)
       algo_256 "$content" "$pass"
       ;;
    *)

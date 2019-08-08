@@ -17,4 +17,3 @@ esac
 
 dot pkg add --package-manager ftp
 
-

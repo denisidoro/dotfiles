@@ -13,5 +13,5 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 for query in "${queries[@]}"; do
-  dot search lucky "$query site:play.google.com"
+   dot search lucky "$query site:play.google.com"
 done

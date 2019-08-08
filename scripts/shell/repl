@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
+# TODO: finish code
+
 cmd="cat ./peripherals/karabiner/karabiner.json | jq {q} -C"
 
 echo '.' | fzf \
-  --ansi \
-  --print-query \
-  --query="$default_query" \
-  --preview="$cmd" \
-  --preview-window='up:99%' \
-  < /dev/null
+   --ansi \
+   --print-query \
+   --query="$default_query" \
+   --preview="$cmd" \
+   --preview-window='up:99%' \
+   < /dev/null

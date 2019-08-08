@@ -88,6 +88,6 @@ recipe::clone_as_submodule() {
 
    cd "$module_path"
    git submodule init &2> /dev/null \
-     && git submodule update &2> /dev/null \
-     || true
+      && git submodule update &2> /dev/null \
+      || true
 }

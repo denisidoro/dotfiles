@@ -41,5 +41,5 @@ str::urlencode() {
 }
 
 str:::without_line_break() {
-  echo -n "$(cat)"
+   echo -n "$(cat)"
 }
