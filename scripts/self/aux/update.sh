@@ -42,6 +42,7 @@ setup_folders_and_files() {
    mkdir -p "$LOCAL_TMP" || true
    mkdir -p "$BIN_DIR" || true
    mkdir -p "$TMP_DIR" || true
+   mkdir -p "$LOCAL_BIN" || true
    mkdir -p "$MAIN_BIN_DIR" || true
    touch "$LOCAL_ZSHRC" || true
    touch "$LOCAL_GITCONFIG" || true
@@ -174,6 +175,7 @@ setup_docopts() {
          echo
          log::warning "the sudo command doesn't exist in this system"
          if feedback::maybe_confirmation "${DOT_INSTALL_SUDO:-}" "Do you want to setup a fallback?"; then
+            mkdir -p "$LOCAL_BIN" || true
             cp "${MAIN_BIN_DIR}/\$" "${LOCAL_BIN}/sudo"
             chmod +x "${LOCAL_BIN}/sudo" || true
             export PATH="${LOCAL_BIN}:${PATH}"
