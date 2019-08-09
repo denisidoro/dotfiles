@@ -55,6 +55,11 @@ if [[ -n "$profile" ]]; then
       exit 42
    fi
    source "$profile_script"
+   echo "Start installation using profile $profile"
+   echo
+   echo "env:"
+   env
+   echo
 fi
 
 # call setup
