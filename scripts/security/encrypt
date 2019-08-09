@@ -44,7 +44,7 @@ algo_256() {
    local readonly content="$1"
    local readonly pass="$2"
 
-   echo "$content" | openssl enc -aes-256-cbc -a -k "$pass"
+   echo "$content" | openssl enc -aes256 -a -k "$pass"
 }
 
 content="$(cat)"
