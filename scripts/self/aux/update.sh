@@ -74,9 +74,27 @@ feedback::maybe() {
    fi
 }
 
-feedback::maybe_text() { feedback::maybe feedback::text "$@"; }
-feedback::maybe_select_option() { feedback::maybe feedback::select_option "$@"; }
-feedback::maybe_confirmation() { feedback::maybe feedback::confirmation "$@"; }
+feedback::maybe_text() { 
+   feedback::maybe feedback::text "$@"
+}
+
+feedback::maybe_select_option() { 
+   feedback::maybe feedback::select_option "$@"
+}
+
+feedback::maybe_confirmation() { 
+   local readonly value="$1"
+   if [ -n "$value" ]; then
+      if $value; then
+         return 0
+      else
+         return 1
+      fi
+   else
+      shift
+      feedback::confirmation "$@"
+   fi
+}
 
 
 setup_git_credentials() {
