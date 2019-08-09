@@ -149,8 +149,7 @@ setup_docopts() {
 
       if ! platform::command_exists nvim; then
          echo
-         log::warning "neovim isn't installed"
-         if feedback::maybe_confirmation "${DOT_INSTALL_NVIM:-}" "Do you want to setup a fallback?"; then
+         if feedback::maybe_confirmation "${DOT_INSTALL_NVIM:-}" "Do you want to setup a fallback for neovim?"; then
             if ! platform::command_exists vi && ! platform::command_exists vim; then
                dot pkg add nvim
             fi
