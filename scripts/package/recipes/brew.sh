@@ -32,17 +32,13 @@ if platform::command_exists brew || fs::is_dir /home/linuxbrew; then
    recipe::abort_installed brew
 fi
 
-if feedback::confirmation "Do you want to install brew?"; then
-
-   log::note "Installing brew..."
-   if platform::is_osx; then
-      _brew_osx
-   elif platform::command_exists apt; then
-      _brew_apt || _brew_linux
-   else
-      _brew_linux
-   fi
-
-   brew update || (brew vendor-install ruby && brew update)
-
+log::note "Installing brew..."
+if platform::is_osx; then
+   _brew_osx
+elif platform::command_exists apt; then
+   _brew_apt || _brew_linux
+else
+   _brew_linux
 fi
+
+brew update || (brew vendor-install ruby && brew update)

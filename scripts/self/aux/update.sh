@@ -63,13 +63,29 @@ fix_locales() {
 # Prompts
 # ==============================
 
+feedback::maybe() {
+   local readonly fn="$1"
+   local readonly value="$2"
+   if [ -n "$value" ]; then
+      echo "$value"
+   else
+      shift 2
+      "$fn" "$@"
+   fi
+}
+
+feedback::maybe_text() { feedback::maybe feedback::text "$@"; }
+feedback::maybe_select_option() { feedback::maybe feedback::select_option "$@"; }
+feedback::maybe_confirmation() { feedback::maybe feedback::confirmation "$@"; }
+
+
 setup_git_credentials() {
 
    if ! grep -q "email" "$LOCAL_GITCONFIG" 2> /dev/null; then
       echo
       log::note "Your git credentials aren't setup"
-      local readonly fullname="$(feedback::text "What is your name?")"
-      local readonly email="$(feedback::text "What is your email?")"
+      local readonly fullname="$(feedback::maybe_text "${DOT_INSTALL_NAME:-}" "What is your name?")"
+      local readonly email="$(feedback::maybe_text "${DOT_INSTALL_EMAIL:-}" "What is your email?")"
       echo -e "[user]\n   name = $fullname\n   email = $email" > "$LOCAL_GITCONFIG"
    fi
 
@@ -82,7 +98,7 @@ setup_docopts() {
    fi
 
    echo
-   local readonly backend="$(echo "bash python go" | tr ' ' '\n' | feedback::select_option "What backend do you want for docopts?")"
+   local readonly backend="$(echo "bash python go" | tr ' ' '\n' | feedback::maybe_select_option "${DOT_INSTALL_DOCOPTS:-}" "What backend do you want for docopts?")"
 
       if [[ -z "${backend:-}" ]]; then
          log::error "Invalid option"
@@ -104,7 +120,7 @@ setup_docopts() {
       local readonly FILE_PATH="$1"
       if fs::is_file "$FILE_PATH" && ! test -L "$FILE_PATH"; then
          log::warning "${FILE_PATH} already exists and it's not a symlink"
-         if feedback::confirmation "Do you want to backup and stop using it?"; then
+         if feedback::maybe_confirmation "${DOT_INSTALL_BACKUP:-}" "Do you want to backup and stop using it?"; then
             mv "$FILE_PATH" "${FILE_PATH}.bak"
          fi
       fi
@@ -116,7 +132,7 @@ setup_docopts() {
       if ! platform::command_exists nvim; then
          echo
          log::warning "neovim isn't installed"
-         if feedback::confirmation "Do you want to setup a fallback?"; then
+         if feedback::maybe_confirmation "${DOT_INSTALL_NVIM:-}" "Do you want to setup a fallback?"; then
             if ! platform::command_exists vi && ! platform::command_exists vim; then
                dot pkg add nvim
             fi
@@ -136,12 +152,18 @@ setup_docopts() {
       if ! platform::command_exists sudo; then
          echo
          log::warning "the sudo command doesn't exist in this system"
-         if feedback::confirmation "Do you want to setup a fallback?"; then
+         if feedback::maybe_confirmation "${DOT_INSTALL_SUDO:-}" "Do you want to setup a fallback?"; then
             mkdir -p "$BIN_DIR" || true
             mkdir -p "$TMP_DIR" || true
             cp "${MAIN_BIN_DIR}/\$" "${LOCAL_BIN}/sudo"
             chmod +x "${LOCAL_BIN}/sudo" || true
             export PATH="${LOCAL_BIN}:${PATH}"
+            if ! platform::command_exists sudo; then
+               sudo() {
+                  "$@"
+               }
+               export -f sudo
+            fi
          fi
       fi
 
@@ -155,7 +177,7 @@ setup_docopts() {
 
       use=false
       echo
-      if feedback::confirmation "Do you want to use FZF?"; then
+      if feedback::maybe_confirmation "${DOT_INSTALL_FZF:-}" "Do you want to use FZF?"; then
          dot pkg add fzf
          use=true
       fi
@@ -172,7 +194,7 @@ setup_docopts() {
 
       use=false
       echo
-      if feedback::confirmation "Do you want to use FASD?"; then
+      if feedback::maybe_confirmation "${DOT_INSTALL_FASD:-}" "Do you want to use FASD?"; then
          dot pkg add fasd
          use=true
       fi
@@ -182,11 +204,17 @@ setup_docopts() {
    }
 
    install_brew() {
-      dot pkg add brew
+      if platform::command_exists brew || fs::is_dir /home/linuxbrew; then
+         if feedback::maybe_confirmation "${DOT_INSTALL_BREW:-}" "Do you want to install brew?"; then
+            dot pkg add brew
+         fi
+      fi
    }
 
    install_batch() {
-      dot pkg batch prompt "$1"
+      if "${DOT_INSTALL_BATCH:-true}"; then
+         dot pkg batch prompt "$1"
+      fi
    }
 
 
@@ -196,7 +224,7 @@ setup_docopts() {
 
    install_nvim_plugins() {
 
-      if platform::command_exists nvim && echo && feedback::confirmation "Do you want to install neovim plugins?"; then
+      if platform::command_exists nvim && echo && feedback::maybe_confirmation "${DOT_INSTALL_NVIM_PLUGINS:-}" "Do you want to install neovim plugins?"; then
          log::note "Installing neovim plugins..."
          nvim +silent +PlugInstall +qall >/dev/null
       fi
@@ -205,7 +233,7 @@ setup_docopts() {
 
    install_tmux_plugins() {
 
-      if platform::command_exists tmux && echo && feedback::confirmation "Do you want to install tmux plugins?"; then
+      if platform::command_exists tmux && echo && feedback::maybe_confirmation "${DOT_INSTALL_TMUX_PLUGINS:-}" "Do you want to install tmux plugins?"; then
          log::note "Installing tpm plugins..."
          export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
          bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/install_plugins" >/dev/null
@@ -216,7 +244,7 @@ setup_docopts() {
 
    install_zplug_plugins() {
 
-      if platform::command_exists zplug && echo && feedback::confirmation "Do you want to install zplug plugins?"; then
+      if platform::command_exists zplug && echo && feedback::maybe_confirmation "${DOT_INSTALL_ZPLUG_PLUGINS:-}" "Do you want to install zplug plugins?"; then
          log::note "Installing ZPlug plugins..."
          zplug install 2>/dev/null
       fi
