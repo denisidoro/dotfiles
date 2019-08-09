@@ -40,6 +40,9 @@ setup_folders_and_files() {
    log::note "Setting up folder and file hierarchy..."
    mkdir -p "$LOCAL_BIN" || true
    mkdir -p "$LOCAL_TMP" || true
+   mkdir -p "$BIN_DIR" || true
+   mkdir -p "$TMP_DIR" || true
+   mkdir -p "$MAIN_BIN_DIR" || true
    touch "$LOCAL_ZSHRC" || true
    touch "$LOCAL_GITCONFIG" || true
 
@@ -149,7 +152,8 @@ setup_docopts() {
 
       if ! platform::command_exists nvim; then
          echo
-         if feedback::maybe_confirmation "${DOT_INSTALL_NVIM:-}" "Do you want to setup a fallback for neovim?"; then
+         log::warning "neovim isn't installed"
+         if feedback::maybe_confirmation "${DOT_INSTALL_NVIM:-}" "Do you want to setup a fallback?"; then
             if ! platform::command_exists vi && ! platform::command_exists vim; then
                dot pkg add nvim
             fi
@@ -170,8 +174,6 @@ setup_docopts() {
          echo
          log::warning "the sudo command doesn't exist in this system"
          if feedback::maybe_confirmation "${DOT_INSTALL_SUDO:-}" "Do you want to setup a fallback?"; then
-            mkdir -p "$BIN_DIR" || true
-            mkdir -p "$TMP_DIR" || true
             cp "${MAIN_BIN_DIR}/\$" "${LOCAL_BIN}/sudo"
             chmod +x "${LOCAL_BIN}/sudo" || true
             export PATH="${LOCAL_BIN}:${PATH}"
