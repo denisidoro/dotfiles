@@ -54,7 +54,7 @@
 		".hg",
 		".lumo_cache"
 	],
-	"font_size": 12,
+	"font_size": 16,
 	"ignored_packages":
 	[
 	],

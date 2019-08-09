@@ -9,7 +9,7 @@ DOT_BIN="${DOTFILES}/bin/dot"
 #?? 0.3.0
 ##?
 ##? Usage:
-##?    init
+##?    init [<profile>]
 
 _dot() {
    "$DOT_BIN" "$@"
@@ -21,7 +21,6 @@ clone_repo() {
 
 # Pushes the current directory to the stack
 pushd . >/dev/null
-
 
 if [ -f "$DOT_BIN" ]; then
    printf ''
@@ -45,6 +44,19 @@ fi
 # OSX bootstrap
 if uname -s | grep -q "arwin"; then
    _dot pkg add gnu
+fi
+
+# export setup defaults
+profile="${1:-}"
+if [[ -n "$profile" ]]; then
+   profile_script="${DOTFILES}/scripts/self/aux/profile_${profile}.sh"
+   if [[ ! -f "$profile_script" ]]; then
+      echo "Profile $profile doesn't exist!"
+      exit 42
+   fi
+   source "$profile_script"
+   echo "Start installation using profile ${profile}..."
+   echo
 fi
 
 # call setup

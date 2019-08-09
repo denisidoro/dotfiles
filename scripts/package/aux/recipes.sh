@@ -31,7 +31,7 @@ recipe::shallow_git_clone() {
    local readonly folder="$(recipe::folder "$repo")"
    mkdir -p "$folder" || true
    sudo chmod 777 "$folder" || true
-   git clone "$(git::url $user $repo)" --depth 1 "$folder" || true
+   yes | git clone "$(git::url $user $repo)" --depth 1 "$folder" || true
 }
 
 recipe::shallow_github_clone() {
@@ -84,7 +84,7 @@ recipe::clone_as_submodule() {
 
    local readonly module_path="${MODULES_FOLDER}/${module}"
    git::url $user $repo
-   git clone "$(git::url $user $repo)" --depth 1 "$module_path"
+   yes | git clone "$(git::url $user $repo)" --depth 1 "$module_path"
 
    cd "$module_path"
    git submodule init &2> /dev/null \

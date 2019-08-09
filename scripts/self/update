@@ -79,3 +79,6 @@ use_fzf
 use_fasd
 
 set -e
+
+echo
+log::warning "Update finished!"
