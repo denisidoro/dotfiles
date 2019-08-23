@@ -1,7 +1,7 @@
 {
     "editor.fontSize": 12,
     "window.zoomLevel": 0,
-
+    
     "files.autoSave": "onWindowChange",
     "workbench.activityBar.visible": false,
     "workbench.iconTheme": "eq-material-theme-icons-ocean",
@@ -12,16 +12,16 @@
     "vim.useSystemClipboard": true,
     "vim.useCtrlKeys": true,
     "vim.hlsearch": true,
-
+    
     "workbench.editor.enablePreview": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
-
+    
     "workbench.list.keyboardNavigation": "simple",
-
+    
     "workbench.colorCustomizations": {},
     "materialTheme.accent": "Remove accents",
     "workbench.colorTheme": "Material Theme Darker High Contrast",
-   
+    
     "vim.leader": "<space>",
     
     "vim.insertModeKeyBindings": [
@@ -35,7 +35,7 @@
             ]
         }
     ],
-
+    
     "vim.normalModeKeyBindings": [
         {
             "before": [
@@ -671,7 +671,7 @@
             "after": [],
             "commands": [
                 {
-                    "command": "workbench.action.files.openFolder",
+                    "command": "workbench.action.files.openFileFolder",
                     "args": []
                 }
             ]
@@ -1108,5 +1108,9 @@
                 }
             ]
         }
-    ]
+    ],
+    "editor.minimap.enabled": false,
+    "breadcrumbs.enabled": true,
+    "editor.renderWhitespace": "none",
+    "editor.renderControlCharacters": true
 }
