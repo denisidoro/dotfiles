@@ -15,6 +15,14 @@
 
     "workbench.editor.enablePreview": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
+
+    "workbench.list.keyboardNavigation": "simple",
+
+    "workbench.colorCustomizations": {},
+    "materialTheme.accent": "Remove accents",
+    "workbench.colorTheme": "Material Theme Darker High Contrast",
+   
+    "vim.leader": "<space>",
     
     "vim.insertModeKeyBindings": [
         {
@@ -1100,8 +1108,5 @@
                 }
             ]
         }
-    ],
-    "workbench.colorCustomizations": {},
-    "materialTheme.accent": "Remove accents",
-    "workbench.colorTheme": "Material Theme Darker High Contrast"
+    ]
 }

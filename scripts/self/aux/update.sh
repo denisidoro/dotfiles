@@ -226,6 +226,8 @@ setup_docopts() {
 
    install_brew() {
       if platform::command_exists brew || fs::is_dir /home/linuxbrew; then
+         :
+      else
          if feedback::maybe_confirmation "${DOT_INSTALL_BREW:-}" "Do you want to install brew?"; then
             dot pkg add brew
          fi
