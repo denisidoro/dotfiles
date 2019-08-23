@@ -54,10 +54,11 @@
 		".hg",
 		".lumo_cache"
 	],
-	"font_size": 9,
+	"font_size": 10,
 	"ignored_packages":
 	[
 	],
+	"open_files_in_new_window": false,
 	"tab_size": 2,
 	"theme": "Material Spaceblack.sublime-theme",
 	"translate_tabs_to_spaces": true,

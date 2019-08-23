@@ -14,10 +14,13 @@
 export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 
 # load vars
-source "${DOTFILES}/shell/aux/vars.sh"
+source "${DOTFILES}/shell/aux/vars.zsh"
 
 # load plugins
 source "${DOTFILES}/shell/aux/zplug.zsh"
+
+# load more vars
+source "${DOTFILES}/shell/aux/vars2.zsh"
 
 # load helper functions
 source "${DOTFILES}/shell/aux/core.zsh"

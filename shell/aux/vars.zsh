@@ -48,7 +48,8 @@ FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # ZSH_HIGHLIGHT_STYLES[reserved-word]=none
 
 # shell prompt autosuggestions
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+# ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#f000ff,bg=cyan,bold,underline"
+# ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 
 # security
 export GPG_TTY=$(tty)
