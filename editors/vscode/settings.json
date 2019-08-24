@@ -1,28 +1,46 @@
 {
-    "editor.fontSize": 12,
     "window.zoomLevel": 0,
+    "editor.fontSize": 12,
+    "editor.letterSpacing": 0.2,
+    "editor.lineHeight": 18,
+    
+    "editor.renderControlCharacters": true,
+    "editor.renderWhitespace": "none",
     
     "files.autoSave": "onWindowChange",
-    "workbench.activityBar.visible": false,
-    "workbench.iconTheme": "eq-material-theme-icons-ocean",
+    "files.trimFinalNewlines": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": false,
     
-    "vim.easymotion": true,
-    "vim.sneak": true,
-    "vim.incsearch": true,
-    "vim.useSystemClipboard": true,
-    "vim.useCtrlKeys": true,
-    "vim.hlsearch": true,
+    "editor.minimap.enabled": false,
+    "editor.mouseWheelZoom": true,
+    "explorer.sortOrder": "filesFirst",
     
-    "workbench.editor.enablePreview": false,
-    "workbench.editor.enablePreviewFromQuickOpen": false,
-    
-    "workbench.list.keyboardNavigation": "simple",
-    
-    "workbench.colorCustomizations": {},
     "materialTheme.accent": "Remove accents",
+    "workbench.iconTheme": "eq-material-theme-icons-ocean",
+    "workbench.colorCustomizations": {},
     "workbench.colorTheme": "Material Theme Darker High Contrast",
     
+    "breadcrumbs.enabled": true,
+    "workbench.activityBar.visible": true,
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.list.keyboardNavigation": "simple",
+    
+    "files.exclude": {
+        "**/.git": true,        
+        "**/.DS_Store": true,  
+        "**/node_modules": true, 
+    },
+    
     "vim.leader": "<space>",
+    "vim.easymotion": true,
+    "vim.hlsearch": true,
+    "vim.incsearch": true,
+    "vim.sneak": true,
+    "vim.useCtrlKeys": true,
+    "vim.useSystemClipboard": true,
     
     "vim.insertModeKeyBindings": [
         {
@@ -35,8 +53,19 @@
             ]
         }
     ],
+
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["j"],
+            "after": ["g", "j"]
+        },
+        {
+            "before": ["k"],
+            "after": ["g", "k"]
+        }
+    ],
     
-    "vim.normalModeKeyBindings": [
+    "vim.normalModeKeyBindirgs": [
         {
             "before": [
                 "<leader>",
@@ -1108,9 +1137,5 @@
                 }
             ]
         }
-    ],
-    "editor.minimap.enabled": false,
-    "breadcrumbs.enabled": true,
-    "editor.renderWhitespace": "none",
-    "editor.renderControlCharacters": true
+    ]
 }
