@@ -14,7 +14,7 @@
     
     "editor.minimap.enabled": false,
     "editor.mouseWheelZoom": true,
-    "explorer.sortOrder": "filesFirst",
+    "explorer.sortOrder": "default",
     
     "materialTheme.accent": "Remove accents",
     "workbench.iconTheme": "eq-material-theme-icons-ocean",
@@ -33,12 +33,16 @@
         "**/.DS_Store": true,  
         "**/node_modules": true, 
     },
+   
+    "diffEditor.ignoreTrimWhitespace": false,
+    "diffEditor.renderSideBySide": true,
     
     "vim.leader": "<space>",
     "vim.easymotion": false,
+    "vim.replaceWithRegister": true,
+    "vim.sneak": false,
     "vim.hlsearch": true,
     "vim.incsearch": true,
-    "vim.sneak": true,
     "vim.useCtrlKeys": true,
     "vim.useSystemClipboard": true,
 
@@ -126,7 +130,15 @@
          "after":    [], 
          "commands": [{"command": "workbench.action.nextEditor", "args": []}]}, 
 
+        {"before":   ["<leader>", "b", "l"], 
+         "after":    [], 
+         "commands": [{"command": "workbench.action.nextEditor", "args": []}]}, 
+
         {"before":   ["<leader>", "b", "p"], 
+         "after":    [], 
+         "commands": [{"command": "workbench.action.previousEditor", "args": []}]}, 
+
+        {"before":   ["<leader>", "b", "h"], 
          "after":    [], 
          "commands": [{"command": "workbench.action.previousEditor", "args": []}]}, 
 
@@ -292,13 +304,21 @@
          "after":    [], 
          "commands": [{"command": "workbench.action.toggleMenuBar", "args": []}]}, 
 
-        {"before":   ["<leader>", "T", "s"], 
+        {"before":   ["<leader>", "T", "v"], 
          "after":    [], 
-         "commands": [{"command": "workbench.action.selectTheme", "args": []}]}, 
+         "commands": [{"command": "toggleVim", "args": []}]}, 
 
         {"before":   ["<leader>", "T", "t"], 
          "after":    [], 
+         "commands": [{"command": "workbench.action.selectTheme", "args": []}]}, 
+
+        {"before":   ["<leader>", "T", "a"], 
+         "after":    [], 
          "commands": [{"command": "workbench.action.toggleActivityBarVisibility", "args": []}]}, 
+
+        {"before":   ["<leader>", "T", "s"], 
+         "after":    [], 
+         "commands": [{"command": "workbench.action.toggleSidebarVisibility", "args": []}]}, 
 
         {"before":   ["<leader>", "v"], 
          "after":    [], 
@@ -366,8 +386,6 @@
 
         {"before":   ["<leader>", "x", "w"], 
          "after":    [], 
-         "commands": [{"command": "editor.action.trimTrailingWhitespace", "args": []}]} 
-        
+         "commands": [{"command": "editor.action.trimTrailingWhitespace", "args": []}]}
     ],
-    "window.menuBarVisibility": "default"
-}                                                                                 
+}
