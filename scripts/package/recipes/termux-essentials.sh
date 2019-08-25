@@ -26,6 +26,7 @@ if has_busybox_only; then
    pkg install util-linux || true
    pkg install termux-packages || true
    pkg install ncurses-utils || true
+   pkg install grep sed || true
 fi
 
 if ! platform::command_exists sudo; then

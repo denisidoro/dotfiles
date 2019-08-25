@@ -175,6 +175,10 @@
          "after":    [], 
          "commands": [{"command": "workbench.action.files.save", "args": []}]}, 
 
+        {"before":   ["<leader>", "f", "S"], 
+         "after":    [], 
+         "commands": [{"command": "workbench.action.files.saveAs", "args": []}]}, 
+
         {"before":   ["<leader>", "f", "t"], 
          "after":    [], 
          "commands": [{"command": "workbench.view.explorer", "args": []}]}, 
@@ -386,6 +390,10 @@
 
         {"before":   ["<leader>", "x", "w"], 
          "after":    [], 
-         "commands": [{"command": "editor.action.trimTrailingWhitespace", "args": []}]}
+         "commands": [{"command": "editor.action.trimTrailingWhitespace", "args": []}]},
+
+        {"before":   ["<leader>", "m", "p"], 
+         "after":    [], 
+         "commands": [{"command": "markdown.showPreviewToSide", "args": [], "when": "editorLangId == markdown"}]}
     ],
 }
