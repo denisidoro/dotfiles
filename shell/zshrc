@@ -13,6 +13,9 @@
 # dotfiles
 export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 
+# register which shell is running
+SH="zsh"
+
 # load vars
 source "${DOTFILES}/shell/aux/vars.zsh"
 
@@ -20,7 +23,7 @@ source "${DOTFILES}/shell/aux/vars.zsh"
 source "${DOTFILES}/shell/aux/zplug.zsh"
 
 # load more vars
-source "${DOTFILES}/shell/aux/vars2.zsh"
+source "${DOTFILES}/shell/aux/zsh_vars.zsh"
 
 # load helper functions
 source "${DOTFILES}/shell/aux/core.zsh"
@@ -31,16 +34,8 @@ source "${DOTFILES}/shell/aliases/core.sh"
 # load local custom config
 source "${DOTFILES}/local/zshrc"
 
-# fzf
-if ${DOT_FZF:-false}; then
-   source "${DOTFILES}/shell/bindings/fzf.zsh"
-   source "${HOME}/.fzf.zsh" || true
-fi
-
-# fasd
-if ${DOT_FASD:-false}; then
-   eval "$(lua "${DOTFILES}/modules/z.lua/z.lua" --init zsh enhanced once)"
-fi
+# fzf and fasd
+source "${DOTFILES}/shell/aux/post.zsh"
 
 # startup time instrumentation end
 # unsetopt XTRACE

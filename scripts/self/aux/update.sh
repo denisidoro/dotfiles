@@ -207,6 +207,23 @@ setup_docopts() {
 
    }
 
+   ps1_code() {
+      echo
+      echo 'if [ $SH = "bash" ]; then '
+      printf '   export PS1="'
+      echo "$1\""
+      echo 'fi'
+   }
+
+   set_random_ps1() {
+      if grep -q "PS1" "$LOCAL_ZSHRC"; then
+         return 0
+      fi
+      local readonly ps1="$(dot shell bash ps1)" 
+      local readonly code="$(ps1_code "$ps1")" 
+      echo "$code" >> "$LOCAL_ZSHRC"
+   }
+
    use_fasd() {
 
       if [[ -n "${DOT_FASD:-}" ]]; then

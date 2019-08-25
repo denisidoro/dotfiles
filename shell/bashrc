@@ -8,14 +8,14 @@
 # dotfiles
 export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 
+# register which shell is running
+SH="bash"
+
 # load vars
 source "${DOTFILES}/shell/aux/vars.zsh"
 
 # load helper functions
 source "${DOTFILES}/shell/aux/core.zsh"
-
-# load more vars
-source "${DOTFILES}/shell/aux/vars2.zsh"
 
 # load aliases
 source "${DOTFILES}/shell/aliases/core.sh"
@@ -27,12 +27,5 @@ export PS1="\n\[\e[32m\]\w\[\e[m\] \[\e[31m\]$(nonzero_return)\[\e[m\]\n\[\e[33m
 # load local custom config
 source "${DOTFILES}/local/zshrc"
 
-# fzf
-if ${DOT_FZF:-false}; then
-   source "${HOME}/.fzf.bash" || true
-fi
-
-# fasd
-if ${DOT_FASD:-false}; then
-   eval "$(lua "${DOTFILES}/modules/z.lua/z.lua" --init bash enhanced once)"
-fi
+# fzf and fasd
+source "${DOTFILES}/shell/aux/post.zsh"

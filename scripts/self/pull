@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Pulls the latest version of the dotfiles
+##?
+##? Usage:
+##?    pull
+
+docs::eval_eval "$@"
+
+cd "${DOTFILES}"
+dot git checkout latest
+git pull
