@@ -1,0 +1,33 @@
+#/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Playnite helpers
+#?? 0.1.0
+##?
+##? Usage:
+##?    playnite games
+##?    playnite images <id>
+
+docs::eval "$@"
+
+LIBRARY_DIR="${HOME}/Downloads/library"
+
+all_data() {
+    curl 'https://api-v3.igdb.com/artworks' \
+        -d "fields url; where game = $id;" \
+        -H "user-key: $IGDB_KEY" \
+        -H 'Accept: application/json' \
+        -s
+}
+
+get_images() {
+    all_data | jq -r '. | map(.url) | .[]' | sed 's|//|http://|g' | xargs -I% bash -c 'curl -s % | imgcat'
+}
+
+if $games; then
+    cat $LIBRARY_DIR/games/* | jq -r '.GameId + "," + .Name'
+elif $images; then
+    get_images
+fi

@@ -40,6 +40,6 @@ zplug load
 #function prompt_short_dir { echo "%{$fg_bold[yellow]%}$(shrink_path -f)" }
 MAGENTA_BOLD=$fg_bold[magenta]
 PROMPT='
-%{$GREEN_BOLD%}%{$MAGENTA_BOLD%}%~%u %{$RED%}$(git_current_branch)%{$RESET_COLOR%}
+%{$GREEN_BOLD%}%~%u %{$RED%}$(git_current_branch)%{$RESET_COLOR%}
 %{$BLUE%}λ%{$RESET_COLOR%} '
 RPROMPT=''

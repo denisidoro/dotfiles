@@ -31,7 +31,7 @@
     "files.exclude": {
         "**/.git": true,        
         "**/.DS_Store": true,  
-        "**/node_modules": true, 
+        "**/node_modules": true
     },
    
     "diffEditor.ignoreTrimWhitespace": false,
@@ -58,8 +58,16 @@
 
         {"before":   ["<leader>", "j", "="], 
          "after":    [], 
-         "commands": [{"command": "editor.action.format", "args": []}]} ], 
-        
+         "commands": [{"command": "editor.action.format", "args": []}]}], 
+       
+    "vim.normalModeKeyBindingsNonRecursive": [     
+
+        {"before":   ["j"], 
+         "after":    ["g", "j"]},
+
+        {"before":   ["k"], 
+         "after":    ["g", "k"]}],
+
     "vim.normalModeKeyBindings": [ 
 
         {"before":   ["<leader>", "<space>"], 
@@ -395,5 +403,5 @@
         {"before":   ["<leader>", "m", "p"], 
          "after":    [], 
          "commands": [{"command": "markdown.showPreviewToSide", "args": [], "when": "editorLangId == markdown"}]}
-    ],
+    ]
 }
