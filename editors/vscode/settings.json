@@ -60,6 +60,14 @@
          "after":    [], 
          "commands": [{"command": "editor.action.format", "args": []}]}], 
        
+    "vim.visualModeKeyBindingsNonRecursive": [     
+
+        {"before":   ["j"], 
+         "after":    ["g", "j"]},
+
+        {"before":   ["k"], 
+         "after":    ["g", "k"]}],
+
     "vim.normalModeKeyBindingsNonRecursive": [     
 
         {"before":   ["j"], 
