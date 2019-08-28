@@ -7,26 +7,21 @@ source "${DOTFILES}/scripts/core/main.sh"
 #?? 0.1.0
 ##?
 ##? Usage:
-##?    igdb api <endpoint> <fields> <filter>
+##?    igdb api <endpoint> <query>
 
 docs::eval "$@"
 
 api_call() {
     local readonly endpoint="$1"
-    local readonly fields="$2"
-    local readonly filter="$3"
+    local readonly query="$2"
 
     curl "https://api-v3.igdb.com/${endpoint}" \
-        -d 'search "assassins creed rogue"; fields name, id, artworks.url;' \
+        -d "$query" \
         -H "user-key: ${IGDB_KEY}" \
         -H 'Accept: application/json' \
         -s
 }
 
 if $api; then
-    api_call "$endpoint" "$fields" "$filter" \
-        | jq -r '. | first | .artworks | map(.url) | .[]' \
-        | sed 's|//|http://|g' \
-        | sed 's/_thumb/_720p/g' \
-        | xargs -I% bash -c 'curl -s % | imgcat'
+    api_call "$endpoint" "$query"
 fi
