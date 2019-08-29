@@ -8,26 +8,17 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?
 ##? Usage:
 ##?    playnite games
-##?    playnite images <id>
+##?    playnite set
 
 docs::eval "$@"
 
 LIBRARY_DIR="${HOME}/Downloads/library"
 
-all_data() {
-    curl 'https://api-v3.igdb.com/artworks' \
-        -d "fields url; where game = $id;" \
-        -H "user-key: $IGDB_KEY" \
-        -H 'Accept: application/json' \
-        -s
-}
-
-get_images() {
-    all_data | jq -r '. | map(.url) | .[]' | sed 's|//|http://|g' | xargs -I% bash -c 'curl -s % | imgcat'
-}
-
 if $games; then
-    cat $LIBRARY_DIR/games/* | jq -r '.GameId + "," + .Name'
-elif $images; then
-    get_images
+    cat $LIBRARY_DIR/games/* | jq -r '.Name'
+elif $set; then
+    game="$(cat $LIBRARY_DIR/games/* \
+        | jq -r '.Name' \
+        | fzf --height '50%')"
+    dot gaming images "$game"
 fi
