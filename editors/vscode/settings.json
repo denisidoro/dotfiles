@@ -1,5 +1,5 @@
 {
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 2,
     "editor.fontSize": 12,
     "editor.letterSpacing": 0.2,
     "editor.lineHeight": 18,
@@ -316,27 +316,27 @@
          "after":    [], 
          "commands": [{"command": "workbench.action.findInFilesWithSelectedText", "args": []}]}, 
 
-        {"before":   ["<leader>", "T", "F"], 
+        {"before":   ["<leader>", "t", "F"], 
          "after":    [], 
          "commands": [{"command": "workbench.action.toggleFullScreen", "args": []}]}, 
 
-        {"before":   ["<leader>", "T", "m"], 
+        {"before":   ["<leader>", "t", "m"], 
          "after":    [], 
          "commands": [{"command": "workbench.action.toggleMenuBar", "args": []}]}, 
 
-        {"before":   ["<leader>", "T", "v"], 
+        {"before":   ["<leader>", "t", "v"], 
          "after":    [], 
          "commands": [{"command": "toggleVim", "args": []}]}, 
 
-        {"before":   ["<leader>", "T", "t"], 
+        {"before":   ["<leader>", "t", "t"], 
          "after":    [], 
          "commands": [{"command": "workbench.action.selectTheme", "args": []}]}, 
 
-        {"before":   ["<leader>", "T", "a"], 
+        {"before":   ["<leader>", "t", "a"], 
          "after":    [], 
          "commands": [{"command": "workbench.action.toggleActivityBarVisibility", "args": []}]}, 
 
-        {"before":   ["<leader>", "T", "s"], 
+        {"before":   ["<leader>", "t", "s"], 
          "after":    [], 
          "commands": [{"command": "workbench.action.toggleSidebarVisibility", "args": []}]}, 
 
