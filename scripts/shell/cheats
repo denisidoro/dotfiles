@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-CHEAT_CONFIG_FOLDER="${CHEAT_CONFIG_FOLDER:-"${DOTFILES}/scripts/shell/cheatsheets"}"
+CHEAT_CONFIG_FOLDER="${CHEAT_CONFIG_FOLDER:-"${DOTFILES}/cheatsheets"}"
+
+echo "$CHEAT_CONFIG_FOLDER"
+exit 0
 
 io::config_files() {
 	find "$CHEAT_CONFIG_FOLDER" -iname '*.cheat'
