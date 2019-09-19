@@ -4,6 +4,8 @@ This repository offers a powerful cheatsheet tool.
 
 Think of it as an enhanced history searcher. Except it works even if you haven't run the command yet. And it allows you to give descriptions to the commands. And it suggests you argument values.
 
+![Demo](https://user-images.githubusercontent.com/3226564/65281359-d158f480-db08-11e9-8e69-e380d76c343b.gif)
+
 Note: please refer to the [main README](https://github.com/denisidoro/dotfiles/blob/master/README.md) for install instructions.
 
 ### Main usage
