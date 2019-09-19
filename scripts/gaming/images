@@ -22,7 +22,7 @@ with_resolution() {
 
 incomplete_image_urls() {
     local readonly data="$1"
-   echo "$data" | jq -r '.cover.url' 
+   # echo "$data" | jq -r '.cover.url' 
    echo "$data" | jq -r '.screenshots | map(.url) | .[]' 
    echo "$data" | jq -r '.artworks | map(.url) | .[]' 
 }

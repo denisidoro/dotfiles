@@ -1,0 +1,20 @@
+#/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Helpers for retrieving grids
+#?? 0.1.0
+##?
+##? Usage:
+##?    grid <game>
+
+docs::eval "$@"
+
+query="$(str::urlencode "$game")"
+
+url="$(curl -s "https://www.steamgriddb.com/search/${query}/alternate,blurred,white_logo,no_logo,material" \
+  | grep -Eo 'http.*/grid/[^"]*png' \
+  | head -n1)"
+
+curl -s "$url" | imgcat
