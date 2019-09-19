@@ -1,0 +1,21 @@
+% git
+
+# Clear everything
+git clean -dxf
+
+# Sign all commits in a branch based on master
+git rebase master -S -f
+
+# Checkout to branch
+# Change branch
+git checkout <branch>
+
+# test cmd
+git test <branch> <branchx2>
+
+# Create symbolic link
+ln -s "<file>" "<new>"
+
+$ branch: git branch --format='%(refname:short)'
+$ branchx: echo "$branch extended"
+$ file: ls
