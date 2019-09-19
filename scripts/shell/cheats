@@ -143,6 +143,7 @@ main() {
         else
             printf "\033[0;36m${arg}:\033[0;0m "
             read value
+            tput cuu1 && tput el || true
         fi
 
         eval "local $arg"='$value'
