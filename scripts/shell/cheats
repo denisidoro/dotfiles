@@ -187,7 +187,12 @@ parser::interpolate_arg() {
     local readonly arg="$1"
     local readonly value="$2"
 
-    sed "s|<${arg}>|\"${value}\"|"
+    sed "s|<${arg}>|\"${value}\"|g"
+}
+
+# no-op hack to set dependency order resolution
+dep() {
+    :
 }
 
 main() {
@@ -209,6 +214,11 @@ main() {
         fi
 
         value="$(parser::suggestions "$arg" "$cheat_file" || echo "")"
+        if [ -z "$value" ]; then
+            echo "$cmd"
+            exit 0
+        fi
+
         eval "local $arg"='$value'
         cmd="$(echo "$cmd" | parser::interpolate_arg "$arg" "$value")"
     done
