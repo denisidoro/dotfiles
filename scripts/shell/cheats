@@ -50,7 +50,7 @@ io::read() {
 }
 
 parser::explode() {
-    sed -E 's/(.*) \[(.*)\].*/\1£\2/g'
+    sed -E 's/(.*) \[(.*)\].*/\1^\2/g'
 }
 
 ui::fzf() {
@@ -67,11 +67,11 @@ ui::select() {
 }
 
 parser::selection_core() {
-    cut -d'£' -f1
+    cut -d'^' -f1
 }
 
 parser::selection_tags() {
-    cut -d'£' -f2
+    cut -d'^' -f2
 }
 
 parser::command() {
