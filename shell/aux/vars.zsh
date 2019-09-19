@@ -5,7 +5,7 @@
 export ZPLUG_HOME="${DOTFILES}/modules/zplug"
 
 # default editor
-export EDITOR='nvim'
+export EDITOR='vim'
 
 # default browser
 export BROWSER='google-chrome'
@@ -42,13 +42,6 @@ export _ZL_MATCH_MODE=1
 export FZF_DEFAULT_OPTS='--height 70% --reverse --border --inline-info --cycle'
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-# shell prompt hightlighting
-# ZSH_HIGHLIGHT_STYLES[path]='bold'
-# ZSH_HIGHLIGHT_STYLES[reserved-word]=none
-
-# shell prompt autosuggestions
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 
 # security
 export GPG_TTY=$(tty)

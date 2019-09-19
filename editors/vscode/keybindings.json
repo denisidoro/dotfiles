@@ -1,0 +1,12 @@
+[
+  {"key":     "enter",
+   "when":    "explorerViewletVisible && filesExplorerFocus",
+   "command": "list.select"},
+
+  {"key":     "escape",
+   "when":    "listFocus",
+   "command": "workbench.action.focusActiveEditorGroup"},
+
+  {"key":     "shift+escape",
+   "command": "workbench.action.focusActiveEditorGroup"}
+]

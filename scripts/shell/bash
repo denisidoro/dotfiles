@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? bash helpers
+#?? 0.1.0
+##?
+##? Usage:
+##?     bash ps1
+
+docs::eval "$@"
+
+char::random() {
+    local readonly var="$*"
+    echo "${var:$((RANDOM % ${#var})):1}"
+}
+
+random_ps1() {
+    local readonly ps1_template='\n\e[%sm\]\h\e[m\] \[\e[%sm\]\w\[\e[m\] $(nonzero_return)\n\[\e[%sm\]%s\[\e[m\] '
+    local readonly prompts='>$Ωπ→⮞⮚'
+
+    local readonly t="$(echo "$ps1_template" | sed 's/\\/\\\\/g')"
+    local readonly c="$(char::random "$prompts")"
+
+    seq 31 36 \
+        | sort -R \
+        | xargs \
+        | cut -d' ' -f1-3 \
+        | xargs -I% echo "% $c" \
+        | xargs printf "$t"
+    echo
+}
+
+if $ps1; then
+  random_ps1
+fi

@@ -65,6 +65,8 @@ else
    update_dotfiles_fallback
 fi
 
+set_random_ps1
+
 install_brew
 install_batch "nano"
 install_batch "mini"
@@ -81,4 +83,4 @@ use_fasd
 set -e
 
 echo
-log::warning "Update finished!"
+log::success "Update finished!"

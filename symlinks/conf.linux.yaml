@@ -8,4 +8,5 @@
     ~/.config/bspwm/bspwmrc: wm/bspwm/bspwmrc
     ~/.config/sxhkd/sxhkdrc: peripherals/sxhkd/sxhkd.rc
     ~/.config/Code/User/settings.json: editors/vscode/settings.json
+    ~/.config/Code/User/keybindings.json: editors/vscode/keybindings.json
     ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings: editors/sublime/preferences.json

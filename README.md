@@ -32,7 +32,10 @@ dot self update
 
 Edit the following files accordingly:
 
-```
-shell: ~/.dotfiles/local/zshrc
-git: ~/.dotfiles/local/gitconfig
+```sh
+# shell
+~/.dotfiles/local/zshrc
+
+# git
+~/.dotfiles/local/gitconfig
 ```
