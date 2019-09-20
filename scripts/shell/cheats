@@ -15,104 +15,11 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docs::eval "$@"
 
-io::config_files() {
-	find "${config_folder:-$DOTFILES/cheatsheets}" -iname '*.cheat'
-}
 
-str::last_paragraph_line() {
-	awk '(!NF) { exit } { print $0 }' \
-        | tail -n1
-}
 
-parser::command() {
-	local readonly filepath="$1"
-	local readonly query="$2"
-
-	grep "$filepath" "$query" -A50 \
-		| str::last_paragraph_line
-}
-
-parser::first_arg() {
-	grep -Eo '<[0-9a-zA-Z\-_]+>' \
-      | head -n1 \
-	  | tr -d '<' \
-	  | tr -d '>'
-}
-
-parser::has_arg() {
-	parser::first_arg
-}
-
-parser::is_comment() {
-    grep -qE '^#'
-}
-
-io::read() {
-    for file in $(cat); do
-        awk '
-        function color(c,s) {
-           printf("\033[%dm%s\033[0m",30+c,s)
-        }
-        
-        /^%/ { suffix="["substr($0, 3)"]"; next }
-        /^#/ { print color(3, suffix"^") color(4, $0); next }
-        /^\$/ { next }
-        NF { print color(3, suffix"^") color(7, $0); next }' "$file"
-    done
-}
-
-parser::explode() {
-    sed -E 's/^\[(.*)\]\^(.*)/\1^\2/g'
-}
-
-ui::fzf() {
-    fzf --inline-info "$@"
-}
-
-ui::select() {
-    local readonly config_files="$1"
-
-    echo "$config_files" \
-        | io::read \
-        | ui::fzf -i --ansi --delimiter '\^' --with-nth 2 \
-        | parser::explode
-}
-
-parser::selection_core() {
-    cut -d'^' -f2
-}
-
-parser::selection_tags() {
-    cut -d'^' -f1
-}
-
-parser::command() {
-    local readonly selection="$1"
-    local readonly config_file="$2"
-
-    local readonly core="$(echo $selection | parser::selection_core)"
-
-    if echo "$core" | parser::is_comment; then
-        grep "$core" "$config_file" -A999 \
-          | str::last_paragraph_line
-    else
-        echo "$core"
-    fi
-}
-
-io::config_file_for_selection() {
-    local readonly config_files="$1"
-    local readonly selection="$2"
-    
-    local readonly tags="$(echo "$selection" | parser::selection_tags)"
-
-    for file in $config_files; do
-        if grep -q "% $tags" "$file"; then
-            echo "$file"
-            break
-        fi
-    done
-}
+# =======================
+# str 
+# =======================
 
 str::length() {
     awk '{print length}'
@@ -135,24 +42,79 @@ str::column() {
     fi
 }
 
-parser::arg_fn() {
+str::last_paragraph_line() {
+    awk '(!NF) { exit } { print $0 }' \
+        | tail -n1
+}
+
+
+# =======================
+# selection
+# =======================
+
+selection::core() {
+    cut -d'^' -f2
+}
+
+selection::tags() {
+    cut -d'^' -f1
+}
+
+selection::core_is_comment() {
+    grep -qE '^#'
+}
+
+selection::command() {
+    local readonly selection="$1"
+    local readonly cheat="$2"
+
+    local readonly core="$(echo $selection | selection::core)"
+
+    if echo "$core" | selection::core_is_comment; then
+        grep "$core" "$cheat" -A999 \
+          | str::last_paragraph_line
+    else
+        echo "$core"
+    fi
+}
+
+
+# =======================
+# arg
+# =======================
+
+arg::fn() {
     awk -F'---' '{print $1}'
 }
 
-parser::arg_opts() {
+arg::opts() {
     awk -F'---' '{print $2}'
 }
 
-parser::suggestions() {
+arg::interpolate() {
     local readonly arg="$1"
-    local readonly config_file="$2"
+    local readonly value="$2"
+
+    sed "s|<${arg}>|\"${value}\"|g"
+}
+
+arg::next() {
+    grep -Eo '<[0-9a-zA-Z\-_]+>' \
+      | head -n1 \
+      | tr -d '<' \
+      | tr -d '>'
+}
+
+arg::pick() {
+    local readonly arg="$1"
+    local readonly cheat="$2"
 
     local readonly prefix="$ ${arg}:"
     local readonly length="$(echo "$prefix" | str::length)"
-    local readonly arg_description="$(grep "$prefix" "$config_file" | str::sub $((length + 1)))"
+    local readonly arg_description="$(grep "$prefix" "$cheat" | str::sub $((length + 1)))"
 
-    local readonly fn="$(echo "$arg_description" | parser::arg_fn)"
-    local readonly args_str="$(echo "$arg_description" | parser::arg_opts | tr ' ' '\n' || echo "")"
+    local readonly fn="$(echo "$arg_description" | arg::fn)"
+    local readonly args_str="$(echo "$arg_description" | arg::opts | tr ' ' '\n' || echo "")"
     local arg_name=""
 
     for arg_str in $args_str; do
@@ -165,7 +127,7 @@ parser::suggestions() {
     done
 
     if [ -n "$fn" ]; then
-        eval "$fn" | ui::fzf --prompt "$arg: " --header-lines "${headers:-0}" | str::column "${column:-}"
+        eval "$fn" | ui::pick --prompt "$arg: " --header-lines "${headers:-0}" | str::column "${column:-}"
     else
         printf "\033[0;36m${arg}:\033[0;0m " > /dev/tty
         read value
@@ -174,16 +136,70 @@ parser::suggestions() {
     fi
 }
 
+
+# =======================
+# cheat
+# =======================
+
+cheat::find() {
+	find "${cheat_folder:-$DOTFILES/cheatsheets}" -iname '*.cheat'
+}
+
+cheat::read_many() {
+    for cheat in $(cat); do
+        awk '
+        function color(c,s) {
+           printf("\033[%dm%s\033[0m",30+c,s)
+        }
+        
+        /^%/ { tags=substr($0, 3); next }
+        /^#/ { print color(3, tags"^") color(4, $0); next }
+        /^\$/ { next }
+        NF { print color(3, tags"^") color(7, $0); next }' "$cheat"
+    done
+}
+
+cheat::from_selection() {
+    local readonly cheats="$1"
+    local readonly selection="$2"
+    
+    local readonly tags="$(echo "$selection" | selection::tags)"
+
+    for cheat in $cheats; do
+        if grep -q "% $tags" "$cheat"; then
+            echo "$cheat"
+            break
+        fi
+    done
+}
+
+
+# =======================
+# ui
+# =======================
+
+ui::pick() {
+    fzf --inline-info "$@"
+}
+
+ui::select() {
+    local readonly cheats="$1"
+
+    echo "$cheats" \
+        | cheat::read_many \
+        | ui::pick -i --ansi --delimiter '\^' --with-nth 2
+}
+
 ui::clear_previous_line() {
     tput cuu1 && tput el || true
 }
 
-parser::interpolate_arg() {
-    local readonly arg="$1"
-    local readonly value="$2"
 
-    sed "s|<${arg}>|\"${value}\"|g"
-}
+
+# =======================
+# misc
+# =======================
+
 
 # no-op hack to set dependency order resolution
 dep() {
@@ -191,10 +207,10 @@ dep() {
 }
 
 main() {
-    local readonly cheat_files="$(io::config_files)"
-    local readonly selection="$(ui::select "$cheat_files")"
-    local readonly cheat_file="$(io::config_file_for_selection "$cheat_files" "$selection")"
-    local cmd="$(parser::command "$selection" "$cheat_file")"
+    local readonly cheats="$(cheat::find)"
+    local readonly selection="$(ui::select "$cheats")"
+    local readonly cheat="$(cheat::from_selection "$cheats" "$selection")"
+    local cmd="$(selection::command "$selection" "$cheat")"
     local arg value
 
     if $no_interpolation; then
@@ -203,19 +219,19 @@ main() {
     fi
 
     while true; do
-        arg="$(echo "$cmd" | parser::first_arg || echo "")"
+        arg="$(echo "$cmd" | arg::next || echo "")"
         if [ -z "$arg" ]; then 
             break
         fi
 
-        value="$(parser::suggestions "$arg" "$cheat_file" || echo "")"
+        value="$(arg::pick "$arg" "$cheat" || echo "")"
         if [ -z "$value" ]; then
             echo "$cmd"
             exit 0
         fi
 
         eval "local $arg"='$value'
-        cmd="$(echo "$cmd" | parser::interpolate_arg "$arg" "$value")"
+        cmd="$(echo "$cmd" | arg::interpolate "$arg" "$value")"
     done
 
     if $print; then
