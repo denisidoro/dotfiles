@@ -4,7 +4,6 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Command cheatsheet tool
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?     cheats [options]
@@ -13,10 +12,6 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?     --print                               Prevent script execution [default: false]
 ##?     --no-interpolation                    Prevent argument interpolation [default: false]
 ##?     -c --config-folder <config-folder>    Config folder with cheatsheets
-##?
-##? Examples:
-##?     cheats
-##?     cheats --print
 
 docs::eval "$@"
 
@@ -59,15 +54,15 @@ io::read() {
            printf("\033[%dm%s\033[0m",30+c,s)
         }
         
-        /^%/ { suffix=" ["substr($0, 3)"]"; next }
-        /^#/ { print color(4, $0) color(6, suffix); next }
+        /^%/ { suffix="["substr($0, 3)"]"; next }
+        /^#/ { print color(3, suffix"^") color(4, $0); next }
         /^\$/ { next }
-        NF { print color(7, $0) color(6, suffix); next }' "$file"
+        NF { print color(3, suffix"^") color(7, $0); next }' "$file"
     done
 }
 
 parser::explode() {
-    sed -E 's/(.*) \[(.*)\].*/\1^\2/g'
+    sed -E 's/^\[(.*)\]\^(.*)/\1^\2/g'
 }
 
 ui::fzf() {
@@ -79,16 +74,16 @@ ui::select() {
 
     echo "$config_files" \
         | io::read \
-        | ui::fzf -i --ansi \
+        | ui::fzf -i --ansi --delimiter '\^' --with-nth 2 \
         | parser::explode
 }
 
 parser::selection_core() {
-    cut -d'^' -f1
+    cut -d'^' -f2
 }
 
 parser::selection_tags() {
-    cut -d'^' -f2
+    cut -d'^' -f1
 }
 
 parser::command() {
