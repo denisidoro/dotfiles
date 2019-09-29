@@ -12,8 +12,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 api_call() {
-    local readonly endpoint="$1"
-    local readonly query="$2"
+    local -r endpoint="$1"
+    local -r query="$2"
 
     curl "https://api-v3.igdb.com/${endpoint}" \
         -d "$query" \

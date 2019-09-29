@@ -16,18 +16,18 @@ path::all() {
 }
 
 path::is_navigable() {
-   local readonly path="$1"
+   local -r path="$1"
    fs::is_dir "$path"
 }
 
 nav::ls() {
-   local readonly path="${1:-$CWD}"
+   local -r path="${1:-$CWD}"
    ls -A "$path" \
       | grep -v '.DS_Store'
 }
 
 action::view() {
-   local readonly path="$1"
+   local -r path="$1"
    if fs::is_dir "$path"; then
       nav::ls "$path" \
          | less -R

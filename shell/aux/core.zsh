@@ -6,7 +6,7 @@ include() {
 }
 
 indexof() {
-   local readonly index="$1"
+   local -r index="$1"
    i=0;
    shift
    while [ "$i" -le "$#" ]; do
@@ -25,7 +25,7 @@ nonzero_return() {
 }
 
 dot_or_args() {
-   local readonly dash_index="$(indexof "--" "$@")"
+   local -r dash_index="$(indexof "--" "$@")"
    readonly fn="${@:1:$((dash_index-1))}"
    shift $dash_index
    if [[ $# < 1 ]]; then

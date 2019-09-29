@@ -67,9 +67,9 @@ f::lambda() {
 
 # TODO: make it work besides f::map
 λx() {
-   local readonly body="${@: -1}"
-   local readonly arg_count="$(echo "$body" | grep -Eo '%[0-9]+' | wc -l)"
-   local readonly new_body="$(echo "$body" | sed 's/%/$var/g')"
+   local -r body="${@: -1}"
+   local -r arg_count="$(echo "$body" | grep -Eo '%[0-9]+' | wc -l)"
+   local -r new_body="$(echo "$body" | sed 's/%/$var/g')"
    args=()
    for i in $(seq 1 $arg_count); do
       args+=("var${i}")

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 feedback::confirmation() {
-   local readonly msg="$1"
-   local readonly default_yes="${2:-true}"
-   local readonly options
+   local -r msg="$1"
+   local -r default_yes="${2:-true}"
+   local -r options
 
    if $default_yes; then
       options="(Y|n)"
@@ -32,17 +32,17 @@ feedback::confirmation() {
 }
 
 feedback::text() {
-   local readonly question="$1"
+   local -r question="$1"
    printf "$1 " >&2
    read answer
    echo "$answer"
 }
 
 feedback::select_option_fallback() {
-   local readonly options="$1"
-   local readonly question="$2"
+   local -r options="$1"
+   local -r question="$2"
 
-   local readonly digits="$(printf "$options" | wc -l | wc -m | xargs -I% echo "% - 1" | bc 2> /dev/null || echo 2)"
+   local -r digits="$(printf "$options" | wc -l | wc -m | xargs -I% echo "% - 1" | bc 2> /dev/null || echo 2)"
    echo "$options" | awk "{printf(\"%${digits}d %s\n\", NR, \$0)}" > /dev/tty
    echo
 
@@ -61,8 +61,8 @@ feedback::select_option_fallback() {
 }
 
 feedback::select_option() {
-   local readonly options="$(cat)"
-   local readonly question="${1:-Select a number}"
+   local -r options="$(cat)"
+   local -r question="${1:-Select a number}"
 
    if platform::command_exists fzf; then
       local height="$(echo "$options" | wc -l)"

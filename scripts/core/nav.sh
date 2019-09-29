@@ -35,8 +35,8 @@ input::parse() {
 # ===============
 
 str::starts_with_slash() {
-   local readonly txt="${1:-}"
-   local readonly first_char="${txt:0:1}"
+   local -r txt="${1:-}"
+   local -r first_char="${txt:0:1}"
    [[ $first_char = "/" ]]
 }
 
@@ -56,7 +56,7 @@ str::remove_trailing_slash() {
 }
 
 str::add_leading_slash() {
-   local readonly path="$(cat)"
+   local -r path="$(cat)"
    if str::starts_with_slash "$path"; then
       echo "$path"
    else
@@ -65,7 +65,7 @@ str::add_leading_slash() {
 }
 
 str::add_trailing_slash() {
-   local readonly path="$(cat)"
+   local -r path="$(cat)"
    if str::ends_with_slash "$path"; then
       echo "$path"
    else
@@ -82,8 +82,8 @@ path::is_root() {
 }
 
 path::start() {
-   local readonly action="$1"
-   local readonly arg="${2:-}"
+   local -r action="$1"
+   local -r arg="${2:-}"
 
    if [[ $action = "browse" ]] && [[ -n "$arg" ]]; then
       echo "$arg"
@@ -93,7 +93,7 @@ path::start() {
 }
 
 path::parse_dots() {
-   local readonly path="$(cat)"
+   local -r path="$(cat)"
 
    dirs=()
    for p in $(echo "$path" | tr '/' '\n'); do
@@ -104,7 +104,7 @@ path::parse_dots() {
       esac
    done
 
-   local readonly base="$(echo "/${dirs[@]:-}" | tr ' ' '/')"
+   local -r base="$(echo "/${dirs[@]:-}" | tr ' ' '/')"
    if [[ "$path" = *.. ]] || path::is_navigable "$path"; then
       echo "${base}/"
    else
@@ -113,7 +113,7 @@ path::parse_dots() {
 }
 
 path::fallback_to_root() {
-   local readonly path="$(cat)"
+   local -r path="$(cat)"
    if [[ -n $path ]]; then
       echo "$path"
    else
@@ -136,7 +136,7 @@ path::hacks() {
 }
 
 path::resolve() {
-   local readonly folder="${1:-}"
+   local -r folder="${1:-}"
    echo "${CWD}/${folder}" \
       | str::remove_double_slashes \
       | path::parse_dots 2> /dev/null \
@@ -172,7 +172,7 @@ nav::cd() {
 }
 
 nav::open() {
-   local readonly path="$1"
+   local -r path="$1"
 
    if path::is_navigable "$path"; then
       nav::cd "$path"
@@ -192,14 +192,14 @@ action::before_exit() {
 }
 
 action::browse() {
-   local readonly selection="$(nav::ls_with_dot_dot | fzf::call)"
+   local -r selection="$(nav::ls_with_dot_dot | fzf::call)"
 
    if [[ -z "$selection" ]]; then
       action::before_exit "$selection"
       exit 0
    fi
 
-   local readonly path="$(path::resolve "$selection")"
+   local -r path="$(path::resolve "$selection")"
    nav::open "$path"
 }
 
@@ -227,7 +227,7 @@ action::handle() {
 }
 
 action::jump() {
-   local readonly path="$(path::all | fzf::call --preview-window 'down:33%')"
+   local -r path="$(path::all | fzf::call --preview-window 'down:33%')"
    local args=()
    IFS=' ' read -r -a args <<< $(fzf::default_args)
    "$0" --action browse "${args[@]:-}" --cwd "$path"
@@ -247,7 +247,7 @@ fzf::extra_bindings() {
 }
 
 fzf::bindings() {
-   local readonly args="$(fzf::default_args)"
+   local -r args="$(fzf::default_args)"
    echo "ctrl-h:execute(echo ..)+abort"
    echo "ctrl-j:execute($0 --action jump $args)+abort"
    echo "ctrl-v:execute($0 --action view --cwd $CWD --path {} $args)"

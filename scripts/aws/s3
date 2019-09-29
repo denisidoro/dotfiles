@@ -12,7 +12,7 @@ source "${DOTFILES}/scripts/core/nav.sh"
 docs::eval_help "$@"
 
 s3::path() {
-   local readonly path="$1"
+   local -r path="$1"
    printf "s3:/"
    echo "$path/" \
       | str::remove_double_slashes
@@ -24,7 +24,7 @@ s3::file_path() {
 }
 
 path::is_navigable() {
-   local readonly path="$1"
+   local -r path="$1"
    if path::is_root "$CWD"; then
       return 0
    fi
@@ -32,13 +32,13 @@ path::is_navigable() {
 }
 
 nav::ls() {
-   local readonly path="${1:-$CWD}"
+   local -r path="${1:-$CWD}"
    aws s3 ls "$(s3::path "$path")" \
       | awk '{print $NF}'
 }
 
 action::view() {
-   local readonly path="$1"
+   local -r path="$1"
 
    if path::is_navigable "$path"; then
       nav::ls "$path" \
@@ -55,11 +55,11 @@ fzf::extra_bindings() {
 }
 
 action::edit() {
-   local readonly path="$1"
+   local -r path="$1"
 
-   local readonly extension="${path##*.}"
-   local readonly tmpfile=$(mktemp --suffix ".${extension:-txt}")
-   local readonly remote_path="$(s3::file_path "$path")"
+   local -r extension="${path##*.}"
+   local -r tmpfile=$(mktemp --suffix ".${extension:-txt}")
+   local -r remote_path="$(s3::file_path "$path")"
 
    aws s3 cp --quiet "$remote_path" "$tmpfile"
    "$EDITOR" "$tmpfile"
@@ -75,7 +75,7 @@ action::handle_extra() {
 
 # in order to bypass trailing slash stripping when resolving the path
 path::intermediate_hacks() {
-   local readonly path="$(cat)"
+   local -r path="$(cat)"
    if str::starts_with_slash "$path"; then
       echo "$path"
    else

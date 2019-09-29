@@ -21,25 +21,25 @@ with_resolution() {
 }
 
 incomplete_image_urls() {
-    local readonly data="$1"
+    local -r data="$1"
    # echo "$data" | jq -r '.cover.url' 
    echo "$data" | jq -r '.screenshots | map(.url) | .[]' 
    echo "$data" | jq -r '.artworks | map(.url) | .[]' 
 }
 
 image_urls() {
-    local readonly data="$1"
+    local -r data="$1"
     incomplete_image_urls "$data" \
         | sed 's|//|http://|g'
 }
 
 print_result() {
-    local readonly data="$1"
-    local readonly cover="$2"
-    local readonly background="$3"
+    local -r data="$1"
+    local -r cover="$2"
+    local -r background="$3"
 
-    local readonly id="$(echo "$data" | jq -r .id)"
-    local readonly name="$(echo "$data" | jq -r .name)"
+    local -r id="$(echo "$data" | jq -r .id)"
+    local -r name="$(echo "$data" | jq -r .name)"
 
     printf "{\"name\": \"${name}\", \"igdbId\": ${id}"
     [ -n "$cover" ] && printf ", 'cover': \"${cover}\""
@@ -48,8 +48,8 @@ print_result() {
 }
 
 prompt() {
-    local readonly data="$1"
-    local readonly urls="$(image_urls "$data")"
+    local -r data="$1"
+    local -r urls="$(image_urls "$data")"
 
     local cover
     local background=

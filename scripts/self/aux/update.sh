@@ -68,8 +68,8 @@ fix_locales() {
 # ==============================
 
 feedback::maybe() {
-   local readonly fn="$1"
-   local readonly value="$2"
+   local -r fn="$1"
+   local -r value="$2"
    if [ -n "$value" ]; then
       echo "$value"
    else
@@ -87,7 +87,7 @@ feedback::maybe_select_option() {
 }
 
 feedback::maybe_confirmation() { 
-   local readonly value="$1"
+   local -r value="$1"
    if [ -n "$value" ]; then
       if $value; then
          return 0
@@ -106,8 +106,8 @@ setup_git_credentials() {
    if ! grep -q "email" "$LOCAL_GITCONFIG" 2> /dev/null; then
       echo
       log::note "Your git credentials aren't setup"
-      local readonly fullname="$(feedback::maybe_text "${DOT_INSTALL_NAME:-}" "What is your name?")"
-      local readonly email="$(feedback::maybe_text "${DOT_INSTALL_EMAIL:-}" "What is your email?")"
+      local -r fullname="$(feedback::maybe_text "${DOT_INSTALL_NAME:-}" "What is your name?")"
+      local -r email="$(feedback::maybe_text "${DOT_INSTALL_EMAIL:-}" "What is your email?")"
       echo -e "[user]\n   name = $fullname\n   email = $email" > "$LOCAL_GITCONFIG"
    fi
 
@@ -120,7 +120,7 @@ setup_docopts() {
    fi
 
    echo
-   local readonly backend="$(echo "bash python go" | tr ' ' '\n' | feedback::maybe_select_option "${DOT_INSTALL_DOCOPTS:-}" "What backend do you want for docopts?")"
+   local -r backend="$(echo "bash python go" | tr ' ' '\n' | feedback::maybe_select_option "${DOT_INSTALL_DOCOPTS:-}" "What backend do you want for docopts?")"
 
       if [[ -z "${backend:-}" ]]; then
          log::error "Invalid option"
@@ -139,7 +139,7 @@ setup_docopts() {
 
    replace_file() {
 
-      local readonly FILE_PATH="$1"
+      local -r FILE_PATH="$1"
       if fs::is_file "$FILE_PATH" && ! test -L "$FILE_PATH"; then
          log::warning "${FILE_PATH} already exists and it's not a symlink"
          if feedback::maybe_confirmation "${DOT_INSTALL_BACKUP:-}" "Do you want to backup and stop using it?"; then
@@ -219,8 +219,8 @@ setup_docopts() {
       if grep -q "PS1" "$LOCAL_ZSHRC"; then
          return 0
       fi
-      local readonly ps1="$(dot shell bash ps1)" 
-      local readonly code="$(ps1_code "$ps1")" 
+      local -r ps1="$(dot shell bash ps1)" 
+      local -r code="$(ps1_code "$ps1")" 
       echo "$code" >> "$LOCAL_ZSHRC"
    }
 
@@ -298,7 +298,7 @@ setup_docopts() {
 
    update_dotfiles() {
 
-      local readonly CONFIG="${DOTFILES}/symlinks/${1}"
+      local -r CONFIG="${DOTFILES}/symlinks/${1}"
       shift
 
       echo
@@ -381,10 +381,10 @@ setup_docopts() {
    project_status() {
       cd "$DOTFILES"
 
-      local readonly UPSTREAM=${1:-'@{u}'}
-      local readonly LOCAL=$(git rev-parse @)
-      local readonly REMOTE=$(git rev-parse "$UPSTREAM")
-      local readonly BASE=$(git merge-base @ "$UPSTREAM")
+      local -r UPSTREAM=${1:-'@{u}'}
+      local -r LOCAL=$(git rev-parse @)
+      local -r REMOTE=$(git rev-parse "$UPSTREAM")
+      local -r BASE=$(git merge-base @ "$UPSTREAM")
 
       if [[ "$LOCAL" = "$REMOTE" ]]; then
          echo "synced"

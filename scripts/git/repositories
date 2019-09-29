@@ -17,7 +17,7 @@ source "${DOTFILES}/scripts/core/git.sh"
 docs::eval "$@"
 
 _url() {
-   local readonly p="$1"
+   local -r p="$1"
    if [[ $p > 1 ]]; then
       echo "https://github.com/${user}?page=$p&access_token=$GITHUB_TOKEN"
    else

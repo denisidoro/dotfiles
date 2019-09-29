@@ -5,7 +5,7 @@ set -euo pipefail
 source "${DOTFILES}/scripts/self/aux/test.sh"
 
 _validate() {
-   local readonly filename="$1"
+   local -r filename="$1"
    log::warning "Validating $filename..."
    cat "$filename" \
       | grep '\- link:' -A10000 \

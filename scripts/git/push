@@ -15,7 +15,7 @@ source "${DOTFILES}/scripts/core/git.sh"
 docs::eval_help "$@"
 
 _upstream() {
-   local readonly branch="$(git rev-parse --abbrev-ref HEAD)"
+   local -r branch="$(git rev-parse --abbrev-ref HEAD)"
    git push -u origin "$branch"
 }
 

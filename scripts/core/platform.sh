@@ -33,7 +33,7 @@ platform::is_android() {
 }
 
 platform::is_ami2() {
-   local readonly txt="$(uname -a)"
+   local -r txt="$(uname -a)"
    [[ $(echo "$txt" | grep -q "Amazon Linux release 2" || echo "$txt" | grep -q "amzn2" || echo 1) -eq 0 ]]
 }
 
@@ -62,8 +62,8 @@ platform::main_package_manager() {
    elif platform::command_exists apt; then
       echo "apt"
    elif platform::command_exists apt-get; then
-      local readonly apt_get_path="$(which apt-get)"
-      local readonly apt_path="$(echo "$apt_get_path" | sed 's/-get//')"
+      local -r apt_get_path="$(which apt-get)"
+      local -r apt_path="$(echo "$apt_get_path" | sed 's/-get//')"
       sudo ln -s "$apt_get_path" "$apt_path"
       echo "apt"
    elif platform::command_exists yum; then

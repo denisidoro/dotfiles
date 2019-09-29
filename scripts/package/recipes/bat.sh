@@ -7,12 +7,12 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 VERSION="0.11.0"
 
 url::generate() {
-   local readonly suffix="$1"
+   local -r suffix="$1"
    echo "https://github.com/sharkdp/bat/releases/download/v${VERSION}/bat_${VERSION}_${suffix}.deb"
 }
 
 url::get() {
-   local readonly tags="$(platform::tags)"
+   local -r tags="$(platform::tags)"
    local suffix
    case $tags in
       *arm*) suffix="arm64" ;;

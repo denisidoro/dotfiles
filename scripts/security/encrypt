@@ -41,8 +41,8 @@ algo_1() {
 }
 
 algo_256() {
-   local readonly content="$1"
-   local readonly pass="$2"
+   local -r content="$1"
+   local -r pass="$2"
 
    echo "$content" | openssl enc -aes256 -a -k "$pass"
 }

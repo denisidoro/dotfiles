@@ -7,12 +7,12 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 REPO_TAG="v0.6.3-alpha1"
 
 url::generate() {
-   local readonly suffix="$1"
+   local -r suffix="$1"
    echo "https://github.com/denisidoro/docopts/releases/download/${REPO_TAG}/docopts-${suffix}"
 }
 
 url::get() {
-   local readonly tags="$(platform::tags)"
+   local -r tags="$(platform::tags)"
    local suffix
    case $tags in
       *osx*) suffix="osx";;

@@ -33,8 +33,8 @@ best_match() {
 }
 
 build_msg() {
-   local readonly type="$1"
-   local readonly txt="${2:-null}"
+   local -r type="$1"
+   local -r txt="${2:-null}"
    echo "${type};${txt}"
 }
 

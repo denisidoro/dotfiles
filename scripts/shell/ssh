@@ -31,21 +31,21 @@ get_name() {
 }
 
 get_config() {
-   local readonly name="$1"
+   local -r name="$1"
    cat "$LIST" \
       | jq -r ".machines | .[] | select(.name==\"${name}\")"
 }
 
 eval_str() {
-   local readonly txt="$(cat)"
+   local -r txt="$(cat)"
    if [[ $txt != "null" ]]; then
       eval "echo $txt"
    fi
 }
 
 field() {
-   local readonly config="$1"
-   local readonly fieldname="$2"
+   local -r config="$1"
+   local -r fieldname="$2"
 
    echo "$config" \
       | jq -r ".${fieldname}" \
@@ -59,22 +59,22 @@ best_match() {
 }
 
 ssh_args() {
-   local readonly name="$1"
+   local -r name="$1"
 
-   local readonly config="$(get_config "$name")"
-   local readonly hostname="$(field "$config" hostname)"
-   local readonly ip="$(field "$config" ip)"
-   local readonly user="$(field "$config" user)"
-   local readonly uri="$(field "$config" uri)"
-   local readonly key="$(field "$config" key)"
-   local readonly port="$(field "$config" port)"
+   local -r config="$(get_config "$name")"
+   local -r hostname="$(field "$config" hostname)"
+   local -r ip="$(field "$config" ip)"
+   local -r user="$(field "$config" user)"
+   local -r uri="$(field "$config" uri)"
+   local -r key="$(field "$config" key)"
+   local -r port="$(field "$config" port)"
 
    if [ -n "$hostname" ]; then
-      local readonly id="$hostname"
+      local -r id="$hostname"
    elif [ -n "$uri" ]; then
-      local readonly id="$uri"
+      local -r id="$uri"
    else [ -n "$ip" ];
-      local readonly id="$ip"
+      local -r id="$ip"
    fi
 
    [ -n "$key" ] && echo -n " -i $key "

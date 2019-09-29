@@ -13,13 +13,13 @@ source "${DOTFILES}/scripts/download/aux/core.sh"
 docs::eval "$@"
 
 _remove_match() {
-   local readonly match="${1:-}"
+   local -r match="${1:-}"
    cat | sed "s/${match}//g"
 }
 
 _apply_field_hack() {
-   local readonly field="${1:-}"
-   local readonly content="$(cat)"
+   local -r field="${1:-}"
+   local -r content="$(cat)"
    if [ -z "$content" ]; then
       echo "$content"
    else
@@ -32,7 +32,7 @@ _apply_field_hack() {
 }
 
 _apply_reduced_hacks() {
-   local readonly filename="${1:-}"
+   local -r filename="${1:-}"
    echo "$filename" | sed 's/\./ /g' | xargs
 }
 

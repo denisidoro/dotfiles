@@ -17,8 +17,8 @@ TV_HOME="${TV_HOME:-$HOME/TV}"
 MOVIES_HOME="${MOVIES_HOME:-$HOME/Movies}"
 
 _video_content() {
-   local readonly f="$(cat)"
-   local readonly first_call="${1:-true}"
+   local -r f="$(cat)"
+   local -r first_call="${1:-true}"
    if fs::is_dir "$f" && ! $first_call; then
       ls "$f" | _video_content false
    else
@@ -27,7 +27,7 @@ _video_content() {
 }
 
 _tv_folder() {
-   local readonly filename="$(dot down parser video name "$full_filename")"
+   local -r filename="$(dot down parser video name "$full_filename")"
    local dist
    cd "$TV_HOME"
    for t in *; do
@@ -41,12 +41,12 @@ _tv_folder() {
 }
 
 _move_video() {
-   local readonly full_filename="$1"
-   local readonly info="$(dot down parser video "$full_filename")"
-   local readonly is_tv="$(echo "$info" | grep tv | awk '{print $2}')"
-   local readonly filename="$(echo "$info" | grep reduced | gsed -E 's/.*?\[0m\s(.*)/\1/')"
+   local -r full_filename="$1"
+   local -r info="$(dot down parser video "$full_filename")"
+   local -r is_tv="$(echo "$info" | grep tv | awk '{print $2}')"
+   local -r filename="$(echo "$info" | grep reduced | gsed -E 's/.*?\[0m\s(.*)/\1/')"
    if $is_tv; then
-      local readonly folder="$(_tv_folder "$filename")"
+      local -r folder="$(_tv_folder "$filename")"
       echo "mv \"${DOWNLOADS_HOME}/${full_filename}\" \"${TV_HOME}/${folder}\""
    else
       echo "mv \"${DOWNLOADS_HOME}/${full_filename}\" \"${MOVIES_HOME}/${filename}\""

@@ -15,8 +15,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 _transform() {
-   local readonly input="$1"
-   local readonly code="$2"
+   local -r input="$1"
+   local -r code="$2"
    case $code in
       line) echo "$input" | tr '\n' ' ' ;;
       *) echo "$input" | eval "$code" ;;

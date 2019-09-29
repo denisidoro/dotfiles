@@ -16,7 +16,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 get_json() {
-   local readonly query="$(str::urlencode "$1")"
+   local -r query="$(str::urlencode "$1")"
 
    curl -s \
       "https://www.googleapis.com/books/v1/volumes?q=$query" \
