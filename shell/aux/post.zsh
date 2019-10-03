@@ -15,4 +15,4 @@ if ${DOT_FASD:-false}; then
 fi
 
 # navi
-source "${DEV_HOME}/navi/navi.plugin.${SH}"
+source "${DEV_HOME}/navi/navi.plugin.${SH}" 2> /dev/null || true
