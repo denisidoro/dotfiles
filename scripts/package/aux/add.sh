@@ -9,19 +9,19 @@ recipe::list() {
 }
 
 recipe::install() {
-   local readonly dep="$1"
+   local -r dep="$1"
    bash "${RECIPES_FOLDER}/${dep}.sh"
 }
 
 filter::with_recipe() {
-   local readonly deps="$1"
-   local readonly regex="$2"
+   local -r deps="$1"
+   local -r regex="$2"
    echo "$deps" | grep -E "$regex"
 }
 
 filter::without_recipe() {
-   local readonly deps="$1"
-   local readonly regex="$2"
+   local -r deps="$1"
+   local -r regex="$2"
    echo "$deps" | grep -Ev "$regex"
 }
 

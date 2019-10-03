@@ -2,7 +2,7 @@
 
 # in order to make it work with any folder in $DOTFILES
 _get_root_folder() {
-   local readonly folder="${1:-}"
+   local -r folder="${1:-}"
    if [ -z "$folder" ]; then
       echo "${HOME}/.dotfiles"
       exit 0

@@ -28,26 +28,26 @@ only_digits() {
 }
 
 epoch_to_touchdate() {
-   local readonly epoch=$1
-   local readonly date=$(epoch_to_date $epoch)
+   local -r epoch=$1
+   local -r date=$(epoch_to_date $epoch)
    printf "${date::-2}" | only_digits
    printf '.'
    echo "${date: -2}"
 }
 
 epoch_to_filedate() {
-   local readonly epoch=$1
-   local readonly date=$(epoch_to_date $epoch)
+   local -r epoch=$1
+   local -r date=$(epoch_to_date $epoch)
    printf "${date::-8}"
    printf '_'
    echo "${date: -8}"
 }
 
 get_new_filepath() {
-   local readonly filepath="$1"
-   local readonly target_time=$2
+   local -r filepath="$1"
+   local -r target_time=$2
 
-   local readonly extension="${filepath##*.}"
+   local -r extension="${filepath##*.}"
 
    printf "$(cd "$(dirname "$filepath")" && pwd)/"
    printf "$(epoch_to_filedate $target_time).${extension}" | sed 's/[^0-9_]*//g'
@@ -60,22 +60,22 @@ get_creation_time() {
 }
 
 get_target_time() {
-   local readonly current_time="$1"
+   local -r current_time="$1"
 
-   local readonly minutes_to_add=$(echo "$days * 24 * 60 + $hours * 60 + $minutes" | bc)
-   local readonly seconds_to_add=$(($minutes_to_add * 60))
+   local -r minutes_to_add=$(echo "$days * 24 * 60 + $hours * 60 + $minutes" | bc)
+   local -r seconds_to_add=$(($minutes_to_add * 60))
 
    echo $(($current_time + $seconds_to_add))
 }
 
 prompt_text() {
-   local readonly filepath="$1"
+   local -r filepath="$1"
 
-   local readonly filename="$(basename "$filepath")"
+   local -r filename="$(basename "$filepath")"
 
-   local readonly green="$(log::color green)"
-   local readonly yellow="$(log::color yellow)"
-   local readonly reset="$(log::color reset)"
+   local -r green="$(log::color green)"
+   local -r yellow="$(log::color yellow)"
+   local -r reset="$(log::color reset)"
 
    echo "$green[${filename}]$reset from $yellow$(epoch_to_date $current_time)$reset to $yellow$(epoch_to_date $target_time)$reset?"
 }

@@ -22,7 +22,7 @@ path::all() {
 }
 
 path::canonical_to_jq() {
-   local readonly path="$1"
+   local -r path="$1"
 
    printf "$path" \
       | tr '/' '\n' \
@@ -32,15 +32,15 @@ path::canonical_to_jq() {
 }
 
 path::is_navigable() {
-   local readonly path="$1"
+   local -r path="$1"
 
    nav::ls "$path" &> /dev/null
 }
 
 nav::ls() {
-   local readonly path="${1:-$CWD}"
+   local -r path="${1:-$CWD}"
 
-   local readonly jq_path=$(path::canonical_to_jq "$path")
+   local -r jq_path=$(path::canonical_to_jq "$path")
 
    cat "$json" \
       | jq "$jq_path | keys | .[]" \
@@ -49,9 +49,9 @@ nav::ls() {
 }
 
 action::view() {
-   local readonly path="$1"
+   local -r path="$1"
 
-   local readonly jq_path="$(path::canonical_to_jq "$path")"
+   local -r jq_path="$(path::canonical_to_jq "$path")"
 
    cat "$json" \
       | jq -C "$jq_path" \

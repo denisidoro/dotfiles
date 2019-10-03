@@ -17,9 +17,9 @@ FILEPATH="${PREFIX}/etc/ssh/sshd_config"
 
 sed_str() {
    if $enable; then
-      local readonly bool=true
+      local -r bool=true
    else
-      local readonly bool=false
+      local -r bool=false
    fi
    echo "s/PasswordAuthentication.*/PasswordAuthentication ${bool}/g"
 }

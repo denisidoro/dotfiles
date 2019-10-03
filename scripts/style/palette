@@ -25,7 +25,7 @@ _extract_colors() {
 }
 
 _image_dominant_colors() {
-   local readonly filename="$1"
+   local -r filename="$1"
    convert "$filename" +dither -colors "${number}" -unique-colors txt: \
       | _extract_colors
 }

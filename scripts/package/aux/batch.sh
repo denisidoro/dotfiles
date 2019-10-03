@@ -4,7 +4,7 @@
 DEP_LIST_FILE="${DOTFILES}/scripts/package/aux/dependencies.ini"
 
 batch::dependencies() {
-   local readonly name="$1"
+   local -r name="$1"
 
    for key in "$@"; do
       cat "$DEP_LIST_FILE" \

@@ -43,8 +43,8 @@ list_commands_for_context() {
 }
 
 exact_match() {
-   local readonly query="$1"
-   local readonly matches="$2"
+   local -r query="$1"
+   local -r matches="$2"
 
    for m in $matches; do
       if [[ "$m" = "$query" ]]; then
@@ -102,7 +102,7 @@ fzf_prompt() {
 }
 
 _alias() {
-   local readonly arg="$1"
+   local -r arg="$1"
    case "$arg" in
       and) echo android;;
       clj) echo clojure;;

@@ -20,20 +20,20 @@ _cleanup_uri() {
 }
 
 _full_uri() {
-   local readonly uri="$1"
-   local readonly branch="$2"
+   local -r uri="$1"
+   local -r branch="$2"
    echo "https://${uri}/compare/${branch}?expand=1"
 }
 
 _get_url() {
    cd "$(git::root)"
    cd .git
-   local readonly original_uri="$(cat config \
+   local -r original_uri="$(cat config \
       | grep "remote \"origin" -A2 \
       | grep github \
       | str::last_word)"
-   local readonly uri="$(_cleanup_uri "$original_uri")"
-   local readonly branch="$(git::current_branch)"
+   local -r uri="$(_cleanup_uri "$original_uri")"
+   local -r branch="$(git::current_branch)"
    _full_uri "$uri" "$branch"
 }
 

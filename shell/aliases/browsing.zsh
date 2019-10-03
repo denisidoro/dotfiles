@@ -31,6 +31,7 @@ _safe_cd() { [[ -d "${1:-}" ]] && cd "$1"; }
 j() { _safe_cd "$(dot fs jump global "$@")"; }
 jj() { _safe_cd "$(dot fs jump local "$@")"; }
 jn() { _safe_cd "$(dot fs jump work "$@")"; }
+jd() { _safe_cd "$(dot fs jump dev "$@")"; }
 jjf() { _safe_cd "$(dot fs jump file "$@")"; }
 up() { _safe_cd "$(dot fs jump up "$@")"; }
 jr() { _safe_cd "$(dot fs jump root "$@")"; }

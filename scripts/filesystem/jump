@@ -7,7 +7,7 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 #?? 0.1.0
 ##?
 ##? Usage:
-##?    jump (global|local|work|file) <args>...
+##?    jump (global|local|work|file|dev) <args>...
 ##?    jump (up|root) <args>...
 ##?    jump edit (global|local) <editor> <args>...
 
@@ -59,7 +59,7 @@ list_folders() {
 }
 
 cd_file() {
-   local readonly filepath="$1"
+   local -r filepath="$1"
 
    cd "$(dirname "$filepath")"
 }
@@ -72,7 +72,7 @@ _jump() {
    if [ $# -gt 0 ]; then
       "$cmd" "$(best_match "$lines" "$@")"
    else
-      local readonly selection="$(echo "$lines" | _fzf)"
+      local -r selection="$(echo "$lines" | _fzf)"
       if [ -n "$selection" ]; then
          "$cmd" "$selection"
       fi
@@ -96,22 +96,25 @@ jump_to_folder_for_file() {
 }
 
 edit_global_file() {
-   local readonly editor="$1"
+   local -r editor="$1"
    shift
 
-   local readonly files="$(_fasd_suggestions "$@" | files_for_folders)"
+   local -r files="$(_fasd_suggestions "$@" | files_for_folders)"
    _jump "$editor" "$files"
 }
 
 edit_file() {
-   local readonly editor="$1"
+   local -r editor="$1"
    shift
 
    _jump "$editor" "$(list_files)" "$@"
 }
 
-jump_to_work_folder() {
-   cd "$WORK_HOME"
+jump_to_specific_folder() {
+   local -r folder="$1"
+   shift
+
+   cd "$folder"
    _jump cd "$(ls)" "$@"
 }
 
@@ -140,7 +143,8 @@ shift
 
 case "$cmd" in
    "local") jump_to_folder "$@" >/dev/null && pwd ;;
-   "work") jump_to_work_folder "$@" >/dev/null && pwd ;;
+   "work") jump_to_specific_folder "$WORK_HOME" "$@" >/dev/null && pwd ;;
+   "dev") jump_to_specific_folder "$DEV_HOME" "$@" >/dev/null && pwd ;;
    "file") jump_to_folder_for_file "$@" >/dev/null && pwd ;;
    "up") cd_up "$@" >/dev/null && pwd ;;
    "root") cd_to_git_root "$@" >/dev/null && pwd ;;

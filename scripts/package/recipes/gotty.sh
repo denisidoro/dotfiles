@@ -7,12 +7,12 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 REPO_TAG="2.0.0-alpha.3"
 
 url::generate() {
-   local readonly suffix="$1"
+   local -r suffix="$1"
    echo "https://github.com/yudai/gotty/releases/download/v${REPO_TAG}/gotty_${REPO_TAG}_${suffix}.tar.gz"
 }
 
 url::get() {
-   local readonly tags="$(platform::tags)"
+   local -r tags="$(platform::tags)"
    local suffix
    case $tags in
       *osx*64bits*) suffix="darwin_386" ;;
