@@ -34,8 +34,13 @@ source "${DOTFILES}/shell/aliases/core.sh"
 # load local custom config
 source "${DOTFILES}/local/zshrc"
 
-# fzf and fasd
+# fzf, fasd and navi
 source "${DOTFILES}/shell/aux/post.zsh"
+
+# demo utilities
+if ${DEMO_MODE:-false}; then
+  source "${DOTFILES}/shell/aux/demo.zsh"
+fi
 
 # startup time instrumentation end
 # unsetopt XTRACE

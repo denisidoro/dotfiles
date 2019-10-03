@@ -3,7 +3,7 @@
 feedback::confirmation() {
    local -r msg="$1"
    local -r default_yes="${2:-true}"
-   local -r options
+   local options
 
    if $default_yes; then
       options="(Y|n)"
