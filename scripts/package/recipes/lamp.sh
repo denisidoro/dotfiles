@@ -30,6 +30,8 @@ recipe::httpd() {
 }
 
 recipe::httpd2() {
+   log::warning "Setting memory limit..."
+   sudo sed -iE 's/^memory_limit =.*/memory_limit = 512M/' /etc/php.ini
    groups
    log::warning "Changing groups..."
    sudo chown -R ec2-user:apache /var/www
