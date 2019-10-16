@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
 
 clojure::install() {
   local -r CLJ_VERSION="1.10.1.447"

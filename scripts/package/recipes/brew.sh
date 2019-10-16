@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
 
 _brew_osx() {
    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"

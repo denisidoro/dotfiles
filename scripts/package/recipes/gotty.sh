@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
-
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 REPO_TAG="2.0.0-alpha.3"
 

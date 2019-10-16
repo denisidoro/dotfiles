@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
 
 heptio-authenticator-aws::depends_on() {
    coll::new aws-iam-authenticator

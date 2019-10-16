@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
 
 user="Red5d"
 repo="pushbullet-bash"

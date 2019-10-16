@@ -1,26 +1,26 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
-
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 _prompt() {
    log::warning "$1"
    read -p "Press enter to continue"
 }
 
-if fs::is_dir "/var/www/html/autoresponders.php"; then
-   recipe::abort_installed sendy
-fi
+sendy::is_installed() {
+  fs::is_dir "/var/www/html/autoresponders.php"
+}
 
-if ! platform::is_ami2; then
+sendy::depends_on() {
+  coll::new unzip curl
+} 
+
+sendy::install() {
+  if ! platform::is_ami2; then
    log::error "Recipe only available to Amazon Linux AMI 2"
    exit 45
 fi
 
 log::warning "Setting up sendy..."
-
-dot pkg add unzip curl
 
 sendy_zip_url="https://sendy.co/download/?license=${SENDY_KEY}"
 
@@ -40,3 +40,5 @@ log::warning "Setting cron..."
 (crontab -l 2>/dev/null; echo "*/1 * * * * php /var/www/html/autoresponders.php > /dev/null 2>&1") | crontab -
 (crontab -l 2>/dev/null; echo "*/5 * * * * php /var/www/html/scheduled.php > /dev/null 2>&1") | crontab -
 (crontab -l 2>/dev/null; echo "*/1 * * * * php /var/www/html/import-csv.php > /dev/null 2>&1") | crontab -
+}
+

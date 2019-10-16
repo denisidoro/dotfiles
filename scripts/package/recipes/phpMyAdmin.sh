@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
-
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 phpMyAdmin::is_installed() {
   fs::is_dir "/var/www/html/phpMyAdmin"

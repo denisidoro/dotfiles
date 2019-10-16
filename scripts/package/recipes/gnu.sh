@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
 
 gnu::is_installed() {
   platform::command_exists ggrep
