@@ -13,40 +13,16 @@ job_defaults: &defaults
       TERM: "dumb"
 
 jobs:
-  symlink:
-    <<: *defaults
-    steps:
-      - checkout
-      - run: ./bin/dot self test symlink
-
-  parse:
+  tests:
     <<: *defaults
     steps:
       - checkout
       - run: apk add git
       - run: 
-          name: JSON
-          command: ./bin/dot self test json
-      - run: 
-          name: YAML
-          command: ./bin/dot self test yaml
-
-  bashrc:
-    <<: *defaults
-    steps:
-      - checkout
-      - run: ./bin/dot self test bashrc
-
-  init:
-    <<: *defaults
-    steps:
-      - checkout
-      - run: ./bin/dot self test init
+          command: ./bin/dot self test
 
 workflows:
   version: 2
   run-tests:
     jobs:
-      - symlink
-      - parse
-      - bashrc
+      - tests
