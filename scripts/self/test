@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/self/aux/test.sh"
 
 ##? Run tests
 ##?
 ##? Usage:
-##?    test <suite>
+##?    test
 
 docs::eval_help "$@"
 
-suite="$1"
-bash "${DOTFILES}/scripts/self/tests/${suite}.sh"
+tests="$(find "${DOTFILES}/scripts/self/tests/" -iname "${1:-*}.sh")"
 
+for test in $tests; do
+   source "$test"
+done
+
+test::finish

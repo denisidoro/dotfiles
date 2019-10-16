@@ -11,4 +11,4 @@ init_works() {
 }
 
 test::set_suite "init"
-test::run "The installation scripts starts" init_works
+test::skip "The installation script starts" init_works

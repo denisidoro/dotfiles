@@ -26,5 +26,5 @@ symlinks() {
       | grep -qv "☓"
 }
 
-test::suite "symlink"
+test::set_suite "symlink"
 test::run "all symlinks are valid"

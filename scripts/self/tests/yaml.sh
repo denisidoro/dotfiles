@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-test::fact
-
 _find_yamls() {
    find . -iname "*.yaml"
    find . -iname "*.yml"
@@ -16,5 +14,5 @@ validate_yaml() {
       | xargs -I% dot code parser yaml %
 }
 
-test::suite "yaml"
+test::set_suite "yaml"
 test::run "all YAMLs are syntactically valid" validate_yaml

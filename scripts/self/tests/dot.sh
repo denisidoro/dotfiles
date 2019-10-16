@@ -2,9 +2,8 @@
 # vim: filetype=sh
 
 health() {
-   res="$(dot self health)"
-   echo "$res" | grep "====" \
-   }
+   dot self health --help | grep -q Usage
+}
 
 test::set_suite "dict"
 test::run "dot <ctx> <cmd> works" health

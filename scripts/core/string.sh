@@ -42,9 +42,9 @@ str::index_last_occurrence() {
 }
 
 str::reverse_lines() {
-   if command_exists tac; then
+   if platform::command_exists tac; then
       tac
-   elif command_exists perl; then
+   elif platform::command_exists perl; then
       perl -e 'print reverse <>'
    else
       awk '{a[i++]=$0} END {for (j=i-1; j>=0;) print a[j--] }'

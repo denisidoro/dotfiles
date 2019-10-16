@@ -8,4 +8,4 @@ symlink_bashrc() {
 }
 
 test::set_suite "bashrc"
-test::run "symlinks include bashrc" symlink_bashrc
+test::skip "symlinks include bashrc" symlink_bashrc
