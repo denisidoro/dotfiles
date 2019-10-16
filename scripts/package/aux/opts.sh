@@ -8,6 +8,7 @@ opts::eval() {
    local print=false
    local values=""
    local path="${RECIPE_PATH:-${RECIPE_DIR:-${SCRIPT_HOME}/recipes}}"
+   local pkg_managers="$(pkg_manager::relevant)"
 
    case "${1:-}" in
       --version|version) entry_point="version"; shift ;;
@@ -31,6 +32,7 @@ opts::eval() {
 
       case $arg in
          --print) print=true ;;
+         --no-custom) pkg_managers="$(echo "$pkg_managers" | sed 's/custom//g')" ;;
          --ask|--a) ask="true" ;;
          --path|--dir) wait_for="path" ;;
          *) values="$(echo "$values" | coll::add "$arg")" ;;
@@ -42,7 +44,7 @@ opts::eval() {
       print "$print" \
       ask "$ask" \
       values "$values" \
-      pkg_managers "$(pkg_manager::relevant)")"
+      pkg_managers "$pkg_managers")"
 
    export RECIPE_PATH="$path"
 }
