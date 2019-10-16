@@ -2,10 +2,10 @@
 # vim: filetype=sh
 
 ftp::map() {
-  dict::new brew inetutils
+   dict::new brew inetutils
 }
 
 ftp::install() {
-  dot pkg add --no-custom ftp && return 0 || true
+   dot pkg add --no-custom ftp && return 0 || true
 }
 

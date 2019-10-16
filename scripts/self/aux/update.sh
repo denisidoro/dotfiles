@@ -78,15 +78,15 @@ feedback::maybe() {
    fi
 }
 
-feedback::maybe_text() { 
+feedback::maybe_text() {
    feedback::maybe feedback::text "$@"
 }
 
-feedback::maybe_select_option() { 
+feedback::maybe_select_option() {
    feedback::maybe feedback::select_option "$@"
 }
 
-feedback::maybe_confirmation() { 
+feedback::maybe_confirmation() {
    local -r value="$1"
    if [ -n "$value" ]; then
       if $value; then
@@ -219,8 +219,8 @@ setup_docopts() {
       if grep -q "PS1" "$LOCAL_ZSHRC"; then
          return 0
       fi
-      local -r ps1="$(dot shell bash ps1)" 
-      local -r code="$(ps1_code "$ps1")" 
+      local -r ps1="$(dot shell bash ps1)"
+      local -r code="$(ps1_code "$ps1")"
       echo "$code" >> "$LOCAL_ZSHRC"
    }
 

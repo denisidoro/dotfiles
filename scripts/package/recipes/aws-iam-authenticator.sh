@@ -6,5 +6,5 @@ aws-iam-authenticator::depends_on() {
 }
 
 aws-iam-authenticator::install() {
-  go get -u -v github.com/kubernetes-sigs/aws-iam-authenticator/cmd/aws-iam-authenticator
+   go get -u -v github.com/kubernetes-sigs/aws-iam-authenticator/cmd/aws-iam-authenticator
 }

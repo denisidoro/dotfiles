@@ -6,5 +6,5 @@ heptio-authenticator-aws::depends_on() {
 }
 
 heptio-authenticator-aws::install() {
-  sudo ln -s "$(which aws-iam-authenticator)" /usr/bin/heptio-authenticator-aws
+   sudo ln -s "$(which aws-iam-authenticator)" /usr/bin/heptio-authenticator-aws
 }

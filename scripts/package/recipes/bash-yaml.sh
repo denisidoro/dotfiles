@@ -3,9 +3,9 @@
 set -euo pipefail
 
 bash-yaml::is_installed() {
-  recipe::has_submodule $repo "script/yaml.sh"
+   recipe::has_submodule $repo "script/yaml.sh"
 }
 
 bash-yaml::install() {
-  recipe::clone_as_submodule jasperes bash-yaml
+   recipe::clone_as_submodule jasperes bash-yaml
 }

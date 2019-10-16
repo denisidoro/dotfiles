@@ -2,5 +2,5 @@
 # vim: filetype=sh
 
 zlua::install() {
-  install_from_git skywind3000 z.lua
+   install_from_git skywind3000 z.lua
 }

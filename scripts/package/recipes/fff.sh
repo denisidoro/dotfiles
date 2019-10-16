@@ -2,6 +2,6 @@
 # vim: filetype=sh
 
 fff::install() {
-  recipe::shallow_github_clone dylanaraps fff
-  recipe::make fff
+   recipe::shallow_github_clone dylanaraps fff
+   recipe::make fff
 }

@@ -11,26 +11,26 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 char::random() {
-    local -r var="$*"
-    echo "${var:$((RANDOM % ${#var})):1}"
+   local -r var="$*"
+   echo "${var:$((RANDOM % ${#var})):1}"
 }
 
 random_ps1() {
-    local -r ps1_template='\n\e[%sm\]\h\e[m\] \[\e[%sm\]\w\[\e[m\] $(nonzero_return)\n\[\e[%sm\]%s\[\e[m\] '
-    local -r prompts='>$Ωπ→'
+   local -r ps1_template='\n\e[%sm\]\h\e[m\] \[\e[%sm\]\w\[\e[m\] $(nonzero_return)\n\[\e[%sm\]%s\[\e[m\] '
+   local -r prompts='>$Ωπ→'
 
-    local -r t="$(echo "$ps1_template" | sed 's/\\/\\\\/g')"
-    local -r c="$(char::random "$prompts")"
+   local -r t="$(echo "$ps1_template" | sed 's/\\/\\\\/g')"
+   local -r c="$(char::random "$prompts")"
 
-    seq 31 36 \
-        | sort -R \
-        | xargs \
-        | cut -d' ' -f1-3 \
-        | xargs -I% echo "% $c" \
-        | xargs printf "$t"
-    echo
+   seq 31 36 \
+      | sort -R \
+      | xargs \
+      | cut -d' ' -f1-3 \
+      | xargs -I% echo "% $c" \
+      | xargs printf "$t"
+   echo
 }
 
 if $ps1; then
-  random_ps1
+   random_ps1
 fi

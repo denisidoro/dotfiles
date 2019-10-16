@@ -18,12 +18,12 @@ speed="${2:-10}"
 wait=$(echo "scale=2; 1 / ${speed}" | bc)
 
 while read -n1 character; do
-  count="$(echo "$character" | wc -w | xargs)"
-  if [[ $count > 0 ]]; then
-    printf "$character"
-  else
-    printf ' '
-  fi
-  sleep "$wait"
+   count="$(echo "$character" | wc -w | xargs)"
+   if [[ $count > 0 ]]; then
+      printf "$character"
+   else
+      printf ' '
+   fi
+   sleep "$wait"
 done < <(echo -n "$text")
 echo

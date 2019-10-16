@@ -12,16 +12,16 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 api_call() {
-    local -r endpoint="$1"
-    local -r query="$2"
+   local -r endpoint="$1"
+   local -r query="$2"
 
-    curl "https://api-v3.igdb.com/${endpoint}" \
-        -d "$query" \
-        -H "user-key: ${IGDB_KEY}" \
-        -H 'Accept: application/json' \
-        -s
+   curl "https://api-v3.igdb.com/${endpoint}" \
+      -d "$query" \
+      -H "user-key: ${IGDB_KEY}" \
+      -H 'Accept: application/json' \
+      -s
 }
 
 if $api; then
-    api_call "$endpoint" "$query"
+   api_call "$endpoint" "$query"
 fi

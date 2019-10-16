@@ -12,68 +12,68 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 best_match() {
-    dot gaming igdb api "games" "search \"${game}\"; fields name, id, artworks.url, screenshots.url, cover.url;" \
-       | jq -rc 'first'
+   dot gaming igdb api "games" "search \"${game}\"; fields name, id, artworks.url, screenshots.url, cover.url;" \
+      | jq -rc 'first'
 }
 
 with_resolution() {
-    sed "s/t_thumb/t_${1}/g"
+   sed "s/t_thumb/t_${1}/g"
 }
 
 incomplete_image_urls() {
-    local -r data="$1"
-   # echo "$data" | jq -r '.cover.url' 
-   echo "$data" | jq -r '.screenshots | map(.url) | .[]' 
-   echo "$data" | jq -r '.artworks | map(.url) | .[]' 
+   local -r data="$1"
+   # echo "$data" | jq -r '.cover.url'
+   echo "$data" | jq -r '.screenshots | map(.url) | .[]'
+   echo "$data" | jq -r '.artworks | map(.url) | .[]'
 }
 
 image_urls() {
-    local -r data="$1"
-    incomplete_image_urls "$data" \
-        | sed 's|//|http://|g'
+   local -r data="$1"
+   incomplete_image_urls "$data" \
+      | sed 's|//|http://|g'
 }
 
 print_result() {
-    local -r data="$1"
-    local -r cover="$2"
-    local -r background="$3"
+   local -r data="$1"
+   local -r cover="$2"
+   local -r background="$3"
 
-    local -r id="$(echo "$data" | jq -r .id)"
-    local -r name="$(echo "$data" | jq -r .name)"
+   local -r id="$(echo "$data" | jq -r .id)"
+   local -r name="$(echo "$data" | jq -r .name)"
 
-    printf "{\"name\": \"${name}\", \"igdbId\": ${id}"
-    [ -n "$cover" ] && printf ", 'cover': \"${cover}\""
-    [ -n "$background" ] && printf ", \"background\": \"${background}\""
-    echo "}"
+   printf "{\"name\": \"${name}\", \"igdbId\": ${id}"
+   [ -n "$cover" ] && printf ", 'cover': \"${cover}\""
+   [ -n "$background" ] && printf ", \"background\": \"${background}\""
+   echo "}"
 }
 
 prompt() {
-    local -r data="$1"
-    local -r urls="$(image_urls "$data")"
+   local -r data="$1"
+   local -r urls="$(image_urls "$data")"
 
-    local cover
-    local background=
-    
-    for url in $urls; do
-        echo "$url" | with_resolution "720p" | xargs curl -s | imgcat
-        echo
+   local cover
+   local background=
 
-        read -n1 -p "Use as [c]over, [b]ackground, [s]kip or [a]bort: " answer
-        echo
-        case "$answer" in
-            c) cover="$url" ;;
-            b) background="$url" ;;
-            a) print_result "$data" "${cover:-}" "${background:-}" && return 0 ;;
-            *) printf '' ;;
-        esac
+   for url in $urls; do
+      echo "$url" | with_resolution "720p" | xargs curl -s | imgcat
+      echo
 
-        if [[ -n "${cover:-}" ]] && [[ -n "${background:-}" ]]; then
-            print_result "$data" "$cover" "$background"
-            return 0
-        fi
-    done
-            
-    print_result "$data" "${cover:-}" "${background:-}"
+      read -n1 -p "Use as [c]over, [b]ackground, [s]kip or [a]bort: " answer
+      echo
+      case "$answer" in
+         c) cover="$url" ;;
+         b) background="$url" ;;
+         a) print_result "$data" "${cover:-}" "${background:-}" && return 0 ;;
+         *) printf '' ;;
+      esac
+
+      if [[ -n "${cover:-}" ]] && [[ -n "${background:-}" ]]; then
+         print_result "$data" "$cover" "$background"
+         return 0
+      fi
+   done
+
+   print_result "$data" "${cover:-}" "${background:-}"
 }
 
 data="$(best_match)"

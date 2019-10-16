@@ -2,5 +2,5 @@
 # vim: filetype=sh
 
 clj::install() {
-  dot pkg install clojure 
+   dot pkg install clojure
 }
