@@ -6,8 +6,8 @@ _output() {
 }
 
 init_works() {
-  echo "$(_output)" \
-     | grep -q risk   
+   echo "$(_output)" \
+      | grep -q risk
 }
 
 test::set_suite "init"
