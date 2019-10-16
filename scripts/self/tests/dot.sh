@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
 
-source "${DOTFILES}/scripts/self/aux/test.sh"
+health() {
+  res="$(dot self health)"
+  echo "$res" | grep "====" \  
+}
 
-res="$(dot self health)"
-
-test::fact "dot <ctx> <cmd> works"
-
-echo "$res" | grep "====" \
-   && test::success || test::fail
+test::set_suite "dict"
+test::run "dot <ctx> <cmd> works" health
