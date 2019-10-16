@@ -8,8 +8,10 @@ user="dominictarr"
 repo="JSON.sh"
 module="json-sh"
 
-if recipe::has_submodule $module "JSON.sh"; then
-   recipe::abort_installed $module
-fi
+json-sh::is_installed() {
+  recipe::has_submodule $module "JSON.sh"
+}
 
-recipe::clone_as_submodule $user $repo $module
+json-sh::install() {
+  recipe::clone_as_submodule $user $repo $module
+}

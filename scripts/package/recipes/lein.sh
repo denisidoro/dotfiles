@@ -1,18 +1,17 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
 
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
+lein::depends_on() {
+  coll::new wget
+}
 
-recipe::abort_if_installed lein
+lein::install() {
+  folder="$(recipe::folder lein)"
+  mkdir -p "$folder" || true
+  cd "$folder"
 
-dot pkg add wget
-
-folder="$(recipe::folder lein)"
-mkdir -p "$folder" || true
-cd "$folder"
-
-url="https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein"
-wget "$url" -O lein
-chmod a+x lein
-sudo mv lein "$(fs::bin)/lein"
+  url="https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein"
+  wget "$url" -O lein
+  chmod a+x lein
+  sudo mv lein "$(fs::bin)/lein"
+}

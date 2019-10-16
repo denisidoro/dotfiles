@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
-
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
-
-recipe::abort_if_installed vifm
 
 vifm::depends_on() {
   coll::new libncurses5-dev libncursesw5-dev

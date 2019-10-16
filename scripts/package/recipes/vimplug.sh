@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
-
 vimplug::is_installed() {
   fs::is_file "$HOME/.local/share/nvim/site/autoload/plug.vim"
 }

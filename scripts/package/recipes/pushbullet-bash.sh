@@ -2,13 +2,13 @@
 # vim: filetype=sh
 set -euo pipefail
 
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
-
 user="Red5d"
 repo="pushbullet-bash"
 
-if recipe::has_submodule $repo "pushbullet"; then
-   recipe::abort_installed $repo
-fi
+pushbullet-bash::is_installed() {
+  recipe::has_submodule $repo "pushbullet"
+}
 
-recipe::clone_as_submodule $user $repo
+pushbullet-bash::install() {
+  recipe::clone_as_submodule $user $repo
+}
