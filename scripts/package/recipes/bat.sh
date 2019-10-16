@@ -22,16 +22,18 @@ url::get() {
    url::generate "$suffix"
 }
 
-recipe::abort_if_installed bat
+bat::depends_on() {
+   dot pkg add wget
+}
 
-dot pkg add --package-manager bat && recipe::abort_if_installed bat
+bat::install() {
+   dot pkg add --no-custom bat && return 0 || true
 
-dot pkg add wget
+   folder="$(recipe::folder bat)"
+   mkdir -p "$folder" || true
+   cd "$folder"
 
-folder="$(recipe::folder bat)"
-mkdir -p "$folder" || true
-cd "$folder"
-
-url="$(url::get)"
-wget "$url" -O bat
-sudo dpkg -i bat
+   url="$(url::get)"
+   wget "$url" -O bat
+   sudo dpkg -i bat
+}

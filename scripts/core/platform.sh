@@ -76,3 +76,14 @@ platform::main_package_manager() {
       echo "brew"
    fi
 }
+
+platform::existing_command() {
+   local cmd
+   for cmd in "$@"; do
+      if command_exists "$cmd"; then
+         echo "$cmd"
+         return 0
+      fi
+   done
+   return 1
+}

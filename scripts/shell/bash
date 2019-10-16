@@ -17,7 +17,7 @@ char::random() {
 
 random_ps1() {
     local -r ps1_template='\n\e[%sm\]\h\e[m\] \[\e[%sm\]\w\[\e[m\] $(nonzero_return)\n\[\e[%sm\]%s\[\e[m\] '
-    local -r prompts='>$Ωπ→⮞⮚'
+    local -r prompts='>$Ωπ→'
 
     local -r t="$(echo "$ps1_template" | sed 's/\\/\\\\/g')"
     local -r c="$(char::random "$prompts")"

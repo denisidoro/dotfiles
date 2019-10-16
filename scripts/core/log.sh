@@ -78,9 +78,9 @@ _log() {
    local template=$1
    shift
    if ${log_to_file:-false}; then
-      echo -e $(printf "$template" "$@") | tee -a "$LOG_FILE" >&2
+      echoerr -e $(printf "$template" "$@") | tee -a "$LOG_FILE" >&2
    else
-      echo -e $(printf "$template" "$@")
+      echoerr -e $(printf "$template" "$@")
    fi
 }
 

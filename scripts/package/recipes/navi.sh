@@ -1,18 +1,14 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
 
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
+navi::map() {
+   dict::new brew denisidoro/tools/navi
+}
 
-recipe::abort_if_installed navi
+navi::depends_on() {
+   coll::new fzf
+}
 
-if platform::command_exists brew; then
-  brew install denisidoro/tools/navi
-  exit 0
-fi
-
-git clone --depth 1 https://github.com/denisidoro/navi /opt/navi
-cd /opt/navi
-sudo make install 
-
-dot pkg add fzf
+navi::install() {
+   install_from_git "https://github.com/denisidoro/navi"
+}

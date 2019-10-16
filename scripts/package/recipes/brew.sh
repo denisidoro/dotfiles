@@ -2,8 +2,6 @@
 # vim: filetype=sh
 set -euo pipefail
 
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
-
 _brew_osx() {
    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }
@@ -28,17 +26,18 @@ _brew_apt() {
    sudo apt install linuxbrew-wrapper
 }
 
-if platform::command_exists brew || fs::is_dir /home/linuxbrew; then
-   recipe::abort_installed brew
-fi
+brew::is_installed() {
+   platform::command_exists brew || fs::is_dir /home/linuxbrew
+}
 
-log::note "Installing brew..."
-if platform::is_osx; then
-   _brew_osx
-elif platform::command_exists apt; then
-   _brew_apt || _brew_linux
-else
-   _brew_linux
-fi
+brew::install() {
+   if platform::is_osx; then
+      _brew_osx
+   elif platform::command_exists apt; then
+      _brew_apt || _brew_linux
+   else
+      _brew_linux
+   fi
 
-brew update || (brew vendor-install ruby && brew update)
+   brew update || (brew vendor-install ruby && brew update)
+}

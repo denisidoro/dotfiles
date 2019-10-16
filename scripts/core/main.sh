@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 if ! ${DOT_MAIN_SOURCED:-false} ; then
+   source "${DOTFILES}/scripts/core/misc.sh"
    source "${DOTFILES}/scripts/core/platform.sh"
    source "${DOTFILES}/scripts/core/osx_gnu.sh"
    if ! ${DOT_EXPORTED_PATH:-false}; then

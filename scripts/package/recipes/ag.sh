@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
 
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
-source "${DOTFILES}/scripts/package/aux/add.sh"
+ag::map() {
+   dict::new \
+      brew the_silver_searcher \
+      port the_silver_searcher \
+      apt silversearcher-ag \
+      yum the_silver_searcher \
+      dnf the_silver_searcher \
+      yum the_silver_searcher \
+      emerge sys-apps/the_silver_searcher \
+      pacman the_silver_searcher \
+      sbopkg the_silver_searcher \
+      zypper the_silver_searcher \
+      pkg the_silver_searcher
+}
 
-recipe::abort_if_installed ag
-
-if [[ "$(recipe::main_package_manager)" = "brew" ]]; then
-   brew install the_silver_searcher
-   exit 0
-fi
-
-dot pkg add silversearcher-ag \
-   || dot pkg add the_silver_searcher
+ag::install() {
+   install_from_git "https://github.com/ggreer/the_silver_searcher"
+}

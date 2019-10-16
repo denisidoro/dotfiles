@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
 
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
+floki::depends_on() {
+   coll::new npm
+}
 
-recipe::abort_if_installed floki
+floki::map() {
+   dict::new npm floki
+}
 
-npm install -g floki

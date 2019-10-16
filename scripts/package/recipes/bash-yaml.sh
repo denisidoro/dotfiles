@@ -2,13 +2,10 @@
 # vim: filetype=sh
 set -euo pipefail
 
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
+bash-yaml::is_installed() {
+  recipe::has_submodule $repo "script/yaml.sh"
+}
 
-user="jasperes"
-repo="bash-yaml"
-
-if recipe::has_submodule $repo "script/yaml.sh"; then
-   recipe::abort_installed $repo
-fi
-
-recipe::clone_as_submodule $user $repo
+bash-yaml::install() {
+  recipe::clone_as_submodule jasperes bash-yaml
+}

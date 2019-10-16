@@ -1,19 +1,11 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
 
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
+ftp::map() {
+  dict::new brew inetutils
+}
 
-recipe::abort_if_installed ftp
-
-main_package_manager="$(platform::main_package_manager)"
-
-case $main_package_manager in
-   brew)
-      brew install inetutils
-      exit 0
-      ;;
-esac
-
-dot pkg add --package-manager ftp
+ftp::install() {
+  dot pkg add --no-custom ftp && return 0 || true
+}
 
