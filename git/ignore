@@ -76,3 +76,6 @@ yarn.lock
 
 # Repl
 .rebel_readline_history
+
+# Misc
+.z_lua

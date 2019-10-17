@@ -1,11 +1,13 @@
-# Set prefix as Ctrl-a
-set -g prefix C-a
+# Set prefix as Ctrl-Space
+set -g prefix C-Space
 unbind-key C-b
-bind-key C-a send-prefix
+bind-key C-Space send-prefix
 
 # Window and pane
 bind-key v split-window -h
 bind-key s split-window -v
+bind-key / split-window -h
+bind-key - split-window -v
 
 bind-key J resize-pane -D 5
 bind-key K resize-pane -U 5
