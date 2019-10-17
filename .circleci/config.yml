@@ -10,7 +10,6 @@ job_defaults: &defaults
     working_directory: ~/repo
     environment:
       ENVIRONMENT: "test"
-      TERM: "dumb"
 
 jobs:
   tests:
