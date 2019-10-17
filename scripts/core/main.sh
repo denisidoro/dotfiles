@@ -20,5 +20,6 @@ if ! ${DOT_MAIN_SOURCED:-false} ; then
 fi
 
 if ${DOT_TRACE:-false}; then
-   set -x
+   export PS4='+'$'\t''\e[1;30m\t \e[1;39m$(printf %4s ${SECONDS}s) \e[1;31m$(printf %3d $LINENO) \e[1;34m$BASH_SOURCE \e[1;32m${FUNCNAME[0]:-}\e[0m: '
+  set -x
 fi
