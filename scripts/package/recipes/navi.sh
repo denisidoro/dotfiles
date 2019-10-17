@@ -10,5 +10,5 @@ navi::depends_on() {
 }
 
 navi::install() {
-   install_from_git "https://github.com/denisidoro/navi"
+   recipe::install_from_git "https://github.com/denisidoro/navi"
 }

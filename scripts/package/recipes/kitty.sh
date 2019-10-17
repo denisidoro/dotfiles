@@ -2,5 +2,5 @@
 # vim: filetype=sh
 
 kitty::install() {
-   install_from_git kovidgoyal kitty
+   recipe::install_from_git kovidgoyal kitty
 }

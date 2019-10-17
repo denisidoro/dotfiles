@@ -92,7 +92,7 @@ recipe::clone_as_submodule() {
       || true
 }
 
-install_from_git() {
+recipe::install_from_git() {
    local -r repo="$1"
 
    local -r package="$(basename "$repo")"

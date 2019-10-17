@@ -22,7 +22,7 @@ yourls::install() {
 
    log::warning "Setting up yourls..."
 
-   VERSION="${VERSION:-1.7.3}"
+   VERSION="1.7.3"
 
    zip_url="https://github.com/YOURLS/YOURLS/archive/${VERSION}.zip"
 
@@ -38,5 +38,4 @@ yourls::install() {
    log::warning "Setting db..."
    dot lamp mysql create yourls
    vim user/config.php
-
 }

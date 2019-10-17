@@ -3,12 +3,7 @@
 set -euo pipefail
 
 spacevim::is_installed() {
-   echoerr FOOOO
-   if cat "$HOME/.config/nvim/init.vim" 2>/dev/null | grep -q "space-vim" 2>/dev/null; then
-      return 0
-   else
-      return 1
-   fi
+   cat "$HOME/.config/nvim/init.vim" 2>/dev/null | grep -q "space-vim" 2>/dev/null
 }
 
 spacevim::depends_on() {

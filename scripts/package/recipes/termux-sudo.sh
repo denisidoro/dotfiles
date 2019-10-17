@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
 
 TARGET="/data/data/com.termux/files/usr/bin/sudo"
 

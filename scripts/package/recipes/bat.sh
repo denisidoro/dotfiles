@@ -24,8 +24,6 @@ bat::depends_on() {
 }
 
 bat::install() {
-   dot pkg add --no-custom bat && return 0 || true
-
    folder="$(recipe::folder bat)"
    mkdir -p "$folder" || true
    cd "$folder"

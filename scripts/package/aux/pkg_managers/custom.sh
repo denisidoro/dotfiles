@@ -18,7 +18,7 @@ custom::install() {
    if platform::command_exists "$depend_fn"; then
       local dependencies="$($depend_fn)"
       for package in $dependencies; do
-         install_if_not_installed "$package"
+         install_if_not_installed "$package" || true
       done
    fi
 

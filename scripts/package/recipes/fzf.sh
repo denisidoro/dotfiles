@@ -11,6 +11,4 @@ fzf::map() {
    recipe::shallow_github_clone junegunn fzf
    cd "$TMP_DIR/fzf"
    ./install
-
-   # $(brew --prefix)/opt/fzf/install
 }

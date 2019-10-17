@@ -4,8 +4,7 @@
 clojure::install() {
    local -r CLJ_VERSION="1.10.1.447"
    local -r CLJ_FOLDER="$TMP_DIR/clojure"
-
-   dot pkg install --no-custom clojure
+   
    pushd
    mkdir -p "$CLJ_FOLDER" || true
    cd "$CLJ_FOLDER"
