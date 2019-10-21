@@ -6,8 +6,8 @@
 
 - link:
     ~/.config/karabiner/karabiner.json: peripherals/karabiner/karabiner.json
-    ~/.khdrc: peripherals/khd/khd.rc
-    ~/.chunkwmrc: wm/chunkwm/chunkwmrc
+    ~/.skhdrc: peripherals/skhd/skhd.rc
+    ~/.yabairc: wm/yabai/yabairc
     ~/Library/Application Support/Code/User/settings.json: editors/vscode/settings.json
     ~/Library/Application Support/Code/User/keybindings.json: editors/vscode/keybindings.json
     ~/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings: editors/sublime/preferences.json
