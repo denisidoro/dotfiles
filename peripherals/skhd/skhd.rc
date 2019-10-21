@@ -152,7 +152,7 @@ shift + cmd - l : yabai -m window --warp east
 # alt - d : yabai -m window --toggle zoom-parent
 
 # toggle window fullscreen zoom
-# alt - f : yabai -m window --toggle zoom-fullscreen
+alt + ctrl + cmd + shift - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle window native fullscreen
 # shift + alt - f : yabai -m window --toggle native-fullscreen
