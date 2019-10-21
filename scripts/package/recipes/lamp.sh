@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
-
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 _prompt() {
    log::warning "$1"
@@ -56,18 +53,20 @@ recipe::httpd2() {
    sudo systemctl restart php-fpm
 }
 
-if fs::is_dir "/var/www/html/phpMyAdmin"; then
-   recipe::abort_installed LAMP
-fi
+lamp::is_installed() {
+   fs::is_dir "/var/www/html/phpMyAdmin"
+}
 
-if ! platform::is_ami2; then
-   log::error "Recipe only available to Amazon Linux AMI 2"
-   exit 45
-fi
+lamp::install() {
+   if ! platform::is_ami2; then
+      log::error "Recipe only available to Amazon Linux AMI 2"
+      exit 45
+   fi
 
-if ! fs::is_dir "/var/www/html"; then
-   recipe::httpd
-else
-   recipe::httpd2
-   dot pkg add phpMyAdmin
-fi
+   if ! fs::is_dir "/var/www/html"; then
+      recipe::httpd
+   else
+      recipe::httpd2
+      dot pkg add phpMyAdmin
+   fi
+}

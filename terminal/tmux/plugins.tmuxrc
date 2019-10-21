@@ -1,5 +1,0 @@
-set -g @tpm_plugins " \
-  tmux-plugins/tpm \
-  jimeh/tmux-themepack \
-  nhdaly/tmux-better-mouse-mode \
-"

@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
-
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 REPO_TAG="2.0.0-alpha.3"
 
@@ -25,21 +22,22 @@ url::get() {
    url::generate "$suffix"
 }
 
-recipe::abort_if_installed "gotty"
+gotty::map() {
+   dict::new brew yudai/gotty/gotty
+}
 
-if platform::command_exists brew; then
-   brew install yudai/gotty/gotty
-   exit 0
-fi
+gotty::depends_on() {
+   coll::new wget
+}
 
-dot pkg add wget
+gotty::install() {
+   folder="$(recipe::folder gotty)"
+   mkdir -p "$folder" || true
+   cd "$folder"
 
-folder="$(recipe::folder gotty)"
-mkdir -p "$folder" || true
-cd "$folder"
+   url="$(url::get)"
+   wget "$url" -O gotty.tar.gz
 
-url="$(url::get)"
-wget "$url" -O gotty.tar.gz
-
-tar -zxvf gotty.tar.gz
-sudo mv "./gotty" "$(fs::bin)/gotty"
+   tar -zxvf gotty.tar.gz
+   sudo mv "./gotty" "$(fs::bin)/gotty"
+}

@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
 
-source "${DOTFILES}/scripts/self/aux/test.sh"
+symlink_bashrc() {
+   cd "$DOTFILES"
+   bashrc_path="$(cat "symlinks/conf.yaml" | grep bashrc | awk '{print $2}')"
+   source "$bashrc_path"
+}
 
-test::fact "sourcing bashrc doesn't throw an exception"
-
-cd "$DOTFILES"
-bashrc_path="$(cat "symlinks/conf.yaml" | grep bashrc | awk '{print $2}')"
-
-source "$bashrc_path" \
-   && test::success || test::fail
+test::set_suite "bashrc"
+test::skip "symlinks include bashrc" symlink_bashrc

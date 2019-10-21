@@ -39,7 +39,7 @@ source "${DOTFILES}/shell/aux/post.zsh"
 
 # demo utilities
 if ${DEMO_MODE:-false}; then
-  source "${DOTFILES}/shell/aux/demo.zsh"
+   source "${DOTFILES}/shell/aux/demo.zsh"
 fi
 
 # startup time instrumentation end

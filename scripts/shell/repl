@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # TODO: finish code
+log::warning "WIP code!"
 
 cmd="cat ./peripherals/karabiner/karabiner.json | jq {q} -C"
 

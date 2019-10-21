@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
 
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
+tpm::is_installed() {
+   fs::is_dir "$HOME/.tmux/plugins/tpm"
+}
 
-if fs::is_dir "$HOME/.tmux/plugins/tpm"; then
-   recipe::abort_installed tpm
-fi
-
-git clone https://github.com/tmux-plugins/tpm --depth=1 $HOME/.tmux/plugins/tpm
+tpm::install() {
+   git clone https://github.com/tmux-plugins/tpm --depth=1 $HOME/.tmux/plugins/tpm
+}

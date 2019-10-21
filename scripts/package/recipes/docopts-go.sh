@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
-
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 REPO_TAG="v0.6.3-alpha1"
 
@@ -23,19 +20,23 @@ url::get() {
    url::generate "$suffix"
 }
 
-if docopts --version 2> /dev/null | grep -q golang; then
-   recipe::abort_installed "docopts-go"
-fi
+docopts-go::depends_on() {
+   coll::new wget
+}
 
-dot pkg add wget
+docopts-go::is_installed() {
+   docopts --version 2> /dev/null | grep -q golang
+}
 
-folder="$(recipe::folder docopts-go)"
-mkdir -p "$folder" || true
-sudo chmod 777 "$folder" || true
-cd "$folder"
+docopts-go::install() {   
+   folder="$(recipe::folder docopts-go)"
+   mkdir -p "$folder" || true
+   sudo chmod 777 "$folder" || true
+   cd "$folder"
 
-url="$(url::get)"
-wget "$url" -O docopts
+   url="$(url::get)"
+   wget "$url" -O docopts
 
-sudo chmod +x "${folder}/docopts"
-sudo mv "${folder}/docopts" "$(fs::bin)/docopts"
+   sudo chmod +x "${folder}/docopts"
+   sudo mv "${folder}/docopts" "$(fs::bin)/docopts"
+}

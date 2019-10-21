@@ -2,11 +2,15 @@
 # vim: filetype=sh
 set -euo pipefail
 
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
+spacevim::is_installed() {
+   cat "$HOME/.config/nvim/init.vim" 2>/dev/null | grep -q "space-vim" 2>/dev/null
+}
 
-if cat "$HOME/.config/nvim/init.vim" 2>/dev/null | grep -q "space-vim" 2>/dev/null; then
-   recipe::abort_installed spacevim
-fi
+spacevim::depends_on() {
+   coll::new curl nvim
+}
 
-dot pkg add curl nvim
-bash <(curl -fsSL https://raw.githubusercontent.com/liuchengxu/space-vim/master/install.sh)
+spacevim::install() {
+   bash <(curl -fsSL https://raw.githubusercontent.com/liuchengxu/space-vim/master/install.sh)
+}
+

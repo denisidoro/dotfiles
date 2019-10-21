@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
-set -euo pipefail
 
-source "${DOTFILES}/scripts/self/aux/test.sh"
+valid_json() {
+   cd "$DOTFILES"
 
-test::fact "all JSONs are syntactically valid"
+   find . -iname "*.json" \
+      | grep -Ev 'node_modules|cache|modules/|lock.json' \
+      | xargs -I% dot code parser json %
+}
 
-cd "$DOTFILES"
-
-find . -iname "*.json" \
-   | grep -Ev 'node_modules|cache|modules/|lock.json' \
-   | xargs -I% dot code parser json % \
-   && test::success || test::fail
+test::set_suite "json"
+test::run "all JSONs are syntactically valid" valid_json
