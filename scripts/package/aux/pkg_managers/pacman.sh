@@ -5,33 +5,33 @@ _pacman() {
 }
 
 pacman::install() {
-   _pacman -S "$@"
+   sudo _pacman -S "$@"
 }
 
 pacman::remove() {
-   _pacman -R "$@"
+   sudo _pacman -R "$@"
 }
 
 pacman::update() {
-   _pacman -Sy "$@"
+   sudo _pacman -Sy "$@"
 }
 
 pacman::upgrade() {
-   _pacman -Syu "$@"
+   sudo _pacman -Syu "$@"
 }
 
 pacman::clean() {
-   _pacman clean "$@"
+   sudo _pacman clean "$@"
 }
 
 pacman::search() {
-   _pacman -Ss "$@"
+   sudo _pacman -Ss "$@"
 }
 
 pacman::list() {
-   _pacman -Q
+   sudo _pacman -Q
 }
 
 pacman::info() {
-   _pacman -Qi "$@"
+   sudo _pacman -Qi "$@"
 }

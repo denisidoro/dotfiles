@@ -10,34 +10,34 @@ fi
 
 apt::install() {
    local -r ask="$(dict::get "$OPTIONS" ask)"
-   apt install $([ ! $ask ] && echo "--yes") "$@"
+   sudo apt install $([ ! $ask ] && echo "--yes") "$@"
 }
 
 apt::remove() {
-   apt remove "$@"
+   sudo apt remove "$@"
 }
 
 apt::update() {
-   apt update "$@"
+   sudo apt update "$@"
 }
 
 apt::upgrade() {
    apt::update "$@" || true
-   apt upgrade "$@"
+   sudo apt upgrade "$@"
 }
 
 apt::clean() {
-   apt clean "$@"
+   sudo apt clean "$@"
 }
 
 apt::search() {
-   apt search "$@"
+   sudo apt search "$@"
 }
 
 apt::list() {
-   apt list "$@"
+   sudo apt list "$@"
 }
 
 apt::info() {
-   apt show "$@"
+   sudo apt show "$@"
 }
