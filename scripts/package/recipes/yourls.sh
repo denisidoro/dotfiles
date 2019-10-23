@@ -22,7 +22,7 @@ yourls::install() {
 
    log::warning "Setting up yourls..."
 
-   VERSION="1.7.3"
+   VERSION="1.7.4"
 
    zip_url="https://github.com/YOURLS/YOURLS/archive/${VERSION}.zip"
 
@@ -30,8 +30,9 @@ yourls::install() {
    cd $HOME
    curl -o yourls.zip -O -J -L "$zip_url"
    unzip yourls.zip -d /var/www/html
-   mv "/var/www/html/YOURLS-${VERSION}/*" /var/www/html/
-   rm -rf /var/www/html/yourls
+   mv /var/www/html/YOURLS-${VERSION}/* /var/www/html/
+   rm -rf /var/www/html/YOURLS-${VERSION} || true
+   rm -rf /var/www/html/yourls || true
    cd /var/www/html/
    ls
    cp user/config-sample.php user/config.php
