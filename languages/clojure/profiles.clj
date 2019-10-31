@@ -20,7 +20,7 @@
                 :passphrase [:gpg :env/artifacts_aws_secret_access_key]}]]
 
   :plugins
-  [[s3-wagon-private "1.3.1"]]}
+  [[s3-wagon-private "1.3.1" :exclusions [commons-logging]]]}
 
  :repl
 
@@ -36,7 +36,7 @@
    ]
 
   :repl-options
-  {:timeout 60000}
+  {:timeout 180000}
 
   :global-vars
   {*warn-on-reflection* false}}}

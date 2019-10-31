@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Set wallpaper
+#?? 0.1.0
+##?
+##? Usage:
+##?    wallpaper <filepath>
+##?
+##? Examples:
+##?    wallpaper ~/Downloads/image.jpg
+
+docs::eval "$@"
+
+echo "$filepath" \
+   | xargs -I% osascript -e 'tell application "Finder" to set desktop picture to POSIX file "%"'

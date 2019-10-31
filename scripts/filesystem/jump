@@ -115,7 +115,7 @@ jump_to_specific_folder() {
    shift
 
    cd "$folder"
-   _jump cd "$(ls)" "$@"
+   FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-} --preview 'ls {}'" _jump cd "$(ls)" "$@"
 }
 
 # Go up X directories (default: 1)
