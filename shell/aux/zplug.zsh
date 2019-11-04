@@ -10,7 +10,7 @@ zplug "plugins/git", from:oh-my-zsh
 #zplug "plugins/shrink-path", from:oh-my-zsh
 
 # Writing
-# zplug zsh-users/zsh-autosuggestions
+zplug zsh-users/zsh-autosuggestions
 #zplug zsh-users/zsh-history-substring-search
 #zplug zsh-users/zsh-syntax-highlighting
 

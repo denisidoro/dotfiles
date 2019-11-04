@@ -13,32 +13,6 @@ docs::eval "$@"
 
 language=fallback
 
-_all_dotfiles_files_to_format() {
-   find "${DOTFILES}/scripts" -maxdepth 3 -executable -type f
-   find "${DOTFILES}/" -maxdepth 4 -iname "*.sh" -type f
-   find "${DOTFILES}/" -maxdepth 4 -iname "*.zsh" -type f
-   find "${DOTFILES}/" -maxdepth 4 -iname "*.bash" -type f
-   find "${DOTFILES}/bin" -maxdepth 2 -executable -type f
-   find "${DOTFILES}/scripts/core" -maxdepth 2 -type f
-   find "${DOTFILES}/shell" -maxdepth 3 -type f
-}
-
-_dedupe() {
-   sort -u
-}
-
-_filter() {
-   grep -v '.py\|beautify\|docopts\|node_modules\|modules\|clojure/compile\|info/bar\|vscode\|hushlogin\|DS_S\|bin/dot'
-}
-
-if [[ $filename = "self" ]]; then
-   _all_dotfiles_files_to_format \
-      | _dedupe \
-      | _filter \
-      | xargs -I% dot code beautify %
-   exit 0
-fi
-
 extension="${filename##*.}"
 if echo "$extension" | grep -q '/'; then
    extension=""

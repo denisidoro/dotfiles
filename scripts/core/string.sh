@@ -78,7 +78,11 @@ str::contains() {
 }
 
 str::uppercase() {
-   cat | tr '[:lower:]' '[:upper:]'
+   tr '[:lower:]' '[:upper:]'
+}
+
+str::lowercase() {
+   tr '[:upper:]' '[:lower:]'
 }
 
 str::trim_newlines() {

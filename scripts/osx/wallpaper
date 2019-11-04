@@ -7,12 +7,23 @@ source "${DOTFILES}/scripts/core/main.sh"
 #?? 0.1.0
 ##?
 ##? Usage:
-##?    wallpaper <filepath>
+##?    wallpaper [options] <filepath>
+##?
+##? Options:
+##?    -s --single    Apply to a single workspace [default: false]
 ##?
 ##? Examples:
 ##?    wallpaper ~/Downloads/image.jpg
 
 docs::eval "$@"
 
-echo "$filepath" \
-   | xargs -I% osascript -e 'tell application "Finder" to set desktop picture to POSIX file "%"'
+if platform::is_osx; then
+  if $single; then
+    echo "$filepath" | xargs -I% osascript -e 'tell application "Finder" to set desktop picture to POSIX file "%"'
+  else
+    echo "$filepath" | xargs -I% osascript -e 'tell application "System Events" to tell every desktop to set picture to "%"'
+  fi
+else
+  die "Unsupported platform"
+fi
+ 
