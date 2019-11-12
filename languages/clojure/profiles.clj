@@ -3,7 +3,8 @@
  {:dependencies
   [[cljdev "0.8.0" :exclusions [org.clojure/clojure]]
    ;[org.clojure/tools.trace "0.7.10" :exclusions [org.clojure/clojure]]
-   [spyscope "0.1.7-SNAPSHOT" :exclusions [org.clojure/clojure]]]
+   ;[spyscope "0.1.7-SNAPSHOT" :exclusions [org.clojure/clojure]]
+   ]
 
   :jvm-opts
   ["-Duser.language=en"
@@ -12,7 +13,8 @@
 
   :injections
   [(require 'nu)
-   (require '[spyscope.core :as spy])]
+   ;(require '[spyscope.core :as spy])
+   ]
 
   :repositories
   [["nu-maven" {:url        "s3p://nu-maven/releases/"

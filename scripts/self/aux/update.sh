@@ -297,34 +297,27 @@ setup_docopts() {
    # ==============================
 
    update_dotfiles() {
-
-      local -r CONFIG="${DOTFILES}/symlinks/${1}"
-      shift
-
-      echo
-      "${DOTFILES}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${DOTFILES}" -c "${CONFIG}" "${@}"
-      echo
-
+      dot self symlinks "$@"
    }
 
    update_dotfiles_common() {
       echo
-      update_dotfiles "conf.yaml"
+      update_dotfiles
    }
 
    update_dotfiles_osx() {
       log::note "Configuring for OSX..."
-      update_dotfiles "conf.osx.yaml"
+      update_dotfiles "osx"
    }
 
    update_dotfiles_linux() {
       log::note "Configuring for Linux..."
-      update_dotfiles "conf.linux.yaml"
+      update_dotfiles "linux"
    }
 
    update_dotfiles_wsl() {
       log::note "Configuring for WSL..."
-      log::note "No custom config for WSL"
+      update_dotfiles "linux"
    }
 
    update_dotfiles_arm() {
@@ -344,7 +337,7 @@ setup_docopts() {
 
    update_dotfiles_fallback() {
       echo
-      log::note "Fallbacking to essential symlinks..."
+      log::note "Falling back to essential symlinks..."
       ln -s "${DOTFILES}/shell/bashrc" "${HOME}/.bashrc" || true
       ln -s "${DOTFILES}/shell/zshrc" "${HOME}/.zshrc" || true
    }

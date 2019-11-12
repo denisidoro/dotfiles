@@ -1,4 +1,4 @@
-TASKER_HOME="${TASKER_HOME:-/sdcard/Tasker}"
+export TASKER_HOME="${TASKER_HOME:-/sdcard/Tasker}"
 source "${TASKER_HOME}/sh/core.sh"
 
 network_name() {
