@@ -2,17 +2,17 @@
 # Constants
 # ==============================
 
-DOTBOT_DIR="modules/dotbot"
-DOTBOT_BIN="bin/dotbot"
+export DOTBOT_DIR="modules/dotbot"
+export DOTBOT_BIN="bin/dotbot"
 
-LOCAL_BIN="${DOTFILES}/local/bin"
-LOCAL_TMP="${DOTFILES}/local/tmp"
-LOCAL_ZSHRC="${DOTFILES}/local/zshrc"
-LOCAL_GITCONFIG="${DOTFILES}/local/gitconfig"
+export LOCAL_BIN="${DOTFILES}/local/bin"
+export LOCAL_TMP="${DOTFILES}/local/tmp"
+export LOCAL_ZSHRC="${DOTFILES}/local/zshrc"
+export LOCAL_GITCONFIG="${DOTFILES}/local/gitconfig"
 
-TMP_DIR="$(fs::tmp)"
-BIN_DIR="$(fs::bin)"
-MAIN_BIN_DIR="${DOTFILES}/bin"
+export TMP_DIR="$(fs::tmp)"
+export BIN_DIR="$(fs::bin)"
+export MAIN_BIN_DIR="${DOTFILES}/bin"
 
 # ==============================
 # Helpers

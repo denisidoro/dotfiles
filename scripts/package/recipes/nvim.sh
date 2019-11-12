@@ -11,6 +11,8 @@ nvim::yum() {
 }
 
 nvim::install() {
+   (dot pkg add neovim || dot pkg add nvim) && return 0
+
    cd "$(fs::tmp)"
    curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
    chmod u+x nvim.appimage
