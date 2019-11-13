@@ -537,4 +537,129 @@
             <name>Launcher</name>
             <dpad index="1">
                 <dpadbutton index="1">
-  
+                    <setselect>4</setselect>
+                    <setselectcondition>one-way</setselectcondition>
+                </dpadbutton>
+            </dpad>
+            <trigger index="1">
+                <throttle>positivehalf</throttle>
+            </trigger>
+            <trigger index="2">
+                <throttle>positivehalf</throttle>
+            </trigger>
+            <button index="5">
+                <setselect>3</setselect>
+                <setselectcondition>one-way</setselectcondition>
+            </button>
+        </set>
+        <set index="6">
+            <name>Window</name>
+            <stick index="1">
+                <stickbutton index="1">
+                    <slots>
+                        <slot>
+                            <code>0x1000013</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </stickbutton>
+                <stickbutton index="7">
+                    <slots>
+                        <slot>
+                            <code>0x1000012</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </stickbutton>
+                <stickbutton index="5">
+                    <slots>
+                        <slot>
+                            <code>0x1000015</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </stickbutton>
+                <stickbutton index="3">
+                    <slots>
+                        <slot>
+                            <code>0x1000014</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </stickbutton>
+            </stick>
+            <dpad index="1">
+                <dpadbutton index="1">
+                    <slots>
+                        <slot>
+                            <code>0x1000022</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                        <slot>
+                            <code>0x1000013</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </dpadbutton>
+                <dpadbutton index="8">
+                    <slots>
+                        <slot>
+                            <code>0x1000022</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                        <slot>
+                            <code>0x1000012</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </dpadbutton>
+                <dpadbutton index="4">
+                    <slots>
+                        <slot>
+                            <code>0x1000022</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                        <slot>
+                            <code>0x1000015</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </dpadbutton>
+                <dpadbutton index="2">
+                    <slots>
+                        <slot>
+                            <code>0x1000022</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                        <slot>
+                            <code>0x1000014</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </dpadbutton>
+            </dpad>
+            <trigger index="1">
+                <throttle>positivehalf</throttle>
+            </trigger>
+            <trigger index="2">
+                <throttle>positivehalf</throttle>
+            </trigger>
+            <button index="5">
+                <setselect>3</setselect>
+                <setselectcondition>one-way</setselectcondition>
+            </button>
+            <button index="10">
+                <slots>
+                    <slot>
+                        <code>0x1000022</code>
+                        <mode>keyboard</mode>
+                    </slot>
+                    <slot>
+                        <code>0x1000001</code>
+                        <mode>keyboard</mode>
+                    </slot>
+                </slots>
+            </button>
+        </set>
+    </sets>
+</gamecontroller>
