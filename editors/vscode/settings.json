@@ -410,6 +410,10 @@
 
         {"before":   ["<leader>", "m", "p"], 
          "after":    [], 
-         "commands": [{"command": "markdown.showPreviewToSide", "args": [], "when": "editorLangId == markdown"}]}
+         "commands": [{"command": "markdown.showPreviewToSide", "args": [], "when": "editorLangId == markdown"}]},
+
+        {"before":   ["<leader>", "e", "f"], 
+         "after":    [], 
+         "commands": [{"command": "calva.evaluateCurrentTopLevelForm", "args": []}]}
     ]
 }

@@ -1,6 +1,16 @@
 export TASKER_HOME="${TASKER_HOME:-/sdcard/Tasker}"
 source "${TASKER_HOME}/sh/core.sh"
 
+## Wifi helpers
+##
+## Usage after sourcing:
+##    group_name "%WIFII" "%text"
+##    is_connected "%WIFII"
+##
+## Variables:
+##    %WIFII  built-in Tasker variable
+##    %text   network name <> ID mapping
+
 network_name() {
    echo "$*" \
       | coll::get 2 \
@@ -29,15 +39,11 @@ group_for_network() {
 group_name() {
    local -r info="$1"
    local -r text="$2"
-   local -r network="$(network_name "$info")"
-   group_for_network "$text" "$(network_name "$text")"
+
+   if is_connected "$info"; then
+      local -r network="$(network_name "$info")"
+      group_for_network "$text" "$(network_name "$text")"
+   else
+      echo 0
+   fi   
 }
-
-info="%WIFII"
-text="%text"
-
-if is_connected "$info"; then
-   group_name "$info" "$text" || echo 0
-else
-   echo 0
-fi

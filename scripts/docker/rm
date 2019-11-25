@@ -9,8 +9,14 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 ##?
 ##? Usage:
 ##?    rm
+##?    rm images
 
-docs::eval_help "$@"
+docs::eval "$@"
 
-dot docker stop
-docker rm $(docker ps -aq)
+dot docker stop || true
+
+if $images; then
+  docker rmi $(docker images -q) --force
+else
+  docker rm $(docker ps -aq)
+fi
