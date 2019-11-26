@@ -100,3 +100,8 @@ log::success() { _export_colors && _log "${green}✔ %s${freset}\n" "$@"; }
 log::error() { _export_colors && _log "${red}✖ %s${freset}\n" "$@"; }
 log::warning() { _export_colors && _log "${tan}➜ %s${freset}\n" "$@"; }
 log::note() { _export_colors && _log "${blue}%s${freset}\n" "$@"; }
+
+die() {
+   log::error "$@"
+   exit 42
+}

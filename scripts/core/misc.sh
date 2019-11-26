@@ -14,8 +14,3 @@ tap() {
    echoerr "$input"
    echo "$input"
 }
-
-die() {
-   echoerr "$@"
-   exit 42
-}

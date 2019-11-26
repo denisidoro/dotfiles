@@ -16,7 +16,7 @@ docs::eval "$@"
 dot docker stop || true
 
 if $images; then
-  docker rmi $(docker images -q) --force
+   docker rmi $(docker images -q) --force
 else
-  docker rm $(docker ps -aq)
+   docker rm $(docker ps -aq)
 fi

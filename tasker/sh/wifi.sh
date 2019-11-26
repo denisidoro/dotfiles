@@ -45,5 +45,5 @@ group_name() {
       group_for_network "$text" "$(network_name "$text")"
    else
       echo 0
-   fi   
+   fi
 }

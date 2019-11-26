@@ -17,7 +17,7 @@ function keyvals(m) {
   return arr
 }
 
-function parse_args(m, defaults = null) {
+function parseArgs(m, defaults = null) {
   keyvals({...m, ...defaults})
     .map(([k, v]) => setLocal(k, v))
 }

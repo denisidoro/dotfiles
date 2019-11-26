@@ -23,6 +23,7 @@ case "$extension" in
    *clj*) language="clj" ;;
    *py*) language="python" ;;
    *json*) language="json" ;;
+   *js*) language="javascript" ;;
 esac
 
 if [ -z $extension ]; then
@@ -42,6 +43,9 @@ case "$language" in
       ;;
    json)
       echo "$(cat "$filename" | jq .)" > "$filename"
+      ;;
+   javascript)
+      js-beautify "$filename" > /dev/null
       ;;
    *)
       nvim --headless --noplugin -n -u NONE -c ':normal gg=G' +wq "$filename"
