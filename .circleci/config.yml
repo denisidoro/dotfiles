@@ -10,7 +10,7 @@ job_defaults: &defaults
     working_directory: ~/repo
     environment:
       ENVIRONMENT: "test"
-      TERM: "xterm"
+      TERM: "dumb"
 
 jobs:
   tests:

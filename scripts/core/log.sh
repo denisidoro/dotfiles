@@ -2,26 +2,6 @@
 
 _export_colors() {
    if ! ${DOT_COLORS_EXPORTED:-false}; then
-      if [ -z ${TERM:-} ] || [ $TERM = "dumb" ]; then
-         bold=""
-         underline=""
-         freset=""
-         purple=""
-         red=""
-         green=""
-         tan=""
-         blue=""
-      else
-         bold=$(tput bold)
-         underline=$(tput sgr 0 1)
-         freset=$(tput sgr0)
-         purple=$(tput setaf 171)
-         red=$(tput setaf 1)
-         green=$(tput setaf 76)
-         tan=$(tput setaf 3)
-         blue=$(tput setaf 38)
-      fi
-
       log_black=30
       log_red=31
       log_green=32
@@ -39,11 +19,11 @@ _export_colors() {
    fi
 }
 
-log::color() {
+log::ansi() {
    _export_colors
    local bg=false
    case "$@" in
-      *reset*) echo "\e[0m"; exit 0 ;;
+      *reset*) echo "\e[0m"; return 0 ;;
       *black*) color=$log_black ;;
       *red*) color=$log_red ;;
       *green*) color=$log_green ;;
@@ -70,15 +50,15 @@ log::color() {
    fi
 }
 
-if [ -z ${LOG_FILE+x} ]; then
-   readonly LOG_FILE="/tmp/$(basename "$0").log"
+if [ -z ${DOT_LOG_FILE+x} ]; then
+   readonly DOT_LOG_FILE="/tmp/$(basename "$0").log"
 fi
 
 _log() {
    local template=$1
    shift
    if ${log_to_file:-false}; then
-      echoerr -e $(printf "$template" "$@") | tee -a "$LOG_FILE" >&2
+      echoerr -e $(printf "$template" "$@") | tee -a "$DOT_LOG_FILE" >&2
    else
       echoerr -e $(printf "$template" "$@")
    fi
@@ -95,11 +75,11 @@ _header() {
    printf "%${right}s" '' | tr ' ' =
 }
 
-log::header() { _export_colors && _log "\n$(log::color bold)$(log::color purple)$(_header "$1")$(log::color reset)\n"; }
-log::success() { _export_colors && _log "$(log::color green)✔ %s$(log::color reset)\n" "$@"; }
-log::error() { _export_colors && _log "$(log::color red)✖ %s$(log::color reset)\n" "$@"; }
-log::warning() { _export_colors && _log "$(log::color yellow)➜ %s$(log::color reset)\n" "$@"; }
-log::note() { _export_colors && _log "$(log::color blue)%s$(log::color reset)\n" "$@"; }
+log::header() { _export_colors && _log "\n$(log::ansi bold)$(log::ansi purple)$(_header "$1")$(log::ansi reset)\n"; }
+log::success() { _export_colors && _log "$(log::ansi green)✔ %s$(log::ansi reset)\n" "$@"; }
+log::error() { _export_colors && _log "$(log::ansi red)✖ %s$(log::ansi reset)\n" "$@"; }
+log::warning() { _export_colors && _log "$(log::ansi yellow)➜ %s$(log::ansi reset)\n" "$@"; }
+log::note() { _export_colors && _log "$(log::ansi blue)%s$(log::ansi reset)\n" "$@"; }
 
 die() {
    log::error "$@"
