@@ -8,15 +8,15 @@ random_line() {
    local -r out="$(node --eval "${lib}; console.log(randomLine('${lines}'))")"
 
    case "$out" in
-    foo|bar) ;;
-    *) return 1 ;;
+      foo|bar) ;;
+      *) return 1 ;;
    esac
 }
 
 if platform::command_exists node; then
-  test_fn="test::run"
+   test_fn="test::run"
 else
-  test_fn="test::skip"
+   test_fn="test::skip"
 fi
 
 test::set_suite "tasker js"
