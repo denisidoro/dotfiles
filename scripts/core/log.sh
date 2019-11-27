@@ -95,11 +95,11 @@ _header() {
    printf "%${right}s" '' | tr ' ' =
 }
 
-log::header() { _export_colors && _log "\n${bold}${purple}$(_header "$1")${freset}\n"; }
-log::success() { _export_colors && _log "${green}✔ %s${freset}\n" "$@"; }
-log::error() { _export_colors && _log "${red}✖ %s${freset}\n" "$@"; }
-log::warning() { _export_colors && _log "${tan}➜ %s${freset}\n" "$@"; }
-log::note() { _export_colors && _log "${blue}%s${freset}\n" "$@"; }
+log::header() { _export_colors && _log "\n$(log::color bold)$(log::color purple)$(_header "$1")$(log::color reset)\n"; }
+log::success() { _export_colors && _log "$(log::color green)✔ %s$(log::color reset)\n" "$@"; }
+log::error() { _export_colors && _log "$(log::color red)✖ %s$(log::color reset)\n" "$@"; }
+log::warning() { _export_colors && _log "$(log::color yellow)➜ %s$(log::color reset)\n" "$@"; }
+log::note() { _export_colors && _log "$(log::color blue)%s$(log::color reset)\n" "$@"; }
 
 die() {
    log::error "$@"
