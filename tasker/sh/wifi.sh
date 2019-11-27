@@ -42,8 +42,12 @@ group_name() {
 
    if is_connected "$info"; then
       local -r network="$(network_name "$info")"
-      group_for_network "$text" "$network"
+      group="$(group_for_network "$text" "$network")"
+   fi
+
+   if [ -n "${group:-}" ]; then
+      echo "$group"
    else
-      echo 0
+      echo "unknown"
    fi
 }
