@@ -2,8 +2,8 @@
 # vim: filetype=sh
 
 _group_name() {
-  source "${DOTFILES}/tasker/sh/wifi.sh"
-  group_name "$@"
+   source "${DOTFILES}/tasker/sh/wifi.sh"
+   group_name "$@"
 }
 
 wifi_from_info() {
@@ -14,7 +14,7 @@ wifi_from_info() {
    local -r info="$(echo -e ">>>>> CONNECTION <<<<<\n\n${network}\n\nMac:123\nIP:456")"
 
    _group_name "$info" "$txt" \
-    | test::equals "$expected"
+      | test::equals "$expected"
 }
 
 test::set_suite "tasker sh"

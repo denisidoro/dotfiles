@@ -21,6 +21,7 @@ _all_dotfiles_files() {
    find "${DOTFILES}/shell" -maxdepth 3 -type f
    find "${DOTFILES}/tasker/sh" -maxdepth 3 -type f
    find "${DOTFILES}/tasker/js" -maxdepth 3 -type f
+   find "${DOTFILES}/tests" -maxdepth 3 -type f
 }
 
 _dedupe() {

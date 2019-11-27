@@ -13,15 +13,15 @@ docs::eval_help "$@"
 
 if [ $# > 0 ]; then
 
-  source "${DOTFILES}/tests/${1}.sh"
+   source "${DOTFILES}/tests/${1}.sh"
 
 else
 
-  tests="$(find "${DOTFILES}/tests/" -iname "${1:-*}.sh")"
+   tests="$(find "${DOTFILES}/tests/" -iname "${1:-*}.sh")"
 
-  for test in $tests; do
-     source "$test"
-  done
+   for test in $tests; do
+      source "$test"
+   done
 
 fi
 
