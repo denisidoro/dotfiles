@@ -1,5 +1,5 @@
-export TASKER_HOME="${TASKER_HOME:-/sdcard/Tasker}"
-source "${TASKER_HOME}/sh/core.sh"
+export DOTFILES="${DOTFILES:-/sdcard/dotfiles}"
+source "${DOTFILES}/tasker/sh/core.sh"
 
 ## Wifi helpers
 ##
@@ -42,7 +42,7 @@ group_name() {
 
    if is_connected "$info"; then
       local -r network="$(network_name "$info")"
-      group_for_network "$text" "$(network_name "$text")"
+      group_for_network "$text" "$network"
    else
       echo 0
    fi

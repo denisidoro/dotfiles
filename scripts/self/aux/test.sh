@@ -39,7 +39,7 @@ test::run() {
    echo
    log::note "${SUITE:-unknown} - ${1:-unknown}"
    shift
-   eval "$*" && test::success || test::fail
+   "$@" && test::success || test::fail
 }
 
 test::equals() {

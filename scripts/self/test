@@ -7,13 +7,22 @@ source "${DOTFILES}/scripts/self/aux/test.sh"
 ##?
 ##? Usage:
 ##?    test
+##?    test <suite>
 
 docs::eval_help "$@"
 
-tests="$(find "${DOTFILES}/scripts/self/tests/" -iname "${1:-*}.sh")"
+if [ $# > 0 ]; then
 
-for test in $tests; do
-   source "$test"
-done
+  source "${DOTFILES}/tests/${1}.sh"
+
+else
+
+  tests="$(find "${DOTFILES}/tests/" -iname "${1:-*}.sh")"
+
+  for test in $tests; do
+     source "$test"
+  done
+
+fi
 
 test::finish

@@ -3,6 +3,7 @@ Core JS helpers
 
 Usage after sourcing:
    randomLine("mytext\nwith\nmultiple\nlines") 
+   paserArgs({foo: 42}, {bar: 43}) 
 */
 
 function randomLine(text) {
