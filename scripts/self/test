@@ -11,13 +11,13 @@ source "${DOTFILES}/scripts/self/aux/test.sh"
 
 docs::eval_help "$@"
 
-if [ $# > 0 ]; then
+if [ -n "${1:-}" ]; then
 
    source "${DOTFILES}/tests/${1}.sh"
 
 else
 
-   tests="$(find "${DOTFILES}/tests/" -iname "${1:-*}.sh")"
+   tests="$(find "${DOTFILES}/tests/" -iname "*.sh")"
 
    for test in $tests; do
       source "$test"
