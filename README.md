@@ -20,10 +20,9 @@ git clone https://github.com/denisidoro/dotfiles.git ~/.dotfiles
 ```
 
 ## 🥳 Usage
-<p align="center">
-  Execute <code>dot</code> in your terminal and you'll see all the scripts (and their documentation).
-</p>
-
+```
+dot
+```
 
 ## 🔰 Updating
 ```bash
@@ -42,8 +41,6 @@ Edit the following files accordingly:
 ~/.dotfiles/local/gitconfig
 ```
 
-## 🤩 Dotfiles that served as inspiration
- * https://github.com/Tuurlijk/dotfiles
-   - For performance
- * https://github.com/rgomezcasas/dotfiles
-   - For 💅
+## 🤩 Inspiration
+ * https://github.com/Tuurlijk/dotfiles: good performance
+ * https://github.com/rgomezcasas/dotfiles: 💅
