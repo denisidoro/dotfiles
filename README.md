@@ -45,5 +45,5 @@ Edit the following files accordingly:
 ## 🤩 Dotfiles that served as inspiration
  * https://github.com/Tuurlijk/dotfiles
    - For performance
- * https://github.com/denisidoro/dotfiles
+ * https://github.com/rgomezcasas/dotfiles
    - For 💅
