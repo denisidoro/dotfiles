@@ -22,6 +22,10 @@ source "${DOTFILES}/shell/aliases/core.sh"
 # load local custom config
 source "${DOTFILES}/local/zshrc" 2> /dev/null || true
 
+# load bindings
+source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
+source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
+
 # fzf, fasd and navi
 # source "${DOTFILES}/shell/aux/post.zsh"
 
