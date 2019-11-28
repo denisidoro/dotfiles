@@ -1,42 +1,60 @@
 #!/usr/bin/env zsh
 
+source "$DOTFILES/scripts/core/documentation.sh"
+
 ##? ZSH helpers
 #?? 0.1.0
 ##?
 ##? Usage:
+##?    zsh optimize             # Optimize ZSH
+##?    zsh test-performance     # Print the current ZSH performance
+##?    zsh reload-completions   # Print the current ZSH performance
 ##?    zsh time <filename>   # Analyzes startup time
 
-docs::eval_help "$@"
+_time_callback() {
+   typeset -a lines
+   typeset -i prev_time=0
+   typeset prev_command
 
-if [[ "$1" = "time" ]]; then
-   shift
-else
-   echo "Invalid arguments"
-   exit 1
-fi
+   while read line; do
+      if [[ $line =~ '^.*\+([0-9]{10})\.([0-9]{6})[0-9]* (.+)' ]]; then
+         integer this_time=$match[1]$match[2]
 
-typeset -a lines
-typeset -i prev_time=0
-typeset prev_command
+         if [[ $prev_time -gt 0 ]]; then
+            time_difference=$(( $this_time - $prev_time ))
+            lines+="$time_difference $prev_command"
+         fi
 
-while read line; do
-   if [[ $line =~ '^.*\+([0-9]{10})\.([0-9]{6})[0-9]* (.+)' ]]; then
-      integer this_time=$match[1]$match[2]
+         prev_time=$this_time
 
-      if [[ $prev_time -gt 0 ]]; then
-         time_difference=$(( $this_time - $prev_time ))
-         lines+="$time_difference $prev_command"
+         local this_command=$match[3]
+         if [[ ${#this_command} -le 80 ]]; then
+            prev_command=$this_command
+         else
+            prev_command="${this_command:0:77}..."
+         fi
       fi
+   done < ${1:-/dev/stdin}
 
-      prev_time=$this_time
+   print -l ${(@On)lines}
+}
 
-      local this_command=$match[3]
-      if [[ ${#this_command} -le 80 ]]; then
-         prev_command=$this_command
-      else
-         prev_command="${this_command:0:77}..."
-      fi
-   fi
-done < ${1:-/dev/stdin}
+case "${1:-}" in
+   "optimize")
+      /bin/zsh -c "source ${ZDOTDIR:-${HOME}}/.zlogin"
+      echo "👌 Done!"
+      ;;
+   "test-performance")
+      for i in $(seq 1 10); do /usr/bin/time /bin/zsh -i -c exit; done
+      ;;
+   "reload-completions")
+      /bin/zsh -c "autoload -U compaudit && compinit"
+      ;;
+   "time")
+      _time_callback
+      ;;
+   *)
+      docs::eval_help --help
+      ;;
+esac
 
-print -l ${(@On)lines}
