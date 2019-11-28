@@ -59,7 +59,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={  A-Z}' # match upper from lower c
 fpath=("${DOTFILES}/shell/zsh/themes" "${DOTFILES}/shell/zsh/completions" $fpath)
 
 autoload -Uz promptinit && promptinit
-prompt rafa
+prompt dns
 
 # iTerm tab name
 precmd() {

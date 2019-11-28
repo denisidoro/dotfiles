@@ -6,23 +6,23 @@ DIVERGED="⥄"
 DIRTY="✗"
 NONE="✓"
 
-prompt_rafa_pwd() {
+prompt_dns_pwd() {
   prompt_short_dir=$(pwd) # TODO: $(dot filesystem short_pwd)
   print -n "%F{cyan}${prompt_short_dir}"$'\n'
 }
 
-prompt_rafa_git() {
+prompt_dns_git() {
   [[ -n ${git_info} ]] && print -n "%F{white} on${(e)git_info[prompt]}"
 }
 
-prompt_rafa_precmd() {
+prompt_dns_precmd() {
   (( ${+functions[git-info]} )) && git-info
 }
 
-prompt_rafa_setup() {
-  local prompt_rafa_status='%(?:%F{green}$FIRST_CHARACTER_OK:%F{red}$FIRST_CHARACTER_KO)'
+prompt_dns_setup() {
+  local prompt_dns_status='%(?:%F{green}$FIRST_CHARACTER_OK:%F{red}$FIRST_CHARACTER_KO)'
 
-  autoload -Uz add-zsh-hook && add-zsh-hook precmd prompt_rafa_precmd
+  autoload -Uz add-zsh-hook && add-zsh-hook precmd prompt_dns_precmd
 
   prompt_opts=(cr percent sp subst)
 
@@ -33,8 +33,8 @@ prompt_rafa_setup() {
   zstyle ':zim:git-info:keys' format \
     'prompt' ' %F{cyan}%b%c %C%D'
 
-  PS1=$'\n'"\$(prompt_rafa_pwd)\$(prompt_rafa_git)%f"$'\n'"${prompt_rafa_status} "
+  PS1=$'\n'"\$(prompt_dns_pwd)\$(prompt_dns_git)%f"$'\n'"${prompt_dns_status} "
   RPS1=''
 }
 
-prompt_rafa_setup "${@}"
+prompt_dns_setup "${@}"
