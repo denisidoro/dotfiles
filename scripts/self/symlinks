@@ -36,7 +36,7 @@ extract_map() {
 }
 
 gen_filename() {
-   local -r group="$1"
+   local -r group="${1:-}"
 
    if [ -n "$group" ]; then
       echo "${DOTFILES}/symlinks/conf.${group}.yaml"
@@ -48,9 +48,11 @@ gen_filename() {
 filename="$(gen_filename "${1:-}")"
 
 if platform::command_exists python; then
-   shift
+   if [ -n "${group:-}" ]; then
+      shift
+   fi
    echo
-   "${DOTFILES}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "$DOTFILES" -c "$filename" "${@}"
+   "${DOTFILES}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "$DOTFILES" -c "$filename"
    echo
 else
    cat "$filename" \

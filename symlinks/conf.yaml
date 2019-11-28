@@ -5,7 +5,9 @@
        create: true
 
 - link:
-    ~/.zshrc: shell/zshrc
+    ~/.zshrc: shell/zsh/zshrc
+    ~/.zlogin: shell/zsh/zlogin
+    ~/.zimrc: shell/zsh/zimrc
     ~/.bashrc: shell/bashrc
     ~/.hushlogin: shell/hushlogin
     ~/.spacevim: editors/spacevim/spacevim.rc

@@ -20,13 +20,13 @@ SH="zsh"
 source "${DOTFILES}/shell/aux/vars.zsh"
 
 # load plugins
-source "${DOTFILES}/shell/aux/zplug.zsh"
+# source "${DOTFILES}/shell/aux/zplug.zsh"
 
 # load more vars
 source "${DOTFILES}/shell/aux/zsh_vars.zsh"
 
 # load helper functions
-source "${DOTFILES}/shell/aux/core.zsh"
+# source "${DOTFILES}/shell/aux/core.zsh"
 
 # load aliases
 source "${DOTFILES}/shell/aliases/core.sh"
@@ -35,12 +35,12 @@ source "${DOTFILES}/shell/aliases/core.sh"
 source "${DOTFILES}/local/zshrc" 2> /dev/null || true
 
 # fzf, fasd and navi
-source "${DOTFILES}/shell/aux/post.zsh"
+# source "${DOTFILES}/shell/aux/post.zsh"
 
 # demo utilities
-if ${DEMO_MODE:-false}; then
-   source "${DOTFILES}/shell/aux/demo.zsh"
-fi
+# if ${DEMO_MODE:-false}; then
+#    source "${DOTFILES}/shell/aux/demo.zsh"
+# fi
 
 # startup time instrumentation end
 # unsetopt XTRACE

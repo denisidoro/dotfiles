@@ -57,6 +57,8 @@
 	"font_size": 14,
 	"ignored_packages":
 	[
+		"Better CoffeeScript",
+		"EDN"
 	],
 	"open_files_in_new_window": false,
 	"tab_size": 2,
