@@ -2,6 +2,7 @@
 	path = modules/dotbot
 	url = https://github.com/anishathalye/dotbot
 	shallow = true
+	ignore = dirty
 
 [submodule "modules/zimfw"]
 	path = modules/zimfw

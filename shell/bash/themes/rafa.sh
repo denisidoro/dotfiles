@@ -1,9 +1,3 @@
-PROMPT_COMMAND="rafa_theme"
-
-FIRST_CHARACTER="λ"
-
 rafa_theme() {
-  current_dir=$(pwd) # TODO: $(dot filesystem short_pwd)
-
-  export PS1="${FIRST_CHARACTER} ${current_dir} "
+  export PS1="\n\[\e[32m\]\w\[\e[m\] \[\e[31m\]$(nonzero_return)\[\e[m\]\n\[\e[33m\]\\$\[\e[m\] "
 }

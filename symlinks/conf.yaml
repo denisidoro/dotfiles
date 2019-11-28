@@ -5,10 +5,12 @@
        create: true
 
 - link:
-    ~/.zshrc: shell/zsh/zshrc
+    ~/.zshrc: shell/zshrc
     ~/.zlogin: shell/zsh/zlogin
     ~/.zimrc: shell/zsh/zimrc
     ~/.bashrc: shell/bashrc
+    ~/.bash_profile: shell/bash/bash_profile
+    ~/.profile: shell/bash/profile
     ~/.hushlogin: shell/hushlogin
     ~/.spacevim: editors/spacevim/spacevim.rc
     ~/.tmux.conf: terminal/tmux/tmux.conf

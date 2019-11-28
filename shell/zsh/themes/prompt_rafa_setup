@@ -8,7 +8,7 @@ NONE="✓"
 
 prompt_rafa_pwd() {
   prompt_short_dir=$(pwd) # TODO: $(dot filesystem short_pwd)
-  print -n "%F{yellow}${prompt_short_dir}"
+  print -n "%F{cyan}${prompt_short_dir}"$'\n'
 }
 
 prompt_rafa_git() {
@@ -33,7 +33,7 @@ prompt_rafa_setup() {
   zstyle ':zim:git-info:keys' format \
     'prompt' ' %F{cyan}%b%c %C%D'
 
-  PS1="${prompt_rafa_status}\$(prompt_rafa_pwd)\$(prompt_rafa_git)%f "
+  PS1=$'\n'"${prompt_rafa_status}\$(prompt_rafa_pwd)\$(prompt_rafa_git)%f"$'\n'
   RPS1=''
 }
 
