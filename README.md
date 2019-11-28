@@ -1,9 +1,9 @@
-<p align="center">
-  <h2>🖥️ denisidoro/dotfiles</h2>
-  <h4>Awesome personal dotfiles</h4>
-</h1>
+<h3 align="center">
+  🖥️ denisidoro/dotfiles
+</h3>
 <p align="center">
   <img src="https://user-images.githubusercontent.com/3226564/54047455-d5997200-41b5-11e9-8db7-e9c3ae62328d.png" alt="denisidoro/dotfiles">
+  <sub>Awesome personal dotfiles</sub>
 </p>
 <p align="center">
   <a href="#-installation">How to</a>&nbsp;&nbsp;&nbsp;
