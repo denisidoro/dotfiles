@@ -3,12 +3,16 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/core/documentation.sh"
 
-##? Lock
+##? Lock screen
 #?? 0.1.0
 ##?
 ##? Usage:
 ##?    lock
 
 docs::eval_help "$@"
+
+if ! platform::is_osx; then
+  die "Command not implemented for your current platform!"
+fi
 
 pmset displaysleepnow
