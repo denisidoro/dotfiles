@@ -9,7 +9,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    pull
 
-docs::eval_eval "$@"
+docs::eval_help "$@"
 
 cd "${DOTFILES}"
 dot git checkout latest

@@ -11,6 +11,15 @@ DOT_BIN="${DOTFILES}/bin/dot"
 ##? Usage:
 ##?    init [<profile>]
 
+extract_help() {
+   local -r file="$1"
+   grep "^##?" "$file" | cut -c 5-
+}
+
+case "${1:-}" in
+   *help) extract_help "$0" ; exit 0 ;;
+esac
+
 _dot() {
    "$DOT_BIN" "$@"
 }

@@ -1,5 +1,5 @@
-FIRST_CHARACTER_OK="♪"
-FIRST_CHARACTER_KO="♫"
+FIRST_CHARACTER_OK="λ"
+FIRST_CHARACTER_KO="$FIRST_CHARACTER_OK"
 AHEAD="↑"
 BEHIND="↓"
 DIVERGED="⥄"
@@ -7,8 +7,8 @@ DIRTY="✗"
 NONE="✓"
 
 prompt_dns_pwd() {
-	prompt_short_dir=$(pwd) # TODO: $(dot filesystem short_pwd)
-		print -n "%F{cyan}${prompt_short_dir}"$'\n'
+	prompt_dir="${PWD/$HOME/\~}"
+	print -n "%F{cyan}${prompt_dir}"$'\n'
 }
 
 prompt_dns_git() {

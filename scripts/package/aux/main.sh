@@ -4,6 +4,7 @@ SCRIPT_HOME="${DOTFILES}/scripts/package"
 
 source "${DOTFILES}/scripts/core/coll.sh"
 source "${DOTFILES}/scripts/core/dict.sh"
+source "${DOTFILES}/scripts/core/documentation.sh"
 source "${DOTFILES}/scripts/package/aux/recipes.sh"
 for f in $(find "${DOTFILES}/scripts/package/aux/pkg_managers" -iname '*.sh'); do
    source "$f"
@@ -14,7 +15,7 @@ source "${DOTFILES}/scripts/package/aux/package.sh"
 source "${DOTFILES}/scripts/package/aux/pkg_manager.sh"
 
 handler::help() {
-   opts::extract_help "$0"
+   extract_help "$0"
 }
 
 handler::script() {

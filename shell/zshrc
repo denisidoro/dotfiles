@@ -67,6 +67,6 @@ prompt dns
 
 # iTerm tab name
 precmd() {
-# TODO: echo -ne "\e]1;$(dot filesystem short_pwd)\a"
+  # TODO: echo -ne "\e]1;$(dot fs pwd)\a"
 	echo -ne "\e]1;$(pwd)\a"
 }

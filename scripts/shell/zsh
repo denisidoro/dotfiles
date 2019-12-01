@@ -9,7 +9,13 @@ source "$DOTFILES/scripts/core/documentation.sh"
 ##?    zsh optimize             # Optimize ZSH
 ##?    zsh test-performance     # Print the current ZSH performance
 ##?    zsh reload-completions   # Print the current ZSH performance
-##?    zsh time <filename>   # Analyzes startup time
+##?    zsh time <filename>      # Analyzes startup time
+
+docs::eval_help "$@"
+
+case "${1:-}" in
+   *help) extract_help "$0"; exit 0 ;;
+esac
 
 _time_callback() {
    typeset -a lines

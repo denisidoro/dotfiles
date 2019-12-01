@@ -5,6 +5,9 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 ##? cat/pager utility abstraction
 #?? 0.1.0
+##?
+##? Usage:
+##?    less [<args>...]
 
 docs::eval_help "$@"
 
