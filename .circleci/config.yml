@@ -11,13 +11,16 @@ job_defaults: &defaults
     environment:
       ENVIRONMENT: "test"
       TERM: "dumb"
+      DOT_DOCOPTS: "python"
+      DOT_FZF: "true"
+      DOT_FASD: "true"
 
 jobs:
   tests:
     <<: *defaults
     steps:
       - checkout
-      - run: apk add git
+      - run: ./bin/dot package add git docopts-go
       - run: 
           command: ./bin/dot self test
 
