@@ -11,7 +11,7 @@ job_defaults: &defaults
     environment:
       ENVIRONMENT: "test"
       TERM: "dumb"
-      DOT_DOCOPTS: "python"
+      DOT_DOCOPTS: "go"
       DOT_FZF: "true"
       DOT_FASD: "true"
 
