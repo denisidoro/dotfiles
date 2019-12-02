@@ -17,10 +17,14 @@
   <a href="git/config">Git</a>
 </p>
 
-
 ## 🚀 Installation
 ```bash
+# with homebrew or linuxbrew
 brew install denisidoro/tools/dotfiles
+
+# with git
+git clone https://github.com/denisidoro/dotfiles $HOME/.dotfiles
+$HOME/.dotfiles/bin/dot self install
 ```
 
 ## ⌨️ Usage
@@ -28,15 +32,15 @@ brew install denisidoro/tools/dotfiles
 dot <cmd> <args>... # dot rice pipes, for example
 ```
 
-## 🌐 Updating
+## 🚴‍♂️ Shell startup performance
 ```bash
-dot self update
+λ dot shell zsh test-performance
+0.08 real         0.03 user         0.03 sys
 ```
 
 ## 🎯 Overriding configs
 
 Edit the following files accordingly:
-
 ```sh
 # shell
 ~/.dotfiles/local/zshrc
@@ -46,5 +50,5 @@ Edit the following files accordingly:
 ```
 
 ## 🌟 Inspiration
- * https://github.com/Tuurlijk/dotfiles
- * https://github.com/rgomezcasas/dotfiles
+ * https://github.com/Tuurlijk/dotfiles: Zsh startup snappiness
+ * https://github.com/rgomezcasas/dotfiles: fine-tuning
