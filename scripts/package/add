@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
+##? Install packages
+##?
+##? Usage:
+##?    install [<packages>...]
+
 "${DOTFILES}/scripts/package/install" "$@"

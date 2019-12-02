@@ -2,17 +2,17 @@
 # Constants
 # ==============================
 
-DOTBOT_DIR="modules/dotbot"
-DOTBOT_BIN="bin/dotbot"
+export DOTBOT_DIR="modules/dotbot"
+export DOTBOT_BIN="bin/dotbot"
 
-LOCAL_BIN="${DOTFILES}/local/bin"
-LOCAL_TMP="${DOTFILES}/local/tmp"
-LOCAL_ZSHRC="${DOTFILES}/local/zshrc"
-LOCAL_GITCONFIG="${DOTFILES}/local/gitconfig"
+export LOCAL_BIN="${DOTFILES}/local/bin"
+export LOCAL_TMP="${DOTFILES}/local/tmp"
+export LOCAL_ZSHRC="${DOTFILES}/local/zshrc"
+export LOCAL_GITCONFIG="${DOTFILES}/local/gitconfig"
 
-TMP_DIR="$(fs::tmp)"
-BIN_DIR="$(fs::bin)"
-MAIN_BIN_DIR="${DOTFILES}/bin"
+export TMP_DIR="$(fs::tmp)"
+export BIN_DIR="$(fs::bin)"
+export MAIN_BIN_DIR="${DOTFILES}/bin"
 
 # ==============================
 # Helpers
@@ -297,34 +297,27 @@ setup_docopts() {
    # ==============================
 
    update_dotfiles() {
-
-      local -r CONFIG="${DOTFILES}/symlinks/${1}"
-      shift
-
-      echo
-      "${DOTFILES}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${DOTFILES}" -c "${CONFIG}" "${@}"
-      echo
-
+      dot self symlinks "$@"
    }
 
    update_dotfiles_common() {
       echo
-      update_dotfiles "conf.yaml"
+      update_dotfiles
    }
 
    update_dotfiles_osx() {
       log::note "Configuring for OSX..."
-      update_dotfiles "conf.osx.yaml"
+      update_dotfiles "osx"
    }
 
    update_dotfiles_linux() {
       log::note "Configuring for Linux..."
-      update_dotfiles "conf.linux.yaml"
+      update_dotfiles "linux"
    }
 
    update_dotfiles_wsl() {
       log::note "Configuring for WSL..."
-      log::note "No custom config for WSL"
+      update_dotfiles "linux"
    }
 
    update_dotfiles_arm() {
@@ -344,7 +337,7 @@ setup_docopts() {
 
    update_dotfiles_fallback() {
       echo
-      log::note "Fallbacking to essential symlinks..."
+      log::note "Falling back to essential symlinks..."
       ln -s "${DOTFILES}/shell/bashrc" "${HOME}/.bashrc" || true
       ln -s "${DOTFILES}/shell/zshrc" "${HOME}/.zshrc" || true
    }

@@ -8,5 +8,22 @@
    "command": "workbench.action.focusActiveEditorGroup"},
 
   {"key":     "shift+escape",
-   "command": "workbench.action.focusActiveEditorGroup"}
+   "command": "workbench.action.focusActiveEditorGroup"},
+
+  {
+  "key": "escape",
+  "command": "-calva.clearInlineResults",
+  "when": "editorTextFocus && !editorHasMultipleSelections && !editorReadOnly && !hasOtherSuggestions && !parameterHintsVisible && !suggestWidgetVisible && editorLangId == 'clojure'"
+},
+{
+  "key": "cmd+escape",
+  "command": "calva.clearInlineResults",
+  "when": "editorTextFocus && !editorHasMultipleSelections && !editorReadOnly && !hasOtherSuggestions && !parameterHintsVisible && !suggestWidgetVisible && editorLangId == 'clojure'"
+},
+{
+  "key": "escape",
+  "command": "-calva.clearInlineResults",
+  "when": "editorTextFocus && !editorHasMultipleSelections && !editorReadOnly && !hasOtherSuggestions && !parameterHintsVisible && !suggestWidgetVisible && editorLangId == 'clojure'"
+}
+
 ]

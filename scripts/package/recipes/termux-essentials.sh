@@ -29,6 +29,7 @@ termux-essentials::install() {
       pkg install termux-packages || true
       pkg install ncurses-utils || true
       pkg install grep sed || true
+      termux-setup-storage || true
    fi
 
    if ! platform::command_exists sudo; then

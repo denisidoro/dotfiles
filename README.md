@@ -1,37 +1,46 @@
-Dotfiles
-===================
+<h3 align="center">
+  <img width="18" src="https://image.flaticon.com/icons/svg/226/226769.svg" alt="OSX - Icon made by Freepik from Flaticon" />
 
-Awesome personal dotfiles.
+  <img width="18" src="https://image.flaticon.com/icons/svg/226/226772.svg" alt="Linux - Icon made by Freepik from Flaticon" />
 
-![Demo](https://user-images.githubusercontent.com/3226564/54047455-d5997200-41b5-11e9-8db7-e9c3ae62328d.png)
+  <img width="18" src="https://image.flaticon.com/icons/svg/174/174836.svg" alt="Android - Icon made by Freepik from Flaticon" />
+  denisidoro/dotfiles
+</h3>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/3226564/54047455-d5997200-41b5-11e9-8db7-e9c3ae62328d.png" alt="denisidoro/dotfiles">
+  <sub>Awesome personal dotfiles</sub>
+</p>
+<p align="center">
+  <a href="#-installation">How to</a>&nbsp;&nbsp;&nbsp;
+  <a href="shell">Shell</a>&nbsp;&nbsp;&nbsp;
+  <a href="scripts">Bash scripts</a>&nbsp;&nbsp;&nbsp;
+  <a href="git/config">Git</a>
+</p>
 
-### Calling scripts
+## 🚀 Installation
+```bash
+# with homebrew or linuxbrew
+brew install denisidoro/tools/dotfiles
 
-```sh
-git clone https://github.com/denisidoro/dotfiles.git ~/.dotfiles
-echo 'alias dot=$HOME/.dotfiles/bin/dot' >> $HOME/.bashrc
-exec $SHELL
-dot <args>... # eg: dot rice pipes
+# with git
+git clone https://github.com/denisidoro/dotfiles $HOME/.dotfiles
+$HOME/.dotfiles/bin/dot self install
 ```
 
-### Installing the full experience 
-
-```sh
-git clone https://github.com/denisidoro/dotfiles.git ~/.dotfiles
-~/.dotfiles/bin/dot self install
-dot <args>... # eg: dot rice pipes
+## ⌨️ Usage
+```bash
+dot <cmd> <args>... # dot rice pipes, for example
 ```
 
-### Updating
-
-```sh
-dot self update
+## 🚴‍♂️ Shell startup performance
+```bash
+λ dot shell zsh test-performance
+0.08 real         0.03 user         0.03 sys
 ```
 
-### Overriding configs
+## 🎯 Overriding configs
 
 Edit the following files accordingly:
-
 ```sh
 # shell
 ~/.dotfiles/local/zshrc
@@ -39,3 +48,7 @@ Edit the following files accordingly:
 # git
 ~/.dotfiles/local/gitconfig
 ```
+
+## 🌟 Inspiration
+ * https://github.com/Tuurlijk/dotfiles: Zsh startup snappiness
+ * https://github.com/rgomezcasas/dotfiles: fine-tuning

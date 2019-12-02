@@ -10,8 +10,8 @@ alt + ctrl + cmd + shift - b : open -na /Applications/Google\ Chrome.app
 # Power
 # =================
 
-alt + ctrl + cmd + shift - 0x75 : $HOME/.dotfiles/bin/dot osx lock
-alt + ctrl + cmd + shift - p : $HOME/.dotfiles/bin/dot osx lock
+alt + ctrl + cmd + shift - 0x75 : $HOME/.dotfiles/bin/dot system lock
+alt + ctrl + cmd + shift - p : $HOME/.dotfiles/bin/dot system lock
 
 
 
@@ -32,13 +32,13 @@ alt + ctrl + cmd + shift - l : yabai -m window --focus east
 shift + alt - h : yabai -m window --swap west
 shift + alt - j : yabai -m window --swap south
 shift + alt - k : yabai -m window --swap north
-shift + alt - l : yabai -m window --swap east
+# shift + alt - l : yabai -m window --swap east
 
 # move window
-shift + cmd - h : yabai -m window --warp west
-shift + cmd - j : yabai -m window --warp south
-shift + cmd - k : yabai -m window --warp north
-shift + cmd - l : yabai -m window --warp east
+# shift + cmd - h : yabai -m window --warp west
+# shift + cmd - j : yabai -m window --warp south
+# shift + cmd - k : yabai -m window --warp north
+# shift + cmd - l : yabai -m window --warp east
 
 # balance size of windows
 # shift + alt - 0 : yabai -m space --balance
@@ -70,16 +70,16 @@ shift + cmd - l : yabai -m window --warp east
 # cmd + alt - x : yabai -m space --focus recent
 # cmd + alt - z : yabai -m space --focus prev
 # cmd + alt - c : yabai -m space --focus next
-# cmd + alt - 1 : yabai -m space --focus 1
-# cmd + alt - 2 : yabai -m space --focus 2
-# cmd + alt - 3 : yabai -m space --focus 3
-# cmd + alt - 4 : yabai -m space --focus 4
-# cmd + alt - 5 : yabai -m space --focus 5
-# cmd + alt - 6 : yabai -m space --focus 6
-# cmd + alt - 7 : yabai -m space --focus 7
-# cmd + alt - 8 : yabai -m space --focus 8
-# cmd + alt - 9 : yabai -m space --focus 9
-# cmd + alt - 0 : yabai -m space --focus 10
+cmd + alt - 1 : yabai -m space --focus 1
+cmd + alt - 2 : yabai -m space --focus 2
+cmd + alt - 3 : yabai -m space --focus 3
+cmd + alt - 4 : yabai -m space --focus 4
+cmd + alt - 5 : yabai -m space --focus 5
+cmd + alt - 6 : yabai -m space --focus 6
+cmd + alt - 7 : yabai -m space --focus 7
+cmd + alt - 8 : yabai -m space --focus 8
+cmd + alt - 9 : yabai -m space --focus 9
+cmd + alt - 0 : yabai -m space --focus 10
 
 # send window to desktop and follow focus
 # shift + cmd - x : yabai -m window --space recent; yabai -m space --focus recent

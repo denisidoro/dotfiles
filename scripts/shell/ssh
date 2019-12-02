@@ -17,7 +17,7 @@ docs::eval "$@"
 
 LIST="${DOTFILES}/local/machines.json"
 
-color="$(log::color green)"
+color="$(log::ansi green)"
 
 get_descriptions() {
    cat "$LIST" \

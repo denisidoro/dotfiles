@@ -3,7 +3,7 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
-##? Desktop
+##? Show/hide desktop icons
 #?? 0.1.0
 ##?
 ##? Usage:
@@ -13,6 +13,10 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    desktop hide
 
 docs::eval "$@"
+
+if ! platform::is_osx; then
+   die "Command not implemented for your current platform!"
+fi
 
 osx::show_desktop() {
    defaults write com.apple.finder CreateDesktop -bool true

@@ -5,5 +5,10 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/package/aux/main.sh"
 
+##? Remove packages
+##?
+##? Usage:
+##?    remove [<packages>...]
+
 opts::eval remove "$@"
 main

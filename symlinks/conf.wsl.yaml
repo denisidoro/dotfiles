@@ -1,0 +1,8 @@
+- clean: ['~']
+
+- defaults:
+    link:
+       create: true
+
+- link:
+    C:/Users/Denis/AppData/Roaming/Code/User/keybindings.json: editors/vscode/keybindings.json

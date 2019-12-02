@@ -1,15 +1,3 @@
-#!/usr/bin/env zsh
-# vim: filetype=sh
-
-# startup time instrumentation start
-# zmodload zsh/datetime
-# setopt PROMPT_SUBST
-# PS4='+$EPOCHREALTIME %N:%i> '
-# logfile=$(mktemp zsh_profile.XXXXXXXX)
-# echo "Logging to $logfile"
-# exec 3>&2 2>$logfile
-# setopt XTRACE
-
 # dotfiles
 export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 
@@ -19,8 +7,8 @@ SH="zsh"
 # load vars
 source "${DOTFILES}/shell/aux/vars.zsh"
 
-# load plugins
-source "${DOTFILES}/shell/aux/zplug.zsh"
+# load vars
+source "${DOTFILES}/shell/aux/vars.zsh"
 
 # load more vars
 source "${DOTFILES}/shell/aux/zsh_vars.zsh"
@@ -35,13 +23,54 @@ source "${DOTFILES}/shell/aliases/core.sh"
 source "${DOTFILES}/local/zshrc" 2> /dev/null || true
 
 # fzf, fasd and navi
-source "${DOTFILES}/shell/aux/post.zsh"
+# source "${DOTFILES}/shell/aux/post.zsh"
 
 # demo utilities
-if ${DEMO_MODE:-false}; then
-   source "${DOTFILES}/shell/aux/demo.zsh"
-fi
+# if ${DEMO_MODE:-false}; then
+#    source "${DOTFILES}/shell/aux/demo.zsh"
+# fi
 
 # startup time instrumentation end
 # unsetopt XTRACE
 # exec 2>&3 3>&-
+
+export ZIM_HOME="${DOTFILES}/modules/zimfw"
+
+# ZSH Ops
+setopt HIST_IGNORE_ALL_DUPS
+setopt autopushd
+
+# Start zim
+source ${ZIM_HOME}/init.zsh
+
+# Removing the waiting dots from completion (...). Original: ~/.zim/modules/input/init.zsh
+expand-or-complete-with-redisplay() {
+	zle expand-or-complete
+		zle redisplay
+}
+
+# Fuzzy Autocompletion
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:approximate:*' max-errors 3 numeric
+zstyle ':completion:*' matcher-list 'm:{a-z}={  A-Z}' # match upper from lower case
+
+# source "${DOTFILES}/shell/init.sh"
+
+fpath=("${DOTFILES}/shell/zsh/themes" "${DOTFILES}/shell/zsh/completions" $fpath)
+
+autoload -Uz promptinit && promptinit
+prompt dns
+
+# iTerm tab name
+precmd() {
+# TODO: echo -ne "\e]1;$(dot fs pwd)\a"
+	echo -ne "\e]1;$(pwd)\a"
+}
+
+# load bindings
+source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
+source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
+
+# completions
+# autoload -Uz compinit
+# compinit

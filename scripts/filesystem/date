@@ -73,9 +73,9 @@ prompt_text() {
 
    local -r filename="$(basename "$filepath")"
 
-   local -r green="$(log::color green)"
-   local -r yellow="$(log::color yellow)"
-   local -r reset="$(log::color reset)"
+   local -r green="$(log::ansi green)"
+   local -r yellow="$(log::ansi yellow)"
+   local -r reset="$(log::ansi reset)"
 
    echo "$green[${filename}]$reset from $yellow$(epoch_to_date $current_time)$reset to $yellow$(epoch_to_date $target_time)$reset?"
 }

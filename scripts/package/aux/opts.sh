@@ -10,10 +10,13 @@ opts::eval() {
    local path="${RECIPE_PATH:-${RECIPE_DIR:-${SCRIPT_HOME}/recipes}}"
    local pkg_managers="$(pkg_manager::relevant)"
 
-   case "${1:-}" in
+   case "${BASH_ARGV[0]:-}" in
       --version|version) entry_point="version"; shift ;;
       --full-version|full-version) entry_point="full-version"; shift ;;
       --help|help) entry_point="help"; shift ;;
+   esac
+
+   case "${1:-}" in
       home) entry_point="home"; shift ;;
       script) entry_point="script"; shift; SCRIPT_ARGS="$@" ;;
       install) entry_point="install"; shift ;;

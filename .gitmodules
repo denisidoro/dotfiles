@@ -2,8 +2,9 @@
 	path = modules/dotbot
 	url = https://github.com/anishathalye/dotbot
 	shallow = true
-	
-[submodule "modules/zplug"]
-	path = modules/zplug
-	url = https://github.com/zplug/zplug.git 
+	ignore = dirty
+
+[submodule "modules/zimfw"]
+	path = modules/zimfw
+	url = https://github.com/zimfw/zimfw
 	shallow = true

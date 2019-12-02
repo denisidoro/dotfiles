@@ -15,7 +15,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    colors
 
-docs::eval "$@"
+docs::eval_help "$@"
 
 T='gYw'
 

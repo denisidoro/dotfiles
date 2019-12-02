@@ -7,24 +7,34 @@ source "${DOTFILES}/scripts/core/main.sh"
 #?? 0.1.0
 ##?
 ##? Usage:
-##?    push list
-##?    push note <device> <title> [<message>]
-##?    push url <device> <uri>
-##?    push url <device> <title> [<message>] <uri>
-##?    push app <device> <name>
-##?    push shot <device>
-##?    push write <device> <text>
-##?    push raw <args>...
+##?    push [options] list
+##?    push [options] note <title> [<message>]
+##?    push [options] url <uri>
+##?    push [options] url <title> [<message>] <uri>
+##?    push [options] auth
+##?    push [options] app <name>
+##?    push [options] shot
+##?    push [options] write <text>
+##?    push [options] say <text>
+##?    push [options] share <text>
+##?    push [options] raw <args>...
+##?
+##? Options:
+##?    -d --device <device>     Device to push [default: phone]
 ##?
 ##? Examples:
 ##?    push list
-##?    push note
-##?    push url moto http://google.com
-##?    push app Gmail
+##?    push note sometext
+##?    push url http://google.com
+##?    push app Gmail --device tablet
 
 docs::eval "$@"
 
 PUSHBULLET_HOME="${PUSHBULLET_HOME:-${DOTFILES}/modules/pushbullet-bash}"
+
+if [ -z "${PUSHBULLET_API_KEY:-}" ]; then
+   die "Please set \$PUSHBULLET_API_KEY first"
+fi
 
 best_match() {
    "$0" list \
@@ -40,17 +50,23 @@ build_msg() {
 
 call_api() {
    cd "$PUSHBULLET_HOME"
-   bash ./pushbullet "${@:-}"
+   PB_API_KEY="$PUSHBULLET_API_KEY" bash ./pushbullet "${@:-}"
 }
 
-# call cli
+# call cli with raw args
 if [[ ${#args[@]} > 0 ]]; then
    call_api "${args[@]:-}"
    exit 0
 fi
 
-if [ -n "${device:-}" ]; then
-   device="$(best_match "$device")"
+if ! $list && [ -n "${device:-}" ]; then
+   case "$device" in
+      phone|moto|g4) device="Moto G4 Plus" ;;
+      tablet|tab|galaxy) device="Galaxy Tab A" ;;
+      all|broadcast) device="all" ;;
+      chrome|pc|desktop|mac|notebook) device="Chrome" ;;
+      *) device="$(best_match "$device")" ;;
+   esac
 fi
 
 if $list; then
@@ -69,10 +85,14 @@ else
       args+=("$(build_msg app "$name")")
    elif $shot; then
       args+=("$(build_msg shot)")
+   elif $auth; then
+      args+=("$(build_msg auth)")
    elif $write; then
       args+=("$(build_msg write "$text")")
    elif $say; then
       args+=("$(build_msg say "$text")")
+   elif $share; then
+      args+=("$(build_msg share "$text")")
    fi
 fi
 

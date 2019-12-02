@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)}"
+  
+##? A hub for an all-purpose set of scripts, using navi
+#?? 0.1.0
+##?
+##? Usage:
+##?    dot <context> <cmd> [<args>...]
+
+ctx="$1"
+cmd="$2"
+shift 2
+
+NAVI_PATH="${DOTFILES}/cheats" navi best "${ctx} ${cmd}" "${@:-}"

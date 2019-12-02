@@ -15,6 +15,10 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docs::eval "$@"
 
+if ! platform::is_osx; then
+   die "Command not implemented for your current platform!"
+fi
+
 osx::show_hidden_files() {
    defaults write com.apple.finder AppleShowAllFiles -bool true
    killall Finder

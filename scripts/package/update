@@ -5,5 +5,10 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/package/aux/main.sh"
 
+##? Update packages
+##?
+##? Usage:
+##?    update [<packages>...]
+
 opts::eval update "$@"
 main

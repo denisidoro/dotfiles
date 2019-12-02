@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Starts a minimal docker container with these dotfiles
+#?? 0.1.0
+##?
+##? Usage:
+##?    docker
+
+docs::eval_help "$@"
+
+docker run \
+   -it \
+   --entrypoint /bin/bash \
+   -v "${DOTFILES}:/dotfiles" \
+   "bashell/alpine-bash" \
+   -c "export DOTFILES=/dotfiles; export PATH=$PATH:/dotfiles/bin; bash"

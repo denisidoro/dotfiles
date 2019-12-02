@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/coll.sh"
+source "${DOTFILES}/scripts/self/aux/update.sh"
+
+##? Generate symlinks
+#?? 0.1.0
+##?
+##? Usage:
+##?    symlinks
+##?    symlinks <group>
+
+docs::eval_help "$@"
+
+expanded() {
+   local -r x="$(echo "$*" | sed 's/~/$HOME/g')"
+   eval "echo \"$x\""
+}
+
+gen_ln() {
+   local -r input="$1"
+   local -r target="$(echo "$input" | awk -F'|' '{print $1}')"
+   local -r src="$(echo "$input" | awk -F'|' '{print $2}')"
+   local -r full_target="$(expanded "$target")"
+
+   mkdir -p "$(dirname "$full_target")" || true
+   ln -s "${DOTFILES}/${src}" "$full_target" || true
+}
+
+extract_map() {
+   grep '^- link' -A999 \
+      | tail -n +2 \
+      | sed 's/: */|/g'
+}
+
+gen_filename() {
+   local -r group="${1:-}"
+
+   if [ -n "$group" ]; then
+      echo "${DOTFILES}/symlinks/conf.${group}.yaml"
+   else
+      echo "${DOTFILES}/symlinks/conf.yaml"
+   fi
+}
+
+filename="$(gen_filename "${1:-}")"
+
+if platform::command_exists python; then
+   if [ -n "${group:-}" ]; then
+      shift
+   fi
+   echo
+   "${DOTFILES}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "$DOTFILES" -c "$filename"
+   echo
+else
+   cat "$filename" \
+      | extract_map \
+      | coll::map gen_ln
+fi

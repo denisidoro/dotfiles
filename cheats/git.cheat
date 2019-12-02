@@ -1,0 +1,545 @@
+% git random
+
+# Set global git user name
+git config --global user.name <name>
+
+# Set global git user email
+git config --global user.email <email>
+
+# Initializes a git repository
+git init
+
+# Clone a git repository
+git clone -b <branch_name> <repository> <clone_directory>
+
+# View all available remote for a git repository
+git remote --verbose
+
+# Adds a remote for a git repository
+git remote add <remote_name> <remote_url>
+
+# Renames a remote for a git repository
+git remote rename <old_remote_name> <new_remote_name>
+
+# Remove a remote for a git repository
+git remote remove <remote_name>
+
+# Checkout to branch
+git checkout <branch>
+
+# Displays the current status of a git repository
+git status
+
+# Displays unstaged changes for file
+git diff <toplevel_directory>/<unstaged_files>
+
+# Stages a changed file
+git add <toplevel_directory>/<unstaged_files>
+
+# Stages all changed files
+git add -A
+
+# Saves the changes to a file in a commit
+git commit -m <message>
+
+# Pushes committed changes to remote repository
+git push -u <remote_name> <branch_name>
+
+# Pushes changes to a remote repository overwriting another branch
+git push <remote_name> <branch>:<branch_to_overwrite>
+
+# Overwrites remote branch with local branch changes
+git push <remote_name> <branch_name> -f
+
+# Pulls changes to a remote repo to the local repo
+git pull --ff-only
+
+# Merges changes on one branch into current branch
+git merge <branch_name>
+
+# Abort the current conflict resolution process, and try to reconstruct the pre-merge state.
+git merge --abort
+
+# Displays log of commits for a repo
+git log
+
+# Displays formatted log of commits for a repo
+git log --all --decorate --oneline --graph
+
+# Clear everything
+git clean -dxf
+
+# Sign all commits in a branch based on master
+git rebase master -S -f
+
+# See all open pull requests of a user on Github
+navi fn url::open 'https://github.com/pulls?&q=author:<user>+is:open+is:pr'
+
+# Checkout a branch from a fork
+git fetch origin pull/<pr_number>/head:pr/<pr_number> \
+   && git checkout pr/<pr_number>
+
+# Add a new module
+git submodule add <repository> <path>
+
+# Update module
+git submodule update --init
+
+# Update module without init
+git submodule update
+
+# Pull all submodules
+git submodule foreach git pull origin master
+
+# Update all submodules
+git submodule update --init --recursive
+
+# Start ssh agent
+eval "$(ssh-agent -s)"; ssh-add
+
+# Skip git hooks
+git commit --no-verify
+
+$ branch: git branch | awk '{print $NF}'
+$ toplevel_directory: git rev-parse --show-toplevel
+$ unstaged_files: git --no-pager diff --name-only
+
+
+% git branch
+
+# lists, creates, renames, and deletes branches
+git branch
+
+# creates a new branch
+git checkout -b
+
+# lists branches and their commits
+git branch -vv
+
+# lists local and remote branches and their commits
+git branch --all -vv
+
+# renames a branch
+git branch --move
+
+# renames a branch even if the new branch name already exists
+git branch --move --force
+
+# lists branches and their commits with ancestry graphs
+git show-branch
+
+# lists local and remote branches and their commits with ancestry graphs
+git show-branch --all
+
+# deletes a branch
+git-branch-delete-interactive
+
+# deletes a branch irrespective of its merged status
+git-branch-delete-interactive --force
+
+ 
+% git commit
+
+# records changes to the repository
+git commit --verbose
+
+# commits all modified and deleted files
+git commit --verbose --all
+
+# commits with the given message
+git commit --message
+
+# checks out a branch or paths to the working tree
+git checkout
+
+# checks out hunks from the index or the tree interactively
+git checkout --patch
+
+# amends the tip of the current branch reusing the same log message as HEAD
+git commit --amend --reuse-message HEAD
+
+# amends the tip of the current branch
+git commit --verbose --amend
+
+# applies changes introduced by existing commits
+git cherry-pick --ff
+
+# applies changes introduced by existing commits without committing
+git cherry-pick --no-commit
+
+# reverts existing commits by reverting patches and recording new commits
+git revert
+
+# removes the HEAD commit
+git reset "HEAD^"
+
+# shows one or more objects (blobs, trees, tags and commits)
+git show --pretty=format:"${_git_log_fuller_format}"
+
+# commits with GPG signature
+git commit -S
+
+# verifies the GPG signature of commits
+git verify-commit
+
+
+% git conflict
+
+# lists unmerged files
+git --no-pager diff --diff-filter=U --name-only
+
+# adds unmerged file contents to the index
+git add $(gCl)
+
+# executes merge-tool on all unmerged files
+git mergetool $(gCl)
+
+# checks out our changes for unmerged paths
+git checkout --ours --
+
+# checks out our changes for all unmerged paths
+gCo $(gCl)
+
+# checks out their changes for unmerged paths
+git checkout --theirs --
+
+# checks out their changes for all unmerged paths
+gCt $(gCl)
+
+
+% git data
+
+# displays information about files in the index and the work tree
+git ls-files
+
+# lists cached files
+git ls-files --cached
+
+# lists deleted files
+git ls-files --deleted
+
+# lists modified files
+git ls-files --modified
+
+# lists untracked files
+git ls-files --other --exclude-standard
+
+# lists killed files
+git ls-files --killed
+
+# lists ignored files
+git status --porcelain --short --ignored | sed -n "s/^!! //p"
+
+
+% git fetch
+
+# downloads objects and references from another repository
+git fetch
+
+# clones a repository into a new directory
+git clone
+
+# fetches from and merges with another repository or local branch
+git pull
+
+# fetches from and rebases on top of another repository or local branch
+git pull --rebase
+
+# removes unexisting remote-tracking references, fetches all remotes and merges
+git fetch --all --prune && git merge --ff-only @\{u\}
+
+
+% git grep
+
+# displays lines matching a pattern
+git grep
+
+# displays lines matching a pattern ignoring case
+git grep --ignore-case
+
+# lists files matching a pattern
+git grep --files-with-matches
+
+# lists files that are not matching a pattern
+git grep --files-without-match
+
+# displays lines not matching a pattern
+git grep --invert-match
+
+# displays lines matching a pattern at word boundary
+git grep --word-regexp
+
+
+% git index
+
+# adds file contents to the index
+git add
+
+# adds file contents to the index interactively
+git add --patch
+
+# adds file contents to the index (updates only known files)
+git add --update
+
+# displays changes between the index and a named commit (diff)
+git diff --no-ext-diff --cached
+
+# displays changes between the index and a named commit (word diff)
+git diff --no-ext-diff --cached --word-diff
+
+# resets the current HEAD to the specified state
+git reset
+
+# resets the current index interactively
+git reset --patch
+
+# removes files/directories from the index (recursively)
+git rm --cached -r
+
+# removes files/directories from the index (recursively and forced)
+git rm --cached -rf
+
+
+% git log
+
+# displays the log
+git log --topo-order --pretty=format:"${_git_log_fuller_format}"
+
+# displays the stats log
+git log --topo-order --stat --pretty=format:"${_git_log_fuller_format}"
+
+# displays the diff log
+git log --topo-order --stat --patch --full-diff --pretty=format:"${_git_log_fuller_format}"
+
+# displays the one line log
+git log --topo-order --pretty=format:"${_git_log_oneline_format}"
+
+# displays the one line log with authors and dates
+git log --topo-order --pretty=format:"${_git_log_oneline_medium_format}"
+
+# displays the graph log
+git log --graph --pretty=format:"${_git_log_oneline_format}"
+
+# displays the graph log with authors and dates
+git log --graph --pretty=format:"${_git_log_oneline_medium_format}"
+
+# displays the log verifying the GPG signature of commits
+git log --topo-order --show-signature --pretty=format:"${_git_log_fuller_format}"
+
+# displays the commit count for each contributor in descending order
+git shortlog --summary --numbered
+
+# manages reflog information
+git reflog
+
+
+% git merge
+
+# joins two or more development histories together
+git merge
+
+# aborts the conflict resolution, and reconstructs the pre-merge state
+git merge --abort
+
+# performs the merge but does not commit
+git merge --no-commit
+
+# performs the merge generating a commit even if the merge resolved as a fast-forward
+git merge --no-ff
+
+# commits with GPG signature
+git merge -S
+
+# verifies the GPG signature of the tip commit of the side branch being merged
+git merge --verify-signatures
+
+# runs the merge conflict resolution tools to resolve conflicts
+git mergetool
+
+
+% git push
+
+# updates remote refs along with associated objects
+git push
+
+# forces a push safely (with lease)
+git push --force-with-lease
+
+# forces a push
+git push --force
+
+# pushes all branches
+git push --all
+
+# pushes all branches and tags
+git push --all && git push --tags
+
+# pushes all tags
+git push --tags
+
+# pushes the current branch and adds origin as an upstream reference for it
+git push --set-upstream origin "$(git-branch-current 2> /dev/null)"
+
+# pulls and pushes the current branch from origin to origin
+git pull origin "$(git-branch-current 2> /dev/null)" && git push origin "$(git-branch-current 2> /dev/null)"
+
+
+% git rebase
+
+# forward-ports local commits to the updated upstream head
+git rebase
+
+# aborts the rebase
+git rebase --abort
+
+# continues the rebase after merge conflicts are resolved
+git rebase --continue
+
+# makes a list of commits to be rebased and opens the editor
+git rebase --interactive
+
+# skips the current patch
+git rebase --skip
+
+
+% git remote
+
+# manages tracked repositories
+git remote
+
+# lists remote names and their URLs
+git remote --verbose
+
+# adds a new remote
+git remote add
+
+# removes a remote
+git remote rm
+
+# renames a remote
+git remote rename
+
+# fetches remotes updates
+git remote update
+
+# prunes all stale remote tracking branches
+git remote prune
+
+# shows information about a given remote
+git remote show
+
+
+% git stash
+
+# stashes the changes of the dirty working directory
+git stash
+
+# applies the changes recorded in a stash to the working directory
+git stash apply
+
+# drops a stashed state
+git stash drop
+
+# drops all the stashed states
+git-stash-clear-interactive
+
+# lists stashed states
+git stash list
+
+# displays changes between the stash and its original parent
+git stash show --patch --stat
+
+# removes and applies a single stashed state from the stash list
+git stash pop
+
+# recovers a given stashed state
+git-stash-recover
+
+# stashes the working directory changes, including untracked files
+git stash save --include-untracked
+
+# stashes the working directory changes interactively
+git stash save --patch --no-keep-index
+
+# stashes the working directory changes retaining the index
+git stash save --include-untracked --keep-index
+
+# unapplies (reverts) applied changes
+git stash show --patch | git apply --reverse
+
+
+% git submodule
+
+# initializes, updates, or inspects submodules
+git submodule
+
+# adds given a repository as a submodule
+git submodule add
+
+# evaluates a shell command in each of checked out submodules
+git submodule foreach
+
+# initializes submodules
+git submodule init
+
+# initializes and clones submodules recursively
+git submodule update --init --recursive
+
+# lists the commits of all submodules
+git submodule status
+
+# moves a submodule
+git-submodule-move
+
+# git submodule sync
+
+# fetches and merges the latest changes for all submodules
+git submodule foreach git pull origin master
+
+# removes a submodule
+git-submodule-remove
+
+
+% git tag
+
+# creates, lists, deletes or verifies a tag object signed with GPG
+git tag
+
+# creates a GPG-signed tag
+git tag --sign
+
+# verifies the GPG signature of tags
+git verify-tag
+
+# deletes tags with given names
+git tag --delete
+
+
+% git tree
+
+# displays working-tree status in the short format
+git status --short
+
+# displays working-tree status
+git status
+
+# displays changes between the working tree and the index (diff)
+git diff --no-ext-diff
+
+# displays changes between the working tree and the index (word diff)
+git diff --no-ext-diff --word-diff
+
+# resets the current HEAD to the specified state, does not touch the index nor the working tree
+git reset --soft
+
+# resets the current HEAD, index and working tree to the specified state
+git reset --hard
+
+# cleans untracked files from the working tree (dry-run)
+git clean --dry-run
+
+# cleans untracked files from the working tree
+git clean -d --force
+
+# removes files from the working tree and from the index recursively
+git rm -r

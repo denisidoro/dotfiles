@@ -3,7 +3,8 @@
  {:dependencies
   [[cljdev "0.8.0" :exclusions [org.clojure/clojure]]
    ;[org.clojure/tools.trace "0.7.10" :exclusions [org.clojure/clojure]]
-   [spyscope "0.1.7-SNAPSHOT" :exclusions [org.clojure/clojure]]]
+   ;[spyscope "0.1.7-SNAPSHOT" :exclusions [org.clojure/clojure]]
+   ]
 
   :jvm-opts
   ["-Duser.language=en"
@@ -12,7 +13,8 @@
 
   :injections
   [(require 'nu)
-   (require '[spyscope.core :as spy])]
+   ;(require '[spyscope.core :as spy])
+   ]
 
   :repositories
   [["nu-maven" {:url        "s3p://nu-maven/releases/"
@@ -20,7 +22,7 @@
                 :passphrase [:gpg :env/artifacts_aws_secret_access_key]}]]
 
   :plugins
-  [[s3-wagon-private "1.3.1"]]}
+  [[s3-wagon-private "1.3.1" :exclusions [commons-logging]]]}
 
  :repl
 
@@ -36,7 +38,7 @@
    ]
 
   :repl-options
-  {:timeout 60000}
+  {:timeout 180000}
 
   :global-vars
   {*warn-on-reflection* false}}}
