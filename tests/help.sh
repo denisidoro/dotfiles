@@ -17,8 +17,14 @@ assert_help() {
    dot "$ctx" "$cmd" --help | grep -q Usage
 }
 
-test::set_suite "help"
+has_zsh="$(platform::command_exists zsh && echo true || echo false)"
 
+test::set_suite "help"
 for bin in $(_bins); do
-   test::run "${bin} has a --help command" assert_help "$bin"
+   if [ "$bin" = "shell zsh" ] && ! $has_zsh; then
+      test_fn=test::skip
+   else
+      test_fn=test::run
+   fi
+   $test_fn "${bin} has a --help command" assert_help "$bin"
 done
