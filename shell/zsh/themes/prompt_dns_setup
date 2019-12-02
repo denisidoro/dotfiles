@@ -8,7 +8,7 @@ NONE="✓"
 
 prompt_dns_pwd() {
 	prompt_dir="${PWD/$HOME/\~}"
-	print -n "%F{cyan}${prompt_dir}"$'\n'
+		print -n "%F{cyan}${prompt_dir}"$'\n'
 }
 
 prompt_dns_git() {

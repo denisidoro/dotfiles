@@ -63,10 +63,14 @@ prompt dns
 
 # iTerm tab name
 precmd() {
-  # TODO: echo -ne "\e]1;$(dot fs pwd)\a"
+# TODO: echo -ne "\e]1;$(dot fs pwd)\a"
 	echo -ne "\e]1;$(pwd)\a"
 }
 
 # load bindings
 source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
 source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
+
+# completions
+# autoload -Uz compinit
+# compinit

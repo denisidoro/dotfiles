@@ -18,11 +18,11 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval "$@"
 
 if ! platform::is_osx; then
-  die "Command not implemented for your current platform!"
+   die "Command not implemented for your current platform!"
 fi
 
 if $single; then
-    echo "$filepath" | xargs -I% osascript -e 'tell application "Finder" to set desktop picture to POSIX file "%"'
+   echo "$filepath" | xargs -I% osascript -e 'tell application "Finder" to set desktop picture to POSIX file "%"'
 else
-    echo "$filepath" | xargs -I% osascript -e 'tell application "System Events" to tell every desktop to set picture to "%"'
+   echo "$filepath" | xargs -I% osascript -e 'tell application "System Events" to tell every desktop to set picture to "%"'
 fi

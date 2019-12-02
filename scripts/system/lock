@@ -12,7 +12,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval_help "$@"
 
 if ! platform::is_osx; then
-  die "Command not implemented for your current platform!"
+   die "Command not implemented for your current platform!"
 fi
 
 pmset displaysleepnow
