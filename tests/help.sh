@@ -21,7 +21,7 @@ has_zsh="$(platform::command_exists zsh && echo true || echo false)"
 
 test::set_suite "help"
 for bin in $(_bins); do
-   if [ "$bin" = "shell zsh" ] && ! $has_zsh; then
+   if [ "$bin" = "./shell/zsh" ] && ! $has_zsh; then
       test_fn=test::skip
    else
       test_fn=test::run
