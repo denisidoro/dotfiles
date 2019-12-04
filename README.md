@@ -7,7 +7,7 @@
   denisidoro/dotfiles
 </h3>
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/3226564/54047455-d5997200-41b5-11e9-8db7-e9c3ae62328d.png" alt="denisidoro/dotfiles">
+  <img src="TODO" alt="Demo">
   <sub>Awesome personal dotfiles</sub>
 </p>
 <p align="center">
