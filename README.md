@@ -8,6 +8,7 @@
 </h3>
 <p align="center">
   <img src="https://user-images.githubusercontent.com/3226564/70169967-99466400-16aa-11ea-9e56-f1e9978e5490.gif" alt="Demo">
+  <br>
   <sub>Awesome personal dotfiles</sub>
 </p>
 <p align="center">
