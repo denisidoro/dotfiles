@@ -33,6 +33,10 @@
         "**/.DS_Store": true,  
         "**/node_modules": true
     },
+
+    "files.associations": {
+        "*.cheat": "shellscript"
+    },
    
     "diffEditor.ignoreTrimWhitespace": false,
     "diffEditor.renderSideBySide": true,

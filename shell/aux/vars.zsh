@@ -47,7 +47,7 @@ FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export GPG_TTY=$(tty)
 
 # navi
-export NAVI_PATH="${DOTFILES}/cheats"
+export NAVI_PATH="${DOTFILES}/cheats:${DOTFILES}/local/cheats"
 
 # PATH
 export PATH="${DOTFILES}/local/bin:${DOTFILES}/bin:/usr/local/bin:${PATH}"

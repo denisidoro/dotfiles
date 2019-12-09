@@ -12,13 +12,13 @@ function randomLine(text) {
 }
 
 function keyvals(m) {
-  var arr = []
-  Object.keys(m)
-    .forEach(k => arr.push([k, m[k]]))
-  return arr
+  return Object.keys(m)
+    .map(k => [k, m[k])
 }
 
 function parseArgs(m, defaults = null) {
   keyvals({...m, ...defaults})
-    .map(([k, v]) => setLocal(k, v))
+    .forEach(([k, v]) => {
+      setLocal(k.toString(), v.toString())
+    })
 }
