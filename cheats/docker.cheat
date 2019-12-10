@@ -28,7 +28,7 @@ docker network ls
 docker ps
 
 # Delete all running and stopped containers
-docker rm -f $(docker ps -aq)
+docker rm -f "$(docker ps -aq)"
 
 # Create a new bash process inside the container and connect it to the terminal
 docker exec -it <container_id> bash

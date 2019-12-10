@@ -24,3 +24,9 @@ ifconfig \
   | grep -Eo '([0-9]*\.){3}[0-9]*' \
   | grep -v '127.0.0.1' \
   | tail -n1
+
+# Get certificates for a service
+openssl s_client -showcerts -connect <url>
+
+# Launch a container with network utils
+docker run -it --entrypoint /bin/sh nicolaka/netshoot
