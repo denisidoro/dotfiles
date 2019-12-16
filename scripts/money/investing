@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Investing helper tools
+##?
+##? Usage:
+##?   investing stocks
+##?
+##? Examples:
+##?   investing stocks
+
+docs::eval "$@"
+
+fetch_blob() {
+  curl 'https://br.investing.com/equities/StocksFilter?noconstruct=1&smlID=602&sid=&tabletype=performance&index_id=all' -H 'Connection: keep-alive' -H 'Accept: */*' -H 'DNT: 1' -H 'X-Requested-With: XMLHttpRequest' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36' -H 'Sec-Fetch-Site: same-origin' -H 'Sec-Fetch-Mode: cors' -H 'Referer: https://br.investing.com/equities/brazil' -H 'Accept-Encoding: gzip, deflate, br' -H 'Accept-Language: en-US,en;q=0.9,fr-FR;q=0.8,fr;q=0.7' -H 'G_ENABLED_IDPS=google; r_p_s_n=1; geoC=BR; gtmFired=OK; UserReactions=true; billboardCounter_30=0;' --compressed
+}
+
+extract() {
+  echo "Stock|Code"
+  grep '/equities/' \
+    | sed -E 's|.*title="([^"]+)".*/equities/([^"]+)".*|\1\|\2|g' \
+    | column -ts '|'
+}
+
+fetch_blob | extract > "${DOTFILES}/local/stocks.txt"

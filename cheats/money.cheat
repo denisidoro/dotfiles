@@ -1,0 +1,6 @@
+% money, stock, finance
+
+# Get historical data for stock
+navi fn url::open https://br.investing.com/equities/<stock>-historical-data
+
+$ stock: cat "${DOTFILES}/local/stocks.txt" --- --column 2 --headers 1
