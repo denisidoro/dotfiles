@@ -23,3 +23,6 @@ alias gprp="dot git pr preview"
 
 # git interactive checkout
 alias gcoo="dot git checkout prompt"
+
+# git status
+alias gst="git status"
