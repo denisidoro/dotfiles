@@ -1,0 +1,3 @@
+{:deps {org.clojure/clojurescript {:mvn/version "1.10.520"}
+        denisidoro/quark          {:mvn/version "0.9.1"}
+        com.wsscode/pathom        {:mvn/version "2.2.28"}}}

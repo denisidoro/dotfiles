@@ -1,0 +1,8 @@
+resources/
+out/
+node_modules/
+.cpcache/
+package-lock.json
+package.json
+doc/
+main.js
