@@ -61,8 +61,11 @@
 
 (defn query
   [& args]
-  (apply parser args))
+  (async/go 
+    (println (async/<! (apply parser args)))))
 
+(println "before")
+#_(println entries)
 (query {} [{[:rf/memid ")%b&R4HVD:P(2zsVy!F@"] [:rf/issuer {:rf/bank [:bank/name]}]}])
-(query {} [{:rf/all [:rf/start-date :rf/start-amount {:rf/bank [:bank/name]}]}])
-
+#_(query {} [{:rf/all [:rf/start-date :rf/start-amount {:rf/bank [:bank/name]}]}])
+(println "after")
