@@ -7,9 +7,7 @@
   [& args]
   (println "before")
   (println (-> (c.parser/connect-and-get-entries!)
-               (l.query/get-by-id "HNAn8<u6Q[S%R2EqZ]sW")
-               ;count
-               ))
+               (l.query/get-by-key+id :fundo/memid "HNAn8<u6Q[S%R2EqZ]sW") ))
   (println "after")
   42)
 

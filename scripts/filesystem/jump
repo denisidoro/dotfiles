@@ -21,7 +21,7 @@ fasd() {
    export PROMPT_COMMAND=""
    export _ZL_CD="cd"
    export _ZL_ECHO="1"
-   eval "$(lua "${DOTFILES}/modules/z.lua/z.lua" --init bash)"
+   eval "$(lua "/opt/z.lua/z.lua" --init bash)"
    set +e
    _zlua "$@"
    set -e

@@ -1,5 +1,5 @@
 # dotfiles
-export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 
 # register which shell is running
 SH="zsh"

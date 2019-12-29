@@ -23,8 +23,8 @@
 brew install denisidoro/tools/dotfiles
 
 # with git
-git clone https://github.com/denisidoro/dotfiles $HOME/.dotfiles
-$HOME/.dotfiles/bin/dot self install
+git clone https://github.com/denisidoro/dotfiles $HOME/dotfiles
+$HOME/dotfiles/bin/dot self install
 ```
 
 ## ⌨️ Usage
@@ -43,10 +43,10 @@ dot <cmd> <args>... # dot rice pipes, for example
 Edit the following files accordingly:
 ```sh
 # shell
-~/.dotfiles/local/zshrc
+~/dotfiles/local/zshrc
 
 # git
-~/.dotfiles/local/gitconfig
+~/dotfiles/local/gitconfig
 ```
 
 ## 🌟 Inspiration

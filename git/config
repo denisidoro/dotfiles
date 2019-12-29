@@ -1,6 +1,6 @@
 [core]
-  excludesfile = ~/.dotfiles/git/ignore
-  hookspath = ~/.dotfiles/git/hooks
+  excludesfile = ~/dotfiles/git/ignore
+  hookspath = ~/dotfiles/git/hooks
   autocrlf = input
   ignorecase = false
 
@@ -37,7 +37,7 @@
   autoStash = true
 
 [include]
-  path = ~/.dotfiles/local/gitconfig
+  path = ~/dotfiles/local/gitconfig
 
 [pull]
   rebase = true

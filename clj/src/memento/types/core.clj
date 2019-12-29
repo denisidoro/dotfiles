@@ -1,6 +1,6 @@
 (ns memento.types.core)
 
-(deftype Ref [id])
+(deftype Ref [key id])
 
 (defn ref?
   [x]

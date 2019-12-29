@@ -3,8 +3,29 @@
             [quark.collection.seq :as seq]
             [quark.conversion.data :as data]
             [quark.collection.map :as map]
-            #_[quark.time.core :as time]
+    #_[quark.time.core :as time]
             [memento.types.core :as types]))
+
+(defn tap
+  [x]
+  (println x)
+  x)
+
+(defn kw-friendly-str
+  [x]
+  (as-> x it
+        (str/replace it " " "-")
+        (str/lower-case it)))
+
+(defn key-mapper
+  [ns x]
+  (as-> x it
+        (kw-friendly-str it)
+        (keyword (kw-friendly-str ns) it)))
+
+(defn library-memid
+  [library-name]
+  (key-mapper (kw-friendly-str library-name) "memid"))
 
 (defn library-internal
   [{:keys [UUID TITLE]}]
@@ -12,7 +33,7 @@
    :name TITLE})
 
 (defn gen-field-map
-  [fields relations rows]
+  [fields relations relations2 rows]
   (->> fields
        (map (fn [{:keys [title UUID type_code]}]
               (let [val-fn (case type_code
@@ -27,7 +48,8 @@
                                   (into {}))
 
                              "ft_lib_entry"
-                             relations
+                             (fn [id]
+                               (types/->Ref (get relations2 UUID) (get relations id)))
 
                              "ft_date"
                              identity
@@ -75,16 +97,31 @@
   [library]
   ["SELECT * FROM tbl_relations WHERE lib_uuid = ?" (:id library)])
 
+(defn ^:private self-row?
+  [{:keys [ownerUUID templateUUID]}]
+  (= ownerUUID templateUUID))
+
+(defn relation-types
+  [rows libraries]
+  (->> rows
+       (filter self-row?)
+       (map (fn [{:keys [templateUUID stringContent]}]
+              [templateUUID (some->> libraries
+                                 (seq/find-first #(-> % :id (= stringContent)))
+                                 :name
+                                 library-memid)]))
+       (into {}) ))
+
 (defn relation-mapper
-  [xs]
+  [rows xs]
   (->> xs
-       (map (fn [{:keys [rel_uuid slave_item_uuid]}] [rel_uuid (types/->Ref slave_item_uuid)]))
+       (map (fn [{:keys [rel_uuid slave_item_uuid]}] [rel_uuid slave_item_uuid]))
        (into {})))
 
 (defn rows->entries
   [rows field-map]
   (->> rows
-       (remove (fn [{:keys [ownerUUID templateUUID]}] (= ownerUUID templateUUID)))
+       (remove self-row?)
        (group-by :ownerUUID)
        (map/map-vals (partial owner-mapper field-map))
        (map (comp without-nil-values merge-id))))
@@ -109,17 +146,6 @@
   []
   ["SELECT * FROM tbl_library"])
 
-(defn kw-friendly-str
-  [x]
-  (as-> x it
-        (str/replace it " " "-")
-        (str/lower-case it)))
-
-(defn key-mapper
-  [ns x]
-  (as-> x it
-        (kw-friendly-str it)
-        (keyword (kw-friendly-str ns) it)))
 
 (defn entry-mapper
   [library-name x]

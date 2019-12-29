@@ -2,21 +2,28 @@
   (:require [quark.collection.map :as map]
             [memento.types.core :as types]))
 
-(defn get-by-id*
+(defn ^:private get-by-id*
   [all-xs id]
   (as-> all-xs it
         (vals it)
         (apply merge it)
         (get it id)))
 
-types/->Ref
+(defn get-by-key+id*
+  [all-xs k id]
+   (get-in all-xs [k id]))
+
+(defn tap
+    [x]
+  (println x)
+  x)
 
 (defn resolve-refs
   [m all-xs]
   (map/map-vals
     (fn [x]
       (if (types/ref? x)
-        (->> (get-by-id* all-xs (.-id x))
+        (->> (get-by-key+id* all-xs (.-key x) (.-id x))
              (map/filter-keys #(-> % name (= "memid"))))
         x))
     m))
