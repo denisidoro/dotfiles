@@ -499,6 +499,9 @@ git submodule foreach git pull origin master
 # removes a submodule
 git-submodule-remove
 
+# remove a submodule (fix no URL found...)
+git rm --cached <path_to_submodule>
+
 
 % git tag
 
@@ -543,3 +546,4 @@ git clean -d --force
 
 # removes files from the working tree and from the index recursively
 git rm -r
+
