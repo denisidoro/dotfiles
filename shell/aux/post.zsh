@@ -2,12 +2,12 @@
 # vim: filetype=sh
 
 # fzf
-if ${DOT_FZF:-false}; then
-   if [ $SHELL = "zsh" ]; then
-      source "${DOTFILES}/shell/bindings/${SH}.zsh"
-   fi
-   source "${HOME}/.fzf.${SH}" 2> /dev/null || true
-fi
+# if ${DOT_FZF:-false}; then
+#    if [ $SHELL = "zsh" ]; then
+#       source "${DOTFILES}/shell/bindings/${SH}.zsh"
+#    fi
+#    source "${HOME}/.fzf.${SH}" 2> /dev/null || true
+# fi
 
 # fasd
 if ${DOT_FASD:-false}; then
@@ -15,4 +15,4 @@ if ${DOT_FASD:-false}; then
 fi
 
 # navi
-source "${DEV_HOME}/navi/navi.plugin.${SH}" 2> /dev/null || true
+# source "${DEV_HOME}/navi/navi.plugin.${SH}" 2> /dev/null || true

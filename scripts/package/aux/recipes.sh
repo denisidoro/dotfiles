@@ -29,6 +29,7 @@ recipe::shallow_git_clone() {
    local -r user="$1"
    local -r repo="$2"
    local -r folder="$(recipe::folder "$repo")"
+   echoerr "$folder"
    mkdir -p "$folder" || true
    sudo chmod 777 "$folder" || true
    yes | git clone "$(git::url $user $repo)" --depth 1 "$folder" || true

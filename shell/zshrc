@@ -23,7 +23,7 @@ source "${DOTFILES}/shell/aliases/core.sh"
 source "${DOTFILES}/local/zshrc" 2> /dev/null || true
 
 # fzf, fasd and navi
-# source "${DOTFILES}/shell/aux/post.zsh"
+source "${DOTFILES}/shell/aux/post.zsh"
 
 # demo utilities
 # if ${DEMO_MODE:-false}; then

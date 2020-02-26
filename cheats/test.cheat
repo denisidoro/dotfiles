@@ -1,0 +1,10 @@
+% test
+
+# Test echo
+echo <foo>
+
+# Test fs
+cat <file>
+
+$ foo: echo 1 2 3 | tr " " "\n"
+$ file: ls --- --multi true
