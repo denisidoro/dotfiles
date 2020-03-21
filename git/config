@@ -48,4 +48,5 @@
   process = git-lfs filter-process
   required = true
 [user]
-	name = asd
+	name = Denis Isidoro
+	email = denis_isidoro@live.com

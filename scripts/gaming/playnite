@@ -1,24 +1,24 @@
-foo#!/usr/bin/env bash
-fooset -euo pipefail
-foo
-foosource "${DOTFILES}/scripts/core/main.sh"
-foo
-foo##? Playnite helpers
-foo#?? 0.1.0
-foo##?
-foo##? Usage:
-foo##?    playnite games
-foo##?    playnite set
-foo
-foodocs::eval "$@"
-foo
-fooLIBRARY_DIR="${HOME}/Downloads/library"
-foo
-fooif $games; then
-foo   cat $LIBRARY_DIR/games/* | jq -r '.Name'
-fooelif $set; then
-foo   game="$(cat $LIBRARY_DIR/games/* \
-foo        | jq -r '.Name' \
-foo        | fzf --height '50%')"
-foo   dot gaming images "$game"
-foofi
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Playnite helpers
+#?? 0.1.0
+##?
+##? Usage:
+##?    playnite games
+##?    playnite set
+
+docs::eval "$@"
+
+LIBRARY_DIR="${HOME}/Downloads/library"
+
+if $games; then
+   cat $LIBRARY_DIR/games/* | jq -r '.Name'
+elif $set; then
+   game="$(cat $LIBRARY_DIR/games/* \
+        | jq -r '.Name' \
+        | fzf --height '50%')"
+   dot gaming images "$game"
+fi

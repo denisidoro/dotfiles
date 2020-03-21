@@ -1,80 +1,80 @@
-foo#!/usr/bin/env bash
-fooset -euo pipefail
-foo
-foosource "${DOTFILES}/scripts/core/main.sh"
-foo
-foo##? Get images for game
-foo#?? 0.1.0
-foo##?
-foo##? Usage:
-foo##?    images <game>
-foo
-foodocs::eval "$@"
-foo
-foobest_match() {
-foo   dot gaming igdb api "games" "search \"${game}\"; fields name, id, artworks.url, screenshots.url, cover.url;" \
-foo      | jq -rc 'first'
-foo}
-foo
-foowith_resolution() {
-foo   sed "s/t_thumb/t_${1}/g"
-foo}
-foo
-fooincomplete_image_urls() {
-foo   local -r data="$1"
-foo   # echo "$data" | jq -r '.cover.url'
-foo   echo "$data" | jq -r '.screenshots | map(.url) | .[]'
-foo   echo "$data" | jq -r '.artworks | map(.url) | .[]'
-foo}
-foo
-fooimage_urls() {
-foo   local -r data="$1"
-foo   incomplete_image_urls "$data" \
-foo      | sed 's|//|http://|g'
-foo}
-foo
-fooprint_result() {
-foo   local -r data="$1"
-foo   local -r cover="$2"
-foo   local -r background="$3"
-foo
-foo   local -r id="$(echo "$data" | jq -r .id)"
-foo   local -r name="$(echo "$data" | jq -r .name)"
-foo
-foo   printf "{\"name\": \"${name}\", \"igdbId\": ${id}"
-foo   [ -n "$cover" ] && printf ", 'cover': \"${cover}\""
-foo   [ -n "$background" ] && printf ", \"background\": \"${background}\""
-foo   echo "}"
-foo}
-foo
-fooprompt() {
-foo   local -r data="$1"
-foo   local -r urls="$(image_urls "$data")"
-foo
-foo   local cover
-foo   local background=
-foo
-foo   for url in $urls; do
-foo      echo "$url" | with_resolution "720p" | xargs curl -s | imgcat
-foo      echo
-foo
-foo      read -n1 -p "Use as [c]over, [b]ackground, [s]kip or [a]bort: " answer
-foo      echo
-foo      case "$answer" in
-foo         c) cover="$url" ;;
-foo         b) background="$url" ;;
-foo         a) print_result "$data" "${cover:-}" "${background:-}" && return 0 ;;
-foo         *) printf '' ;;
-foo      esac
-foo
-foo      if [[ -n "${cover:-}" ]] && [[ -n "${background:-}" ]]; then
-foo         print_result "$data" "$cover" "$background"
-foo         return 0
-foo      fi
-foo   done
-foo
-foo   print_result "$data" "${cover:-}" "${background:-}"
-foo}
-foo
-foodata="$(best_match)"
-fooprompt "$data"
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Get images for game
+#?? 0.1.0
+##?
+##? Usage:
+##?    images <game>
+
+docs::eval "$@"
+
+best_match() {
+   dot gaming igdb api "games" "search \"${game}\"; fields name, id, artworks.url, screenshots.url, cover.url;" \
+      | jq -rc 'first'
+}
+
+with_resolution() {
+   sed "s/t_thumb/t_${1}/g"
+}
+
+incomplete_image_urls() {
+   local -r data="$1"
+   # echo "$data" | jq -r '.cover.url'
+   echo "$data" | jq -r '.screenshots | map(.url) | .[]'
+   echo "$data" | jq -r '.artworks | map(.url) | .[]'
+}
+
+image_urls() {
+   local -r data="$1"
+   incomplete_image_urls "$data" \
+      | sed 's|//|http://|g'
+}
+
+print_result() {
+   local -r data="$1"
+   local -r cover="$2"
+   local -r background="$3"
+
+   local -r id="$(echo "$data" | jq -r .id)"
+   local -r name="$(echo "$data" | jq -r .name)"
+
+   printf "{\"name\": \"${name}\", \"igdbId\": ${id}"
+   [ -n "$cover" ] && printf ", 'cover': \"${cover}\""
+   [ -n "$background" ] && printf ", \"background\": \"${background}\""
+   echo "}"
+}
+
+prompt() {
+   local -r data="$1"
+   local -r urls="$(image_urls "$data")"
+
+   local cover
+   local background=
+
+   for url in $urls; do
+      echo "$url" | with_resolution "720p" | xargs curl -s | imgcat
+      echo
+
+      read -n1 -p "Use as [c]over, [b]ackground, [s]kip or [a]bort: " answer
+      echo
+      case "$answer" in
+         c) cover="$url" ;;
+         b) background="$url" ;;
+         a) print_result "$data" "${cover:-}" "${background:-}" && return 0 ;;
+         *) printf '' ;;
+      esac
+
+      if [[ -n "${cover:-}" ]] && [[ -n "${background:-}" ]]; then
+         print_result "$data" "$cover" "$background"
+         return 0
+      fi
+   done
+
+   print_result "$data" "${cover:-}" "${background:-}"
+}
+
+data="$(best_match)"
+prompt "$data"
