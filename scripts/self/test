@@ -7,22 +7,41 @@ source "${DOTFILES}/scripts/self/aux/test.sh"
 ##?
 ##? Usage:
 ##?    test
-##?    test <suite>
+##?    test suite <suite>
+##?    test file <file>
 
 docs::eval_help "$@"
 
-if [ -n "${1:-}" ]; then
+_all_files() {
+find "${DOTFILES}/tests/" -iname "*.sh"
+}
 
-   source "${DOTFILES}/tests/${1}.sh"
-
-else
-
-   tests="$(find "${DOTFILES}/tests/" -iname "*.sh")"
+_source_all() {
+   local -r tests="$(_all_files)"
 
    for test in $tests; do
       source "$test"
    done
+}
 
-fi
+_source_matching() {
+   local -r match="$1"
+   local -r tests="$(_all_files)"
+
+   for test in $tests; do
+      local suites="$(cat "$test" | grep 'set_suite')"
+      if echo "$suites" | grep -q "$match -"; then
+         source "$test"
+      fi
+   done
+}
+
+cmd="${1:-}"
+
+case $cmd in
+   file) source "${DOTFILES}/tests/${2}.sh" ;;
+   suite) _source_matching "$2" ;;
+   *) _source_all ;;
+esac
 
 test::finish

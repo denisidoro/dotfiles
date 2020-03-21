@@ -52,8 +52,8 @@ test::set_suite "bash - help"
 
 for bin in $(_bins); do
    case $bin in
-      clojure/data) platform::command_exists clojure && test_fn=test::run || test_fn=test::skip;;
-      shell/zsh) platform::command_exists zsh && test_fn=test::run || test_fn=test::skip;;
+      "clojure/data") platform::command_exists clojure && test_fn=test::run || test_fn=test::skip;;
+      "shell/zsh") platform::command_exists zsh && test_fn=test::run || test_fn=test::skip;;
       *) test_fn=test::run ;; 
    esac
    $test_fn "${bin} has a help command" assert_help "$bin"

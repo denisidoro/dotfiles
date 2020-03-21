@@ -12,11 +12,10 @@ _validate() {
       | cut -d',' -f1)"
    
    for f in $files; do
-      printf "$f "
       if [[ -f "$f" || -d "$f" ]]; then 
-         echo ✓
+         :
       else 
-         echo ☓
+         echo "☓ $f"
          success=false
       fi
    done
@@ -26,8 +25,8 @@ _validate() {
 
    cd "$DOTFILES"
 
+test::set_suite "bash - symlink"
 
-test::set_suite "symlink"
    for f in $(ls "./links/"); do
 test::run "$f - symlinks are valid" _validate "./links/$f"
    done

@@ -122,6 +122,8 @@ _alias() {
       fs) echo filesystem ;;
       not) echo notification ;;
       google) echo search ;;
+      down) echo torrent ;;
+      download) echo torrent ;;
       *) echo "$arg" ;;
    esac
 }
