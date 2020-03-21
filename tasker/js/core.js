@@ -13,7 +13,7 @@ function randomLine(text) {
 
 function keyvals(m) {
   return Object.keys(m)
-    .map(k => [k, m[k])
+    .map(k => [k, m[k]])
 }
 
 function parseArgs(m, defaults = null) {

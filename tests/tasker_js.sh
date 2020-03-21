@@ -19,5 +19,5 @@ else
    test_fn="test::skip"
 fi
 
-test::set_suite "tasker js"
+test::set_suite "node - tasker js"
 $test_fn "randomLine" random_line
