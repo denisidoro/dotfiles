@@ -1,6 +1,6 @@
 [submodule "modules/zimfw"]
 	path = modules/zimfw
-	url = https://github.com/zimfw/zimfw
+	url = git@github.com:zimfw/zimfw.git
 	shallow = true
 
 [submodule "modules/dotlink"]
