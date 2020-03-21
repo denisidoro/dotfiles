@@ -69,7 +69,7 @@ precmd() {
 
 # load bindings
 source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
-source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
+# source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
 
 # completions
 # autoload -Uz compinit
