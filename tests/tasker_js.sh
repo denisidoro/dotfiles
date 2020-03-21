@@ -13,11 +13,5 @@ random_line() {
    esac
 }
 
-if platform::command_exists node; then
-   test_fn="test::run"
-else
-   test_fn="test::skip"
-fi
-
 test::set_suite "node - tasker js"
 $test_fn "randomLine" random_line
