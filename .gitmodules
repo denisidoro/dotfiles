@@ -1,9 +1,14 @@
+[submodule "modules/dotlink"]
+	path = modules/dotlink
+	url = git@github.com:denisidoro/dotlink.git
+	shallow = true
+	
 [submodule "modules/zimfw"]
 	path = modules/zimfw
 	url = git@github.com:zimfw/zimfw.git
 	shallow = true
 
-[submodule "modules/dotlink"]
-	path = modules/dotlink
-	url = git@github.com:denisidoro/dotlink.git
+[submodule "modules/z.lua"]
+	path = modules/z.lua
+	url = git@github.com:skywind3000/z.lua.git
 	shallow = true

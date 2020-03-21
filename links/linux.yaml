@@ -1,0 +1,5 @@
+wm/bspwm/bspwmrc, $HOME/config/bspwm/bspwmrc
+peripherals/sxhkd/sxhkd.rc, $HOME/config/sxhkd/sxhkdrc
+editors/vscode/settings.json, $HOME/config/Code/User/settings.json
+editors/vscode/keybindings.json, $HOME/config/Code/User/keybindings.json
+editors/sublime/preferences.json, $HOME/config/sublime-text-3/Packages/User/Preferences.sublime-settings

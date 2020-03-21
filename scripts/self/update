@@ -41,29 +41,21 @@ if platform::is_android; then
    dot pkg add termux-essentials
 fi
 
-if $has_python; then
-   update_submodules 2> /dev/null || true
-fi
+update_submodules || true
 
 setup_folders_and_files
 setup_git_credentials
 setup_docopts
-replace_file "${HOME}/.bashrc"
-replace_file "${HOME}/.zshrc"
 
 echo
 log::note "Setting symlinks..."
-if $has_python; then
-   update_dotfiles_common
-   has_tag "$tags" "osx" && { update_dotfiles_osx; }
-   has_tag "$tags" "linux" && { update_dotfiles_linux; }
-   has_tag "$tags" "arm" && { update_dotfiles_arm; }
-   has_tag "$tags" "x86" && { update_dotfiles_x86; }
-   has_tag "$tags" "android" && { update_dotfiles_android; }
-   has_tag "$tags" "wsl" && { update_dotfiles_wsl; }
-else
-   update_dotfiles_fallback
-fi
+update_dotfiles_common
+has_tag "$tags" "osx" && { update_dotfiles_osx; }
+has_tag "$tags" "linux" && { update_dotfiles_linux; }
+has_tag "$tags" "arm" && { update_dotfiles_arm; }
+has_tag "$tags" "x86" && { update_dotfiles_x86; }
+has_tag "$tags" "android" && { update_dotfiles_android; }
+has_tag "$tags" "wsl" && { update_dotfiles_wsl; }
 
 set_random_ps1
 

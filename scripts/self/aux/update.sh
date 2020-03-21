@@ -2,9 +2,6 @@
 # Constants
 # ==============================
 
-export DOTBOT_DIR="modules/dotbot"
-export DOTBOT_BIN="bin/dotbot"
-
 export LOCAL_BIN="${DOTFILES}/local/bin"
 export LOCAL_TMP="${DOTFILES}/local/tmp"
 export LOCAL_ZSHRC="${DOTFILES}/local/zshrc"
@@ -134,18 +131,6 @@ setup_docopts() {
          python) dot pkg add python ;;
          bash) dot pkg add docoptsh ;;
       esac
-
-   }
-
-   replace_file() {
-
-      local -r FILE_PATH="$1"
-      if fs::is_file "$FILE_PATH" && ! test -L "$FILE_PATH"; then
-         log::warning "${FILE_PATH} already exists and it's not a symlink"
-         if feedback::maybe_confirmation "${DOT_INSTALL_BACKUP:-}" "Do you want to backup and stop using it?"; then
-            mv "$FILE_PATH" "${FILE_PATH}.bak"
-         fi
-      fi
 
    }
 
@@ -297,7 +282,7 @@ setup_docopts() {
    # ==============================
 
    update_dotfiles() {
-      dot self symlinks "$@"
+      DOTLINK="$1" "${DOTFILES}/bin/dotlink" set
    }
 
    update_dotfiles_common() {
@@ -335,14 +320,6 @@ setup_docopts() {
       log::note "Installing essential dependencies..."
    }
 
-   update_dotfiles_fallback() {
-      echo
-      log::note "Falling back to essential symlinks..."
-      ln -s "${DOTFILES}/shell/bashrc" "${HOME}/.bashrc" || true
-      ln -s "${DOTFILES}/shell/zshrc" "${HOME}/.zshrc" || true
-   }
-
-
    # ==============================
    # git
    # ==============================
@@ -367,7 +344,7 @@ setup_docopts() {
       git submodule init
       git submodule update
       git submodule status
-      git submodule update --init --recursive "${DOTBOT_DIR}"
+      git submodule update --init --recursive 
 
    }
 
