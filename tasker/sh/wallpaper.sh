@@ -9,8 +9,8 @@ export DOTFILES="${DOTFILES:-/sdcard/dotfiles}"
 ##    %data   HTTP data
 
 apod_url() {
-    printf 'https://apod.nasa.gov/'
-    echo "$*" \
+   printf 'https://apod.nasa.gov/'
+   echo "$*" \
       | grep -i '<img' \
       | head -n1 \
       | grep -Eo '".*?"' \

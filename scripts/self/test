@@ -13,7 +13,7 @@ source "${DOTFILES}/scripts/self/aux/test.sh"
 docs::eval_help "$@"
 
 _all_files() {
-find "${DOTFILES}/tests/" -iname "*.sh"
+   find "${DOTFILES}/tests/" -iname "*.sh"
 }
 
 _source_all() {

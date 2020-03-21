@@ -10,23 +10,23 @@ _validate() {
    local -r files="$(cat "$filename" \
       | sed '/^$/d' \
       | cut -d',' -f1)"
-   
+
    for f in $files; do
-      if [[ -f "$f" || -d "$f" ]]; then 
+      if [[ -f "$f" || -d "$f" ]]; then
          :
-      else 
+      else
          echo "☓ $f"
          success=false
       fi
    done
-   
-   $success && return 0 || return 1 
+
+   $success && return 0 || return 1
 }
 
-   cd "$DOTFILES"
+cd "$DOTFILES"
 
 test::set_suite "bash - symlink"
 
-   for f in $(ls "./links/"); do
-test::run "$f - symlinks are valid" _validate "./links/$f"
-   done
+for f in $(ls "./links/"); do
+   test::run "$f - symlinks are valid" _validate "./links/$f"
+done

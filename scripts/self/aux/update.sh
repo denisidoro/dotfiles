@@ -344,7 +344,7 @@ setup_docopts() {
       git submodule init
       git submodule update
       git submodule status
-      git submodule update --init --recursive 
+      git submodule update --init --recursive
 
    }
 

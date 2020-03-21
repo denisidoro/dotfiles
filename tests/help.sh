@@ -14,13 +14,13 @@ _execs() {
 }
 
 _scripts() {
-    cd "${DOTFILES}/scripts"
-    find . -maxdepth 2 -type f \
-        | grep -v '/core/' \
-        | grep -v '.clj$' \
-        | grep -v '.json$' \
-        | grep -v '.edn$' \
-        | without_dot_slash
+   cd "${DOTFILES}/scripts"
+   find . -maxdepth 2 -type f \
+      | grep -v '/core/' \
+      | grep -v '.clj$' \
+      | grep -v '.json$' \
+      | grep -v '.edn$' \
+      | without_dot_slash
 }
 
 _bins() {
@@ -38,10 +38,10 @@ assert_help() {
 }
 
 _with_eval_help() {
-grep 'eval_help' -Rl . \
-| grep -v core \
-| sort -u \
-| without_dot_slash
+   grep 'eval_help' -Rl . \
+      | grep -v core \
+      | sort -u \
+      | without_dot_slash
 }
 
 print_health() {
@@ -52,9 +52,9 @@ test::set_suite "bash - help"
 
 for bin in $(_bins); do
    case $bin in
-      "clojure/data") platform::command_exists clojure && test_fn=test::run || test_fn=test::skip;;
-      "shell/zsh") platform::command_exists zsh && test_fn=test::run || test_fn=test::skip;;
-      *) test_fn=test::run ;; 
+      "clojure/data") platform::command_exists clojure && test_fn=test::run || test_fn=test::skip ;;
+      "shell/zsh") platform::command_exists zsh && test_fn=test::run || test_fn=test::skip ;;
+      *) test_fn=test::run ;;
    esac
    $test_fn "${bin} has a help command" assert_help "$bin"
 done
