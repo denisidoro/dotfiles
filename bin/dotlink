@@ -4,6 +4,8 @@ export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null
 export DOT_REPO="https://github.com/denisidoro/dotfiles.git"
 export DOT_DIR="$DOTFILES"
 export DOT_LINK="${DOTFILES}/links/${DOTLINK:-"unix"}.yaml"
-source "${DOTFILES}/modules/dotlink/dotlink"
+
+source "${HOME}/dev/dotlink/dotlink" \
+    || source "${DOTFILES}/modules/dotlink/dotlink"
 
 dotlink_main "$@"

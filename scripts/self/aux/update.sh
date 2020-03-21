@@ -282,7 +282,7 @@ setup_docopts() {
    # ==============================
 
    update_dotfiles() {
-      DOTLINK="$1" "${DOTFILES}/bin/dotlink" set
+      DOTLINK="${1:-unix}" "${DOTFILES}/bin/dotlink" set --create-dirs --verbose
    }
 
    update_dotfiles_common() {
