@@ -1,7 +1,7 @@
 #/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/download/core.sh"
+source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Cemu helpers
 #?? 0.1.0

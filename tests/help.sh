@@ -1,11 +1,31 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-_bins() {
+without_dot_slash() {
+   sed 's|\./||g'
+}
+
+_execs() {
    cd "${DOTFILES}/scripts"
    find . -type f -executable -print \
       | grep -v node_modules \
-      | grep -v './core'
+      | grep -v './core' \
+      | without_dot_slash
+}
+
+_scripts() {
+    cd "${DOTFILES}/scripts"
+    find . -maxdepth 2 -type f \
+        | grep -v '/core/' \
+        | grep -v '.clj$' \
+        | grep -v '.json$' \
+        | grep -v '.edn$' \
+        | without_dot_slash
+}
+
+_bins() {
+   echo -e "$(_scripts)\n$(_execs)" \
+      | sort -u
 }
 
 assert_help() {
@@ -17,14 +37,31 @@ assert_help() {
    dot "$ctx" "$cmd" --help | grep -q Usage
 }
 
-has_zsh="$(platform::command_exists zsh && echo true || echo false)"
+_with_eval_help() {
+grep 'eval_help' -Rl . \
+| grep -v core \
+| sort -u \
+| without_dot_slash
+}
 
-test::set_suite "help"
+print_health() {
+   dot "$@" --help | grep -q Usage
+}
+
+test::set_suite "bash - help"
+
 for bin in $(_bins); do
-   if [ "$bin" = "./shell/zsh" ] && ! $has_zsh; then
-      test_fn=test::skip
-   else
-      test_fn=test::run
-   fi
-   $test_fn "${bin} has a --help command" assert_help "$bin"
+   case $bin in
+      clojure/data) platform::command_exists clojure && test_fn=test::run || test_fn=test::skip;;
+      shell/zsh) platform::command_exists zsh && test_fn=test::run || test_fn=test::skip;;
+      *) test_fn=test::run ;; 
+   esac
+   $test_fn "${bin} has a help command" assert_help "$bin"
+done
+
+cd "$DOTFILES/scripts"
+for f in $(); do
+   context="$(echo "$f" | cut -d'/' -f2)"
+   command="$(echo "$f" | cut -d'/' -f3)"
+   test::run "$f - eval_help works" print_health "$context" "$command"
 done

@@ -3,28 +3,31 @@
 
 _validate() {
    local -r filename="$1"
+   local success=true
+
    log::warning "Validating $filename..."
-   cat "$filename" \
-      | grep '\- link:' -A10000 \
-      | tail -n +2 \
-      | cut -d':' -f2 \
-      | xargs -I% bash -c 'printf "% "; (test -f % || test -d %) && echo ✓ || echo ☓'
-   echo
-}
 
-symlinks() {
-   cd "$DOTFILES"
-   result=""
-   for f in $(ls "./symlinks/"); do
-      result="$result$(_validate "./symlinks/$f")\n\n"
+   local -r files="$(cat "$filename" \
+      | sed '/^$/d' \
+      | cut -d',' -f1)"
+   
+   for f in $files; do
+      printf "$f "
+      if [[ -f "$f" || -d "$f" ]]; then 
+         echo ✓
+      else 
+         echo ☓
+         success=false
+      fi
    done
-
-   echo -e "$result" | head -n -2
-   echo
-
-   echo $result \
-      | grep -qv "☓"
+   
+   $success && return 0 || return 1 
 }
+
+   cd "$DOTFILES"
+
 
 test::set_suite "symlink"
-test::run "all symlinks are valid"
+   for f in $(ls "./links/"); do
+test::run "$f - symlinks are valid" _validate "./links/$f"
+   done
