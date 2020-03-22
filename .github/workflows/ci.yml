@@ -16,4 +16,4 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
       - name: Run tests
-        run: ./bin/dot/self test suite bash
+        run: ./bin/dot self test suite bash
