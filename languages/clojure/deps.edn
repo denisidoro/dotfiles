@@ -14,7 +14,6 @@
                org.clojure/core.async {:mvn/version "RELEASE"}
                org.clojure/core.logic {:mvn/version "RELEASE"}
                org.clojure/test.check {:mvn/version "RELEASE"}
-               ; com.github.vlsi.compactmap/compactmap {:mvn/version "1.3.0"}
                net.sf.trove4j/trove4j {:mvn/version "3.0.3"}
                com.clojure-goes-fast/clj-java-decompiler {:mvn/version "RELEASE"}
                com.clojure-goes-fast/clj-memory-meter {:mvn/version "RELEASE"}

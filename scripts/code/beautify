@@ -38,7 +38,7 @@ case "$language" in
       shfmt -w -i 3 -ci -bn "$filename"
       ;;
    sh)
-      beautysh -i 3 -s paronly --files "$filename"
+      beautysh -i 3 -s paronly "$filename"
       sed -i -e 's/() ::/::/g' "$filename"
       ;;
    json)

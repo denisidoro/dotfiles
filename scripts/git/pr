@@ -2,7 +2,7 @@
 # vim: filetype=sh
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/core/git.sh"
+source "${DOTFILES}/scripts/git/aux/core.sh"
 
 ##? PR utilities
 #?? 0.1.0

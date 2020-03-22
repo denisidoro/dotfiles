@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-source "${DOTFILES}/scripts/core/documentation.sh"
-source "${DOTFILES}/scripts/core/git.sh"
+source "${DOTFILES}/scripts/git/aux/core.sh"
 
 ##? Git push helpers
 #?? 0.1.0

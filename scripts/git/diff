@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-source "${DOTFILES}/scripts/core/documentation.sh"
 source "${DOTFILES}/scripts/git/aux/core.sh"
 
 ##? Git diff viewer
@@ -35,3 +34,5 @@ git::diff() {
     eval "git diff --name-status $commit -- ${files[*]} | sed -E 's/^(.)[[:space:]]+(.*)$/[\1]  \2/'" |
         FZF_DEFAULT_OPTS="$opts" fzf
 }
+
+git::diff "$@"

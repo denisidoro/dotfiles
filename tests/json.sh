@@ -15,7 +15,7 @@ _valid_json() {
 
 test::set_suite "js - json"
 
-# TODO: use nodejs
+cd "$DOTFILES"
 for f in $(_jsons); do
    test::run "$f is syntactically valid" _valid_json "$f"
 done

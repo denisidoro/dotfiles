@@ -5,8 +5,6 @@ _validate() {
    local -r filename="$1"
    local success=true
 
-   log::warning "Validating $filename..."
-
    local -r files="$(cat "$filename" \
       | sed '/^$/d' \
       | cut -d',' -f1)"
