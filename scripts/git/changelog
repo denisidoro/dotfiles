@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+
+source "${DOTFILES}/scripts/core/documentation.sh"
+source "${DOTFILES}/scripts/git/aux/core.sh"
+
+##? Changelog generator
+##?   This script is heavily influenced by https://github.com/wfxr/git by Wenxuan Zhang
+#?? 0.1.0
+##?
+##? Usage:
+##?    log
+
+docs::eval_help "$@"
+
+_remove_empty_lines() {
+   sed -E '/^\s*$/d'
+}
+
+_prefix() {
+   sed -E 's/^\s*/\- /g'
+}
+
+_dedupe() {
+   awk '!visited[$0]++'
+}
+
+_cleanup() {
+   grep -v 'Author:' \
+      | grep -v 'Date:' \
+      | grep -v 'Merge pull request' \
+      | grep -v 'Merge:' \
+      | _remove_empty_lines \
+      | grep '^commit ' -A1 \
+      | grep -v '^commit ' \
+      | grep -v '^--' \
+      | _prefix \
+      | _dedupe
+}
+
+_commits() {
+   local -r tag_older="$1"
+   local -r tag_newer="$2"
+
+   local -r tag_date="$(git log -1 --format=%ai v2.3.1 | awk '{print $1}')"
+   echo "## [${tag_newer}](releases/tag/${tag_newer}) ${tag_date}"
+   git log "${tag_older}..${tag_newer}" --grep '#' \
+      | _cleanup
+}
+
+_all_tags() {
+   git for-each-ref --sort=creatordate --format '%(refname)' refs/tags \
+      | sed 's|refs/tags/||g'
+}
+
+pairs=($(_all_tags))
+len="${#pairs[@]}"
+
+for i in $(seq 0 $((len - 2))); do
+   tag_older="${pairs[$((len - i - 2))]}"
+   tag_newer="${pairs[$((len - i - 1))]}"
+   _commits "$tag_older" "$tag_newer"
+   echo
+   echo
+done
