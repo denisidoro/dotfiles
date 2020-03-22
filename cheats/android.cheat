@@ -1,27 +1,35 @@
-% android, device
+% android, adb, device
 
-# Get property
-adb -s <device> shell getprop <property>
+# Display a property
+adb -s "<devices>" shell getprop "<property>"
 
-# Install APK
-adb -s <device> install -r <path>
+# Install an APK
+adb -s "<devices>" install -r "<apk_path>"
 
-# Uninstall package
-adb -s <device> uninstall -r <package>
+# Uninstall an APK
+adb -s "<devices>" uninstall "<apk_path>"
 
-# Clear user data for package
-adb -s <device> shell pm clear <package>
+# Clear data given an application package
+adb -s "<devices>" shell pm clear "<package>"
 
-# Dispatch a deep-link / open URI
-adb -s <device> shell am start <uri>
+# Dispatch a deep-link
+adb -s "<devices>" shell am start "<uri>"
 
-$ device: adb devices --- --headers 1 --column 1
+$ devices: adb devices | tail -n +2 | cut -sf 1
 
 
+% android, ssh, termux
 
-% android, emulator
+# Enable password authentication
+sed -Ei "s/PasswordAuthentication.*/PasswordAuthentication true/g" "<sshd_config>"
 
-# Start emulator
-"$ANDROID_HOME/tools/emulator" -avd <emulator> -netdelay none -netspeed full
+# Disable password authentication
+sed -Ei "s/PasswordAuthentication.*/PasswordAuthentication false/g" "<sshd_config>"
 
-$ emulator: "$ANDROID_HOME/tools/emulator" -list-avds
+$ ssh_config: echo "${PREFIX}/etc/ssh/sshd_config"
+
+
+% android, apps
+
+# Open Google Play Store profile page for an app
+dot search lucky "<query> site:play.google.com"

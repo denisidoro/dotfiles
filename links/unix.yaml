@@ -1,0 +1,15 @@
+shell/zshrc, $HOME/.zshrc
+shell/zsh/zlogin, $HOME/.zlogin
+shell/zsh/zimrc, $HOME/.zimrc
+shell/bashrc, $HOME/.bashrc
+shell/bash/bash_profile, $HOME/.bash_profile
+shell/bash/profile, $HOME/.profile
+shell/hushlogin, $HOME/.hushlogin
+editors/spacevim/spacevim.rc, $HOME/.spacevim
+terminal/tmux/tmux.conf, $HOME/.tmux.conf
+git/config, $HOME/.gitconfig
+editors/intellij/ideavim.rc, $HOME/.ideavimrc
+git/agignore, $HOME/.gitignore
+terminal/vifm/vifmrc, $HOME/.vifm/vifmrc
+languages/clojure/deps.edn, $HOME/.clojure/deps.edn
+languages/clojure/profiles.clj, $HOME/.lein/profiles.clj

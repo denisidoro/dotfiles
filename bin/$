@@ -1,22 +1,3 @@
 #!/usr/bin/env bash
 
-# in order to make it work with any folder in $DOTFILES
-_get_root_folder() {
-   local -r folder="${1:-}"
-   if [ -z "$folder" ]; then
-      echo "${HOME}/.dotfiles"
-      exit 0
-   fi
-   cd "$folder"
-   if [ -f "./bin/dot" ]; then
-      echo "$folder"
-      exit 0
-   else
-      _get_root_folder "$(cd "${folder}/.." && pwd || echo "")"
-   fi
-}
-
-this_folder="$(dirname "${BASH_SOURCE[0]}")"
-root_folder="$(_get_root_folder "$this_folder")"
-
-"${root_folder}/bin/dot" shell identity "$@"
+"$@"

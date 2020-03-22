@@ -1,10 +1,12 @@
-# ctrl+g - Paste the selected command from history into the command line
+#!/usr/bin/env zsh
+
 _call_navi() {
-   local navi_path=$(command -v navi)
-   local buff="$BUFFER"
+   local -r buff="$BUFFER"
+   local -r r="$(printf "$(navi --print </dev/tty)")"
    zle kill-whole-line
-   local cmd="$(NAVI_USE_FZF_ALL_INPUTS=true "$navi_path" --print <> /dev/tty)"
-   zle -U "${buff}${cmd}"
+   zle -U "${buff}${r}"
 }
-zle     -N   _call_navi
+
+zle -N _call_navi
+
 bindkey '^g' _call_navi

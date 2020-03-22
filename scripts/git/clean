@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+
+source "${DOTFILES}/scripts/git/aux/core.sh"
+
+##? Git clean selector
+##?   This script is heavily influenced by https://github.com/wfxr/git by Wenxuan Zhang
+#?? 0.1.0
+##?
+##? Usage:
+##?    clean
+
+docs::eval_help "$@"
+
+git::clean() {
+   git::inside_work_tree || return 1
+   local files opts
+   opts="
+   $GIT_FZF_DEFAULT_OPTS
+   -m -0
+   $GIT_CLEAN_FZF_OPTS
+   "
+    # Note: Postfix '/' in directory path should be removed. Otherwise the directory itself will not be removed.
+    files=$(git clean -xdfn "$@"| sed 's/^Would remove //' | FZF_DEFAULT_OPTS="$opts" fzf |sed 's#/$##')
+    [[ -n "$files" ]] && echo "$files" | tr '\n' '\0' | xargs -0 -I% git clean -xdf '%' && return
+    echo 'Nothing to clean.'
+}
+
+git::clean "$@"

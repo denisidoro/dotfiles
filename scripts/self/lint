@@ -22,6 +22,9 @@ _all_dotfiles_files() {
    find "${DOTFILES}/tasker/sh" -maxdepth 3 -type f
    find "${DOTFILES}/tasker/js" -maxdepth 3 -type f
    find "${DOTFILES}/tests" -maxdepth 3 -type f
+   echo "${DOTFILES}/shell/zshrc"
+   echo "${DOTFILES}/shell/hushlogin"
+   echo "${DOTFILES}/shell/bashrc"
 }
 
 _dedupe() {
@@ -39,4 +42,5 @@ _all_dotfiles_files_to_format() {
 }
 
 _all_dotfiles_files_to_format \
+   | sort -u \
    | xargs -I% -P8 dot code beautify "%"

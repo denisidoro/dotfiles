@@ -17,7 +17,7 @@ wifi_from_info() {
       | test::equals "$expected"
 }
 
-test::set_suite "tasker sh"
+test::set_suite "bash - tasker sh"
 test::run "wifi from info - work" wifi_from_info "boulot" "work"
 test::run "wifi from info - home" wifi_from_info "casita" "home"
 test::run "wifi from info - home" wifi_from_info "casa" "home"

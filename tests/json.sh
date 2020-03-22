@@ -1,13 +1,21 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-valid_json() {
+_jsons() {
    cd "$DOTFILES"
-
    find . -iname "*.json" \
       | grep -Ev 'node_modules|cache|modules/|lock.json' \
-      | xargs -I% dot code parser json %
+      | sed 's|\./||g'
 }
 
-test::set_suite "json"
-test::run "all JSONs are syntactically valid" valid_json
+_valid_json() {
+   cat "$1" \
+      | jq . &>/dev/null
+}
+
+test::set_suite "js - json"
+
+cd "$DOTFILES"
+for f in $(_jsons); do
+   test::run "$f is syntactically valid" _valid_json "$f"
+done

@@ -33,11 +33,6 @@ main() {
    check_file "$HOME/.local/share/nvim/site/autoload/plug.vim" "vim-plug"
 
    echo
-   log::header "Submodules"
-   check_file "$DOTFILES/modules/dotbot/.git" "dotbot"
-   check_file "$DOTFILES/modules/zplug/.git" "zplug"
-
-   echo
    log::header "Local git"
    check_file "$DOTFILES/local/gitconfig" "config"
 

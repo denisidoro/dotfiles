@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+
+source "${DOTFILES}/scripts/git/aux/core.sh"
+
+##? Git commit log viewer
+##?   This script is heavily influenced by https://github.com/wfxr/git by Wenxuan Zhang
+#?? 0.1.0
+##?
+##? Usage:
+##?    log
+
+docs::eval_help "$@"
+
+git::log() {
+   git::inside_work_tree || return 1
+   local cmd opts
+   cmd="echo {} |grep -Eo '[a-f0-9]+' |head -1 |xargs -I% git show --color=always % $* | $git_pager"
+   opts="
+   $GIT_FZF_DEFAULT_OPTS
+   +s +m --tiebreak=index --preview=\"$cmd\"
+   --bind=\"enter:execute($cmd | LESS='-R' less)\"
+   --bind=\"ctrl-y:execute-silent(echo {} |grep -Eo '[a-f0-9]+' | head -1 | tr -d '\n' |${GIT_COPY_CMD:-pbcopy})\"
+   $GIT_LOG_FZF_OPTS
+   "
+    eval "git log --graph --color=always --format='%C(auto)%h%d %s %C(black)%C(bold)%cr' $* $git_emojify" |
+        FZF_DEFAULT_OPTS="$opts" fzf
+}
+
+git::log "$@"

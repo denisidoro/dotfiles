@@ -21,6 +21,13 @@ test::success() {
    log::success "Test passed!"
 }
 
+test::filter_check() {
+   if [ -n "${TEST_FILTER:-}" ]; then
+      echo "${SUITE:-}" | grep -Eq "$TEST_FILTER" || return 1
+   fi
+   return 0
+}
+
 test::fail() {
    FAILED=$((FAILED+1))
    log::error "Test failed..."
@@ -28,6 +35,7 @@ test::fail() {
 }
 
 test::skip() {
+   test::filter_check || return 0
    echo
    log::note "${SUITE:-unknown} - ${1:-unknown}"
    SKIPPED=$((SKIPPED+1))
@@ -36,6 +44,7 @@ test::skip() {
 }
 
 test::run() {
+   test::filter_check || return 0
    echo
    log::note "${SUITE:-unknown} - ${1:-unknown}"
    shift

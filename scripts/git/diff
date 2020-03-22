@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+
+source "${DOTFILES}/scripts/git/aux/core.sh"
+
+##? Git diff viewer
+##?   This script is heavily influenced by https://github.com/wfxr/git by Wenxuan Zhang
+#?? 0.1.0
+##?
+##? Usage:
+##?    diff
+
+docs::eval_help "$@"
+
+git::diff() {
+   git::inside_work_tree || return 1
+   local cmd files opts commit repo
+   [[ $# -ne 0 ]] && {
+      if git rev-parse "$1" -- &>/dev/null ; then
+         commit="$1" && files=("${@:2}")
+      else
+         files=("$@")
+      fi
+   }
+
+   repo="$(git rev-parse --show-toplevel)"
+   target="\$(echo {} | sed 's/.*]  //')"
+   cmd="git diff --color=always $commit -- $repo/$target | $git_pager"
+   opts="
+   $GIT_FZF_DEFAULT_OPTS
+   +m -0 --preview=\"$cmd\" --bind=\"enter:execute($cmd |LESS='-R' less)\"
+   $GIT_DIFF_FZF_OPTS
+   "
+    eval "git diff --name-status $commit -- ${files[*]} | sed -E 's/^(.)[[:space:]]+(.*)$/[\1]  \2/'" |
+        FZF_DEFAULT_OPTS="$opts" fzf
+}
+
+git::diff "$@"

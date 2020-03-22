@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 REPO="https://github.com/denisidoro/dotfiles.git"
 DOT_BIN="${DOTFILES}/bin/dot"
 
@@ -34,12 +34,12 @@ pushd . >/dev/null
 if [ -f "$DOT_BIN" ]; then
    printf ''
 elif [ -f "$DOTFILES" ]; then
-   echo "Backing up existing .dotfiles folder and cloning new .dotfiles..."
+   echo "Backing up existing dotfiles folder and cloning new dotfiles..."
    old_dotfiles=$(mktemp -u -d "${DOTFILES}_XXXX")
    mv "$DOTFILES" "$old_dotfiles"
    clone_repo
 else
-   echo "No .dotfiles folder found. Installing dependencies and cloning .dotfiles..."
+   echo "No dotfiles folder found. Installing dependencies and cloning dotfiles..."
    clone_repo
 fi
 

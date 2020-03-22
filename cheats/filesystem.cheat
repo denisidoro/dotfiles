@@ -1,0 +1,7 @@
+% fs, filesystem
+
+# Delete all broken symlinks in the current directory
+find -L . -name . -o -type d -prune -o -type l -exec rm {} +
+
+# Use fzf to jump navigate folders
+dot fs nav

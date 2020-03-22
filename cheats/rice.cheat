@@ -1,0 +1,13 @@
+% rice
+
+# Show available colors in the terminal
+dot rice colors
+
+# Show matrix effect
+dot rice colors
+
+# Show pipe animation
+dot rice pipes
+
+# Simulate typing
+dot rice type

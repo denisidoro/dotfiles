@@ -2,7 +2,7 @@
 # vim: filetype=sh
 set -euo pipefail
 IFS=$' \n\t'
-  
+
 export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)}"
 source "$DOTFILES/scripts/core/main.sh"
 CALLING_DIR="${CALLING_DIR:-"$PWD"}"
@@ -122,6 +122,8 @@ _alias() {
       fs) echo filesystem ;;
       not) echo notification ;;
       google) echo search ;;
+      down) echo torrent ;;
+      download) echo torrent ;;
       *) echo "$arg" ;;
    esac
 }

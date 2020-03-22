@@ -7,22 +7,26 @@ source "${DOTFILES}/scripts/self/aux/test.sh"
 ##?
 ##? Usage:
 ##?    test
-##?    test <suite>
+##?    test suite <suite>
+##?    test file <file>
 
 docs::eval_help "$@"
 
-if [ -n "${1:-}" ]; then
+_all_files() {
+   find "${DOTFILES}/tests/" -iname "*.sh"
+}
 
-   source "${DOTFILES}/tests/${1}.sh"
+cmd="${1:-}"
 
-else
+case $cmd in
+   file) export TEST_FILTER="$2" ;;
+   suite) export TEST_FILTER="^${2} \-"  ;;
+   *) ;;
+esac
 
-   tests="$(find "${DOTFILES}/tests/" -iname "*.sh")"
-
-   for test in $tests; do
-      source "$test"
-   done
-
-fi
+echo "$TEST_FILTER"
+for test in $(_all_files); do
+   source "$test"
+done
 
 test::finish

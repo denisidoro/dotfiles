@@ -28,19 +28,6 @@ git::check_json() {
    done
 }
 
-git::check_edn() {
-   local files="$1"
-
-   for file in $(echo "$files" | grep -P '\.((edn))$'); do
-      cat "$file" | dot clojure edn > /dev/null || {
-         log::error "Lint check of EDN object failed\n\tin ${git_dir}/${file}"
-         if ! feedback::confirmation "Are you sure you want to commit this file anyway?" false; then
-            exit 2
-         fi
-      }
-   done
-}
-
 git::match_content() {
    local files="$1"
    local name="$2"

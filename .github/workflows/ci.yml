@@ -1,0 +1,30 @@
+# Based on https://github.com/actions-rs/meta/blob/master/recipes/quickstart.md
+#
+# While our "example" application has the platform-specific code,
+# for simplicity we are compiling and testing everything on the Ubuntu environment only.
+# For multi-OS testing see the `cross.yml` workflow.
+
+on: [push]
+
+name: Tests
+
+jobs:
+  bash-tests:
+    name: Bash
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: ./bin/dot self test suite bash
+
+  js-tests:
+    name: Javascript
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Setup NodeJS
+        uses: actions/setup-node@v1
+      - name: Run tests
+        run: ./bin/dot self test suite js

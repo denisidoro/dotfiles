@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+
+source "${DOTFILES}/scripts/git/aux/core.sh"
+
+##? Git ignore generator
+##?   This script is heavily influenced by https://github.com/wfxr/git by Wenxuan Zhang
+#?? 0.1.0
+##?
+##? Usage:
+##?    ignore
+
+docs::eval_help "$@"
+
+export GIT_GI_REPO_REMOTE=${GIT_GI_REPO_REMOTE:-https://github.com/dvcs/gitignore}
+export GIT_GI_REPO_LOCAL=${GIT_GI_REPO_LOCAL:-~/.git/gi/repos/dvcs/gitignore}
+export GIT_GI_TEMPLATES=${GIT_GI_TEMPLATES:-$GIT_GI_REPO_LOCAL/templates}
+
+git::ignore() {
+   [ -d "$GIT_GI_REPO_LOCAL" ] || git::ignore::update
+   local IFS cmd args cat opts
+   # https://github.com/sharkdp/bat.git
+   hash bat &>/dev/null && cat='bat -l gitignore --color=always' || cat="cat"
+   cmd="$cat $GIT_GI_TEMPLATES/{2}{,.gitignore} 2>/dev/null"
+   opts="
+   $GIT_FZF_DEFAULT_OPTS
+   -m --preview=\"$cmd\" --preview-window='right:70%'
+   $GIT_IGNORE_FZF_OPTS
+   "
+    # shellcheck disable=SC2206,2207
+    IFS=$'\n' args=($@) && [[ $# -eq 0 ]] && args=($(git::ignore::list | nl -nrn -w4 -s'  ' |
+        FZF_DEFAULT_OPTS="$opts" fzf  |awk '{print $2}'))
+    [ ${#args[@]} -eq 0 ] && return 1
+    # shellcheck disable=SC2068
+    if hash bat &>/dev/null; then
+        git::ignore::get ${args[@]} | bat -l gitignore
+    else
+        git::ignore::get ${args[@]}
+    fi
+}
+
+git::ignore::update() {
+    if [[ -d "$GIT_GI_REPO_LOCAL" ]]; then
+        log::info 'Updating gitignore repo...'
+        (cd "$GIT_GI_REPO_LOCAL" && git pull --no-rebase --ff) || return 1
+    else
+        log::info 'Initializing gitignore repo...'
+        git clone --depth=1 "$GIT_GI_REPO_REMOTE" "$GIT_GI_REPO_LOCAL"
+    fi
+}
+
+git::ignore::get() {
+    local item filename header
+    for item in "$@"; do
+        if filename=$(find -L "$GIT_GI_TEMPLATES" -type f \( -iname "${item}.gitignore" -o -iname "${item}" \) -print -quit); then
+            [[ -z "$filename" ]] && log::warning "No gitignore template found for '$item'." && continue
+            header="${filename##*/}" && header="${header%.gitignore}"
+            echo "### $header" && cat "$filename" && echo
+        fi
+    done
+}
+
+git::ignore::list() {
+    find "$GIT_GI_TEMPLATES" -print |sed -e 's#.gitignore$##' -e 's#.*/##' | sort -fu
+}
+
+git::ignore::clean() {
+    setopt localoptions rmstarsilent
+    [[ -d "$GIT_GI_REPO_LOCAL" ]] && rm -rf "$GIT_GI_REPO_LOCAL"
+}
+
+git::ignore "$@"

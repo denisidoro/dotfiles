@@ -93,14 +93,14 @@ recipe::clone_as_submodule() {
 }
 
 recipe::install_from_git() {
-   local -r repo="$1"
+   local -r repo="$(echo "$@" | tr ' ' '/')"
 
    local -r package="$(basename "$repo")"
    local -r path="/opt/${package}"
 
    cd "/opt"
-   git clone "$repo" --depth 1
-   cd "$repo"
+   git clone "https://github.com/${repo}" --depth 1
+   cd "$path"
 
    if [ -f build.sh ]; then
       ./build.sh

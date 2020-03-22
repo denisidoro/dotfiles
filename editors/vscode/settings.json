@@ -7,7 +7,7 @@
     "editor.renderControlCharacters": true,
     "editor.renderWhitespace": "none",
     
-    "files.autoSave": "onWindowChange",
+    "files.autoSave": "onFocusChange",
     "files.trimFinalNewlines": true,
     "editor.formatOnPaste": true,
     "editor.formatOnSave": false,
@@ -32,6 +32,10 @@
         "**/.git": true,        
         "**/.DS_Store": true,  
         "**/node_modules": true
+    },
+
+    "files.associations": {
+        "*.cheat": "shellscript"
     },
    
     "diffEditor.ignoreTrimWhitespace": false,
@@ -415,5 +419,7 @@
         {"before":   ["<leader>", "e", "f"], 
          "after":    [], 
          "commands": [{"command": "calva.evaluateCurrentTopLevelForm", "args": []}]}
-    ]
+    ],
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false
 }

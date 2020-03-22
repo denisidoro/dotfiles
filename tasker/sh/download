@@ -1,0 +1,26 @@
+#!/data/data/com.termux/files/usr/bin/env bash
+
+export DOTFILES="${DOTFILES:-/sdcard/dotfiles}"
+source "${DOTFILES}/tasker/sh/core.sh"
+
+##? Move old files in the downloads folder
+##?
+##? Usage:
+##?    download move
+
+docs::eval_help "$@"
+
+move_old() {
+   cd "/sdcard/Download"
+
+   mkdir -p Old
+
+   find . -type f -mtime +7 -maxdepth 1 \
+      | grep -Ev 'torrents?$' \
+      | xargs -I {} mv "{}" "Old/{}"
+}
+
+case "${1:-}" in
+   move) move_old ;;
+   *) exit 1 ;;
+esac

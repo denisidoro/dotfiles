@@ -3,9 +3,9 @@
 
 symlink_bashrc() {
    cd "$DOTFILES"
-   bashrc_path="$(cat "symlinks/conf.yaml" | grep bashrc | awk '{print $2}')"
+   bashrc_path="$(cat "links/unix.yaml" | grep bashrc | cut -d',' -f1)"
    source "$bashrc_path"
 }
 
-test::set_suite "bashrc"
-test::skip "symlinks include bashrc" symlink_bashrc
+test::set_suite "bash - bashrc"
+test::skip "sourcing the bashrc won't bork" symlink_bashrc

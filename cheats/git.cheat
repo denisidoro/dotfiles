@@ -72,7 +72,7 @@ git clean -dxf
 # Sign all commits in a branch based on master
 git rebase master -S -f
 
-# See all open pull requests of a user on Github
+# See all open pull requests from a user on GitHub
 navi fn url::open 'https://github.com/pulls?&q=author:<user>+is:open+is:pr'
 
 # Checkout a branch from a fork
@@ -498,6 +498,9 @@ git submodule foreach git pull origin master
 
 # removes a submodule
 git-submodule-remove
+
+# remove a submodule (fix no URL found...)
+git rm --cached <path_to_submodule>
 
 
 % git tag

@@ -1,4 +1,4 @@
-export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 
 #!/usr/bin/env bash
 # vim: filetype=sh
