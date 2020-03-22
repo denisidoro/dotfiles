@@ -10,7 +10,7 @@ name: Tests
 
 jobs:
   bash-tests:
-    name: Bash tests
+    name: Bash
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
@@ -19,13 +19,11 @@ jobs:
         run: ./bin/dot self test suite bash
 
   js-tests:
-    name: Javascript tests
+    name: Javascript
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
-      - name: Install jq
-        run: apt install jq || sudo apt install jq
       - name: Setup NodeJS
         uses: actions/setup-node@v1
       - name: Run tests
