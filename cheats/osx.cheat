@@ -1,0 +1,28 @@
+% osx, macos
+
+# Display a notification with message, title and subtitle
+osascript -e "display notification \"<message>\" with title \"<title>\" subtitle \"<subtitle>\""
+
+# Display a notification with message and title
+osascript -e "display notification \"<message>\" with title \"<title>\""
+
+# Show desktop icons
+defaults write com.apple.finder CreateDesktop -bool true && killall Finder
+
+# Hide desktop icons
+defaults write com.apple.finder CreateDesktop -bool false && killall Finder
+
+# Show hidden files
+defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder
+
+# Hide hidden files
+defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder
+
+# Lock screen
+pmset displaysleepnow
+
+# Set wallpaper for a single workspace
+echo "<filepath>" | xargs -I% osascript -e 'tell application "Finder" to set desktop picture to POSIX file "%"'
+
+# Set wallpaper for multiple workspaces
+echo "<filepath>" | xargs -I% osascript -e 'tell application "System Events" to tell every desktop to set picture to "%"'

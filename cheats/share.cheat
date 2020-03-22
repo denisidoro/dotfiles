@@ -1,0 +1,7 @@
+% share
+
+# Create a QR code with the specified content
+echo "<content>" | curl -F-=\<- qrenco.de
+
+# Publicly share a file via transfer.sh
+dot share file "<path>"

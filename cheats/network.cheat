@@ -16,7 +16,7 @@ netstat -tn 2>/dev/null \
    | head
 
 # Find external, public IP address
-dig +short myip.opendns.com @resolver1.opendns.com
+dig +short myip.opendns.com @resolver1.opendns.com || curl -s ifconfig.me/all.json | jq
 
 # Find primary, local IP address
 ifconfig \
@@ -30,3 +30,6 @@ openssl s_client -showcerts -connect <url>
 
 # Launch a container with network utils
 docker run -it --entrypoint /bin/sh nicolaka/netshoot
+
+# Map ports
+sudo nmap -sS -sV -0 "<target>"

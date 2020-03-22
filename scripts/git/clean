@@ -5,7 +5,7 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 source "${DOTFILES}/scripts/git/aux/core.sh"
 
 ##? Git clean selector
-##? This script is heavily influenced by https://github.com/wfxr/git by Wenxuan Zhang
+##?   This script is heavily influenced by https://github.com/wfxr/git by Wenxuan Zhang
 #?? 0.1.0
 ##?
 ##? Usage:

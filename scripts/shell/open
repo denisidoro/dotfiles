@@ -19,16 +19,14 @@ docs::eval "$@"
 
 _open() {
    if platform::is_osx; then
-      open "$@"
+      nohup open "$@" & disown
    else
-      xdg-open "$@"
+      nohup xdg-open "$@" & disown
    fi
 }
 
 _open_browser() {
-   _open "$@" \
-      || google-chrome "$@" \
-      || firefox "$@"
+   _open "$@" 
 }
 
 if $browser; then

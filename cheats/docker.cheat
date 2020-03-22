@@ -3,8 +3,17 @@
 # Remove an image
 docker image rm <image_id>
 
-# Delete an image from the local image store
+# Remove an image from the local image store
 docker rmi <image_id>
+
+# Remove all images from the local image store
+docker rmi $(docker images -q) --force
+
+# Remove all containers
+docker rm $(docker ps -aq)
+
+# Stop all containers
+docker stop $(docker ps -aq)
 
 # List all images that are locally stored with the Docker engine
 docker images
@@ -44,7 +53,6 @@ docker network create <network_name>
 
 $ image_id: docker images --- --headers 1 --column 3 --delimiter '\s\s+'
 $ container_id: docker ps --- --headers 1 --column 1 --delimiter '\s\s+'
-
 
 
 % docker-compose

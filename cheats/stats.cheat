@@ -1,0 +1,7 @@
+% stats
+
+# Show weather info for current city
+curl -s "wttr.in" | grep -v "New feature" | grep -v Follow
+
+# Show weather info for a given city
+curl -s "wttr.in/<city>" | grep -v "New feature" | grep -v Follow

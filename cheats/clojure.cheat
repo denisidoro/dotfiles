@@ -1,0 +1,6 @@
+% clojure, clj
+
+# Start a Clojure REPL using deps aliases
+clj "-A:${alias}"
+
+$ alias: cat "${HOME}/.clojure/deps.edn" | dot clojure data -o json | jq -r '.aliases | keys | .[]'
