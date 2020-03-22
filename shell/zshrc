@@ -1,11 +1,10 @@
+#!/usr/bin/env zsh
+
 # dotfiles
 export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 
 # register which shell is running
 SH="zsh"
-
-# load vars
-source "${DOTFILES}/shell/aux/vars.zsh"
 
 # load vars
 source "${DOTFILES}/shell/aux/vars.zsh"
@@ -24,15 +23,6 @@ source "${DOTFILES}/local/zshrc" 2> /dev/null || true
 
 # fzf, fasd and navi
 source "${DOTFILES}/shell/aux/post.zsh"
-
-# demo utilities
-# if ${DEMO_MODE:-false}; then
-#    source "${DOTFILES}/shell/aux/demo.zsh"
-# fi
-
-# startup time instrumentation end
-# unsetopt XTRACE
-# exec 2>&3 3>&-
 
 export ZIM_HOME="${DOTFILES}/modules/zimfw"
 
@@ -53,8 +43,6 @@ expand-or-complete-with-redisplay() {
 zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:approximate:*' max-errors 3 numeric
 zstyle ':completion:*' matcher-list 'm:{a-z}={  A-Z}' # match upper from lower case
-
-# source "${DOTFILES}/shell/init.sh"
 
 fpath=("${DOTFILES}/shell/zsh/themes" "${DOTFILES}/shell/zsh/completions" $fpath)
 

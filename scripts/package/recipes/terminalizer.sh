@@ -6,5 +6,5 @@ terminalizer::depends_on() {
 }
 
 terminalizer::map() {
-   dict::new npm floki
+   dict::new npm terminalizer
 }

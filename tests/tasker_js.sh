@@ -13,5 +13,5 @@ random_line() {
    esac
 }
 
-test::set_suite "node - tasker js"
-$test_fn "randomLine" random_line
+test::set_suite "js - tasker js"
+test::run "randomLine" random_line

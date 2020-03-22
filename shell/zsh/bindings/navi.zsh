@@ -1,4 +1,5 @@
-# ctrl+g - Paste the selected command from history into the command line
+#!/usr/bin/env zsh
+
 _call_navi() {
    local -r buff="$BUFFER"
    local -r r="$(printf "$(navi --print </dev/tty)")"

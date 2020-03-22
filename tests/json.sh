@@ -13,7 +13,7 @@ _valid_json() {
       | jq . &>/dev/null
 }
 
-test::set_suite "jq - json"
+test::set_suite "js - json"
 
 # TODO: use nodejs
 for f in $(_jsons); do
