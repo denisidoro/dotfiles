@@ -19,9 +19,9 @@ docs::eval "$@"
 
 _open() {
    if platform::is_osx; then
-      nohup open "$@" & disown
+      open "$@" & disown
    else
-      nohup xdg-open "$@" & disown
+      xdg-open "$@" & disown
    fi
 }
 
