@@ -14,14 +14,13 @@ _files() {
    local -r pairs="$1"
    echo "$pairs" \
       | cut -d'+' -f1 \
-      | sort -u
+      | sort -u \
+      | sed 's|\./||g'
 }
 
 validate_reference() {
    local cmds=($(echo "$*" | tr ' ' '\n'))
    case "$*" in
-      *cl*edn) return 0 ;;
-      *sh*zsh) return 0 ;;
       *) "${cmds[@]}" --help &>/dev/null ;;
    esac
 }

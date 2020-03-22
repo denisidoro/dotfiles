@@ -8,4 +8,4 @@ symlink_bashrc() {
 }
 
 test::set_suite "bash - bashrc"
-test::run "sourcing the bashrc won't bork" symlink_bashrc
+test::skip "sourcing the bashrc won't bork" symlink_bashrc
