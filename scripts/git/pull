@@ -3,6 +3,7 @@
 
 source "${DOTFILES}/scripts/core/documentation.sh"
 source "${DOTFILES}/scripts/core/git.sh"
+source "${DOTFILES}/scripts/core/git.sh"
 
 ##? Git pull helpers
 #?? 0.1.0
