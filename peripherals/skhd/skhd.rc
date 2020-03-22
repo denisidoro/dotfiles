@@ -10,8 +10,8 @@ alt + ctrl + cmd + shift - b : open -na /Applications/Google\ Chrome.app
 # Power
 # =================
 
-alt + ctrl + cmd + shift - 0x75 : $HOME/dotfiles/bin/dot system lock
-alt + ctrl + cmd + shift - p : $HOME/dotfiles/bin/dot system lock
+alt + ctrl + cmd + shift - 0x75 : pmset displaysleepnow
+alt + ctrl + cmd + shift - p : pmset displaysleepnow
 
 
 

@@ -35,8 +35,8 @@ source ${ZIM_HOME}/init.zsh
 
 # Removing the waiting dots from completion (...). Original: ~/.zim/modules/input/init.zsh
 expand-or-complete-with-redisplay() {
-	zle expand-or-complete
-		zle redisplay
+   zle expand-or-complete
+   zle redisplay
 }
 
 # Fuzzy Autocompletion
@@ -51,7 +51,7 @@ prompt dns
 
 # iTerm tab name
 precmd() {
-	echo -ne "\e]1;$(pwd)\a"
+   echo -ne "\e]1;$(pwd)\a"
 }
 
 # load bindings

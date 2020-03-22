@@ -14,14 +14,14 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 docs::eval_help "$@"
 
 git::reset::head() {
-    git::inside_work_tree || return 1
-    local cmd files opts
-    cmd="git diff --cached --color=always -- {} | $git_pager "
-    opts="
-        $GIT_FZF_DEFAULT_OPTS
-        -m -0 --preview=\"$cmd\"
-        $GIT_RESET_HEAD_FZF_OPTS
-    "
+   git::inside_work_tree || return 1
+   local cmd files opts
+   cmd="git diff --cached --color=always -- {} | $git_pager "
+   opts="
+   $GIT_FZF_DEFAULT_OPTS
+   -m -0 --preview=\"$cmd\"
+   $GIT_RESET_HEAD_FZF_OPTS
+   "
     files="$(git diff --cached --name-only --relative | FZF_DEFAULT_OPTS="$opts" fzf)"
     [[ -n "$files" ]] && echo "$files" | tr '\n' '\0' | xargs -0 -I% git reset -q HEAD % && git status --short && return
     echo 'Nothing to unstage.'

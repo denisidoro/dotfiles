@@ -14,14 +14,14 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 docs::eval_help "$@"
 
 git::restore() {
-    git::inside_work_tree || return 1
-    local cmd files opts
-    cmd="git diff --color=always -- {} | $git_pager"
-    opts="
-        $GIT_FZF_DEFAULT_OPTS
-        -m -0 --preview=\"$cmd\"
-        $GIT_CHECKOUT_FZF_OPTS
-    "
+   git::inside_work_tree || return 1
+   local cmd files opts
+   cmd="git diff --color=always -- {} | $git_pager"
+   opts="
+   $GIT_FZF_DEFAULT_OPTS
+   -m -0 --preview=\"$cmd\"
+   $GIT_CHECKOUT_FZF_OPTS
+   "
     files="$(git ls-files --modified "$(git rev-parse --show-toplevel)"| FZF_DEFAULT_OPTS="$opts" fzf)"
     [[ -n "$files" ]] && echo "$files" | tr '\n' '\0' | xargs -0 -I% git checkout % && git status --short && return
     echo 'Nothing to restore.'

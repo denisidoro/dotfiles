@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-git::inside_work_tree() { 
+git::inside_work_tree() {
    git rev-parse --is-inside-work-tree >/dev/null
 }
 
