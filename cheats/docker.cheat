@@ -33,7 +33,7 @@ docker rm -f $(docker ps -aq)
 # Create a new bash process inside the container and connect it to the terminal
 docker exec -it <container_id> bash
 
-# Print the last lines of a container’s logs
+# Print the last lines of a container's logs
 docker logs --tail 100 <container_id> | less
 
 # Print the last lines of a container's logs and following its logs
