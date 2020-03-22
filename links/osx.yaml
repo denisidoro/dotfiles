@@ -1,6 +1,6 @@
 peripherals/karabiner/karabiner.json, $HOME/config/karabiner/karabiner.json
 peripherals/skhd/skhd.rc, $HOME/skhdrc
 wm/yabai/yabai.rc, $HOME/yabairc
-editors/vscode/settings.json, $HOME/Library/Application Support/Code/User/settings.json
-editors/vscode/keybindings.json, $HOME/Library/Application Support/Code/User/keybindings.json
-editors/sublime/preferences.json, $HOME/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings
+editors/vscode/settings.json, $HOME/Library/Application\ Support/Code/User/settings.json
+editors/vscode/keybindings.json, $HOME/Library/Application\ Support/Code/User/keybindings.json
+editors/sublime/preferences.json, $HOME/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Preferences.sublime-settings
