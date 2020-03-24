@@ -1,43 +1,39 @@
 #!/usr/bin/env bash
 
-if platform::command_exists apt-get && ! platform::command_exists apt; then
-   apt() {
+   _apt() {
       apt-get "$@"
    }
 
-   export -f apt-get
-fi
-
 apt::install() {
    local -r ask="$(dict::get "$OPTIONS" ask)"
-   sudo apt install $([ ! $ask ] && echo "--yes") "$@"
+   sudo _apt install $([ ! $ask ] && echo "--yes") "$@"
 }
 
 apt::remove() {
-   sudo apt remove "$@"
+   sudo _apt remove "$@"
 }
 
 apt::update() {
-   sudo apt update "$@"
+   sudo _apt update "$@"
 }
 
 apt::upgrade() {
    apt::update "$@" || true
-   sudo apt upgrade "$@"
+   sudo _apt upgrade "$@"
 }
 
 apt::clean() {
-   sudo apt clean "$@"
+   sudo _apt clean "$@"
 }
 
 apt::search() {
-   sudo apt search "$@"
+   sudo _apt search "$@"
 }
 
 apt::list() {
-   sudo apt list "$@"
+   sudo _apt list "$@"
 }
 
 apt::info() {
-   sudo apt show "$@"
+   sudo _apt show "$@"
 }

@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# vim: filetype=sh
-
-##? Remove packages
-##?
-##? Usage:
-##?    remove [<packages>...]
-
-"${DOTFILES}/scripts/package/remove" "$@"

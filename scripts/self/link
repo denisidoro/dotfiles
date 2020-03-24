@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
+##? Symlink handler
+#?? 0.1.0
+##?
+##? Usage:
+##?    lint <args>...
+
 export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)}"
 export DOT_REPO="https://github.com/denisidoro/dotfiles.git"
 export DOT_DIR="$DOTFILES"
 export DOT_LINK="${DOTFILES}/links/${DOTLINK:-"unix"}.yaml"
 
-source "${HOME}/dev/dotlink/dotlink" \
-    || source "${DOTFILES}/modules/dotlink/dotlink"
+source "${HOME}/dev/dotlink/dotlink" 2>/dev/null || source "${DOTFILES}/modules/dotlink/dotlink"
 
 dotlink_main "$@"

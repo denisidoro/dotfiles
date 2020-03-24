@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+
+##? Install packages
+##?
+##? Usage:
+##?    <pkg_manager> (install|add) [<packages>...]
+##?    <pkg_manager> (uninstall|remove) [<packages>...]
+##?    <pkg_manager> upgrade [<packages>...]
+##?    <pkg_manager> update [<packages>...]
+
+pkg_manager="$1"
+operation="$2"
+shift 2
+
+_actual_operation() {
+    local -r operation="$1"
+    case "$operation" in
+        install|add) echo install;;
+        uninstall|remove) echo remove;;
+        *) echo "$operation"
+    esac
+}
+
+source "${DOTFILES}/scripts/package/aux/pkg_managers/${pkg_manager}.sh"
+
+fn="${pkg_manager}::$(_actual_operation "$operation")"
+"$fn" "$@"

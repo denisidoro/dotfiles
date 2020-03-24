@@ -24,7 +24,6 @@ case $cmd in
    *) ;;
 esac
 
-echo "$TEST_FILTER"
 for test in $(_all_files); do
    source "$test"
 done
