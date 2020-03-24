@@ -30,3 +30,5 @@ source "${DOTFILES}/shell/aux/post.zsh"
 
 # theme
 source "${DOTFILES}/shell/bash/themes/dns.sh"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
