@@ -14,10 +14,24 @@ source "${DOTFILES}/scripts/package/aux/batch.sh"
 
 docs::eval_help "$@"
 
+# show help if no arguments
 if [[ $# < 1 ]]; then
    "$0" --help
    exit 0
 fi
+
+DEP_LIST_FILE="${DOTFILES}/scripts/package/aux/dependencies.ini"
+
+batch::dependencies() {
+   local -r name="$1"
+
+   for key in "$@"; do
+      cat "$DEP_LIST_FILE" \
+         | grep -A999 "\[${name}\].*" \
+         | sed '/^ *$/q' \
+         | tail -n +2
+   done
+}
 
 # input parsing
 list=false
@@ -51,5 +65,5 @@ if $prompt; then
    fi
 fi
 
-deps="$(batch::dependencies "$name" | str::join)"
-dot pkg add "$deps"
+deps=($(batch::dependencies "$name"))
+dot pkg add "${deps[@]}"

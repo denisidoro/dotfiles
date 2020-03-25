@@ -12,15 +12,15 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval_help "$@"
 
 if [ $# -gt 1 ]; then
-    pkg_failures=0
-    for package in "$@"; do
-        dot pkg add "$package" || pkg_failures=$((pkg_failures+1))
-    done
-    exit "$pkg_failures"
+   pkg_failures=0
+   for package in "$@"; do
+      dot pkg add "$package" || pkg_failures=$((pkg_failures+1))
+   done
+   exit "$pkg_failures"
 fi
 
 _is_installed() {
-    log::success "${package} is already installed"
+   log::success "${package} is already installed"
 }
 
 package="$1"
@@ -30,17 +30,17 @@ platform::command_exists "$package" && _is_installed && exit 0
 file="${DOTFILES}/scripts/package/recipes/${package}.sh"
 
 if ! [ -f "$file" ]; then
-    for pkg_mgr in apt pkg yum dnf port emerge pacman brew npm; do
-        dot pkg proxy $pkg_mgr add "$package" && exit 0 || true
-    done
-    exit 234
+   for pkg_mgr in apt pkg yum dnf port emerge pacman brew npm; do
+      dot pkg proxy $pkg_mgr add "$package" && exit 0 || true
+   done
+   exit 234
 fi
 
 source "$file"
 
 command_exists package::is_installed \
-    && package::is_installed \
-    && _is_installed \
-    && exit 0
+   && package::is_installed \
+   && _is_installed \
+   && exit 0
 
 package::install

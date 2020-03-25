@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-   _apt() {
-      apt-get "$@"
-   }
+_apt() {
+   apt-get "$@"
+}
 
 apt::install() {
    local -r ask="$(dict::get "$OPTIONS" ask)"

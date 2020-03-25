@@ -50,19 +50,6 @@ recipe::make() {
    make && sudo make install
 }
 
-recipe::abort_installed() {
-   local -r cmd="$1"
-   log::warning "${cmd} already installed"
-   exit 0
-}
-
-recipe::abort_if_installed() {
-   local -r cmd="$1"
-   if platform::command_exists "$cmd"; then
-      recipe::abort_installed "$cmd"
-   fi
-}
-
 recipe::has_submodule() {
    local -r module="$1"
    local -r probe_file="${2:-}"
@@ -83,7 +70,6 @@ recipe::clone_as_submodule() {
    local -r module="${3:-$repo}"
 
    local -r module_path="${MODULES_FOLDER}/${module}"
-   git::url $user $repo
    yes | git clone "$(git::url $user $repo)" --depth 1 "$module_path"
 
    cd "$module_path"
