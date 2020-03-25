@@ -7,8 +7,3 @@
 	path = modules/zimfw
 	url = git@github.com:zimfw/zimfw.git
 	shallow = true
-
-[submodule "modules/z.lua"]
-	path = modules/z.lua
-	url = git@github.com:skywind3000/z.lua.git
-	shallow = true
