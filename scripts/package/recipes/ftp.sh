@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-ftp::map() {
-   dict::new brew inetutils
+package::install() {
+   brew install inetutils
 }
-

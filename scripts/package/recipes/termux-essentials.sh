@@ -6,15 +6,11 @@ has_busybox_only() {
       | grep -q BusyBox
 }
 
-termux-essentials::is_installed() {
-   platform::command_exists grep
+package::is_installed() {
+   ! platform::is_android || platform::command_exists grep
 }
 
-termux-essentials::install() {
-   if ! platform::is_android; then
-      return 0
-   fi
-
+package::install() {
    # in order to skip $PREFIX/bin, for example
    if ! fs::is_dir /bin; then
       pkg install proot

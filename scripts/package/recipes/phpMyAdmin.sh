@@ -1,15 +1,12 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-phpMyAdmin::is_installed() {
+package::is_installed() {
    fs::is_dir "/var/www/html/phpMyAdmin"
 }
 
-phpMyAdmin::depends_on() {
-   coll::new wget
-}
-
-phpMyAdmin::install() {
+package::install() {
+   dot pkg add wget
    log::warning "Setting up phpMyAdmin..."
    cd /var/www/html
    log::warning "Downloading zip..."

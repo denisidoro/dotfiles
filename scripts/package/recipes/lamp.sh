@@ -53,11 +53,11 @@ recipe::httpd2() {
    sudo systemctl restart php-fpm
 }
 
-lamp::is_installed() {
+package::is_installed() {
    fs::is_dir "/var/www/html/phpMyAdmin"
 }
 
-lamp::install() {
+package::install() {
    if ! platform::is_ami2; then
       log::error "Recipe only available to Amazon Linux AMI 2"
       exit 45

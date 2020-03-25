@@ -8,7 +8,9 @@ fzf::map() {
 }
 
 fzf::map() {
+   platform::command_exists brew && brew install fzf && return 0
+
    recipe::shallow_github_clone junegunn fzf
    cd "$TMP_DIR/fzf"
-   ./install
+   yes | ./install
 }

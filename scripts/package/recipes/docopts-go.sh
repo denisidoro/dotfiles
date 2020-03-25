@@ -20,15 +20,13 @@ url::get() {
    url::generate "$suffix"
 }
 
-docopts-go::depends_on() {
-   coll::new wget
-}
-
-docopts-go::is_installed() {
+package::is_installed() {
    docopts --version 2> /dev/null | grep -q golang
 }
 
-docopts-go::install() {   
+package::install() {   
+   dot pkg add wget curl
+   
    folder="$(recipe::folder docopts-go)"
    mkdir -p "$folder" || true
    sudo chmod 777 "$folder" || true

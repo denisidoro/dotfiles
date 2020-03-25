@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
+source "${DOTFILES}/scripts/core/main.sh"
+
 ##? Install packages
 ##?
 ##? Usage:
@@ -12,6 +14,10 @@
 pkg_manager="$1"
 operation="$2"
 shift 2
+
+if platform::is_osx && [[ $pkg_manager != "brew" ]] && [[ $pkg_manager != "npm" ]] && [[ $pkg_manager != "pip" ]]; then
+    exit 123
+fi
 
 _actual_operation() {
     local -r operation="$1"

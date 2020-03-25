@@ -25,11 +25,11 @@ _brew_apt() {
    sudo apt install linuxbrew-wrapper
 }
 
-brew::is_installed() {
+recipe::is_installed() {
    platform::command_exists brew || fs::is_dir /home/linuxbrew
 }
 
-brew::install() {
+recipe::install() {
    if platform::is_osx; then
       _brew_osx
    elif platform::command_exists apt; then

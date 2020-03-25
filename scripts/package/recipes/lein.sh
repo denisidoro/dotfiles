@@ -6,6 +6,10 @@ lein::depends_on() {
 }
 
 lein::install() {
+   platform::command_exists brew && brew install leiningen && return 0
+
+   dot pkg add wget
+
    folder="$(recipe::folder lein)"
    mkdir -p "$folder" || true
    cd "$folder"
