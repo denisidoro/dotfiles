@@ -15,6 +15,10 @@ alias f="dot_or_args vifm --"
 
 # alias ls='ls --color=auto'
 alias lst="tree -L 2"
+cd() {
+   builtin cd "$@"
+   lsd . 2>/dev/null || ls .
+}
 
 # ===============
 # folders
