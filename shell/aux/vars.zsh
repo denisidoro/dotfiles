@@ -34,9 +34,9 @@ export GOPATH="${DEV_HOME}/go"
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 # fasd/z.lua/jump
-export _ZL_CMD=zlua
+# export _ZL_CMD=zlua
 # export _ZL_DATA="${DOTFILES}/modules/.z_lua"
-export _ZL_MATCH_MODE=1
+# export _ZL_MATCH_MODE=1
 
 # fzf
 export FZF_DEFAULT_OPTS='--height 70% --reverse --inline-info --cycle'

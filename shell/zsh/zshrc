@@ -47,7 +47,7 @@ source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
 
 
 fre_chpwd() {
-  fre --add "$(pwd)"
+   fre --add "$(pwd)"
 }
 typeset -gaU chpwd_functions
 chpwd_functions+=fre_chpwd

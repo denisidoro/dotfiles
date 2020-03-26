@@ -17,19 +17,8 @@ _fzf() {
    fzf --no-sort +m "$@"
 }
 
-fasd() {
-   export PROMPT_COMMAND=""
-   export _ZL_CD="cd"
-   export _ZL_ECHO="1"
-   eval "$(lua "${DOTFILES}/modules/z.lua/z.lua" --init bash)"
-   set +e
-   _zlua "$@"
-   set -e
-}
-
-_fasd_suggestions() {
-   fasd -l "${@:-}" \
-      | awk '{print $NF}'
+_fre_suggestions() {
+   fre --sorted "${@:-}"
 }
 
 files_for_folders() {
@@ -80,11 +69,7 @@ _jump() {
 }
 
 jump_to_global_folder() {
-   if [ $# -gt 0 ]; then
-      fasd "$@"
-   else
-      _jump cd "$(_fasd_suggestions)"
-   fi
+   _jump cd "$(_fre_suggestions)" "$@"
 }
 
 jump_to_folder() {
@@ -99,7 +84,7 @@ edit_global_file() {
    local -r editor="$1"
    shift
 
-   local -r files="$(_fasd_suggestions "$@" | files_for_folders)"
+   local -r files="$(_fre_suggestions "$@" | files_for_folders)"
    _jump "$editor" "$files"
 }
 
