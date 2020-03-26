@@ -96,66 +96,48 @@ $ unstaged_files: git --no-pager diff --name-only
 git branch --all -vv
 
 # Renames a branch
-git branch --move
+git branch --move <new_branch_name>
 
-# renames a branch even if the new branch name already exists
-git branch --move --force
-
-# lists branches and their commits with ancestry graphs
-git show-branch
-
-# lists local and remote branches and their commits with ancestry graphs
+# List local and remote branches and their commits with ancestry graphs
 git show-branch --all
 
-# deletes a branch
-git-branch-delete-interactive
+# Remove branches
+branches=($(echo "<branches>"))
+git branch -D "${branches[@]}"
 
-# deletes a branch irrespective of its merged status
-git-branch-delete-interactive --force
+$ branches: git branch | awk '{print $NF}' --- --multi
 
  
 % git commit
 
-# records changes to the repository
+# Record change to the repository
 git commit --verbose
 
-# commits all modified and deleted files
-git commit --verbose --all
-
-# commits with the given message
-git commit --message
-
-# checks out a branch or paths to the working tree
-git checkout
-
-# checks out hunks from the index or the tree interactively
+# Checkout hunks from the index or the tree interactively
 git checkout --patch
 
-# amends the tip of the current branch reusing the same log message as HEAD
+# Amend the tip of the current branch reusing the same log message as HEAD
 git commit --amend --reuse-message HEAD
 
-# amends the tip of the current branch
+# Amend the tip of the current branch
 git commit --verbose --amend
 
-# applies changes introduced by existing commits
+# Apply changes introduced by existing commits
 git cherry-pick --ff
 
-# applies changes introduced by existing commits without committing
+# Apply changes introduced by existing commits without committing
 git cherry-pick --no-commit
 
-# reverts existing commits by reverting patches and recording new commits
+# Revert existing commits by reverting patches and recording new commits
 git revert
 
-# removes the HEAD commit
+# Remove the HEAD commit
 git reset "HEAD^"
 
-# shows one or more objects (blobs, trees, tags and commits)
-git show --pretty=format:"${_git_log_fuller_format}"
-
-# commits with GPG signature
+# Commit with GPG signature
 git commit -S
 
-# verifies the GPG signature of commits
+# Verify the GPG signature of commits
 git verify-commit
 
 
@@ -498,9 +480,6 @@ git tag --delete
 
 # displays working-tree status in the short format
 git status --short
-
-# displays working-tree status
-git status
 
 # displays changes between the working tree and the index (diff)
 git diff --no-ext-diff
