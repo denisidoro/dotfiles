@@ -23,6 +23,10 @@ _is_installed() {
    log::success "${package} is already installed"
 }
 
+_installing() {
+   log::warning "Attempting to install ${package}..."
+}
+
 package="$1"
 
 platform::command_exists "$package" && _is_installed && exit 0
@@ -30,6 +34,7 @@ platform::command_exists "$package" && _is_installed && exit 0
 file="${DOTFILES}/scripts/package/recipes/${package}.sh"
 
 if ! [ -f "$file" ]; then
+   _installing
    for pkg_mgr in apt pkg yum dnf port emerge pacman brew npm; do
       dot pkg proxy $pkg_mgr add "$package" && exit 0 || true
    done
@@ -38,9 +43,10 @@ fi
 
 source "$file"
 
-command_exists package::is_installed \
+platform::command_exists package::is_installed \
    && package::is_installed \
    && _is_installed \
    && exit 0
 
+_installing
 package::install
