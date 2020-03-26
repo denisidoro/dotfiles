@@ -1,30 +1,30 @@
 % brew, cask
 
-# get info for a package
+# Get info for a package
 brew info <package>
 
-# get info for a cask
+# Get info for a cask
 brew cask info <casks>
 
-# install a package
+# Install a package
 brew install <package>
 
-# install a cask
+# Install a cask
 brew cask install <casks>
 
-# uninstall a package
+# Uninstall a package
 brew uninstall <installed>
 
-# uninstall a cask
-brew cask uninstall <caskinstalled>
+# Uninstall a cask
+brew cask uninstall <installed_cask>
 
-# edit package
+# Edit package
 brew edit <package>
 
-# edit cask
+# Edit cask
 brew cask edit <casks>
 
 $ package: brew search
 $ casks: brew search --casks
 $ installed: brew list
-$ caskinstalled: brew cask list
+$ installed_cask: brew cask list

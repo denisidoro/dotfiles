@@ -1,13 +1,16 @@
 % rice
 
-# Show available colors in the terminal
+# Available colors in the terminal
 dot rice colors
 
-# Show matrix effect
+# Matrix effect
 dot rice colors
 
-# Show pipe animation
+# Pipe animation
 dot rice pipes
 
 # Simulate typing
 dot rice type
+
+# :partyparrot:
+curl parrot.live

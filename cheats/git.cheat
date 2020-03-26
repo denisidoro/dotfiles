@@ -6,16 +6,13 @@ git config --global user.name <name>
 # Set global git user email
 git config --global user.email <email>
 
-# Initializes a git repository
-git init
-
 # Clone a git repository
 git clone -b <branch_name> <repository> <clone_directory>
 
 # View all available remote for a git repository
 git remote --verbose
 
-# Adds a remote for a git repository
+# Add a remote for a git repository
 git remote add <remote_name> <remote_url>
 
 # Renames a remote for a git repository
@@ -25,24 +22,15 @@ git remote rename <old_remote_name> <new_remote_name>
 git remote remove <remote_name>
 
 # Checkout to branch
-git checkout <branch>
+dot git checkout
 
-# Displays the current status of a git repository
-git status
-
-# Displays unstaged changes for file
+# Display unstaged changes for file
 git diff <toplevel_directory>/<unstaged_files>
 
-# Stages a changed file
+# Stage a changed file
 git add <toplevel_directory>/<unstaged_files>
 
-# Stages all changed files
-git add -A
-
-# Saves the changes to a file in a commit
-git commit -m <message>
-
-# Pushes committed changes to remote repository
+# Push committed changes to remote repository
 git push -u <remote_name> <branch_name>
 
 # Pushes changes to a remote repository overwriting another branch
@@ -57,13 +45,10 @@ git pull --ff-only
 # Merges changes on one branch into current branch
 git merge <branch_name>
 
-# Abort the current conflict resolution process, and try to reconstruct the pre-merge state.
+# Abort the current conflict resolution process, and try to reconstruct the pre-merge state
 git merge --abort
 
-# Displays log of commits for a repo
-git log
-
-# Displays formatted log of commits for a repo
+# Display formatted log of commits for a repo
 git log --all --decorate --oneline --graph
 
 # Clear everything
@@ -107,19 +92,10 @@ $ unstaged_files: git --no-pager diff --name-only
 
 % git branch
 
-# lists, creates, renames, and deletes branches
-git branch
-
-# creates a new branch
-git checkout -b
-
-# lists branches and their commits
-git branch -vv
-
-# lists local and remote branches and their commits
+# List local and remote branches and their commits
 git branch --all -vv
 
-# renames a branch
+# Renames a branch
 git branch --move
 
 # renames a branch even if the new branch name already exists

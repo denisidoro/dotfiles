@@ -3,5 +3,6 @@
 # Convert node_modules into symlinks
 dot javascript npm symlink
 
-# convert JSON to YAML
-cat "<json_file>" | ruby -ryaml -rjson -e 'puts YAML.dump(JSON.load(ARGF))'
+# Convert JSON to YAML
+cat "<json_file>" \
+   | ruby -ryaml -rjson -e 'puts YAML.dump(JSON.load(ARGF))'

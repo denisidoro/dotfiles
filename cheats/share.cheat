@@ -5,3 +5,6 @@ echo "<content>" | curl -F-=\<- qrenco.de
 
 # Publicly share a file via transfer.sh
 dot share file "<path>"
+
+# Shorten a URL
+curl -s "http://tinyurl.com/api-create.php?url=<url>"

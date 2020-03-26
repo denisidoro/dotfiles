@@ -16,7 +16,7 @@ netstat -tn 2>/dev/null \
    | head
 
 # Find external, public IP address
-dig +short myip.opendns.com @resolver1.opendns.com || curl -s ifconfig.me/all.json | jq
+dig +short myip.opendns.com @resolver1.opendns.com
 
 # Find primary, local IP address
 ifconfig \
@@ -28,8 +28,16 @@ ifconfig \
 # Get certificates for a service
 openssl s_client -showcerts -connect <url>
 
+# Geolocation data given an IP
+curl -sL "ipinfo.io/<ip>" | jq
+
+# Geolocation data for own IP
+curl -sL "ipinfo.io/<self_global_ip>" | jq
+
 # Launch a container with network utils
 docker run -it --entrypoint /bin/sh nicolaka/netshoot
 
 # Map ports
 sudo nmap -sS -sV -0 "<target>"
+
+$ self_global_ip: dig +short myip.opendns.com @resolver1.opendns.com

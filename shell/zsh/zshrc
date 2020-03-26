@@ -36,9 +36,6 @@ precmd() {
    echo -ne "\e]1;$(pwd)\a"
 }
 
-# load bindings
-source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
-# source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
 
 # completions
 # autoload -Uz compinit
@@ -180,3 +177,8 @@ bindkey -M vicmd 'j' history-substring-search-down
 # }}} End configuration added by Zim install
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# load bindings
+source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
+source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
+# source <(navi widget zsh)
