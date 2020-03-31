@@ -1,9 +1,18 @@
 # =================
+# Modes
+# =================
+
+:: default : yabai -m config active_window_border_color 0xffff1493
+:: grab : yabai -m config active_window_border_color 0xFF00BFFF
+
+alt + ctrl + cmd + shift - g ; grab
+grab < escape ; default
+
+# =================
 # Application
 # =================
 
 alt + ctrl + cmd + shift - return : open -na /Applications/iTerm.app
-alt + ctrl + cmd + shift - b : open -na /Applications/Google\ Chrome.app
 
 
 # =================
@@ -12,6 +21,74 @@ alt + ctrl + cmd + shift - b : open -na /Applications/Google\ Chrome.app
 
 alt + ctrl + cmd + shift - 0x75 : pmset displaysleepnow
 alt + ctrl + cmd + shift - p : pmset displaysleepnow
+
+
+# focus window direction
+alt + ctrl + cmd + shift - h : yabai -m window --focus west
+alt + ctrl + cmd + shift - j : yabai -m window --focus south
+alt + ctrl + cmd + shift - k : yabai -m window --focus north
+alt + ctrl + cmd + shift - l : yabai -m window --focus east
+
+# focus window tab
+alt + ctrl + cmd + shift - n : yabai -m window --focus recent || yabai -m window --focus next || yabai -m window --focus first
+
+# focus display tab
+alt + ctrl + cmd + shift - m : yabai -m display --focus recent || yabai -m display --focus next || yabai -m display --focus first
+
+# focus space
+alt + cmd + ctrl + shift - 1 : yabai -m space --focus 1
+alt + cmd + ctrl + shift - 2 : yabai -m space --focus 2
+alt + cmd + ctrl + shift - 3 : yabai -m space --focus 3
+alt + cmd + ctrl + shift - 4 : yabai -m space --focus 4
+alt + cmd + ctrl + shift - 5 : yabai -m space --focus 5
+alt + cmd + ctrl + shift - 6 : yabai -m space --focus 6
+alt + cmd + ctrl + shift - 7 : yabai -m space --focus 7
+alt + cmd + ctrl + shift - 8 : yabai -m space --focus 8
+alt + cmd + ctrl + shift - 9 : yabai -m space --focus 9
+alt + cmd + ctrl + shift - 0 : yabai -m space --focus 10
+
+# insertion point direction
+alt + cmd + ctrl + shift - y : yabai -m window --insert west
+alt + cmd + ctrl + shift - u : yabai -m window --insert south
+alt + cmd + ctrl + shift - i : yabai -m window --insert north
+alt + cmd + ctrl + shift - o : yabai -m window --insert east
+
+# toggle fullscreen
+alt + ctrl + cmd + shift - f : yabai -m window --toggle zoom-fullscreen
+
+# send window to space
+grab < alt + cmd + ctrl + shift - 1 : yabai -m window --space 1
+grab < alt + cmd + ctrl + shift - 2 : yabai -m window --space 2
+grab < alt + cmd + ctrl + shift - 3 : yabai -m window --space 3
+grab < alt + cmd + ctrl + shift - 4 : yabai -m window --space 4
+grab < alt + cmd + ctrl + shift - 5 : yabai -m window --space 5
+grab < alt + cmd + ctrl + shift - 6 : yabai -m window --space 6
+grab < alt + cmd + ctrl + shift - 7 : yabai -m window --space 7
+grab < alt + cmd + ctrl + shift - 8 : yabai -m window --space 8
+grab < alt + cmd + ctrl + shift - 9 : yabai -m window --space 9
+grab < alt + cmd + ctrl + shift - 0 : yabai -m window --space 10
+
+# swap window direction
+grab < alt + ctrl + cmd + shift - h : yabai -m window --swap west
+grab < alt + ctrl + cmd + shift - j : yabai -m window --swap south
+grab < alt + ctrl + cmd + shift - k : yabai -m window --swap north
+grab < alt + ctrl + cmd + shift - l : yabai -m window --swap east
+
+# warp window direction
+grab < alt + ctrl + cmd + shift - y : yabai -m window --warp west
+grab < alt + ctrl + cmd + shift - u : yabai -m window --warp south
+grab < alt + ctrl + cmd + shift - i : yabai -m window --warp north
+grab < alt + ctrl + cmd + shift - o : yabai -m window --warp east
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -23,15 +100,15 @@ alt + ctrl + cmd + shift - p : pmset displaysleepnow
 # =================
 
 # focus window
-alt + ctrl + cmd + shift - h : yabai -m window --focus west
-alt + ctrl + cmd + shift - j : yabai -m window --focus south
-alt + ctrl + cmd + shift - k : yabai -m window --focus north
-alt + ctrl + cmd + shift - l : yabai -m window --focus east
+# alt + ctrl + cmd + shift - h : yabai -m window --focus west
+# alt + ctrl + cmd + shift - j : yabai -m window --focus south
+# alt + ctrl + cmd + shift - k : yabai -m window --focus north
+# alt + ctrl + cmd + shift - l : yabai -m window --focus east
 
 # swap window
-shift + alt - h : yabai -m window --swap west
-shift + alt - j : yabai -m window --swap south
-shift + alt - k : yabai -m window --swap north
+# shift + alt - h : yabai -m window --swap west
+# shift + alt - j : yabai -m window --swap south
+# shift + alt - k : yabai -m window --swap north
 # shift + alt - l : yabai -m window --swap east
 
 # move window
@@ -70,17 +147,6 @@ shift + alt - k : yabai -m window --swap north
 # cmd + alt - x : yabai -m space --focus recent
 # cmd + alt - z : yabai -m space --focus prev
 # cmd + alt - c : yabai -m space --focus next
-cmd + alt - 1 : yabai -m space --focus 1
-cmd + alt - 2 : yabai -m space --focus 2
-cmd + alt - 3 : yabai -m space --focus 3
-cmd + alt - 4 : yabai -m space --focus 4
-cmd + alt - 5 : yabai -m space --focus 5
-cmd + alt - 6 : yabai -m space --focus 6
-cmd + alt - 7 : yabai -m space --focus 7
-cmd + alt - 8 : yabai -m space --focus 8
-cmd + alt - 9 : yabai -m space --focus 9
-cmd + alt - 0 : yabai -m space --focus 10
-
 # send window to desktop and follow focus
 # shift + cmd - x : yabai -m window --space recent; yabai -m space --focus recent
 # shift + cmd - z : yabai -m window --space prev; yabai -m space --focus prev
@@ -152,7 +218,7 @@ cmd + alt - 0 : yabai -m space --focus 10
 # alt - d : yabai -m window --toggle zoom-parent
 
 # toggle window fullscreen zoom
-alt + ctrl + cmd + shift - f : yabai -m window --toggle zoom-fullscreen
+# alt + ctrl + cmd + shift - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle window native fullscreen
 # shift + alt - f : yabai -m window --toggle native-fullscreen

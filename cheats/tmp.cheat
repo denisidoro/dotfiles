@@ -1,0 +1,16 @@
+% tmp
+
+# Update submodule reference
+echo git add <submodule> && echo git commit -m "Update submodule: <submodule_name>"
+
+# Middle argument
+<permanent> && arg="--permanent"
+echo mycmd <port> foo "${arg:-}" bar 
+
+# pwd
+pwd
+
+$ permanent: echo 'true false' | tr ' ' '\n'
+$ port: echo '80 81 82' | tr ' ' '\n'
+$ submodule: git diff --submodule=diff | awk '{ print $2 }'
+$ submodule_name: echo "$((submodule))" | sed 's/.*\///'

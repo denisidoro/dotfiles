@@ -244,7 +244,7 @@ setup_docopts() {
       git submodule init
       git submodule update
       git submodule status
-      for f in $(ls "${DOTFILES}/modules") {
+      for f in $(ls "${DOTFILES}/modules"); do
          git submodule update --init --recursive "$f"
-      }
+      done
    }
