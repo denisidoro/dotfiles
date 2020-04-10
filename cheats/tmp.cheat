@@ -7,9 +7,13 @@ echo git add <submodule> && echo git commit -m "Update submodule: <submodule_nam
 <permanent> && arg="--permanent"
 echo mycmd <port> foo "${arg:-}" bar 
 
+# Color conversion
+: <original color>; echo "<color>" | awk '{$1=""}1' | xargs
+
 # pwd
 pwd
 
+$ color: echo -e "Mode@Value\nRGB@255 0 255\nHEX@#FF00FF\nHSL@todo" | column -t -s'@' --- --header-lines 1
 $ permanent: echo 'true false' | tr ' ' '\n'
 $ port: echo '80 81 82' | tr ' ' '\n'
 $ submodule: git diff --submodule=diff | awk '{ print $2 }'

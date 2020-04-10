@@ -39,7 +39,7 @@ else
 fi
 
 if $preview; then
-   dot style color print -- "$colors"
+   dot style color print "$colors"
 else
    echo "$colors"
 fi

@@ -77,3 +77,9 @@ docker-compose logs -f --tail 100 <service_name>
 
 # Stops containers and removes containers, networks created by up
 docker-compose down
+
+
+% docker, boot
+
+# Prevent all containers from autostarting on boot
+docker update --restart=no $(docker ps -a -q)
