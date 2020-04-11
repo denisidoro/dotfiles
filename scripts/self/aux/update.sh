@@ -98,7 +98,6 @@ get_git_info() {
 }
 
 setup_git_credentials() {
-
    if ! grep -q "email" "$LOCAL_GITCONFIG" 2> /dev/null; then
       echoerr
       log::note "Your git credentials aren't setup"
@@ -106,7 +105,6 @@ setup_git_credentials() {
       local -r email="$(feedback::maybe_text "${DOT_INSTALL_EMAIL:-}" "What is your email?")"
       echoerr -e "[user]\n   name = $fullname\n   email = $email" > "$LOCAL_GITCONFIG"
    fi
-
 }
 
 setup_docopts() {
@@ -159,32 +157,26 @@ setup_docopts() {
    # ==============================
 
    install_nvim_plugins() {
-
       if platform::command_exists nvim && echo && feedback::maybe_confirmation "${DOT_INSTALL_NVIM_PLUGINS:-}" "Do you want to install neovim plugins?"; then
          log::note "Installing neovim plugins..."
          nvim +silent +PlugInstall +qall >/dev/null
       fi
-
    }
 
    install_tmux_plugins() {
-
       if platform::command_exists tmux && echo && feedback::maybe_confirmation "${DOT_INSTALL_TMUX_PLUGINS:-}" "Do you want to install tmux plugins?"; then
          log::note "Installing tpm plugins..."
          export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins/"
          bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/install_plugins" >/dev/null
          bash "${TMUX_PLUGIN_MANAGER_PATH}tpm/bin/update_plugins" all >/dev/null
       fi
-
    }
 
    install_zplug_plugins() {
-
       if platform::command_exists zplug && echo && feedback::maybe_confirmation "${DOT_INSTALL_ZPLUG_PLUGINS:-}" "Do you want to install zplug plugins?"; then
          log::note "Installing ZPlug plugins..."
          zplug install 2>/dev/null
       fi
-
    }
 
 
@@ -240,11 +232,12 @@ setup_docopts() {
       echoerr
       log::note "Attempting to update submodules..."
       cd "$DOTFILES"
-      git pull
-      git submodule init
-      git submodule update
-      git submodule status
-      for f in $(ls "${DOTFILES}/modules"); do
-         git submodule update --init --recursive "$f"
-      done
+
+  git submodule foreach git reset --hard
+  git submodule foreach git checkout .
+git submodule foreach git pull origin master
+
+export ZIM_HOME="${ZIM_HOME:-$DOTFILES/modules/zimfw}"
+  zsh "$ZIM_HOME/zimfw.zsh" upgrade
+  rm -rf "$ZIM_HOME/modules/"* && zsh "$ZIM_HOME/zimfw.zsh" install
    }
