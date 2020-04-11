@@ -21,6 +21,12 @@ defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder
 # Lock screen
 pmset displaysleepnow
 
+# Set dark mode on (dark)
+osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to true'
+
+# Set dark mode off (light)
+osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to false'
+
 # Set wallpaper for a single workspace
 echo "<filepath>" | xargs -I% osascript -e 'tell application "Finder" to set desktop picture to POSIX file "%"'
 
