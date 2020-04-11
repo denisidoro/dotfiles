@@ -10,8 +10,4 @@ export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null
 ##? Usage:
 ##?    dot <context> <cmd> [<args>...]
 
-ctx="$1"
-cmd="$2"
-shift 2
-
-NAVI_PATH="${DOTFILES}/cheats" navi best "${ctx} ${cmd}" "${@:-}"
+NAVI_PATH="${DOTFILES}/cheats" navi best "${@:-}"

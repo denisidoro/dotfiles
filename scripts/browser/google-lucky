@@ -8,10 +8,9 @@ source "${DOTFILES}/scripts/core/main.sh"
 #?? 0.1.0
 ##?
 ##? Usage:
-##?    lucky <query>
+##?    google-lucky <query>
 
 docs::eval "$@"
 
 url="https://duckduckgo.com/?q=%21+$(str::urlencode "$query")&ia=web"
-
-dot sh open --browser "$url"
+dot system open "$url"

@@ -2,7 +2,8 @@
 # vim: filetype=sh
 
 package::install() {
-   (dot pkg add neovim || dot pkg add nvim) && return 0
+   dot pkg add neovim && return 0 || true
+   dot pkg add --prevent-recipe nvim && return 0 || true
 
    dot pkg add curl
    cd "$(fs::tmp)"

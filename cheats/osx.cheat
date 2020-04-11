@@ -1,10 +1,10 @@
 % osx, macos
 
 # Display a notification with message, title and subtitle
-osascript -e "display notification \"<message>\" with title \"<title>\" subtitle \"<subtitle>\""
+osascript -e 'display notification "<message>" with title "<title>" subtitle "<subtitle>"'
 
 # Display a notification with message and title
-osascript -e "display notification \"<message>\" with title \"<title>\""
+osascript -e 'display notification "<message>" with title "<title>"'
 
 # Show desktop icons
 defaults write com.apple.finder CreateDesktop -bool true && killall Finder
@@ -27,8 +27,25 @@ osascript -e 'tell app "System Events" to tell appearance preferences to set dar
 # Set dark mode off (light)
 osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to false'
 
+# Set DND on
+defaults -currentHost write ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturb -boolean true
+defaults -currentHost write ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturbDate -date "$(date -u +\"%Y-%m-%d %H:%M:%S +000\")"
+killall NotificationCenter
+
+# Set DND off
+defaults -currentHost write ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturb -boolean false
+killall NotificationCenter
+
+# Prevent sleep
+caffeinate -t $((60*<minutes>))
+
+# Prevent sleep for a long time
+caffeinate -t 18000
+
 # Set wallpaper for a single workspace
-echo "<filepath>" | xargs -I% osascript -e 'tell application "Finder" to set desktop picture to POSIX file "%"'
+osascript -e 'tell application "Finder" to set desktop picture to POSIX file "<wallpaper>"'
 
 # Set wallpaper for multiple workspaces
-echo "<filepath>" | xargs -I% osascript -e 'tell application "System Events" to tell every desktop to set picture to "%"'
+osascript -e 'tell application "System Events" to tell every desktop to set picture to "<wallpaper>"'
+
+$ wallpaper: find ~/Pictures/Wallpapers -type f

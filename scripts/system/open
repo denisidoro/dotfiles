@@ -7,13 +7,10 @@ source "${DOTFILES}/scripts/core/main.sh"
 #?? 0.1.0
 ##?
 ##? Usage:
-##?    open [options] <args>...
-##?
-##? Options:
-##?    -b --browser    Launch in a browser
+##?    open <args>...
 ##?
 ##? Examples:
-##?    open --browser http://google.com
+##?    open http://google.com
 
 docs::eval "$@"
 
@@ -25,12 +22,4 @@ _open() {
    fi
 }
 
-_open_browser() {
-   _open "$@"
-}
-
-if $browser; then
-   _open_browser "${args[@]:-}"
-else
-   _open "${args[@]:-}"
-fi
+_open "${args[@]:-}"

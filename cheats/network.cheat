@@ -40,4 +40,7 @@ docker run -it --entrypoint /bin/sh nicolaka/netshoot
 # Map ports
 sudo nmap -sS -sV -0 "<target>"
 
+# Port owner
+lsof -n -i4TCP:<port> | grep LISTEN
+
 $ self_global_ip: dig +short myip.opendns.com @resolver1.opendns.com

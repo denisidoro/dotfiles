@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-lein::depends_on() {
-   coll::new wget
-}
-
-lein::install() {
+package::install() {
    platform::command_exists brew && brew install leiningen && return 0
 
    dot pkg add wget

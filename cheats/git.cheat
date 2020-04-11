@@ -509,3 +509,12 @@ git rm -r
 curl -i "https://api.github.com/repos/<user>/<repo>/releases" \
   -H "Accept: application/vnd.github.manifold-preview+json" -s \
   | grep download_count | grep -Eo '[0-9]+' | awk '{s+=$1} END {print s}'
+
+# Standup, log for daily
+git log --reverse --branches --since=$(if [[ "Mon" == "$(date +%a)" ]]; then echo "last friday"; else echo "yesterday"; fi) --author=$(git config --get user.email) --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cgreen%d' --date=local
+
+# Remote stale branches
+for branch in $(git branch -r --merged | egrep -v "origin/HEAD|origin/master"); do echo -e $(git show --format="%ci %cr %an" $branch | head -n 1) \\t$branch; done | sort -r
+
+# List ignored files
+git status --ignored -s | grep "\!\!" | sed 's/!! //'

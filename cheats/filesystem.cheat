@@ -5,3 +5,6 @@ find -L . -name . -o -type d -prune -o -type l -exec rm {} +
 
 # Use fzf to navigate folders
 dot fs nav
+
+# Folder size
+du -sh

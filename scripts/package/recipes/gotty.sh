@@ -22,8 +22,8 @@ url::get() {
    url::generate "$suffix"
 }
 
-gotty::install() {
-   platform::command_exists brew && brew install yudai/gotty/gotty && return 0
+package::install() {
+   platform::command_exists brew && brew install yudai/gotty/gotty && return 0 || true
 
    dot pkg add wget
 

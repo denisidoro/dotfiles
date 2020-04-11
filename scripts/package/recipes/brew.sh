@@ -29,7 +29,7 @@ recipe::is_installed() {
    platform::command_exists brew || fs::is_dir /home/linuxbrew
 }
 
-recipe::install() {
+package::install() {
    if platform::is_osx; then
       _brew_osx
    elif platform::command_exists apt; then

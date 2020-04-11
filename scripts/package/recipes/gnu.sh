@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-gnu::is_installed() {
+package::is_installed() {
    ! platform::is_osx || platform::command_exists ggrep
 }
 

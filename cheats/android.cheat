@@ -32,4 +32,4 @@ $ ssh_config: echo "${PREFIX}/etc/ssh/sshd_config"
 % android, apps
 
 # Open Google Play Store profile page for an app
-dot search lucky "<query> site:play.google.com"
+dot browser google-lucky "<query> site:play.google.com"

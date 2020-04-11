@@ -61,10 +61,11 @@ fi
 
 if ! $list && [ -n "${device:-}" ]; then
    case "$device" in
-      phone|moto|g4) device="Moto G4 Plus" ;;
-      tablet|tab|galaxy) device="Galaxy Tab A" ;;
+      moto|g4) device="Moto G4 Plus" ;;
+      phone|xiaomi|mi|9t|pro) device="Xiaomi Mi 9T Pro" ;;
+      tablet|tab|galaxy|samsung) device="Galaxy Tab A" ;;
       all|broadcast) device="all" ;;
-      chrome|pc|desktop|mac|notebook) device="Chrome" ;;
+      chrome|pc|desktop|mac|windows|computer|win|osx|linux|notebook) device="Chrome" ;;
       *) device="$(best_match "$device")" ;;
    esac
 fi

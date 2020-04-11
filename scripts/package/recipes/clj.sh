@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-recipe::install() {
+package::install() {
    dot pkg add clojure
 }
