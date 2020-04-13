@@ -47,6 +47,7 @@
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
   required = true
+
 [user]
-	email = denis_isidoro@live.com
-	name = Denis Isidoro
+  email = denis_isidoro@live.com
+  name = Denis Isidoro

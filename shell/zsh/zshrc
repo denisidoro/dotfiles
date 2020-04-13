@@ -176,9 +176,9 @@ bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 # }}} End configuration added by Zim install
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # load bindings
-source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
+# source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
 source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
 # source <(navi widget zsh)
