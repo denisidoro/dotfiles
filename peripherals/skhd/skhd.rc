@@ -13,7 +13,7 @@ grab < escape ; default
 # =================
 
 alt + ctrl + cmd + shift - return : open -na /Applications/iTerm.app
-
+alt + ctrl + cmd + shift - space: Applications/Alacritty.app/Contents/MacOS/alacritty -e /usr/local/bin/navi
 
 # =================
 # Power

@@ -31,13 +31,27 @@
     "files.exclude": {
         "**/.git": true,        
         "**/.DS_Store": true,  
-        "**/node_modules": true
+        "**/node_modules": true,
+        "bazel-*": true,
+        "pkg*": true
+    },
+
+    "files.watcherExclude": {
+        "bazel-*": true,
+        "pkg*": true
     },
 
     "files.associations": {
         "*.cheat": "shellscript",
-        "*rc": "shellscript",
+        "*rc": "shellscript"
     },
+
+    "go.toolsEnvVars": {
+        "GO111MODULE": "off"
+    },
+
+    "go.useLanguageServer": true,
+ 
    
     "diffEditor.ignoreTrimWhitespace": false,
     "diffEditor.renderSideBySide": true,

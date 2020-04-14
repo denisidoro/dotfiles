@@ -34,3 +34,7 @@ dot_or_args() {
       eval ${fn[@]} "$@"
    fi
 }
+
+echoerr() { 
+   echo "$@" 1>&2; 
+}

@@ -19,7 +19,7 @@ source "${DOTFILES}/shell/aux/core.zsh"
 source "${DOTFILES}/shell/aliases/core.sh"
 
 # load local custom config
-source "${DOTFILES}/local/zshrc" 2> /dev/null || true
+source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
 
 # fzf, fasd and navi
 source "${DOTFILES}/shell/aux/post.zsh"
