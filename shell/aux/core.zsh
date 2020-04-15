@@ -29,9 +29,9 @@ dot_or_args() {
    readonly fn="${@:1:$((dash_index-1))}"
    shift $dash_index
    if [[ $# < 1 ]]; then
-      eval ${fn[@]} .
+      "${fn[@]}" .
    else
-      eval ${fn[@]} "$@"
+      "${fn[@]}" "$@"
    fi
 }
 

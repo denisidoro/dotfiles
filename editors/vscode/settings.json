@@ -17,9 +17,8 @@
     "explorer.sortOrder": "default",
     
     "materialTheme.accent": "Remove accents",
-    "workbench.iconTheme": "eq-material-theme-icons-ocean",
     "workbench.colorCustomizations": {},
-    "workbench.colorTheme": "Material Theme Darker High Contrast",
+    "workbench.colorTheme": "Material Theme Darker",
     
     "breadcrumbs.enabled": true,
     "workbench.activityBar.visible": false,
@@ -27,6 +26,10 @@
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.list.keyboardNavigation": "simple",
+
+    "go.toolsEnvVars": {
+        "GO111MODULE": "off"
+    },
     
     "files.exclude": {
         "**/.git": true,        
@@ -45,14 +48,7 @@
         "*.cheat": "shellscript",
         "*rc": "shellscript"
     },
-
-    "go.toolsEnvVars": {
-        "GO111MODULE": "off"
-    },
-
-    "go.useLanguageServer": true,
- 
-   
+    
     "diffEditor.ignoreTrimWhitespace": false,
     "diffEditor.renderSideBySide": true,
     

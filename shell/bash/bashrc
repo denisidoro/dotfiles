@@ -8,7 +8,7 @@ export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 # fi
 
 # register which shell is running
-SH="bash"
+PROFILE_SHELL="bash"
 
 # load vars
 source "${DOTFILES}/shell/aux/vars.zsh"
@@ -23,12 +23,12 @@ source "${DOTFILES}/shell/aliases/core.sh"
 export PS1="\n\[\e[32m\]\w\[\e[m\] \[\e[31m\]$(nonzero_return)\[\e[m\]\n\[\e[33m\]\\$\[\e[m\] "
 
 # load local custom config
-source "${DOTFILES}/local/zshrc" 2> /dev/null || true
+source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
 
 # fzf, fasd and navi
-source "${DOTFILES}/shell/aux/post.zsh"
+# source "${DOTFILES}/shell/aux/post.zsh"
 
 # theme
 source "${DOTFILES}/shell/bash/themes/dns.sh"
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# [ -f ~/.fzf.bash ] && source ~/.fzf.bash

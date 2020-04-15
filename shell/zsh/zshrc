@@ -1,10 +1,10 @@
 #!/usr/bin/env zsh
 
 # dotfiles
-export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
+export DOTFILES="${DOTFILES:-"${HOME}/dotfiles"}"
 
 # register which shell is running
-SH="zsh"
+PROFILE_SHELL="zsh"
 
 # load vars
 source "${DOTFILES}/shell/aux/vars.zsh"
