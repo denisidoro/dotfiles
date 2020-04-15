@@ -2,5 +2,13 @@
 # vim: filetype=sh
 
 open() {
-   dot shell open "$@" & disown
+   dot system open "$@"
+}
+
+pbcopy() {
+   dot system clip copy
+}
+
+pbpaste() {
+   dot system clip paste
 }
