@@ -3,6 +3,9 @@
   hookspath = ~/dotfiles/git/hooks
   autocrlf = input
   ignorecase = false
+	editor = $EDITOR
+	pager = $PAGER
+	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
 
 [push]
   default = current
@@ -26,6 +29,21 @@
   changed = green
   untracked = cyan
 
+[status]
+	short = true
+	branch = true
+  
+[apply]
+	whitespace = error
+
+[grep]
+	linenumber = true
+	patterntype = perl
+
+[column]
+	ui = auto
+	tag = never
+
 [alias]
   fuck = fsck
 
@@ -48,6 +66,13 @@
   process = git-lfs filter-process
   required = true
 
-[user]
-  email = denis_isidoro@live.com
-  name = Denis Isidoro
+[url "git@github.com:"]
+	insteadOf = "g:"
+	pushInsteadOf = "g:"
+
+[url "git@gist.github.com:"]
+	insteadOf = "gist:"
+	pushInsteadOf = "gist:"
+
+[url "git@github.com:denisidoro/"]
+	insteadOf = "my:"
