@@ -13,6 +13,7 @@ case $PROFILE_SHELL in
 esac
 
 code() {
+   set_work
    export VSCODE_CWD="$PWD"
    dot_or_args "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" -- "$@"
 }
@@ -21,6 +22,7 @@ _load() {
    case $1 in
       nvm)
          if ! ${NVM_LOADED:-false}; then
+            unset -f nvm node npm &> /dev/null
             echoerr "Loading nvm..."
             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
             export NVM_LOADED=true
@@ -47,7 +49,7 @@ _load() {
             add-zsh-hook precmd zsh_disable_lda
          elif [[ ! -z "$JENKINS_HOME" ]]; then
             # do nothing on jenkin
-            .
+            :
          elif [[ $- == *i* ]]; then
             # interactive bash shell, use PROMPT_COMMAND to hook in pre-execution
             bash_enable_lda
@@ -83,17 +85,23 @@ _load() {
 
 nvm() {
    _load nvm || true
-   \nvm "$@"
+   nvm "$@"
 }
 
 node() {
    _load nvm || true
-   command node "$@"
+   node "$@"
+}
+
+npm() {
+   _load nvm || true
+   npm "$@"
 }
 
 rbenv() {
+   unfunction "$0" || true
    _load rbenv || true
-   command rbenv "$@"
+   "$0" "$@"
 }
 
 zsh_disable_lda() {
