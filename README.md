@@ -25,8 +25,8 @@
 brew install denisidoro/tools/dotfiles
 
 # with git
-git clone https://github.com/denisidoro/dotfiles $HOME/.dotfiles
-$HOME/.dotfiles/bin/dot self install
+git clone https://github.com/denisidoro/dotfiles $HOME/dotfiles
+$HOME/dotfiles/bin/dot self install
 ```
 
 ## ⌨️ Calling scripts
@@ -43,7 +43,7 @@ dot <cmd> <args>... # dot rice pipes, for example
 ## 🎯 Overriding configs
 
 Edit the following files accordingly:
-```sh
+```bash
 # shell
 ~/.dotfiles/local/zshrc
 
@@ -52,5 +52,6 @@ Edit the following files accordingly:
 ```
 
 ## 🌟 Inspiration
- * https://github.com/Tuurlijk/dotfiles: Zsh startup snappiness
- * https://github.com/rgomezcasas/dotfiles: fine-tuning
+ * [Tuurlijk/dotfiles](https://github.com/Tuurlijk/dotfiles): zsh startup snappiness
+ * [rgomezcasas/dotfiles](https://github.com/rgomezcasas/dotfiles): README, some scripts and fine-tuning
+ * [wfxr/forgit](https://github.com/wfxr/forgit): some git scripts
