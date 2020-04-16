@@ -13,7 +13,8 @@ grab < escape ; default
 # =================
 
 alt + ctrl + cmd + shift - return : open -na /Applications/iTerm.app
-alt + ctrl + cmd + shift - space: Applications/Alacritty.app/Contents/MacOS/alacritty -e /usr/local/bin/navi
+alt + ctrl + cmd + shift - space: Applications/Alacritty.app/Contents/MacOS/alacritty -e navi --path "${HOME}/dotfiles/cheats:${HOME}/dotfiles/local/cheats"
+alt + ctrl + cmd + shift - u: Applications/Alacritty.app/Contents/MacOS/alacritty -e navi --path "${HOME}/dotfiles/cheats:${HOME}/dotfiles/local/cheats" query '^uber ' 
 
 # =================
 # Power
@@ -48,10 +49,10 @@ alt + cmd + ctrl + shift - 9 : yabai -m space --focus 9
 alt + cmd + ctrl + shift - 0 : yabai -m space --focus 10
 
 # insertion point direction
-alt + cmd + ctrl + shift - y : yabai -m window --insert west
-alt + cmd + ctrl + shift - u : yabai -m window --insert south
-alt + cmd + ctrl + shift - i : yabai -m window --insert north
-alt + cmd + ctrl + shift - o : yabai -m window --insert east
+alt + cmd + ctrl + shift - left : yabai -m window --insert west
+alt + cmd + ctrl + shift - down : yabai -m window --insert south
+alt + cmd + ctrl + shift - up : yabai -m window --insert north
+alt + cmd + ctrl + shift - right : yabai -m window --insert east
 
 # toggle fullscreen
 alt + ctrl + cmd + shift - f : yabai -m window --toggle zoom-fullscreen

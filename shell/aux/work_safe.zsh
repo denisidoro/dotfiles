@@ -13,7 +13,10 @@ case $PROFILE_SHELL in
 esac
 
 code() {
-   set_work
+   local is_work=$(is_in_work_folder &>/dev/null || echo false)
+   if $is_work; then
+      set_work
+   fi
    export VSCODE_CWD="$PWD"
    dot_or_args "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" -- "$@"
 }
