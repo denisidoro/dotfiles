@@ -4,4 +4,4 @@
 dot code beautify <path>
 
 # Search for cheatsheets
-curl -s "https://cheat.sh/$@"
+curl -s "https://cheat.sh/<query>"
