@@ -16,6 +16,21 @@ _all_files() {
    find "${DOTFILES}/tests/" -iname "*.sh"
 }
 
+_prepare_environment() {
+   if ! platform::command_exists zsh; then
+      local -r bash_path="$(which bash)"
+      local -r zsh_path="$(echo "$bash_path" | sed 's/bash/zsh')"
+      ln -s "$bash_path" "$zsh_path" || true
+   fi
+
+   local file="${DOTFILES}/modules/dotlink/dotlink"
+   if ! [[ -f "$file" ]]; then
+      mkdir - "$(dirname "$file")"
+      local content="$(cat "$0"; echo; echo; echo "dotlink_main() { echo stub; }")"
+      echo "$content" > "$f"
+   fi
+}
+
 cmd="${1:-}"
 
 case $cmd in
@@ -23,6 +38,8 @@ case $cmd in
    suite) export TEST_FILTER="^${2} \-"  ;;
    *) ;;
 esac
+
+_prepare_environment
 
 for test in $(_all_files); do
    source "$test"

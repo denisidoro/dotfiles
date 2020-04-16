@@ -8,7 +8,7 @@ source "$DOTFILES/scripts/core/documentation.sh"
 ##? Usage:
 ##?    zsh optimize             # Optimize ZSH
 ##?    zsh test-performance     # Print the current ZSH performance
-##?    zsh reload-completions   # Print the current ZSH performance
+##?    zsh reload-completions   # Reload completions
 ##?    zsh time <filename>      # Analyzes startup time
 
 docs::eval_help "$@"

@@ -167,6 +167,7 @@ opensync() {
 
 set_work() {
    local -r prompt_char="λ"
+   # Already set up
    [ "${FIRST_CHARACTER_OK}" = "${prompt_char}" ] && return 0
    local -r color_0="$PROMPT_COLOR_0"
    export PROMPT_COLOR_0="$PROMPT_COLOR_1"

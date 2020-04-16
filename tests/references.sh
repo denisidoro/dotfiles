@@ -46,5 +46,5 @@ files="$(_files "$pairs")"
 
 declare -A caches=()
 for f in $files; do
-   test::run "references to dot in $f are valid" validate_references "$pairs" "$f"
+   test::run "$f" validate_references "$pairs" "$f"
 done

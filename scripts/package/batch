@@ -3,7 +3,6 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/package/aux/batch.sh"
 
 ##? Install multiple dependencies
 ##?
