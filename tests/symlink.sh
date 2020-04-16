@@ -13,7 +13,7 @@ _validate() {
       if [[ -f "$f" || -d "$f" ]]; then
          :
       else
-         echo "☓ $f"
+         echoerr "☓ $f"
          success=false
       fi
    done
