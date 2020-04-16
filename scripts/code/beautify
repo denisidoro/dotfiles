@@ -13,7 +13,7 @@ docs::eval "$@"
 
 _get_language() {
    local -r filename="$1"
-   local -r extension="${filename##*.}"
+   local extension="${filename##*.}"
    local language
 
    if echo "$extension" | grep -q '/'; then

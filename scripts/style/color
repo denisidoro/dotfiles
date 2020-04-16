@@ -55,7 +55,7 @@ _hex_to_rgb() {
 operation="$1"
 shift
 
-case "$operation" in 
+case "$operation" in
    print) _print_colors "$@" ;;
    hex) _rgb_to_hex "$@" ;;
    rgb) _hex_to_rgb "$@" ;;

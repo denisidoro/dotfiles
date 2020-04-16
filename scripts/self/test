@@ -19,7 +19,7 @@ _all_files() {
 _prepare_environment() {
    if ! platform::command_exists zsh; then
       local -r bash_path="$(which bash)"
-      local -r zsh_path="$(echo "$bash_path" | sed 's/bash/zsh')"
+      local -r zsh_path="$(echo "$bash_path" | sed 's/bash/zsh/')"
       ln -s "$bash_path" "$zsh_path" || true
    fi
 

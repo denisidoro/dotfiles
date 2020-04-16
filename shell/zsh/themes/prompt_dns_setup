@@ -30,19 +30,19 @@ prompt_dns_setup() {
 
 		zstyle ':zim:git-info:branch' format "%F${PROMPT_COLOR_1}%b"
 		zstyle ':zim:git-info:commit' format '%c'
-		
+
 		if ! ${PREVENT_DIRTY:-false}; then
 			zstyle ':zim:git-info:clean' format '%F{white}$NONE'
-			zstyle ':zim:git-info:dirty' format '%F{yellow}$DIRTY'
+				zstyle ':zim:git-info:dirty' format '%F{yellow}$DIRTY'
 		else
 			zstyle ':zim:git-info:clean' format ''
-			zstyle ':zim:git-info:dirty' format ''
-		fi
+				zstyle ':zim:git-info:dirty' format ''
+				fi
 
-		zstyle ':zim:git-info:keys' format 'prompt' ' %F{cyan}%b%c %C%D'
+				zstyle ':zim:git-info:keys' format 'prompt' ' %F{cyan}%b%c %C%D'
 
-		PS1=$'\n'"\$(prompt_dns_pwd)\$(prompt_dns_git)%f"$'\n'"${prompt_dns_status} "
-		RPS1=''
+				PS1=$'\n'"\$(prompt_dns_pwd)\$(prompt_dns_git)%f"$'\n'"${prompt_dns_status} "
+				RPS1=''
 }
 
 prompt_dns_setup "${@}"

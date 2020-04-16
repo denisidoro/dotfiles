@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${DOTFILES}/scripts/core/main.sh" 
+source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Universal clipboard tools
 #?? 0.1.0
@@ -26,7 +26,7 @@ _copy() {
       clip
    else
       die "No available clipboard tool"
-   fi 
+   fi
 }
 
 _paste() {
@@ -40,7 +40,7 @@ _paste() {
       powershell Get-Clipboard | sed 's/\r$//'
    else
       die "No available clipboard tool"
-   fi 
+   fi
 }
 
 _map() {

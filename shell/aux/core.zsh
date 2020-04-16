@@ -35,6 +35,6 @@ dot_or_args() {
    fi
 }
 
-echoerr() { 
-   echo "$@" 1>&2; 
+echoerr() {
+   echo "$@" 1>&2;
 }

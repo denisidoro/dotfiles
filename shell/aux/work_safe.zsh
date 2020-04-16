@@ -9,7 +9,7 @@ export PATH="${GOPATH}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK
 
 case $PROFILE_SHELL in
    zsh) path=("$HOME/bin" /usr/local/sbin /usr/local/bin "$path[@]") ;;
-   # *) export PS1="\n\e[32m\]\h\e[m\] \[\e[35m\]\w\[\e[m\] $(nonzero_return)\n\[\e[31m\]→\[\e[m\] " ;;
+      # *) export PS1="\n\e[32m\]\h\e[m\] \[\e[35m\]\w\[\e[m\] $(nonzero_return)\n\[\e[31m\]→\[\e[m\] " ;;
 esac
 
 code() {
