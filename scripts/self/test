@@ -27,7 +27,7 @@ _prepare_environment() {
    if ! [[ -f "$file" ]]; then
       mkdir -p "$(dirname "$file")" || true
       local content="$(cat "$0"; echo; echo; echo "dotlink_main() { echo stub; }")"
-      echo "$content" > "$f"
+      echo "$content" > "$file"
    fi
 }
 
