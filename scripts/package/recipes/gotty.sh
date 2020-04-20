@@ -22,15 +22,11 @@ url::get() {
    url::generate "$suffix"
 }
 
-gotty::map() {
-   dict::new brew yudai/gotty/gotty
-}
+package::install() {
+   platform::command_exists brew && brew install yudai/gotty/gotty && return 0 || true
 
-gotty::depends_on() {
-   coll::new wget
-}
+   dot pkg add wget
 
-gotty::install() {
    folder="$(recipe::folder gotty)"
    mkdir -p "$folder" || true
    cd "$folder"

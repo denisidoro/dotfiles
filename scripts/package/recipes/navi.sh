@@ -1,14 +1,8 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-navi::map() {
-   dict::new brew denisidoro/tools/navi
-}
+package::install() {
+   package::command_exists brew && brew install navi && return 0 || true
 
-navi::depends_on() {
-   coll::new fzf
-}
-
-navi::install() {
-   recipe::install_from_git "https://github.com/denisidoro/navi"
+   bash <(curl -sL https://raw.githubusercontent.com/denisidoro/navi/master/scripts/install)
 }

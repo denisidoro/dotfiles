@@ -14,7 +14,11 @@ alias f="dot_or_args vifm --"
 # ===============
 
 # alias ls='ls --color=auto'
+# alias ls='lsd'
 alias lst="tree -L 2"
+cd() {
+   builtin cd "$@" && (lsd . 2>/dev/null || ls .)
+}
 
 # ===============
 # folders
@@ -30,7 +34,8 @@ mkcd() {
 _safe_cd() { [[ -d "${1:-}" ]] && cd "$1"; }
 j() { _safe_cd "$(dot fs jump global "$@")"; }
 jj() { _safe_cd "$(dot fs jump local "$@")"; }
-jn() { _safe_cd "$(dot fs jump work "$@")"; }
+ju() { _safe_cd "$(navi best 'uber path to a project')"; }
+jn() { echoerr "DEPRECATED!"; ju "$@"; }
 jd() { _safe_cd "$(dot fs jump dev "$@")"; }
 jjf() { _safe_cd "$(dot fs jump file "$@")"; }
 up() { _safe_cd "$(dot fs jump up "$@")"; }

@@ -1,29 +1,26 @@
 [
-  {"key":     "enter",
-   "when":    "explorerViewletVisible && filesExplorerFocus",
-   "command": "list.select"},
-
-  {"key":     "escape",
-   "when":    "listFocus",
-   "command": "workbench.action.focusActiveEditorGroup"},
-
-  {"key":     "shift+escape",
-   "command": "workbench.action.focusActiveEditorGroup"},
-
   {
-  "key": "escape",
-  "command": "-calva.clearInlineResults",
-  "when": "editorTextFocus && !editorHasMultipleSelections && !editorReadOnly && !hasOtherSuggestions && !parameterHintsVisible && !suggestWidgetVisible && editorLangId == 'clojure'"
-},
-{
-  "key": "cmd+escape",
-  "command": "calva.clearInlineResults",
-  "when": "editorTextFocus && !editorHasMultipleSelections && !editorReadOnly && !hasOtherSuggestions && !parameterHintsVisible && !suggestWidgetVisible && editorLangId == 'clojure'"
-},
-{
-  "key": "escape",
-  "command": "-calva.clearInlineResults",
-  "when": "editorTextFocus && !editorHasMultipleSelections && !editorReadOnly && !hasOtherSuggestions && !parameterHintsVisible && !suggestWidgetVisible && editorLangId == 'clojure'"
-}
-
+    "key": "enter",
+    "when": "explorerViewletVisible && filesExplorerFocus",
+    "command": "list.select"
+  },
+  {
+    "key": "escape",
+    "when": "listFocus",
+    "command": "workbench.action.focusActiveEditorGroup"
+  },
+  {
+    "key": "shift+escape",
+    "command": "workbench.action.focusActiveEditorGroup"
+  },
+  {
+    "key": "f12",
+    "command": "-editor.action.goToDeclaration",
+    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+  },
+  {
+    "key": "cmd+b",
+    "command": "editor.action.goToDeclaration",
+    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+  }
 ]

@@ -1,5 +1,5 @@
 {
-    "window.zoomLevel": 1,
+    "window.zoomLevel": 0,
     "editor.fontSize": 12,
     "editor.letterSpacing": 0.2,
     "editor.lineHeight": 18,
@@ -17,9 +17,8 @@
     "explorer.sortOrder": "default",
     
     "materialTheme.accent": "Remove accents",
-    "workbench.iconTheme": "eq-material-theme-icons-ocean",
     "workbench.colorCustomizations": {},
-    "workbench.colorTheme": "Material Theme Darker High Contrast",
+    "workbench.colorTheme": "Material Theme Darker",
     
     "breadcrumbs.enabled": true,
     "workbench.activityBar.visible": false,
@@ -27,17 +26,66 @@
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.list.keyboardNavigation": "simple",
+
+    "gitlens.blame.heatmap.enabled": false,
+    "gitlens.codeLens.enabled": false,
+    "gitlens.codeLens.recentChange.enabled": false,
+    "gitlens.hovers.annotations.enabled": false,
+    "gitlens.keymap": "none",
+    "gitlens.menus": false,
+    "gitlens.mode.statusBar.enabled": false,
+    "gitlens.statusBar.enabled": false,
+    "gitlens.views.compare.enabled": false,
+    "gitlens.views.fileHistory.enabled": false,
+    "gitlens.views.lineHistory.enabled": false,
+    "gitlens.views.repositories.enabled": false,
+    "gitlens.views.search.enabled": false, 
+
+    "editor.fontLigatures": true,
+
+    "keyboard.touchbar.enabled": true,
+
+    "go.autocompleteUnimportedPackages": true,
+    "go.toolsEnvVars": {
+        "GO111MODULE": "off"
+    },
+    "go.useLanguageServer": false,
+    "go.languageServerFlags": ["-enhance-signature-help"],
+    "go.languageServerExperimentalFeatures": {
+        "format": true,
+        "autoComplete": true,
+        "rename": true,
+        "goToDefinition": true,
+        "hover": true,
+        "signatureHelp": true,
+        "goToTypeDefinition": true,
+        "goToImplementation": true,
+        "documentSymbols": true,
+        "workspaceSymbols": true,
+        "findReferences": true
+    },
     
     "files.exclude": {
         "**/.git": true,        
         "**/.DS_Store": true,  
-        "**/node_modules": true
+        "**/node_modules": true,
+        "bazel-*": true,
+        "pkg*": true
+    },
+
+    "files.watcherExclude": {
+        "bazel-*": true,
+        "pkg*": true
     },
 
     "files.associations": {
-        "*.cheat": "shellscript"
+        "*.cheat": "shellscript",
+        "*rc": "shellscript",
+        "*.arc*": "jsonc",
+        "*.eslintrc": "jsonc",
+        "*.envrc": "shellscript"
     },
-   
+    
     "diffEditor.ignoreTrimWhitespace": false,
     "diffEditor.renderSideBySide": true,
     
@@ -217,7 +265,11 @@
 
         {"before":   ["<leader>", "g", "d"], 
          "after":    [], 
-         "commands": [{"command": "git.deleteBranch", "args": []}]}, 
+         "commands": [{"command": "workbench.action.gotoSymbol", "args": []}]}, 
+
+        {"before":   ["<leader>", "g", "c"], 
+         "after":    [], 
+         "commands": [{"command": "git.commit", "args": []}]}, 
 
         {"before":   ["<leader>", "g", "f"], 
          "after":    [], 

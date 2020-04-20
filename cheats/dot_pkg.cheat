@@ -3,16 +3,8 @@
 # List all recipes
 dot pkg recipe list
 
-# Install a package
-dot pkg add "<package>"
+# Install packages
+packages=($(echo "<packages>"))
+dot pkg add "${packages[@]}"
 
-# Uninstall a package
-dot pkg remove "<package>"
-
-# Update a package
-dot pkg update "<package>"
-
-# Upgrade a package
-dot pkg upgrade "<package>"
-
-$ package: dot pkg recipe list
+$ packages: dot pkg recipe list --- --multi

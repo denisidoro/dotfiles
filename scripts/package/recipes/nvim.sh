@@ -1,18 +1,11 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-nvim::map() {
-   dict::new brew neovim
-}
+package::install() {
+   dot pkg add neovim && return 0 || true
+   dot pkg add --prevent-recipe nvim && return 0 || true
 
-nvim::yum() {
-   sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-   sudo yum install -y neovim python3-neovim
-}
-
-nvim::install() {
-   (dot pkg add neovim || dot pkg add nvim) && return 0
-
+   dot pkg add curl
    cd "$(fs::tmp)"
    curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
    chmod u+x nvim.appimage

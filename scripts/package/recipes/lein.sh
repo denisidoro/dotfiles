@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-lein::depends_on() {
-   coll::new wget
-}
+package::install() {
+   platform::command_exists brew && brew install leiningen && return 0
 
-lein::install() {
+   dot pkg add wget
+
    folder="$(recipe::folder lein)"
    mkdir -p "$folder" || true
    cd "$folder"

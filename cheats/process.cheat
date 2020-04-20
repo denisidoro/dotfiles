@@ -1,0 +1,21 @@
+% process
+
+# Kill with signal 9
+sudo kill -9 <pid>
+
+# Kill with signal <n>
+sudo kill -<n> <pid>
+
+# Limit CPU usage to <n>%
+cpulimit --include-children --limit <n> --pid <pid>
+
+# Stop limiting CPU
+pkill -f cpulimit.*<pid>
+
+# Lower priority by <n>
+renice -n <n> -p <pid>
+
+# Unfreeze process
+kill -CONT <pid>
+
+$ pid: (ps -o pid,%cpu,%mem,ni,cmd ax 2>/dev/null || ps -o pid,%cpu,%mem,ni,command) | sort -b -k3 -r | awk '{print $1, $2, $3, $4, $5}' | column -t --- --header-lines 1 --column 1

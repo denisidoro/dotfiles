@@ -1,0 +1,7 @@
+% news
+
+# News for topic
+query="$(echo "<topic>" | tr ' ' '+')"
+curl -L "br.getnews.tech/${query}" \
+   | awk '/Powered by/{s=1} s==0 {print}' \
+   | (bat -p 2>/dev/null || cat)

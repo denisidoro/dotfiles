@@ -3,7 +3,7 @@
   <span><img width="18" src="https://image.flaticon.com/icons/svg/226/226772.svg" alt="Linux - Icon made by Freepik from Flaticon" /></span>
   <span><img width="18" src="https://image.flaticon.com/icons/svg/174/174836.svg" alt="Android - Icon made by Freepik from Flaticon" /></span>
   denisidoro/dotfiles
-  <a alt="CI status" href="https://github.com/denisidoro/navi/actions"><img src="https://github.com/denisidoro/dotfiles/workflows/Tests/badge.svg" /></a>
+  <a alt="CI status" href="https://github.com/denisidoro/dotfiles/actions"><img src="https://github.com/denisidoro/dotfiles/workflows/Tests/badge.svg" /></a>
   <a alt="GitHub release" href="https://github.com/denisidoro/dotfiles/releases"><img src="https://img.shields.io/github/v/release/denisidoro/dotfiles?include_prereleases" /></a>
 </h3>
 
@@ -25,11 +25,11 @@
 brew install denisidoro/tools/dotfiles
 
 # with git
-git clone https://github.com/denisidoro/dotfiles $HOME/.dotfiles
-$HOME/.dotfiles/bin/dot self install
+git clone https://github.com/denisidoro/dotfiles $HOME/dotfiles
+$HOME/dotfiles/bin/dot self install
 ```
 
-## ⌨️ Usage
+## ⌨️ Calling scripts
 ```bash
 dot <cmd> <args>... # dot rice pipes, for example
 ```
@@ -43,7 +43,7 @@ dot <cmd> <args>... # dot rice pipes, for example
 ## 🎯 Overriding configs
 
 Edit the following files accordingly:
-```sh
+```bash
 # shell
 ~/.dotfiles/local/zshrc
 
@@ -52,5 +52,6 @@ Edit the following files accordingly:
 ```
 
 ## 🌟 Inspiration
- * https://github.com/Tuurlijk/dotfiles: Zsh startup snappiness
- * https://github.com/rgomezcasas/dotfiles: fine-tuning
+ * [Tuurlijk/dotfiles](https://github.com/Tuurlijk/dotfiles): zsh startup snappiness
+ * [rgomezcasas/dotfiles](https://github.com/rgomezcasas/dotfiles): README, some scripts and fine-tuning
+ * [wfxr/forgit](https://github.com/wfxr/forgit): some git scripts

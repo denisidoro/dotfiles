@@ -7,21 +7,17 @@ source "${DOTFILES}/scripts/core/main.sh"
 #?? 0.2.0
 ##?
 ##? Usage:
-##?    color [options] print -- <rgb>...
-##?
-##? Options:
-##?    -c --cols <cols>   Number of columns in square [default: 5]
+##?    color print <rgb>...
+##?    color hex <r> <g> <b>
+##?    color rgb <hex>
 
-docs::eval "$@"
+docs::eval_help "$@"
 
 _row() {
-   for ((i = 0; i < $cols; i++)); do
+   for i in $(seq 1 $cols); do
       echo -n "█"
    done
 }
-
-row="$(_row)"
-rows=$(echo "$cols * 3 / 5" | bc)
 
 _as_printf_color() {
    local -r color="$1"
@@ -35,8 +31,10 @@ _as_printf_color() {
 }
 
 _print_colors() {
+   local -r row="$(_row)"
+   local -r rows=$(echo "${COLS:-5} * 3 / 5" | bc)
    local i color c
-   for ((i = 0; i < $rows; i++)); do
+   for i in $(seq 1 $rows); do
       for color in $@; do
          c="$(_as_printf_color "$color")"
          printf "\x1b[38;2;${c}m${row}\x1b[0m "
@@ -45,4 +43,20 @@ _print_colors() {
    done
 }
 
-_print_colors "${rgb[@]}"
+_rgb_to_hex() {
+   echo "$(printf \#%02X%02X%02X "$@")"
+}
+
+_hex_to_rgb() {
+   local -r hex="$(echo "$1" | tr -d '#')"
+   echo "$(printf "%d %d %d\n" 0x${hex:0:2} 0x${hex:2:2} 0x${hex:4:2})"
+}
+
+operation="$1"
+shift
+
+case "$operation" in
+   print) _print_colors "$@" ;;
+   hex) _rgb_to_hex "$@" ;;
+   rgb) _hex_to_rgb "$@" ;;
+esac

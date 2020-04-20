@@ -29,8 +29,19 @@ dot_or_args() {
    readonly fn="${@:1:$((dash_index-1))}"
    shift $dash_index
    if [[ $# < 1 ]]; then
-      eval ${fn[@]} .
+      "${fn[@]}" .
    else
-      eval ${fn[@]} "$@"
+      "${fn[@]}" "$@"
+   fi
+}
+
+echoerr() {
+   echo "$@" 1>&2;
+}
+
+set_profile_based_on_pwd() {
+   local is_work=$(is_in_work_folder &>/dev/null || echo false)
+   if $is_work; then
+      set_work
    fi
 }

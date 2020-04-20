@@ -15,64 +15,37 @@ docs::eval_help "$@"
 
 git_info="$(get_git_info)"
 log::note "Updating dotfiles\n${git_info}\n"
-echo
+echoerr
 
 tags="$(platform::tags)"
 log::note "Current config: $tags"
-echo
+echoerr
 
 set +e
 
-self_update
-
-has_python=true
-if ! platform::command_exists python; then
-   has_python=false
-   log::error "Python isn't installed"
-   log::error "Some features won't work as expected"
-   log::note "In case you install Python, please re-run this script"
-fi
-
-setup_sudo_fallback
-# dot pkg update 2> /dev/null || true
-fix_locales
-
-if platform::is_android; then
-   dot pkg add termux-essentials
-fi
-
 update_submodules || true
-
 setup_folders_and_files
 setup_git_credentials
 setup_docopts
 
-echo
+echoerr
 log::note "Setting symlinks..."
 update_dotfiles_common
-has_tag "$tags" "osx" && { update_dotfiles_osx; }
-has_tag "$tags" "linux" && { update_dotfiles_linux; }
-has_tag "$tags" "arm" && { update_dotfiles_arm; }
-has_tag "$tags" "x86" && { update_dotfiles_x86; }
-has_tag "$tags" "android" && { update_dotfiles_android; }
-has_tag "$tags" "wsl" && { update_dotfiles_wsl; }
+has_tag "$tags" "osx" && update_dotfiles_osx
+has_tag "$tags" "linux" && update_dotfiles_linux
+has_tag "$tags" "arm" && update_dotfiles_arm
+has_tag "$tags" "x86" && update_dotfiles_x86
+has_tag "$tags" "android" && update_dotfiles_android
+has_tag "$tags" "wsl" && update_dotfiles_wsl
 
 set_random_ps1
+fix_locales
 
-install_brew
-install_batch "nano"
-install_batch "mini"
-
-setup_nvim_fallback
-
-install_nvim_plugins
-install_tmux_plugins
-install_zplug_plugins
-
-use_fzf
-use_fasd
+# install_nvim_plugins
+# install_tmux_plugins
+# install_zplug_plugins
 
 set -e
 
-echo
+echoerr
 log::success "Update finished!"

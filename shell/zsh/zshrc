@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+
+# dotfiles
+export DOTFILES="${DOTFILES:-"${HOME}/dotfiles"}"
+
+# register which shell is running
+PROFILE_SHELL="zsh"
+
+# load vars
+source "${DOTFILES}/shell/aux/vars.zsh"
+
+# load more vars
+source "${DOTFILES}/shell/aux/zsh_vars.zsh"
+
+# load helper functions
+source "${DOTFILES}/shell/aux/core.zsh"
+
+# load aliases
+source "${DOTFILES}/shell/aliases/core.sh"
+
+# load local custom config
+source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
+
+# fzf, fasd and navi
+source "${DOTFILES}/shell/aux/post.zsh"
+
+# misc
+source "${DOTFILES}/shell/aux/misc.zsh"
+
+# load bindings
+# source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
+source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
+source "${DOTFILES}/shell/zsh/bindings/zim.zsh"

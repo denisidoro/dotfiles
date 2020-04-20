@@ -21,7 +21,7 @@ yabai -m config window_opacity_duration      0.0
 yabai -m config window_shadow                on
 yabai -m config window_border                on
 yabai -m config window_border_placement      inset
-yabai -m config window_border_width          2
+yabai -m config window_border_width          4
 yabai -m config window_border_radius         -1.0
 yabai -m config active_window_border_topmost off
 yabai -m config active_window_border_color   0xffff1493
@@ -42,5 +42,8 @@ yabai -m config bottom_padding               20
 yabai -m config left_padding                 20
 yabai -m config right_padding                20
 yabai -m config window_gap                   10
+
+# rules
+yabai -m rule --add app="Alacritty" manage=off border=off
 
 echo "yabai configuration loaded.."

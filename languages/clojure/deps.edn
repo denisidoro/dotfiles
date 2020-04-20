@@ -2,7 +2,6 @@
 
 {:mvn/repos
  {"sonatype" {:url "https://oss.sonatype.org/content/repositories/snapshots/"}
-  "nu-maven" {:url "s3://nu-maven/releases/"}
   "central"  {:url "https://repo1.maven.org/maven2/"}
   "clojars"  {:url "https://clojars.org/repo"}}
 

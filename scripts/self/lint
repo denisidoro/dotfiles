@@ -22,6 +22,7 @@ _all_dotfiles_files() {
    find "${DOTFILES}/tasker/sh" -maxdepth 3 -type f
    find "${DOTFILES}/tasker/js" -maxdepth 3 -type f
    find "${DOTFILES}/tests" -maxdepth 3 -type f
+   find "${DOTFILES}/local" -maxdepth 3 -iname "*rc" -type f
    echo "${DOTFILES}/shell/zshrc"
    echo "${DOTFILES}/shell/hushlogin"
    echo "${DOTFILES}/shell/bashrc"

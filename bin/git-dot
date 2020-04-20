@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+export dot_bin_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
+
+##? A hub for an all-purpose set of scripts, using navi
+#?? 0.1.0
+##?
+##? Usage:
+##?    dot <context> <cmd> [<args>...]
+
+"${dot_bin_dir}/dot" git "$@"

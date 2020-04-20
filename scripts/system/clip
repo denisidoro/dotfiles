@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Universal clipboard tools
+#?? 0.1.0
+##?
+##? Usage:
+##?     clip copy
+##?     clip paste
+##?     clip map <args>...
+
+docs::eval "$@"
+
+operation="$1"
+shift
+
+_copy() {
+   if platform::command_exists pbcopy; then
+      pbcopy
+   elif platform::command_exists xclip; then
+      xclip -selection clipboard
+   elif platform::command_exists clip.exe; then
+      clip.exe
+   elif platform::command_exists clip; then
+      clip
+   else
+      die "No available clipboard tool"
+   fi
+}
+
+_paste() {
+   if platform::command_exists pbpaste; then
+      pbpaste
+   elif platform::command_exists xclip; then
+      xclip -selection clipboard -o
+   elif platform::command_exists powershell.exe; then
+      powershell.exe Get-Clipboard | sed 's/\r$//'
+   elif platform::command_exists powershell; then
+      powershell Get-Clipboard | sed 's/\r$//'
+   else
+      die "No available clipboard tool"
+   fi
+}
+
+_map() {
+   _paste | "$@" | _copy
+}
+
+case $operation in
+   copy) _copy ;;
+   paste) _paste ;;
+   map) _map "$@" ;;
+esac

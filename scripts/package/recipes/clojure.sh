@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # vim: filetype=sh
 
-clojure::install() {
+package::install() {
+   platform::is_osx && brew install clojure && return 0 || true
+
    local -r CLJ_VERSION="1.10.1.447"
    local -r CLJ_FOLDER="$TMP_DIR/clojure"
 

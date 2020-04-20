@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Install packages
+##?
+##? Usage:
+##?    <pkg_manager> (install|add) [<packages>...]
+##?    <pkg_manager> (uninstall|remove) [<packages>...]
+##?    <pkg_manager> <cmd> <args>...
+
+docs::eval_help "$@"
+
+pkg_manager="$1"
+operation="$2"
+shift 2
+
+# short-circuit on OSX
+platform::is_osx \
+   && [[ $pkg_manager != "brew" ]] \
+   && [[ $pkg_manager != "npm" ]] \
+   && [[ $pkg_manager != "pip" ]] \
+   && exit 123
+
+# unavailable package manager
+platform::command_exists "$pkg_manager" \
+   || exit 124
+
+_actual_operation() {
+   local -r operation="$1"
+   case "$operation" in
+      install|add) echo install ;;
+      uninstall|remove) echo remove ;;
+      *) echo "$operation"
+   esac
+}
+
+file="${DOTFILES}/scripts/package/pkg_managers/${pkg_manager}.sh"
+
+# unsupported package manager
+[ ! -f "$file" ] && exit 125
+
+source "$file"
+fn="${pkg_manager}::$(_actual_operation "$operation")"
+"$fn" "$@"

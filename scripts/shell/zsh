@@ -8,42 +8,13 @@ source "$DOTFILES/scripts/core/documentation.sh"
 ##? Usage:
 ##?    zsh optimize             # Optimize ZSH
 ##?    zsh test-performance     # Print the current ZSH performance
-##?    zsh reload-completions   # Print the current ZSH performance
-##?    zsh time <filename>      # Analyzes startup time
+##?    zsh reload-completions   # Reload completions
 
 docs::eval_help "$@"
 
 case "${1:-}" in
    *help) extract_help "$0"; exit 0 ;;
 esac
-
-_time_callback() {
-   typeset -a lines
-   typeset -i prev_time=0
-   typeset prev_command
-
-   while read line; do
-      if [[ $line =~ '^.*\+([0-9]{10})\.([0-9]{6})[0-9]* (.+)' ]]; then
-         integer this_time=$match[1]$match[2]
-
-         if [[ $prev_time -gt 0 ]]; then
-            time_difference=$(( $this_time - $prev_time ))
-            lines+="$time_difference $prev_command"
-         fi
-
-         prev_time=$this_time
-
-         local this_command=$match[3]
-         if [[ ${#this_command} -le 80 ]]; then
-            prev_command=$this_command
-         else
-            prev_command="${this_command:0:77}..."
-         fi
-      fi
-   done < ${1:-/dev/stdin}
-
-   print -l ${(@On)lines}
-}
 
 case "${1:-}" in
    "optimize")
@@ -55,9 +26,6 @@ case "${1:-}" in
       ;;
    "reload-completions")
       zsh -c "autoload -U compaudit && compinit"
-      ;;
-   "time")
-      _time_callback
       ;;
    *)
       docs::eval_help --help

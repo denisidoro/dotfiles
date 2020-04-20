@@ -3,8 +3,6 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/package/aux/add.sh"
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 ##? Lists custom recipes
 ##?
@@ -12,5 +10,12 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 ##?    recipe list
 
 docs::eval_help "$@"
+
+RECIPES_FOLDER="${DOTFILES}/scripts/package/recipes"
+
+recipe::list() {
+   ls "${RECIPES_FOLDER}" \
+      | sed 's/\.sh//g'
+}
 
 recipe::list

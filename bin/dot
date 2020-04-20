@@ -118,12 +118,14 @@ _alias() {
       net) echo network ;;
       pkg) echo package ;;
       sec) echo security ;;
+      aws) echo cloud ;;
       sh) echo shell ;;
       fs) echo filesystem ;;
       not) echo notification ;;
       google) echo search ;;
-      down) echo torrent ;;
-      download) echo torrent ;;
+      down) echo download ;;
+      downloads) echo download ;;
+      torrent) echo download ;;
       *) echo "$arg" ;;
    esac
 }

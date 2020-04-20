@@ -11,26 +11,33 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docs::eval "$@"
 
-language=fallback
+_get_language() {
+   local -r filename="$1"
+   local extension="${filename##*.}"
+   local language
 
-extension="${filename##*.}"
-if echo "$extension" | grep -q '/'; then
-   extension=""
-fi
-
-case "$extension" in
-   *sh) language=sh ;;
-   *clj*) language="clj" ;;
-   *py*) language="python" ;;
-   *json*) language="json" ;;
-   *js*) language="javascript" ;;
-esac
-
-if [ -z $extension ]; then
-   if cat "$filename" | head -n3 | grep -q "sh$"; then
-      language=sh
+   if echo "$extension" | grep -q '/'; then
+      extension=""
    fi
-fi
+
+   case "$extension" in
+      *sh) language="sh" ;;
+      *clj*) language="clj" ;;
+      *py*) language="python" ;;
+      *json*) language="json" ;;
+      *js*) language="javascript" ;;
+   esac
+
+   if [ -z $extension ]; then
+      if cat "$filename" | head -n3 | grep -q "sh$"; then
+         language="sh"
+      fi
+   fi
+
+   echo "${language:-fallback}"
+}
+
+language=${language:-$(_get_language "$filename")}
 
 log::warning "formatting $filename as <${language}>"
 case "$language" in

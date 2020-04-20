@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/download/aux/core.sh"
+
+##? Download file name parser
+#?? 0.1.0
+##?
+##? Usage:
+##?    organize
+
+docs::eval_help "$@"
+
+DOWNLOADS_HOME="${DOWNLOADS_HOME:-"$HOME/Downloads/test"}"
+TV_HOME="${TV_HOME:-$HOME/TV}"
+MOVIES_HOME="${MOVIES_HOME:-$HOME/Movies}"
+
+_video_content() {
+   local -r f="$(cat)"
+   local -r first_call="${1:-true}"
+   if fs::is_dir "$f" && ! $first_call; then
+      ls "$f" | _video_content false
+   else
+      echo "$f" | grep -Eiq "\.${VIDEO_EXTENSIONS}$"
+   fi
+}
+
+_tv_folder() {
+   local -r filename="$(dot down parser video name "$full_filename")"
+   local dist
+   cd "$TV_HOME"
+   for t in *; do
+      dist=$(str::filename_levenshtein "$t" "$filename")
+      if [ "$dist" -lt 5 ]; then
+         basename "$t"
+         exit 0
+      fi
+      echo "$filename"
+   done
+}
+
+_move_video() {
+   local -r full_filename="$1"
+   local -r info="$(dot down parser video "$full_filename")"
+   local -r is_tv="$(echo "$info" | grep tv | awk '{print $2}')"
+   local -r filename="$(echo "$info" | grep reduced | gsed -E 's/.*?\[0m\s(.*)/\1/')"
+   if $is_tv; then
+      local -r folder="$(_tv_folder "$filename")"
+      echo "mv \"${DOWNLOADS_HOME}/${full_filename}\" \"${TV_HOME}/${folder}\""
+   else
+      echo "mv \"${DOWNLOADS_HOME}/${full_filename}\" \"${MOVIES_HOME}/${filename}\""
+   fi
+}
+
+pushd "$DOWNLOADS_HOME" >/dev/null
+
+SAVEIFS=$IFS
+IFS=$(echo -en "\n\b")
+
+for f in ./*; do
+   is_video=$(echo "$f" | _video_content && echo true || echo false)
+   if $is_video; then
+      _move_video "${f:2}"
+   fi
+done
+
+IFS=$SAVEIFS
+
+popd >/dev/null
