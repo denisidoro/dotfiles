@@ -1,0 +1,6 @@
+% editor, vscode
+
+# List VSCode commands
+echo "<vscode_action>"
+
+$ vscode_action: curl -sL "https://raw.githubusercontent.com/aburok/mysettings/master/VisualStudio/vscommands.txt"

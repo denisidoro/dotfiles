@@ -10,10 +10,7 @@ prompt dns
 # on cd (directory changed)
 dns_chpwd() {
    # setup profile
-   local is_work=$(is_in_work_folder &>/dev/null || echo false)
-   if $is_work; then
-      set_work
-   fi
+   set_profile_based_on_pwd
 
    # register for jump
    fre --add "$PWD"

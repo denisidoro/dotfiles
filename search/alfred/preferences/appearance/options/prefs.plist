@@ -4,8 +4,6 @@
 <dict>
 	<key>hidehat</key>
 	<true/>
-	<key>hidemenu</key>
-	<true/>
 	<key>saveposition</key>
 	<true/>
 	<key>showOnScreen</key>

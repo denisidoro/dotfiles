@@ -27,9 +27,46 @@
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.list.keyboardNavigation": "simple",
 
-    "go.toolsEnvVars": {
-        "GO111MODULE": "off"
-    },
+    "gitlens.blame.heatmap.enabled": false,
+    "gitlens.codeLens.enabled": false,
+    "gitlens.codeLens.recentChange.enabled": false,
+    "gitlens.hovers.annotations.enabled": false,
+    "gitlens.keymap": "none",
+    "gitlens.menus": false,
+    "gitlens.mode.statusBar.enabled": false,
+    "gitlens.statusBar.enabled": false,
+    "gitlens.views.compare.enabled": false,
+    "gitlens.views.fileHistory.enabled": false,
+    "gitlens.views.lineHistory.enabled": false,
+    "gitlens.views.repositories.enabled": false,
+    "gitlens.views.search.enabled": false, 
+
+    // "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+
+    "keyboard.touchbar.enabled": true,
+
+    "go.autocompleteUnimportedPackages": true,
+        "go.toolsEnvVars": {
+            "GO111MODULE": "off",
+        },
+        //"go.useLanguageServer": true,
+
+"go.useLanguageServer": false,
+"go.languageServerFlags": ["-enhance-signature-help"],
+"go.languageServerExperimentalFeatures": {
+	"format": true,
+	"autoComplete": true,
+	"rename": true,
+	"goToDefinition": true,
+	"hover": true,
+	"signatureHelp": true,
+	"goToTypeDefinition": true,
+	"goToImplementation": true,
+	"documentSymbols": true,
+	"workspaceSymbols": true,
+	"findReferences": true
+},
     
     "files.exclude": {
         "**/.git": true,        
@@ -46,7 +83,10 @@
 
     "files.associations": {
         "*.cheat": "shellscript",
-        "*rc": "shellscript"
+        "*rc": "shellscript",
+        "*.arc*": "jsonc",
+        "*.eslintrc": "jsonc",
+        "*.envrc": "shellscript"
     },
     
     "diffEditor.ignoreTrimWhitespace": false,
@@ -226,9 +266,17 @@
          "after":    [], 
          "commands": [{"command": "git.commit", "args": []}]}, 
 
+        // {"before":   ["<leader>", "g", "d"], 
+        //  "after":    [], 
+        // "commands": [{"command": "git.deleteBranch", "args": []}]}, 
+
         {"before":   ["<leader>", "g", "d"], 
          "after":    [], 
-         "commands": [{"command": "git.deleteBranch", "args": []}]}, 
+         "commands": [{"command": "workbench.action.gotoSymbol", "args": []}]}, 
+
+        {"before":   ["<leader>", "g", "c"], 
+         "after":    [], 
+         "commands": [{"command": "git.commit", "args": []}]}, 
 
         {"before":   ["<leader>", "g", "f"], 
          "after":    [], 

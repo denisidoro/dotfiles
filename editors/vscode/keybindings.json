@@ -14,18 +14,13 @@
     "command": "workbench.action.focusActiveEditorGroup"
   },
   {
-    "key": "escape",
-    "command": "-calva.clearInlineResults",
-    "when": "editorTextFocus && !editorHasMultipleSelections && !editorReadOnly && !hasOtherSuggestions && !parameterHintsVisible && !suggestWidgetVisible && editorLangId == 'clojure'"
+    "key": "f12",
+    "command": "-editor.action.goToDeclaration",
+    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
   },
   {
-    "key": "cmd+escape",
-    "command": "calva.clearInlineResults",
-    "when": "editorTextFocus && !editorHasMultipleSelections && !editorReadOnly && !hasOtherSuggestions && !parameterHintsVisible && !suggestWidgetVisible && editorLangId == 'clojure'"
-  },
-  {
-    "key": "escape",
-    "command": "-calva.clearInlineResults",
-    "when": "editorTextFocus && !editorHasMultipleSelections && !editorReadOnly && !hasOtherSuggestions && !parameterHintsVisible && !suggestWidgetVisible && editorLangId == 'clojure'"
+    "key": "cmd+b",
+    "command": "editor.action.goToDeclaration",
+    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
   }
 ]

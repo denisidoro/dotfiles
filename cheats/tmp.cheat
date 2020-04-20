@@ -1,5 +1,11 @@
 % tmp
 
+# alfred test
+echo <foo> <bar>
+
+# env var
+echo <dependent>
+
 # Update submodule reference
 echo git add <submodule> && echo git commit -m "Update submodule: <submodule_name>"
 
@@ -13,8 +19,11 @@ echo mycmd <port> foo "${arg:-}" bar
 # pwd
 pwd
 
+$ foo: echo 'lorem ipsum' | tr ' ' '\n'
+$ bar: echo 'dolor sit' | tr ' ' '\n'
 $ color: echo -e "Mode@Value\nRGB@255 0 255\nHEX@#FF00FF\nHSL@todo" | column -t -s'@' --- --header-lines 1
 $ permanent: echo 'true false' | tr ' ' '\n'
 $ port: echo '80 81 82' | tr ' ' '\n'
 $ submodule: git diff --submodule=diff | awk '{ print $2 }'
 $ submodule_name: echo "$((submodule))" | sed 's/.*\///'
+$ dependent: echo "hello $base,hi $base" | tr ',' '\n'

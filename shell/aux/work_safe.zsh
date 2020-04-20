@@ -3,9 +3,9 @@
 export DOT_FZF=true
 export DOT_DOCOPTS=python
 
-export WORKSPACE_ROOT="$GOPATH"
-
-export PATH="${GOPATH}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH}:${HOME}/bin:${PATH}"
+# export WORKSPACE_ROOT="$GOPATH"
+# export PATH="${GOPATH}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH}:${HOME}/bin:${PATH}"
+export PATH="${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH}:${HOME}/bin:${PATH}:${GOPATH}/bin"
 
 case $PROFILE_SHELL in
    zsh) path=("$HOME/bin" /usr/local/sbin /usr/local/bin "$path[@]") ;;
@@ -32,7 +32,7 @@ _load() {
       rbenv)
          if ! ${RBENV_LOADED:-false}; then
             echoerr "Loading rbenv..."
-            type "rbenv" > /dev/null && eval "$(rbenv init - --no-rehash)"
+            type "rbenv" > /dev/null && eval "$(command rbenv init - --no-rehash)"
             export RBENV_LOADED=true
          else
             echoerr "rbenv already loaded!"
@@ -179,6 +179,9 @@ set_work() {
    _load direnv
    export FIRST_CHARACTER_OK="$prompt_char"
    export FIRST_CHARACTER_KO="$FIRST_CHARACTER_OK"
-   [ $PROFILE_SHELL = 'zsh' ] && PREVENT_DIRTY=true prompt_dns_setup "$@"
+   [ $PROFILE_SHELL = 'zsh' ] && PREVENT_DIRTY=true prompt_dns_setup "$@" &>/dev/null
+   export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl/lib/
+   export LDFLAGS="-L/usr/local/opt/openssl/lib"
+   export CPPFLAGS="-I/usr/local/opt/openssl/include"
    echoerr "✅ Everything loaded!"
 }

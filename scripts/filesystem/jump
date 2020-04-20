@@ -100,7 +100,13 @@ jump_to_specific_folder() {
    shift
 
    cd "$folder"
-   FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-} --preview 'ls {}'" _jump cd "$(ls)" "$@"
+   FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-} --exact --preview 'cd {} && lsd . --color always'" _jump cd "$(ls)" "$@"
+}
+
+jump_to_work_folder() {
+   cd "$DEV_HOME"
+   local -r projects="$(rg --files -g main.go | grep -v 'test' | sed 's|/main.go||')"
+   FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-} --exact --preview 'proj={}; readme=\$proj/README.md; [ -f \$readme ] && dot shell less \$readme || cd \$proj && lsd . --color always'" _jump cd "$projects" "$@"
 }
 
 # Go up X directories (default: 1)
@@ -128,7 +134,7 @@ shift
 
 case "$cmd" in
    "local") jump_to_folder "$@" >/dev/null && pwd ;;
-   "work") jump_to_specific_folder "$WORK_HOME" "$@" >/dev/null && pwd ;;
+   "work") jump_to_work_folder "$@" >/dev/null && pwd ;;
    "dev") jump_to_specific_folder "$DEV_HOME" "$@" >/dev/null && pwd ;;
    "file") jump_to_folder_for_file "$@" >/dev/null && pwd ;;
    "up") cd_up "$@" >/dev/null && pwd ;;
