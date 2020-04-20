@@ -41,32 +41,29 @@
     "gitlens.views.repositories.enabled": false,
     "gitlens.views.search.enabled": false, 
 
-    // "editor.fontFamily": "Fira Code",
     "editor.fontLigatures": true,
 
     "keyboard.touchbar.enabled": true,
 
     "go.autocompleteUnimportedPackages": true,
-        "go.toolsEnvVars": {
-            "GO111MODULE": "off",
-        },
-        //"go.useLanguageServer": true,
-
-"go.useLanguageServer": false,
-"go.languageServerFlags": ["-enhance-signature-help"],
-"go.languageServerExperimentalFeatures": {
-	"format": true,
-	"autoComplete": true,
-	"rename": true,
-	"goToDefinition": true,
-	"hover": true,
-	"signatureHelp": true,
-	"goToTypeDefinition": true,
-	"goToImplementation": true,
-	"documentSymbols": true,
-	"workspaceSymbols": true,
-	"findReferences": true
-},
+    "go.toolsEnvVars": {
+        "GO111MODULE": "off"
+    },
+    "go.useLanguageServer": false,
+    "go.languageServerFlags": ["-enhance-signature-help"],
+    "go.languageServerExperimentalFeatures": {
+        "format": true,
+        "autoComplete": true,
+        "rename": true,
+        "goToDefinition": true,
+        "hover": true,
+        "signatureHelp": true,
+        "goToTypeDefinition": true,
+        "goToImplementation": true,
+        "documentSymbols": true,
+        "workspaceSymbols": true,
+        "findReferences": true
+    },
     
     "files.exclude": {
         "**/.git": true,        
@@ -265,10 +262,6 @@
         {"before":   ["<leader>", "g", "c"], 
          "after":    [], 
          "commands": [{"command": "git.commit", "args": []}]}, 
-
-        // {"before":   ["<leader>", "g", "d"], 
-        //  "after":    [], 
-        // "commands": [{"command": "git.deleteBranch", "args": []}]}, 
 
         {"before":   ["<leader>", "g", "d"], 
          "after":    [], 
