@@ -31,3 +31,5 @@ source "${DOTFILES}/shell/aux/misc.zsh"
 # source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
 source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
 source "${DOTFILES}/shell/zsh/bindings/zim.zsh"
+
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

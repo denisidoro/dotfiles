@@ -22,6 +22,7 @@ function! UserInit()
   Plug 'junegunn/seoul256.vim'
   Plug 'airblade/vim-rooter'
   Plug 'danilo-augusto/vim-afterglow'
+  Plug 'liuchengxu/space-vim-dark'
 
 endfunction
 
@@ -36,15 +37,14 @@ function! UserConfig()
   " Use gui colors in terminal if available
   if has('termguicolors')
 
-    colorscheme afterglow
+    " colorscheme afterglow
+    colorscheme space-vim-dark
+    hi Comment cterm=italic
+    hi Normal     ctermbg=NONE guibg=NONE
+    hi LineNr     ctermbg=NONE guibg=NONE
+    hi SignColumn ctermbg=NONE guibg=NONE
     set termguicolors
 
-    if g:spacevim_tmux
-      " If use vim inside tmux, see https://github.com/vim/vim/issues/993
-      " set Vim-specific sequences for RGB colors
-      let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-      let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-    endif
   endif
 
 endfunction

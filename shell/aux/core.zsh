@@ -38,10 +38,3 @@ dot_or_args() {
 echoerr() {
    echo "$@" 1>&2;
 }
-
-set_profile_based_on_pwd() {
-   local is_work=$(is_in_work_folder &>/dev/null || echo false)
-   if $is_work; then
-      set_work
-   fi
-}

@@ -2,8 +2,8 @@
 # Modes
 # =================
 
-:: default : yabai -m config active_window_border_color 0xffff1493
-:: grab : yabai -m config active_window_border_color 0xFF00BFFF
+:: default : yabai -m config active_window_border_color 0xFF00BFFF
+:: grab : yabai -m config active_window_border_color 0xffff1493
 
 alt + ctrl + cmd + shift - g ; grab
 grab < escape ; default
