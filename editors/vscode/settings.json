@@ -473,5 +473,6 @@
          "commands": [{"command": "calva.evaluateCurrentTopLevelForm", "args": []}]}
     ],
     "explorer.confirmDragAndDrop": false,
-    "explorer.confirmDelete": false
+    "explorer.confirmDelete": false,
+    "editor.wordWrap": "on"
 }

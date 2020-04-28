@@ -42,6 +42,9 @@ caffeinate -t $((60*<minutes>))
 # Prevent sleep for a long time
 caffeinate -t 18000
 
+# Create new file
+suffix="$(date +'%Hh%Mmin%S')"; osascript -e 'set title to "new_'$suffix'.txt"' -e 'tell application "Finder" to make new file at (the target of the front window) as alias with properties {name: title}'
+
 # Set wallpaper for a single workspace
 osascript -e 'tell application "Finder" to set desktop picture to POSIX file "<wallpaper>"'
 
