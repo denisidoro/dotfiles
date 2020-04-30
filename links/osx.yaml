@@ -3,5 +3,6 @@ peripherals/skhd/skhd.rc, $HOME/.skhdrc
 wm/yabai/yabai.rc, $HOME/.yabairc
 editors/vscode/settings.json, $HOME/Library/Application\ Support/Code/User/settings.json
 editors/vscode/keybindings.json, $HOME/Library/Application\ Support/Code/User/keybindings.json
+editors/vscode/tasks.json, $HOME/Library/Application\ Support/Code/User/tasks.json
 editors/sublime/preferences.json, $HOME/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Preferences.sublime-settings
 search/alfred/preferences, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/preferences

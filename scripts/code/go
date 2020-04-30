@@ -73,7 +73,17 @@ _loop() {
     echo "$code"
 }
 
-filename="$1"
-input="$(cat "$filename")"
-new_code="$(_loop "$input")"
-echo "$new_code" > "$filename"
+cmd="${1:-}"
+shift
+case "$cmd" in
+    transpile) 
+        filename="$1"
+        input="$(cat "$filename")"
+        new_code="$(_loop "$input")"
+        echo "$new_code" > "$filename"
+        ;;
+    *) 
+        echoerr "Invalid cmd: $cmd"
+        exit 1
+        ;;
+esac
