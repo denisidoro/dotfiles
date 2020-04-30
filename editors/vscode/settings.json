@@ -1,5 +1,5 @@
 {
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 1,
     "editor.fontSize": 12,
     "editor.letterSpacing": 0.2,
     "editor.lineHeight": 18,
@@ -129,6 +129,9 @@
          "after":    ["g", "k"]}],
 
     "vim.normalModeKeyBindings": [ 
+
+        {"before":   ["<leader>", "l", "e"],
+         "after":    ["0","t",":","i",","," ","e","r","r","<ESC>","<ESC>","A",";"," ","i","f"," ","e","r","r"," ","!","="," ","n","i","l"," ","{","<enter>"," ", "r","e","t","u","r","n"," ","n","i","l",","," ","e","r","r","<ESC>","j","o"]},
 
         {"before":   ["<leader>", "<space>"], 
          "after":    [], 

@@ -23,4 +23,28 @@
     "command": "editor.action.goToDeclaration",
     "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
   }
+  {
+    "key": "cmd+e",
+    "command": "-workbench.action.openRecent"
+  },
+  {
+    "key": "cmd+e",
+    "command": "extension.intellijRecentFiles",
+    "when": "!inQuickOpen"
+  },
+  {
+    "key": "cmd+e",
+    "command": "workbench.action.quickOpenNavigateNext",
+    "when": "inQuickOpen"
+  },
+  {
+    "key": "cmd+e",
+    "command": "workbench.action.quickOpenNavigateNext",
+    "when": "inQuickOpen"
+  },
+  {
+    "key": "shift+cmd+e",
+    "command": "workbench.action.quickOpenNavigatePrevious",
+    "when": "inQuickOpen"
+  },
 ]

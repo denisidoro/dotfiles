@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -uo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Go helper utils
+##?
+##? Usage:
+##?    transpile <filename>
+
+docs::eval_help "$@"
+
+_transpile_map() {
+    local -r code="$1"
+
+    matches="$(echo "$code" | sed -E "s|(.*)?:=(.*).map\(func\((.*)\)(.*)\{(.*)|\1;\2;\3;\4;\5|g")"
+
+    newname="$(echo "$matches" | head -n1 | cut -d';' -f1 | xargs)"
+    array="$(echo "$matches" | head -n1 | cut -d';' -f2 | xargs)"
+    element="$(echo "$matches" | head -n1 | cut -d';' -f3 | xargs)"
+    type="$(echo "$matches" | head -n1 | cut -d';' -f4 | xargs)"
+    body="$(echo "$matches" | tail -n +2 | sed "s/return/${newname}[i] =/g")"
+
+    echo "${newname} := make([]${type}, len(${array}))"
+    echo "for i, ${element} := range ${array} {"
+    echo "${body::-1}"
+}
+
+_transpile_err() {
+    local -r code="$1"
+    printf "$code" | sed 's/ :=/, err :=/' | sed -E 's/\? *$//'
+    echo "; if err != nil {"
+    echo "   return nil, err"
+    echo "}"
+}
+
+_match_err() {
+    grep -m1 -Eo '.*\? *$'
+}
+
+_match_map() {
+    grep -m1 '.map(func(' -A50 | grep -m1 '})' -B50
+}
+
+_transpile() {
+    local -r transpile_fn="$1"
+    local match="$2"
+    local -r code="$3"
+    replacement="$($transpile_fn "$match")"
+    match="$(echo "$match" | tr '\n' 'X')"
+    replacement="$(echo "$replacement" | tr '\n' 'X')"
+    echo "$code" | tr '\n' 'X' | sed "s|${match}|${replacement}|g" | tr 'X' '\n'
+}
+
+_loop() {
+    local code="$1"
+    local matched=false
+    local match
+    while true; do
+        for x in err map; do
+            match_fn="_match_${x}"
+            transpile_fn="_transpile_${x}"
+            match="$(echo "$code" | $match_fn)"
+            [[ -n $match ]] && code="$(_transpile $transpile_fn "$match" "$code")" && matched=true
+        done
+        if ! $matched; then
+            break
+        fi
+        matched=false
+        match=""
+    done
+    echo "$code"
+}
+
+filename="$1"
+input="$(cat "$filename")"
+new_code="$(_loop "$input")"
+echo "$new_code" > "$filename"

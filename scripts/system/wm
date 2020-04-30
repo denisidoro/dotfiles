@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Window manager utilities
+#?? 0.1.0
+##?
+##? Usage:
+##?    wm cheats
+##?
+##? Examples:
+##?    wm cheats
+
+docs::eval_help "$@"
+
+_last_word() {
+    echo ${1##* }
+}
+
+_print_alfred() {
+    local -r comment="$1"
+    local -r cmd="$2"
+    local -r hotkey="$3"
+    echo "{\"title\":\"${comment}\",\"match\":\"${comment} ${cmd}\",\"subtitle\":\"${hotkey} :: ${cmd}\",\"arg\":\"${cmd}\"},"
+}
+
+_print() {
+    print_fn="$1"
+    IFS=$'\n'
+    should_start=false
+    comment=""
+    for line in $(cat "${DOTFILES}/peripherals/skhd/skhd.rc"); do
+        if ! $should_start; then
+            case $line in
+                *Power*) should_start=true ;;
+            esac
+            continue
+        fi
+        case $line in
+            *EOF*) return 0 ;;
+        esac
+        if [[ "$line" == \#* ]]; then 
+            comment="${line:2}"
+            last_word="$(_last_word "$comment")"
+            case "$last_word" in
+                direction|space) should_replace=true ;;
+                *) should_replace=false ;;
+            esac
+        else
+            hotkey="$(echo "$line" | cut -d':' -f1 | sed 's/alt + cmd + ctrl + shift/hyper/g')"
+            cmd="$(echo "$line" | cut -d':' -f2)"
+            if $should_replace; then
+                replacement="$(_last_word "$cmd")"
+                new_comment="$comment $replacement"
+            else
+                new_comment="$comment"
+            fi
+            $print_fn "$new_comment" "${cmd:1}" "$hotkey"
+        fi
+    done
+}
+
+echo '{"items":['
+items="$(_print _print_alfred)"
+echo "${items::-1}"
+echo ']}'
