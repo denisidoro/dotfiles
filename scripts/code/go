@@ -11,6 +11,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docs::eval_help "$@"
 
+ESCAPE_CHAR="\034"
+
 _transpile_map() {
     local -r code="$1"
 
@@ -43,14 +45,22 @@ _match_map() {
     grep -m1 '.map(func(' -A50 | grep -m1 '})' -B50
 }
 
+_escape() {
+    tr '\n' "$ESCAPE_CHAR"
+}
+
+_unescape() {
+    tr "$ESCAPE_CHAR" '\n'
+}
+
 _transpile() {
     local -r transpile_fn="$1"
     local match="$2"
     local -r code="$3"
     replacement="$($transpile_fn "$match")"
-    match="$(echo "$match" | tr '\n' 'X')"
-    replacement="$(echo "$replacement" | tr '\n' 'X')"
-    echo "$code" | tr '\n' 'X' | sed "s|${match}|${replacement}|g" | tr 'X' '\n'
+    match="$(echo "$match" | _escape)"
+    replacement="$(echo "$replacement" | _escape)"
+    echo "$code" | _escape | sed "s|${match}|${replacement}|g" | _unescape
 }
 
 _loop() {
