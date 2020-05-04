@@ -61,6 +61,16 @@ test::equals() {
    fi
 }
 
+test::includes() {
+   local -r actual="$(cat)"
+   local -r should_include="$(echo "${1:-}")"
+
+   if ! echo "$actual" | grep -Fq "$should_include"; then
+      log::error "Expected the following string to include '${should_include}' but it doesn't: '${actual}'"
+      return 2
+   fi
+}
+
 test::finish() {
    echo
    if [ $SKIPPED -gt 0 ]; then

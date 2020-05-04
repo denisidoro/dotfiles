@@ -69,6 +69,12 @@
         "**/.git": true,        
         "**/.DS_Store": true,  
         "**/node_modules": true,
+        "**/.gen": true,
+        "**/gen": true,
+        "**/.glue": true,
+        "**/.tmp": true,
+        "**/vendor": true,
+        "**/go-build": true,
         "bazel-*": true,
         "pkg*": true
     },

@@ -13,8 +13,17 @@ docs::eval_help "$@"
 
 ESCAPE_CHAR="\034"
 
+_get_tabs() {
+    echo "$*" | grep -Eo '^ *' | head -n1
+}
+
+_force_colon() {
+    sed 's/ =/ :=/g'
+}
+
 _transpile_map() {
-    local -r code="$1"
+    local -r code="$(echo "$1" | _force_colon)"
+    local -r tabs="$(_get_tabs "$code")"
 
     matches="$(echo "$code" | sed -E "s|(.*)?:=(.*).map\(func\((.*)\)(.*)\{(.*)|\1;\2;\3;\4;\5|g")"
 
@@ -24,17 +33,18 @@ _transpile_map() {
     type="$(echo "$matches" | head -n1 | cut -d';' -f4 | xargs)"
     body="$(echo "$matches" | tail -n +2 | sed "s/return/${newname}[i] =/g")"
 
-    echo "${newname} := make([]${type}, len(${array}))"
-    echo "for i, ${element} := range ${array} {"
+    echo "${tabs}${newname} := make([]${type}, len(${array}))"
+    echo "${tabs}for i, ${element} := range ${array} {"
     echo "${body::-1}"
 }
 
 _transpile_err() {
-    local -r code="$1"
-    printf "$code" | sed 's/ :=/, err :=/' | sed -E 's/\? *$//'
-    echo "; if err != nil {"
-    echo "   return nil, err"
-    echo "}"
+    local -r code="$(echo "$1" | _force_colon)"
+    local -r tabs="$(_get_tabs "$code")"
+    echo "$code" | sed 's/ :=/, err :=/' | sed -E 's/\? *$//'
+    echo "${tabs}if err != nil {"
+    echo "${tabs}   return nil, err"
+    echo "${tabs}}"
 }
 
 _match_err() {

@@ -89,12 +89,12 @@ nvm() {
    nvm "$@"
 }
 
-node() {
+nodework() {
    _load nvm || true
    node "$@"
 }
 
-npm() {
+npmwork() {
    _load nvm || true
    npm "$@"
 }
