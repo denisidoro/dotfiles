@@ -48,7 +48,6 @@ _prepare_zsh || true
 _prepare_dotlink || true
 
 for test in $(_all_files); do
-   echoerr "ASDFA: $test"
    source "$test"
 done
 

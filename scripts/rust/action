@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-##? action release
+##? Actions
+##?
+##? Usage:
+##?    action release
+##?    action workflow
 
 source "${DOTFILES}/scripts/rust/aux/proj.sh"
+
+docs::eval_help "$@"
 
 release() {
 

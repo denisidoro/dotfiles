@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-##? make install
-##? make uninstall
+##? make
+##?
+##? Usage:
+##?    make install
+##?    make uninstall
+
+source "${DOTFILES}/scripts/rust/aux/proj.sh"
+
+docs::eval_help "$@"
 
 source "${DOTFILES}/scripts/rust/aux/proj.sh"
 

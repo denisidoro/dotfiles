@@ -26,8 +26,8 @@ validate_reference() {
 }
 
 validate_references() {
-   local -r all_pairs="$(_pairs)"
-   local -r file="$(_files "$pairs")"
+   local -r all_pairs="$1"
+   local -r file="$2"
    local -r pairs="$(echo "$all_pairs" | grep "$file +")"
    local -r calls="$(echo "$pairs" | grep -Eo 'dot ([a-z][a-z0-9]+) ([a-z][a-z0-9-]+)' | sort -u)"
    IFS=$'\n'
@@ -39,9 +39,14 @@ validate_references() {
    done
 }
 
-test::set_suite "bash - references"
+_run() {
+   local -r all_pairs="$(_pairs)"
+   local -r files="$(_files "$all_pairs")"
+   declare -A caches=()
+   for f in $files; do
+      test::run "$f" validate_references "$all_pairs" "$f"
+   done
+}
 
-declare -A caches=()
-for f in $files; do
-   test::run "$f" validate_references "$pairs" "$f"
-done
+test::set_suite "bash - references"
+test::run "run" _run

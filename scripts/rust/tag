@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+##? tag
+##?
+##? Usage:
+##?    tag
+
+source "${DOTFILES}/scripts/rust/aux/proj.sh"
+
+docs::eval_help "$@"
+
 source "${DOTFILES}/scripts/rust/aux/proj.sh"
 
 version="${1:-$(version_from_toml)}"

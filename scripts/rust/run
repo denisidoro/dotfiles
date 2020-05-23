@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+##? run
+##?
+##? Usage:
+##?    run
+
 source "${DOTFILES}/scripts/rust/aux/proj.sh"
+
+docs::eval_help "$@"
 
 cd "$PROJ_HOME"
 rm -rf "target/release/${PROJ_NAME}" 2> /dev/null || true

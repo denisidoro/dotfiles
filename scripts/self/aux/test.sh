@@ -46,9 +46,14 @@ test::skip() {
 test::run() {
    test::filter_check || return 0
    echo
-   log::note "${SUITE:-unknown} - ${1:-unknown}"
+   local -r msg="${SUITE:-unknown} - ${1:-unknown}"
    shift
-   "$@" && test::success || test::fail
+   if [[ "$1" == "_run" ]]; then
+      "$@"
+   else
+      log::note "$msg"
+      "$@" && test::success || test::fail
+   fi
 }
 
 test::equals() {

@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-##? brew formula
+##? Actions
+##?
+##? Usage:
+##?    brew formula
 
 source "${DOTFILES}/scripts/rust/aux/proj.sh"
+
+docs::eval_help "$@"
 
 gen_formula() {
    version="$(latest_version_released)"

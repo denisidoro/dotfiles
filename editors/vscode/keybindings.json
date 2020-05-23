@@ -22,7 +22,7 @@
     "key": "cmd+b",
     "command": "editor.action.goToDeclaration",
     "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
-  }
+  },
   {
     "key": "cmd+e",
     "command": "-workbench.action.openRecent"
