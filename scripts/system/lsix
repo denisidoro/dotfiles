@@ -44,61 +44,61 @@ fontsize=$((tilewidth/10))
 #fontsize=16		     # (or set the point size directly, if you prefer)
 
 timeout=0.25		    # How long to wait for terminal to respond
-			    # to a control sequence (in seconds).
+# to a control sequence (in seconds).
 
 # Sanity checks and compatibility
 if [[ ${BASH_VERSINFO[0]} -eq 3 ]]; then
-    if bash --version | head -1 | grep -q "version 3"; then
-	cat <<-EOF >&2
+   if bash --version | head -1 | grep -q "version 3"; then
+      cat <<-EOF >&2
 	Error: The version of Bash is extremely out of date.
 	(2007, the same year Steve Jobs announced the iPhone!)
 	This is almost always due to Apple's MacOS being silly.
 	Please let Apple know that their users expect current UNIX tools.
 	In the meantime, try using "brew install bash".
 	EOF
-	exit 1
-    else
-	exec bash "$0" "$@"  || echo "Exec failed" >&2
-	exit 1
-    fi
+      exit 1
+   else
+      exec bash "$0" "$@"  || echo "Exec failed" >&2
+      exit 1
+   fi
 fi
 
 if ! command -v montage >/dev/null; then
-    echo "Please install ImageMagick" >&2
-    exit 1
+   echo "Please install ImageMagick" >&2
+   exit 1
 fi
 
 if command -v gsed >/dev/null; then
-    alias sed=gsed		# Use GNU sed for MacOS & BSD
+   alias sed=gsed		# Use GNU sed for MacOS & BSD
 fi
 
 cleanup() {
-    echo -n $'\e\\'		# Escape sequence to stop SIXEL.
-    stty echo			# Reset terminal to show characters.
-    exit 0
+   echo -n $'\e\\'		# Escape sequence to stop SIXEL.
+   stty echo			# Reset terminal to show characters.
+   exit 0
 }
 trap cleanup SIGINT SIGHUP SIGABRT EXIT
 
 autodetect() {
-    # Various terminal automatic configuration routines.
+   # Various terminal automatic configuration routines.
 
-    # Don't show escape sequences the terminal doesn't understand.
-    stty -echo			# Hush-a Mandara Ni Pari
+   # Don't show escape sequences the terminal doesn't understand.
+   stty -echo			# Hush-a Mandara Ni Pari
 
-    # IS TERMINAL SIXEL CAPABLE?		# Send Device Attributes
-    IFS=";" read -a REPLY -s -t 1 -d "c" -p $'\e[c' >&2
-    for code in "${REPLY[@]}"; do
-	if [[ $code == "4" ]]; then
-	    hassixel=yup
-	    break
-	fi
-    done
+   # IS TERMINAL SIXEL CAPABLE?		# Send Device Attributes
+   IFS=";" read -a REPLY -s -t 1 -d "c" -p $'\e[c' >&2
+   for code in "${REPLY[@]}"; do
+      if [[ $code == "4" ]]; then
+         hassixel=yup
+         break
+      fi
+   done
 
-    # YAFT is vt102 compatible, cannot respond to vt220 escape sequence.
-    if [[ "$TERM" == yaft* ]]; then hassixel=yeah; fi
+   # YAFT is vt102 compatible, cannot respond to vt220 escape sequence.
+   if [[ "$TERM" == yaft* ]]; then hassixel=yeah; fi
 
-    if [[ -z "$hassixel" ]]; then
-	cat <<-EOF >&2
+   if [[ -z "$hassixel" ]]; then
+      cat <<-EOF >&2
 	Error: Your terminal does not report having sixel graphics support.
 	Please use a sixel capable terminal, such as xterm -ti vt340, or
 	ask your terminal manufacturer to add sixel support.
@@ -107,48 +107,48 @@ autodetect() {
 	If your terminal actually does support sixel, please file a bug
 	report at http://github.com/hackerb9/lsix/issues
 	EOF
-	read -s -t 1 -d "c" -p $'\e[c' >&2
-	if [[ "$REPLY" ]]; then
-	    echo
-	    cat -v <<< "(Please mention device attribute codes: ${REPLY}c)"
-	fi
+      read -s -t 1 -d "c" -p $'\e[c' >&2
+      if [[ "$REPLY" ]]; then
+         echo
+         cat -v <<< "(Please mention device attribute codes: ${REPLY}c)"
+      fi
 
-	exit 1
-    fi
+      exit 1
+   fi
 
-    # ENABLE SIXEL SCROLLING so image will appear right after cursor.
-    if [[ $TERM != "mlterm" ]]; then
-	echo -ne $'\e[?80h'
-    else
-	# Except... mlterm (as of 3.5.0) has a bug that reverses the sense
-	echo -ne $'\e[?80l'
-    fi
+   # ENABLE SIXEL SCROLLING so image will appear right after cursor.
+   if [[ $TERM != "mlterm" ]]; then
+      echo -ne $'\e[?80h'
+   else
+      # Except... mlterm (as of 3.5.0) has a bug that reverses the sense
+      echo -ne $'\e[?80l'
+   fi
 
-    # TERMINAL COLOR AUTODETECTION.
-    # Find out how many color registers the terminal has
-    IFS=";"  read -a REPLY -s -t ${timeout} -d "S" -p $'\e[?1;1;0S' >&2
-    [[ ${REPLY[1]} == "0" ]] && numcolors=${REPLY[2]}
+   # TERMINAL COLOR AUTODETECTION.
+   # Find out how many color registers the terminal has
+   IFS=";"  read -a REPLY -s -t ${timeout} -d "S" -p $'\e[?1;1;0S' >&2
+   [[ ${REPLY[1]} == "0" ]] && numcolors=${REPLY[2]}
 
-    # Bug workaround: mlterm does not report number of colors.
-    if [[ $TERM =~ mlterm ]]; then numcolors=1024; fi
-    # YAFT is vt102 compatible, cannot respond to vt220 escape sequence.
-    if [[ "$TERM" == yaft* ]]; then numcolors=256; fi
+   # Bug workaround: mlterm does not report number of colors.
+   if [[ $TERM =~ mlterm ]]; then numcolors=1024; fi
+   # YAFT is vt102 compatible, cannot respond to vt220 escape sequence.
+   if [[ "$TERM" == yaft* ]]; then numcolors=256; fi
 
-    # Increase colors, if needed
-    if [[ $numcolors -lt 256 ]]; then
-	# Attempt to set the number of colors to 256.
-	# This will work for xterm, but fail on a real vt340.
-	IFS=";"  read -a REPLY -s -t ${timeout} -d "S" -p $'\e[?1;3;256S' >&2
-	[[ ${REPLY[1]} == "0" ]] && numcolors=${REPLY[2]}
-    fi
+   # Increase colors, if needed
+   if [[ $numcolors -lt 256 ]]; then
+      # Attempt to set the number of colors to 256.
+      # This will work for xterm, but fail on a real vt340.
+      IFS=";"  read -a REPLY -s -t ${timeout} -d "S" -p $'\e[?1;3;256S' >&2
+      [[ ${REPLY[1]} == "0" ]] && numcolors=${REPLY[2]}
+   fi
 
-    # Query the terminal background and foreground colors.
-    IFS=";:/"  read -a REPLY -r -s -t ${timeout} -d "\\" -p $'\e]11;?\e\\' >&2
+   # Query the terminal background and foreground colors.
+   IFS=";:/"  read -a REPLY -r -s -t ${timeout} -d "\\" -p $'\e]11;?\e\\' >&2
     if [[ ${REPLY[1]} =~ ^rgb ]]; then
 	# Return value format: $'\e]11;rgb:ffff/0000/ffff\e\\'.
 	# ImageMagick wants colors formatted as #ffff0000ffff.
 	background='#'${REPLY[2]}${REPLY[3]}${REPLY[4]%%$'\e'*}
-	IFS=";:/"  read -a REPLY -r -s -t ${timeout} -d "\\" -p $'\e]10;?\e\\' >&2
+IFS=";:/"  read -a REPLY -r -s -t ${timeout} -d "\\" -p $'\e]10;?\e\\' >&2
 	if [[ ${REPLY[1]} =~ ^rgb ]]; then
 	    foreground='#'${REPLY[2]}${REPLY[3]}${REPLY[4]%%$'\e'*}
 	    # Check for "Reverse Video" (DECSCNM screen mode).

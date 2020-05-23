@@ -5,12 +5,29 @@ set -euo pipefail
 ##?
 ##? Usage:
 ##?    run
+##?
+##? Options:
+##?    -c --clean     Whether to delete existing builds
 
 source "${DOTFILES}/scripts/rust/aux/proj.sh"
 
-docs::eval_help "$@"
+docs::eval "$@"
+
+RELEASE_PATH="target/release/${PROJ_NAME}"
+DEBUG_PATH="target/debug/${PROJ_NAME}"
+
+if $clean; then
+    rm "$RELEASE_PATH" 2>/dev/null || true
+    rm "$DEBUG_PATH" 2>/dev/null || true
+fi
+
+if [ -f "$RELEASE_PATH" ]; then
+    "$RELEASE_PATH" "$@"
+    exit 0
+elif [ -f "$DEBUG_PATH" ]; then
+    "$DEBUG_PATH" "$@"
+    exit 0
+fi
 
 cd "$PROJ_HOME"
-rm -rf "target/release/${PROJ_NAME}" 2> /dev/null || true
-rm -rf "target/debug/${PROJ_NAME}" 2> /dev/null || true
 cargo run -- "$@"

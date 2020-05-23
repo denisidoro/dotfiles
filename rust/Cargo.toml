@@ -1,5 +1,5 @@
 [package]
-name = "dot"
+name = "dotrs"
 version = "0.1.0"
 authors = ["Denis Isidoro <denis_isidoro@live.com>"]
 edition = "2018"
@@ -26,10 +26,10 @@ default-features = false
 features = ["std", "unicode-perl"]
 
 [lib]
-name = "dot"
+name = "dotrs"
 path = "src/lib.rs"
 
 [[bin]]
-name = "dot"
+name = "dotrs"
 path = "src/bin/main.rs"
 bench = false

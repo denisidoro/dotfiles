@@ -1,5 +1,5 @@
-extern crate dot;
+extern crate dotrs;
 
 fn main() -> Result<(), anyhow::Error> {
-    dot::handle(dot::Opts::from_env())
+    dotrs::handle(dotrs::Opts::from_env())
 }

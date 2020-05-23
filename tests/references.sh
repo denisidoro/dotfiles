@@ -49,4 +49,4 @@ _run() {
 }
 
 test::set_suite "bash - references"
-test::run "run" _run
+test::lazy_run _run

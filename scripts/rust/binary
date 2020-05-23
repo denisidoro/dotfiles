@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+##? Binary helpers
+##?
+##? Usage:
+##?    binary build
+##?    binary tar
+##?    binary symlink
+##?    binary download
+##?    binary install
+##?    binary uninstall
+##? 
+##? Options:
+##?    -t --target <target>     Build variant
+
+source "${DOTFILES}/scripts/rust/aux/proj.sh"
+
+docs::eval "$@"
+
+_target() {
+   target="${1:-}"
+
+   if [[ $target == *"osx"* ]]; then
+      echoerr "OSX cross-compile is impossible. Fallbacking to cargo..."
+      target=""
+   fi
+
+   echo "$target"
+}
+
+_bin_path() {
+   local bin_folder
+
+   if [ -n "$TARGET" ]; then
+      bin_folder="${TARGET}/release"
+   else
+      bin_folder="release"
+   fi
+
+   echo "${PROJ_HOME}/target/${bin_folder}/${PROJ_NAME}"
+}
+
+_build() {
+   cd "$PROJ_HOME"
+   [[ -f "${PROJ_HOME}/Cargo.lock" ]] && use_locked=true || use_locked=false
+
+   rm -rf "${PROJ_HOME}/target" 2> /dev/null || true
+
+   if [ -n "$TARGET" ]; then
+      cargo install cross 2> /dev/null || true
+      cross build --release $($use_locked && printf %s '--locked') --target "$TARGET"
+   else
+      cargo build --release $($use_locked && printf %s '--locked')
+   fi
+
+   chmod +x "$BIN_PATH"
+}
+
+_symlink_dot() {
+   local -r dot_target_dir="${DOTFILES}/target"
+   mkdir -p "$dot_target_dir" 2>/dev/null || true
+   ln -s "$BIN_PATH" "${dot_target_dir}/${PROJ_NAME}"
+}
+
+_tar() {
+   mkdir -p "$TAR_DIR" 2> /dev/null || true
+
+   cp "$BIN_PATH" "$TAR_DIR"
+
+   cd "$TAR_DIR"
+   tar -czf "${PROJ_NAME}.tar.gz" *
+}
+
+_build_and_install() {
+   echoerr "The final binary will be available at ${BIN_DIR}/${PROJ_NAME}..."
+   _build
+   ln -s "${PROJ_HOME}/target/tar/${PROJ_NAME}" "${BIN_DIR}/${PROJ_NAME}"
+}
+
+_download_and_install() {
+   local -r variant="$(platform::rust_compatible_variant)"
+   local -r username="${GITHUB_USERNAME:-denisidoro}"
+   local -r repo="${REPO:-PROJ_NAME}"
+   dot github asset download "$username" "$repo" --variant "$variant"
+}
+
+_uninstall() {
+   rm -rf "${TAR_DIR}/.."
+}
+
+export SOURCE_DIR="${SOURCE_DIR:-"$(platform::get_source_dir "$PROJ_NAME")"}"
+export BIN_DIR="${BIN_DIR:-"$(platform::get_bin_dir)"}"
+export TAR_DIR="${PROJ_HOME}/target/tar"
+export TARGET="$(_target "${target:-}")"
+export BIN_PATH="$(_bin_path)"
+
+if $build; then
+   _build
+elif $symlink; then
+   _symlink_dot
+elif $tar; then
+   _tar
+elif $download; then
+   _download_and_install
+elif $install; then
+   _build_and_install
+elif $uninstall; then
+   _uninstall
+fi

@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+
+##? Pushbullet API
+#?? 0.1.0
+##?
+##? Usage:
+##?    asset latest-version <user> <repo>
+##?    asset url <user> <repo>
+##?    asset download <user> <repo>
+##?    asset sha <user> <repo>
+##?
+##? Options:
+##?    --variant <variant>     Binary variant
+##?    --version <version>     Release version
+##?
+##? Examples:
+##?    asset latest-version denisidoro navi
+##?    asset download denisidoro navi --variant osx
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+docs::eval_help "$@"
+
+latest_version_released() {
+   curl -s "https://api.github.com/repos/${USERNAME}/${REPO}/releases/latest" \
+      | grep -Eo 'releases/tag/v([0-9\.]+)' \
+      | sed 's|releases/tag/v||'
+}
+
+asset_url() {
+   local -r version="$1"
+   local -r variant="${2:-}"
+
+   if [[ -n "$variant" ]]; then
+      echo "https://github.com/${USERNAME}/${REPO}/releases/download/v${version}/${REPO}-v${version}-${variant}.tar.gz"
+   else
+      echo "https://github.com/${USERNAME}/${REPO}/archive/v${version}.tar.gz"
+   fi
+}
+
+download_asset() {
+   local -r url="$1"
+   local -r gz_path="${REPO}.tar.gz"
+
+   TMP_DIR="${TMP_DIR:-$(platform::get_tmp_dir "$REPO")}"
+   BIN_DIR="${BIN_DIR:-$(platform::get_bin_dir)}"
+
+   mkdir -p "$TMP_DIR"
+   mkdir -p "$BIN_DIR"
+
+   cd "$TMP_DIR"
+   rm -f "$gz_path"
+   echoerr "Downloading ${url}..."
+   curl -L "$url" -o "$gz_path"
+   tar xvzf "$gz_path"
+   rm -f "$gz_path"
+   cp "${TMP_DIR}/${REPO}" "${BIN_DIR}/${REPO}"
+}
+
+sha_for_asset_on_github() {
+   local -r url="$1"
+   curl -sL "$url" | dot security sha256 | awk '{print $1}'
+}
+
+_invalid_url() {
+   local -r url="$1"
+   log::error "There's no binary at $url"
+   exit 2
+}
+
+USERNAME="$user"
+REPO="$repo"
+
+if [ -z "$version" ]; then
+   version="$(latest_version_released)"
+fi
+
+if $latest_version; then
+   echo "$version"
+   exit 0
+fi
+
+url="$(asset_url "$version" "${variant:-})"
+
+if $url; then
+   echo "$url"
+elif $download; then
+   download_asset "$url" || _invalid_url "$url"
+elif $sha; then
+   sha "$url" || _invalid_url "$url"
+fi

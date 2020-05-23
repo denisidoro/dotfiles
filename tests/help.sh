@@ -54,7 +54,6 @@ test::set_suite "bash - help"
 _run() {
    for bin in $(_bins); do
       case $bin in
-         "clojure/data") platform::command_exists clojure && test_fn=test::run || test_fn=test::skip ;;
          "shell/zsh") platform::command_exists zsh && test_fn=test::run || test_fn=test::skip ;;
          *) test_fn=test::run ;;
       esac
@@ -69,4 +68,4 @@ _run() {
    done
 }
 
-test::run "run" _run
+test::lazy_run _run

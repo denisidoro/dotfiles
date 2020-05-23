@@ -2,13 +2,16 @@
 # vim: filetype=sh
 
 package::is_installed() {
-   [ -f "${DOTFILES}/rust/target/tar/dot" ]
+   [ -f "${DOTFILES}/target/dotrs" ]
 }
 
 package::install() {
-    export PROJ_NAME="dot"
-    export PROJ_HOME="${DOTFILES}/rust"
-
    cd "${DOTFILES}/rust"
-   dot rust action release
+   
+   if platform::command_exists cargo; then
+      dot rust binary build
+      dot rust binary symlink
+   else
+      BIN_DIR="${DOTFILES}/target" dot rust binary download
+   fi
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROJ_BIN="${DOTFILES}/rust/target/tar/dot"
+PROJ_BIN="${DOTFILES}/target/dotrs"
 
 _call() {
    "$PROJ_BIN" "$@"
@@ -11,15 +11,15 @@ _help() {
    echo "Calls Rust commands
 
 Usage:
-    call <script>"
-    exit 0
+   call <script>"
+   exit 0
 }
 
 cmd="${1:-}"
 shift
 
 case "$cmd" in
-   --help|-h) _help;;
+   --help|-h) _help ;;
 esac
 
 if [ -f "$PROJ_BIN" ]; then
