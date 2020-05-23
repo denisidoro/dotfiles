@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJ_BIN="${DOTFILES}/rust/target/tar/dot"
+
+_call() {
+   "$PROJ_BIN" "$@"
+}
+
+cmd="${1:-}"
+shift
+
+if [ -f "$PROJ_BIN" ]; then
+   _call "$cmd" "$@"
+   exit 0
+fi
+
+dot pkg add dotrs || true
+_call "$cmd" "$@"

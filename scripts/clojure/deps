@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
-# For documentation, please refer to
-# $DOTFILES/scripts/clojure/src/deps
-dot clojure jvm --fresh deps "${@:-}"

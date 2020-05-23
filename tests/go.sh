@@ -21,7 +21,7 @@ EOB
 _transpile_error_propagation() {
     local -r source="${TEST_DIR}/code.go"
     _gen_source "$source"
-    dot go transpile "$source"
+    dot code transpile "$source"
     local -r result="$(cat "$source")"
     echo "$result" | test::includes "foo, err := myFn()" \
         && echo "$result" | test::includes "halfBakedPie, err := startBaking(apple)" \
@@ -31,7 +31,7 @@ _transpile_error_propagation() {
 _transpile_map() {
     local -r source="${TEST_DIR}/code.go"
     _gen_source "$source"
-    dot go transpile "$source"
+    dot code transpile "$source"
     local -r result="$(cat "$source")"
     echo "$result" | test::includes "pies := make([]Pie, len(apples))" \
         && echo "$result" | test::includes "pies[i] = halfBakedPie.finish()"
