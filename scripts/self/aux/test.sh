@@ -66,8 +66,8 @@ test::includes() {
    local -r should_include="$(echo "${1:-}")"
 
    if ! echo "$actual" | grep -Fq "$should_include"; then
-      log::error "Expected the following string to include '${should_include}' but it doesn't: '${actual}'"
-      return 2
+      log::error "Expected the following string to include...\n\n${should_include}\n\n...but it doesn't:\n\n${actual}"
+      return 3
    fi
 }
 

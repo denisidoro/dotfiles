@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/rust/aux/proj.sh"
+
+(return 0 2>/dev/null) || install_proj "$@"

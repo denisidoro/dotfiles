@@ -7,7 +7,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 #?? 0.1.0
 ##?
 ##? Usage:
-##?    wm cheats
+##?    wm cheats (alfred|navi)
 ##?
 ##? Examples:
 ##?    wm cheats
@@ -23,6 +23,13 @@ _print_alfred() {
     local -r cmd="$2"
     local -r hotkey="$3"
     echo "{\"title\":\"${comment}\",\"match\":\"${comment} ${cmd}\",\"subtitle\":\"${hotkey} :: ${cmd}\",\"arg\":\"${cmd}\"},"
+}
+
+_print_navi() {
+    local -r comment="$1"
+    local -r cmd="$2"
+    local -r hotkey="$3"
+    printf "%-36s %-20s %s\n" "$comment" "$hotkey" "$cmd"
 }
 
 _print() {
@@ -61,7 +68,19 @@ _print() {
     done
 }
 
-echo '{"items":['
-items="$(_print _print_alfred)"
-echo "${items::-1}"
-echo ']}'
+_alfred() {
+    echo '{"items":['
+    items="$(_print _print_alfred)"
+    echo "${items::-1}"
+    echo ']}'
+}
+
+_navi() {
+    _print _print_navi
+}
+
+target="${2:-}"
+case $target in
+    alfred) _alfred ;;
+    *) _navi ;;
+esac

@@ -71,6 +71,7 @@
         "**/node_modules": true,
         "**/.gen": true,
         "**/gen": true,
+        "/gen": true,
         "**/.glue": true,
         "**/.tmp": true,
         "**/vendor": true,
@@ -78,7 +79,7 @@
         "bazel-*": true,
         "pkg*": true
     },
-
+    
     "files.watcherExclude": {
         "bazel-*": true,
         "pkg*": true

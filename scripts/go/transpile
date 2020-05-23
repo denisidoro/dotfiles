@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export PROJ_NAME="gotranspiler"
+export PROJ_HOME="${DOTFILES}/scripts-rust/${PROJ_NAME}"
+
+PROJ_BIN="${PROJ_HOME}/target/tar/${PROJ_NAME}"
+
+if [ -f "$PROJ_BIN" ]; then
+    "$PROJ_BIN" "$@" && exit 0
+fi
+
+dot rust action release || true
+"$PROJ_BIN" "$@"

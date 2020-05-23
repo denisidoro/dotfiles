@@ -18,17 +18,25 @@ func main() {
 EOB
 }
 
-_transpile() {
+_transpile_error_propagation() {
     local -r source="${TEST_DIR}/code.go"
     _gen_source "$source"
-    dot code go transpile "$source"
+    dot go transpile "$source"
     local -r result="$(cat "$source")"
-    echo "$result" | test::includes "foo, err := myFn()"
-    echo "$result" | test::includes "pies := make([]Pie, len(apples))"
-    echo "$result" | test::includes "halfBakedPie, err := startBaking(apple)"
-    echo "$result" | test::includes "if err != nil {"
-    echo "$result" | test::includes "pies[i] = halfBakedPie.finish()"
+    echo "$result" | test::includes "foo, err := myFn()" \
+        && echo "$result" | test::includes "halfBakedPie, err := startBaking(apple)" \
+        && echo "$result" | test::includes "if err != nil {"
 }
 
-test::set_suite "bash - go"
-test::run "transpile" _transpile
+_transpile_map() {
+    local -r source="${TEST_DIR}/code.go"
+    _gen_source "$source"
+    dot go transpile "$source"
+    local -r result="$(cat "$source")"
+    echo "$result" | test::includes "pies := make([]Pie, len(apples))" \
+        && echo "$result" | test::includes "pies[i] = halfBakedPie.finish()"
+}
+
+test::set_suite "rust - go"
+test::run "transpile - error propagation" _transpile_error_propagation
+test::skip "transpile - map" _transpile_map

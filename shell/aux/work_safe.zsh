@@ -89,12 +89,12 @@ nvm() {
    nvm "$@"
 }
 
-nodework() {
+node() {
    _load nvm || true
    node "$@"
 }
 
-npmwork() {
+npm() {
    _load nvm || true
    npm "$@"
 }
@@ -190,3 +190,5 @@ _set_profile() {
    [ $PROFILE_SHELL = 'zsh' ] && prompt_dns_setup &>/dev/null
    # echoerr "✅ Everything loaded!"
 }
+
+# if command -v rbenv > /dev/null; then eval "$(rbenv init -)"; fi

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/rust/aux/proj.sh"
+
+cd "$PROJ_HOME"
+rm -rf "target/release/${PROJ_NAME}" 2> /dev/null || true
+rm -rf "target/debug/${PROJ_NAME}" 2> /dev/null || true
+cargo run -- "$@"

@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+##? action release
+
+source "${DOTFILES}/scripts/rust/aux/proj.sh"
+
+release() {
+
+   TAR_DIR="${PROJ_HOME}/target/tar"
+
+   target="${1:-}"
+   if [[ $target == *"osx"* ]]; then
+      echoerr "OSX cross-compile is impossible. Fallbacking to cargo..."
+      target=""
+   fi
+
+   cd "$PROJ_HOME"
+   [[ -f "${PROJ_HOME}/Cargo.lock" ]] && use_locked=true || use_locked=false
+
+   rm -rf "${PROJ_HOME}/target" 2> /dev/null || true
+
+   if [ -n "$target" ]; then
+      cargo install cross 2> /dev/null || true
+      cross build --release $($use_locked && printf %s '--locked') --target "$target"
+      bin_folder="${target}/release"
+   else
+      cargo build --release $($use_locked && printf %s '--locked')
+      bin_folder="release"
+   fi
+
+   bin_path="${PROJ_HOME}/target/${bin_folder}/${PROJ_NAME}"
+   chmod +x "$bin_path"
+   mkdir -p "$TAR_DIR" 2> /dev/null || true
+
+   cp "$bin_path" "$TAR_DIR"
+
+   cd "$TAR_DIR"
+   tar -czf "${PROJ_NAME}.tar.gz" *
+
+}
+
+workflow() {
+
+   WORKFLOW_DIR="${PROJ_HOME}/target/workflow"
+
+   cd "$PROJ_HOME"
+
+   rm -rf "${PROJ_HOME}/target" 2> /dev/null || true
+
+   mkdir -p "$WORKFLOW_DIR" 2> /dev/null || true
+
+   cp ${PROJ_HOME}/alfred/* "$WORKFLOW_DIR"
+   cd "$WORKFLOW_DIR"
+   zip -j -r "${PROJ_NAME}.zip" *
+
+}
+
+cmd="$1"
+shift
+
+case "$cmd" in
+   "release") release "$@" ;;
+   "workflow") workflow "$@" ;;
+esac

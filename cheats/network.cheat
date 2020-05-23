@@ -5,6 +5,12 @@ lsof -i :<port> \
    | awk '{l=$2} END {print l}' \
    | xargs kill
 
+# Kill a process for port
+port="$(echo "<process>" | grep -Eo ':([0-9][0-9][0-9]+) ' | tr -d ':')"
+lsof -i :$port \
+   | awk '{l=$2} END {print l}' \
+   | xargs kill
+
 # List IP addresses connected on a given port
 netstat -tn 2>/dev/null \
    | grep :<port> \
@@ -44,3 +50,4 @@ sudo nmap -sS -sV -0 "<target>"
 lsof -n -i4TCP:<port> | grep LISTEN
 
 $ self_global_ip: dig +short myip.opendns.com @resolver1.opendns.com
+$ process: lsof -iTCP -sTCP:LISTEN -n -P | sed -E "s/:([0-9][0-9][0-9]+) /:$(tput setaf 3)\1$(tput sgr0) /g" --- --header-lines 1

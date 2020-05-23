@@ -7,7 +7,7 @@
             "label": "Go transpile",
             "type": "shell",
             "command": "/Users/denis.isidoro/dotfiles/bin/dot",
-            "args": ["code", "go", "transpile", "${file}"] 
+            "args": ["go", "transpile", "${file}"] 
         }
     ]
 }

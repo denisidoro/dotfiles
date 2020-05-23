@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/rust/aux/proj.sh"
+
+version="${1:-$(version_from_toml)}"
+echo "version: $version..."
+sleep 2
+
+git tag -a "v${version}"
+git push origin --tags
