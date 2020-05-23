@@ -37,6 +37,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup cargo
         uses: actions-rs/toolchain@v1
-        toolchain: stable
+        with:
+          toolchain: stable
       - name: Run tests
         run: ./bin/dot self test suite rust
