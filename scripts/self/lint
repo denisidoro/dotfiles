@@ -41,10 +41,10 @@ _all_dotfiles_files_to_format() {
       | _filter
 }
 
+cd "${DOTFILES}/rust"
+dot rust fix
+
+cd "$DOTFILES"
 _all_dotfiles_files_to_format \
    | sort -u \
    | xargs -I% -P8 dot code beautify "%" \
-   || true
-
-cd "${DOTFILES}/rust"
-dot rust fix
