@@ -38,11 +38,6 @@
     "when": "inQuickOpen"
   },
   {
-    "key": "cmd+e",
-    "command": "workbench.action.quickOpenNavigateNext",
-    "when": "inQuickOpen"
-  },
-  {
     "key": "shift+cmd+e",
     "command": "workbench.action.quickOpenNavigatePrevious",
     "when": "inQuickOpen"

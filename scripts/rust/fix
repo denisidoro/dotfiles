@@ -12,14 +12,14 @@ docs::eval "$@"
 
 cd "$PROJ_HOME"
 
-header "Cargo fmt..."
+log::warning "Cargo fmt..."
 cargo fmt || true
 
-header "Cargo nighly fix..."
+log::warning "Cargo nighly fix..."
 cargo +nightly clippy --fix -Z unstable-options || true
 
-header "Cargo fix..."
+log::warning "Cargo fix..."
 cargo fix || true
 
-header "clippy..."
+log::warning "clippy..."
 cargo clippy || true

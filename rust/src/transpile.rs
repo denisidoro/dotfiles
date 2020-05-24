@@ -1,10 +1,10 @@
+use anyhow::Context;
+use anyhow::Error;
 use regex::Regex;
 use std::fs::File;
 use std::io::prelude::*;
 use std::io::{self, BufRead, BufWriter};
 use std::path::Path;
-use anyhow::Error;
-use anyhow::Context;
 
 type Lines = io::Lines<io::BufReader<File>>;
 
@@ -24,12 +24,12 @@ fn transpile_error_propagation(lines: Lines) -> Result<String, Error> {
             tmp = l;
             if tmp.contains('?') && tmp.contains('=') {
                 if let Some(captures) = re.captures(&tmp) {
-                   tmp = format!("{padding}{var}, err :={assignment}\n{padding}if err != nil {{\n{padding}   return nil, err\n{padding}}}", 
+                    tmp = format!("{padding}{var}, err :={assignment}\n{padding}if err != nil {{\n{padding}   return nil, err\n{padding}}}", 
                             padding = &captures[1],
                             var = &captures[2],
                             assignment = &captures[3]);
                 }
-            } 
+            }
             result.push_str(&tmp);
             result.push_str("\n");
         }
@@ -52,6 +52,7 @@ where
 {
     let f = File::create(filename).context("Unable to create file")?;
     let mut f = BufWriter::new(f);
-    f.write_all(text.as_bytes()).context("Unable to write data")?;
+    f.write_all(text.as_bytes())
+        .context("Unable to write data")?;
     Ok(())
 }

@@ -3,11 +3,11 @@
 source "${DOTFILES}/scripts/core/main.sh"
 
 _proj_name() {
-    cat "${PROJ_HOME}/Cargo.toml" \
-        | grep name \
-        | head -n1 \
-        | sed 's/name = //' \
-        | tr -d '"'
+   cat "${PROJ_HOME}/Cargo.toml" \
+      | grep name \
+      | head -n1 \
+      | sed 's/name = //' \
+      | tr -d '"'
 }
 
 export PROJ_HOME="${PROJ_HOME:-$PWD}"

@@ -2,10 +2,10 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Go transpile",
+            "label": "Transpile",
             "type": "shell",
             "command": "/Users/denis.isidoro/dotfiles/bin/dot",
-            "args": ["go", "transpile", "${file}"] 
+            "args": ["code", "transpile", "${file}"] 
         }
     ]
 }

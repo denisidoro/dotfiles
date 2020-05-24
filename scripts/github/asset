@@ -83,9 +83,9 @@ fi
 url="$(asset_url "$version" "${variant:-})"
 
 if $url; then
-   echo "$url"
+echo "$url"
 elif $download; then
-   download_asset "$url" || _invalid_url "$url"
+download_asset "$url" || _invalid_url "$url"
 elif $sha; then
-   sha "$url" || _invalid_url "$url"
+sha "$url" || _invalid_url "$url"
 fi

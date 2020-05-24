@@ -8,9 +8,7 @@ pub struct Opts {
 
 #[derive(Clap)]
 pub enum Command {
-    Transpile {
-        filename: String,
-    },
+    Transpile { filename: String },
 }
 
 impl Opts {

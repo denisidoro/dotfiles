@@ -10,7 +10,7 @@ set -euo pipefail
 ##?    binary download
 ##?    binary install
 ##?    binary uninstall
-##? 
+##?
 ##? Options:
 ##?    -t --target <target>     Build variant
 
