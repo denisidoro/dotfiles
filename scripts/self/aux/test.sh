@@ -51,6 +51,11 @@ test::run() {
    "$@" && test::success || test::fail
 }
 
+test::lazy_run() {
+   test::filter_check || return 0
+   "$@"
+}
+
 test::equals() {
    local -r actual="$(cat)"
    local -r expected="$(echo "${1:-}")"
@@ -58,6 +63,16 @@ test::equals() {
    if [[ "$actual" != "$expected" ]]; then
       log::error "Expected '${expected}' but got '${actual}'"
       return 2
+   fi
+}
+
+test::includes() {
+   local -r actual="$(cat)"
+   local -r should_include="$(echo "${1:-}")"
+
+   if ! echo "$actual" | grep -Fq "$should_include"; then
+      log::error "Expected the following string to include...\n\n${should_include}\n\n...but it doesn't:\n\n${actual}"
+      return 3
    fi
 }
 

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 git::prompt_if_protected() {
-   local current_branch="$1"
-   local protected_branch="$2"
+   local current_branch="${1:-}"
+   local protected_branch="${2:-}"
 
-   if [ $protected_branch = $current_branch ]; then
+   if [[ "$protected_branch" == "$current_branch" ]]; then
       if ! feedback::confirmation "Are you sure you want to push to $protected_branch?" true; then
          exit 1
       fi

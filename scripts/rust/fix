@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+##? Apply lint and fmt fixes
+##?
+##? Usage:
+##?    fix
+
+source "${DOTFILES}/scripts/rust/aux/proj.sh"
+
+docs::eval "$@"
+
+cd "$PROJ_HOME"
+
+log::warning "Cargo fmt..."
+cargo fmt || true
+
+log::warning "Cargo nighly fix..."
+cargo +nightly clippy --fix -Z unstable-options || true
+
+log::warning "Cargo fix..."
+cargo fix || true
+
+log::warning "clippy..."
+cargo clippy || true

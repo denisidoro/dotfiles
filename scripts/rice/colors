@@ -4,7 +4,6 @@ set -eo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Colors
-#?? 0.1.0
 ##?   This file echoes a bunch of color codes to the
 ##?   terminal to demonstrate what's available.  Each
 ##?   line is the color code of one forground color,

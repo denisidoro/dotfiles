@@ -1,4 +1,0 @@
-{:deps
- {org.clojure/data.json {:mvn/version "0.2.6"}
-  com.offbytwo/docopt   {:mvn/version "0.6.0.20150202"}
-  mvxcvi/puget          {:mvn/version "1.0.2"}}}

@@ -1,10 +1,22 @@
-% osx, macos
+% osx, notification
 
 # Display a notification with message, title and subtitle
 osascript -e 'display notification "<message>" with title "<title>" subtitle "<subtitle>"'
 
 # Display a notification with message and title
 osascript -e 'display notification "<message>" with title "<title>"'
+
+# Set DND on (silent)
+defaults -currentHost write ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturb -boolean true
+defaults -currentHost write ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturbDate -date "$(date -u +\"%Y-%m-%d %H:%M:%S +000\")"
+killall NotificationCenter
+
+# Set DND off (not silent)
+defaults -currentHost write ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturb -boolean false
+killall NotificationCenter
+
+
+% osx, file
 
 # Show desktop icons
 defaults write com.apple.finder CreateDesktop -bool true && killall Finder
@@ -18,23 +30,14 @@ defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder
 # Hide hidden files
 defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder
 
+# Create new file
+suffix="$(date +'%Hh%Mmin%S')"; osascript -e 'set title to "new_'$suffix'.txt"' -e 'tell application "Finder" to make new file at (the target of the front window) as alias with properties {name: title}'
+
+
+% osx, power
+
 # Lock screen
 pmset displaysleepnow
-
-# Set dark mode on (dark)
-osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to true'
-
-# Set dark mode off (light)
-osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to false'
-
-# Set DND on
-defaults -currentHost write ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturb -boolean true
-defaults -currentHost write ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturbDate -date "$(date -u +\"%Y-%m-%d %H:%M:%S +000\")"
-killall NotificationCenter
-
-# Set DND off
-defaults -currentHost write ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturb -boolean false
-killall NotificationCenter
 
 # Prevent sleep
 caffeinate -t $((60*<minutes>))
@@ -42,10 +45,33 @@ caffeinate -t $((60*<minutes>))
 # Prevent sleep for a long time
 caffeinate -t 18000
 
+# Turn Macbook display on :: screen
+for i in $(seq 0 30); do osascript -e 'tell application "System Events"' -e 'key code 144' -e ' end tell'; done
+
+# Turn Macbook display off :: screen
+for i in $(seq 0 30); do osascript -e 'tell application "System Events"' -e 'key code 145' -e ' end tell'; done
+
+
+% osx, wm
+
+# Execute yabai command
+eval "<yabai_cmd>"
+
+$ yabai_cmd: dot system wm cheats navi --- --column 3 --delimiter '\s\s+'
+
+
+% osx, ui
+
+# Set dark mode on (dark)
+osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to true'
+
+# Set dark mode off (light)
+osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to false'
+
 # Set wallpaper for a single workspace
 osascript -e 'tell application "Finder" to set desktop picture to POSIX file "<wallpaper>"'
 
 # Set wallpaper for multiple workspaces
 osascript -e 'tell application "System Events" to tell every desktop to set picture to "<wallpaper>"'
 
-$ wallpaper: find ~/Pictures/Wallpapers -type f
+$ wallpaper: find ~/Pictures/Wallpapers -type f --- --preview 'viu --height 20 {}' --preview-window 'bottom:20'

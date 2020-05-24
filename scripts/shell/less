@@ -4,7 +4,6 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? cat/pager utility abstraction
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    less [<args>...]
@@ -45,6 +44,5 @@ fi
 # call
 case $language in
    json) jq -C . | _less ;;
-      # edn) cat | dot clj data -c | _less ;;
    *) bat --plain --color=always "${args[@]}" | _less ;;
 esac

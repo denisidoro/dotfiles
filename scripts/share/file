@@ -5,7 +5,6 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Publicly shares a file via transfer.sh
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    file <path>

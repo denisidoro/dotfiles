@@ -4,7 +4,6 @@ set -eo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Color
-#?? 0.2.0
 ##?
 ##? Usage:
 ##?    color print <rgb>...

@@ -5,7 +5,6 @@ source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/git/aux/core.sh"
 
 ##? Interactive git checkout
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    checkout prompt

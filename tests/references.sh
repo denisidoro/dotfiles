@@ -39,12 +39,14 @@ validate_references() {
    done
 }
 
+_run() {
+   local -r all_pairs="$(_pairs)"
+   local -r files="$(_files "$all_pairs")"
+   declare -A caches=()
+   for f in $files; do
+      test::run "$f" validate_references "$all_pairs" "$f"
+   done
+}
+
 test::set_suite "bash - references"
-
-pairs="$(_pairs)"
-files="$(_files "$pairs")"
-
-declare -A caches=()
-for f in $files; do
-   test::run "$f" validate_references "$pairs" "$f"
-done
+test::lazy_run _run

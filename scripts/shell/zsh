@@ -3,7 +3,6 @@
 source "$DOTFILES/scripts/core/documentation.sh"
 
 ##? ZSH helpers
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    zsh optimize             # Optimize ZSH

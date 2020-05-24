@@ -28,3 +28,16 @@ jobs:
         uses: actions/setup-node@v1
       - name: Run tests
         run: ./bin/dot self test suite js
+
+  rust-tests:
+    name: Rust
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Setup cargo
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Run tests
+        run: ./bin/dot self test suite rust

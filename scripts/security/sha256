@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/documentation.sh"
+
+##? Calculates sha256
+##?
+##? Usage:
+##?    sha256 [<args>...]
+##?
+##? Examples:
+##?    echo 123 | sha256
+
+docs::eval_help "$@"
+
+sha256() {
+   if command_exists sha256sum; then
+      sha256sum "$@"
+   elif command_exists shasum; then
+      shasum -a 256 "$@"
+   elif command_exists openssl; then
+      openssl dgst -sha256 "$@"
+   else
+      echoerr "Unable to calculate sha256!"
+      exit 43
+   fi
+}
+
+sha256 "$@"

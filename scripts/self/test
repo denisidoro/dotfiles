@@ -41,6 +41,9 @@ case $cmd in
    *) ;;
 esac
 
+TEST_DIR="${DOTFILES}/target/test"
+
+mkdir -p "$TEST_DIR" || true
 _prepare_zsh || true
 _prepare_dotlink || true
 
@@ -49,3 +52,4 @@ for test in $(_all_files); do
 done
 
 test::finish
+rm -rf "$TEST_DIR" || true

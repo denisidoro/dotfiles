@@ -40,5 +40,3 @@ if $display; then
 else
    echo "$url"
 fi
-
-

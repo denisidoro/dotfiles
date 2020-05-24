@@ -5,7 +5,6 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 
 ##? Git commit log viewer
 ##?   This script is heavily influenced by https://github.com/wfxr/git by Wenxuan Zhang
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    log

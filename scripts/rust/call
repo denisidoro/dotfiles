@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJ_BIN="${DOTFILES}/target/dotrs"
+
+_call() {
+   "$PROJ_BIN" "$@"
+}
+
+_help() {
+   echo "Calls Rust commands
+
+Usage:
+   call <script>"
+   exit 0
+}
+
+cmd="${1:-}"
+shift
+
+case "$cmd" in
+   --help|-h) _help ;;
+esac
+
+if [ -f "$PROJ_BIN" ]; then
+   _call "$cmd" "$@"
+   exit 0
+fi
+
+dot pkg add dotrs || true
+_call "$cmd" "$@"

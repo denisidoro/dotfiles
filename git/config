@@ -29,10 +29,6 @@
   changed = green
   untracked = cyan
 
-[status]
-	short = true
-	branch = true
-  
 [apply]
 	whitespace = error
 

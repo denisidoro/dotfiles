@@ -13,7 +13,9 @@ case $PROFILE_SHELL in
 esac
 
 code() {
+   [[ "$PWD" == "$HOME" ]] && echoerr "Can't open the whole home dir in VSCode" && return 1
    export VSCODE_CWD="$PWD"
+   export APP_ROOT="$PWD"
    dot_or_args "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" -- "$@"
 }
 
@@ -164,24 +166,29 @@ opensync() {
    _sync_dir open @
 }
 
-set_work() {
+_set_profile_work_go_project() {
+   _load lda &>/dev/null
+   _load bazel &>/dev/null
+   _load direnv &>/dev/null
+   export PREVENT_DIRTY=true
+   export LIBRARY_PATH="${LIBRARY_PATH}:/usr/local/opt/openssl/lib/"
+   export LDFLAGS="-L/usr/local/opt/openssl/lib"
+   export CPPFLAGS="-I/usr/local/opt/openssl/include"
+}
+
+_set_profile() {
+   local -r fn="$1"
    local -r prompt_char="λ"
    # Already set up
    [ "${FIRST_CHARACTER_OK}" = "${prompt_char}" ] && return 0
    local -r color_0="$PROMPT_COLOR_0"
    export PROMPT_COLOR_0="$PROMPT_COLOR_1"
    export PROMPT_COLOR_1="$color_0"
-   _load nvm
-   _load lda
-   _load virtualenv
-   _load bazel
-   _load rbenv
-   _load direnv
+   "$fn"
    export FIRST_CHARACTER_OK="$prompt_char"
    export FIRST_CHARACTER_KO="$FIRST_CHARACTER_OK"
-   [ $PROFILE_SHELL = 'zsh' ] && PREVENT_DIRTY=true prompt_dns_setup "$@" &>/dev/null
-   export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl/lib/
-   export LDFLAGS="-L/usr/local/opt/openssl/lib"
-   export CPPFLAGS="-I/usr/local/opt/openssl/include"
-   echoerr "✅ Everything loaded!"
+   [ $PROFILE_SHELL = 'zsh' ] && prompt_dns_setup &>/dev/null
+   # echoerr "✅ Everything loaded!"
 }
+
+# if command -v rbenv > /dev/null; then eval "$(rbenv init -)"; fi

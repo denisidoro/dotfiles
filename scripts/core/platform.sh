@@ -87,3 +87,56 @@ platform::existing_command() {
    done
    return 1
 }
+
+# =====================
+# paths
+# =====================
+
+platform::get_dir() {
+   local -r first_dir="$1"
+   local -r second_dir="$2"
+   local -r useless_folder="${first_dir}/useless"
+   local folder
+   mkdir -p "$useless_folder" 2>/dev/null \
+      && folder="$first_dir" \
+      || folder="$second_dir"
+   rm -r "$useless_folder" 2>/dev/null
+   echo "$folder"
+}
+
+platform::get_source_dir() {
+   local -r proj_name="$1"
+   platform::get_dir "/opt/${proj_name}" "${HOME}/.${proj_name}/src"
+}
+
+platform::get_bin_dir() {
+   platform::get_dir "/usr/bin" "/usr/local/bin"
+}
+
+platform::get_tmp_dir() {
+   local -r proj_name="$1"
+   platform::get_dir "/tmp/${proj_name}" "${HOME}/.${proj_name}/tmp"
+}
+
+platform::rust_compatible_variant() {
+   local -r unamea="$(uname -a)"
+   local -r archi="$(uname -sm)"
+   local is_android
+
+   [[ $unamea = *Android* ]] && is_android=true || is_android=false
+
+   local target
+   case "$archi" in
+      Darwin*) target="x86_64-osx" ;;
+      *x86*) $is_android && target="" || target="x86_64-unknown-linux-musl" ;;
+      *aarch*) $is_android && target="aarch64-linux-android" || target="armv7-unknown-linux-musleabihf" ;;
+      *arm*) $is_android && target="armv7-linux-androideabi" || target="armv7-unknown-linux-musleabihf" ;;
+      *) target="" ;;
+   esac
+
+   echo "$target"
+}
+
+platform::shell() {
+   echo $SHELL | xargs basename
+}

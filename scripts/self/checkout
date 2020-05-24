@@ -6,7 +6,6 @@ source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/self/aux/update.sh"
 
 ##? Checkout itself to latest branch
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    checkout
@@ -16,4 +15,3 @@ docs::eval_help "$@"
 cd "$DOTFILES"
 git pull
 dot git checkout latest
-

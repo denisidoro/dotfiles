@@ -25,6 +25,7 @@ _scripts() {
 
 _bins() {
    echo -e "$(_scripts)\n$(_execs)" \
+      | grep -v '.DS_Store' \
       | sort -u
 }
 
@@ -34,7 +35,7 @@ assert_help() {
    local -r ctx="$(echo "$words" | awk '{print $1}')"
    local -r cmd="$(echo "$words" | awk '{print $2}')"
 
-   dot "$ctx" "$cmd" --help | grep -q Usage
+   dot "$ctx" "$cmd" --help | grep -Eq 'Usage|USAGE'
 }
 
 _with_eval_help() {
@@ -50,18 +51,21 @@ print_health() {
 
 test::set_suite "bash - help"
 
-for bin in $(_bins); do
-   case $bin in
-      "clojure/data") platform::command_exists clojure && test_fn=test::run || test_fn=test::skip ;;
-      "shell/zsh") platform::command_exists zsh && test_fn=test::run || test_fn=test::skip ;;
-      *) test_fn=test::run ;;
-   esac
-   $test_fn "${bin} has a help command" assert_help "$bin"
-done
+_run() {
+   for bin in $(_bins); do
+      case $bin in
+         "shell/zsh") platform::command_exists zsh && test_fn=test::run || test_fn=test::skip ;;
+         *) test_fn=test::run ;;
+      esac
+      $test_fn "${bin} has a help command" assert_help "$bin"
+   done
 
-cd "$DOTFILES/scripts"
-for f in $(); do
-   context="$(echo "$f" | cut -d'/' -f2)"
-   command="$(echo "$f" | cut -d'/' -f3)"
-   test::run "$f - eval_help works" print_health "$context" "$command"
-done
+   cd "$DOTFILES/scripts"
+   for f in $(); do
+      context="$(echo "$f" | cut -d'/' -f2)"
+      command="$(echo "$f" | cut -d'/' -f3)"
+      test::run "$f - eval_help works" print_health "$context" "$command"
+   done
+}
+
+test::lazy_run _run

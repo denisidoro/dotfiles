@@ -4,7 +4,6 @@
 source "${DOTFILES}/scripts/git/aux/core.sh"
 
 ##? Git pull helpers
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    pull module <args>...

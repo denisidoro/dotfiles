@@ -4,7 +4,6 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Lint own files
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    lint
@@ -42,6 +41,10 @@ _all_dotfiles_files_to_format() {
       | _filter
 }
 
+cd "${DOTFILES}/rust"
+dot rust fix
+
+cd "$DOTFILES"
 _all_dotfiles_files_to_format \
    | sort -u \
-   | xargs -I% -P8 dot code beautify "%"
+   | xargs -I% -P8 dot code beautify "%" \

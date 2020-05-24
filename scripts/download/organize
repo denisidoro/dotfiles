@@ -5,7 +5,6 @@ set -euo pipefail
 source "${DOTFILES}/scripts/download/aux/core.sh"
 
 ##? Download file name parser
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    organize

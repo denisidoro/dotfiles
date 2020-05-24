@@ -1,5 +1,5 @@
 {
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 1,
     "editor.fontSize": 12,
     "editor.letterSpacing": 0.2,
     "editor.lineHeight": 18,
@@ -69,10 +69,17 @@
         "**/.git": true,        
         "**/.DS_Store": true,  
         "**/node_modules": true,
+        "**/.gen": true,
+        "**/gen": true,
+        "/gen": true,
+        "**/.glue": true,
+        "**/.tmp": true,
+        "**/vendor": true,
+        "**/go-build": true,
         "bazel-*": true,
         "pkg*": true
     },
-
+    
     "files.watcherExclude": {
         "bazel-*": true,
         "pkg*": true
@@ -129,6 +136,10 @@
          "after":    ["g", "k"]}],
 
     "vim.normalModeKeyBindings": [ 
+
+        {"before":   ["<leader>", "l", "e"], 
+         "after":    [], 
+         "commands": [{"command": "workbench.action.tasks.runTask", "args": "Go transpile"}]}, 
 
         {"before":   ["<leader>", "<space>"], 
          "after":    [], 
@@ -473,5 +484,6 @@
          "commands": [{"command": "calva.evaluateCurrentTopLevelForm", "args": []}]}
     ],
     "explorer.confirmDragAndDrop": false,
-    "explorer.confirmDelete": false
+    "explorer.confirmDelete": false,
+    "editor.wordWrap": "on"
 }

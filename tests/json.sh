@@ -13,9 +13,12 @@ _valid_json() {
       | jq . &>/dev/null
 }
 
-test::set_suite "js - json"
+_run() {
+   cd "$DOTFILES"
+   for f in $(_jsons); do
+      test::run "$f is syntactically valid" _valid_json "$f"
+   done
+}
 
-cd "$DOTFILES"
-for f in $(_jsons); do
-   test::run "$f is syntactically valid" _valid_json "$f"
-done
+test::set_suite "js - json"
+test::lazy_run _run

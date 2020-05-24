@@ -2,39 +2,38 @@
 # Modes
 # =================
 
-:: default : yabai -m config active_window_border_color 0xffff1493
-:: grab : yabai -m config active_window_border_color 0xFF00BFFF
+:: default : yabai -m config active_window_border_color 0xFF00BFFF
+:: grab : yabai -m config active_window_border_color 0xffff1493
 
-alt + ctrl + cmd + shift - g ; grab
+alt + cmd + ctrl + shift - g ; grab
 grab < escape ; default
 
 # =================
 # Application
 # =================
 
-alt + ctrl + cmd + shift - return : open -na /Applications/iTerm.app
-alt + ctrl + cmd + shift - space: Applications/Alacritty.app/Contents/MacOS/alacritty -e navi --path "${HOME}/dotfiles/cheats:${HOME}/dotfiles/local/cheats"
-alt + ctrl + cmd + shift - u: Applications/Alacritty.app/Contents/MacOS/alacritty -e navi --path "${HOME}/dotfiles/cheats:${HOME}/dotfiles/local/cheats" query '^uber ' 
+# launch iTerm
+alt + cmd + ctrl + shift - return : open -na /Applications/iTerm.app
+alt + cmd + ctrl + shift - a : open -na /Applications/Alacritty.app
 
 # =================
 # Power
 # =================
 
-alt + ctrl + cmd + shift - 0x75 : pmset displaysleepnow
-alt + ctrl + cmd + shift - p : pmset displaysleepnow
-
+# sleep
+alt + cmd + ctrl + shift - p : pmset displaysleepnow
 
 # focus window direction
-alt + ctrl + cmd + shift - h : yabai -m window --focus west
-alt + ctrl + cmd + shift - j : yabai -m window --focus south
-alt + ctrl + cmd + shift - k : yabai -m window --focus north
-alt + ctrl + cmd + shift - l : yabai -m window --focus east
+alt + cmd + ctrl + shift - h : yabai -m window --focus west || yabai -m display --focus recent || yabai -m display --focus next || yabai -m display --focus first
+alt + cmd + ctrl + shift - j : yabai -m window --focus south || yabai -m display --focus recent || yabai -m display --focus next || yabai -m display --focus first
+alt + cmd + ctrl + shift - k : yabai -m window --focus north || yabai -m display --focus recent || yabai -m display --focus next || yabai -m display --focus first
+alt + cmd + ctrl + shift - l : yabai -m window --focus east || yabai -m display --focus recent || yabai -m display --focus next || yabai -m display --focus first
 
 # focus window tab
-alt + ctrl + cmd + shift - n : yabai -m window --focus recent || yabai -m window --focus next || yabai -m window --focus first
+alt + cmd + ctrl + shift - n : yabai -m window --focus recent || yabai -m window --focus next || yabai -m window --focus first
 
 # focus display tab
-alt + ctrl + cmd + shift - m : yabai -m display --focus recent || yabai -m display --focus next || yabai -m display --focus first
+alt + cmd + ctrl + shift - m : yabai -m display --focus recent || yabai -m display --focus next || yabai -m display --focus first
 
 # focus space
 alt + cmd + ctrl + shift - 1 : yabai -m space --focus 1
@@ -55,7 +54,10 @@ alt + cmd + ctrl + shift - up : yabai -m window --insert north
 alt + cmd + ctrl + shift - right : yabai -m window --insert east
 
 # toggle fullscreen
-alt + ctrl + cmd + shift - f : yabai -m window --toggle zoom-fullscreen
+alt + cmd + ctrl + shift - f : yabai -m window --toggle zoom-fullscreen
+
+# split
+alt + cmd + ctrl + shift - o : yabai -m window --toggle split
 
 # send window to space
 grab < alt + cmd + ctrl + shift - 1 : yabai -m window --space 1
@@ -70,16 +72,19 @@ grab < alt + cmd + ctrl + shift - 9 : yabai -m window --space 9
 grab < alt + cmd + ctrl + shift - 0 : yabai -m window --space 10
 
 # swap window direction
-grab < alt + ctrl + cmd + shift - h : yabai -m window --swap west
-grab < alt + ctrl + cmd + shift - j : yabai -m window --swap south
-grab < alt + ctrl + cmd + shift - k : yabai -m window --swap north
-grab < alt + ctrl + cmd + shift - l : yabai -m window --swap east
+grab < alt + cmd + ctrl + shift - h : yabai -m window --swap west
+grab < alt + cmd + ctrl + shift - j : yabai -m window --swap south
+grab < alt + cmd + ctrl + shift - k : yabai -m window --swap north
+grab < alt + cmd + ctrl + shift - l : yabai -m window --swap east
+
+# send window to other display
+grab < alt + cmd + ctrl + shift - m : yabai -m window --display next || yabai -m window --display previous || yabai -m window --display first  
 
 # warp window direction
-grab < alt + ctrl + cmd + shift - y : yabai -m window --warp west
-grab < alt + ctrl + cmd + shift - u : yabai -m window --warp south
-grab < alt + ctrl + cmd + shift - i : yabai -m window --warp north
-grab < alt + ctrl + cmd + shift - o : yabai -m window --warp east
+grab < alt + cmd + ctrl + shift - left : yabai -m window --warp west
+grab < alt + cmd + ctrl + shift - down : yabai -m window --warp south
+grab < alt + cmd + ctrl + shift - up : yabai -m window --warp north
+grab < alt + cmd + ctrl + shift - right : yabai -m window --warp east
 
 
 
@@ -87,7 +92,7 @@ grab < alt + ctrl + cmd + shift - o : yabai -m window --warp east
 
 
 
-
+# EOF
 
 
 
@@ -101,10 +106,10 @@ grab < alt + ctrl + cmd + shift - o : yabai -m window --warp east
 # =================
 
 # focus window
-# alt + ctrl + cmd + shift - h : yabai -m window --focus west
-# alt + ctrl + cmd + shift - j : yabai -m window --focus south
-# alt + ctrl + cmd + shift - k : yabai -m window --focus north
-# alt + ctrl + cmd + shift - l : yabai -m window --focus east
+# alt + cmd + ctrl + shift - h : yabai -m window --focus west
+# alt + cmd + ctrl + shift - j : yabai -m window --focus south
+# alt + cmd + ctrl + shift - k : yabai -m window --focus north
+# alt + cmd + ctrl + shift - l : yabai -m window --focus east
 
 # swap window
 # shift + alt - h : yabai -m window --swap west
@@ -172,12 +177,12 @@ grab < alt + ctrl + cmd + shift - o : yabai -m window --warp east
 # ctrl + alt - 3  : yabai -m display --focus 3
 
 # send window to monitor and follow focus
-# ctrl + cmd - x  : yabai -m window --display recent; yabai -m display --focus recent
-# ctrl + cmd - z  : yabai -m window --display prev; yabai -m display --focus prev
-# ctrl + cmd - c  : yabai -m window --display next; yabai -m display --focus next
-# ctrl + cmd - 1  : yabai -m window --display 1; yabai -m display --focus 1
-# ctrl + cmd - 2  : yabai -m window --display 2; yabai -m display --focus 2
-# ctrl + cmd - 3  : yabai -m window --display 3; yabai -m display --focus 3
+# cmd + ctrl - x  : yabai -m window --display recent; yabai -m display --focus recent
+# cmd + ctrl - z  : yabai -m window --display prev; yabai -m display --focus prev
+# cmd + ctrl - c  : yabai -m window --display next; yabai -m display --focus next
+# cmd + ctrl - 1  : yabai -m window --display 1; yabai -m display --focus 1
+# cmd + ctrl - 2  : yabai -m window --display 2; yabai -m display --focus 2
+# cmd + ctrl - 3  : yabai -m window --display 3; yabai -m display --focus 3
 
 # move window
 # shift + ctrl - a : yabai -m window --move rel:-20:0
@@ -219,7 +224,7 @@ grab < alt + ctrl + cmd + shift - o : yabai -m window --warp east
 # alt - d : yabai -m window --toggle zoom-parent
 
 # toggle window fullscreen zoom
-# alt + ctrl + cmd + shift - f : yabai -m window --toggle zoom-fullscreen
+# alt + cmd + ctrl + shift - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle window native fullscreen
 # shift + alt - f : yabai -m window --toggle native-fullscreen
