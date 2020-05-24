@@ -33,11 +33,18 @@ _prepare_dotlink() {
    fi
 }
 
+_cargo() {
+   cd "${DOTFILES}/rust"
+   cargo build
+}
+
 cmd="${1:-}"
 
+file=""
+suite=""
 case $cmd in
-   file) export TEST_FILTER="$2" ;;
-   suite) export TEST_FILTER="^${2} \-"  ;;
+   file) file="$2"; export TEST_FILTER="$2" ;;
+   suite) suite="$2"; export TEST_FILTER="^${2} \-"  ;;
    *) ;;
 esac
 
@@ -46,6 +53,10 @@ TEST_DIR="${DOTFILES}/target/test"
 mkdir -p "$TEST_DIR" || true
 _prepare_zsh || true
 _prepare_dotlink || true
+
+if [[ "${suite:-}" == "rust" ]]; then
+   _cargo || true
+fi
 
 for test in $(_all_files); do
    source "$test"
