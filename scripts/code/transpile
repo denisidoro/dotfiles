@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-dot rust call "transpile" "$@"
+filename="${1:-}"
+
+case "${filename:-}" in
+    *.go) dot rust call "transpile" "$@";;
+    --help|-h) dot rust call "transpile" "$@" && exit 0;;
+esac
+
+dot code beautify "$filename"

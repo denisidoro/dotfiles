@@ -33,6 +33,11 @@ _prepare_dotlink() {
    fi
 }
 
+_cargo() {
+   cd "${DOTFILES}/rust"
+   cargo build
+}
+
 cmd="${1:-}"
 
 case $cmd in
@@ -46,6 +51,7 @@ TEST_DIR="${DOTFILES}/target/test"
 mkdir -p "$TEST_DIR" || true
 _prepare_zsh || true
 _prepare_dotlink || true
+[[ "${suite:-}" == "rust" ]] _cargo || true
 
 for test in $(_all_files); do
    source "$test"

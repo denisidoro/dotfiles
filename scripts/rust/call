@@ -2,9 +2,21 @@
 set -euo pipefail
 
 PROJ_BIN="${DOTFILES}/target/dotrs"
+RELEASE_PATH="target/release/dotrs"
+DEBUG_PATH="target/debug/dotrs"
 
-_call() {
-   "$PROJ_BIN" "$@"
+_bin() {
+  if [ -f "$PROJ_BIN" ]; then
+   echo "$PROJ_BIN"
+   return 0
+  elif [ -f "$RELEASE_BIN" ]; then
+   echo "$RELEASE_BIN"
+   return 0
+  else [ -f "$DEBUG_BIN" ]; then
+   echo "$DEBUG_BIN"
+   return 0
+   fi
+   return 1
 }
 
 _help() {
@@ -22,10 +34,15 @@ case "$cmd" in
    --help|-h) _help ;;
 esac
 
-if [ -f "$PROJ_BIN" ]; then
-   _call "$cmd" "$@"
+bin_path="$(_bin)"
+if [ -n "$bin_path" ]; then
+   _bin_path "$cmd" "$@"
    exit 0
 fi
 
 dot pkg add dotrs || true
-_call "$cmd" "$@"
+bin_path="$(_bin)"
+if [ -n "$bin_path" ]; then
+   _bin_path "$cmd" "$@"
+   exit 0
+fi

@@ -10,7 +10,7 @@
     "files.autoSave": "onFocusChange",
     "files.trimFinalNewlines": true,
     "editor.formatOnPaste": true,
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": true,
     
     "editor.minimap.enabled": false,
     "editor.mouseWheelZoom": true,
@@ -95,6 +95,11 @@
     
     "diffEditor.ignoreTrimWhitespace": false,
     "diffEditor.renderSideBySide": true,
+
+    "rust.formatOnSave": true,
+    "rls.formatOnSave": true,
+    "rust.unstable_features": true,
+    "rls.unstable_features": true,
     
     "vim.leader": "<space>",
     "vim.easymotion": false,
@@ -137,9 +142,9 @@
 
     "vim.normalModeKeyBindings": [ 
 
-        {"before":   ["<leader>", "l", "e"], 
+        {"before":   ["<leader>", "l", "t"], 
          "after":    [], 
-         "commands": [{"command": "workbench.action.tasks.runTask", "args": "Go transpile"}]}, 
+         "commands": [{"command": "workbench.action.tasks.runTask", "args": "Transpile"}]}, 
 
         {"before":   ["<leader>", "<space>"], 
          "after":    [], 
