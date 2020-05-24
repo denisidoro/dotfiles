@@ -59,6 +59,6 @@ mod tests {
     #[test]
     fn test_transform_none() {
         let line = String::from("foo := bar()");
-        assert_eq!(line.clone(), transform(line));
+        assert_eq!(line.clone(), transform(line.clone()));
     }
 }

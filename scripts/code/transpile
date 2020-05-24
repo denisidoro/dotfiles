@@ -3,9 +3,5 @@ set -euo pipefail
 
 filename="${1:-}"
 
-case "${filename:-}" in
-    *.go) dot rust call "transpile" "$@";;
-    --help|-h) dot rust call "transpile" "$@" && exit 0;;
-esac
-
+dot rust call "transpile" "$@"
 dot code beautify "$filename"

@@ -1,6 +1,5 @@
 use super::fs;
 use super::transpiler;
-use anyhow::Context;
 use anyhow::Error;
 use regex::Regex;
 
@@ -12,28 +11,69 @@ impl Transpiler {
     }
 }
 
+lazy_static! {
+    static ref REGEX: Regex = Regex::new(r"(\s*)([^\s]*)\(([^\)]+)").expect("Invalid regex");
+}
+
 impl transpiler::Transpiler for Transpiler {
     fn transpile(&self, lines: fs::Lines) -> Result<String, Error> {
         let mut result = String::new();
-        let mut tmp: String;
-        let re = Regex::new(r"\([^\)]+").context("Invalid regex")?;
 
         for line in lines {
             if let Ok(l) = line {
-                tmp = l;
-                if tmp.contains('(') && tmp.contains(')') && tmp.contains('{') {
-                    if let Some(captures) = re.captures(&tmp) {
-                        tmp = format!("{padding}{var}, err :={assignment}\n{padding}if err != nil {{\n{padding}   return nil, err\n{padding}}}", 
-                                padding = &captures[1],
-                                var = &captures[2],
-                                assignment = &captures[3]);
-                    }
-                }
-                result.push_str(&tmp);
+                result.push_str(&transform(l));
                 result.push_str("\n");
             }
         }
 
         Ok(result)
+    }
+}
+
+fn transform(line: String) -> String {
+    let mut result = line;
+    if result.contains('(') && result.contains(')') && result.contains('{') {
+        if let Some(captures) = REGEX.captures(&result.clone()) {
+            let padding = &captures[1];
+            let fnname = &captures[2];
+
+            result = format!(
+                "{padding}{fnname}() {{\n",
+                padding = padding,
+                fnname = fnname
+            );
+
+            let split = (&captures[3]).split(",");
+            let args: Vec<&str> = split.collect();
+
+            for arg in args {
+                result.push_str(&format!(
+                    "{padding}   local -r {arg};\n",
+                    padding = padding,
+                    arg = arg.replace(" ", "")
+                ));
+            }
+        }
+    }
+    result
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_transform_args() {
+        let line = String::from("myfn(arg1, arg2, arg3) {");
+        assert_eq!(
+            "myfn() {\n   local -r arg1;\n   local -r arg2;\n   local -r arg3;\n",
+            transform(line)
+        );
+    }
+
+    #[test]
+    fn test_transform_none() {
+        let line = String::from("myfn() {");
+        assert_eq!(line.clone(), transform(line));
     }
 }
