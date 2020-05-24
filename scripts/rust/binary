@@ -4,15 +4,15 @@ set -euo pipefail
 ##? Binary helpers
 ##?
 ##? Usage:
-##?    binary build
-##?    binary tar
-##?    binary symlink
-##?    binary download
-##?    binary install
-##?    binary uninstall
+##?    binary [options] build
+##?    binary [options] tar
+##?    binary [options] symlink
+##?    binary [options] download
+##?    binary [options] install
+##?    binary [options] uninstall
 ##?
 ##? Options:
-##?    -t --target <target>     Build variant
+##?    -t --target <target>       Build variant
 
 source "${DOTFILES}/scripts/rust/aux/proj.sh"
 

@@ -3,10 +3,10 @@
 ##? Pushbullet API
 ##?
 ##? Usage:
-##?    asset latest-version <user> <repo>
-##?    asset url <user> <repo>
-##?    asset download <user> <repo>
-##?    asset sha <user> <repo>
+##?    asset [options] latest-version <user> <repo>
+##?    asset [options] url <user> <repo>
+##?    asset [options] download <user> <repo>
+##?    asset [options] sha <user> <repo>
 ##?
 ##? Options:
 ##?    --variant <variant>     Binary variant
