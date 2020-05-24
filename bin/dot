@@ -8,7 +8,6 @@ source "$DOTFILES/scripts/core/main.sh"
 CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 
 ##? A hub for an all-purpose set of scripts
-#?? 1.0.0
 ##?
 ##? Usage:
 ##?    dot

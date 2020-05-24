@@ -4,7 +4,6 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/documentation.sh"
 
 ##? Jump to files, folders or editing
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    jump (global|local|work|file|dev) <args>...

@@ -4,7 +4,6 @@ set -eo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Palette
-#?? 0.2.0
 ##?
 ##? Usage:
 ##?    palette [options] image <filename>

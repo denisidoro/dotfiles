@@ -6,7 +6,6 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 source "${DOTFILES}/scripts/git/aux/hooks.sh"
 
 ##? Git pre-commit hooks
-#?? 0.2.0
 ##?
 ##? Usage:
 ##?    pre-commit

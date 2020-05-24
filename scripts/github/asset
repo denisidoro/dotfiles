@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 ##? Pushbullet API
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    asset latest-version <user> <repo>

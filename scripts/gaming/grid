@@ -4,7 +4,6 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Helpers for retrieving grids
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    grid <game>

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 ##? Symlink handler
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    link <args>...

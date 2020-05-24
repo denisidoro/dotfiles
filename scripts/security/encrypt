@@ -5,7 +5,6 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Encrypts content
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    encrypt [options]

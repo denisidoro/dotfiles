@@ -4,10 +4,9 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Call arbitrary core functions
-#?? 0.1.0
 ##?
 ##? Usage:
-#??   eval [<code>...]
+##?   eval [<code>...]
 
 docs::eval_help "$@"
 

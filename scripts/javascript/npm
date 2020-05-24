@@ -4,7 +4,6 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? npm helpers
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    npm symlink

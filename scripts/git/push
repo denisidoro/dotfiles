@@ -4,7 +4,6 @@
 source "${DOTFILES}/scripts/git/aux/core.sh"
 
 ##? Git push helpers
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    push upstream <args>...

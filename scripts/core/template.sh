@@ -5,7 +5,6 @@ source "$DOTFILES/scripts/core/main.sh"
 import "" # todo
 
 ##? Brief script explanation
-#?? 0.1.0
 ##?
 ##? Usage
 ##?    script args

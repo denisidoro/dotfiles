@@ -6,7 +6,6 @@ REPO="https://github.com/denisidoro/dotfiles.git"
 DOT_BIN="${DOTFILES}/bin/dot"
 
 ##? Setups the environment
-#?? 0.3.0
 ##?
 ##? Usage:
 ##?    init [<profile>]

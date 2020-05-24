@@ -4,7 +4,6 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Window manager utilities
-#?? 0.1.0
 ##?
 ##? Usage:
 ##?    wm cheats (alfred|navi)

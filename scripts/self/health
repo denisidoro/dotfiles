@@ -5,7 +5,6 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Checks for available commands, config files, etc.
-#?? 0.5.0
 ##?
 ##? Usage:
 ##?    health
