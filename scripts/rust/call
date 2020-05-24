@@ -32,7 +32,6 @@ _call() {
    local -r bin_path="$(_bin)"
 
    if [ -n "$bin_path" ]; then
-      echo $bin_path "$@"
       $bin_path "$@"
       exit 0
    fi

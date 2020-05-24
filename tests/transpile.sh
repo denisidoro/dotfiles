@@ -1,65 +1,56 @@
 #!/usr/bin/env bash
 
-_gen_go_source() {
-   local -r source="$1"
-   cat << EOB > "$source"
-package main
-import "fmt"
+_get_source() {
+   local -r extended="$1"
+   local -r language="$2"
 
-func main() {
-    fmt.Println("hello world")
-    foo := myFn()?
-    apples := getApples()
-    pies := apples.map(func(a) Pie {
-       halfBakedPie = startBaking(apple)?
-       return halfBakedPie.finish()
-    })
-}
-EOB
-}
+   local -r backtick='`'
+   local -r triple_backtick="${backtick}"
+   local -r pattern="${triple_backtick}${language}"
 
-_transpile_go_error_propagation() {
-   local -r source="${TEST_DIR}/code.go"
-   _gen_go_source "$source"
-   dot code transpile "$source"
-   local -r result="$(cat "$source")"
-   echo "$result" | test::includes "foo, err := myFn()" \
-      && echo "$result" | test::includes "halfBakedPie, err := startBaking(apple)" \
-      && echo "$result" | test::includes "if err != nil {"
+   _extended_fn() {
+      grep -m1 "$triple_backtick" -B999
+   }
+
+   _vanilla_fn() {
+      grep "$triple_backtick" -A999
+   }
+
+   $extended && filter_fn=_extended_fn || filter_fn=_vanilla_fn
+
+   cat "${DOTFILES}/docs/transpile.md" \
+      | sed -n "/${pattern}/,/${triple_backtick}/p" \
+      | grep -v "$pattern" \
+      | $filter_fn \
+      | grep -v "$triple_backtick"
 }
 
-_transpile_go_map() {
-   local -r source="${TEST_DIR}/code.go"
-   _gen_go_source "$source"
-   dot code transpile "$source"
-   local -r result="$(cat "$source")"
-   echo "$result" | test::includes "pies := make([]Pie, len(apples))" \
-      && echo "$result" | test::includes "pies[i] = halfBakedPie.finish()"
+_get_extended_source() {
+   _get_source true "$@"
 }
 
-_gen_bash_source() {
-   local -r source="$1"
-   cat << EOB > "$source"
-myfn(arg1, arg2, arg3) {
-   body
-}
-EOB
+_get_vanilla_source() {
+   _get_source false "$@"
 }
 
-_transpile_bash_args() {
-   local -r source="${TEST_DIR}/code.bash"
-   _gen_bash_source "$source"
-   dot code transpile "$source"
-   local -r result="$(cat "$source")"
-   echo "$result" | test::includes "myfn() {" \
-      && echo "$result" | test::includes "local -r arg1" \
-      && echo "$result" | test::includes "local -r arg2" \
-      && echo "$result" | test::includes "local -r arg3"
+_gen_extended() {
+   local -r language="$1"
+   local -r filepath="$2"
+   _get_extended_source "$language" > "$filepath"
+}
+
+_transpile() {
+   local -r extension="$1"
+   local -r filepath="${TEST_DIR}/code.${extension}"
+   _gen_extended "$extension" "$filepath"
+   dot code transpile "$filepath" || true
+   local -r actual="$(cat "$filepath")"
+   local -r expected="$(_get_vanilla_source "$extension" | xargs)"
+   echo "$actual" | xargs | test::equals "$expected"
 }
 
 test::set_suite "rust - go"
-test::run "transpile - error propagation" _transpile_go_error_propagation
-test::skip "transpile - map" _transpile_go_map
+test::run "transpile" _transpile "go"
 
 test::set_suite "rust - bash"
-test::run "transpile - args" _transpile_bash_args
+test::run "transpile" _transpile "bash"

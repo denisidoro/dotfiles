@@ -11,6 +11,8 @@ For example, [ag](https://github.com/ggreer/the_silver_searcher) requires you to
 
 `dot pkg add ag` will take care of all this for you.
 
+Note: please refer to the [main README](https://github.com/denisidoro/dotfiles/blob/master/README.md) for install instructions.
+
 ### Main usage
 
 ```sh
