@@ -12,3 +12,4 @@ target
 local/
 .lein-env
 modules
+Cargo.lock
