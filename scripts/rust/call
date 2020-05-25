@@ -38,11 +38,6 @@ _call() {
    return 1
 }
 
-cmd="${1:-}"
-case "$cmd" in
-   --help|-h) _help ;;
-esac
-
 _call "$@" && exit 0
 dot pkg add dotrs || true
 _call "$@" && exit 0
