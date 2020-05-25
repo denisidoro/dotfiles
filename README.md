@@ -16,8 +16,8 @@
   <a href="#-installation">Installation</a>&nbsp;&nbsp;&nbsp;
   <a href="shell">Shell</a>&nbsp;&nbsp;&nbsp;
   <a href="scripts">Scripts</a>&nbsp;&nbsp;&nbsp;
-  <a href="git/config">Git</a>
-  <a href="docs">Docs</a>&nbsp;&nbsp;&nbsp;
+  <a href="git/config">Git</a>&nbsp;&nbsp;&nbsp;
+  <a href="docs">Docs</a>
 </p>
 
 ## Installation
