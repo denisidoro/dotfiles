@@ -10,7 +10,7 @@ _proj_name() {
       | tr -d '"'
 }
 
-case "${1:-} " in
+case "${1:-}" in
    --help|-h) ;;
    *)
       export PROJ_HOME="${PROJ_HOME:-$PWD}"
