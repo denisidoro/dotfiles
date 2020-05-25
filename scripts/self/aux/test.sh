@@ -61,7 +61,7 @@ test::equals() {
    local -r expected="$(echo "${1:-}")"
 
    if [[ "$actual" != "$expected" ]]; then
-      log::error "Expected '${expected}' but got '${actual}'"
+      log::error "Expected...\n\n${expected}\n\n...but got:\n\n${actual}'"
       return 2
    fi
 }

@@ -46,11 +46,12 @@ fn transform(line: String) -> String {
             let split = (&captures[3]).split(",");
             let args: Vec<&str> = split.collect();
 
-            for arg in args {
+            for (i, arg) in args.into_iter().enumerate() {
                 result.push_str(&format!(
-                    "{padding}   local -r {arg};\n",
+                    "{padding}   local -r {arg}=\"${index}\"\n",
                     padding = padding,
-                    arg = arg.replace(" ", "")
+                    arg = arg.replace(" ", ""),
+                    index = i + 1
                 ));
             }
         }
@@ -66,7 +67,7 @@ mod tests {
     fn test_transform_args() {
         let line = String::from("myfn(arg1, arg2, arg3) {");
         assert_eq!(
-            "myfn() {\n   local -r arg1;\n   local -r arg2;\n   local -r arg3;\n",
+            "myfn() {\n   local -r arg1=\"$1\"\n   local -r arg2=\"$2\"\n   local -r arg3=\"$3\"\n",
             transform(line)
         );
     }

@@ -27,6 +27,7 @@ _get_language() {
       *json*) language="json" ;;
       *js*) language="javascript" ;;
       *rs) language="rust" ;;
+      *go) language="go" ;;
    esac
 
    if [ -z $extension ]; then
@@ -57,6 +58,9 @@ case "$language" in
       ;;
    rust)
       rustfmt "$filename"
+      ;;
+   go)
+      gofmt "$filename"
       ;;
    *)
       nvim --headless --noplugin -n -u NONE -c ':normal gg=G' +wq "$filename"

@@ -32,17 +32,11 @@ _call() {
    local -r bin_path="$(_bin)"
 
    if [ -n "$bin_path" ]; then
-      echo $bin_path "$@"
       $bin_path "$@"
       exit 0
    fi
    return 1
 }
-
-cmd="${1:-}"
-case "$cmd" in
-   --help|-h) _help ;;
-esac
 
 _call "$@" && exit 0
 dot pkg add dotrs || true

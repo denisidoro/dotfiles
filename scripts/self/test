@@ -59,7 +59,12 @@ if [[ "${suite:-}" == "rust" ]]; then
 fi
 
 for test in $(_all_files); do
+   seconds=$SECONDS
    source "$test"
+   delta=$((SECONDS - seconds))
+   echoerr
+   filename="$(basename "$test")"
+   log::warning "Running ${filename} took ${delta} seconds"
 done
 
 test::finish
