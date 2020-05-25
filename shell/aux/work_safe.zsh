@@ -84,17 +84,17 @@ _load() {
    esac
 }
 
-nvm() {
+_nvm() {
    _load nvm || true
    nvm "$@"
 }
 
-node() {
+_node() {
    _load nvm || true
    node "$@"
 }
 
-npm() {
+_npm() {
    _load nvm || true
    npm "$@"
 }
