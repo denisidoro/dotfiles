@@ -2,6 +2,10 @@
 set -euo pipefail
 
 filename="${1:-}"
-
 dot rust call "transpile" "$@"
+
+case $filename in
+    --help|-h) exit 0;;
+esac
+
 dot code beautify "$filename"

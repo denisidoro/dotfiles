@@ -35,7 +35,7 @@ assert_help() {
    local -r ctx="$(echo "$words" | awk '{print $1}')"
    local -r cmd="$(echo "$words" | awk '{print $2}')"
 
-   dot "$ctx" "$cmd" --help | grep -Eq 'Usage|USAGE'
+   dot "$ctx" "$cmd" --help | grep -Eq 'Usage|USAGE|usage'
 }
 
 _with_eval_help() {
