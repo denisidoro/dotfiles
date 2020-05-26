@@ -1,0 +1,32 @@
+/* =============== 
+ compose button 
+================ */
+
+.z0 {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+.T-I.J-J5-Ji.T-I-KE.L3 {
+    color: transparent;
+    width: 1px;
+    background: black;
+    padding-right: 0;
+    transform: scale(0.6);
+}
+
+/* =============== 
+ hide sections
+================ */
+
+.akc.aZ6.YX, /* meet: bottom left */
+.l2.pfiaof, /* stats footer */
+a.gb_ue.gb_vc.gb_se, /* gmail logo: top left */
+.apO, /* apps: right sidebar */
+.zo, /* support button: top right */
+.gb_Sf /* apps button: top right */ {
+    display: none !important;
+    visibility: hidden !important;
+}
