@@ -4,7 +4,7 @@ set -euo pipefail
 filename="${1:-}"
 dot rust call "transpile" "$@"
 
-cat "$filename"
+${DEBUG:-false} && cat "$filename"
 
 case $filename in
    --help|-h) exit 0 ;;

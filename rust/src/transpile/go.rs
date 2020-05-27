@@ -89,7 +89,7 @@ fn transpile_map(lines: Vec<String>) -> Vec<String> {
 
                 inside_map = true;
                 new_lines.push(format!(
-                    "{}{} := make([]{}, len({})",
+                    "{}{} := make([]{}, len({}))",
                     padding, array_name, elem_type, original_array_name
                 ));
                 new_lines.push(format!(
@@ -143,7 +143,7 @@ mod tests {
         let result: String = new_lines.join("\n");
 
         assert_eq!(
-            r#"   pies := make([]Pie, len(apples)
+            r#"   pies := make([]Pie, len(apples))
    for i, a := range apples {
         appleSlice := slice(a)
         pies[i] = bake(appleSlice)

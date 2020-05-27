@@ -29,13 +29,13 @@ func myfn() (*somestruct, error) {
 package main
 
 func myfn() (*somestruct, error) {
-    apples, err := bar()
+    apples, err := getFruits()
     if err != nil {
         return nil, err
     }
 
 	pies := make([]Pie, len(apples))
-	for i, a := range pies {
+	for i, a := range apples {
         appleSlice := slice(a)
 		pies[i] = bake(appleSlice)
 	}
