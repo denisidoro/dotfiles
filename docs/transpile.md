@@ -16,9 +16,9 @@ func myfn() (*somestruct, error) {
     apples := getFruits()?
 
     pies := apples.map(func(a) Pie {
-        appleSlice := slice(a)
-		return bake(appleSlice)
-	})
+    appleSlice := slice(a)
+        return bake(appleSlice)
+    })
 
     return baz(pies)
 }
@@ -34,11 +34,11 @@ func myfn() (*somestruct, error) {
         return nil, err
     }
 
-	pies := make([]Pie, len(apples))
-	for i, a := range apples {
+    pies := make([]Pie, len(apples))
+    for i, a := range apples {
         appleSlice := slice(a)
-		pies[i] = bake(appleSlice)
-	}
+        pies[i] = bake(appleSlice)
+    }
 
     return baz(pies)
 }
