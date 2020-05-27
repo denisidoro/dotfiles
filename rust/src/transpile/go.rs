@@ -44,9 +44,9 @@ fn transform_line_error_propagation(line: String) -> String {
     if result.contains('?') && result.contains('=') {
         if let Some(captures) = ERROR_REGEX.captures(&result) {
             result = format!("{padding}{var}, err :={assignment}\n{padding}if err != nil {{\n{padding}   return nil, err\n{padding}}}", 
-                                padding = &captures[1],
-                                var = &captures[2],
-                                assignment = &captures[3]);
+                                padding = capture_str(&captures, 1),
+                                var = capture_str(&captures, 2),
+                                assignment = capture_str(&captures, 3));
         }
     }
     result
@@ -65,26 +65,11 @@ fn transpile_map(lines: Vec<String>) -> Vec<String> {
     for l in lines {
         if !inside_map && l.contains(".map(f") {
             if let Some(captures) = MAP_REGEX.captures(&l) {
-                padding = captures
-                    .get(1)
-                    .map_or(String::from(""), |s| String::from(s.as_str()));
-
-                array_name = captures
-                    .get(2)
-                    .map_or(String::from(""), |s| String::from(s.as_str()));
-
-                original_array_name = captures
-                    .get(3)
-                    .map_or(String::from(""), |s| String::from(s.as_str()));
-
-                elem_name = captures
-                    .get(4)
-                    .map_or(String::from("x"), |s| String::from(s.as_str()));
-
-                elem_type = captures
-                    .get(5)
-                    .map_or(String::from(""), |s| String::from(s.as_str()));
-
+                padding = capture_str(&captures, 1);
+                array_name = capture_str(&captures, 2);
+                original_array_name = capture_str(&captures, 3);
+                elem_name = capture_str(&captures, 4);
+                elem_type = capture_str(&captures, 5);
                 replace_str = format!("{}[i] =", array_name);
 
                 inside_map = true;
@@ -108,6 +93,12 @@ fn transpile_map(lines: Vec<String>) -> Vec<String> {
     }
 
     return new_lines;
+}
+
+fn capture_str(captures: &regex::Captures<'_>, index: usize) -> String {
+    captures
+        .get(index)
+        .map_or(String::from(""), |s| String::from(s.as_str()))
 }
 
 #[cfg(test)]
