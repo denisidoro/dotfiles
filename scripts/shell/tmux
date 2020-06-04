@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 source "${DOTFILES}/scripts/core/documentation.sh"
 
@@ -29,10 +30,13 @@ _fzf1() {
 }
 
 _session() {
+    local -r x="$(_ls)"
+    [ -z "$x" ] && exit 1
+
     if [[ $# < 1 ]]; then
-       _ls  | _fzf1
+       echo "$x" | _fzf1
     else
-        _ls | _fzf1 --filter="$*" | head -n1
+        echo "$x" | _fzf1 --filter="$*" | head -n1
     fi
 }
 
@@ -40,16 +44,20 @@ _new() {
     if [[ $# < 1 ]]; then
         tmux new
     else
-        tmux new -s "$@"
+        tmux new -s "$*"
     fi
 }
 
 _attach() {
-    tmux attach -t "$(_session "$@")"
+    local -r session="$(_session "$@")"
+    [ -z "$session" ] && exit 1
+    tmux attach -t "$session"
 }
 
 _kill() {
-    tmux kill-session -t "$(_session "$@")"
+    local -r session="$(_session "$@")"
+    [ -z "$session" ] && exit 1
+    tmux kill-session -t "$session"
 }
 
 case $cmd in
