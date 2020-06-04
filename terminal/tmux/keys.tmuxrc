@@ -1,7 +1,7 @@
-# Set prefix as Ctrl-Space
-set -g prefix C-Space
+# Set prefix as Ctrl-J
+set -g prefix C-j
 unbind-key C-b
-bind-key C-Space send-prefix
+bind-key C-j send-prefix
 
 # Window and pane
 bind-key v split-window -h
@@ -40,6 +40,10 @@ bind -n M-Down select-pane -D
 # Shift arrow to switch windows
 bind -n S-Left  previous-window
 bind -n S-Right next-window
+
+# Kill without confirmation
+bind-key & kill-window
+bind-key x kill-pane
 
 # No delay for escape key press
 set -sg escape-time 0

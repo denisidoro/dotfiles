@@ -1,1 +1,3 @@
 source ~/.bashrc
+export VOLTA_HOME="/Users/denis.isidoro/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"

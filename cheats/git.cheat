@@ -519,5 +519,10 @@ for branch in $(git branch -r --merged | egrep -v "origin/HEAD|origin/master"); 
 # List ignored files
 git status --ignored -s | grep "\!\!" | sed 's/!! //'
 
-# Set master as parent, upstream branch
+# Set parent, upstream branch as master
 git branch -u master
+
+# Set parent, upstream branch
+git branch -u <branch>
+
+$ branch: git branch | awk '{print $NF}'

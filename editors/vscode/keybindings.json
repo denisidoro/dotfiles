@@ -14,6 +14,11 @@
     "command": "workbench.action.focusActiveEditorGroup"
   },
   {
+    "key": "ctrl+enter",
+    "command": "workbench.action.terminal.runSelectedText",
+    "when": "editorTextFocus && editorHasSelection"
+  },
+  {
     "key": "f12",
     "command": "-editor.action.goToDeclaration",
     "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"

@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+source "${DOTFILES}/scripts/core/documentation.sh"
+
+##? tmux helpers
+##?
+##? Usage:
+##?     tmux new [<session_name>]
+##?     tmux attach [<session_name>]
+##?     tmux kill [<session_name>]
+
+docs::eval_help "$@"
+
+cmd="${1:-}"
+shift
+
+_ls() {
+    tmux ls \
+        | sed -E 's/^([^:]+): ?/\1|/' \
+        | column -t -s'|'
+}
+
+_fzf() {
+    fzf "$@" 
+}
+
+_fzf1() {
+    _fzf "$@" | awk '{print $1}'
+}
+
+_session() {
+    if [[ $# < 1 ]]; then
+       _ls  | _fzf1
+    else
+        _ls | _fzf1 --filter="$*" | head -n1
+    fi
+}
+
+_new() {
+    if [[ $# < 1 ]]; then
+        tmux new
+    else
+        tmux new -s "$@"
+    fi
+}
+
+_attach() {
+    tmux attach -t "$(_session "$@")"
+}
+
+_kill() {
+    tmux kill-session -t "$(_session "$@")"
+}
+
+case $cmd in
+    new) _new "$@";;
+    attach) _attach "$@";;
+    kill) _kill "$@";;
+esac

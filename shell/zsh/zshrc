@@ -16,7 +16,7 @@ source "${DOTFILES}/shell/aux/zsh_vars.zsh"
 source "${DOTFILES}/shell/aux/core.zsh"
 
 # load aliases
-source "${DOTFILES}/shell/aliases/core.sh"
+source "${DOTFILES}/shell/aliases/core.zsh"
 
 # load local custom config
 source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
@@ -33,3 +33,5 @@ source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
 source "${DOTFILES}/shell/zsh/bindings/zim.zsh"
 
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export VOLTA_HOME="/Users/denis.isidoro/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"

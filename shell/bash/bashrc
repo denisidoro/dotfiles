@@ -17,7 +17,7 @@ source "${DOTFILES}/shell/aux/vars.zsh"
 source "${DOTFILES}/shell/aux/core.zsh"
 
 # load aliases
-source "${DOTFILES}/shell/aliases/core.sh"
+source "${DOTFILES}/shell/aliases/core.zsh"
 
 # set prompt
 export PS1="\n\[\e[32m\]\w\[\e[m\] \[\e[31m\]$(nonzero_return)\[\e[m\]\n\[\e[33m\]\\$\[\e[m\] "
@@ -32,3 +32,5 @@ source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
 source "${DOTFILES}/shell/bash/themes/dns.sh"
 
 # [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export VOLTA_HOME="/Users/denis.isidoro/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
