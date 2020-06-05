@@ -6,6 +6,8 @@
 # ========================
 alias c='clear'
 alias t='tmux'
+alias tt='dot shell tmux tat'
+alias tl='dot shell tmux ls'
 alias tn='dot shell tmux new'
 alias ta='dot shell tmux attach'
 alias tk='dot shell tmux kill'

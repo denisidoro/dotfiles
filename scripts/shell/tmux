@@ -6,6 +6,8 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 ##? tmux helpers
 ##?
 ##? Usage:
+##?     tmux tat
+##?     tmux ls
 ##?     tmux new [<session_name>]
 ##?     tmux attach [<session_name>]
 ##?     tmux kill [<session_name>]
@@ -17,12 +19,13 @@ shift
 
 _ls() {
     tmux ls \
-        | sed -E 's/^([^:]+): ?/\1|/' \
-        | column -t -s'|'
+        | sed -E 's|\([^ ]+ +[^ ]+ ([^ ]+) +([0-9]+) +([0-9]+):([0-9]+):([0-9]+) +([0-9]+)\)|: \2/\1 \3h\4|' \
+        | awk -F':' 'BEGIN{OFS=":";} {$1="\033[33m"$1"\033[0m"; $3="\033[37m"$3"\033[0m"};1' \
+        | column -t -s':'
 }
 
 _fzf() {
-    fzf "$@" 
+    fzf --ansi "$@" 
 }
 
 _fzf1() {
@@ -36,7 +39,7 @@ _session() {
     if [[ $# < 1 ]]; then
        echo "$x" | _fzf1
     else
-        echo "$x" | _fzf1 --filter="$*" | head -n1
+       echo "$x" | _fzf1 --filter="$*" | head -n1
     fi
 }
 
@@ -60,8 +63,39 @@ _kill() {
     tmux kill-session -t "$session"
 }
 
+not_in_tmux() {
+  [ -z "${TMUX:-}" ]
+}
+
+session_exists() {
+  tmux has-session -t "=$session_name"
+}
+
+create_detached_session() {
+  (TMUX='' tmux new-session -Ad -s "$session_name")
+}
+
+create_if_needed_and_attach() {
+  if not_in_tmux; then
+    tmux new-session -As "$session_name"
+  else
+    if ! session_exists; then
+      create_detached_session
+    fi
+    tmux switch-client -t "$session_name"
+  fi
+}
+
+_tat() {
+    local -r path_name="$(basename "$PWD" | tr . -)"
+    local -r session_name=${1:-$path_name}
+    create_if_needed_and_attach
+}
+
 case $cmd in
-    new) _new "$@";;
+    ls) _ls "$@";;
+    new|cr*) _new "$@";;
     attach) _attach "$@";;
-    kill) _kill "$@";;
+    kill|del*) _kill "$@";;
+    tat) _tat "$@";;
 esac

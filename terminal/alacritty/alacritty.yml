@@ -532,14 +532,31 @@ background_opacity: 0.95
 # be mapped to the `ReceiveChar` action. Alternatively, you can use `None` for
 # a no-op if you do not wish to receive input characters for that binding.
 key_bindings:
+  - { key: N,     mods: Command, command: {program: "/Users/denis.isidoro/dotfiles/bin/dot", args: ["shell", "alacritty", "new"]}}
+
+  # split right
   - { key: D,     mods: Command,       chars: "\x0a\x76" } 
+
+  # split below
   - { key: D,     mods: Command|Shift, chars: "\x0a\x73" }
+
+  # copy mode
+  - { key: G,     mods: Command,       chars: "\x0a\x5b" }
+
+  # search
+  - { key: F,     mods: Command,       chars: "\x0a\x2f" }
+
+  # detach
+  - { key: X,     mods: Command,       chars: "\x0a\x64" }
+
+  # close pane
   - { key: W,     mods: Command,       chars: "\x0a\x78" }
+
+  # focus pane
   - { key: H,     mods: Command,       chars: "\x0a\x68" }
   - { key: J,     mods: Command,       chars: "\x0a\x6a" }
   - { key: K,     mods: Command,       chars: "\x0a\x6b" }
   - { key: L,     mods: Command,       chars: "\x0a\x6c" }
-  - { key: T,     mods: Command,       chars: "\x0a\x63" }
   - { key: Key1,  mods: Command,       chars: "\x0a\x31" }
   - { key: Key2,  mods: Command,       chars: "\x0a\x32" }
   - { key: Key3,  mods: Command,       chars: "\x0a\x33" }
@@ -553,6 +570,11 @@ key_bindings:
   - { key: Down,  mods: Command,       chars: "\x0a\x4a" }
   - { key: Up,    mods: Command,       chars: "\x0a\x4b" }
   - { key: Right, mods: Command,       chars: "\x0a\x4c" }
+
+  # new window
+  - { key: T,     mods: Command,       chars: "\x0a\x63" }
+
+
 
     # (Windows, Linux, and BSD only)
   - { key: V,        mods: Control|Shift, action: Paste            }

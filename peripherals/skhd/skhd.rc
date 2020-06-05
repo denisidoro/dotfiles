@@ -13,8 +13,8 @@ grab < escape ; default
 # =================
 
 # launch iTerm
-alt + cmd + ctrl + shift - return : open -na /Applications/iTerm.app
-alt + cmd + ctrl + shift - a : open -na /Applications/Alacritty.app
+alt + cmd + ctrl + shift - a : open -na /Applications/iTerm.app
+alt + cmd + ctrl + shift - return : open -na /Applications/Alacritty.app
 
 # =================
 # Power
