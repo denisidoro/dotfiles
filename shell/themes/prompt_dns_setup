@@ -11,40 +11,40 @@ DIRTY="✗"
 NONE="✓"
 
 prompt_dns_pwd() {
-	prompt_dir="${PWD/$HOME/\~}"
-	print -n "%F${PROMPT_COLOR_0}${prompt_dir}"$'\n'
+   prompt_dir="${PWD/$HOME/\~}"
+   print -n "%F${PROMPT_COLOR_0}${prompt_dir}"$'\n'
 }
 
 prompt_dns_git() {
-	[[ -n ${git_info} ]] && print -n "${(e)git_info[prompt]}"
+   [[ -n ${git_info} ]] && print -n "${(e)git_info[prompt]}"
 }
 
 prompt_dns_precmd() {
-	(( ${+functions[git-info]} )) && git-info
+   (( ${+functions[git-info]} )) && git-info
 }
 
 prompt_dns_setup() {
-	local prompt_dns_status="%(?:%F${PROMPT_COLOR_1}$FIRST_CHARACTER_OK:%F{red}$FIRST_CHARACTER_KO)"
+   local prompt_dns_status="%(?:%F${PROMPT_COLOR_1}$FIRST_CHARACTER_OK:%F{red}$FIRST_CHARACTER_KO)"
 
-		autoload -Uz add-zsh-hook && add-zsh-hook precmd prompt_dns_precmd
+   autoload -Uz add-zsh-hook && add-zsh-hook precmd prompt_dns_precmd
 
-		prompt_opts=(cr percent sp subst)
+   prompt_opts=(cr percent sp subst)
 
-		zstyle ':zim:git-info:branch' format "%F${PROMPT_COLOR_1}%b"
-		zstyle ':zim:git-info:commit' format '%c'
+   zstyle ':zim:git-info:branch' format "%F${PROMPT_COLOR_1}%b"
+   zstyle ':zim:git-info:commit' format '%c'
 
-		if ! ${PREVENT_DIRTY:-false}; then
-			zstyle ':zim:git-info:clean' format '%F{white}$NONE'
-				zstyle ':zim:git-info:dirty' format '%F{yellow}$DIRTY'
-		else
-			zstyle ':zim:git-info:clean' format ''
-				zstyle ':zim:git-info:dirty' format ''
-				fi
+   if ! ${PREVENT_DIRTY:-false}; then
+      zstyle ':zim:git-info:clean' format '%F{white}$NONE'
+      zstyle ':zim:git-info:dirty' format '%F{yellow}$DIRTY'
+   else
+      zstyle ':zim:git-info:clean' format ''
+      zstyle ':zim:git-info:dirty' format ''
+   fi
 
-				zstyle ':zim:git-info:keys' format 'prompt' ' %F{cyan}%b%c %C%D'
+   zstyle ':zim:git-info:keys' format 'prompt' ' %F{cyan}%b%c %C%D'
 
-				PS1=$'\n'"\$(prompt_dns_pwd)\$(prompt_dns_git)%f"$'\n'"${prompt_dns_status} "
-				RPS1=''
+   PS1=$'\n'"\$(prompt_dns_pwd)\$(prompt_dns_git)%f"$'\n'"${prompt_dns_status} "
+   RPS1=''
 }
 
 prompt_dns_setup "${@}"

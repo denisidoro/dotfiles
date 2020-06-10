@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 _load_fallback_theme() {
-fpath=("${DOTFILES}/shell/themes" "${DOTFILES}/shell/zsh/completions" $fpath)
-autoload -Uz promptinit
-promptinit
-prompt "${1:-dns}"
+   fpath=("${DOTFILES}/shell/themes" "${DOTFILES}/shell/zsh/completions" $fpath)
+   autoload -Uz promptinit
+   promptinit
+   prompt "${1:-dns}"
 }
 
 eval "$(starship init zsh 2>/dev/null || echo "_load_fallback_theme")"

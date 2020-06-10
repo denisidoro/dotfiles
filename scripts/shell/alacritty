@@ -28,15 +28,15 @@ end tell
 '
 
 _check_running() {
-	osascript -e 'set appName to "Alacritty"
+   osascript -e 'set appName to "Alacritty"
 	if application appName is running then
 		return 0
 	else
 		error number 1
-	end if'
+   end if'
 }
 
 case $cmd in
-    new) _new "$@";;
-    check) _check_running "$@";;
+   new) _new "$@" ;;
+   check) _check_running "$@" ;;
 esac
