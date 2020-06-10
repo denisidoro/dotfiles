@@ -7,3 +7,8 @@ echoerr() {
 has() {
    type "$1" &>/dev/null
 }
+
+nonzero_return() {
+   RETVAL=$?
+   [ $RETVAL -ne 0 ] && echo "$RETVAL"
+}
