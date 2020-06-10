@@ -114,7 +114,7 @@ _alias() {
       pkg) echo package ;;
       sec) echo security ;;
       aws) echo cloud ;;
-      sh) echo shell ;;
+      sh|shell) echo terminal ;;
       fs) echo filesystem ;;
       not) echo notification ;;
       google) echo search ;;

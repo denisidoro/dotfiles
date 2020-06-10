@@ -533,7 +533,7 @@ background_opacity: 0.95
 # be mapped to the `ReceiveChar` action. Alternatively, you can use `None` for
 # a no-op if you do not wish to receive input characters for that binding.
 key_bindings:
-  - { key: N,     mods: Command, command: {program: "/Users/denis.isidoro/dotfiles/bin/dot", args: ["shell", "alacritty", "new"]}}
+  - { key: N,     mods: Command, command: {program: "/Users/denis.isidoro/dotfiles/bin/dot", args: ["terminal", "alacritty", "new"]}}
 
   # split right
   - { key: D,     mods: Command,       chars: "\x0a\x76" } 

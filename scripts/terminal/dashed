@@ -6,11 +6,11 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 ##? Use current path as argument if none is specified
 ##
 ##? Usage:
-##?     dashed-call <cmds>... [-- [<args>...]]?
+##?     dashed <cmds>... [-- [<args>...]]?
 ##
 ##? Example:
-##?     dashed-call ls -la
-##?     dashed-call ls -la -- somefolder
+##?     dashed ls -la
+##?     dashed ls -la -- somefolder
 
 docs::eval_help "$@"
 

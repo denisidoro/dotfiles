@@ -11,13 +11,13 @@ export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 PROFILE_SHELL="bash"
 
 # load vars
-source "${DOTFILES}/shell/aux/vars.zsh"
+source "${DOTFILES}/shell/aux/vars.bash"
 
 # load helper functions
-source "${DOTFILES}/shell/aux/core.zsh"
+source "${DOTFILES}/shell/aux/core.bash"
 
 # load aliases
-source "${DOTFILES}/shell/aliases/core.zsh"
+source "${DOTFILES}/shell/aliases/core.bash"
 
 # set prompt
 export PS1="\n\[\e[32m\]\w\[\e[m\] \[\e[31m\]$(nonzero_return)\[\e[m\]\n\[\e[33m\]\\$\[\e[m\] "
@@ -26,4 +26,4 @@ export PS1="\n\[\e[32m\]\w\[\e[m\] \[\e[31m\]$(nonzero_return)\[\e[m\]\n\[\e[33m
 source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
 
 # theme
-source "${DOTFILES}/shell/themes/dns.sh"
+source "${DOTFILES}/shell/themes/dns.bash"

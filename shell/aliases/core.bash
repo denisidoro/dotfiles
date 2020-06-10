@@ -6,11 +6,11 @@
 # ========================
 alias c='clear'
 alias t='tmux'
-alias tt='dot shell tmux tat'
-alias tl='dot shell tmux ls'
-alias tn='dot shell tmux new'
-alias ta='dot shell tmux attach'
-alias tk='dot shell tmux kill'
+alias tt='dot terminal tmux tat'
+alias tl='dot terminal tmux ls'
+alias tn='dot terminal tmux new'
+alias ta='dot terminal tmux attach'
+alias tk='dot terminal tmux kill'
 
 # ========================
 # shell
@@ -26,7 +26,7 @@ alias map='xargs -I%'
 # editors
 # ========================
 alias vim='nvim'
-alias v="dot_or_args nvim --"
+alias v="dot terminal dashed nvim --"
 
 code() {
    local target="${1:-$PWD}"
@@ -43,7 +43,11 @@ code() {
    export APP_ROOT="$cwd"
 
    [[ $# > 0 ]] && shift
-   "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" "$target" "$@"
+   if has code; then
+      command code "$target ""$@" 
+   else
+      "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" "$target" "$@"
+   fi
 }
 
 # ========================
@@ -56,7 +60,7 @@ alias n="navi"
 # ========================
 # git
 # ========================
-source "${DOTFILES}/shell/aliases/git.zsh"
+source "${DOTFILES}/shell/aliases/git.bash"
 
 # ========================
 # phabricator
@@ -69,11 +73,11 @@ alias al="navi best 'Land a diff'"
 # explorer
 # ========================
 
-alias o="dot_or_args open --"
+alias o="dot terminal dashed open --"
 unalias f &> /dev/null
-alias f="dot_or_args vifm --"
+alias f="dot terminal dashed vifm --"
 # alias ls='ls --color=auto'
-alias ls='lsd'
+ls() { has lsd && lsd "$@" || command ls "$@"; }
 alias lst="tree -L 2"
 cd() { builtin cd "$@" && ls .; }
 mkcd() { mkdir -p -- "$@" && cd -P -- "$@"; }

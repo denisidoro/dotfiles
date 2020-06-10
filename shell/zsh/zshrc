@@ -7,13 +7,13 @@ export DOTFILES="${DOTFILES:-"${HOME}/dotfiles"}"
 PROFILE_SHELL="zsh"
 
 # load vars
-source "${DOTFILES}/shell/aux/vars.zsh"
+source "${DOTFILES}/shell/aux/vars.bash"
 
 # load helper functions
-source "${DOTFILES}/shell/aux/core.zsh"
+source "${DOTFILES}/shell/aux/core.bash"
 
 # load aliases
-source "${DOTFILES}/shell/aliases/core.zsh"
+source "${DOTFILES}/shell/aliases/core.bash"
 
 # on directory change
 dns_chpwd() {
@@ -26,7 +26,7 @@ chpwd_functions+=dns_chpwd
 setopt HIST_IGNORE_ALL_DUPS
 
 # theme
-source "${DOTFILES}/shell/zsh/themes/core.zsh"
+source "${DOTFILES}/shell/themes/core.zsh"
 
 # Initialize modules
 export ZIM_HOME="${DOTFILES}/modules/zimfw"
