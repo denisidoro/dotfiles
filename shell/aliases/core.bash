@@ -43,10 +43,12 @@ code() {
    export APP_ROOT="$cwd"
 
    [[ $# > 0 ]] && shift
-   if has code; then
-      command code "$target ""$@" 
+
+   local -r osx_path="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" 
+   if [ -f "$osx_path" ]; then
+      "$osx_path" "$target" "$@"
    else
-      "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" "$target" "$@"
+      command code "$target ""$@" 
    fi
 }
 
