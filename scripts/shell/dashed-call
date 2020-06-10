@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/documentation.sh"
+
+##? Use current path as argument if none is specified
+##
+##? Usage:
+##?     dashed-call <cmds>... [-- [<args>...]]?
+##
+##? Example:
+##?     dashed-call ls -la
+##?     dashed-call ls -la -- somefolder
+
+docs::eval_help "$@"
+
+indexof() {
+   local -r index="$1"
+   i=0;
+   shift
+   while [ "$i" -le "$#" ]; do
+      if [ "${@:$i:1}" = "$index" ]; then
+         echo $i
+         return
+      fi
+      ((i++));
+   done;
+   echo -1;
+}
+
+dot_or_args() {
+   local -r dash_index="$(indexof "--" "$@")"
+   readonly fn="${@:1:$((dash_index-1))}"
+   shift $dash_index
+   if [[ $# < 1 ]]; then
+      "${fn[@]}" .
+   else
+      "${fn[@]}" "$@"
+   fi
+}
+
+dot_or_args "$@"

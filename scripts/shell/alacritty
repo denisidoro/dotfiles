@@ -7,6 +7,7 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 ##?
 ##? Usage:
 ##?     alacritty new
+##?     alacritty check
 
 docs::eval_help "$@"
 
@@ -26,6 +27,16 @@ tell application "System Events"
 end tell
 '
 
+_check_running() {
+	osascript -e 'set appName to "Alacritty"
+	if application appName is running then
+		return 0
+	else
+		error number 1
+	end if'
+}
+
 case $cmd in
     new) _new "$@";;
+    check) _check_running "$@";;
 esac

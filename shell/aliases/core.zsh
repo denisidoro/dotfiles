@@ -28,9 +28,28 @@ alias map='xargs -I%'
 alias vim='nvim'
 alias v="dot_or_args nvim --"
 
+code() {
+   local target="${1:-$PWD}"
+   [[ "$target" == "." ]] && target="$PWD"
+   [[ "$target" == "$HOME" ]] && echoerr "Can't open the whole home dir in VSCode" && return 1
+
+   local full_target
+   [[ "$target" == /* ]] && full_target="$target" || full_target="${PWD}/${target}"
+
+   local cwd
+   [[ -d "$full_target" ]] && cwd="$full_target" || cwd="$(dirname "$full_target")"
+
+   export VSCODE_CWD="$cwd"
+   export APP_ROOT="$cwd"
+
+   [[ $# > 0 ]] && shift
+   "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" "$target" "$@"
+}
+
 # ========================
 # utils
 # ========================
+# alias fzf='fzf-tmux'
 alias d='dot'
 alias n="navi"
 
@@ -53,17 +72,11 @@ alias al="navi best 'Land a diff'"
 alias o="dot_or_args open --"
 unalias f &> /dev/null
 alias f="dot_or_args vifm --"
-
 # alias ls='ls --color=auto'
-# alias ls='lsd'
+alias ls='lsd'
 alias lst="tree -L 2"
-cd() {
-   builtin cd "$@" && (lsd . 2>/dev/null || ls .)
-}
-
-mkcd() {
-   mkdir -p -- "$@" && cd -P -- "$@"
-}
+cd() { builtin cd "$@" && ls .; }
+mkcd() { mkdir -p -- "$@" && cd -P -- "$@"; }
 
 _safe_cd() { [[ -d "${1:-}" ]] && cd "$1" || echoerr "$1 doesn't exist"; }
 j() { _safe_cd "$(dot fs jump global "$@")"; }

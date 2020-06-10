@@ -3,21 +3,9 @@
 export DOT_FZF=true
 export DOT_DOCOPTS=python
 
-# export WORKSPACE_ROOT="$GOPATH"
-# export PATH="${GOPATH}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH}:${HOME}/bin:${PATH}"
-export PATH="${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH}:${HOME}/bin:${PATH}:${GOPATH}/bin"
-
-case $PROFILE_SHELL in
-   zsh) path=("$HOME/bin" /usr/local/sbin /usr/local/bin "$path[@]") ;;
-      # *) export PS1="\n\e[32m\]\h\e[m\] \[\e[35m\]\w\[\e[m\] $(nonzero_return)\n\[\e[31m\]→\[\e[m\] " ;;
-esac
-
-code() {
-   [[ "$PWD" == "$HOME" ]] && echoerr "Can't open the whole home dir in VSCode" && return 1
-   export VSCODE_CWD="$PWD"
-   export APP_ROOT="$PWD"
-   dot_or_args "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" -- "$@"
-}
+export WORKSPACE_ROOT="$GOPATH"
+export VOLTA_HOME="${HOME}/.volta"
+export PATH="${VOLTA_HOME}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH}:${HOME}/bin:${PATH}:${GOPATH}/bin"
 
 _load() {
    case $1 in
@@ -49,7 +37,7 @@ _load() {
             add-zsh-hook preexec zsh_enable_lda
             add-zsh-hook precmd zsh_disable_lda
          elif [[ ! -z "$JENKINS_HOME" ]]; then
-            # do nothing on jenkin
+            # do nothing on jenkins
             :
          elif [[ $- == *i* ]]; then
             # interactive bash shell, use PROMPT_COMMAND to hook in pre-execution

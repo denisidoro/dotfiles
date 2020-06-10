@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 FIRST_CHARACTER_OK="♪"
 FIRST_CHARACTER_KO="$FIRST_CHARACTER_OK"
 PROMPT_COLOR_0="{cyan}"
@@ -10,11 +12,11 @@ NONE="✓"
 
 prompt_dns_pwd() {
 	prompt_dir="${PWD/$HOME/\~}"
-		print -n "%F${PROMPT_COLOR_0}${prompt_dir}"$'\n'
+	print -n "%F${PROMPT_COLOR_0}${prompt_dir}"$'\n'
 }
 
 prompt_dns_git() {
-	[[ -n ${git_info} ]] && print -n "%F{white} on${(e)git_info[prompt]}"
+	[[ -n ${git_info} ]] && print -n "${(e)git_info[prompt]}"
 }
 
 prompt_dns_precmd() {

@@ -21,7 +21,7 @@ _get_language() {
    fi
 
    case "$extension" in
-      *sh) language="sh" ;;
+      zimrc|zshenv|zshrc|zlogin|*sh) language="sh" ;;
       *clj*) language="clj" ;;
       *py*) language="python" ;;
       *json*) language="json" ;;

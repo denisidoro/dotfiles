@@ -9,29 +9,35 @@ PROFILE_SHELL="zsh"
 # load vars
 source "${DOTFILES}/shell/aux/vars.zsh"
 
-# load more vars
-source "${DOTFILES}/shell/aux/zsh_vars.zsh"
-
 # load helper functions
 source "${DOTFILES}/shell/aux/core.zsh"
 
 # load aliases
 source "${DOTFILES}/shell/aliases/core.zsh"
 
-# load local custom config
-source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
+# on directory change
+dns_chpwd() {
+   fre --add "$PWD" # register for jump/fasd
+}
+typeset -gaU chpwd_functions
+chpwd_functions+=dns_chpwd
 
-# fzf, fasd and navi
-source "${DOTFILES}/shell/aux/post.zsh"
+# history
+setopt HIST_IGNORE_ALL_DUPS
 
-# misc
-source "${DOTFILES}/shell/aux/misc.zsh"
+# theme
+source "${DOTFILES}/shell/zsh/themes/core.zsh"
+
+# Initialize modules
+export ZIM_HOME="${DOTFILES}/modules/zimfw"
+[[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]] && source ${ZIM_HOME}/zimfw.zsh init -q
+source ${ZIM_HOME}/init.zsh
 
 # load bindings
-# source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
+source "${DOTFILES}/shell/zsh/bindings/editing.zsh"
 source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
 source "${DOTFILES}/shell/zsh/bindings/zim.zsh"
+source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
 
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export VOLTA_HOME="/Users/denis.isidoro/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+# load local custom config
+source "${DOTFILES}/local/zshrc" # 2> /dev/null || true

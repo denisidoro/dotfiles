@@ -21,13 +21,16 @@
 		zmodule git-info
 # A customizable version of steeef's prompt theme.
 # zmodule steeef
-		prompt dns
+		#prompt dns
 
 # Additional completion definitions for Zsh.
 		zmodule zsh-users/zsh-completions
 # Enables and configures smart and extensive tab completion.
 # completion must be sourced after zsh-users/zsh-completions
-		zmodule completion
+		# zmodule completion
+
+# zmodule marlonrichert/zsh-autocomplete
+
 # Fish-like autosuggestions for Zsh.
 		zmodule zsh-users/zsh-autosuggestions
 # Fish-like syntax highlighting for Zsh.
@@ -39,3 +42,5 @@
 # }}} End configuration added by Zim install
 
 		zmodule hlissner/zsh-autopair
+
+# zmodule marlonrichert/zsh-autocomplete
