@@ -3,6 +3,6 @@
 set -euo pipefail
 
 package::install() {
-   dot apk add rustup
+   dot pkg add rustup
    cargo +nightly install --no-default-features hunter
 }
