@@ -44,11 +44,11 @@ code() {
 
    [[ $# > 0 ]] && shift
 
-   local -r osx_path="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" 
+   local -r osx_path="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
    if [ -f "$osx_path" ]; then
       "$osx_path" "$target" "$@"
    else
-      command code "$target ""$@" 
+      command code "$target ""$@"
    fi
 }
 

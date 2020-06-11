@@ -14,11 +14,17 @@ pub fn main(string1: &str, string2: &str) -> Result<(), Error> {
             all_finished = true;
         }
 
-        println!("{:0fsize$} {:0ssize$}", f.unwrap_or(""), s.unwrap_or(""), fsize = 20, ssize = 20);
+        println!(
+            "{:0fsize$} {:0ssize$}",
+            f.unwrap_or(""),
+            s.unwrap_or(""),
+            fsize = 20,
+            ssize = 20
+        );
 
-if all_finished {
-        break;
-}
+        if all_finished {
+            break;
+        }
     }
 
     Ok(())
