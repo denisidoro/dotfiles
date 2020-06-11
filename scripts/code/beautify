@@ -21,27 +21,33 @@ _get_language() {
    fi
 
    case "$extension" in
-      zimrc|zshenv|zshrc|zlogin|*sh) language="sh" ;;
-      *clj*) language="clj" ;;
-      *py*) language="python" ;;
-      *json*) language="json" ;;
-      *js*) language="javascript" ;;
-      *rs) language="rust" ;;
-      *go) language="go" ;;
+      clj*) language="clj" ;;
+      py) language="python" ;;
+      json) language="json" ;;
+      js*) language="javascript" ;;
+      rs) language="rust" ;;
+      go) language="go" ;;
+      sh|bash|zsh|tmuxrc) language="sh" ;;
    esac
 
-   if [ -z $extension ]; then
-      if cat "$filename" | head -n3 | grep -q "sh$"; then
+   if [ -z "${language:-}" ]; then
+      case "$filename" in
+         *shrc|*sh_profile|*shenv|*shlogin|*zlogin|*zimrc|*tmux.conf) language="sh" ;;
+      esac
+   fi
+
+   if [ -z "${language:-}" ] && [ -z "$extension" ]; then
+      if cat "$filename" | head -n3 | grep -Eq "sh *$|compdef"; then
          language="sh"
       fi
    fi
 
-   echo "${language:-fallback}"
+   echo "${language:-"unknown"}"
 }
 
 language=${language:-$(_get_language "$filename")}
-
 log::warning "formatting $filename as <${language}>"
+
 case "$language" in
    sh_old)
       shfmt -w -i 3 -ci -bn "$filename"
