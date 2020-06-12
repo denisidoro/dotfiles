@@ -14,12 +14,7 @@ _compose_version() {
 docs::eval() {
    local -r file="$0"
    local -r help="$(extract_help "$file")"
-
-   case ${DOT_DOCOPTS:-python} in
-      bash) docopts="${DOTFILES}/modules/docoptsh/docoptsh" ;;
-      python) docopts="${DOTFILES}/scripts/core/docopts" ;;
-      go) docopts="docopts" ;;
-   esac
+   local -r docopts="${DOTFILES}/scripts/core/docopts"
 
    if [[ ${1:-} == "--version" ]]; then
       local -r version="$(_compose_version "$file")"

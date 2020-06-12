@@ -33,14 +33,14 @@ code() {
    [[ "$target" == "." ]] && target="$PWD"
    [[ "$target" == "$HOME" ]] && echoerr "Can't open the whole home dir in VSCode" && return 1
 
-   local full_target
-   [[ "$target" == /* ]] && full_target="$target" || full_target="${PWD}/${target}"
+   # local full_target
+   # [[ "$target" == /* ]] && full_target="$target" || full_target="${PWD}/${target}"
 
-   local cwd
-   [[ -d "$full_target" ]] && cwd="$full_target" || cwd="$(dirname "$full_target")"
+   # local cwd
+   # [[ -d "$full_target" ]] && cwd="$full_target" || cwd="$(dirname "$full_target")"
 
-   export VSCODE_CWD="$cwd"
-   export APP_ROOT="$cwd"
+   # export VSCODE_CWD="$cwd"
+   # export APP_ROOT="$cwd"
 
    [[ $# > 0 ]] && shift
 

@@ -5,3 +5,6 @@ bindkey "^X^X" edit-command-line
 
 # set editor default keymap to emacs
 bindkey -e
+
+# prevent delete key from inserting ~
+bindkey "^[[3~" delete-char
