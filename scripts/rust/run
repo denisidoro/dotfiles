@@ -12,7 +12,6 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/rust/aux/proj.sh"
 
-PROJ_NAME="${PROJ_NAME:-dotrs}"
 RELEASE_PATH="target/release/${PROJ_NAME}"
 DEBUG_PATH="target/debug/${PROJ_NAME}"
 
