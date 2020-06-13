@@ -48,7 +48,7 @@ case $cmd in
    *) ;;
 esac
 
-TEST_DIR="${DOTFILES}/target/test"
+TEST_DIR="${TEST_DIR:-"${DOTFILES}/target/test"}"
 
 mkdir -p "$TEST_DIR" || true
 _prepare_zsh || true

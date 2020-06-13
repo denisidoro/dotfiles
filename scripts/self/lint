@@ -33,7 +33,7 @@ _dedupe() {
 }
 
 _filter() {
-   grep -v '.py\|beautify\|docopts\|node_modules\|modules\|clojure/compile\|info/bar\|vscode\|hushlogin\|DS_S\|bin/dot'
+   grep -v '.py\|beautify\|docopts\|node_modules\|modules\|clojure/compile\|info/bar\|vscode\|hushlogin\|DS_S\|bin/dot|themes/core.zsh'
 }
 
 _all_dotfiles_files_to_format() {

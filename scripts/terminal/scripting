@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Helpers for using dot in other projects
+##?
+##? Usage:
+##?    scripting eval [<args>...]
+
+docs::eval "$@"
+
+cmd="$1"
+shift
+
+case $cmd in
+eval) eval "$@" ;;
+esac

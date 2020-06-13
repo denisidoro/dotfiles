@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROJ_BIN="${DOTFILES}/target/dotrs"
-RELEASE_BIN="target/release/dotrs"
-DEBUG_BIN="target/debug/dotrs"
+PROJ_NAME="${PROJ_NAME:-dotrs}"
+PROJ_BIN="${PROJ_BIN:-${DOTFILES}/target/${PROJ_NAME}}"
+RELEASE_BIN="target/release/${PROJ_NAME}"
+DEBUG_BIN="target/debug/${PROJ_NAME}"
 
 _bin() {
    if [ -f "$PROJ_BIN" ]; then

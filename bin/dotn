@@ -3,7 +3,7 @@
 set -euo pipefail
 
 export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)}"
-  
+
 ##? A hub for an all-purpose set of scripts, using navi
 ##?
 ##? Usage:
