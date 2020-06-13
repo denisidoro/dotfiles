@@ -7,12 +7,18 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?
 ##? Usage:
 ##?    scripting eval [<args>...]
-
-docs::eval "$@"
+##?    scripting test <folder> [<args>...]
 
 cmd="$1"
 shift
 
+_test() {
+    source "${DOTFILES}/scripts/self/aux/test.sh"
+    test::start "$@"
+}
+
 case $cmd in
-eval) eval "$@" ;;
+   eval) eval "$@" ;;
+   test) _test "$@" ;;
+    *) extract_help "$0";;
 esac

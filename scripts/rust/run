@@ -4,19 +4,22 @@ set -euo pipefail
 ##? run
 ##?
 ##? Usage:
-##?    run
+##?    run [options] 
 ##?
 ##? Options:
 ##?    -c --clean     Whether to delete existing builds
 
+source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/rust/aux/proj.sh"
-
-docs::eval "$@"
 
 RELEASE_PATH="target/release/${PROJ_NAME}"
 DEBUG_PATH="target/debug/${PROJ_NAME}"
 
-if $clean; then
+case "${1:-}" in
+   -c|--clean) clean="true" && shift ;;
+esac
+
+if ${clean:-false}; then
    rm "$RELEASE_PATH" 2>/dev/null || true
    rm "$DEBUG_PATH" 2>/dev/null || true
 fi

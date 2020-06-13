@@ -20,6 +20,7 @@ _scripts() {
       | grep -v '.clj$' \
       | grep -v '.json$' \
       | grep -v '.edn$' \
+      | grep -v 'rust/call$' \
       | without_dot_slash
 }
 

@@ -89,3 +89,21 @@ test::finish() {
       exit 0
    fi
 }
+
+test::find_files() {
+   local -r folder="${1:-"${DOTFILES}/tests/"}"
+   find "$folder" -iname "*.sh"
+}
+
+test::start() {
+   for test in $(test::find_files "$@"); do
+      seconds=$SECONDS
+      source "$test"
+      delta=$((SECONDS - seconds))
+      echoerr
+      filename="$(basename "$test")"
+      log::warning "Running ${filename} took ${delta} seconds"
+   done
+
+   test::finish
+}
