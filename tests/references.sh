@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
 _pairs() {
-   find . \( -name .git -prune \) -o \( -name modules -prune \) -o -name '*' -type f \
+   find . \( -name .git -prune \) -o \( -name modules -prune \) -o \( -name rust -prune \) -o \( -name target -prune \)  -o -name '*' -type f \
       -exec bash -c 'x="$(grep "dot " {})"; [ -n "$x" ] && echo "$x" | sed -e "s|^|{} \+ |"' \; \
       | grep -v 'completions' \
       | grep -v 'references' \
       | grep -v 'nav.sh' \
       | grep -v 'bin/dot' \
-      | grep -v 'help.sh'
+      | grep -v 'help.sh' \
+      | grep -v 'terminal/scripting'
 }
 
 _files() {
@@ -21,6 +22,7 @@ _files() {
 validate_reference() {
    local cmds=($(echo "$*" | tr ' ' '\n'))
    case "$*" in
+      *"rust call"*|*"rust run"*) ;;
       *) "${cmds[@]}" --help &>/dev/null ;;
    esac
 }

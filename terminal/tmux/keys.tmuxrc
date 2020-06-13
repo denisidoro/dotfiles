@@ -1,13 +1,20 @@
-# Set prefix as Ctrl-Space
-set -g prefix C-Space
+# Set prefix as Ctrl-J
+set -g prefix C-j
 unbind-key C-b
-bind-key C-Space send-prefix
+bind-key C-j send-prefix
+
+# Search
+bind-key /   copy-mode \; send-key /
 
 # Window and pane
-bind-key v split-window -h
-bind-key s split-window -v
-bind-key / split-window -h
-bind-key - split-window -v
+bind-key v split-window -h -c '#{pane_current_path}'
+bind-key s split-window -v -c '#{pane_current_path}'
+# bind-key / split-window -h -c '#{pane_current_path}'
+# bind-key - split-window -v -c '#{pane_current_path}'
+
+bind-key c new-window -c '#{pane_current_path}'
+
+bind-key b break-pane -d
 
 bind-key J resize-pane -D 5
 bind-key K resize-pane -U 5
@@ -41,8 +48,35 @@ bind -n M-Down select-pane -D
 bind -n S-Left  previous-window
 bind -n S-Right next-window
 
+# Kill without confirmation
+bind-key & kill-window
+bind-key x kill-pane
+
 # No delay for escape key press
 set -sg escape-time 0
+
+# copying selection vim style
+# http://jasonwryan.com/blog/2011/06/07/copy-and-paste-in-tmux/
+# https://github.com/myfreeweb/dotfiles/blob/master/tmux.conf
+bind-key Escape copy-mode			# enter copy mode; default [
+bind-key p paste-buffer				# paste; (default hotkey: ] )
+bind-key P choose-buffer 			# tmux clipboard history
+bind-key + delete-buffer \; display-message "Deleted current Tmux Clipboard History"
+
+# begin selection
+# bind-key -T copy-mode-vi 'v' send-keys -X begin-selection
+# bind-key -T copy-mode-vi 'y' send-keys -X copy-pipe-and-cancel 'reattach-to-user-namespace pbcopy'
+bind-key    -T copy-mode    Escape                send-keys -X cancel
+
+bind-key -T copy-mode-vi v send-keys -X begin-selection
+  bind-key -T copy-mode-vi V send-keys -X select-line
+  bind-key -T copy-mode-vi C-v send-keys -X begin-selection \; send-keys -X rectangle-toggle
+  bind-key -T choice-mode-vi h send-keys -X tree-collapse
+  bind-key -T choice-mode-vi l send-keys -X tree-expand
+  bind-key -T choice-mode-vi H send-keys -X tree-collapse-all
+  bind-key -T choice-mode-vi L send-keys -X tree-expand-all
+  bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe "pbcopy"
+  bind-key -T copy-mode-vi y send-keys -X copy-pipe "pbcopy"
 
 # Reload tmux config
 bind r source-file ~/.tmux.conf

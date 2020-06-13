@@ -11,27 +11,36 @@ Note: please refer to the [main README](https://github.com/denisidoro/dotfiles/b
 Calling the script for the following file...
 ```go
 package main
-import "fmt"
 
 func myfn() (*somestruct, error) {
-    fmt.Println("hello world")
-    foo := bar()?
-    return baz()
+    apples := getFruits()?
+
+    pies := apples.map(func(a) Pie {
+    appleSlice := slice(a)
+        return bake(appleSlice)
+    })
+
+    return baz(pies)
 }
 ```
 
 ...should result into:
 ```go
 package main
-import "fmt"
 
 func myfn() (*somestruct, error) {
-    fmt.Println("hello world")
-    foo, err := bar()
+    apples, err := getFruits()
     if err != nil {
         return nil, err
     }
-    return baz()
+
+    pies := make([]Pie, len(apples))
+    for i, a := range apples {
+        appleSlice := slice(a)
+        pies[i] = bake(appleSlice)
+    }
+
+    return baz(pies)
 }
 ```
 

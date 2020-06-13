@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Helpers for using dot in other projects
+##?
+##? Usage:
+##?    scripting eval [<args>...]
+##?    scripting test <folder> [<args>...]
+
+cmd="$1"
+shift
+
+_test() {
+   source "${DOTFILES}/scripts/self/aux/test.sh"
+   test::start "$@"
+}
+
+case $cmd in
+   eval) eval "$@" ;;
+   test) _test "$@" ;;
+   *) extract_help "$0" ;;
+esac

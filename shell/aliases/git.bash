@@ -2,6 +2,33 @@
 
 # based on https://github.com/ohmybash/oh-my-bash/blob/master/plugins/git/git.plugin.sh
 
+# master
+alias gcom="git checkout master"
+alias gmm="git merge master"
+
+# update
+alias gu="dot git pull module"
+alias gum="dot git pull master"
+
+# git status with tig
+alias tst="tig status"
+
+# git push upstream
+alias gpu="dot git push upstream"
+
+# git commit with push
+alias gcam='git add --all && git commit -a -m'
+alias gcamp="dot git push commit"
+
+# preview PR
+alias gprp="dot git pr preview"
+
+# git interactive checkout
+alias gcoo="dot git checkout prompt"
+
+# git status
+alias gst="git status"
+
 current_branch() {
    git_current_branch
 }

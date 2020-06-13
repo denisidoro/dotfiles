@@ -103,28 +103,23 @@ fzf_prompt() {
 _alias() {
    local -r arg="$1"
    case "$arg" in
+      js|json) echo javascript ;;
+      phab|ph) echo phabricator ;;
+      sh|shell) echo terminal ;;
+      fs) echo filesystem ;;
       and) echo android ;;
       clj) echo clojure ;;
       game) echo gaming ;;
-      js) echo javascript ;;
-      json) echo javascript ;;
-      environment) echo self ;;
-      env) echo self ;;
-      mac) echo system ;;
-      osx) echo system ;;
-      os) echo system ;;
-      linux) echo system ;;
+      mac|osx|os|linux|win) echo system ;;
+      environment|env) echo self ;;
       net) echo network ;;
       pkg) echo package ;;
       sec) echo security ;;
       aws) echo cloud ;;
-      sh) echo shell ;;
-      fs) echo filesystem ;;
       not) echo notification ;;
       google) echo search ;;
-      down) echo download ;;
-      downloads) echo download ;;
-      torrent) echo download ;;
+      work|uber|w|u) echo "../local/scripts/uber" ;;
+      down|downloads|torrent) echo download ;;
       *) echo "$arg" ;;
    esac
 }
@@ -141,6 +136,11 @@ elif [[ $# -eq 1 ]]; then
    # Shows available commands for a given context
 
    context_query="$(_alias $1)"
+
+   case $context_query in
+      -v|--version) cat "${DOTFILES}/rust/Cargo.toml" | grep version | head -n1 | grep -Eo '[0-9\.]+' && exit ;;
+   esac
+
    paths="$(list_command_paths)"
    contexts="$(list_contexts "$paths")"
    find_context "$contexts" "$context_query"
@@ -153,7 +153,7 @@ else
    cmd="$2"
 
    shift 2
-   export DOT_TRACE=${TRACE:-false}
+   export DOT_TRACE=${DOT_TRACE:-false}
    "${DOTFILES}/scripts/${ctx}/${cmd}" "$@"
 
 fi

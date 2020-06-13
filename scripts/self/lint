@@ -6,7 +6,10 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Lint own files
 ##?
 ##? Usage:
-##?    lint
+##?    lint [options]
+##?
+##? Options:
+##?    --no-rust          Skip rust lints
 
 docs::eval_help "$@"
 
@@ -22,9 +25,7 @@ _all_dotfiles_files() {
    find "${DOTFILES}/tasker/js" -maxdepth 3 -type f
    find "${DOTFILES}/tests" -maxdepth 3 -type f
    find "${DOTFILES}/local" -maxdepth 3 -iname "*rc" -type f
-   echo "${DOTFILES}/shell/zshrc"
    echo "${DOTFILES}/shell/hushlogin"
-   echo "${DOTFILES}/shell/bashrc"
 }
 
 _dedupe() {
@@ -32,7 +33,7 @@ _dedupe() {
 }
 
 _filter() {
-   grep -v '.py\|beautify\|docopts\|node_modules\|modules\|clojure/compile\|info/bar\|vscode\|hushlogin\|DS_S\|bin/dot'
+   grep -v '.py\|beautify\|docopts\|node_modules\|modules\|clojure/compile\|info/bar\|vscode\|hushlogin\|DS_S\|bin/dot|themes/core.zsh'
 }
 
 _all_dotfiles_files_to_format() {
@@ -41,8 +42,10 @@ _all_dotfiles_files_to_format() {
       | _filter
 }
 
-cd "${DOTFILES}/rust"
-dot rust fix
+if [[ "$*" != *"no-rust"* ]]; then
+   cd "${DOTFILES}/rust"
+   dot rust fix
+fi
 
 cd "$DOTFILES"
 _all_dotfiles_files_to_format \

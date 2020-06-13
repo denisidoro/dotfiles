@@ -12,10 +12,6 @@ source "${DOTFILES}/scripts/self/aux/test.sh"
 
 docs::eval_help "$@"
 
-_all_files() {
-   find "${DOTFILES}/tests/" -iname "*.sh"
-}
-
 _prepare_zsh() {
    if ! platform::command_exists zsh; then
       local -r bash_path="$(which bash)"
@@ -58,14 +54,6 @@ if [[ "${suite:-}" == "rust" ]]; then
    _cargo || true
 fi
 
-for test in $(_all_files); do
-   seconds=$SECONDS
-   source "$test"
-   delta=$((SECONDS - seconds))
-   echoerr
-   filename="$(basename "$test")"
-   log::warning "Running ${filename} took ${delta} seconds"
-done
+test::start
 
-test::finish
 rm -rf "$TEST_DIR" || true

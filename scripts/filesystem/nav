@@ -20,9 +20,13 @@ path::is_navigable() {
    fs::is_dir "$path"
 }
 
+_ls() {
+   lsd --color always -A "$@" || ls -A "$@"
+}
+
 nav::ls() {
    local -r path="${1:-$CWD}"
-   ls -A "$path" \
+   _ls "$path" \
       | grep -v '.DS_Store'
 }
 

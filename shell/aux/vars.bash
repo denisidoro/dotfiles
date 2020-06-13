@@ -5,7 +5,7 @@
 export ZPLUG_HOME="${DOTFILES}/modules/zplug"
 
 # default editor
-export EDITOR='vim'
+export EDITOR='nvim'
 
 # default browser
 export BROWSER='google-chrome'
@@ -33,15 +33,10 @@ export GOPATH="${DEV_HOME}/go"
 # package management
 export HOMEBREW_NO_AUTO_UPDATE=1
 
-# fasd/z.lua/jump
-# export _ZL_CMD=zlua
-# export _ZL_DATA="${DOTFILES}/modules/.z_lua"
-# export _ZL_MATCH_MODE=1
-
 # fzf
 export FZF_DEFAULT_OPTS='--height 70% --reverse --inline-info --cycle'
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
-FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # security
 export GPG_TTY=$(tty)
@@ -54,4 +49,4 @@ export XENVIRONMENT="${XENVIRONMENT:-"${HOME}/.Xresources"}"
 export NAVI_PATH="${DOTFILES}/cheats:${DOTFILES}/local/cheats"
 
 # PATH
-export PATH="${DOTFILES}/local/bin:${DOTFILES}/bin:/usr/local/bin:${PATH}:${HOME}/.cargo/bin"
+export PATH="${DOTFILES}/local/bin:${DOTFILES}/bin:${HOME}/.cargo/bin:${PATH}"

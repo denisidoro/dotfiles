@@ -15,18 +15,13 @@ docs::eval() {
    local -r file="$0"
    local -r help="$(extract_help "$file")"
 
-   case ${DOT_DOCOPTS:-python} in
-      bash) docopts="${DOTFILES}/modules/docoptsh/docoptsh" ;;
-      python) docopts="${DOTFILES}/scripts/core/docopts" ;;
-      go) docopts="docopts" ;;
+   case ${DOT_DOCOPT:-python} in
+      python) local -r docopt="${DOTFILES}/scripts/core/docopts" ;;
+      rust) local -r docopt="${HOME}/dev/docpars/target/debug/docpars" ;;
+      *) local -r docopt="$DOT_DOCOPT"
    esac
 
-   if [[ ${1:-} == "--version" ]]; then
-      local -r version="$(_compose_version "$file")"
-      eval "$($docopts -h "${help}" -V "${version}" : "${@:1}")"
-   else
-      eval "$($docopts -h "${help}" : "${@:1}")"
-   fi
+   eval "$("$docopt" -h "${help}" : "${@:1}")"
 }
 
 docs::eval_help() {

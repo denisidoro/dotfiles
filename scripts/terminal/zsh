@@ -1,0 +1,51 @@
+#!/usr/bin/env zsh
+
+source "$DOTFILES/scripts/core/documentation.sh"
+
+##? ZSH helpers
+##?
+##? Usage:
+##?    zsh optimize             # Optimize ZSH
+##?    zsh benchmark            # Print the current ZSH performance
+##?    zsh reload-completions   # Reload completions
+
+docs::eval_help "$@"
+
+case "${1:-}" in
+   *help) extract_help "$0"; exit 0 ;;
+esac
+
+_expand() {
+   local -r filename="$1"
+
+   while read line; do
+      if [[ "$line" =~ (source)\s+.+ ]]; then
+         file="$(echo $line | cut -d' ' -f2)"
+         echo "line: $line" 1>&2
+         echo "file: $file" 1>&2
+         file="$(eval echo "$file")"
+         echo "file2: $file" 1>&2
+         # echo "$(cat $file)"
+      else
+         echo "$line"
+         :
+      fi
+   done < "$filename"
+}
+
+case "${1:-}" in
+   opt*)
+      /bin/zsh -c "source ${ZDOTDIR:-${HOME}}/.zlogin"
+      echo "👌 Done!"
+      ;;
+   *perf*|bench*)
+      hyperfine '/usr/bin/time /bin/zsh -i -c exit' --warmup 1 \
+         || for i in $(seq 1 10); do /usr/bin/time /bin/zsh -i -c exit; done
+      ;;
+   *comp*)
+      zsh -c "autoload -U compaudit && compinit"
+      ;;
+   *)
+      docs::eval_help --help
+      ;;
+esac

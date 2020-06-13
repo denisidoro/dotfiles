@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROJ_BIN="${DOTFILES}/target/dotrs"
-RELEASE_BIN="target/release/dotrs"
-DEBUG_BIN="target/debug/dotrs"
+PROJ_HOME="${PROJ_HOME:-$DOTFILES}"
+PROJ_NAME="${PROJ_NAME:-dotrs}"
+PROJ_BIN="${PROJ_BIN:-${DOTFILES}/target/${PROJ_NAME}}"
+RELEASE_BIN="${PROJ_HOME}/target/release/${PROJ_NAME}"
+DEBUG_BIN="${PROJ_HOME}/target/debug/${PROJ_NAME}"
 
 _bin() {
    if [ -f "$PROJ_BIN" ]; then
@@ -39,5 +41,6 @@ _call() {
 }
 
 _call "$@" && exit 0
+
 dot pkg add dotrs || true
 _call "$@" && exit 0

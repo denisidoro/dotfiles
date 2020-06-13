@@ -109,7 +109,7 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    family: Mononoki Nerd Font
+    family: Hack Nerd Font
 
     # The `style` can be specified to pick a specific face.
     style: Regular
@@ -120,7 +120,7 @@ font:
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Mononoki Nerd Font
+    family: Hack Nerd Font
 
     # The `style` can be specified to pick a specific face.
     style: Bold
@@ -131,7 +131,7 @@ font:
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Mononoki Nerd Font
+    family: Hack Nerd Font
 
     # The `style` can be specified to pick a specific face.
     style: Italic
@@ -142,13 +142,13 @@ font:
     #
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Mononoki Nerd Font
+    family: Hack Nerd Font
 
     # The `style` can be specified to pick a specific face.
     style: Bold Italic
 
   # Point size
-  size: 13.0
+  size: 14.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -187,7 +187,8 @@ colors:
   # Default colors
   primary:
     background: '0x282a36'
-    foreground: '0xbbc5ff'
+    foreground: '0xdddddd'
+    # foreground: '0xbbc5ff'
 
     # Bright and dim foreground colors
     #
@@ -532,6 +533,50 @@ background_opacity: 0.95
 # be mapped to the `ReceiveChar` action. Alternatively, you can use `None` for
 # a no-op if you do not wish to receive input characters for that binding.
 key_bindings:
+  - { key: N,     mods: Command, command: {program: "/Users/denis.isidoro/dotfiles/bin/dot", args: ["terminal", "alacritty", "new"]}}
+
+  # split right
+  - { key: D,     mods: Command,       chars: "\x0a\x76" } 
+
+  # split below
+  - { key: D,     mods: Command|Shift, chars: "\x0a\x73" }
+
+  # copy mode
+  - { key: G,     mods: Command,       chars: "\x0a\x5b" }
+
+  # search
+  - { key: F,     mods: Command,       chars: "\x0a\x2f" }
+
+  # detach
+  - { key: X,     mods: Command,       chars: "\x0a\x64" }
+
+  # close pane
+  - { key: W,     mods: Command,       chars: "\x0a\x78" }
+
+  # focus pane
+  - { key: H,     mods: Command,       chars: "\x0a\x68" }
+  - { key: J,     mods: Command,       chars: "\x0a\x6a" }
+  - { key: K,     mods: Command,       chars: "\x0a\x6b" }
+  - { key: L,     mods: Command,       chars: "\x0a\x6c" }
+  - { key: Key1,  mods: Command,       chars: "\x0a\x31" }
+  - { key: Key2,  mods: Command,       chars: "\x0a\x32" }
+  - { key: Key3,  mods: Command,       chars: "\x0a\x33" }
+  - { key: Key4,  mods: Command,       chars: "\x0a\x34" }
+  - { key: Key5,  mods: Command,       chars: "\x0a\x35" }
+  - { key: Key6,  mods: Command,       chars: "\x0a\x36" }
+  - { key: Key7,  mods: Command,       chars: "\x0a\x37" }
+  - { key: Key8,  mods: Command,       chars: "\x0a\x38" }
+  - { key: Key9,  mods: Command,       chars: "\x0a\x39" }
+  - { key: Left,  mods: Command,       chars: "\x0a\x48" }
+  - { key: Down,  mods: Command,       chars: "\x0a\x4a" }
+  - { key: Up,    mods: Command,       chars: "\x0a\x4b" }
+  - { key: Right, mods: Command,       chars: "\x0a\x4c" }
+
+  # new window
+  - { key: T,     mods: Command,       chars: "\x0a\x63" }
+
+
+
     # (Windows, Linux, and BSD only)
   - { key: V,        mods: Control|Shift, action: Paste            }
   - { key: C,        mods: Control|Shift, action: Copy             }
@@ -541,7 +586,6 @@ key_bindings:
   - { key: Add,      mods: Control,       action: IncreaseFontSize }
   - { key: Subtract, mods: Control,       action: DecreaseFontSize }
   - { key: Minus,    mods: Control,       action: DecreaseFontSize }
-
   - { key: Paste,                    action: Paste                            }
   - { key: Copy,                     action: Copy                             }
   - { key: L,         mods: Control, action: ClearLogNotice                   }

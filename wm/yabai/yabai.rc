@@ -45,5 +45,14 @@ yabai -m config window_gap                   10
 
 # rules
 # yabai -m rule --add app="Alacritty" manage=off border=off
+yabai -m rule --add app="Chrome" space=^1
+yabai -m rule --add app="Alacritty" space=^2
+yabai -m rule --add app="Code" space=^3
+yabai -m rule --add app="Spotify" space=^7
+yabai -m rule --add app="Slack" space=^8
+yabai -m rule --add app="zoom.us" space=^8
+yabai -m rule --add app="Digital Color Meter" sticky=on
+
+# yabai -m signal --add event=space_changed action="open 'bitbar://refreshPlugin?name=yabai.1h.sh'"
 
 echo "yabai configuration loaded.."

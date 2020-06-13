@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
+set -euo pipefail
 
-include() {
-   [[ -f "$1" ]] && source "$1"
-}
+source "${DOTFILES}/scripts/core/documentation.sh"
+
+##? Use current path as argument if none is specified
+##
+##? Usage:
+##?     dashed <cmds>... [-- [<args>...]]?
+##
+##? Example:
+##?     dashed ls -la
+##?     dashed ls -la -- somefolder
+
+docs::eval_help "$@"
 
 indexof() {
    local -r index="$1"
@@ -19,11 +28,6 @@ indexof() {
    echo -1;
 }
 
-nonzero_return() {
-   RETVAL=$?
-   [ $RETVAL -ne 0 ] && echo "$RETVAL"
-}
-
 dot_or_args() {
    local -r dash_index="$(indexof "--" "$@")"
    readonly fn="${@:1:$((dash_index-1))}"
@@ -35,6 +39,4 @@ dot_or_args() {
    fi
 }
 
-echoerr() {
-   echo "$@" 1>&2;
-}
+dot_or_args "$@"

@@ -13,15 +13,15 @@ grab < escape ; default
 # =================
 
 # launch iTerm
-alt + cmd + ctrl + shift - return : open -na /Applications/iTerm.app
-alt + cmd + ctrl + shift - a : open -na /Applications/Alacritty.app
+alt + cmd + ctrl + shift - a : open -na /Applications/iTerm.app
+alt + cmd + ctrl + shift - return : open -na /Applications/Alacritty.app
 
 # =================
 # Power
 # =================
 
 # sleep
-alt + cmd + ctrl + shift - p : pmset displaysleepnow
+alt + cmd + ctrl + shift - q : pmset displaysleepnow
 
 # focus window direction
 alt + cmd + ctrl + shift - h : yabai -m window --focus west || yabai -m display --focus recent || yabai -m display --focus next || yabai -m display --focus first
@@ -47,6 +47,10 @@ alt + cmd + ctrl + shift - 8 : yabai -m space --focus 8
 alt + cmd + ctrl + shift - 9 : yabai -m space --focus 9
 alt + cmd + ctrl + shift - 0 : yabai -m space --focus 10
 
+# focus desktop
+alt + cmd + ctrl + shift - u : yabai -m space --focus prev || yabai -m space --focus 8
+alt + cmd + ctrl + shift - i : yabai -m space --focus next || yabai -m space --focus 1
+
 # insertion point direction
 alt + cmd + ctrl + shift - left : yabai -m window --insert west
 alt + cmd + ctrl + shift - down : yabai -m window --insert south
@@ -57,7 +61,7 @@ alt + cmd + ctrl + shift - right : yabai -m window --insert east
 alt + cmd + ctrl + shift - f : yabai -m window --toggle zoom-fullscreen
 
 # split
-alt + cmd + ctrl + shift - o : yabai -m window --toggle split
+alt + cmd + ctrl + shift - p : yabai -m window --toggle split
 
 # send window to space
 grab < alt + cmd + ctrl + shift - 1 : yabai -m window --space 1
