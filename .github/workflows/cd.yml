@@ -33,9 +33,9 @@ jobs:
         rust-version: stable
     - uses: actions/checkout@v1
     - name: Build
-      run: cd rust && ../bin/dot rust binary build --target ${{ matrix.target }}
+      run: cd rust && DOT_DOCOPT=python ../bin/dot rust binary build --target ${{ matrix.target }}
     - name: Tar
-      run: cd rust && ../bin/dot rust binary tar --target ${{ matrix.target }}
+      run: cd rust && DOT_DOCOPT=python../bin/dot rust binary tar --target ${{ matrix.target }}
     - name: Get the version
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}

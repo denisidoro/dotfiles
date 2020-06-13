@@ -18,7 +18,7 @@ jobs:
       - name: Create stubs
         run: mkdir -p ./target; echo -e '#!/usr/bin/env bash\n\necho usage' > ./target/dotrs && chmod +x ./target/dotrs
       - name: Run tests
-        run: ./bin/dot self test suite bash
+        run: DOT_DOCOPT=python ./bin/dot self test suite bash
 
   js-tests:
     name: Javascript
@@ -29,7 +29,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v1
       - name: Run tests
-        run: ./bin/dot self test suite js
+        run: DOT_DOCOPT=python ./bin/dot self test suite js
 
   rust-tests:
     name: Rust
@@ -42,4 +42,4 @@ jobs:
         with:
           toolchain: stable
       - name: Run tests
-        run: ./bin/dot self test suite rust
+        run: DOT_DOCOPT=python ./bin/dot self test suite rust
