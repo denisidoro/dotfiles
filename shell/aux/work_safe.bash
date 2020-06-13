@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 export DOT_FZF=true
-export DOT_DOCOPTS=python
+export DOT_DOCOPT=rust
 
 export WORKSPACE_ROOT="$GOPATH"
 export VOLTA_HOME="${HOME}/.volta"

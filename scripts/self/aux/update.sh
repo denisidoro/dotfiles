@@ -109,7 +109,7 @@ setup_git_credentials() {
 
 setup_docopts() {
 
-   if [[ -n "${DOT_DOCOPTS:-}" ]]; then
+   if [[ -n "${DOT_DOCOPT:-}" ]]; then
       return 0
    fi
 
@@ -121,7 +121,7 @@ setup_docopts() {
          exit 3
       fi
 
-      echoerr "export DOT_DOCOPTS=$backend" >> "$LOCAL_ZSHRC"
+      echoerr "export DOT_DOCOPT=$backend" >> "$LOCAL_ZSHRC"
 
       case $backend in
          go) dot pkg add docopts-go ;;
