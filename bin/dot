@@ -138,7 +138,7 @@ elif [[ $# -eq 1 ]]; then
    context_query="$(_alias $1)"
 
    case $context_query in
-      -v|--version) cat "${DOTFILES}/rust/Cargo.toml" | grep version | head -n1 | grep -Eo '[0-9\.]+' && exit;;
+      -v|--version) cat "${DOTFILES}/rust/Cargo.toml" | grep version | head -n1 | grep -Eo '[0-9\.]+' && exit ;;
    esac
 
    paths="$(list_command_paths)"

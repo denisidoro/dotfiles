@@ -4,7 +4,7 @@ set -euo pipefail
 ##? run
 ##?
 ##? Usage:
-##?    run [options] 
+##?    run [options]
 ##?
 ##? Options:
 ##?    -c --clean     Whether to delete existing builds

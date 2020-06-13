@@ -1,6 +1,5 @@
 use crate::opts::Command::Transpile;
 use crate::opts::Opts;
-use crate::table;
 use crate::transpile;
 use anyhow::Error;
 
