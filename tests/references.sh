@@ -7,7 +7,6 @@ _pairs() {
       | grep -v 'references' \
       | grep -v 'nav.sh' \
       | grep -v 'bin/dot' \
-      | grep -v 'terminal/scripting' \
       | grep -v 'help.sh'
 }
 
@@ -22,6 +21,7 @@ _files() {
 validate_reference() {
    local cmds=($(echo "$*" | tr ' ' '\n'))
    case "$*" in
+      *rust call*|*rust run*) ;;
       *) "${cmds[@]}" --help &>/dev/null ;;
    esac
 }

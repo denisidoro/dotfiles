@@ -14,14 +14,10 @@ _compose_version() {
 docs::eval() {
    local -r file="$0"
    local -r help="$(extract_help "$file")"
-   local -r docopts="${DOTFILES}/scripts/core/docopts"
+   # local -r docopts="${DOTFILES}/scripts/core/docopts"
+   local -r docopts="${HOME}/dev/docpars/target/debug/docpars"
 
-   if [[ ${1:-} == "--version" ]]; then
-      local -r version="$(_compose_version "$file")"
-      eval "$($docopts -h "${help}" -V "${version}" : "${@:1}")"
-   else
-      eval "$($docopts -h "${help}" : "${@:1}")"
-   fi
+   eval "$($docopts -h "${help}" : "${@:1}")"
 }
 
 docs::eval_help() {
