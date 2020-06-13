@@ -7,7 +7,8 @@ _pairs() {
       | grep -v 'references' \
       | grep -v 'nav.sh' \
       | grep -v 'bin/dot' \
-      | grep -v 'help.sh'
+      | grep -v 'help.sh' \
+      | grep -v 'terminal/scripting'
 }
 
 _files() {
