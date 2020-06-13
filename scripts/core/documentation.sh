@@ -16,8 +16,8 @@ docs::eval() {
    local -r help="$(extract_help "$file")"
 
    case ${DOT_DOCOPT:-python} in
-      python) local -r docopt="${HOME}/dev/docpars/target/debug/docpars" ;;
-      rust) local -r docopt="${DOTFILES}/scripts/core/docopts" ;;
+      python) local -r docopt="${DOTFILES}/scripts/core/docopts" ;;
+      rust) local -r docopt="${HOME}/dev/docpars/target/debug/docpars" ;;
       *) local -r docopt="$DOT_DOCOPT"
    esac
 
