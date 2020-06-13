@@ -15,13 +15,13 @@ docs::eval() {
    local -r file="$0"
    local -r help="$(extract_help "$file")"
 
-   if [[ ${DOT_DOCOPT:-python} == "rust" ]]; then
-      local -r docopts="${HOME}/dev/docpars/target/debug/docpars"
-   else
-      local -r docopts="${DOTFILES}/scripts/core/docopts"
-   fi
+   case ${DOT_DOCOPT:-python} in
+      python) local -r docopt="${HOME}/dev/docpars/target/debug/docpars" ;;
+      rust) local -r docopt="${DOTFILES}/scripts/core/docopts" ;;
+      *) local -r docopt="$DOT_DOCOPT"
+   esac
 
-   eval "$($docopts -h "${help}" : "${@:1}")"
+   eval "$("$docopt" -h "${help}" : "${@:1}")"
 }
 
 docs::eval_help() {
