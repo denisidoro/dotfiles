@@ -2,7 +2,6 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/self/aux/update.sh"
 
 ##? Checkout itself to latest branch
 ##?
