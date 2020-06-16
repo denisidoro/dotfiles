@@ -194,7 +194,7 @@ alias gm='git merge'
 alias gp='git push'
 #alias gpd='git push --dry-run'
 #alias gpoat='git push origin --all && git push origin --tags'
-alias gpu='git push upstream'
+#alias gpu='git push upstream'
 #alias gpv='git push -v'
 
 #alias gr='git remote'
