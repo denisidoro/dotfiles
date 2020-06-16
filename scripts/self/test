@@ -29,6 +29,22 @@ _prepare_dotlink() {
    fi
 }
 
+_create_file() {
+   local -r content="$1"
+   local -r filename="$2"
+   mkdir -p "$(dirname "$filename")" || true
+   echo "$content" > "$filename"
+   chmod +x "$filename"
+}
+
+_stub_dotrs() {
+   local content="echo \"$(echo "Stub"; echo; echo "Usage:"; echo "    dotrs")\""
+   _create_file "$content" "$dotrs"
+   _create_file "$content" "${DOTFILES}/target/release/dotrs"
+   _create_file "$content" "${DOTFILES}/rust/target/release/dotrs"
+}
+
+
 _cargo() {
    cd "${DOTFILES}/rust"
    cargo build
@@ -47,8 +63,9 @@ esac
 TEST_DIR="${DOTFILES}/target/test"
 
 mkdir -p "$TEST_DIR" || true
-_prepare_zsh || true
-_prepare_dotlink || true
+_prepare_zsh 2>/dev/null || true
+_prepare_dotlink 2>/dev/null || true
+[ ${DOT_STUB_DOTRS:-false} ] && _stub_dotrs 2>/dev/null || true
 
 if [[ "${suite:-}" == "rust" ]]; then
    _cargo || true
