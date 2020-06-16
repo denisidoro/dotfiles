@@ -44,7 +44,7 @@ fn transform(line: String) -> String {
                 fnname = fnname
             );
 
-            let split = (&captures[3]).split(",");
+            let split = (&captures[3]).split(',');
             let args: Vec<&str> = split.collect();
 
             for (i, arg) in args.into_iter().enumerate() {

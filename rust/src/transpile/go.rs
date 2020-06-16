@@ -36,7 +36,7 @@ fn transpile_error_propagation(lines: fs::Lines) -> Vec<String> {
         }
     }
 
-    return new_lines;
+    new_lines
 }
 
 fn transform_line_error_propagation(line: String) -> String {
@@ -92,7 +92,7 @@ fn transpile_map(lines: Vec<String>) -> Vec<String> {
         }
     }
 
-    return new_lines;
+    new_lines
 }
 
 fn capture_str(captures: &regex::Captures<'_>, index: usize) -> String {
