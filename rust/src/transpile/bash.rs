@@ -76,6 +76,7 @@ mod tests {
     #[test]
     fn test_transform_none() {
         let line = String::from("myfn() {");
-        assert_eq!(line.clone(), transform(line));
+        let line2 = line.clone();
+        assert_eq!(line2, transform(line));
     }
 }
