@@ -11,7 +11,7 @@ _content() {
    echo "#!/usr/bin/env bash"
    echo
    echo "export DOT_FRE=${DOT_FRE:-true}"
-   echo "export DOT_DOCOPT=${DOT_DOCOPT:-python}"
+   echo "export DOT_DOCOPT=\"${DOT_DOCOPT:-python}\""
    echo "export DOT_FZF=${DOT_FZF:-true}"
    echo "export DOT_NAVI=${DOT_NAVI:-true}"
    echo "export DOT_ZIM=${DOT_ZIM:-true}"
