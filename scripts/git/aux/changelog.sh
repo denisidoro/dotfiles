@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+_repo_url() {
+   cat "$(git::root)/.git/config" \
+      | grep origin -A1 \
+      | grep url \
+      | awk '{print $NF}' \
+      | head -n1 | tr ':' '/' \
+      | sed 's|git@|https://|g' \
+      |  sed -E 's/.git$//'
+}
+
+_remove_empty_lines() {
+   sed -E '/^\s*$/d'
+}
+
+_capture() {
+   perl -pe 's/([a-z\d]+)\s+(.*)/\1;\2/s'
+}
+
+_format() {
+   IFS=$'\n'
+   for line in $(cat); do
+      local commit="$(echo "$line" | cut -d';' -f1 | xargs | cut -c1-5)"
+      local msg="$(echo "$line" | cut -d';' -f2 | sed -E "s|\(#([0-9]+)\)|([#\1](${REPO_URL}/issues/\1))|g")"
+      echo "- [\`${commit}\`](${REPO_URL}/commit/${commit}) ${msg}"
+   done
+}
+
+_dedupe() {
+   awk '!visited[$0]++'
+}
+
+_cleanup() {
+   grep -v 'Author:' \
+      | grep -v 'Date:' \
+      | grep -v 'Merge pull request' \
+      | grep -v 'Merge:' \
+      | _remove_empty_lines \
+      | grep '^commit ' -A1 \
+      | sed -E 's/commit\s+([a-f0-9]+)/\1/g' \
+      | sed 'N;s/\n/ /' \
+      | perl -pe 's/^--\s([a-f0-9]+)\s+/\1/g' \
+      | grep -v '^--' \
+      | grep -v '\-\-$' \
+      | _capture \
+      | _dedupe \
+      | _format
+}
+
+_commits() {
+   local -r tag_older="$1"
+   local -r tag_newer="$2"
+
+   local -r tag_date="$(git log -1 --format=%ai v2.3.1 | awk '{print $1}')"
+
+   echo "## [${tag_newer}](${REPO_URL}/releases/tag/${tag_newer}) - ${tag_date}"
+
+   git log "${tag_older}..${tag_newer}" --grep '#' \
+      | _cleanup
+}
+
+_all_tags() {
+   git for-each-ref --sort=creatordate --format '%(refname)' refs/tags \
+      | sed 's|refs/tags/||g'
+}
+
+git::changelog_releasefs() {
+   REPO_URL="$(_repo_url)"
+
+   pairs=($(_all_tags))
+   len="${#pairs[@]}"
+
+   for i in $(seq 0 $((len - 2))); do
+      tag_older="${pairs[$((len - i - 2))]}"
+      tag_newer="${pairs[$((len - i - 1))]}"
+      _commits "$tag_older" "$tag_newer"
+      echo
+      echo
+   done
+}

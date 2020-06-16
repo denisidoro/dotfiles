@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
- 
+
 source "${DOTFILES}/scripts/git/aux/core.sh"
 
 ##? Git commit helpers
@@ -13,7 +13,7 @@ _msg() {
    if [[ $# -gt 0 ]] && [[ $1 -ne "wip" ]]; then
       echo "$*"
    else
-    dot git changelog commit
+      dot git changelog commit
    fi
 }
 
@@ -26,6 +26,6 @@ _am() {
 
 cmd="${1:-}"
 case $cmd in
-am) _am "$@";;
-*) docs::help "$@" && exit 1;;
+   am) _am "$@" ;;
+   *) docs::help "$@" && exit 1 ;;
 esac
