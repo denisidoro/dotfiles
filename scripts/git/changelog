@@ -94,6 +94,7 @@ _commit() {
    local -r changes="$(git diff --numstat HEAD \
       | awk '{print $3" "$1-$2}' \
    | sort -k2 -n -r \
+   | awk '{print $1}' \
    | sed -E 's|(.*)/(.*)|\2|g')"
 
    local -r n="$(printf "$changes" \
@@ -104,12 +105,6 @@ _commit() {
    | head -n3 \
    | tr '\n' ';' \
    | sed -E 's/ *; */, /g')"
-
-   echoerr "pwd: $(pwd)"
-   echoerr "diff1: $(git diff --numstat HEAD)"
-   echoerr "changes: $changes"
-   echoerr "n: $n"
-   echoerr "msg: $msg"
 
    [[ $n -gt 3 ]] && msg="${msg}..."
 
