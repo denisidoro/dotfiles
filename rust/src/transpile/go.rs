@@ -117,7 +117,8 @@ mod tests {
     #[test]
     fn test_transform_none() {
         let line = String::from("foo := bar()");
-        assert_eq!(line.clone(), transform_line_error_propagation(line.clone()));
+        let line2 = line.clone();
+        assert_eq!(line.clone(), transform_line_error_propagation(line2));
     }
 
     #[test]
