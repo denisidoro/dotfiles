@@ -20,5 +20,5 @@ _test() {
 case $cmd in
    eval) eval "$@" ;;
    test) _test "$@" ;;
-   *) docs::help_or_invalid "$@" ;;
+   *) docs::help_or_invalid "$cmd" "$@" ;;
 esac
