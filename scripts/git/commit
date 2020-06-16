@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+
+source "${DOTFILES}/scripts/git/aux/core.sh"
+
+##? Git commit helpers
+##?
+##? Usage:
+##?    commit am <args>...
+
+docs::eval "$@"
+
+_msg() {
+   [[ $# -gt 0 ]] \
+    && echo "$*" \
+    || dot git changelog commit
+}
+
+if $am; then
+   git add . || true
+   shift
+   msg="$(_msg "$@" || echo "WIP")"
+   git commit -am "$msg"
+fi

@@ -57,7 +57,7 @@ case "$language" in
       sed -i -e 's/() ::/::/g' "$filename"
       ;;
    json)
-      echo "$(cat "$filename" | jq .)" > "$filename"
+      cat "$filename" | jq . > "$filename"
       ;;
    javascript)
       js-beautify "$filename" > /dev/null

@@ -189,37 +189,37 @@ setup_docopts() {
    }
 
    update_dotfiles_common() {
-      echoerr
+      log::note "Installing dotfiles for Unix..."
       update_dotfiles
    }
 
    update_dotfiles_osx() {
-      log::note "Configuring for OSX..."
+      log::note "Installing dotfiles for OSX..."
       update_dotfiles "osx"
    }
 
    update_dotfiles_linux() {
-      log::note "Configuring for Linux..."
+      log::note "Installing dotfiles for Linux..."
       update_dotfiles "linux"
    }
 
    update_dotfiles_wsl() {
-      log::note "Configuring for WSL..."
+      log::note "Installing dotfiles for WSL..."
       update_dotfiles "linux"
    }
 
    update_dotfiles_arm() {
-      log::note "Configuring for ARM..."
+      log::note "Installing dotfiles for ARM..."
       log::note "No custom config for ARM"
    }
 
    update_dotfiles_x86() {
-      log::note "Configuring for x86..."
+      log::note "Installing dotfiles for x86..."
       log::note "No custom config for x86"
    }
 
    update_dotfiles_android() {
-      log::note "Configuring for Android..."
+      log::note "Installing dotfiles for Android..."
       dot pkg add termux-essentials
    }
 
@@ -231,13 +231,4 @@ setup_docopts() {
    update_submodules() {
       echoerr
       log::note "Attempting to update submodules..."
-      cd "$DOTFILES"
-
-      git submodule foreach git reset --hard
-      git submodule foreach git checkout .
-      git submodule foreach git pull origin master
-
-      export ZIM_HOME="${ZIM_HOME:-$DOTFILES/modules/zimfw}"
-      zsh "$ZIM_HOME/zimfw.zsh" upgrade
-      rm -rf "$ZIM_HOME/modules/"* && zsh "$ZIM_HOME/zimfw.zsh" install
    }

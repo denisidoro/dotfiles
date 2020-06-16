@@ -16,11 +16,15 @@ pkg_manager="$1"
 operation="$2"
 shift 2
 
+_valid_pkg_mgr_for_osx() {
+   case "${1:-}" in
+      "apt"|"pkg"|"yum"|"dnf"|"port"|"emerge"|"pacman") return 1;;
+   esac
+}
+
 # short-circuit on OSX
 platform::is_osx \
-   && [[ $pkg_manager != "brew" ]] \
-   && [[ $pkg_manager != "npm" ]] \
-   && [[ $pkg_manager != "pip" ]] \
+   && ! _valid_pkg_mgr_for_osx $pkg_manager \
    && exit 123
 
 # unavailable package manager

@@ -12,7 +12,7 @@ source "$DOTFILES/scripts/core/documentation.sh"
 docs::eval_help "$@"
 
 case "${1:-}" in
-   *help) extract_help "$0"; exit 0 ;;
+   *help) docs::help "$0" ;;
 esac
 
 _expand() {

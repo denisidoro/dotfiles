@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
-extract_help() {
+docs::extract_help() {
    local -r file="$1"
    grep "^##?" "$file" | cut -c 5-
+}
+
+docs::help() {
+   docs::extract_help "$@"
+   exit 0
 }
 
 _compose_version() {
@@ -13,13 +18,13 @@ _compose_version() {
 
 docs::eval() {
    local -r file="$0"
-   local -r help="$(extract_help "$file")"
+   local -r help="$(docs::extract_help "$file")"
 
-   case ${DOT_DOCOPT:-python} in
-      python) local -r docopt="${DOTFILES}/scripts/core/docopts" ;;
-      rust) local -r docopt="${HOME}/dev/docpars/target/debug/docpars" ;;
-      *) local -r docopt="$DOT_DOCOPT"
-   esac
+   if [[ ${DOT_DOCOPT:-python} == "python" ]]; then
+      local -r docopt="${DOTFILES}/scripts/core/docopts" 
+   else
+      local -r docopt="$DOT_DOCOPT"
+   fi
 
    eval "$("$docopt" -h "${help}" : "${@:1}")"
 }
@@ -28,7 +33,7 @@ docs::eval_help() {
    local -r file="$0"
 
    case "${!#:-}" in
-      -h|--help) extract_help "$file"; exit 0 ;;
+      -h|--help) docs::extract_help "$file"; exit 0 ;;
       --version) _compose_version "$file"; exit 0 ;;
    esac
 }
@@ -37,7 +42,7 @@ docs::eval_help_first_arg() {
    local -r file="$0"
 
    case "${1:-}" in
-      -h|--help) extract_help "$file"; exit 0 ;;
+      -h|--help) docs::extract_help "$file"; exit 0 ;;
       --version) _compose_version "$file"; exit 0 ;;
    esac
 }

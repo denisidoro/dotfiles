@@ -15,6 +15,8 @@ if ! ${DOT_MAIN_SOURCED:-false} ; then
          sudo() { "$@"; }
          export -f sudo
       fi
+
+      export EDITOR="${EDITOR:-vi}"
    fi
 
    source "${DOTFILES}/scripts/core/collections.sh"

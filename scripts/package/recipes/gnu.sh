@@ -2,7 +2,8 @@
 # vim: filetype=sh
 
 package::is_installed() {
-   ! platform::is_osx || platform::command_exists ggrep
+   ! platform::is_osx \
+      || platform::command_exists ggrep
 }
 
 package::install() {

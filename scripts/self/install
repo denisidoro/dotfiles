@@ -10,13 +10,8 @@ DOT_BIN="${DOTFILES}/bin/dot"
 ##? Usage:
 ##?    init [<profile>]
 
-extract_help() {
-   local -r file="$1"
-   grep "^##?" "$file" | cut -c 5-
-}
-
 case "${1:-}" in
-   *help) extract_help "$0" ; exit 0 ;;
+   "-h"|"--help") grep "^##?" "$file" | cut -c 5-; exit 0 ;;
 esac
 
 _dot() {
@@ -46,25 +41,14 @@ cd "$DOTFILES"
 
 # Android bootstrap
 if uname -a | grep -q "ndroid"; then
-   pkg install ncurses-utils
+   pkg install ncurses-utils || true
+   _dot pkg add termux-essentials || true
 fi
 
 # OSX bootstrap
 if uname -s | grep -q "arwin"; then
-   _dot pkg add gnu
-fi
-
-# export setup defaults
-profile="${1:-}"
-if [[ -n "$profile" ]]; then
-   profile_script="${DOTFILES}/scripts/self/aux/profile_${profile}.sh"
-   if [[ ! -f "$profile_script" ]]; then
-      echo "Profile $profile doesn't exist!"
-      exit 42
-   fi
-   source "$profile_script"
-   echo "Start installation using profile ${profile}..."
-   echo
+   _dot pkg add gnu || true
+   _dot pkg add brew || true
 fi
 
 # call setup

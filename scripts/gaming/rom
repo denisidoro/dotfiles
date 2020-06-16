@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? ROM helpers
+##?
+##? Usage:
+##?    rom rename
+##?    rom emuparadise list <url>
+##?
+##? Examples:
+##?    rom rename
+##?    rom emuparadise list https://www.emuparadise.me/Super_Nintendo_Entertainment_System_(SNES)_ROMs/List-All-Titles/5
+
+docs::eval "$@"
+
+_rename() {
+   tr '_' ' ' \
+      | sed -E 's/ (ROM|ISO) *$//g' `# remove download suffixes` \
+      | sed -E 's/\([^\)]+\)//g' `# remove (...)` \
+      | sed -E 's/\[[^\]+\]//g' `# remove [...]` \
+      | sed -E 's/^[0-9]+ \- //g' `# remove 1234 -`  \
+      | sed -E 's/Decrypted *//g' \
+      | sed 's/Bros./Bros/g' \
+      | sed 's/Pokemon/Pokémon/g' \
+      | sed 's/Legend of Zelda, The/The Legend of Zelda/g' \
+      | sed -E 's/v[0-9\.]+//g' `# remove v1.2` \
+      | sed -E 's/(.*), ?The *$/The \1/g' `# remove , The from the ending` \
+      | sed 's/^ *//;s/ *$//' `# left and right trim` \
+      | sed -E 's/  */ /g' `# remove consecutive spaces` \
+      | sed -E "s/'[0-9])/\1/g" `# remove '94'`
+}
+
+if $rename; then
+    _rename "$@"
+elif $emuparadise && $list; then
+    curl "$url" \
+        | grep -Eo 'class="index gamelist" title="([^"]+)' \
+        | cut -c 31-
+fi

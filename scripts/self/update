@@ -12,20 +12,22 @@ source "${DOTFILES}/scripts/self/aux/update.sh"
 
 docs::eval_help "$@"
 
-git_info="$(get_git_info)"
-log::note "Updating dotfiles\n${git_info}\n"
+_version() {
+dot --version || echo "unknown"
+}
+
+main() {
+log::note "Updating dotfiles\n$(_version)\n"
 echoerr
 
 tags="$(platform::tags)"
 log::note "Current config: $tags"
 echoerr
 
-set +e
-
-update_submodules || true
-setup_folders_and_files
-setup_git_credentials
-setup_docopts
+dot pkg add submodules || true
+dot pkg add dot-folders || true
+dot pkg add dot-gitconfig || true
+dot pkg add dot-zshrc || true
 
 echoerr
 log::note "Setting symlinks..."
@@ -37,14 +39,38 @@ has_tag "$tags" "x86" && update_dotfiles_x86
 has_tag "$tags" "android" && update_dotfiles_android
 has_tag "$tags" "wsl" && update_dotfiles_wsl
 
-set_random_ps1
 fix_locales
-
-# install_nvim_plugins
-# install_tmux_plugins
-# install_zplug_plugins
 
 set -e
 
 echoerr
 log::success "Update finished!"
+}
+
+# ==============================
+# Helpers
+# ==============================
+
+has_tag() {
+   str::contains "$@"
+}
+
+
+# ==============================
+# Locale
+# ==============================
+
+fix_locales() {
+   if platform::command_exists locale-gen; then
+      echoerr
+      log::note "Fixing locales..."
+      locale-gen en_US en_US.UTF-8
+   fi
+}
+
+
+   # ==============================
+   # Script root
+   # ==============================
+
+main "$@"

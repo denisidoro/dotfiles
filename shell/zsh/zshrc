@@ -17,7 +17,9 @@ source "${DOTFILES}/shell/aliases/core.bash"
 
 # on directory change
 dns_chpwd() {
-   fre --add "$PWD" # register for jump/fasd
+   if ${DOT_FRE:-true}; then
+      fre --add "$PWD"
+   fi
 }
 typeset -gaU chpwd_functions
 chpwd_functions+=dns_chpwd

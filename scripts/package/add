@@ -38,14 +38,14 @@ else
 fi
 
 package="$1"
-
 platform::command_exists "$package" && _is_installed && exit 0
 
-file="${DOTFILES}/scripts/package/recipes/${package}.sh"
+dashed_package="$(echo "$package" | tr ' _' '-')"
+file="${DOTFILES}/scripts/package/recipes/${dashed_package}.sh"
 
 if $prevent_recipe || ! [ -f "$file" ]; then
    _installing
-   for pkg_mgr in apt pkg yum dnf port emerge pacman brew npm; do
+   for pkg_mgr in apt pkg yum dnf port emerge pacman brew pnpm yarn npm pip; do
       dot pkg proxy $pkg_mgr add "$package" && exit 0 || true
    done
    exit 234
