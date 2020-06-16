@@ -13,12 +13,12 @@ cmd="$1"
 shift
 
 _test() {
-   source "${DOTFILES}/scripts/self/aux/test.sh"
+   source "${DOTFILES}/scripts/core/test.sh"
    test::start "$@"
 }
 
 case $cmd in
    eval) eval "$@" ;;
    test) _test "$@" ;;
-   *) docs::help "$0" && exit 0 ;;
+   *) docs::help_or_invalid "$@" ;;
 esac

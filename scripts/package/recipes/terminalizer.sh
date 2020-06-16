@@ -2,5 +2,6 @@
 set -euo pipefail
 
 package::install() {
-   npm install -g terminalizer
+   yarn add global terminalizer \
+      || npm install -g terminalizer
 }

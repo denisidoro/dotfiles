@@ -11,7 +11,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Options:
 ##?    --no-rust          Skip rust lints
 
-docs::eval_help "$@"
+docs::eval "$@"
 
 _all_dotfiles_files() {
    find "${DOTFILES}/scripts" -maxdepth 3 -executable -type f
@@ -42,7 +42,7 @@ _all_dotfiles_files_to_format() {
       | _filter
 }
 
-if [[ "$*" != *"no-rust"* ]]; then
+if ! $no_rust; then
    cd "${DOTFILES}/rust"
    dot rust fix
 fi

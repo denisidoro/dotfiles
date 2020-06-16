@@ -3,5 +3,7 @@ set -euo pipefail
 
 package::install() {
    platform::command_exists brew && brew install starship && return 0 || true
+
+   dot pkg curl
    bash <(curl -fsSL https://starship.rs/install.sh)
 }

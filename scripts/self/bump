@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/documentation.sh"
+
+##? Bumps version
+##?
+##? Usage:
+##?    x <ctx> <cmd>
+
+docs::eval_help "$@"
+
+new_version="$(date +'%Y-%m-%d' | sed 's/-0/-/g' | tr '-' '.')"
+pattern='version = "[0-9\.]+"'
+replacement="version = \"${new_version}\""
+sed -Ei "0,/${pattern}/s/${pattern}/${replacement}/" "${DOTFILES}/rust/Cargo.toml"

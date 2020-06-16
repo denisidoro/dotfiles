@@ -7,7 +7,7 @@ package::is_installed() {
 
 package::install() {
    dot pkg add wget
-   log::warning "Setting up phpMyAdmin..."
+
    cd /var/www/html
    log::warning "Downloading zip..."
    wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz

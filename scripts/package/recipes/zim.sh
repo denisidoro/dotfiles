@@ -9,5 +9,5 @@ package::install() {
    dot pkg add curl
    dot pkg add zsh
 
-   curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh	
+   curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
 }

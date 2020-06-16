@@ -11,7 +11,7 @@ DOT_BIN="${DOTFILES}/bin/dot"
 ##?    init [<profile>]
 
 case "${1:-}" in
-   "-h"|"--help") grep "^##?" "$0" | cut -c 5-; exit 0 ;;
+   -h|--help|--version) grep "^##?" "$0" | cut -c 5-; exit 0 ;;
 esac
 
 _dot() {
@@ -33,7 +33,7 @@ elif [ -f "$DOTFILES" ]; then
    mv "$DOTFILES" "$old_dotfiles"
    clone_repo
 else
-   echo "No dotfiles folder found. Installing dependencies and cloning dotfiles..."
+   echo "No dotfiles folder found. Cloning dotfiles..."
    clone_repo
 fi
 
@@ -47,8 +47,8 @@ fi
 
 # OSX bootstrap
 if uname -s | grep -q "arwin"; then
-   _dot pkg add gnu || true
    _dot pkg add brew || true
+   _dot pkg add gnu || true
 fi
 
 # call setup

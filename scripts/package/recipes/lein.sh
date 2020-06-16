@@ -2,7 +2,10 @@
 set -euo pipefail
 
 package::install() {
-   platform::command_exists brew && brew install leiningen && return 0
+   dot pkg add --prevent-recipe leiningen \
+      || dot pkg add --prevent-recipe lein \
+      && return 0 \
+      || true
 
    dot pkg add wget
 

@@ -9,5 +9,7 @@ package::is_installed() {
 }
 
 package::install() {
+   dot pkg add git
+
    recipe::clone_as_submodule $user $repo
 }

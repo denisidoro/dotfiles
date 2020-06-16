@@ -2,6 +2,7 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/documentation.sh"
+source "${DOTFILES}/scripts/core/git.sh"
 
 ##? Jump to files, folders or editing
 ##?
@@ -125,7 +126,7 @@ cd_up() {
 
 # Go up to project root
 cd_to_git_root() {
-   cd "$(git rev-parse --show-toplevel)"
+   cd "$(git::root)"
 }
 
 cmd="$1"

@@ -6,6 +6,8 @@ package::is_installed() {
 }
 
 package::install() {
+   dot pkg add curl
    dot pkg add nvim
+
    bash <(curl -fsSL https://raw.githubusercontent.com/liuchengxu/space-vim/master/install.sh)
 }

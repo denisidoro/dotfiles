@@ -5,12 +5,6 @@ docs::help() {
    grep "^##?" "$file" | cut -c 5-
 }
 
-_compose_version() {
-   local -r file="$1"
-   local -r git_info=$(cd "$(dirname "$file")" && git log -n 1 --pretty=format:'%h%n%ad%n%an%n%s' --date=format:'%Y-%m-%d %Hh%M' -- "$(basename "$file")")
-   echo -e "$git_info"
-}
-
 docs::eval() {
    local -r file="$0"
    local -r help="$(docs::help "$file")"
@@ -29,15 +23,14 @@ docs::eval_help() {
 
    case "${!#:-}" in
       -h|--help) docs::help "$file"; exit 0 ;;
-      --version) _compose_version "$file"; exit 0 ;;
    esac
 }
 
-docs::eval_help_first_arg() {
+docs::help_or_invalid() {
    local -r file="$0"
 
-   case "${1:-}" in
-      -h|--help) docs::help "$file"; exit 0 ;;
-      --version) _compose_version "$file"; exit 0 ;;
+   case "${!#:-}" in
+      -h|--help|--version) docs::help "$file"; exit 0 ;;
+      *) docs::help "$file"; exit 1 ;;
    esac
 }

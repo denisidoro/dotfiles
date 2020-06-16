@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/self/aux/test.sh"
+source "${DOTFILES}/scripts/core/test.sh"
 
 ##? Run tests
 ##?

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 _brew_osx() {
-   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }
 
 _brew_linux() {
@@ -31,6 +31,7 @@ recipe::is_installed() {
 
 package::install() {
    if platform::is_osx; then
+      dot pkg add ruby
       _brew_osx
    elif platform::command_exists apt; then
       _brew_apt || _brew_linux

@@ -6,13 +6,19 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Starts a minimal docker container with these dotfiles
 ##?
 ##? Usage:
-##?    docker
+##?    docker <script>
 
 docs::eval_help "$@"
+
+if ${1:-install}; then
+   SCRIPT="EDITOR=cat dot self install"
+else
+   SCRIPT=":"
+fi
 
 docker run \
    -it \
    --entrypoint /bin/bash \
    -v "${DOTFILES}:/dotfiles" \
    "bashell/alpine-bash" \
-   -c "export DOTFILES=/dotfiles; export EDITOR=vi; export PATH=$PATH:/dotfiles/bin; EDITOR=cat dot self install; bash"
+   -c "export DOTFILES=/dotfiles; export EDITOR=vi; export PATH=${PATH}:/dotfiles/bin; $SCRIPT; bash"

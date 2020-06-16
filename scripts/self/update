@@ -72,48 +72,48 @@ fix_locales() {
    fi
 }
 
-   # ==============================
-   # Symlinks and custom configs
-   # ==============================
+# ==============================
+# Symlinks and custom configs
+# ==============================
 
-   update_dotfiles() {
-      DOTLINK="${1:-unix}" dot self link set --create-dirs --verbose
-   }
+update_dotfiles() {
+   DOTLINK="${1:-unix}" dot self link set --create-dirs --verbose
+}
 
-   update_dotfiles_common() {
-      log::note "Symlinking for OSX..."
-      update_dotfiles
-   }
+update_dotfiles_common() {
+   log::note "Symlinking for Unix..."
+   update_dotfiles
+}
 
-   update_dotfiles_osx() {
-      log::note "Symlinking for OSX..."
-      update_dotfiles "osx"
-   }
+update_dotfiles_osx() {
+   log::note "Symlinking for OSX..."
+   update_dotfiles "osx"
+}
 
-   update_dotfiles_linux() {
-      log::note "Symlinking for Linux..."
-      update_dotfiles "linux"
-   }
+update_dotfiles_linux() {
+   log::note "Symlinking for Linux..."
+   update_dotfiles "linux"
+}
 
-   update_dotfiles_wsl() {
-      log::note "Symlinking for WSL..."
-      update_dotfiles "linux"
-   }
+update_dotfiles_wsl() {
+   log::note "Symlinking for WSL..."
+   update_dotfiles "linux"
+}
 
-   update_dotfiles_arm() {
-      log::note "Symlinking for ARM..."
-      log::note "No custom config for ARM"
-   }
+update_dotfiles_arm() {
+   log::note "Symlinking for ARM..."
+   log::note "No custom config for ARM"
+}
 
-   update_dotfiles_x86() {
-      log::note "Symlinking for x86..."
-      log::note "No custom config for x86"
-   }
+update_dotfiles_x86() {
+   log::note "Symlinking for x86..."
+   log::note "No custom config for x86"
+}
 
-   update_dotfiles_android() {
-      log::note "Symlinking for Android..."
-      dot pkg add termux-essentials
-   }
+update_dotfiles_android() {
+   log::note "Symlinking for Android..."
+   dot pkg add termux-essentials
+}
 
 # ==============================
 # Script root

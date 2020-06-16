@@ -32,7 +32,8 @@ impl transpiler::Transpiler for Transpiler {
 
 fn transform(line: String) -> String {
     let mut result = line;
-    if result.contains('(') && result.contains(')') && result.contains('{') {
+    if result.contains('(') && result.contains(')') && result.contains('{') && result.ends_with("{")
+    {
         let tmp_result = result.clone();
         if let Some(captures) = REGEX.captures(&tmp_result) {
             let padding = &captures[1];
