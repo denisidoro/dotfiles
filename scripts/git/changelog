@@ -34,7 +34,7 @@ git::changelog_commit() {
    local msg="$(printf "$changes" \
       | head -n3 \
       | tr '\n' ';' \
-      | sed -E 's/ *; */, /g'
+      | sed -E 's/ *; */, /g' \
       | sed -E 's/ *, *//g')"
 
    [[ $n -gt 3 ]] && msg="${msg}, ..."
