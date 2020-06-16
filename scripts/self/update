@@ -19,6 +19,8 @@ main() {
    log::note "Updating dotfiles\n$(_version)\n"
    echoerr
 
+   set +e
+
    tags="$(platform::tags)"
    log::note "Current config: $tags"
    echoerr
