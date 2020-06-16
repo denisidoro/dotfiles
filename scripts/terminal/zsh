@@ -11,10 +11,6 @@ source "$DOTFILES/scripts/core/documentation.sh"
 
 docs::eval_help "$@"
 
-case "${1:-}" in
-   *help) docs::help "$0" ;;
-esac
-
 _expand() {
    local -r filename="$1"
 

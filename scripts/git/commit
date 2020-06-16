@@ -7,17 +7,25 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 ##? Usage:
 ##?    commit am <args>...
 
-docs::eval "$@"
+docs::eval_help "$@"
 
 _msg() {
-   [[ $# -gt 0 ]] \
-    && echo "$*" \
-    || dot git changelog commit
+   if [[ $# -gt 0 ]] && [[ $1 -ne "wip" ]]; then
+      echo "$*"
+   else
+    dot git changelog commit
+   fi
 }
 
-if $am; then
+_am() {
    git add . || true
    shift
    msg="$(_msg "$@" || echo "WIP")"
    git commit -am "$msg"
-fi
+}
+
+cmd="${1:-}"
+case $cmd in
+am) _am "$@";;
+*) docs::help "$@" && exit 1;;
+esac

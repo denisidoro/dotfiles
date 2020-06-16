@@ -17,8 +17,8 @@ _upstream() {
 }
 
 _commit_first() {
-   git add . || true
-   git commit -am "$*" || true
+   git add .
+   dot git commit am "$@"
    _upstream
 }
 

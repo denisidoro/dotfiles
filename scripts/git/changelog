@@ -108,11 +108,7 @@ _commit() {
 
    [[ $n -gt 3 ]] && msg="${msg}..."
 
-   echo "$msg"
-   echo
-   date +'%Y-%m-%d %T'
-   echo
-   git diff --stat | tac
+   echo "$(date +'%b-%d %Hh%M') ${msg}"
 }
 
 if $release; then

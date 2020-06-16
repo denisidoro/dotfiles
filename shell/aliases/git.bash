@@ -17,7 +17,7 @@ alias tst="tig status"
 alias gpu="dot git push upstream"
 
 # git commit with push
-alias gcam='git add --all && git commit -a -m'
+alias gcam='git add --all && dot git commit am'
 alias gcamp="dot git push commit"
 
 # preview PR
