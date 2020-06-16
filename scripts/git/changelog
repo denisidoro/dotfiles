@@ -91,7 +91,7 @@ _release() {
 _commit() {
 
    local -r changes="$(git diff --numstat \
-   | awk '{print $3" "$1-$2}' \
+      | awk '{print $3" "$1-$2}' \
    | sort -k2 -n -r \
    | sed -E 's|(.*)/(.*)|\2|g')"
 
@@ -103,6 +103,10 @@ _commit() {
    | head -n3 \
    | tr '\n' ';' \
    | sed -E 's/ *; */, /g')"
+
+   echoerr "changes: $changes"
+   echoerr "n: $n"
+   echoerr "msg: $msg"
 
    [[ $n -gt 3 ]] && msg="${msg}..."
 
