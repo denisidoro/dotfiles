@@ -35,7 +35,7 @@ git::changelog_commit() {
       | head -n3 \
       | tr '\n' ';' \
       | sed -E 's/ *; */, /g' \
-      | sed -E 's/ *, *//g')"
+      | sed -E 's/ *, *$//g')"
 
    [[ $n -gt 3 ]] && msg="${msg}, ..."
 
