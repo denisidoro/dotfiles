@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 _prompt() {
    log::warning "$1"
    read -p "Press enter to continue"

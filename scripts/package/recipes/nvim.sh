@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 package::install() {
    dot pkg add neovim && return 0 || true
    dot pkg add --prevent-recipe nvim && return 0 || true

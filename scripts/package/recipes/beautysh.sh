@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 package::install() {
    cd "$TMP_DIR"
    git clone https://github.com/bemeurer/beautysh

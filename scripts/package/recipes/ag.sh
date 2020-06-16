@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 package::install() {
    platform::command_exists apt && dot pkg proxy apt add silversearcher-ag && return 0 || true
    platform::command_exists pkg && dot pkg proxy pkg add the_silver_searcher && return 0 || true

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 ESCAPE_CHAR="\034"
 ESCAPE_CHAR_2="\035"
 ESCAPE_CHAR_3="\036"

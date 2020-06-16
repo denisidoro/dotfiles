@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 symlink_bashrc() {
    cd "$DOTFILES"
    bashrc_path="$(cat "links/unix.yaml" | grep bashrc | cut -d',' -f1)"

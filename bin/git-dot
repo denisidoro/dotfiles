@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 set -euo pipefail
 
 export dot_bin_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"

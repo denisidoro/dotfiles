@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 package::is_installed() {
    fs::is_dir "/var/www/html/phpMyAdmin"
 }

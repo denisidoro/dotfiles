@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 source "${DOTFILES}/scripts/core/main.sh"
 
 TMP_DIR="$(fs::tmp)"

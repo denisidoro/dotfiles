@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 package::install() {
    platform::command_exists brew && brew install leiningen && return 0
 

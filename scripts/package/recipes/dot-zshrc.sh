@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 set -euo pipefail
 
 ZSHRC_PATH="${DOTFILES}/local/zshrc"

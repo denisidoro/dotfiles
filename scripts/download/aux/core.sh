@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 source "${DOTFILES}/scripts/core/main.sh"
 
 VIDEO_EXTENSIONS="avi|mp4|mov|mkv|mpg|3gp|asf|flv|m4v|rm|rmvb|swf|wmv|webm|mp2|mpeg|mpv|ogg|m4p"

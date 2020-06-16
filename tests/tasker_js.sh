@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 random_line() {
    local -r lines="foo\nbar"
 

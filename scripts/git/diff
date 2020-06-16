@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 source "${DOTFILES}/scripts/git/aux/core.sh"
 
 ##? Git diff viewer

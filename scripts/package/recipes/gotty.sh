@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 REPO_TAG="2.0.0-alpha.3"
 
 url::generate() {

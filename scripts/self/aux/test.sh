@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 export FORCE_GNU=true
 
 source "${DOTFILES}/scripts/core/main.sh"

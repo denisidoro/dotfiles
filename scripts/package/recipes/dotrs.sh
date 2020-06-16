@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 package::is_installed() {
    [ -f "${DOTFILES}/target/dotrs" ]
 }

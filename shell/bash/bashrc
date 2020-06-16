@@ -1,8 +1,7 @@
 export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 # if [ -t 1 ]; then
 #    exec zsh
 # fi

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 # zplug
 export ZPLUG_HOME="${DOTFILES}/modules/zplug"
 

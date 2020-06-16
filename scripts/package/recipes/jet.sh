@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 package::install() {
    package::command_exists brew && brew install borkdude/brew/jet && return 0 || true
 

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
+ 
 _validate() {
    local -r filename="$1"
    local success=true
