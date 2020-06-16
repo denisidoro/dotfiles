@@ -41,7 +41,6 @@ git::changelog_commit() {
    echo "$(date +'%b-%d %Hh%M'): ${msg}"
 }
 
-
 git::changelog_release() {
    REPO_URL="$(_repo_url)"
 
@@ -62,7 +61,8 @@ _repo_url() {
       | grep origin -A1 \
       | grep url \
       | awk '{print $NF}' \
-      | head -n1 | tr ':' '/' \
+      | head -n1 \
+      | tr ':' '/' \
       | sed 's|git@|https://|g' \
       |  sed -E 's/.git$//'
 }
