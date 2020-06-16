@@ -30,11 +30,6 @@ setopt HIST_IGNORE_ALL_DUPS
 # theme
 source "${DOTFILES}/shell/themes/core.zsh"
 
-# Initialize modules
-export ZIM_HOME="${DOTFILES}/modules/zimfw"
-[[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]] && source ${ZIM_HOME}/zimfw.zsh init -q
-source ${ZIM_HOME}/init.zsh
-
 # load bindings
 source "${DOTFILES}/shell/zsh/bindings/editing.zsh"
 [[ ${DOT_NAVI:-true} ]] && source "${DOTFILES}/shell/zsh/bindings/navi.zsh" || true

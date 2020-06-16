@@ -14,7 +14,7 @@ CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 ##?    dot <context> <cmd> [<args>...]
 
 list_command_paths() {
-   find "$DOTFILES/scripts" -maxdepth 2 -executable -type f \
+   find "$DOTFILES/scripts" -maxdepth 2 -exec -type f \
       | grep -v core \
       | sort
 }

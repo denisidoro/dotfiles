@@ -7,9 +7,9 @@ _brew_osx() {
 
 _brew_linux() {
    if platform::command_exists apt; then
-      sudo apt update && sudo apt-get install -y build-essential curl file git
+      sudo apt update && sudo apt-get install -y build-essential curl file git && exit 0 || true
    elif platform::command_exists yum; then
-      sudo yum groupinstall 'Development Tools' && sudo yum install curl file git
+      sudo yum groupinstall 'Development Tools' && sudo yum install curl file git && exit 0 || true
    fi
 
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"

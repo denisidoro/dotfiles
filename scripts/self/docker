@@ -15,4 +15,4 @@ docker run \
    --entrypoint /bin/bash \
    -v "${DOTFILES}:/dotfiles" \
    "bashell/alpine-bash" \
-   -c "export DOTFILES=/dotfiles; export PATH=$PATH:/dotfiles/bin; bash"
+   -c "export DOTFILES=/dotfiles; export EDITOR=vi; export PATH=$PATH:/dotfiles/bin; EDITOR=cat dot self install; bash"

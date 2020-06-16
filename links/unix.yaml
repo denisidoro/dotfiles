@@ -1,7 +1,5 @@
 shell/zsh/zshrc, $HOME/.zshrc
-shell/zsh/zlogin, $HOME/.zlogin
 shell/zsh/zimrc, $HOME/.zimrc
-shell/zsh/zshenv, $HOME/.zshenv
 shell/bash/bashrc, $HOME/.bashrc
 shell/bash/bash_profile, $HOME/.bash_profile
 shell/bash/profile, $HOME/.profile

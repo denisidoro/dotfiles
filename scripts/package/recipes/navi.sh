@@ -2,7 +2,8 @@
 set -euo pipefail
 
 package::install() {
-   package::command_exists brew && brew install navi && return 0 || true
+   platform::command_exists brew && brew install navi && return 0 || true
 
+   dot pkg add curl
    bash <(curl -sL https://raw.githubusercontent.com/denisidoro/navi/master/scripts/install)
 }

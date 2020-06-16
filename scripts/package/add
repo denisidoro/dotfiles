@@ -13,6 +13,13 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 docs::eval_help "$@"
 
+if [[ "$1" == "--prevent-recipe" ]]; then
+   prevent_recipe=true
+   shift
+else
+   prevent_recipe=false
+fi
+
 if [ $# -gt 1 ]; then
    pkg_failures=0
    for package in "$@"; do
@@ -29,13 +36,6 @@ _installing() {
    log::warning "Attempting to install ${package}..."
 }
 
-if [[ "$1" == "--prevent-recipe" ]]; then
-   prevent_recipe=true
-   shift
-else
-   prevent_recipe=false
-fi
-
 package="$1"
 platform::command_exists "$package" && _is_installed && exit 0
 
@@ -44,7 +44,7 @@ file="${DOTFILES}/scripts/package/recipes/${dashed_package}.sh"
 
 if $prevent_recipe || ! [ -f "$file" ]; then
    _installing
-   for pkg_mgr in apt pkg yum dnf port emerge pacman brew pnpm yarn npm pip; do
+   for pkg_mgr in apt apk pkg yum dnf port emerge pacman brew pnpm yarn npm pip; do
       dot pkg proxy $pkg_mgr add "$package" && exit 0 || true
    done
    exit 234
@@ -58,4 +58,8 @@ platform::command_exists package::is_installed \
    && exit 0
 
 _installing
-package::install
+package::install && log::success "Finished installing ${package}!"
+
+hash -r 2>/dev/null || true
+source "${HOME}/.bashrc" 2>/dev/null || true
+source "${HOME}/.zshrc" 2>/dev/null || true

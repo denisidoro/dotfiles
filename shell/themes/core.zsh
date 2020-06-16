@@ -29,17 +29,17 @@ _load_starship() {
       NUM_JOBS=$#jobstates
       # Compute cmd_duration, if we have a time to consume
       if [[ ! -z "${STARSHIP_START_TIME+1}" ]]; then
-         STARSHIP_END_TIME=$("/usr/local/bin/starship" time)
+         STARSHIP_END_TIME=$("starship" time)
          STARSHIP_DURATION=$((STARSHIP_END_TIME - STARSHIP_START_TIME))
-         PROMPT="$("/usr/local/bin/starship" prompt --status=$STATUS --cmd-duration=$STARSHIP_DURATION --jobs="$NUM_JOBS")"
+         PROMPT="$("starship" prompt --status=$STATUS --cmd-duration=$STARSHIP_DURATION --jobs="$NUM_JOBS")"
          unset STARSHIP_START_TIME
       else
-         PROMPT="$("/usr/local/bin/starship" prompt --status=$STATUS --jobs="$NUM_JOBS")"
+         PROMPT="$("starship" prompt --status=$STATUS --jobs="$NUM_JOBS")"
       fi
    }
 
    starship_preexec() {
-      STARSHIP_START_TIME=$("/usr/local/bin/starship" time)
+      STARSHIP_START_TIME=$("starship" time)
    }
 
    # If precmd/preexec arrays are not already set, set them. If we don't do this,
@@ -59,16 +59,20 @@ _load_starship() {
 
    # Set up a function to redraw the prompt if the user switches vi modes
    zle-keymap-select() {
-      PROMPT=$("/usr/local/bin/starship" prompt --keymap=$KEYMAP --jobs="$(jobs | wc -l)")
+      PROMPT=$("starship" prompt --keymap=$KEYMAP --jobs="$(jobs | wc -l)")
       zle reset-prompt
    }
 
-   STARSHIP_START_TIME=$("/usr/local/bin/starship" time)
+   STARSHIP_START_TIME=$("starship" time)
    zle -N zle-keymap-select
    export STARSHIP_SHELL="zsh"
 }
 
-_load_starship || _load_fallback_theme
+if ${DOT_STARSHIP:-true}; then
+   _load_starship || _load_fallback_theme
+else
+   _load_fallback_theme
+fi
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan"
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20

@@ -57,4 +57,4 @@ _dot self update
 # cleanup
 popd >/dev/null
 
-exec "$SHELL"
+exec "${SHELL:-bash}"

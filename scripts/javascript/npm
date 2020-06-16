@@ -23,7 +23,7 @@ _symlink() {
    else
       mkdir -p "$to"
       mv "$from" "$to"
-      ln -s "$to" "$from"
+      sudo ln -s "$to" "$from"
    fi
 }
 

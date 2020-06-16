@@ -16,6 +16,11 @@ if ! ${DOT_MAIN_SOURCED:-false} ; then
          export -f sudo
       fi
 
+      if ! platform::command_exists tput; then
+         tput() { :; }
+         export -f tput
+      fi
+
       export EDITOR="${EDITOR:-vi}"
    fi
 
