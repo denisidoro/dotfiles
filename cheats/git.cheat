@@ -525,4 +525,10 @@ git branch -u master
 # Set parent, upstream branch
 git branch -u <branch>
 
+# Merge master with ours strategy
+git merge -s ours master
+
+# Merge master with theirs strategy
+git merge -s theirs master
+
 $ branch: git branch | awk '{print $NF}'
