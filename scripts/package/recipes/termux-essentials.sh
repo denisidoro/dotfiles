@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
- 
+set -euo pipefail
+
 has_busybox_only() {
    mktemp --help 2>&1 \
       | grep -q BusyBox

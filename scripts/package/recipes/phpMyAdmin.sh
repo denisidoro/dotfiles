@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
- 
+set -euo pipefail
+
 package::is_installed() {
    fs::is_dir "/var/www/html/phpMyAdmin"
 }

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
- 
+set -euo pipefail
+
 package::install() {
    cd "$TMP_DIR"
    git clone https://github.com/bemeurer/beautysh

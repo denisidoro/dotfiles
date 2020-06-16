@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
- 
+set -euo pipefail
+
 package::install() {
    platform::command_exists brew && brew install leiningen && return 0
 

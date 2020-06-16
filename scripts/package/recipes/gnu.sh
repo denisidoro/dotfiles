@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
- 
+set -euo pipefail
+
 package::is_installed() {
    ! platform::is_osx \
       || platform::command_exists ggrep

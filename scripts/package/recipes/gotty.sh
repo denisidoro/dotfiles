@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
- 
+set -euo pipefail
+
 REPO_TAG="2.0.0-alpha.3"
 
 url::generate() {

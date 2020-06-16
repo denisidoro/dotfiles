@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
- 
+set -euo pipefail
+
 _prompt() {
    log::warning "$1"
    read -p "Press enter to continue"
