@@ -118,7 +118,7 @@ mod tests {
     fn test_transform_none() {
         let line = String::from("foo := bar()");
         let line2 = line.clone();
-        assert_eq!(line.clone(), transform_line_error_propagation(line2));
+        assert_eq!(line, transform_line_error_propagation(line2));
     }
 
     #[test]
@@ -128,7 +128,7 @@ mod tests {
         return bake(appleSlice)
 	})"#;
 
-        let split = input.split("\n");
+        let split = input.split('\n');
         let lines: Vec<&str> = split.collect();
         let lines: Vec<String> = lines.iter().map(|x| String::from(*x)).collect();
         let new_lines = transpile_map(lines);
