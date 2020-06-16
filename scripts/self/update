@@ -54,7 +54,6 @@ has_tag() {
    str::contains "$@"
 }
 
-
 # ==============================
 # Locale
 # ==============================
@@ -66,7 +65,6 @@ fix_locales() {
       locale-gen en_US en_US.UTF-8
    fi
 }
-
 
 # ==============================
 # Script root

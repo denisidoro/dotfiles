@@ -37,9 +37,9 @@ source ${ZIM_HOME}/init.zsh
 
 # load bindings
 source "${DOTFILES}/shell/zsh/bindings/editing.zsh"
-source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
-source "${DOTFILES}/shell/zsh/bindings/zim.zsh"
-source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
+[[ ${DOT_NAVI:-true} ]] && source "${DOTFILES}/shell/zsh/bindings/navi.zsh" || true
+[[ ${DOT_ZIM:-true} ]] && source "${DOTFILES}/shell/zsh/bindings/zim.zsh" || true
+[[ ${DOT_FZF:-true} ]] && source "${DOTFILES}/shell/zsh/bindings/fzf.zsh" || true
 
 # load local custom config
 source "${DOTFILES}/local/zshrc" # 2> /dev/null || true

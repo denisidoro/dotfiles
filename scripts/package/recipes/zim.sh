@@ -6,6 +6,7 @@ package::is_installed() {
 }
 
 package::install() {
+   dot pkg add zsh
    export ZIM_HOME="${ZIM_HOME:-$DOTFILES/modules/zimfw}"
    zsh "$ZIM_HOME/zimfw.zsh" upgrade
    rm -rf "$ZIM_HOME/modules/"* && zsh "$ZIM_HOME/zimfw.zsh" install

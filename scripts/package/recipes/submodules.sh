@@ -6,13 +6,13 @@ package::is_installed() {
 }
 
 package::install() {
-      cd "$DOTFILES"
+   cd "$DOTFILES"
 
-      git submodule foreach git reset --hard
-      git submodule foreach git checkout .
-      git submodule foreach git pull origin master
+   git submodule foreach git reset --hard || true
+   git submodule foreach git checkout . || true
+   git submodule foreach git pull origin master || true
 
-      platform::command_exists zsh && dot pkg add zim
+   platform::command_exists zsh && dot pkg add zim
 
-      return 0
+   return 0
 }
