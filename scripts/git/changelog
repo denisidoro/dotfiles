@@ -104,6 +104,7 @@ _commit() {
    | tr '\n' ';' \
    | sed -E 's/ *; */, /g')"
 
+   echoerr "diff: $(git diff --numstat)"
    echoerr "changes: $changes"
    echoerr "n: $n"
    echoerr "msg: $msg"
