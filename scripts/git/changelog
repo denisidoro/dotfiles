@@ -108,7 +108,7 @@ _commit() {
 
    [[ $n -gt 3 ]] && msg="${msg}..."
 
-   echo "$(date +'%b-%d %Hh%M') ${msg}"
+   echo "$(date +'%b-%d %Hh%M'): ${msg}"
 }
 
 if $release; then
