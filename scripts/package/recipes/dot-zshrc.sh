@@ -26,7 +26,7 @@ package::install() {
    source "$ZSHRC_PATH" || true
 
    if [ -n ${DOT_DOCOPT:-} ]; then
-      dot pkg add $DOT_DOCOPT
+      dot pkg add $DOT_DOCOPT || true
    fi
 
    if ${DOT_ZIM:-false}; then
