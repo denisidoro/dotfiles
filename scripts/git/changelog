@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
- 
+
 source "${DOTFILES}/scripts/git/aux/core.sh"
 
 ##? Changelog generator
@@ -91,7 +91,7 @@ _release() {
 }
 
 _commit() {
-   
+
    local -r changes="$(git diff --numstat \
    | awk '{print $3" "$1-$2}' \
    | sort -k2 -n -r \
@@ -108,7 +108,7 @@ _commit() {
 
    [[ $n -gt 3 ]] && msg="${msg}..."
 
-   echo "$msg"   
+   echo "$msg"
    echo
    date +'%Y-%m-%d %T'
    echo

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
- 
+
 source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Install packages
@@ -17,7 +17,7 @@ shift 2
 
 _valid_pkg_mgr_for_osx() {
    case "${1:-}" in
-      "apt"|"pkg"|"yum"|"dnf"|"port"|"emerge"|"pacman") return 1;;
+      "apt"|"pkg"|"yum"|"dnf"|"port"|"emerge"|"pacman") return 1 ;;
    esac
 }
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
- 
+
 random_line() {
    local -r lines="foo\nbar"
 

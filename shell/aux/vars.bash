@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
- 
+
 # zplug
 export ZPLUG_HOME="${DOTFILES}/modules/zplug"
 

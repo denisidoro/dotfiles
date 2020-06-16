@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
- 
+
 _jsons() {
    cd "$DOTFILES"
    find . -iname "*.json" \

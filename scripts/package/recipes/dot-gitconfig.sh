@@ -8,25 +8,25 @@ package::is_installed() {
 }
 
 _git_name() {
-    echo "$(whoami) $(hostname)"
+   echo "$(whoami) $(hostname)"
 }
 
 _git_email() {
-    echo "$(whoami)@$(hostname)"
+   echo "$(whoami)@$(hostname)"
 }
 
 _content() {
-    DOT_GIT_NAME="${DOT_GIT_NAME:-$(_git_name)}"
-    DOT_GIT_EMAIL="${DOT_GIT_EMAIL:-$(_git_email)}"
+   DOT_GIT_NAME="${DOT_GIT_NAME:-$(_git_name)}"
+   DOT_GIT_EMAIL="${DOT_GIT_EMAIL:-$(_git_email)}"
 
-    echo "[user]"
-    echo "   name = ${DOT_GIT_NAME}"
-    echo "   email = ${DOT_GIT_EMAIL}"
+   echo "[user]"
+   echo "   name = ${DOT_GIT_NAME}"
+   echo "   email = ${DOT_GIT_EMAIL}"
 }
 
 package::install() {
-    dot pkg add dot-folders
+   dot pkg add dot-folders
 
-    _content > "$GITCONFIG_PATH"
-    $EDITOR "$GITCONFIG_PATH"
+   _content > "$GITCONFIG_PATH"
+   $EDITOR "$GITCONFIG_PATH"
 }

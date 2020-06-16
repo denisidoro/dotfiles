@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
- 
+
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/git/aux/core.sh"
 

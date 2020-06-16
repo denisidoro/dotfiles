@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
- 
+
 export FORCE_GNU=true
 
 source "${DOTFILES}/scripts/core/main.sh"

@@ -12,38 +12,38 @@ source "${DOTFILES}/scripts/self/aux/update.sh"
 docs::eval_help "$@"
 
 _version() {
-dot --version || echo "unknown"
+   dot --version || echo "unknown"
 }
 
 main() {
-log::note "Updating dotfiles\n$(_version)\n"
-echoerr
+   log::note "Updating dotfiles\n$(_version)\n"
+   echoerr
 
-tags="$(platform::tags)"
-log::note "Current config: $tags"
-echoerr
+   tags="$(platform::tags)"
+   log::note "Current config: $tags"
+   echoerr
 
-dot pkg add submodules || true
-dot pkg add dot-folders || true
-dot pkg add dot-gitconfig || true
-dot pkg add dot-zshrc || true
+   dot pkg add submodules || true
+   dot pkg add dot-folders || true
+   dot pkg add dot-gitconfig || true
+   dot pkg add dot-zshrc || true
 
-echoerr
-log::note "Setting symlinks..."
-update_dotfiles_common
-has_tag "$tags" "osx" && update_dotfiles_osx
-has_tag "$tags" "linux" && update_dotfiles_linux
-has_tag "$tags" "arm" && update_dotfiles_arm
-has_tag "$tags" "x86" && update_dotfiles_x86
-has_tag "$tags" "android" && update_dotfiles_android
-has_tag "$tags" "wsl" && update_dotfiles_wsl
+   echoerr
+   log::note "Setting symlinks..."
+   update_dotfiles_common
+   has_tag "$tags" "osx" && update_dotfiles_osx
+   has_tag "$tags" "linux" && update_dotfiles_linux
+   has_tag "$tags" "arm" && update_dotfiles_arm
+   has_tag "$tags" "x86" && update_dotfiles_x86
+   has_tag "$tags" "android" && update_dotfiles_android
+   has_tag "$tags" "wsl" && update_dotfiles_wsl
 
-fix_locales
+   fix_locales
 
-set -e
+   set -e
 
-echoerr
-log::success "Update finished!"
+   echoerr
+   log::success "Update finished!"
 }
 
 # ==============================
@@ -68,8 +68,8 @@ fix_locales() {
 }
 
 
-   # ==============================
-   # Script root
-   # ==============================
+# ==============================
+# Script root
+# ==============================
 
 main "$@"

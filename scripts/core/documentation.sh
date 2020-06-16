@@ -21,7 +21,7 @@ docs::eval() {
    local -r help="$(docs::extract_help "$file")"
 
    if [[ ${DOT_DOCOPT:-python} == "python" ]]; then
-      local -r docopt="${DOTFILES}/scripts/core/docopts" 
+      local -r docopt="${DOTFILES}/scripts/core/docopts"
    else
       local -r docopt="$DOT_DOCOPT"
    fi

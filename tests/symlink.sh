@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
- 
+
 _validate() {
    local -r filename="$1"
    local success=true

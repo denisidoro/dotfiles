@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
- 
+
 without_dot_slash() {
    sed 's|\./||g'
 }
