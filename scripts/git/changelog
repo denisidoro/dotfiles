@@ -11,7 +11,7 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 docs::eval "$@"
 
 _repo_url() {
-   cat "$(git rev-parse --show-toplevel)/.git/config" \
+   cat "$(git::root)/.git/config" \
       | grep origin -A1 \
       | grep url \
       | awk '{print $NF}' \
@@ -89,6 +89,7 @@ _release() {
 }
 
 _commit() {
+   cd "$(git::root)"
 
    local -r changes="$(git diff --numstat \
       | awk '{print $3" "$1-$2}' \
