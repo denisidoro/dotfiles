@@ -11,7 +11,7 @@ DOT_BIN="${DOTFILES}/bin/dot"
 ##?    init [<profile>]
 
 case "${1:-}" in
-   "-h"|"--help") grep "^##?" "$file" | cut -c 5-; exit 0 ;;
+   "-h"|"--help") grep "^##?" "$0" | cut -c 5-; exit 0 ;;
 esac
 
 _dot() {
