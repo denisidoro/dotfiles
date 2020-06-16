@@ -6,7 +6,7 @@ _apt() {
 
 apt::install() {
    local -r ask="$(dict::get "$OPTIONS" ask)"
-   sudo _apt install $([ ! $ask ] && echo "--yes") "$@"
+   sudo _apt install $([ ! "$ask" ] && echo "--yes") "$@"
 }
 
 apt::remove() {

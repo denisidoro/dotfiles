@@ -53,7 +53,7 @@ str::reverse_lines() {
 str::not_empty() {
    local -r input="$(cat)"
 
-   if [ -n $input ]; then
+   if [ -n "$input" ]; then
       echo "$input"
    else
       return 1
@@ -65,7 +65,7 @@ str::remove_empty_lines() {
 }
 
 str::capitalize() {
-   echo "$(tr '[:lower:]' '[:upper:]' <<<${1:0:1})${1:1}"
+   echo "$(tr '[:lower:]' '[:upper:]' <<<"${1:0:1}")${1:1}"
 }
 
 str::contains() {

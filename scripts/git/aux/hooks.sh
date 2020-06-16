@@ -86,7 +86,7 @@ git::check_conflict() {
 
    for file in $(echo "$files"); do
       local res=$(echo "$file" | egrep '^[><=]{7}( |$)' -H -I --line-number && echo 0 || echo 1)
-      if [ $res == 0 ]; then
+      if [ "$res" == 0 ]; then
          log::error "$file still has unresolved conflicts"
          exit 5
       fi

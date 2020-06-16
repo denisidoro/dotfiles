@@ -41,13 +41,13 @@ code() {
    # export VSCODE_CWD="$cwd"
    # export APP_ROOT="$cwd"
 
-   [[ $# > 0 ]] && shift
+   [[ $# -gt 0 ]] && shift
 
    local -r osx_path="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
    if [ -f "$osx_path" ]; then
       "$osx_path" "$target" "$@"
    else
-      command code "$target ""$@"
+      command code "$target" "$@"
    fi
 }
 

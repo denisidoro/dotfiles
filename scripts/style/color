@@ -34,7 +34,7 @@ _print_colors() {
    local -r rows=$(echo "${COLS:-5} * 3 / 5" | bc)
    local i color c
    for i in $(seq 1 $rows); do
-      for color in $@; do
+      for color in "$@"; do
          c="$(_as_printf_color "$color")"
          printf "\x1b[38;2;${c}m${row}\x1b[0m "
       done

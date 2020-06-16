@@ -32,7 +32,7 @@ dot_or_args() {
    local -r dash_index="$(indexof "--" "$@")"
    readonly fn="${@:1:$((dash_index-1))}"
    shift $dash_index
-   if [[ $# < 1 ]]; then
+   if [[ $# -lt 1 ]]; then
       "${fn[@]}" .
    else
       "${fn[@]}" "$@"

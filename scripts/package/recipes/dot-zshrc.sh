@@ -22,7 +22,7 @@ package::install() {
    dot pkg add dot-folders
 
    if ! [ -f "$ZSHRC_PATH" ]; then
-      dot pkg add $EDITOR || true
+      dot pkg add "$EDITOR" || true
       touch "$ZSHRC_PATH"
       _content > "$ZSHRC_PATH"
       $EDITOR "$ZSHRC_PATH"
@@ -30,8 +30,8 @@ package::install() {
 
    source "$ZSHRC_PATH" || true
 
-   if [ -n ${DOT_DOCOPT:-} ]; then
-      dot pkg add $DOT_DOCOPT || true
+   if [ -n "${DOT_DOCOPT:-}" ]; then
+      dot pkg add "$DOT_DOCOPT" || true
    fi
 
    if ${DOT_NAVI:-false}; then

@@ -54,6 +54,8 @@ case "$language" in
    sh)
       beautysh -i 3 -s paronly "$filename"
       sed -i -e 's/() ::/::/g' "$filename"
+      shellcheck -f diff "$filename" | git apply
+      shellcheck "$filename"
       ;;
    json)
       cat "$filename" | jq . > "$filename"

@@ -53,7 +53,7 @@ call_api() {
 }
 
 # call cli with raw args
-if [[ ${#args[@]} > 0 ]]; then
+if [[ ${#args[@]} -gt 0 ]]; then
    call_api "${args[@]:-}"
    exit 0
 fi

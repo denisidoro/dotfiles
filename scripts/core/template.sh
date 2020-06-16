@@ -16,7 +16,7 @@ main() {
 safe_exit() { # move to core?
    echo -n
    trap - INT TERM EXIT
-   exit ${1:-0}
+   exit "${1:-0}"
 }
 
 trap_exit() { # move to core?

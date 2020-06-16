@@ -9,7 +9,7 @@ coll::contains_element() {
    elements="${@:2}"
    element="${1}"
 
-   for e in ${elements[@]}; do
+   for e in "${elements[@]}"; do
       if [[ "$e" == "${element}" ]]; then
          return 1
       fi

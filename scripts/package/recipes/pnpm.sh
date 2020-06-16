@@ -5,5 +5,5 @@ package::install() {
    dot pkg add --prevent-recipe pnpm && return 0 || true
 
    yarn global add pnpm \
-      || npm install -g pnpm \
-   }
+      || npm install -g pnpm
+}

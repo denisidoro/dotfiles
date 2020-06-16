@@ -41,7 +41,7 @@ coll::remove() {
 coll::without_empty_line() {
    local -r input="$(cat)"
    local -r words="$(echo "$input" | wc -w | xargs)"
-   if [[ $words > 0 ]]; then
+   if [[ $words -gt 0 ]]; then
       echo "$input"
    fi
 }

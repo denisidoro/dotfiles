@@ -12,7 +12,7 @@ fs::is_dir() {
 
 fs::realpath() {
    local -r relative_path="$1"
-   echo "$(cd "$(dirname "$relative_path")"; pwd)/$(basename "$relative_path")"
+   echo "$(cd "$(dirname "$relative_path")" || exit; pwd)/$(basename "$relative_path")"
 }
 
 fs::tmp() {

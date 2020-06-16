@@ -76,7 +76,7 @@ prompt_text() {
    local -r yellow="$(log::ansi yellow)"
    local -r reset="$(log::ansi reset)"
 
-   echo "$green[${filename}]$reset from $yellow$(epoch_to_date $current_time)$reset to $yellow$(epoch_to_date $target_time)$reset?"
+   echo "${green}[${filename}]${reset} from ${yellow}$(epoch_to_date $current_time)${reset} to ${yellow}$(epoch_to_date $target_time)${reset}?"
 }
 
 should_rename() {

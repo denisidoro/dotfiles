@@ -18,7 +18,7 @@ package::install() {
    recipe::make xtitle
    recipe::make bar
 
-   echo "sxhkd & exec bspwm" >> $HOME/.xinitrc
+   echo "sxhkd & exec bspwm" >> "$HOME"/.xinitrc
 
    sudo cp "${TMP_FOLDER}/bspwm/contrib/freedesktop/bspwm.desktop" /usr/share/xsessions/
 }

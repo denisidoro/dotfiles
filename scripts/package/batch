@@ -13,7 +13,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 docs::eval_help "$@"
 
 # show help if no arguments
-if [[ $# < 1 ]]; then
+if [[ $# -lt 1 ]]; then
    "$0" --help
    exit 0
 fi

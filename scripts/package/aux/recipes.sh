@@ -30,7 +30,7 @@ recipe::shallow_git_clone() {
    local -r folder="$(recipe::folder "$repo")"
    mkdir -p "$folder" || true
    sudo chmod 777 "$folder" || true
-   yes | git clone "$(git::url $user $repo)" --depth 1 "$folder" || true
+   yes | git clone "$(git::url "$user" "$repo")" --depth 1 "$folder" || true
 }
 
 recipe::shallow_github_clone() {
@@ -45,7 +45,7 @@ recipe::shallow_gitlab_clone() {
 
 recipe::make() {
    local -r repo="$1"
-   cd "$(recipe::folder "$repo")"
+   cd "$(recipe::folder "$repo")" || exit
    make && sudo make install
 }
 
@@ -69,9 +69,9 @@ recipe::clone_as_submodule() {
    local -r module="${3:-$repo}"
 
    local -r module_path="${MODULES_FOLDER}/${module}"
-   yes | git clone "$(git::url $user $repo)" --depth 1 "$module_path"
+   yes | git clone "$(git::url "$user" "$repo")" --depth 1 "$module_path"
 
-   cd "$module_path"
+   cd "$module_path" || exit
    git submodule init &2> /dev/null \
       && git submodule update &2> /dev/null \
       || true
@@ -83,9 +83,9 @@ recipe::install_from_git() {
    local -r package="$(basename "$repo")"
    local -r path="/opt/${package}"
 
-   cd "/opt"
+   cd "/opt" || exit
    git clone "https://github.com/${repo}" --depth 1
-   cd "$path"
+   cd "$path" || exit
 
    if [ -f build.sh ]; then
       ./build.sh

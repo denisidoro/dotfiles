@@ -26,7 +26,7 @@ _content() {
 
 package::install() {
    dot pkg add dot-folders
-   dot pkg add $EDITOR
+   dot pkg add "$EDITOR"
 
    touch "$GITCONFIG_PATH"
    _content > "$GITCONFIG_PATH"
