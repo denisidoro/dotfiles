@@ -11,7 +11,7 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 docs::eval "$@"
 
 _repo_url() {
-   cat ".git/config" \
+   cat "$(git rev-parse --show-toplevel)/.git/config" \
       | grep origin -A1 \
       | grep url \
       | awk '{print $NF}' \
@@ -19,8 +19,6 @@ _repo_url() {
       | sed 's|git@|https://|g' \
       |  sed -E 's/.git$//'
 }
-
-REPO_URL="$(_repo_url)"
 
 _remove_empty_lines() {
    sed -E '/^\s*$/d'
@@ -112,6 +110,7 @@ _commit() {
 }
 
 if $release; then
+   REPO_URL="$(_repo_url)"
    _release "$@"
 elif $commit; then
    _commit "$@"
