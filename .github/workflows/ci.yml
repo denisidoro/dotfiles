@@ -42,4 +42,4 @@ jobs:
         with:
           toolchain: stable
       - name: Run tests
-        run: ./bin/dot self test suite rust
+        run: DOT_STUB_DOTRS=true ./bin/dot self test suite rust

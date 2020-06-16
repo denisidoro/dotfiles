@@ -38,6 +38,8 @@ _create_file() {
 }
 
 _stub_dotrs() {
+   local -r dotrs="${DOTFILES}/target/dotrs"
+   [ -f "$dotrs" ] && return 0
    local -r content="echo \"$(echo "Stub"; echo; echo "Usage:"; echo "    dotrs")\""
    _create_file "$content" "$dotrs"
    _create_file "$content" "${DOTFILES}/target/release/dotrs"
