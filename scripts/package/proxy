@@ -19,6 +19,7 @@ _valid_pkg_mgr_for_osx() {
    case "${1:-}" in
       "apt"|"pkg"|"yum"|"dnf"|"port"|"emerge"|"pacman") return 1 ;;
    esac
+   return 0
 }
 
 # short-circuit on OSX
