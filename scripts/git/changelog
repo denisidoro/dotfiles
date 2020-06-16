@@ -91,7 +91,7 @@ _release() {
 _commit() {
    cd "$(git::root)"
 
-   local -r changes="$(git diff --numstat \
+   local -r changes="$(git diff --numstat HEAD \
       | awk '{print $3" "$1-$2}' \
    | sort -k2 -n -r \
    | sed -E 's|(.*)/(.*)|\2|g')"
@@ -106,7 +106,7 @@ _commit() {
    | sed -E 's/ *; */, /g')"
 
    echoerr "pwd: $(pwd)"
-   echoerr "diff2: $(git diff --numstat)"
+   echoerr "diff1: $(git diff --numstat HEAD)"
    echoerr "changes: $changes"
    echoerr "n: $n"
    echoerr "msg: $msg"
