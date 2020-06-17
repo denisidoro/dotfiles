@@ -1,10 +1,10 @@
-export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
-
 #!/usr/bin/env bash
 
 # if [ -t 1 ]; then
 #    exec zsh
 # fi
+
+export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 
 # register which shell is running
 PROFILE_SHELL="bash"

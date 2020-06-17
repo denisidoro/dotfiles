@@ -28,7 +28,6 @@ bindkey -e
 #SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 
 # Remove path separator from WORDCHARS.
-WORDCHARS=${WORDCHARS//[\/]}
 
 
 # --------------------
@@ -159,6 +158,12 @@ source "${DOTFILES}/shell/zsh/bindings/editing.zsh"
 [[ ${DOT_NAVI:-true} ]] && source "${DOTFILES}/shell/zsh/bindings/navi.zsh" || true
 [[ ${DOT_ZIM:-true} ]] && source "${DOTFILES}/shell/zsh/bindings/zim.zsh" || true
 [[ ${DOT_FZF:-true} ]] && source "${DOTFILES}/shell/zsh/bindings/fzf.zsh" || true
+
+# misc
+WORDCHARS=${WORDCHARS//[\/]}
+
+# set path for completions
+fpath=("${DOTFILES}/shell/zsh/completions" $fpath)
 
 # load local custom config
 source "${DOTFILES}/local/zshrc" # 2> /dev/null || true

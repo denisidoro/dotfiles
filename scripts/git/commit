@@ -10,7 +10,7 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 docs::eval_help "$@"
 
 _msg() {
-   if [[ $# -gt 0 ]] && [[ $1 -ne "wip" ]]; then
+   if [[ $# -gt 0 ]] && [[ "${1:-}" != "wip" ]]; then
       echo "$*"
    else
       dot git changelog commit
