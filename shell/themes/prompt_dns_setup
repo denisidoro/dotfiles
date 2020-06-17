@@ -33,7 +33,7 @@ prompt_dns_setup() {
    zstyle ':zim:git-info:branch' format "%F${PROMPT_COLOR_1}%b"
    zstyle ':zim:git-info:commit' format '%c'
 
-   if ! ${PREVENT_DIRTY:-false}; then
+   if ! ${DOT_PREVENT_DIRTY:-true}; then
       zstyle ':zim:git-info:clean' format '%F{white}$NONE'
       zstyle ':zim:git-info:dirty' format '%F{yellow}$DIRTY'
    else

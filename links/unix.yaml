@@ -1,7 +1,7 @@
 shell/zsh/zshrc, $HOME/.zshrc
 shell/zsh/zimrc, $HOME/.zimrc
 shell/bash/bashrc, $HOME/.bashrc
-shell/bash/bash_profile, $HOME/.bash_profile
+shell/bash/profile, $HOME/.bash_profile
 shell/bash/profile, $HOME/.profile
 shell/hushlogin, $HOME/.hushlogin
 editors/spacevim/spacevim.rc, $HOME/.spacevim
