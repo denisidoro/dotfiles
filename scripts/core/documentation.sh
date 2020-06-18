@@ -22,15 +22,13 @@ docs::eval_help() {
    local -r file="$0"
 
    case "${!#:-}" in
-      -h|--help) docs::help "$file"; exit 0 ;;
+      -h|--help|--version) docs::help "$file"; exit 0 ;;
    esac
 }
 
-docs::help_or_invalid() {
+docs::invalid() {
    local -r file="$0"
 
-   case "${!#:-}" in
-      -h|--help|--version) docs::help "$file"; exit 0 ;;
-      *) docs::help "$file"; exit 1 ;;
-   esac
+   docs::help "$file"
+   exit 1
 }

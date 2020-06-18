@@ -39,6 +39,10 @@ fi
 
 cd "$DOTFILES"
 
+# Initial bootstrap
+_dot pkg add git || true
+_dot pkg add curl || true
+
 # Android bootstrap
 if uname -a | grep -q "ndroid"; then
    pkg install ncurses-utils || true

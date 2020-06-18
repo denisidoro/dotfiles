@@ -138,7 +138,7 @@ elif [[ $# -eq 1 ]]; then
    context_query="$(_alias $1)"
 
    case $context_query in
-      -h|--help) docs::help_or_invalid "$@" && exit ;;
+      -h|--help) docs::invalid "$@" && exit ;;
       -v|--version) cat "${DOTFILES}/rust/Cargo.toml" | grep version | head -n1 | grep -Eo '[0-9\.]+' && exit ;;
    esac
 

@@ -27,5 +27,5 @@ _am() {
 cmd="${1:-}"
 case $cmd in
    am) _am "$@" ;;
-   *) docs::help_or_invalid "$@" ;;
+   *) docs::invalid "$@" ;;
 esac

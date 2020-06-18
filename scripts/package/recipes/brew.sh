@@ -30,8 +30,10 @@ recipe::is_installed() {
 }
 
 package::install() {
+   dot pkg add git || true
+   dot pkg add ruby || true
+
    if platform::is_osx; then
-      dot pkg add ruby
       _brew_osx
    elif platform::command_exists apt; then
       _brew_apt || _brew_linux

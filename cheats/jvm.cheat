@@ -1,0 +1,12 @@
+% jvm, java
+
+# Set Java version to 8
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+
+# Set Java version to 14
+export JAVA_HOME=$(/usr/libexec/java_home -v 14)
+
+# Set Java version
+export JAVA_HOME=$(/usr/libexec/java_home -v <version>)
+
+$ version: /usr/libexec/java_home -V 2>&1 | grep ',' | grep '^ ' | sed -E 's/^ +//' | column -t -s ',' --- --column 1
