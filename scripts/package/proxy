@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/dict.sh"
 
 ##? Install packages
 ##?
@@ -34,8 +35,8 @@ platform::command_exists "$pkg_manager" \
 _actual_operation() {
    local -r operation="$1"
    case "$operation" in
-      install|add) echo install ;;
-      uninstall|remove) echo remove ;;
+      add) echo install ;;
+      uninstall) echo remove ;;
       *) echo "$operation"
    esac
 }
