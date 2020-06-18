@@ -48,12 +48,12 @@ jobs:
         continue-on-error: false
         with:
           command: build
-        working-directory: rust
+        working-directory: ./rust
       - name: Run cargo test
         uses: actions-rs/cargo@v1
         continue-on-error: false
         with:
           command: test
-        working-directory: rust
+        working-directory: ./rust
       - name: Run tests
         run: ./bin/dot self test suite rust
