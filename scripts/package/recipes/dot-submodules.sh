@@ -9,6 +9,7 @@ package::is_installed() {
 
 _default_dotfiles() {
    local -r p1="$(cd "${DOTFILES}" && pwd)"
+   echo "p1: $p1, p2: $DEFAULT_DOTFILES"
    [[ "$p1" == "$DEFAULT_DOTFILES" ]]
 }
 
