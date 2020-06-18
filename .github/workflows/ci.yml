@@ -37,9 +37,21 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
-      - name: Setup cargo
+      - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
         with:
+          profile: minimal
           toolchain: stable
+          override: true
+      - name: Run cargo build
+        uses: actions-rs/cargo@v1
+        continue-on-error: false
+        with:
+          command: build
+      - name: Run cargo test
+        uses: actions-rs/cargo@v1
+        continue-on-error: false
+        with:
+          command: test
       - name: Run tests
         run: ./bin/dot self test suite rust
