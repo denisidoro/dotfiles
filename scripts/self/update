@@ -20,7 +20,7 @@ main() {
    log::note "Current config: $tags"
    echoerr
 
-   _add submodules || true
+   _add dot-submodules || true
    _add dot-folders || true
    _add dot-gitconfig || true
    _add dot-zshrc || true

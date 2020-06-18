@@ -9,7 +9,7 @@ package::is_installed() {
 
 _default_dotfiles() {
    local -r p1="$(cd "${DOTFILES}" && pwd)"
-   [[ "$p1" == "$p2" ]]
+   [[ "$p1" == "$DEFAULT_DOTFILES" ]]
 }
 
 _symlink() {
