@@ -7,10 +7,8 @@ package::is_installed() {
    return 1
 }
 
-_default_dotfiles() {
-   local -r p1="$(cd "${DOTFILES}" && pwd)"
-   echo "p1: $p1, p2: $DEFAULT_DOTFILES"
-   [[ "$p1" == "$DEFAULT_DOTFILES" ]]
+_default_available() {
+   [[ -f "${DEFAULT_DOTFILES}/bin/dot" ]]
 }
 
 _symlink() {
@@ -32,9 +30,7 @@ package::install() {
    git submodule foreach git checkout . || true
    git submodule foreach git pull origin master || true
 
-   if ! _default_dotfiles; then
+   if ! _default_available; then
       _symlink
    fi
-
-   return 0
 }
