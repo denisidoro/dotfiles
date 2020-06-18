@@ -26,6 +26,8 @@ package::install() {
 
    cd "$DOTFILES"
 
+   git submodule init || true
+   git submodule update || true
    git submodule foreach git reset --hard || true
    git submodule foreach git checkout . || true
    git submodule foreach git pull origin master || true
