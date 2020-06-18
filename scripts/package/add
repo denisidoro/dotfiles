@@ -2,6 +2,7 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/dict.sh"
 
 ##? Install packages
 ##?
