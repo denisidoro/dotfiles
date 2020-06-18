@@ -44,16 +44,16 @@ jobs:
           toolchain: stable
           override: true
       - name: Run cargo build
-        uses: actions-rs/cargo@v1
+        uses: marcopolo/cargo@master
         continue-on-error: false
         with:
           command: build
-        working-directory: ./rust
+          working-directory: ./rust
       - name: Run cargo test
-        uses: actions-rs/cargo@v1
+        uses: marcopolo/cargo@master
         continue-on-error: false
         with:
           command: test
-        working-directory: ./rust
+          working-directory: ./rust
       - name: Run tests
         run: ./bin/dot self test suite rust

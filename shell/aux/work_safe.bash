@@ -5,6 +5,7 @@ export DOT_FZF=true
 export DOT_NAVI=true
 export DOT_FRE=true
 export DOT_STARSHIP=true
+export DOT_ZIM=true
 
 export PATH="${WORK_BINARIES_PATH}:${PATH}"
 
