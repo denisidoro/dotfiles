@@ -2,6 +2,7 @@
 set -euo pipefail
 
 package::install() {
+   dot pkg add zsh
    platform::command_exists brew && brew install starship && return 0 || true
 
    dot pkg add curl

@@ -22,6 +22,10 @@ clone_repo() {
    git clone "$REPO" "$DOTFILES"
 }
 
+_has() {
+   type "$1" &>/dev/null
+}
+
 # Pushes the current directory to the stack
 pushd . >/dev/null
 
@@ -39,9 +43,14 @@ fi
 
 cd "$DOTFILES"
 
-# Initial bootstrap
+# Make sure everything is up to date
+_has apt-get && sudo apt-get update || true
+_has brew && brew update || true
+
+# Install some key dependencies
 _dot pkg add git || true
 _dot pkg add curl || true
+_dot pkg add wget || true
 
 # Android bootstrap
 if uname -a | grep -q "ndroid"; then

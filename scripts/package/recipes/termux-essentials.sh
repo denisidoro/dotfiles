@@ -11,6 +11,8 @@ package::is_installed() {
 }
 
 package::install() {
+   pkg install ncurses-utils || true
+
    # in order to skip $PREFIX/bin, for example
    if ! fs::is_dir /bin; then
       pkg install proot || true

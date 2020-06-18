@@ -16,10 +16,12 @@ source "${DOTFILES}/shell/aux/core.bash"
 source "${DOTFILES}/shell/aliases/core.bash"
 
 # zim
-if [[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
-   source ${ZIM_HOME}/zimfw.zsh init -q
+if ${DOT_ZIM:-false}; then
+   if [[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
+      source ${ZIM_HOME}/zimfw.zsh init -q
+   fi
+   source ${ZIM_HOME}/init.zsh
 fi
-source ${ZIM_HOME}/init.zsh
 
 # on directory change
 dns_chpwd() {
@@ -38,9 +40,9 @@ source "${DOTFILES}/shell/themes/core.zsh"
 
 # load bindings
 source "${DOTFILES}/shell/zsh/bindings/editing.zsh"
-[[ ${DOT_NAVI:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/navi.zsh" || true
-[[ ${DOT_ZIM:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/zim.zsh" || true
-[[ ${DOT_FZF:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/fzf.zsh" || true
+[[ ${DOT_NAVI:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
+[[ ${DOT_ZIM:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/zim.zsh"
+[[ ${DOT_FZF:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
 
 # misc
 WORDCHARS=${WORDCHARS//[\/]}
