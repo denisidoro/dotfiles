@@ -23,6 +23,11 @@ if ${clean:-false}; then
    rm "$DEBUG_PATH" 2>/dev/null || true
 fi
 
+echoerr "RELEASE_PATH: $RELEASE_PATH"
+ls "$DOTFILES/rust"
+ls "$DOTFILES/rust/target"
+ls "$DOTFILES/rust/target/release"
+
 if [ -f "$RELEASE_PATH" ]; then
    "$RELEASE_PATH" "$@"
    exit 0

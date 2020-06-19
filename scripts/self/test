@@ -43,7 +43,9 @@ _stub_dotrs() {
    local -r content="echo \"$(echo "Stub"; echo; echo "Usage:"; echo "    dotrs")\""
    _create_file "$content" "$dotrs"
    _create_file "$content" "${DOTFILES}/target/release/dotrs"
+   _create_file "$content" "${DOTFILES}/target/debug/dotrs"
    _create_file "$content" "${DOTFILES}/rust/target/release/dotrs"
+   _create_file "$content" "${DOTFILES}/rust/target/debug/dotrs"
 }
 
 _cargo() {

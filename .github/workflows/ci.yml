@@ -56,4 +56,4 @@ jobs:
           command: test
           working-directory: ./rust
       - name: Run tests
-        run: ./bin/dot self test suite rust
+        run: DOT_SKIP_CARGO=true ./bin/dot self test suite rust
