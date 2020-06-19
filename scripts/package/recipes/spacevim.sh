@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 set -euo pipefail
 
 package::is_installed() {
@@ -7,6 +6,8 @@ package::is_installed() {
 }
 
 package::install() {
+   dot pkg add curl
    dot pkg add nvim
+
    bash <(curl -fsSL https://raw.githubusercontent.com/liuchengxu/space-vim/master/install.sh)
 }

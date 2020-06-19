@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-set -uo pipefail
+ set -uo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
@@ -55,9 +54,11 @@ case "$language" in
    sh)
       beautysh -i 3 -s paronly "$filename"
       sed -i -e 's/() ::/::/g' "$filename"
+      shellcheck -f diff "$filename" | git apply
+      shellcheck "$filename"
       ;;
    json)
-      echo "$(cat "$filename" | jq .)" > "$filename"
+      cat "$filename" | jq . > "$filename"
       ;;
    javascript)
       js-beautify "$filename" > /dev/null

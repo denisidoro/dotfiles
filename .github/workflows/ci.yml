@@ -18,7 +18,7 @@ jobs:
       - name: Create stubs
         run: mkdir -p ./target; echo -e '#!/usr/bin/env bash\n\necho usage' > ./target/dotrs && chmod +x ./target/dotrs
       - name: Run tests
-        run: ./bin/dot self test suite bash
+        run: DOT_STUB_DOTRS=true ./bin/dot self test suite bash
 
   js-tests:
     name: Javascript
@@ -37,9 +37,23 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
-      - name: Setup cargo
+      - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
         with:
+          profile: minimal
           toolchain: stable
+          override: true
+      - name: Run cargo build
+        uses: marcopolo/cargo@master
+        continue-on-error: false
+        with:
+          command: build
+          working-directory: ./rust
+      - name: Run cargo test
+        uses: marcopolo/cargo@master
+        continue-on-error: false
+        with:
+          command: test
+          working-directory: ./rust
       - name: Run tests
         run: ./bin/dot self test suite rust

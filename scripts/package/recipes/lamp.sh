@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
+set -euo pipefail
 
 _prompt() {
    log::warning "$1"

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/self/aux/test.sh"
+source "${DOTFILES}/scripts/core/test.sh"
 
 ##? Run tests
 ##?
@@ -16,7 +16,7 @@ _prepare_zsh() {
    if ! platform::command_exists zsh; then
       local -r bash_path="$(which bash)"
       local -r zsh_path="$(echo "$bash_path" | sed 's/bash/zsh/')"
-      ln -s "$bash_path" "$zsh_path" || sudo ln -s "$bash_path" "$zsh_path"
+      sudo ln -s "$bash_path" "$zsh_path" || sudo ln -s "$bash_path" "$zsh_path"
    fi
 }
 
@@ -27,6 +27,23 @@ _prepare_dotlink() {
       local content="$(cat "$0"; echo; echo; echo "dotlink_main() { echo stub; }")"
       echo "$content" > "$file"
    fi
+}
+
+_create_file() {
+   local -r content="$1"
+   local -r filename="$2"
+   mkdir -p "$(dirname "$filename")" || true
+   echo "$content" > "$filename"
+   chmod +x "$filename"
+}
+
+_stub_dotrs() {
+   local -r dotrs="${DOTFILES}/target/dotrs"
+   [ -f "$dotrs" ] && return 0
+   local -r content="echo \"$(echo "Stub"; echo; echo "Usage:"; echo "    dotrs")\""
+   _create_file "$content" "$dotrs"
+   _create_file "$content" "${DOTFILES}/target/release/dotrs"
+   _create_file "$content" "${DOTFILES}/rust/target/release/dotrs"
 }
 
 _cargo() {
@@ -46,9 +63,10 @@ esac
 
 TEST_DIR="${DOTFILES}/target/test"
 
-mkdir -p "$TEST_DIR" || true
-_prepare_zsh || true
-_prepare_dotlink || true
+mkdir -p "$TEST_DIR" 2>/dev/null || true
+_prepare_zsh 2>/dev/null || true
+_prepare_dotlink 2>/dev/null || true
+${DOT_STUB_DOTRS:-false} && _stub_dotrs 2>/dev/null || true
 
 if [[ "${suite:-}" == "rust" ]]; then
    _cargo || true

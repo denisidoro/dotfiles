@@ -15,9 +15,19 @@ source "${DOTFILES}/shell/aux/core.bash"
 # load aliases
 source "${DOTFILES}/shell/aliases/core.bash"
 
+# zim
+if ${DOT_ZIM:-false}; then
+   if [[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
+      source ${ZIM_HOME}/zimfw.zsh init -q
+   fi
+   source ${ZIM_HOME}/init.zsh
+fi
+
 # on directory change
 dns_chpwd() {
-   fre --add "$PWD" # register for jump/fasd
+   if ${DOT_FRE:-true}; then
+      fre --add "$PWD"
+   fi
 }
 typeset -gaU chpwd_functions
 chpwd_functions+=dns_chpwd
@@ -28,16 +38,17 @@ setopt HIST_IGNORE_ALL_DUPS
 # theme
 source "${DOTFILES}/shell/themes/core.zsh"
 
-# Initialize modules
-export ZIM_HOME="${DOTFILES}/modules/zimfw"
-[[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]] && source ${ZIM_HOME}/zimfw.zsh init -q
-source ${ZIM_HOME}/init.zsh
-
 # load bindings
 source "${DOTFILES}/shell/zsh/bindings/editing.zsh"
-source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
-source "${DOTFILES}/shell/zsh/bindings/zim.zsh"
-source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
+[[ ${DOT_NAVI:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
+[[ ${DOT_ZIM:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/zim.zsh"
+[[ ${DOT_FZF:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
+
+# misc
+WORDCHARS=${WORDCHARS//[\/]}
+
+# set path for completions
+fpath=("${DOTFILES}/shell/zsh/completions" $fpath)
 
 # load local custom config
 source "${DOTFILES}/local/zshrc" # 2> /dev/null || true

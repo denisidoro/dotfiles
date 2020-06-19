@@ -16,7 +16,7 @@ custom::install() {
    local -r depend_fn="$(package::fn "$package" depends_on)"
 
    if platform::command_exists "$depend_fn"; then
-      echoerr dep_fn $depend_fn
+      echoerr dep_fn "$depend_fn"
       local dependencies="$($depend_fn)"
       for dependency in $dependencies; do
          install_if_not_installed "$dependency" || true

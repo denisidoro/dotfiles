@@ -1,11 +1,13 @@
 #!/usr/bin/env zsh
 
+export DOT_DOCOPT="python"
 export DOT_FZF=true
-export DOT_DOCOPT=rust
+export DOT_NAVI=true
+export DOT_FRE=true
+export DOT_STARSHIP=true
+export DOT_ZIM=true
 
-export WORKSPACE_ROOT="$GOPATH"
-export VOLTA_HOME="${HOME}/.volta"
-export PATH="${VOLTA_HOME}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH}:${HOME}/bin:${PATH}:${GOPATH}/bin"
+export PATH="${WORK_BINARIES_PATH}:${PATH}"
 
 _load() {
    case $1 in
@@ -129,7 +131,6 @@ export HOMEBREW_NO_SANDBOX=1
 export HOMEBREW_PREFIX="/usr/local"
 export VIRTUALENVWRAPPER_PYTHON="${HOMEBREW_PREFIX}/bin/python2.7"
 export VIRTUALENVWRAPPER_SCRIPT="${HOMEBREW_PREFIX}/bin/virtualenvwrapper.sh"
-export NVM_DIR="${HOME}/.nvm"
 
 _sync_dir() {
    cmd=$1
@@ -152,31 +153,6 @@ editsync() {
 
 opensync() {
    _sync_dir open @
-}
-
-_set_profile_work_go_project() {
-   _load lda &>/dev/null
-   _load bazel &>/dev/null
-   _load direnv &>/dev/null
-   export PREVENT_DIRTY=true
-   export LIBRARY_PATH="${LIBRARY_PATH}:/usr/local/opt/openssl/lib/"
-   export LDFLAGS="-L/usr/local/opt/openssl/lib"
-   export CPPFLAGS="-I/usr/local/opt/openssl/include"
-}
-
-_set_profile() {
-   local -r fn="$1"
-   local -r prompt_char="λ"
-   # Already set up
-   [ "${FIRST_CHARACTER_OK}" = "${prompt_char}" ] && return 0
-   local -r color_0="$PROMPT_COLOR_0"
-   export PROMPT_COLOR_0="$PROMPT_COLOR_1"
-   export PROMPT_COLOR_1="$color_0"
-   "$fn"
-   export FIRST_CHARACTER_OK="$prompt_char"
-   export FIRST_CHARACTER_KO="$FIRST_CHARACTER_OK"
-   [ $PROFILE_SHELL = 'zsh' ] && prompt_dns_setup &>/dev/null
-   # echoerr "✅ Everything loaded!"
 }
 
 # if command -v rbenv > /dev/null; then eval "$(rbenv init -)"; fi

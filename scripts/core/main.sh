@@ -15,6 +15,13 @@ if ! ${DOT_MAIN_SOURCED:-false} ; then
          sudo() { "$@"; }
          export -f sudo
       fi
+
+      if ! platform::command_exists tput; then
+         tput() { :; }
+         export -f tput
+      fi
+
+      export EDITOR="${EDITOR:-vi}"
    fi
 
    source "${DOTFILES}/scripts/core/collections.sh"

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 
 source "${DOTFILES}/scripts/core/main.sh"
 
@@ -33,10 +32,10 @@ str::levenshtein() {
             d[i + str1len * j]=$(echo -e "$del\n$ins\n$alt" | sort -n | head -1)
          done
       done
-      echo ${d[str1len + str1len * (str2len)]}
+      echo "${d[str1len + str1len * (str2len)]}"
    fi
 }
 
 str::filename_levenshtein() {
-   str::levenshtein "$(basename $1)" "$(basename $2)"
+   str::levenshtein "$(basename "$1")" "$(basename "$2")"
 }

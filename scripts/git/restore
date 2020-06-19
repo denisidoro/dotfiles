@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 
 source "${DOTFILES}/scripts/git/aux/core.sh"
 
@@ -20,7 +19,7 @@ git::restore() {
    -m -0 --preview=\"$cmd\"
    $GIT_CHECKOUT_FZF_OPTS
    "
-    files="$(git ls-files --modified "$(git rev-parse --show-toplevel)"| FZF_DEFAULT_OPTS="$opts" fzf)"
+    files="$(git ls-files --modified "$(git::root)"| FZF_DEFAULT_OPTS="$opts" fzf)"
     [[ -n "$files" ]] && echo "$files" | tr '\n' '\0' | xargs -0 -I% git checkout % && git status --short && return
     echo 'Nothing to restore.'
 }

@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
+set -euo pipefail
 
 package::is_installed() {
-   ! platform::is_osx || platform::command_exists ggrep
+   ! platform::is_osx \
+      || platform::command_exists ggrep
 }
 
 package::install() {
+   dot pkg add brew
+
    brew tap homebrew/dupes
    brew install binutils diffutils findutils gawk gnu-indent gnu-sed gnu-tar gnu-which gnutls grep gzip wget
    brew install wdiff --with-gettext

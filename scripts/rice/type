@@ -19,7 +19,7 @@ wait=$(echo "scale=2; 1 / ${speed}" | bc)
 
 while read -n1 character; do
    count="$(echo "$character" | wc -w | xargs)"
-   if [[ $count > 0 ]]; then
+   if [[ $count -gt 0 ]]; then
       printf "$character"
    else
       printf ' '

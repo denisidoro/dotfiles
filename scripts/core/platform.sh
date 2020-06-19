@@ -138,5 +138,5 @@ platform::rust_compatible_variant() {
 }
 
 platform::shell() {
-   echo $SHELL | xargs basename
+   echo "$SHELL" | xargs basename
 }

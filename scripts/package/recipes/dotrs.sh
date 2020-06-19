@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
+set -euo pipefail
 
 package::is_installed() {
    [ -f "${DOTFILES}/target/dotrs" ]

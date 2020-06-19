@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 
 _jsons() {
    cd "$DOTFILES"

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/git/aux/core.sh"
@@ -7,9 +6,9 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 ##? PR utilities
 ##?
 ##? Usage:
-##?    pr preview
+##?   pr preview
 
-docs::eval "$@"
+docs::eval_help "$@"
 
 _cleanup_uri() {
    echo "$1" \

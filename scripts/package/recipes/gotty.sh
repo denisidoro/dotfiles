@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
+set -euo pipefail
 
 REPO_TAG="2.0.0-alpha.3"
 
@@ -26,6 +26,7 @@ package::install() {
    platform::command_exists brew && brew install yudai/gotty/gotty && return 0 || true
 
    dot pkg add wget
+   dot pkg add tar
 
    folder="$(recipe::folder gotty)"
    mkdir -p "$folder" || true

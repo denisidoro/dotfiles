@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
+set -euo pipefail
 
 has_busybox_only() {
    mktemp --help 2>&1 \
@@ -11,10 +11,12 @@ package::is_installed() {
 }
 
 package::install() {
+   pkg install ncurses-utils || true
+
    # in order to skip $PREFIX/bin, for example
    if ! fs::is_dir /bin; then
-      pkg install proot
-      termux-chroot
+      pkg install proot || true
+      termux-chroot || true
    fi
 
    # probably first time running it so let's add more stuff as well
@@ -28,8 +30,8 @@ package::install() {
       termux-setup-storage || true
    fi
 
-   if ! platform::command_exists sudo; then
-      dot pkg add termux-sudo
+   if ! which sudo; then
+      dot pkg add termux-sudo || true
    fi
 
 }

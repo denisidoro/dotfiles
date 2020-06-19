@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROJ_HOME="${PROJ_HOME:-$DOTFILES}"
+PROJ_HOME="${PROJ_HOME:-"${DOTFILES}/rust"}"
 PROJ_NAME="${PROJ_NAME:-dotrs}"
-PROJ_BIN="${PROJ_BIN:-${DOTFILES}/target/${PROJ_NAME}}"
+PROJ_BIN="${PROJ_BIN:-"${DOTFILES}/target/${PROJ_NAME}"}"
 RELEASE_BIN="${PROJ_HOME}/target/release/${PROJ_NAME}"
 DEBUG_BIN="${PROJ_HOME}/target/debug/${PROJ_NAME}"
 

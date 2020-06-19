@@ -13,7 +13,7 @@ input::parse_cwd() {
 input::parse() {
    readonly first_arg="${1:-}"
    variable=""
-   for arg in $@; do
+   for arg in "$@"; do
       if [[ $arg = --* ]]; then
          variable="$(echo "$arg" | sed 's/\-\-//')"
       elif [[ -n $variable ]]; then
@@ -104,7 +104,7 @@ path::parse_dots() {
       esac
    done
 
-   local -r base="$(echo "/${dirs[@]:-}" | tr ' ' '/')"
+   local -r base="$(echo "/${dirs[*]:-}" | tr ' ' '/')"
    if [[ "$path" = *.. ]] || path::is_navigable "$path"; then
       echo "${base}/"
    else

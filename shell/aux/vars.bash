@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
-
-# zplug
-export ZPLUG_HOME="${DOTFILES}/modules/zplug"
 
 # default editor
 export EDITOR='nvim'
@@ -21,7 +17,7 @@ export LC_ALL=en_US.UTF-8
 export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=512M -Xdebug -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n"
 export JAVA_TOOLS_OPTIONS='-Dfile.encoding="UTF-8"'
 
-# dev
+# bookmarks
 export DEV_HOME="${HOME}/dev"
 
 # Clojure
@@ -38,6 +34,10 @@ export FZF_DEFAULT_OPTS='--height 70% --reverse --inline-info --cycle'
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+# JS
+export VOLTA_HOME="${HOME}/.volta"
+export NVM_DIR="${HOME}/.nvm"
+
 # security
 export GPG_TTY=$(tty)
 
@@ -48,5 +48,9 @@ export XENVIRONMENT="${XENVIRONMENT:-"${HOME}/.Xresources"}"
 # navi
 export NAVI_PATH="${DOTFILES}/cheats:${DOTFILES}/local/cheats"
 
+# zsh
+export ZDOTDIR="${ZDOTDIR:-"${HOME}/.zim"}"
+export ZIM_HOME="${ZIM_HOME:-"$ZDOTDIR"}"
+
 # PATH
-export PATH="${DOTFILES}/local/bin:${DOTFILES}/bin:${HOME}/.cargo/bin:${PATH}"
+export PATH="${DOTFILES}/local/bin:${DOTFILES}/bin:${HOME}/bin:${HOME}/.cargo/bin:${VOLTA_HOME}/bin:${GO_PATH}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${PATH}"

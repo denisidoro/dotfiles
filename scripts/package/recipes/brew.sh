@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
+set -euo pipefail
 
 _brew_osx() {
-   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }
 
 _brew_linux() {
    if platform::command_exists apt; then
-      sudo apt update && sudo apt-get install -y build-essential curl file git
+      sudo apt update && sudo apt-get install -y build-essential curl file git && exit 0 || true
    elif platform::command_exists yum; then
-      sudo yum groupinstall 'Development Tools' && sudo yum install curl file git
+      sudo yum groupinstall 'Development Tools' && sudo yum install curl file git && exit 0 || true
    fi
 
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
@@ -30,6 +30,9 @@ recipe::is_installed() {
 }
 
 package::install() {
+   dot pkg add git || true
+   dot pkg add ruby || true
+
    if platform::is_osx; then
       _brew_osx
    elif platform::command_exists apt; then

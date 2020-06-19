@@ -1,11 +1,11 @@
-export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
-
 #!/usr/bin/env bash
-# vim: filetype=sh
 
 # if [ -t 1 ]; then
 #    exec zsh
 # fi
+
+# dotfiles
+export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 
 # register which shell is running
 PROFILE_SHELL="bash"
@@ -18,9 +18,6 @@ source "${DOTFILES}/shell/aux/core.bash"
 
 # load aliases
 source "${DOTFILES}/shell/aliases/core.bash"
-
-# set prompt
-export PS1="\n\[\e[32m\]\w\[\e[m\] \[\e[31m\]$(nonzero_return)\[\e[m\]\n\[\e[33m\]\\$\[\e[m\] "
 
 # load local custom config
 source "${DOTFILES}/local/zshrc" # 2> /dev/null || true

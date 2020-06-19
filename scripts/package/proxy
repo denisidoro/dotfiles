@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/dict.sh"
 
 ##? Install packages
 ##?
@@ -16,11 +16,16 @@ pkg_manager="$1"
 operation="$2"
 shift 2
 
+_valid_pkg_mgr_for_osx() {
+   case "${1:-}" in
+      "apt"|"apk"|"pkg"|"yum"|"dnf"|"port"|"emerge"|"pacman") return 1 ;;
+   esac
+   return 0
+}
+
 # short-circuit on OSX
 platform::is_osx \
-   && [[ $pkg_manager != "brew" ]] \
-   && [[ $pkg_manager != "npm" ]] \
-   && [[ $pkg_manager != "pip" ]] \
+   && ! _valid_pkg_mgr_for_osx $pkg_manager \
    && exit 123
 
 # unavailable package manager
@@ -30,8 +35,8 @@ platform::command_exists "$pkg_manager" \
 _actual_operation() {
    local -r operation="$1"
    case "$operation" in
-      install|add) echo install ;;
-      uninstall|remove) echo remove ;;
+      add) echo install ;;
+      uninstall) echo remove ;;
       *) echo "$operation"
    esac
 }

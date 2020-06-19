@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
+set -euo pipefail
 
 package::install() {
    dot pkg add neovim && return 0 || true

@@ -5,8 +5,8 @@ _apt() {
 }
 
 apt::install() {
-   local -r ask="$(dict::get "$OPTIONS" ask)"
-   sudo _apt install $([ ! $ask ] && echo "--yes") "$@"
+   local -r ask="$(dict::get "$OPTIONS" ask || false)"
+   sudo _apt install $([ ! "$ask" ] && echo "--yes") "$@"
 }
 
 apt::remove() {

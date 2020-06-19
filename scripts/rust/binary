@@ -60,7 +60,7 @@ _build() {
 _symlink_dot() {
    local -r dot_target_dir="${DOTFILES}/target"
    mkdir -p "$dot_target_dir" 2>/dev/null || true
-   ln -s "$BIN_PATH" "${dot_target_dir}/${PROJ_NAME}"
+   sudo ln -s "$BIN_PATH" "${dot_target_dir}/${PROJ_NAME}"
 }
 
 _tar() {
@@ -75,7 +75,7 @@ _tar() {
 _build_and_install() {
    echoerr "The final binary will be available at ${BIN_DIR}/${PROJ_NAME}..."
    _build
-   ln -s "${PROJ_HOME}/target/tar/${PROJ_NAME}" "${BIN_DIR}/${PROJ_NAME}"
+   sudo ln -s "${PROJ_HOME}/target/tar/${PROJ_NAME}" "${BIN_DIR}/${PROJ_NAME}"
 }
 
 _download_and_install() {

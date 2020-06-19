@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 
 without_dot_slash() {
    sed 's|\./||g'

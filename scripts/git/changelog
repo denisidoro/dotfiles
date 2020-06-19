@@ -1,27 +1,72 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 
 source "${DOTFILES}/scripts/git/aux/core.sh"
 
 ##? Changelog generator
-##?   This script is heavily influenced by https://github.com/wfxr/git by Wenxuan Zhang
 ##?
 ##? Usage:
-##?    log
+##?    log release
+##?    log commit
 
-docs::eval_help "$@"
+docs::eval "$@"
+
+main() {
+   if $release; then
+      git::changelog_release "$@"
+   elif $commit; then
+      git::changelog_commit "$@"
+   fi
+}
+
+git::changelog_commit() {
+   cd "$(git::root)"
+
+   local -r changes="$(git diff --numstat HEAD \
+      | awk '{print $3" "$1-$2}' \
+      | sort -k2 -n -r \
+      | awk '{print $1}' \
+      | sed -E 's|(.*)/(.*)|\2|g')"
+
+   local -r n="$(printf "$changes" \
+      | wc -l \
+      | xargs)"
+
+   local msg="$(printf "$changes" \
+      | head -n3 \
+      | tr '\n' ';' \
+      | sed -E 's/ *; */, /g' \
+      | sed -E 's/ *, *$//g')"
+
+   [[ $n -gt 3 ]] && msg="${msg}, ..."
+
+   echo "$(date +'%b-%d %Hh%M'): ${msg}"
+}
+
+git::changelog_release() {
+   REPO_URL="$(_repo_url)"
+
+   pairs=($(_all_tags))
+   len="${#pairs[@]}"
+
+   for i in $(seq 0 $((len - 2))); do
+      tag_older="${pairs[$((len - i - 2))]}"
+      tag_newer="${pairs[$((len - i - 1))]}"
+      _commits "$tag_older" "$tag_newer"
+      echo
+      echo
+   done
+}
 
 _repo_url() {
-   cat ".git/config" \
+   cat "$(git::root)/.git/config" \
       | grep origin -A1 \
       | grep url \
       | awk '{print $NF}' \
-      | head -n1 | tr ':' '/' \
+      | head -n1 \
+      | tr ':' '/' \
       | sed 's|git@|https://|g' \
       |  sed -E 's/.git$//'
 }
-
-REPO_URL="$(_repo_url)"
 
 _remove_empty_lines() {
    sed -E '/^\s*$/d'
@@ -78,13 +123,4 @@ _all_tags() {
       | sed 's|refs/tags/||g'
 }
 
-pairs=($(_all_tags))
-len="${#pairs[@]}"
-
-for i in $(seq 0 $((len - 2))); do
-   tag_older="${pairs[$((len - i - 2))]}"
-   tag_newer="${pairs[$((len - i - 1))]}"
-   _commits "$tag_older" "$tag_newer"
-   echo
-   echo
-done
+main "$@"

@@ -1,7 +1,9 @@
+#!/usr/bin/env zsh
+
 #compdef dot
 
 _command_for() {
-   ls -p "${DOTFILES}/scripts/${1}" | grep -v / | xargs echo
+   command ls "${DOTFILES}/scripts/${1:-}" | grep -v / | xargs echo
 }
 
 _dot() {
@@ -13,10 +15,9 @@ _dot() {
       '2: :->command' \
       '*: :->args'
 
-   existing_contexts="$(ls "${DOTFILES}/scripts" | grep -v core | xargs echo)"
-
    case $state in
       context)
+         existing_contexts="$(_command_for)"
          _arguments "1:Context:($existing_contexts)"
          ;;
       command)

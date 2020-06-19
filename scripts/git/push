@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 
 source "${DOTFILES}/scripts/git/aux/core.sh"
 
@@ -18,8 +17,8 @@ _upstream() {
 }
 
 _commit_first() {
-   git add . || true
-   git commit -am "$*" || true
+   git add .
+   dot git commit am "$@"
    _upstream
 }
 

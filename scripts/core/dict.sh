@@ -38,7 +38,7 @@ dict::assoc() {
    local -r key="${1:-}"
    local -r input="$(cat)"
 
-   if [ -z $key ]; then
+   if [ -z "$key" ]; then
       printf "$(echo "$input" | tr '%' "$ESCAPE_CHAR_2")" | tr "$ESCAPE_CHAR_2" '%'
       return
    fi
@@ -62,7 +62,7 @@ dict::get() {
    local -r result="$(echo "$input" | grep -E "^${prefix}")"
    local -r matches="$(echo "$result" | wc -l || echo 0)"
 
-   if [ $matches -gt 1 ]; then
+   if [ "$matches" -gt 1 ]; then
       echo "$result" | dict::unescape_value
    else
       echo "$result" | sed -E "s/${prefix}//" | dict::unescape_value

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 
 _group_name() {
    source "${DOTFILES}/tasker/sh/wifi.sh"

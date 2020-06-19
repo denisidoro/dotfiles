@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/documentation.sh"
+source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Calculates sha256
 ##?
@@ -15,11 +14,11 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 docs::eval_help "$@"
 
 sha256() {
-   if command_exists sha256sum; then
+   if platform::command_exists sha256sum; then
       sha256sum "$@"
-   elif command_exists shasum; then
+   elif platform::command_exists shasum; then
       shasum -a 256 "$@"
-   elif command_exists openssl; then
+   elif platform::command_exists openssl; then
       openssl dgst -sha256 "$@"
    else
       echoerr "Unable to calculate sha256!"

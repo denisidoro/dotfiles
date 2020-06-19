@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 set -euo pipefail
 IFS=$' \n\t'
 
 export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)}"
-source "$DOTFILES/scripts/core/main.sh"
 CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 
 ##? A hub for an all-purpose set of scripts
@@ -127,6 +125,7 @@ _alias() {
 if [[ $# -eq 0 ]]; then
    # Shows available contexts
    # or prompts for a command if fzf is installed
+   source "$DOTFILES/scripts/core/main.sh"
 
    platform::command_exists fzf \
       && fzf_prompt "$(list_command_paths)" \
@@ -134,10 +133,12 @@ if [[ $# -eq 0 ]]; then
 
 elif [[ $# -eq 1 ]]; then
    # Shows available commands for a given context
+   source "$DOTFILES/scripts/core/main.sh"
 
    context_query="$(_alias $1)"
 
    case $context_query in
+      -h|--help) docs::invalid "$@" && exit ;;
       -v|--version) cat "${DOTFILES}/rust/Cargo.toml" | grep version | head -n1 | grep -Eo '[0-9\.]+' && exit ;;
    esac
 
@@ -155,5 +156,4 @@ else
    shift 2
    export DOT_TRACE=${DOT_TRACE:-false}
    "${DOTFILES}/scripts/${ctx}/${cmd}" "$@"
-
 fi

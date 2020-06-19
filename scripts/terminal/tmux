@@ -36,7 +36,7 @@ _session() {
    local -r x="$(_ls)"
    [ -z "$x" ] && exit 1
 
-   if [[ $# < 1 ]]; then
+   if [[ $# -gt 1 ]]; then
       echo "$x" | _fzf1
    else
       echo "$x" | _fzf1 --filter="$*" | head -n1
@@ -44,7 +44,7 @@ _session() {
 }
 
 _new() {
-   if [[ $# < 1 ]]; then
+   if [[ $# -gt 1 ]]; then
       tmux new
    else
       tmux new -s "$*"

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 
 source "${DOTFILES}/scripts/git/aux/core.sh"
 
@@ -22,7 +21,7 @@ git::diff() {
       fi
    }
 
-   repo="$(git rev-parse --show-toplevel)"
+   repo="$(git::root)"
    target="\$(echo {} | sed 's/.*]  //')"
    cmd="git diff --color=always $commit -- $repo/$target | $git_pager"
    opts="

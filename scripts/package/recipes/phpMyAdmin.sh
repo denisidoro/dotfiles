@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
+set -euo pipefail
 
 package::is_installed() {
    fs::is_dir "/var/www/html/phpMyAdmin"
@@ -7,7 +7,7 @@ package::is_installed() {
 
 package::install() {
    dot pkg add wget
-   log::warning "Setting up phpMyAdmin..."
+
    cd /var/www/html
    log::warning "Downloading zip..."
    wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz

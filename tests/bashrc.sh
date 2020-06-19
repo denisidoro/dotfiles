@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
 
 symlink_bashrc() {
    cd "$DOTFILES"

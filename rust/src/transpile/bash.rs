@@ -32,8 +32,10 @@ impl transpiler::Transpiler for Transpiler {
 
 fn transform(line: String) -> String {
     let mut result = line;
-    if result.contains('(') && result.contains(')') && result.contains('{') {
-        if let Some(captures) = REGEX.captures(&result.clone()) {
+    if result.contains('(') && result.contains(')') && result.contains('{') && result.ends_with('{')
+    {
+        let tmp_result = result.clone();
+        if let Some(captures) = REGEX.captures(&tmp_result) {
             let padding = &captures[1];
             let fnname = &captures[2];
 
@@ -43,7 +45,7 @@ fn transform(line: String) -> String {
                 fnname = fnname
             );
 
-            let split = (&captures[3]).split(",");
+            let split = (&captures[3]).split(',');
             let args: Vec<&str> = split.collect();
 
             for (i, arg) in args.into_iter().enumerate() {
@@ -75,6 +77,7 @@ mod tests {
     #[test]
     fn test_transform_none() {
         let line = String::from("myfn() {");
-        assert_eq!(line.clone(), transform(line));
+        let line2 = line.clone();
+        assert_eq!(line2, transform(line));
     }
 }

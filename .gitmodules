@@ -1,11 +1,5 @@
 [submodule "modules/dotlink"]
 	path = modules/dotlink
-	url = git@github.com:denisidoro/dotlink.git
-	shallow = true
-	ignore = dirty
-	
-[submodule "modules/zimfw"]
-	path = modules/zimfw
-	url = git@github.com:zimfw/zimfw.git
+	url = https://github.com/denisidoro/dotlink
 	shallow = true
 	ignore = dirty

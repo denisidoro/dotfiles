@@ -9,16 +9,18 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    scripting eval [<args>...]
 ##?    scripting test <folder> [<args>...]
 
+docs::eval_help "$@"
+
 cmd="$1"
 shift
 
 _test() {
-   source "${DOTFILES}/scripts/self/aux/test.sh"
+   source "${DOTFILES}/scripts/core/test.sh"
    test::start "$@"
 }
 
 case $cmd in
    eval) eval "$@" ;;
    test) _test "$@" ;;
-   *) extract_help "$0" ;;
+   *) docs::invalid "$cmd" "$@" ;;
 esac

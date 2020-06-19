@@ -36,7 +36,7 @@ fn transpile_error_propagation(lines: fs::Lines) -> Vec<String> {
         }
     }
 
-    return new_lines;
+    new_lines
 }
 
 fn transform_line_error_propagation(line: String) -> String {
@@ -92,7 +92,7 @@ fn transpile_map(lines: Vec<String>) -> Vec<String> {
         }
     }
 
-    return new_lines;
+    new_lines
 }
 
 fn capture_str(captures: &regex::Captures<'_>, index: usize) -> String {
@@ -117,7 +117,8 @@ mod tests {
     #[test]
     fn test_transform_none() {
         let line = String::from("foo := bar()");
-        assert_eq!(line.clone(), transform_line_error_propagation(line.clone()));
+        let line2 = line.clone();
+        assert_eq!(line, transform_line_error_propagation(line2));
     }
 
     #[test]
@@ -127,7 +128,7 @@ mod tests {
         return bake(appleSlice)
 	})"#;
 
-        let split = input.split("\n");
+        let split = input.split('\n');
         let lines: Vec<&str> = split.collect();
         let lines: Vec<String> = lines.iter().map(|x| String::from(*x)).collect();
         let new_lines = transpile_map(lines);

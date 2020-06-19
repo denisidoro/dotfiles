@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# vim: filetype=sh
+set -euo pipefail
 
 package::install() {
    sudo apt-get install xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev gcc make feh dmenu rofi \
@@ -18,7 +18,7 @@ package::install() {
    recipe::make xtitle
    recipe::make bar
 
-   echo "sxhkd & exec bspwm" >> $HOME/.xinitrc
+   echo "sxhkd & exec bspwm" >> "$HOME"/.xinitrc
 
    sudo cp "${TMP_FOLDER}/bspwm/contrib/freedesktop/bspwm.desktop" /usr/share/xsessions/
 }
