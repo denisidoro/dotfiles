@@ -52,7 +52,8 @@ set -g @prefix_highlight_copy_mode_attr "fg=brightcyan,bg=black,bold"
 #+--- Bars ---+
 set -g status-left "#[fg=black,bg=yellow,bold] #S#[fg=yellow,bg=black]"
 # set -g status-right "#{prefix_highlight}#[fg=brightblack,bg=black,nobold,noitalics,nounderscore]#[fg=white,bg=brightblack] #(cd #{pane_current_path}; git rev-parse --abbrev-ref HEAD) #[fg=black,bg=brightblack,nobold,noitalics,nounderscore]#[fg=white,bg=brightblack] %H:%M #[fg=black,bg=brightblack,nobold,noitalics,nounderscore]#[fg=cyan,bg=black,nobold,noitalics,nounderscore]#[fg=black,bg=cyan] #H "
-set -g status-right "#{prefix_highlight}#[fg=brightblack,bg=black,nobold,noitalics,nounderscore]#[fg=white,bg=brightblack] #(cd #{pane_current_path}; git rev-parse --abbrev-ref HEAD) #[fg=black,bg=brightblack,nobold,noitalics,nounderscore]"
+# set -g status-right "#{prefix_highlight}#[fg=brightblack,bg=black,nobold,noitalics,nounderscore]#[fg=white,bg=brightblack] #(cd #{pane_current_path}; git rev-parse --abbrev-ref HEAD) #[fg=black,bg=brightblack,nobold,noitalics,nounderscore]"
+set -g status-right "#{prefix_highlight}#[fg=brightblack,bg=black,nobold,noitalics,nounderscore]"
 
 set -g window-status-format "#[fg=black,bg=brightblack,nobold,noitalics,nounderscore] #[fg=white,bg=brightblack]#I #[fg=black,bg=brightblack,nobold,noitalics,nounderscore] #[fg=white,bg=brightblack]#W #{?window_last_flag,\uf7d9,} #{?window_zoomed_flag,\uf848 ,}#{window_activity_flag,\u26a1,}#{?window_bell_flag,\uf599 ,}#{?window_marked_flag,\uf02e ,}#[fg=brightblack,bg=black,nobold,noitalics,nounderscore]"
 set -g window-status-current-format "#[fg=black,bg=cyan,nobold,noitalics,nounderscore] #[fg=black,bg=cyan]#I #[fg=black,bg=cyan,nobold,noitalics,nounderscore] #[fg=black,bg=cyan]#W #{?current_window_flag,,\uf192 }#{?window_marked_flag,\uf02e ,}#{?window_zoomed_flag,\uf848 ,}#[fg=cyan,bg=black,nobold,noitalics,nounderscore]"

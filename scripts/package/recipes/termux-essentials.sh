@@ -4,37 +4,27 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/fs.sh"
 source "${DOTFILES}/scripts/core/platform.sh"
 
-has_busybox_only() {
-   mktemp --help 2>&1 \
-      | grep -q BusyBox
-}
-
 package::is_installed() {
-   ! platform::is_android || has grep
+   return 1
 }
 
 package::install() {
+   platform::is_android || return 1
+
    pkg install ncurses-utils || true
 
-   # in order to skip $PREFIX/bin, for example
-   if ! fs::is_dir /bin; then
-      pkg install proot || true
-      termux-chroot || true
-   fi
-
-   # probably first time running it so let's add more stuff as well
-   if has_busybox_only; then
-      pkg install unstable-repo || true
-      apt install coreutils || true
-      pkg install util-linux || true
-      pkg install termux-packages || true
-      pkg install ncurses-utils || true
-      pkg install grep sed || true
-      termux-setup-storage || true
-   fi
+   pkg install proot || true
+   pkg install unstable-repo || true
+   apt install coreutils || true
+   pkg install util-linux || true
+   pkg install termux-packages || true
+   pkg install ncurses-utils || true
+   pkg install grep sed || true
+   termux-setup-storage || true
 
    if ! which sudo; then
       dot pkg add termux-sudo || true
    fi
 
+   termux-chroot || true
 }

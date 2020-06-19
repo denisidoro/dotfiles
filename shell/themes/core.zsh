@@ -49,11 +49,11 @@ _load_starship() {
    export STARSHIP_SHELL="zsh"
 }
 
-if ${DOT_STARSHIP:-true}; then
-   _load_starship || _load_fallback_theme
-else
+# if ${DOT_STARSHIP:-true}; then
+#   _load_starship || _load_fallback_theme
+#else
    _load_fallback_theme
-fi
+#fi
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan"
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
