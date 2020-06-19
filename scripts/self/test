@@ -69,6 +69,7 @@ TEST_DIR="${DOTFILES}/target/test"
 mkdir -p "$TEST_DIR" 2>/dev/null || true
 _prepare_zsh 2>/dev/null || true
 _prepare_dotlink 2>/dev/null || true
+echoerr "DOT_STUB: ${DOT_STUB_DOTRS:-false}"
 ${DOT_STUB_DOTRS:-false} && _stub_dotrs 2>/dev/null || true
 
 if [[ "${suite:-}" == "rust" ]]; then
