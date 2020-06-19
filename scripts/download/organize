@@ -2,7 +2,7 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/download/aux/core.sh"
-source "${DOTFILES}/scripts/download/aux/fs.sh"
+source "${DOTFILES}/scripts/core/fs.sh"
 
 ##? Download file name parser
 ##?

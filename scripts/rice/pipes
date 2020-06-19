@@ -8,7 +8,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    pipes
 
-docs::eval_help "$@"
+docs::maybe_help "$@"
 
 M=32768
 p=1

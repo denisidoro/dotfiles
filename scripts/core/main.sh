@@ -87,6 +87,6 @@ doc::parse() {
    eval "$("$docopt" -h "${help}" : "${@:1}")"
 }
 
-export -f doc::maybe_help doc::help_or_fail doc::parse
+export -f doc::help_msg doc::maybe_help doc::help_or_fail doc::parse
 
 export DOT_MAIN_SOURCED=true

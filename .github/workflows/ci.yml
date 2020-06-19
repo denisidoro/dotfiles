@@ -18,7 +18,7 @@ jobs:
       - name: Create stubs
         run: mkdir -p ./target; echo -e '#!/usr/bin/env bash\n\necho usage' > ./target/dotrs && chmod +x ./target/dotrs
       - name: Run tests
-        run: DOT_STUB_DOTRS=true ./bin/dot self test suite bash
+        run: DOT_STUB_DOTRS=true PROJ_HOME=$(pwd)/rust PROJ_NAME=dotrs ./bin/dot self test suite bash
 
   js-tests:
     name: Javascript
