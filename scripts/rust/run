@@ -24,7 +24,9 @@ if ${clean:-false}; then
 fi
 
 echoerr "RELEASE_PATH: $RELEASE_PATH"
+echoerr ls "$DOTFILES/rust"
 ls "$DOTFILES/rust"
+echoerr ls "$DOTFILES/rust/target"
 ls "$DOTFILES/rust/target"
 ls "$DOTFILES/rust/target/release"
 

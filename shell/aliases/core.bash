@@ -80,7 +80,7 @@ alias f="dot terminal dashed vifm --"
 # alias ls='ls --color=auto'
 ls() { has lsd && lsd "$@" || command ls "$@"; }
 alias lst="tree -L 2"
-cd() { builtin cd "$@" && ls .; }
+cdd() { cd "$@" && ls .; }
 mkcd() { mkdir -p -- "$@" && cd -P -- "$@"; }
 
 _safe_cd() { [[ -d "${1:-}" ]] && cd "$1" || echoerr "$1 doesn't exist"; }
