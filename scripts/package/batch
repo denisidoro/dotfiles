@@ -2,6 +2,8 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
+source "${DOTFILES}/scripts/core/feedback.sh"
 
 ##? Install multiple dependencies
 ##?
@@ -10,7 +12,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    batch prompt <name>
 ##?    batch add <name>
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 # show help if no arguments
 if [[ $# -lt 1 ]]; then

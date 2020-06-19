@@ -2,6 +2,7 @@
 set -uo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/str.sh"
 
 ##? Gets cover for books
 ##?
@@ -12,7 +13,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    -d --display       Show image instead of printing the URL
 ##?    -z --zoom <zoom>   Zoom level [default: 0]
 
-docs::eval "$@"
+doc::parse "$@"
 
 get_json() {
    local -r query="$(str::urlencode "$1")"

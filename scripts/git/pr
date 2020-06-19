@@ -2,13 +2,14 @@
 
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/git/aux/core.sh"
+source "${DOTFILES}/scripts/core/str.sh"
 
 ##? PR utilities
 ##?
 ##? Usage:
 ##?   pr preview
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 _cleanup_uri() {
    echo "$1" \

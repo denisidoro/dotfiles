@@ -8,7 +8,7 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 ##?    log release
 ##?    log commit
 
-docs::eval "$@"
+doc::parse "$@"
 
 main() {
    if $release; then

@@ -2,13 +2,16 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/str.sh"
+source "${DOTFILES}/scripts/core/platform.sh"
+source "${DOTFILES}/scripts/core/log.sh"
 
 ##? Updates submodules, dotfiles and attempts to do some setup
 ##?
 ##? Usage:
 ##?    dotfiles
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 main() {
    log::note "Updating dotfiles\n$(_version)\n"
@@ -65,7 +68,7 @@ _add() {
 # ==============================
 
 fix_locales() {
-   if platform::command_exists locale-gen; then
+   if has locale-gen; then
       echoerr
       log::note "Fixing locales..."
       locale-gen en_US en_US.UTF-8

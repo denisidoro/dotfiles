@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "${DOTFILES}/scripts/core/dict.sh"
+
 _apt() {
    apt-get "$@"
 }

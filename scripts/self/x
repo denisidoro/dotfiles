@@ -8,6 +8,6 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    x <ctx> <cmd>
 
-docs::eval "$@"
+doc::parse "$@"
 
 chmod +x "${DOTFILES}/scripts/${ctx}/${cmd}"

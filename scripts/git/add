@@ -9,7 +9,7 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 ##?    add
 ##?    add [<files>...]
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 git::add() {
    git::inside_work_tree || return 1

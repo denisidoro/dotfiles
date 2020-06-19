@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+source "${DOTFILES}/scripts/core/fs.sh"
+source "${DOTFILES}/scripts/core/platform.sh"
+
 has_busybox_only() {
    mktemp --help 2>&1 \
       | grep -q BusyBox
 }
 
 package::is_installed() {
-   ! platform::is_android || platform::command_exists grep
+   ! platform::is_android || has grep
 }
 
 package::install() {

@@ -5,9 +5,7 @@
 ##? Usage:
 ##?    diff list
 
-source "${DOTFILES}/scripts/core/documentation.sh"
-
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 _list0() {
    arc --ansi feature \

@@ -2,6 +2,8 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
+source "${DOTFILES}/scripts/core/feedback.sh"
 
 ##? Changes the file creation time
 ##?
@@ -13,7 +15,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    date add photo.jpg 365 20 10
 ##?    ls | xargs -I% date add % 365
 
-docs::eval "$@"
+doc::parse "$@"
 
 hours=${hours:-0}
 minutes=${minutes:-0}

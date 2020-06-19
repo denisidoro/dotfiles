@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-source "$DOTFILES/scripts/core/documentation.sh"
+source "$DOTFILES/scripts/core/main.sh"
 
 ##? ZSH helpers
 ##?
@@ -9,7 +9,7 @@ source "$DOTFILES/scripts/core/documentation.sh"
 ##?    zsh benchmark            # Print the current ZSH performance
 ##?    zsh reload-completions   # Reload completions
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 _expand() {
    local -r filename="$1"
@@ -42,6 +42,6 @@ case "${1:-}" in
       zsh -c "autoload -U compaudit && compinit"
       ;;
    *)
-      docs::eval_help --help
+      doc::maybe_help --help
       ;;
 esac

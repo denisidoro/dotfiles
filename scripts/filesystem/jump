@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/documentation.sh"
 source "${DOTFILES}/scripts/core/git.sh"
 
 ##? Jump to files, folders or editing
@@ -11,7 +10,7 @@ source "${DOTFILES}/scripts/core/git.sh"
 ##?    jump (up|root) <args>...
 ##?    jump edit (global|local) <editor> <args>...
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 _fzf() {
    fzf --exact --no-sort +m "$@"

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "${DOTFILES}/scripts/core/log.sh"
+
 _pairs() {
    find . \( -name .git -prune \) -o \( -name modules -prune \) -o \( -name rust -prune \) -o \( -name target -prune \)  -o -name '*' -type f \
       -exec bash -c 'x="$(grep "dot " {})"; [ -n "$x" ] && echo "$x" | sed -e "s|^|{} \+ |"' \; \

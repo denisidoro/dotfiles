@@ -8,7 +8,7 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 ##? Usage:
 ##?    diff
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 git::diff() {
    git::inside_work_tree || return 1

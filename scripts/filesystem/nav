@@ -2,6 +2,7 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/fs.sh"
 source "${DOTFILES}/scripts/core/nav.sh"
 
 ##? JSON navigator
@@ -9,7 +10,7 @@ source "${DOTFILES}/scripts/core/nav.sh"
 ##? Usage:
 ##?    nav [<path>]
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 path::all() {
    echo "TODO"

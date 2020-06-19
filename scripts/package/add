@@ -2,6 +2,7 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
 
 ##? Install packages
 ##?
@@ -11,7 +12,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Options:
 ##?    --prevent-recipe
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 if [[ "$1" == "--prevent-recipe" ]]; then
    prevent_recipe=true
@@ -37,7 +38,7 @@ _installing() {
 }
 
 package="$1"
-platform::command_exists "$package" && _is_installed && exit 0
+has "$package" && _is_installed && exit 0
 
 dashed_package="$(echo "$package" | tr ' _' '-')"
 file="${DOTFILES}/scripts/package/recipes/${dashed_package}.sh"
@@ -52,7 +53,7 @@ fi
 
 source "$file"
 
-platform::command_exists package::is_installed \
+has package::is_installed \
    && package::is_installed \
    && _is_installed \
    && exit 0

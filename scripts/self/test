@@ -10,10 +10,10 @@ source "${DOTFILES}/scripts/core/test.sh"
 ##?    test suite <suite>
 ##?    test file <file>
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 _prepare_zsh() {
-   if ! platform::command_exists zsh; then
+   if ! has zsh; then
       local -r bash_path="$(which bash)"
       local -r zsh_path="$(echo "$bash_path" | sed 's/bash/zsh/')"
       sudo ln -s "$bash_path" "$zsh_path" || sudo ln -s "$bash_path" "$zsh_path"

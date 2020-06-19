@@ -5,6 +5,7 @@ export FORCE_GNU=true
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/coll.sh"
 source "${DOTFILES}/scripts/core/dict.sh"
+source "${DOTFILES}/scripts/core/log.sh"
 
 PASSED=0
 FAILED=0

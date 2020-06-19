@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/documentation.sh"
+source "${DOTFILES}/scripts/core/main.sh"
 
 ##? alacritty helpers
 ##?
@@ -9,7 +9,7 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 ##?     alacritty new
 ##?     alacritty check
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 cmd="${1:-}"
 shift

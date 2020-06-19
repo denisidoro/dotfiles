@@ -11,7 +11,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Examples:
 ##?    wm cheats
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 _last_word() {
    echo ${1##* }

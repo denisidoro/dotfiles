@@ -11,7 +11,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Examples:
 ##?    type 'foo bar' 100
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 text="$1"
 speed="${2:-10}"

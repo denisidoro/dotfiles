@@ -9,7 +9,7 @@ source "${DOTFILES}/scripts/git/aux/hooks.sh"
 ##? Usage:
 ##?    pre-commit
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 git_dir=$(git::root)
 files=$(git diff-index --name-only --diff-filter=ACM --cached HEAD -- || echo "")

@@ -8,7 +8,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    less [<args>...]
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 # argument parsing
 args=()
@@ -29,7 +29,7 @@ _less() {
 }
 
 # fallback in case of missing binaries
-if ! platform::command_exists bat; then
+if ! has bat; then
    _less "$@"
    exit 0
 fi

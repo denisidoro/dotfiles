@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+source "${DOTFILES}/scripts/core/platform.sh"
+
 package::is_installed() {
    return 1
 }
@@ -16,6 +18,6 @@ package::install() {
    _mkdir "${DOTFILES}/target"
    _mkdir "${DOTFILES}/bin"
 
-   _mkdir "$(fs::tmp)"
-   _mkdir "$(fs::bin)"
+   _mkdir "$(platform::get_tmp_dir)"
+   _mkdir "$(platform::get_bin_dir)"
 }

@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+source "${DOTFILES}/scripts/core/str.sh"
+source "${DOTFILES}/scripts/core/log.sh"
+
 # ===============
 # input
 # ===============

@@ -2,6 +2,7 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/platform.sh"
 
 ##? Open files/folders
 ##?
@@ -11,7 +12,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Examples:
 ##?    open http://google.com
 
-docs::eval "$@"
+doc::parse "$@"
 
 _open() {
    if platform::is_osx; then

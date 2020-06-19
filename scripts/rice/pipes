@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${DOTFILES}/scripts/core/documentation.sh"
+source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Animated pipes terminal screensaver
 ##? based on https://github.com/pipeseroni/pipes.sh

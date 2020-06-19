@@ -30,18 +30,10 @@ log::ansi() {
    fi
 }
 
-if [ -z ${DOT_LOG_FILE+x} ]; then
-   readonly DOT_LOG_FILE="/tmp/$(basename "$0").log"
-fi
-
 _log() {
    local template=$1
    shift
-   if ${log_to_file:-false}; then
-      echoerr -e $(printf "$template" "$@") | tee -a "$DOT_LOG_FILE" >&2
-   else
-      echoerr -e $(printf "$template" "$@")
-   fi
+   echoerr -e $(printf "$template" "$@")
 }
 
 _header() {
@@ -64,4 +56,10 @@ log::note() { _log "$(log::ansi blue)%s$(log::ansi reset)\n" "$@"; }
 die() {
    log::error "$@"
    exit 42
+}
+
+tap() {
+   local -r input="$(cat)"
+   echoerr "$input"
+   echo "$input"
 }

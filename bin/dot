@@ -126,8 +126,9 @@ if [[ $# -eq 0 ]]; then
    # Shows available contexts
    # or prompts for a command if fzf is installed
    source "$DOTFILES/scripts/core/main.sh"
+   source "$DOTFILES/scripts/core/coll.sh"
 
-   platform::command_exists fzf \
+   has fzf \
       && fzf_prompt "$(list_command_paths)" \
       || list_contexts "$(list_command_paths)"
 
@@ -138,7 +139,7 @@ elif [[ $# -eq 1 ]]; then
    context_query="$(_alias $1)"
 
    case $context_query in
-      -h|--help) docs::invalid "$@" && exit ;;
+      -h|--help) doc::help_or_fail "$@" && exit ;;
       -v|--version) cat "${DOTFILES}/rust/Cargo.toml" | grep version | head -n1 | grep -Eo '[0-9\.]+' && exit ;;
    esac
 

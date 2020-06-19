@@ -8,7 +8,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    cemu gen
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 CEMU_DIR="${CEMU_DIR:-/mnt/d/Emulators/Cemu}"
 SAVE_BASE="${CEMU_DIR}/mlc01/usr/"

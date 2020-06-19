@@ -8,7 +8,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    docker <script>
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 if ${1:-install}; then
    SCRIPT="EDITOR=cat dot self install"

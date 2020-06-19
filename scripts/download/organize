@@ -2,13 +2,14 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/download/aux/core.sh"
+source "${DOTFILES}/scripts/download/aux/fs.sh"
 
 ##? Download file name parser
 ##?
 ##? Usage:
 ##?    organize
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 DOWNLOADS_HOME="${DOWNLOADS_HOME:-"$HOME/Downloads/test"}"
 TV_HOME="${TV_HOME:-$HOME/TV}"

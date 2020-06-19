@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "${DOTFILES}/scripts/core/log.sh"
+
 feedback::confirmation() {
    local -r msg="$1"
    local -r default_yes="${2:-true}"
@@ -64,7 +66,7 @@ feedback::select_option() {
    local -r options="$(cat)"
    local -r question="${1:-Select a number}"
 
-   if platform::command_exists fzf; then
+   if has fzf; then
       local height="$(echo "$options" | wc -l)"
       height="$((height + 2))"
       echo "$options" \

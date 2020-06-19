@@ -14,7 +14,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    -n --number <num>   Number of dominant colors [default: 5]
 ##?    -p --preview        Display on screen
 
-docs::eval "$@"
+doc::parse "$@"
 
 _extract_colors() {
    cat \

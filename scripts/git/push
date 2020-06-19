@@ -9,7 +9,7 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 ##?    push lint <args>...
 ##?    push commit <args>...
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 _upstream() {
    local -r branch="$(git rev-parse --abbrev-ref HEAD)"

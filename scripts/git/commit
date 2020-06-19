@@ -7,7 +7,7 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 ##? Usage:
 ##?    commit am <args>...
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 _msg() {
    if [[ $# -gt 0 ]] && [[ "${1:-}" != "wip" ]]; then
@@ -27,5 +27,5 @@ _am() {
 cmd="${1:-}"
 case $cmd in
    am) _am "$@" ;;
-   *) docs::invalid "$@" ;;
+   *) doc::help_or_fail "$@" ;;
 esac

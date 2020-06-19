@@ -2,13 +2,14 @@
  set -uo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
 
 ##? Source code indentation fixer
 ##?
 ##? Usage:
 ##?    beautify <filename>
 
-docs::eval "$@"
+doc::parse "$@"
 
 _get_language() {
    local -r filename="$1"

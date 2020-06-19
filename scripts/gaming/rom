@@ -13,7 +13,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    rom rename
 ##?    rom emuparadise list https://www.emuparadise.me/Super_Nintendo_Entertainment_System_(SNES)_ROMs/List-All-Titles/5
 
-docs::eval "$@"
+doc::parse "$@"
 
 _rename() {
    tr '_' ' ' \

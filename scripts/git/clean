@@ -8,7 +8,7 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 ##? Usage:
 ##?    clean
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 git::clean() {
    git::inside_work_tree || return 1

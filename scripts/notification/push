@@ -2,6 +2,7 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
 
 ##? Pushbullet API
 ##?
@@ -27,7 +28,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    push url http://google.com
 ##?    push app Gmail --device tablet
 
-docs::eval "$@"
+doc::parse "$@"
 
 PUSHBULLET_HOME="${PUSHBULLET_HOME:-${DOTFILES}/modules/pushbullet-bash}"
 

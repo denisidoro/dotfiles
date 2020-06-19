@@ -7,7 +7,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?     bash ps1
 
-docs::eval "$@"
+doc::parse "$@"
 
 char::random() {
    local -r var="$*"

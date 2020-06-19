@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-platform::command_exists() {
-   type "$1" &>/dev/null
-}
-
 platform::is_osx() {
    [[ $(uname -s) == "Darwin" ]]
 }
@@ -59,18 +55,18 @@ platform::main_package_manager() {
       echo "brew"
    elif platform::is_android; then
       echo "pkg"
-   elif platform::command_exists apt; then
+   elif has apt; then
       echo "apt"
-   elif platform::command_exists apt-get; then
+   elif has apt-get; then
       local -r apt_get_path="$(which apt-get)"
       local -r apt_path="$(echo "$apt_get_path" | sed 's/-get//')"
       sudo ln -s "$apt_get_path" "$apt_path"
       echo "apt"
-   elif platform::command_exists yum; then
+   elif has yum; then
       echo "yum"
-   elif platform::command_exists dnf; then
+   elif has dnf; then
       echo "dnf"
-   elif platform::command_exists apk; then
+   elif has apk; then
       echo "apk"
    else
       echo "brew"
@@ -80,7 +76,7 @@ platform::main_package_manager() {
 platform::existing_command() {
    local cmd
    for cmd in "$@"; do
-      if platform::command_exists "$cmd"; then
+      if has "$cmd"; then
          echo "$cmd"
          return 0
       fi

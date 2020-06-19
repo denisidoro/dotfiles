@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/documentation.sh"
+source "${DOTFILES}/scripts/core/main.sh"
 
 ##? tmux helpers
 ##?
@@ -12,7 +12,7 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 ##?     tmux attach [<session_name>]
 ##?     tmux kill [<session_name>]
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 cmd="${1:-}"
 shift

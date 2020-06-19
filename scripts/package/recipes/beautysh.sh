@@ -9,6 +9,6 @@ package::install() {
    git clone https://github.com/bemeurer/beautysh
    cd beautysh
 
-   platform::command_exists python3 && bin="python3" || bin="python"
+   has python3 && bin="python3" || bin="python"
    $bin setup.py install
 }

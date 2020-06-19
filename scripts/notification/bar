@@ -8,7 +8,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    bar <msg>
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 # how long should the popup remain?
 duration=3

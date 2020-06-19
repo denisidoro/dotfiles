@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+source "${DOTFILES}/scripts/core/platform.sh"
+
 REPO_TAG="2.0.0-alpha.3"
 
 url::generate() {
@@ -23,7 +25,7 @@ url::get() {
 }
 
 package::install() {
-   platform::command_exists brew && brew install yudai/gotty/gotty && return 0 || true
+   has brew && brew install yudai/gotty/gotty && return 0 || true
 
    dot pkg add wget
    dot pkg add tar
@@ -36,5 +38,5 @@ package::install() {
    wget "$url" -O gotty.tar.gz
 
    tar -zxvf gotty.tar.gz
-   sudo mv "./gotty" "$(fs::bin)/gotty"
+   sudo mv "./gotty" "$(platform::get_bin_dir)/gotty"
 }
