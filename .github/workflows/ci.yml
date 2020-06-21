@@ -55,3 +55,14 @@ jobs:
           working-directory: ./rust
       - name: Run tests
         run: DOT_SKIP_CARGO=true ./bin/dot self test suite rust
+
+  install-tests:
+    name: Install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: EDITOR=cat DOT_DOCOPT=python DOT_FRE=false DOT_FZF=false DOT_NAVI=false DOT_ZIM=false DOT_STARSHIP=false ./bin/dot self install
+      - name: dot version
+        run: dot --version
