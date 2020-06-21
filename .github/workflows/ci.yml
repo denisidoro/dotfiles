@@ -67,4 +67,4 @@ jobs:
       - name: dot self install
         run: EDITOR=cat TERM=dumb DOT_INSTALL_SKIP_UPDATE=true DOT_DOCOPT=python DOT_FRE=false DOT_FZF=false DOT_NAVI=false DOT_ZIM=false DOT_STARSHIP=false ./bin/dot self install
       - name: dot version
-        run: source $HOME/.bashrc && dot --version
+        run: source $HOME/.bashrc && dot --version | grep "$(date +'%Y')" 
