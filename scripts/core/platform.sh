@@ -101,7 +101,7 @@ platform::get_dir() {
 }
 
 platform::get_source_dir() {
-   local -r proj_name="$1"
+   local -r proj_name="${1:-}"
    platform::get_dir "/opt/${proj_name}" "${HOME}/.${proj_name}/src"
 }
 
@@ -110,7 +110,7 @@ platform::get_bin_dir() {
 }
 
 platform::get_tmp_dir() {
-   local -r proj_name="$1"
+   local -r proj_name="${1:-}"
    platform::get_dir "/tmp/${proj_name}" "${HOME}/.${proj_name}/tmp"
 }
 
