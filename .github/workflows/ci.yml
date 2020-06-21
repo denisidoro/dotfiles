@@ -65,6 +65,6 @@ jobs:
       - name: Cleanup
         run: cd $HOME && for f in $(ls -a | grep '^\.'); do rm "$f" || true; done
       - name: dot self install
-        run: EDITOR=cat TERM=dumb DOT_DOCOPT=python DOT_FRE=false DOT_FZF=false DOT_NAVI=false DOT_ZIM=false DOT_STARSHIP=false ./bin/dot self install
+        run: EDITOR=cat TERM=dumb DOT_INSTALL_SKIP_UPDATE=true DOT_DOCOPT=python DOT_FRE=false DOT_FZF=false DOT_NAVI=false DOT_ZIM=false DOT_STARSHIP=false ./bin/dot self install
       - name: dot version
-        run: dot --version
+        run: bash -c 'dot --version'
