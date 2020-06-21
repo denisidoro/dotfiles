@@ -2,7 +2,7 @@
 set -euo pipefail
 
 package::is_installed() {
-   return 1
+   has zsh && zsh -c 'source $HOME/.zshrc; zimfw help 2>/dev/null | grep -q Usage'
 }
 
 package::install() {

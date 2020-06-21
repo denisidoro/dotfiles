@@ -19,7 +19,7 @@ _dot() {
 }
 
 clone_repo() {
-   git clone "$REPO" "$DOTFILES"
+   git clone "$REPO" "$DOTFILES" --depth 1
 }
 
 _has() {

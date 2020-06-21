@@ -24,6 +24,6 @@ cd "$DOTFILES"
 
 test::set_suite "bash - symlink"
 
-for f in $(ls "./links/"); do
+for f in $(ls "./links/" | grep -v 'android'); do
    test::run "$f - symlinks are valid" _validate "./links/$f"
 done
