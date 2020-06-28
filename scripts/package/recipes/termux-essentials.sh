@@ -19,7 +19,8 @@ package::install() {
    pkg install util-linux || true
    pkg install termux-packages || true
    pkg install ncurses-utils || true
-   pkg install grep sed || true
+   pkg install grep || true
+   pkg install sed || true
    termux-setup-storage || true
 
    if ! which sudo; then
