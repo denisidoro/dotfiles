@@ -1,0 +1,14 @@
+{
+  "type": 1,
+  "priority": 5,
+  "volume_notification": 1,
+  "volume_media": 2,
+  "dnd": "all",
+  "dark_mode": false,
+  "wifi": false, 
+  "mobile_data": true, 
+  "screen_rotation": false,
+  "display_timeout": 1,
+  "display_brightness": "auto",
+  "haptic_feedback": true
+}

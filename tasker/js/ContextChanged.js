@@ -1,6 +1,6 @@
 function main() {
     const CONFIG_PATH = global('Modes_ConfigPath') || '/sdcard/dotfiles/tasker/configs';
-    const ALL_CONFIGS = readConfigs();
+    const ALL_CONFIGS = readConfigs(CONFIG_PATH);
     const DEFAULT_CONTEXT = global('Modes_DefaultContext') || 'base';
 
     let contexts = global('Modes_Contexts').split(',').filter(c => { return (c !== '') });
@@ -29,9 +29,9 @@ function main() {
       .filter(c => { return inactivatedContexts.indexOf(c.name) > -1 })
       .forEach(context => {
         if (context.exit) {
-          if (context.exit.profilesToDisable && Array.isArray(context.exit.profilesToDisable)) context.exit.profilesToDisable.forEach(prof => { changeProfileStatus(prof, false); });
-          if (context.exit.profilesToEnable && Array.isArray(context.exit.profilesToEnable)) context.exit.profilesToEnable.forEach(prof => { changeProfileStatus(prof, true); });
-          if (context.exit.tasksToRun && Array.isArray(context.exit.tasksToRun)) context.exit.tasksToRun.forEach(tsk => {
+          if (context.exit.profiles_to_disable && Array.isArray(context.exit.profiles_to_disable)) context.exit.profiles_to_disable.forEach(prof => { changeProfileStatus(prof, false); });
+          if (context.exit.profiles_to_enable && Array.isArray(context.exit.profiles_to_enable)) context.exit.profiles_to_enable.forEach(prof => { changeProfileStatus(prof, true); });
+          if (context.exit.tasks_to_run && Array.isArray(context.exit.tasks_to_run)) context.exit.tasks_to_run.forEach(tsk => {
             if (typeof tsk === 'string') {
               executeTask(tsk, 10, null, null);
             } else if (typeof tsk === 'object' && tsk.name) {
@@ -63,24 +63,24 @@ function main() {
     if (existsIsType(merged, 'location', 'string')) performTask('Location mode', 10, merged.location, '');
     if (existsIsType(merged, 'wifi', 'boolean')) setWifi(merged.wifi);
     if (existsIsType(merged, 'bluetooth', 'boolean')) setBT(merged.bluetooth);
-    if (existsIsType(merged, 'mobileData', 'boolean')) performTask('Mobile data', 10, merged.mobileData, '');
-    if (existsIsType(merged, 'airplaneMode', 'boolean')) setAirplaneMode(merged.airplaneMode);
-    if (existsIsType(merged, 'screenRotation', 'boolean')) performTask('Display Rotation', 10, merged.screenRotation, '');
-    if (existsIsType(merged, 'displayTimeout', 'int')) displayTimeout(0, merged.displayTimeout, 0);
-    if (existsIsType(merged, 'displayBrightness', 'int') || existsIsType(merged, 'displayBrightness', 'string')) performTask('Display brightness', 10, merged.displayBrightness, '');
-    if (existsIsType(merged, 'immersiveMode', 'string')) performTask('Immersive mode', 10, merged.immersiveMode, '');
-    if (existsIsType(merged, 'darkMode', 'boolean')) performTask('Dark mode', 10, merged.darkMode, '');
-    if (existsIsType(merged, 'hapticFeedback', 'boolean')) performTask('Haptic feedback', 10, merged.hapticFeedbackOn, '');
-    if (existsIsType(merged, 'batterySaver', 'boolean')) performTask('Battery saver', 10, merged.batterySaverOn, '');
+    if (existsIsType(merged, 'mobile_data', 'boolean')) performTask('Mobile data', 10, merged.mobile_data, '');
+    if (existsIsType(merged, 'airplane_mode', 'boolean')) setAirplaneMode(merged.airplane_mode);
+    if (existsIsType(merged, 'screen_rotation', 'boolean')) performTask('Display rotation', 10, merged.screen_rotation, '');
+    if (existsIsType(merged, 'display_timeout', 'int')) displayTimeout(0, merged.display_timeout, 0);
+    if (existsIsType(merged, 'display_brightness', 'int') || existsIsType(merged, 'displayBrightness', 'string')) performTask('Display brightness', 10, merged.display_brightness, '');
+    if (existsIsType(merged, 'immersive_mode', 'string')) performTask('Immersive mode', 10, merged.immersive_mode, '');
+    if (existsIsType(merged, 'dark_mode', 'boolean')) performTask('Dark mode', 10, merged.dark_mode, '');
+    if (existsIsType(merged, 'haptic_feedback', 'boolean')) performTask('Haptic feedback', 10, merged.haptic_feedback, '');
+    if (existsIsType(merged, 'battery_saver', 'boolean')) performTask('Battery saver', 10, merged.battery_saver, '');
 
     // Perform enter parameters for new contexts
     ALL_CONFIGS
       .filter(context => { return (newContexts.indexOf(context.name) > -1) })
       .forEach(context => {
         if (context.enter) {
-          if (context.enter.profilesToDisable && Array.isArray(context.enter.profilesToDisable)) context.enter.profilesToDisable.forEach(prof => { changeProfileStatus(prof, false); });
-          if (context.enter.profilesToEnable && Array.isArray(context.enter.profilesToEnable)) context.enter.profilesToEnable.forEach(prof => { changeProfileStatus(prof, true); });
-          if (context.enter.tasksToRun && Array.isArray(context.enter.tasksToRun)) context.enter.tasksToRun.forEach(tsk => {
+          if (context.enter.profiles_to_disable && Array.isArray(context.enter.profiles_to_disable)) context.enter.profiles_to_disable.forEach(prof => { changeProfileStatus(prof, false); });
+          if (context.enter.profiles_to_enable && Array.isArray(context.enter.profiles_to_enable)) context.enter.profiles_to_enable.forEach(prof => { changeProfileStatus(prof, true); });
+          if (context.enter.tasks_to_run && Array.isArray(context.enter.tasks_to_run)) context.enter.tasks_to_run.forEach(tsk => {
             if (typeof tsk === 'string') {
               executeTask(tsk, 10, null, null);
             } else if (typeof tsk === 'object' && tsk.name) {
@@ -94,16 +94,16 @@ function main() {
     setGlobal('Modes_ActiveContexts', activeContexts.join(','));
 }
 
-function readConfigs() {
+function readConfigs(config_path) {
     let configs = [];
 
-    let fileList = listFiles(CONFIG_PATH).split('\n').filter(f => { return (f !== '') });
+    let fileList = listFiles(config_path).split('\n').filter(f => { return (f !== '') });
     fileList.forEach(f => {
       let conf = readConfigFile(f);
       configs.push(conf);
     });
 
-    return JSON.stringify(configs);
+    return configs;
 }
 
 function readConfigFile(configName) {
@@ -129,10 +129,9 @@ function readConfigFile(configName) {
 
 // Helper functions
 function missingItems(arr1, arr2) {
-  var missing = arr1.filter(function(item) {
+  return arr1.filter(function(item) {
     return arr2.indexOf(item) === -1;
   });
-  return missing;
 }
 
 function existsIsType(obj, key, type) {
