@@ -7,18 +7,13 @@ _jsons() {
       | sed 's|\./||g'
 }
 
-_maybe_remove_comments() {
-   if has jsmin; then
-      jsmin
-   else
-      cat
-   fi
-}
-
 _valid_json() {
-   cat "$1" \
-      | _maybe_remove_comments \
-      | jq . &>/dev/null
+   local -r file="$1"
+   if has jsmin; then
+      cat "$file" | jsmin | jq . &>/dev/null
+   then
+      cat "$file" | jq . &>/dev/null
+   fi
 }
 
 _run() {

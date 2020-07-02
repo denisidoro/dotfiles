@@ -14,20 +14,26 @@ git::prompt_if_protected() {
    fi
 }
 
+_parse_json() {
+   local -r file="$1"
+   if has jsmin; then
+      cat "$file" | jsmin | jq .
+   else
+      cat "$file" | jq .
+   fi
+}
+
 git::check_json() {
    local files="$1"
+   local err=false
 
    for file in $(echo "$files" | grep -P '\.((json))$'); do
-      set +e
-      python -mjson.tool "$file" 2>&1 /dev/null
-      local result=$?
-      if [ $result -ne 0 ] ; then
+      _parse_json "$file" &>/dev/null || err=true
+      if $err; then
          git::not_commited_msg
          log::error "Lint check of JSON object failed\n\tin $git_dir/$file"
-         python -mjson.tool "$file"
          exit 1
       fi
-      set -e
    done
 }
 
