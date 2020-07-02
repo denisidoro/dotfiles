@@ -26,6 +26,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup NodeJS
         uses: actions/setup-node@v1
+      - name: Install tools
+        run: ./bin/dot pkg add jsmin jq
       - name: Run tests
         run: ./bin/dot self test suite js
 

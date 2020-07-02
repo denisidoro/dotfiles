@@ -3,12 +3,21 @@
 _jsons() {
    cd "$DOTFILES"
    find . -iname "*.json" \
-      | grep -Ev 'node_modules|cache|modules/|lock.json' \
+      | grep -Ev 'node_modules|cache|modules/|rust/|target|lock.json' \
       | sed 's|\./||g'
+}
+
+_maybe_remove_comments() {
+   if has jsmin; then
+      jsmin
+   else
+      cat
+   fi
 }
 
 _valid_json() {
    cat "$1" \
+      | _maybe_remove_comments \
       | jq . &>/dev/null
 }
 
