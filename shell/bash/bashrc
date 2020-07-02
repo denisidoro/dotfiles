@@ -29,5 +29,5 @@ source "${DOTFILES}/shell/themes/dns.bash"
 <<<<<<< Updated upstream
 sometest
 =======
-othertest
+othertest2
 >>>>>>> Stashed changes
