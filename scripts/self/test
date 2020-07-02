@@ -13,11 +13,10 @@ source "${DOTFILES}/scripts/core/test.sh"
 doc::maybe_help "$@"
 
 _prepare_zsh() {
-   if ! has zsh; then
-      local -r bash_path="$(which bash)"
-      local -r zsh_path="$(echo "$bash_path" | sed 's/bash/zsh/')"
-      sudo ln -s "$bash_path" "$zsh_path" || sudo ln -s "$bash_path" "$zsh_path"
-   fi
+   has zsh && return 0 || true
+   local -r bash_path="$(which bash)"
+   local -r zsh_path="$(echo "$bash_path" | sed 's/bash/zsh/')"
+   sudo ln -s "$bash_path" "$zsh_path" || sudo ln -s "$bash_path" "$zsh_path"
 }
 
 _prepare_dotlink() {
@@ -38,6 +37,7 @@ _create_file() {
 }
 
 _stub_dotrs() {
+   has dotrs && return 0 || true
    local -r dotrs="${DOTFILES}/target/dotrs"
    [ -f "$dotrs" ] && return 0
    local -r content="echo \"$(echo "Stub"; echo; echo "Usage:"; echo "    dotrs")\""
@@ -49,6 +49,7 @@ _stub_dotrs() {
 }
 
 _stub_vscode() {
+   has code && return 0 || true
    local -r path="${DOTFILES}/local/bin/code"
    [ -f "$path" ] && return 0
    local -r content="echo \"$(echo "Stub"; echo; echo "Usage:"; echo "    code")\""
