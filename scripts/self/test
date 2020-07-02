@@ -21,11 +21,10 @@ _prepare_zsh() {
 
 _prepare_dotlink() {
    local file="${DOTFILES}/modules/dotlink/dotlink"
-   if ! [[ -f "$file" ]]; then
-      mkdir -p "$(dirname "$file")" || true
-      local content="$(cat "$0"; echo; echo; echo "dotlink_main() { echo stub; }")"
-      echo "$content" > "$file"
-   fi
+   [[ -f "$file" ]] && return 0 || true
+   mkdir -p "$(dirname "$file")" || true
+   local content="$(cat "$0"; echo; echo; echo "dotlink_main() { echo stub; }")"
+   echo "$content" > "$file"
 }
 
 _create_file() {
