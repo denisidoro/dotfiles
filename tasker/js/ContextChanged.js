@@ -24,6 +24,9 @@ function main() {
     let newContexts = missingItems(activeContexts, previousContexts);
     let inactivatedContexts = missingItems(previousContexts, activeContexts);
 
+
+if (newContexts.length == 0 && inactivatedContexts.length == 0) exit()
+
     // Perform exit parameters for inactivated contexts
     ALL_CONFIGS
       .filter(c => { return inactivatedContexts.indexOf(c.name) > -1 })
