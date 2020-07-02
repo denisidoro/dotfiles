@@ -86,12 +86,15 @@ git::check_aws() {
 
 git::check_conflict() {
    local files="$1"
+   local err=false
 
    for file in $files; do
-      echoerr "file: $file"
-      cat "$file"
-      local res=$(cat "$file" | egrep '^[><=]{7}( |$)' -H -I --line-number && echo 0 || echo 1)
-      if [ "$res" == 0 ]; then
+      cat "$file" \
+         | grep -qE '^[><=]{7}( |$)' \
+         && err=true \
+         || true
+      if $err; then
+         git::not_commited_msg
          log::error "$file still has unresolved conflicts"
          exit 5
       fi
