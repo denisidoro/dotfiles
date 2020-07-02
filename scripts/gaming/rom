@@ -33,11 +33,11 @@ _rename_rom() {
 }
 
 _rename_ext() {
-    tr '[:upper:]' '[:lower:]'
+   tr '[:upper:]' '[:lower:]'
 }
 
 _rename_dir() {
-    cat
+   cat
 }
 
 _quoted() {
@@ -45,24 +45,24 @@ _quoted() {
 }
 
 _rename() {
-    local -r input="$(cat)"
-    
-    local -r splits="$(echo "$input" | sed -E 's|([^/]+)\.([^\.]+)$|;\1;\2|g')"
-    local -r new_dirs="$(echo "$splits" | cut -f1 -d';' | _rename_dir)"
-    local -r new_roms="$(echo "$splits" | cut -f2 -d';' | _rename_rom)"
-    local -r new_exts="$(echo "$splits" | cut -f3 -d';' | _rename_ext)"
+   local -r input="$(cat)"
 
-    local -r output="$(paste <(echo "$new_dirs") <(echo "$new_roms") <(echo "$new_exts" | sed 's/^/\./g') | tr -d '\t')"
+   local -r splits="$(echo "$input" | sed -E 's|([^/]+)\.([^\.]+)$|;\1;\2|g')"
+   local -r new_dirs="$(echo "$splits" | cut -f1 -d';' | _rename_dir)"
+   local -r new_roms="$(echo "$splits" | cut -f2 -d';' | _rename_rom)"
+   local -r new_exts="$(echo "$splits" | cut -f3 -d';' | _rename_ext)"
 
-    paste <(echo "$input" | _quoted) <(echo "$output" | _quoted) \
-	    | sed 's/^/mv /g' \
-	    | sed -E 's|"[ \s\t]+"|" "|g'
+   local -r output="$(paste <(echo "$new_dirs") <(echo "$new_roms") <(echo "$new_exts" | sed 's/^/\./g') | tr -d '\t')"
+
+   paste <(echo "$input" | _quoted) <(echo "$output" | _quoted) \
+      | sed 's/^/mv /g' \
+      | sed -E 's|"[ \s\t]+"|" "|g'
 }
 
 if $rename; then
-	_rename
+   _rename
 elif $emuparadise && $list; then
-    curl "$url" \
-        | grep -Eo 'class="index gamelist" title="([^"]+)' \
-        | cut -c 31-
+   curl "$url" \
+      | grep -Eo 'class="index gamelist" title="([^"]+)' \
+      | cut -c 31-
 fi

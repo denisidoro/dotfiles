@@ -27,7 +27,7 @@ git::check_json() {
          python -mjson.tool "$file"
          exit 1
       fi
-     set -e
+      set -e
    done
 }
 

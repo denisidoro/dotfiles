@@ -4,6 +4,6 @@
   "volume_notification": 0,
   "volume_media": 0,
   "dnd": "priority",
-  "displayBrightness": 5,
-  "hapticFeedbackOn": false
+  "display_brightness": 5,
+  "haptic_feedback": false
 }

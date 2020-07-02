@@ -1,20 +1,20 @@
 {
-  "extends": "eslint:recommended",
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "script",
-    "ecmaFeatures": {
-      "jsx": false,
-      "experimentalObjectRestSpread": true
-    }
-  },
-  "env": {
-    "browser": true,
-    "node": true
-  },
-  "rules": {
-    "indent": ["error", 2],
-    "no-unused-vars": "warn",
-    "no-console": "warn"
-  }
+	"extends": "eslint:recommended",
+		"parserOptions": {
+			"ecmaVersion": 6,
+			"sourceType": "script",
+			"ecmaFeatures": {
+				"jsx": false,
+				"experimentalObjectRestSpread": true
+			}
+		},
+		"env": {
+			"browser": true,
+			"node": true
+		},
+		"rules": {
+			"indent": ["error", 2],
+			"no-unused-vars": "warn",
+			"no-console": "warn"
+		}
 }

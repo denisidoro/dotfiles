@@ -23,5 +23,5 @@ _list() {
 }
 
 case "${1:-}" in
-   list) _list;;
+   list) _list ;;
 esac

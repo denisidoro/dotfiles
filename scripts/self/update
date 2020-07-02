@@ -40,7 +40,7 @@ main() {
 
    fix_locales
 
-  set -e
+   set -e
 
    echoerr
    log::success "Update finished!"
