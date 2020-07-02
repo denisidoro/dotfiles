@@ -9,6 +9,8 @@ export DOT_ZIM=true
 
 export PATH="${WORK_BINARIES_PATH}:${PATH}"
 
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home"
+
 _load() {
    case $1 in
       nvm)

@@ -24,7 +24,7 @@ _set_colors() {
 
 _handle_wm() {
   local skip=false wm= IFS=':'
-  set -- ${line#?}
+ set -- ${line#?}
   while [ $# -gt 0 ] ; do
     item=$1
     name=${item#?}

@@ -73,3 +73,8 @@
 
 [url "git@github.com:denisidoro/"]
 	insteadOf = "my:"
+[credential]
+	helper = ""
+	helper = manager-core
+[credential "https://dev.azure.com"]
+	useHttpPath = true

@@ -40,7 +40,7 @@ main() {
 
    fix_locales
 
-   set -e
+  set -e
 
    echoerr
    log::success "Update finished!"
@@ -80,7 +80,7 @@ fix_locales() {
 # ==============================
 
 update_dotfiles() {
-   DOTLINK="${1:-unix}" dot self link set --create-dirs --verbose
+   DOTLINK="${1:-unix}" dot self linkset --create-dirs --verbose
 }
 
 update_dotfiles_common() {

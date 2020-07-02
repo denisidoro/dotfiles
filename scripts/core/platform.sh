@@ -89,29 +89,42 @@ platform::existing_command() {
 # =====================
 
 platform::get_dir() {
-   local -r first_dir="$1"
-   local -r second_dir="$2"
-   local -r useless_folder="${first_dir}/useless"
-   local folder
+   local -r dir="$1"
+
+   if [[ $# -lt 2 ]]; then
+      echo "$dir"
+      return 0
+   fi
+
+   local -r useless_folder="${dir}/useless"
    mkdir -p "$useless_folder" 2>/dev/null \
-      && folder="$first_dir" \
-      || folder="$second_dir"
-   rm -r "$useless_folder" 2>/dev/null
-   echo "$folder"
+      && rm -r "$useless_folder" 2>/dev/null \
+      && echo "$dir" \
+      && return 0
+
+   shift
+   platform::get_dir "$@"
+}
+
+platform::root_path() {
+   if [ -n "${PREFIX:-} "]; then
+      local dir="$(cd "${PREFIX}/.." && pwd)"
+      echo "$dir"
+   fi
 }
 
 platform::get_source_dir() {
    local -r proj_name="${1:-}"
-   platform::get_dir "/opt/${proj_name}" "${HOME}/.${proj_name}/src"
+   platform::get_dir "$(platform::root)/opt/${proj_name}" "${HOME}/.${proj_name}/src"
 }
 
 platform::get_bin_dir() {
-   platform::get_dir "/usr/bin" "/usr/local/bin"
+   platform::get_dir "$(platform::root)/usr/bin" "$(platform::root)/usr/local/bin" "${DOTFILES}/local/bin"
 }
 
 platform::get_tmp_dir() {
    local -r proj_name="${1:-}"
-   platform::get_dir "/tmp/${proj_name}" "${HOME}/.${proj_name}/tmp"
+   platform::get_dir "$(platform::root)/tmp/${proj_name}" "${HOME}/.${proj_name}/tmp"
 }
 
 platform::rust_compatible_variant() {

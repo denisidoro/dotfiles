@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+_code() {
+   local target="${1:-$PWD}"
+   [[ "$target" == "." ]] && target="$PWD"
+   [[ "$target" == "$HOME" ]] && echoerr "Can't open the whole home dir in VSCode" && return 1
+
+   # local full_target
+   # [[ "$target" == /* ]] && full_target="$target" || full_target="${PWD}/${target}"
+
+   # local cwd
+   # [[ -d "$full_target" ]] && cwd="$full_target" || cwd="$(dirname "$full_target")"
+
+   # export VSCODE_CWD="$cwd"
+   # export APP_ROOT="$cwd"
+
+   [[ $# -gt 0 ]] && shift
+
+   local -r osx_path="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+   if [ -f "$osx_path" ]; then
+      "$osx_path" "$target" "$@"
+   else
+      command code "$target" "$@"
+   fi
+}
+
+_code "$@"
