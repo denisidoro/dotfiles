@@ -80,7 +80,7 @@ fix_locales() {
 # ==============================
 
 update_dotfiles() {
-   DOTLINK="${1:-unix}" dot self linkset --create-dirs --verbose
+   DOTLINK="${1:-unix}" dot self link set --create-dirs --verbose
 }
 
 update_dotfiles_common() {

@@ -24,6 +24,7 @@ _files() {
 validate_reference() {
    local cmds=($(echo "$*" | tr ' ' '\n'))
    case "$*" in
+      *uber*|*work*) ;;
       *"rust call"*|*"rust run"*) ;;
       *) "${cmds[@]}" --help &>/dev/null ;;
    esac
