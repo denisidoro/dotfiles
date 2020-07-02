@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # if ${DOT_MAIN_SOURCED:-false}; then
 #    return 0

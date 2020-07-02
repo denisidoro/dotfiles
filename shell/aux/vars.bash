@@ -25,6 +25,7 @@ export LEIN_SUPPRESS_USER_LEVEL_REPO_WARNINGS=true
 
 # Golang
 export GOPATH="${DEV_HOME}/go"
+export GOBIN="${GOPATH}/bin"
 
 # package management
 export HOMEBREW_NO_AUTO_UPDATE=1
@@ -53,4 +54,4 @@ export ZDOTDIR="${ZDOTDIR:-"${HOME}/.zim"}"
 export ZIM_HOME="${ZIM_HOME:-"$ZDOTDIR"}"
 
 # PATH
-export PATH="${DOTFILES}/local/bin:${DOTFILES}/bin:${HOME}/bin:${HOME}/.cargo/bin:${VOLTA_HOME}/bin:${GO_PATH}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${PATH}"
+export PATH="${DOTFILES}/local/bin:${DOTFILES}/bin:${HOME}/bin:${HOME}/.cargo/bin:${VOLTA_HOME}/bin:${GOBIN}:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${PATH}"
