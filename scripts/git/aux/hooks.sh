@@ -87,7 +87,7 @@ git::check_aws() {
 git::check_conflict() {
    local files="$1"
 
-   for file in $(echo "$files"); do
+   for file in $files; do
       echoerr "file: $f"
       local res=$(echo "$file" | egrep '^[><=]{7}( |$)' -H -I --line-number && echo 0 || echo 1)
       if [ "$res" == 0 ]; then
