@@ -16,7 +16,7 @@ files=$(git diff-index --name-only --diff-filter=ACM --cached HEAD -- || echo ""
 
 git::check_json "$files"
 
-if git rev-parse --verify HEAD >/dev/null 2>&1; then
+if git rev-parse --verify HEAD &>/dev/null; then
    against="HEAD"
 else
    against=$(git hash-object -t tree /dev/null)
@@ -25,5 +25,7 @@ fi
 git_diff=$(git diff --cached --name-only "$against")
 existing_diff="$(echo "$git_diff" | perl -ne 'chomp(); if (-e $_) {print "$_\n"}')"
 
+echoerr "CHECKING CONFLICT:"
+echoerr "git_diff: $git_diff"
+echoerr "existing_diff: $git_diff"
 git::check_conflict "$existing_diff"
-# git::match_content "$existing_diff" "code debug" "SOME CONTENT" false

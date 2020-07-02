@@ -24,3 +24,10 @@ source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
 
 # theme
 source "${DOTFILES}/shell/themes/dns.bash"
+
+
+<<<<<<< Updated upstream
+sometest
+=======
+othertest
+>>>>>>> Stashed changes
