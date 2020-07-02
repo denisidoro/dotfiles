@@ -11,7 +11,7 @@ _valid_json() {
    local -r file="$1"
    if has jsmin; then
       cat "$file" | jsmin | jq . &>/dev/null
-   then
+   else
       cat "$file" | jq . &>/dev/null
    fi
 }
