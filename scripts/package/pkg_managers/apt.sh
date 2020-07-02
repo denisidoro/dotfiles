@@ -8,34 +8,34 @@ _apt() {
 
 apt::install() {
    local -r ask="$(dict::get "$OPTIONS" ask || false)"
-   sudo _apt install $([ ! "$ask" ] && echo "--yes") "$@"
+   _apt install $([ ! "$ask" ] && echo "--yes") "$@"
 }
 
 apt::remove() {
-   sudo _apt remove "$@"
+   _apt remove "$@"
 }
 
 apt::update() {
-   sudo _apt update "$@"
+   _apt update "$@"
 }
 
 apt::upgrade() {
    apt::update "$@" || true
-   sudo _apt upgrade "$@"
+   _apt upgrade "$@"
 }
 
 apt::clean() {
-   sudo _apt clean "$@"
+   _apt clean "$@"
 }
 
 apt::search() {
-   sudo _apt search "$@"
+   _apt search "$@"
 }
 
 apt::list() {
-   sudo _apt list "$@"
+   _apt list "$@"
 }
 
 apt::info() {
-   sudo _apt show "$@"
+   _apt show "$@"
 }

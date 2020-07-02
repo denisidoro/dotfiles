@@ -27,7 +27,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v1
       - name: Install tools
-        run: ./bin/dot pkg add jsmin jq
+        run: sudo ./bin/dot pkg add jsmin jq
       - name: Run tests
         run: ./bin/dot self test suite js
 
