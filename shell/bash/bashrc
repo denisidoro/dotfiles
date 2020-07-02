@@ -24,9 +24,3 @@ source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
 
 # theme
 source "${DOTFILES}/shell/themes/dns.bash"
-<<<<<<< Updated upstream
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-=======
-source /Users/denis.isidoro/.gradle/jv1/.gradle/caches/okbuck/buck-completion.bash
->>>>>>> Stashed changes
