@@ -69,7 +69,7 @@ mkcd() { mkdir -p -- "$@" && cd -P -- "$@"; }
 _safe_cd() { [[ -d "${1:-}" ]] && cd "$1" || echoerr "$1 doesn't exist"; }
 j() { _safe_cd "$(dot fs jump global "$@")"; }
 jj() { _safe_cd "$(dot fs jump local "$@")"; }
-ju() { _safe_cd "$(dot uber projects --clone --best local "$@")"; }
+ju() { _safe_cd "$(dot uber projects --clone local "$@")"; }
 jd() { _safe_cd "$(dot fs jump dev "$@")"; }
 jjf() { _safe_cd "$(dot fs jump file "$@")"; }
 up() { _safe_cd "$(dot fs jump up "$@")"; }

@@ -54,7 +54,7 @@ fi
 source "$file"
 
 has package::is_installed \
-   && package::is_installed \
+   && package::is_installed &>/dev/null \
    && _is_installed \
    && exit 0
 

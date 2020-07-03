@@ -53,6 +53,12 @@ if $list; then
    exit 0
 fi
 
+case "$name" in
+   "mini") dot pkg batch add "nano";;
+   "dev") dot pkg batch add "mini" ;;
+   "full") dot pkg batch add "dev" ;;
+esac
+
 if _list | xargs which &> /dev/null; then
    log::note "All dependencies already installed for the batch $name"
    exit 0
