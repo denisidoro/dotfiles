@@ -10,8 +10,9 @@ alias gmm="git merge master"
 alias gu="dot git pull module"
 alias gum="dot git pull master"
 
-# git status with tig
-alias tst="tig status"
+# tig <> lazygit (DEPRECATED)
+alias tst="lazygit"
+alias tig="lazygit"
 
 # git push upstream
 alias gpu="dot git push upstream"
