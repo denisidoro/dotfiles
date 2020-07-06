@@ -35,11 +35,16 @@ _create_file() {
    chmod +x "$filename"
 }
 
+_create_content() {
+   local -r content="#!/usr/bin/env bash
+   echo \"$(echo "Stub"; echo; echo "Usage:"; echo "    $@")\""
+}
+
 _stub_dotrs() {
    has dotrs && return 0 || true
    local -r dotrs="${DOTFILES}/target/dotrs"
    [ -f "$dotrs" ] && return 0
-   local -r content="echo \"$(echo "Stub"; echo; echo "Usage:"; echo "    dotrs")\""
+   local -r content="$(_create_content "dotrs")"
    _create_file "$content" "$dotrs"
    _create_file "$content" "${DOTFILES}/target/release/dotrs"
    _create_file "$content" "${DOTFILES}/target/debug/dotrs"
@@ -51,7 +56,7 @@ _stub_vscode() {
    has code && return 0 || true
    local -r path="${DOTFILES}/local/bin/code"
    [ -f "$path" ] && return 0
-   local -r content="echo \"$(echo "Stub"; echo; echo "Usage:"; echo "    code")\""
+   local -r content="$(_create_content "code")"
    _create_file "$content" "$path"
 }
 
