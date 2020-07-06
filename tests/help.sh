@@ -39,6 +39,10 @@ assert_help() {
    dot "$ctx" "$cmd" --help | grep -Eq 'Usage|USAGE|usage'
 }
 
+assert_help_with_retry() {
+   test::call_with_retry 2 assert_help "$@"
+}
+
 _with_eval_help() {
    grep 'eval_help' -Rl . \
       | grep -v core \
@@ -58,7 +62,7 @@ _run() {
          "shell/zsh") has zsh && test_fn=test::run || test_fn=test::skip ;;
          *) test_fn=test::run ;;
       esac
-      $test_fn "${bin} has a help command" assert_help "$bin"
+      $test_fn "${bin} has a help command" assert_help_with_retry "$bin"
    done
 
    cd "$DOTFILES/scripts"

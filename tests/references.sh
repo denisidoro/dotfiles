@@ -30,6 +30,10 @@ validate_reference() {
    esac
 }
 
+validate_reference_with_retry() {
+   test::call_with_retry 2 validate_reference "$@"
+}
+
 validate_references() {
    local -r all_pairs="$1"
    local -r file="$2"
@@ -37,7 +41,7 @@ validate_references() {
    local -r calls="$(echo "$pairs" | grep -Eo 'dot ([a-z][a-z0-9]+) ([a-z][a-z0-9-]+)' | sort -u)"
    IFS=$'\n'
    for c in $calls; do
-      if ! validate_reference "$c"; then
+      if ! validate_reference_with_retry "$c"; then
          log::error "$c isn't a valid command"
          return 1
       fi

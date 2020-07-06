@@ -107,3 +107,16 @@ test::start() {
 
    test::finish
 }
+
+test::with_sleep() {
+   sleep "$1"
+   shift
+   "$@"
+}
+
+test::call_with_retry() {
+   local -r sleep="$1"
+   local -r fn="$2"
+   shift 2
+   "$fn" "$@" | test::with_sleep $sleep "$fn" "$@"
+}
