@@ -45,6 +45,8 @@ Usage:
     $1
     $1 --version
     $1 --help"
+
+exit 0
 EOF
 }
 
