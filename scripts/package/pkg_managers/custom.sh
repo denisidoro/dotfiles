@@ -3,7 +3,7 @@
 custom::safe_call() {
    local -r fn="$1"
 
-   if platform::command_exists "$fn"; then
+   if has "$fn"; then
       "$fn"
    else
       return 42
@@ -15,7 +15,7 @@ custom::install() {
 
    local -r depend_fn="$(package::fn "$package" depends_on)"
 
-   if platform::command_exists "$depend_fn"; then
+   if has "$depend_fn"; then
       echoerr dep_fn "$depend_fn"
       local dependencies="$($depend_fn)"
       for dependency in $dependencies; do

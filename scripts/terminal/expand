@@ -7,7 +7,7 @@ source "$DOTFILES/scripts/core/main.sh"
 ##? Usage:
 ##?    expand
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 _expand() {
    local -r filename="$1"

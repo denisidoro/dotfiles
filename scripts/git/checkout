@@ -9,7 +9,7 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 ##?    checkout prompt
 ##?    checkout latest
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 prompt=false
 latest=false

@@ -19,12 +19,17 @@ _dot() {
 }
 
 clone_repo() {
-   git clone "$REPO" "$DOTFILES"
+   git clone "$REPO" "$DOTFILES" --depth 1
 }
 
 _has() {
    type "$1" &>/dev/null
 }
+
+if ! _has sudo; then
+   sudo() { "$@"; }
+   export -f sudo
+fi
 
 # Pushes the current directory to the stack
 pushd . >/dev/null
@@ -44,8 +49,10 @@ fi
 cd "$DOTFILES"
 
 # Make sure everything is up to date
-_has apt-get && sudo apt-get update || true
-_has brew && brew update || true
+if ! ${DOT_INSTALL_SKIP_UPDATE:-false}; then
+   _has apt-get && sudo apt-get update || true
+   _has brew && brew update || true
+fi
 
 # Install some key dependencies
 _dot pkg add git || true

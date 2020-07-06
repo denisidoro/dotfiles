@@ -17,8 +17,9 @@
 ##?    asset download denisidoro navi --variant osx
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/platform.sh"
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 latest_version_released() {
    curl -s "https://api.github.com/repos/${USERNAME}/${REPO}/releases/latest" \

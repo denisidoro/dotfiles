@@ -8,7 +8,7 @@ source "${DOTFILES}/scripts/download/aux/core.sh"
 ##? Usage:
 ##?    parser video [name] <filename>
 
-docs::eval "$@"
+doc::parse "$@"
 
 _remove_match() {
    local -r match="${1:-}"

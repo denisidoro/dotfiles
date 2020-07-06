@@ -7,6 +7,8 @@
 # values with non-trivial whitespaces (newlines, subsequent spaces, etc)
 # aren't handled very well
 
+source "${DOTFILES}/scripts/core/str.sh"
+
 dict::new() {
    if [ $# = 0 ]; then
       echo ""

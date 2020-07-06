@@ -9,7 +9,7 @@ source "${DOTFILES}/scripts/core/nav.sh"
 ##? Usage:
 ##?    nav [<path>]
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 s3::path() {
    local -r path="$1"

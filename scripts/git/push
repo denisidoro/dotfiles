@@ -9,11 +9,20 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 ##?    push lint <args>...
 ##?    push commit <args>...
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
+
+_should_use_arc() {
+   cd "$(git::root)"
+   cat .git/config | grep -q gitolite
+}
 
 _upstream() {
    local -r branch="$(git rev-parse --abbrev-ref HEAD)"
-   git push -u origin "$branch"
+   if _should_use_arc; then
+      arc diff
+   else
+      git push -u origin "$branch"
+   fi
 }
 
 _commit_first() {

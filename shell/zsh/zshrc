@@ -15,9 +15,15 @@ source "${DOTFILES}/shell/aux/core.bash"
 # load aliases
 source "${DOTFILES}/shell/aliases/core.bash"
 
+# load local custom config
+source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
+
 # zim
 if ${DOT_ZIM:-false}; then
+   # source ${ZIM_HOME}/login_init.zsh -q &!
+
    if [[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
+      # Update static initialization script if it's outdated, before sourcing it
       source ${ZIM_HOME}/zimfw.zsh init -q
    fi
    source ${ZIM_HOME}/init.zsh
@@ -49,6 +55,3 @@ WORDCHARS=${WORDCHARS//[\/]}
 
 # set path for completions
 fpath=("${DOTFILES}/shell/zsh/completions" $fpath)
-
-# load local custom config
-source "${DOTFILES}/local/zshrc" # 2> /dev/null || true

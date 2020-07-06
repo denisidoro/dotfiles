@@ -2,6 +2,7 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
 
 ##? ssh into known machines
 ##?
@@ -12,7 +13,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    ssh
 ##?    ssh galaxy
 
-docs::eval "$@"
+doc::parse "$@"
 
 LIST="${DOTFILES}/local/machines.json"
 

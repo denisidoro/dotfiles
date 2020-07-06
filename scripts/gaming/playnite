@@ -9,7 +9,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    playnite games
 ##?    playnite set
 
-docs::eval "$@"
+doc::parse "$@"
 
 LIBRARY_DIR="${HOME}/Downloads/library"
 

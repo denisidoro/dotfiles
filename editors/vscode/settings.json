@@ -1,5 +1,5 @@
 {
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 1,
     "editor.fontSize": 12,
     "editor.fontFamily": "Hack Nerd Font",
     "editor.letterSpacing": 0.2,
@@ -8,8 +8,8 @@
     "editor.renderWhitespace": "none",
     "files.autoSave": "onFocusChange",
     "files.trimFinalNewlines": true,
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
+    // "editor.formatOnPaste": true,
+    // "editor.formatOnSave": true,
     "editor.minimap.enabled": false,
     "editor.mouseWheelZoom": true,
     "explorer.sortOrder": "default",
@@ -70,7 +70,11 @@
         "**/vendor": true,
         "**/go-build": true,
         "bazel-*": true,
-        "pkg*": true
+        "pkg*": true,
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
     },
     "files.watcherExclude": {
         "bazel-*": true,
@@ -1425,5 +1429,9 @@
     "explorer.confirmDelete": false,
     "editor.wordWrap": "on",
     "javascript.validate.enable": false,
-    "javascript.updateImportsOnFileMove.enabled": "always"
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "java.semanticHighlighting.enabled": true,
+    "java.requirements.JDK11Warning": false
 }

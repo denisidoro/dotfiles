@@ -2,6 +2,7 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
 
 ##? Decrypts content
 ##?
@@ -17,7 +18,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    echo U2FsdG= | decrypt "foo bar" -a 0
 ##?    echo U2FsdG= | decrypt "foo bar" -a 256 -p swordfish
 
-docs::eval "$@"
+doc::parse "$@"
 
 algo_0() {
    log::error "Impossible to decrypt"

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "${DOTFILES}/scripts/core/main.sh"
+
 git::inside_work_tree() {
    git rev-parse --is-inside-work-tree >/dev/null
 }

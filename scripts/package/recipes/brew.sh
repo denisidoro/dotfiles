@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+source "${DOTFILES}/scripts/core/fs.sh"
+source "${DOTFILES}/scripts/core/platform.sh"
+
 _brew_osx() {
    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }
 
 _brew_linux() {
-   if platform::command_exists apt; then
+   if has apt; then
       sudo apt update && sudo apt-get install -y build-essential curl file git && exit 0 || true
-   elif platform::command_exists yum; then
+   elif has yum; then
       sudo yum groupinstall 'Development Tools' && sudo yum install curl file git && exit 0 || true
    fi
 
@@ -26,7 +29,7 @@ _brew_apt() {
 }
 
 recipe::is_installed() {
-   platform::command_exists brew || fs::is_dir /home/linuxbrew
+   has brew || fs::is_dir /home/linuxbrew
 }
 
 package::install() {
@@ -35,7 +38,7 @@ package::install() {
 
    if platform::is_osx; then
       _brew_osx
-   elif platform::command_exists apt; then
+   elif has apt; then
       _brew_apt || _brew_linux
    else
       _brew_linux

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "${DOTFILES}/scripts/core/dict.sh"
+
 inc() {
    local -r x="$1"
    echo $((x+1))

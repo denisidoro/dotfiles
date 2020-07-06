@@ -1,8 +1,4 @@
 # Based on https://github.com/actions-rs/meta/blob/master/recipes/quickstart.md
-#
-# While our "example" application has the platform-specific code,
-# for simplicity we are compiling and testing everything on the Ubuntu environment only.
-# For multi-OS testing see the `cross.yml` workflow.
 
 on: [push]
 
@@ -15,10 +11,8 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
-      - name: Create stubs
-        run: mkdir -p ./target; echo -e '#!/usr/bin/env bash\n\necho usage' > ./target/dotrs && chmod +x ./target/dotrs
       - name: Run tests
-        run: DOT_STUB_DOTRS=true ./bin/dot self test suite bash
+        run: DOT_STUB_DOTRS=true PROJ_HOME=$(pwd)/rust PROJ_NAME=dotrs ./bin/dot self test suite bash
 
   js-tests:
     name: Javascript
@@ -28,6 +22,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup NodeJS
         uses: actions/setup-node@v1
+      - name: Install tools
+        run: sudo ./bin/dot pkg add jsmin jq
       - name: Run tests
         run: ./bin/dot self test suite js
 
@@ -56,4 +52,21 @@ jobs:
           command: test
           working-directory: ./rust
       - name: Run tests
-        run: ./bin/dot self test suite rust
+        run: DOT_SKIP_CARGO=true ./bin/dot self test suite rust
+
+  install-tests:
+    name: Install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Cleanup
+        run: cd $HOME && for f in $(ls -a | grep '^\.'); do rm "$f" || true; done
+      - name: dot self install
+        run: EDITOR=cat TERM=dumb DOT_INSTALL_SKIP_UPDATE=true DOT_DOCOPT=python DOT_FRE=false DOT_FZF=false DOT_NAVI=false DOT_ZIM=false DOT_STARSHIP=false ./bin/dot self install
+      - name: DOTFILES bashrc
+        run: cat $HOME/.bashrc | grep DOTFILES
+      - name: DOTFILES env variable
+        run: bash -c 'source $HOME/.bashrc; env | grep DOTFILES'
+      - name: dot version
+        run: bash -c 'source $HOME/.bashrc; dot --version | grep -E '^202[0-9]\.[0-9]+\.[0-9]+$''

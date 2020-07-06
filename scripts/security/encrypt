@@ -17,12 +17,12 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    echo 123 | encrypt "foo bar" -a 0
 ##?    echo 123 | encrypt "foo bar" -a 256 -p swordfish
 
-docs::eval "$@"
+doc::parse "$@"
 
 md5_fn() {
-   if platform::command_exists md5sum; then
+   if has md5sum; then
       echo "$1" | md5sum
-   elif platform::command_exists md5; then
+   elif has md5; then
       echo "$1" | md5
    else
       echo "No md5 algorithm available"

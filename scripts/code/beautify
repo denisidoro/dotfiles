@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
- set -uo pipefail
+set -uo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
 
 ##? Source code indentation fixer
 ##?
 ##? Usage:
 ##?    beautify <filename>
 
-docs::eval "$@"
+doc::parse "$@"
 
 _get_language() {
    local -r filename="$1"
@@ -54,8 +55,8 @@ case "$language" in
    sh)
       beautysh -i 3 -s paronly "$filename"
       sed -i -e 's/() ::/::/g' "$filename"
-      shellcheck -f diff "$filename" | git apply
-      shellcheck "$filename"
+      # shellcheck -f diff "$filename" | git apply
+      # shellcheck "$filename"
       ;;
    json)
       cat "$filename" | jq . > "$filename"

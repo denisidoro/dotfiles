@@ -2,13 +2,14 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/str.sh"
 
 ##? Opens a webpage directly via DuckDuckGo's "feeling lucky"
 ##?
 ##? Usage:
 ##?    google-lucky <query>
 
-docs::eval "$@"
+doc::parse "$@"
 
 url="https://duckduckgo.com/?q=%21+$(str::urlencode "$query")&ia=web"
 dot system open "$url"

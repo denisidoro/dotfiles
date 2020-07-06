@@ -9,7 +9,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    scripting eval [<args>...]
 ##?    scripting test <folder> [<args>...]
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 cmd="$1"
 shift
@@ -22,5 +22,5 @@ _test() {
 case $cmd in
    eval) eval "$@" ;;
    test) _test "$@" ;;
-   *) docs::invalid "$cmd" "$@" ;;
+   *) doc::help_or_fail "$cmd" "$@" ;;
 esac

@@ -8,7 +8,7 @@ source "${DOTFILES}/tasker/sh/core.sh"
 ##? Usage:
 ##?    download move
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 move_old() {
    cd "/sdcard/Download"

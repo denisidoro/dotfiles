@@ -10,23 +10,21 @@ source "${DOTFILES}/scripts/core/test.sh"
 ##?    test suite <suite>
 ##?    test file <file>
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 _prepare_zsh() {
-   if ! platform::command_exists zsh; then
-      local -r bash_path="$(which bash)"
-      local -r zsh_path="$(echo "$bash_path" | sed 's/bash/zsh/')"
-      sudo ln -s "$bash_path" "$zsh_path" || sudo ln -s "$bash_path" "$zsh_path"
-   fi
+   has zsh && return 0 || true
+   local -r bash_path="$(which bash)"
+   local -r zsh_path="$(echo "$bash_path" | sed 's/bash/zsh/')"
+   sudo ln -s "$bash_path" "$zsh_path" || sudo ln -s "$bash_path" "$zsh_path"
 }
 
 _prepare_dotlink() {
    local file="${DOTFILES}/modules/dotlink/dotlink"
-   if ! [[ -f "$file" ]]; then
-      mkdir -p "$(dirname "$file")" || true
-      local content="$(cat "$0"; echo; echo; echo "dotlink_main() { echo stub; }")"
-      echo "$content" > "$file"
-   fi
+   [[ -f "$file" ]] && return 0 || true
+   mkdir -p "$(dirname "$file")" || true
+   local content="$(cat "$0"; echo; echo; echo "dotlink_main() { echo stub; }")"
+   echo "$content" > "$file"
 }
 
 _create_file() {
@@ -37,13 +35,39 @@ _create_file() {
    chmod +x "$filename"
 }
 
+_create_content() {
+   cat <<EOF
+#!/usr/bin/env bash
+
+echo "Stub
+
+Usage:
+    $1
+    $1 --version
+    $1 --help"
+
+exit 0
+EOF
+}
+
 _stub_dotrs() {
+   has dotrs && return 0 || true
    local -r dotrs="${DOTFILES}/target/dotrs"
    [ -f "$dotrs" ] && return 0
-   local -r content="echo \"$(echo "Stub"; echo; echo "Usage:"; echo "    dotrs")\""
+   local -r content="$(_create_content "dotrs")"
    _create_file "$content" "$dotrs"
    _create_file "$content" "${DOTFILES}/target/release/dotrs"
+   _create_file "$content" "${DOTFILES}/target/debug/dotrs"
    _create_file "$content" "${DOTFILES}/rust/target/release/dotrs"
+   _create_file "$content" "${DOTFILES}/rust/target/debug/dotrs"
+}
+
+_stub_vscode() {
+   has code && return 0 || true
+   local -r path="${DOTFILES}/local/bin/code"
+   [ -f "$path" ] && return 0
+   local -r content="$(_create_content "code")"
+   _create_file "$content" "$path"
 }
 
 _cargo() {
@@ -66,7 +90,10 @@ TEST_DIR="${DOTFILES}/target/test"
 mkdir -p "$TEST_DIR" 2>/dev/null || true
 _prepare_zsh 2>/dev/null || true
 _prepare_dotlink 2>/dev/null || true
+_stub_vscode 2>/dev/null || true
 ${DOT_STUB_DOTRS:-false} && _stub_dotrs 2>/dev/null || true
+export PATH="${DOTFILES}/local/bin:${PATH}"
+hash -r 2>/dev/null || true
 
 if [[ "${suite:-}" == "rust" ]]; then
    _cargo || true

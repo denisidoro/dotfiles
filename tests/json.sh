@@ -3,13 +3,17 @@
 _jsons() {
    cd "$DOTFILES"
    find . -iname "*.json" \
-      | grep -Ev 'node_modules|cache|modules/|lock.json' \
+      | grep -Ev 'node_modules|cache|modules/|rust/|target|lock.json' \
       | sed 's|\./||g'
 }
 
 _valid_json() {
-   cat "$1" \
-      | jq . &>/dev/null
+   local -r file="$1"
+   if has jsmin; then
+      cat "$file" | jsmin | jq . &>/dev/null
+   else
+      cat "$file" | jq . &>/dev/null
+   fi
 }
 
 _run() {

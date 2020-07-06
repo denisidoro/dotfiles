@@ -2,7 +2,7 @@
 set -euo pipefail
 
 package::is_installed() {
-   platform::command_exists rg
+   has rg
 }
 
 package::install() {

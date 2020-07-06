@@ -8,7 +8,7 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 ##? Usage:
 ##?    ignore
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 export GIT_GI_REPO_REMOTE=${GIT_GI_REPO_REMOTE:-https://github.com/dvcs/gitignore}
 export GIT_GI_REPO_LOCAL=${GIT_GI_REPO_LOCAL:-~/.git/gi/repos/dvcs/gitignore}

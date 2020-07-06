@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "${DOTFILES}/scripts/core/log.sh"
+
 _pairs() {
    find . \( -name .git -prune \) -o \( -name modules -prune \) -o \( -name rust -prune \) -o \( -name target -prune \)  -o -name '*' -type f \
       -exec bash -c 'x="$(grep "dot " {})"; [ -n "$x" ] && echo "$x" | sed -e "s|^|{} \+ |"' \; \
@@ -22,9 +24,14 @@ _files() {
 validate_reference() {
    local cmds=($(echo "$*" | tr ' ' '\n'))
    case "$*" in
+      *uber*|*work*) ;;
       *"rust call"*|*"rust run"*) ;;
       *) "${cmds[@]}" --help &>/dev/null ;;
    esac
+}
+
+validate_reference_with_retry() {
+   test::call_with_retry 2 validate_reference "$@"
 }
 
 validate_references() {
@@ -34,7 +41,7 @@ validate_references() {
    local -r calls="$(echo "$pairs" | grep -Eo 'dot ([a-z][a-z0-9]+) ([a-z][a-z0-9-]+)' | sort -u)"
    IFS=$'\n'
    for c in $calls; do
-      if ! validate_reference "$c"; then
+      if ! validate_reference_with_retry "$c"; then
          log::error "$c isn't a valid command"
          return 1
       fi

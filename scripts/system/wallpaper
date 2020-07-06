@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Wallpaper helpers
+##?
+##? Usage:
+##?    wallpaper [options] apod
+##?
+##? Options:
+##?    --download
+
+doc::parse "$@"
+
+apod_url() {
+   printf 'https://apod.nasa.gov/'
+   echo "$*" \
+      | grep -i '<img' \
+      | head -n1 \
+      | grep -Eo '".*?"' \
+      | tr -d '"'
+}
+
+_url() {
+   if $apod; then
+      apod_url
+   fi
+}
+
+url="$(_url)"
+
+if $download; then
+   wget "$url"
+else
+   echo "$url"
+fi

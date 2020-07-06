@@ -6,4 +6,11 @@ _cargo_test() {
 }
 
 test::set_suite "rust - cargo"
-test::run "test" _cargo_test
+
+if ${DOT_SKIP_CARGO:-false}; then
+   fn=test::skip
+else
+   fn=test::run
+fi
+
+$fn "test" _cargo_test

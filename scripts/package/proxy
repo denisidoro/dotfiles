@@ -2,6 +2,7 @@
 
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/dict.sh"
+source "${DOTFILES}/scripts/core/platform.sh"
 
 ##? Install packages
 ##?
@@ -10,7 +11,7 @@ source "${DOTFILES}/scripts/core/dict.sh"
 ##?    <pkg_manager> (uninstall|remove) [<packages>...]
 ##?    <pkg_manager> <cmd> <args>...
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 pkg_manager="$1"
 operation="$2"
@@ -29,7 +30,7 @@ platform::is_osx \
    && exit 123
 
 # unavailable package manager
-platform::command_exists "$pkg_manager" \
+has "$pkg_manager" \
    || exit 124
 
 _actual_operation() {

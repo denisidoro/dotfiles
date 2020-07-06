@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/fs.sh"
+source "${DOTFILES}/scripts/core/platform.sh"
 
-TMP_DIR="$(fs::tmp)"
+TMP_DIR="$(platform::get_tmp_dir)"
 MODULES_FOLDER="${DOTFILES}/modules"
 
 recipe::folder() {
@@ -17,7 +19,7 @@ git::url() {
    local -r git_name="$(git config user.name || echo "")"
    local -r rsa_file="$HOME/.ssh/id_rsa"
 
-   if platform::command_exists ssh && [[ -n "$git_name" ]] && [[ -f "$rsa_file" ]]; then
+   if has ssh && [[ -n "$git_name" ]] && [[ -f "$rsa_file" ]]; then
       echo "git@${host}:${user}/${repo}.git"
    else
       echo "https://${host}/${user}/${repo}"

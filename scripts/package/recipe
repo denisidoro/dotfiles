@@ -8,7 +8,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    recipe list
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 RECIPES_FOLDER="${DOTFILES}/scripts/package/recipes"
 

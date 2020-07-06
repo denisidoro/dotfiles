@@ -8,7 +8,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    images <game>
 
-docs::eval "$@"
+doc::parse "$@"
 
 best_match() {
    dot gaming igdb api "games" "search \"${game}\"; fields name, id, artworks.url, screenshots.url, cover.url;" \

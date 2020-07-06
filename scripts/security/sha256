@@ -11,14 +11,14 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Examples:
 ##?    echo 123 | sha256
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 sha256() {
-   if platform::command_exists sha256sum; then
+   if has sha256sum; then
       sha256sum "$@"
-   elif platform::command_exists shasum; then
+   elif has shasum; then
       shasum -a 256 "$@"
-   elif platform::command_exists openssl; then
+   elif has openssl; then
       openssl dgst -sha256 "$@"
    else
       echoerr "Unable to calculate sha256!"

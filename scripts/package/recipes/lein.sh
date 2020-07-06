@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+source "${DOTFILES}/scripts/core/platform.sh"
+
 package::install() {
    dot pkg add --prevent-recipe leiningen \
       || dot pkg add --prevent-recipe lein \
@@ -16,5 +18,5 @@ package::install() {
    url="https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein"
    wget "$url" -O lein
    chmod a+x lein
-   sudo mv lein "$(fs::bin)/lein"
+   sudo mv lein "$(platform::get_bin_dir)/lein"
 }

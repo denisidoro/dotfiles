@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/documentation.sh"
+source "${DOTFILES}/scripts/core/main.sh"
 
 ##? Use current path as argument if none is specified
 ##
@@ -12,7 +12,7 @@ source "${DOTFILES}/scripts/core/documentation.sh"
 ##?     dashed ls -la
 ##?     dashed ls -la -- somefolder
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 indexof() {
    local -r index="$1"
@@ -33,9 +33,9 @@ dot_or_args() {
    readonly fn="${@:1:$((dash_index-1))}"
    shift $dash_index
    if [[ $# -lt 1 ]]; then
-      "${fn[@]}" .
+      ${fn[@]} .
    else
-      "${fn[@]}" "$@"
+      ${fn[@]} "$@"
    fi
 }
 

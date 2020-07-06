@@ -2,6 +2,7 @@
 set -eo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/str.sh"
 
 ##? Color
 ##?
@@ -10,7 +11,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    color hex <r> <g> <b>
 ##?    color rgb <hex>
 
-docs::eval_help "$@"
+doc::maybe_help "$@"
 
 _row() {
    for i in $(seq 1 $cols); do

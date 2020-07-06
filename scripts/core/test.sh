@@ -5,6 +5,7 @@ export FORCE_GNU=true
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/coll.sh"
 source "${DOTFILES}/scripts/core/dict.sh"
+source "${DOTFILES}/scripts/core/log.sh"
 
 PASSED=0
 FAILED=0
@@ -105,4 +106,17 @@ test::start() {
    done
 
    test::finish
+}
+
+test::with_sleep() {
+   sleep "$1"
+   shift
+   "$@"
+}
+
+test::call_with_retry() {
+   local -r sleep="$1"
+   local -r fn="$2"
+   shift 2
+   "$fn" "$@" || test::with_sleep $sleep "$fn" "$@"
 }

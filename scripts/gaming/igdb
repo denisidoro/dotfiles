@@ -8,7 +8,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Usage:
 ##?    igdb api <endpoint> <query>
 
-docs::eval "$@"
+doc::parse "$@"
 
 api_call() {
    local -r endpoint="$1"

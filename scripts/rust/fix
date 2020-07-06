@@ -8,7 +8,7 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/rust/aux/proj.sh"
 
-docs::eval "$@"
+doc::parse "$@"
 
 cd "$PROJ_HOME"
 

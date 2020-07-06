@@ -1,13 +1,15 @@
 #!/usr/bin/env zsh
 
-export DOT_DOCOPT="python"
-export DOT_FZF=true
-export DOT_NAVI=true
-export DOT_FRE=true
-export DOT_STARSHIP=true
-export DOT_ZIM=true
+export DOT_DOCOPT=${DOT_DOCOPT:-"python"}
+export DOT_FZF=${DOT_FZF:-true}
+export DOT_NAVI=${DOT_NAVI:-true}
+export DOT_FRE=${DOT_FRE:-true}
+export DOT_STARSHIP=${DOT_STARSHIP:-true}
+export DOT_ZIM=${DOT_ZIM:-true}
 
 export PATH="${WORK_BINARIES_PATH}:${PATH}"
+
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home"
 
 _load() {
    case $1 in

@@ -1,5 +1,7 @@
 export DOTFILES="${DOTFILES:-/sdcard/dotfiles}"
 source "${DOTFILES}/tasker/sh/core.sh"
+source "${DOTFILES}/scripts/core/str.sh"
+source "${DOTFILES}/scripts/core/coll.sh"
 
 ## Wifi helpers
 ##

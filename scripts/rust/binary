@@ -16,7 +16,7 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/rust/aux/proj.sh"
 
-docs::eval "$@"
+doc::parse "$@"
 
 _target() {
    target="${1:-}"

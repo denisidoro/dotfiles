@@ -5,22 +5,9 @@
 ##? Usage:
 ##?    diff list
 
-source "${DOTFILES}/scripts/core/documentation.sh"
+source "${DOTFILES}/scripts/core/main.sh"
 
-docs::eval_help "$@"
-
-_list0() {
-   arc --ansi feature \
-      | sed -E 's/\*? ?([^ ]+)(.*)(D[0-9]+):(.*)/\1|\2|\3|\4/' \
-      | awk -F'|' 'BEGIN{OFS="|"}
-
-      function ltrim(s) { sub(/^[ \t\r\n]+/, "", s); return s }
-      function rtrim(s) { sub(/[ \t\r\n]+$/, "", s); return s }
-      function trim(s) { return rtrim(ltrim(s)); }
-
-   { branch = $1; id = $3; $1 = "\033[34m"id"\033[0m"; $2 = trim($2); $3 = trim(branch); $4 = "\033[37m"trim($4)"\033[0m"; print; }' \
-      | column -t -s'|'
-}
+doc::maybe_help "$@"
 
 _list() {
    arc --ansi list \

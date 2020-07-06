@@ -11,7 +11,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Options:
 ##?    --no-rust          Skip rust lints
 
-docs::eval "$@"
+doc::parse "$@"
 
 _all_dotfiles_files() {
    find "${DOTFILES}/scripts" -maxdepth 3 -executable -type f

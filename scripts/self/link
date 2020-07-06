@@ -8,7 +8,7 @@
 export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)}"
 export DOT_REPO="https://github.com/denisidoro/dotfiles.git"
 export DOT_DIR="$DOTFILES"
-export DOT_LINK="${DOTFILES}/links/${DOTLINK:-"unix"}.yaml"
+export DOT_LINK="${DOTFILES}/links/${DOTLINK:-"unix"}.csv"
 
 source "${DOTFILES}/modules/dotlink/dotlink"
 

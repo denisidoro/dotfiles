@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
 source "${DOTFILES}/scripts/core/git.sh"
 
 git_pager=$(git config core.pager || echo 'less')

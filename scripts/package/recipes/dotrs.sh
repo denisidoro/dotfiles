@@ -8,7 +8,7 @@ package::is_installed() {
 package::install() {
    cd "${DOTFILES}/rust"
 
-   if platform::command_exists cargo; then
+   if has cargo; then
       dot rust binary build
       dot rust binary symlink
    else

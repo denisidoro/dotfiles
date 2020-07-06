@@ -1,7 +1,5 @@
 #!/usr/bin/env zsh
 
-source "$DOTFILES/scripts/core/documentation.sh"
-
 ##? ZSH helpers
 ##?
 ##? Usage:
@@ -9,24 +7,9 @@ source "$DOTFILES/scripts/core/documentation.sh"
 ##?    zsh benchmark            # Print the current ZSH performance
 ##?    zsh reload-completions   # Reload completions
 
-docs::eval_help "$@"
-
-_expand() {
-   local -r filename="$1"
-
-   while read line; do
-      if [[ "$line" =~ (source)\s+.+ ]]; then
-         file="$(echo $line | cut -d' ' -f2)"
-         echo "line: $line" 1>&2
-         echo "file: $file" 1>&2
-         file="$(eval echo "$file")"
-         echo "file2: $file" 1>&2
-         # echo "$(cat $file)"
-      else
-         echo "$line"
-         :
-      fi
-   done < "$filename"
+_benchmark() {
+   env | grep "DOT_"
+   hyperfine '/usr/bin/time /bin/zsh -i -c exit' --warmup 1
 }
 
 case "${1:-}" in
@@ -35,13 +18,14 @@ case "${1:-}" in
       echo "👌 Done!"
       ;;
    *perf*|bench*)
-      hyperfine '/usr/bin/time /bin/zsh -i -c exit' --warmup 1 \
-         || for i in $(seq 1 10); do /usr/bin/time /bin/zsh -i -c exit; done
+      DOT_ZIM=false _benchmark
+      _benchmark
       ;;
    *comp*)
       zsh -c "autoload -U compaudit && compinit"
       ;;
    *)
-      docs::eval_help --help
+      source "$DOTFILES/scripts/core/main.sh"
+      doc::maybe_help --help
       ;;
 esac

@@ -1,0 +1,10 @@
+{
+  "type": 2,
+  "priority": 95,
+  "displayBrightness": 5,
+  "hapticFeedbackOn": false,
+  "wifi": false,
+  "mobile_data": false,
+  "dark_mode": true,
+  "bluetooth": false
+}

@@ -11,7 +11,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Examples:
 ##?    file ./foo.txt
 
-docs::eval "$@"
+doc::parse "$@"
 
 transfer() {
    local path="$1"
