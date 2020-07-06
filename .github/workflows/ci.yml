@@ -1,8 +1,4 @@
 # Based on https://github.com/actions-rs/meta/blob/master/recipes/quickstart.md
-#
-# While our "example" application has the platform-specific code,
-# for simplicity we are compiling and testing everything on the Ubuntu environment only.
-# For multi-OS testing see the `cross.yml` workflow.
 
 on: [push]
 
@@ -68,5 +64,7 @@ jobs:
         run: cd $HOME && for f in $(ls -a | grep '^\.'); do rm "$f" || true; done
       - name: dot self install
         run: EDITOR=cat TERM=dumb DOT_INSTALL_SKIP_UPDATE=true DOT_DOCOPT=python DOT_FRE=false DOT_FZF=false DOT_NAVI=false DOT_ZIM=false DOT_STARSHIP=false ./bin/dot self install
+      - name: DOTFILES env variable
+        run: bash -c 'env | grep DOTFILES'
       - name: dot version
-        run: source $HOME/.bashrc && dot --version | grep "$(date +'%Y')" 
+        run: bash -c 'dot --version | grep -E '^202[0-9]\.[0-9]+\.[0-9]+$''
