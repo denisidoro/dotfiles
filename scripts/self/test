@@ -36,8 +36,16 @@ _create_file() {
 }
 
 _create_content() {
-   local -r content="#!/usr/bin/env bash
-   echo \"$(echo "Stub"; echo; echo "Usage:"; echo "    $@")\""
+   cat <<EOF
+#!/usr/bin/env bash
+
+echo "Stub
+
+Usage:
+    $1
+    $1 --version
+    $1 --help"
+EOF
 }
 
 _stub_dotrs() {
