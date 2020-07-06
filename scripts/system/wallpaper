@@ -22,15 +22,15 @@ apod_url() {
 }
 
 _url() {
-    if $apod; then
-        apod_url
-    fi
+   if $apod; then
+      apod_url
+   fi
 }
 
 url="$(_url)"
 
 if $download; then
-    wget "$url"
+   wget "$url"
 else
-    echo "$url"
+   echo "$url"
 fi

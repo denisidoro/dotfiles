@@ -54,7 +54,7 @@ if $list; then
 fi
 
 case "$name" in
-   "mini") dot pkg batch add "nano";;
+   "mini") dot pkg batch add "nano" ;;
    "dev") dot pkg batch add "mini" ;;
    "full") dot pkg batch add "dev" ;;
 esac
