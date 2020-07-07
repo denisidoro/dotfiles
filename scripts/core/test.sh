@@ -43,12 +43,30 @@ test::skip() {
    return
 }
 
+_with_sleep() {
+   sleep "$1"
+   shift
+   "$@"
+}
+
 test::run() {
    test::filter_check || return 0
    echo
    log::note "${SUITE:-unknown} - ${1:-unknown}"
    shift
    "$@" && test::success || test::fail
+}
+
+test::run_with_retry() {
+   local -r name="$1"
+   local -r fn="$2"
+   shift 2
+
+   new_test_fn() {
+      "$fn" "$@" || _with_sleep 2 "$fn" "$@"
+   }
+
+   test::run "$name" new_test_fn "$@"
 }
 
 test::lazy_run() {
@@ -106,17 +124,4 @@ test::start() {
    done
 
    test::finish
-}
-
-test::with_sleep() {
-   sleep "$1"
-   shift
-   "$@"
-}
-
-test::call_with_retry() {
-   local -r sleep="$1"
-   local -r fn="$2"
-   shift 2
-   "$fn" "$@" || test::with_sleep $sleep "$fn" "$@"
 }

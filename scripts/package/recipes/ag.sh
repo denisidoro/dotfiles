@@ -7,5 +7,5 @@ package::install() {
    has brew && brew install the_silver_searcher && return 0 || true
 
    dot pkg add git
-   recipe::install_from_git "https://github.com/ggreer/the_silver_searcher"
+   recipe::install_from_git "ggreer/the_silver_searcher"
 }
