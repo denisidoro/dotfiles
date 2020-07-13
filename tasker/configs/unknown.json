@@ -1,6 +1,6 @@
 {
   "type": 1,
-  "priority": 5,
+  "priority": 55,
   "volume_notification": 1,
   "volume_media": 2,
   "dnd": "all",

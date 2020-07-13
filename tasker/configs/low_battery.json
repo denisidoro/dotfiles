@@ -1,8 +1,8 @@
 {
   "type": 2,
-  "priority": 95,
-  "displayBrightness": 5,
-  "hapticFeedbackOn": false,
+  "priority": 92,
+  "display_brightness": 5,
+  "haptic_feedback": false,
   "wifi": false,
   "mobile_data": false,
   "dark_mode": true,

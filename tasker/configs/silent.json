@@ -1,6 +1,6 @@
 {
   "type": 2,
-  "priority": 95,
+  "priority": 90,
   "volume_notification": 0,
   "volume_media": 0,
   "volume_media_override": false,

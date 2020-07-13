@@ -6,6 +6,12 @@ echo <foo> <bar>
 # env var
 echo <dependent>
 
+# printf percentage
+printf '%s' 'hi foo'
+
+# date percentage
+printf "$(date +%Y)"
+
 # Update submodule reference
 echo git add <submodule> && echo git commit -m "Update submodule: <submodule_name>"
 

@@ -4,7 +4,7 @@ function main() {
     const DEFAULT_CONTEXT = global('Modes_DefaultContext') || 'base';
 
     let contexts = global('Modes_Contexts').split(',').filter(c => { return (c !== '') });
-    let previousContexts = global('Modes_ActiveContexts').split(',').filter(c => { return (c !== '') });
+    let previousContexts = contexts; // global('Modes_ActiveContexts').split(',').filter(c => { return (c !== '') });
 
     // Filter down to only configs in %Modes_Contexts
     let configs = ALL_CONFIGS.filter(c => { return contexts.indexOf(c.name) > -1 });
@@ -24,8 +24,7 @@ function main() {
     let newContexts = missingItems(activeContexts, previousContexts);
     let inactivatedContexts = missingItems(previousContexts, activeContexts);
 
-
-if (newContexts.length == 0 && inactivatedContexts.length == 0) exit()
+    if (newContexts.length == 0 && inactivatedContexts.length == 0) exit()
 
     // Perform exit parameters for inactivated contexts
     ALL_CONFIGS
@@ -44,18 +43,18 @@ if (newContexts.length == 0 && inactivatedContexts.length == 0) exit()
         }
       });
 
-    const MERGEABLE_KEYS = ['name', 'type', 'priority', 'enter', 'exit'];
+    const UNMERGEABLE_KEYS = ['name', 'type', 'priority', 'enter', 'exit'];
 
     // Merge active context's settings
     let merged = {};
     if (primaryContext) {
       Object.keys(primaryContext).forEach(key => {
-        if (MERGEABLE_KEYS.indexOf(key) === -1 && primaryContext[key] !== null) merged[key] = primaryContext[key];
+        if (UNMERGEABLE_KEYS.indexOf(key) === -1 && primaryContext[key] !== null) merged[key] = primaryContext[key];
       });
     }
     secondaryContexts.forEach(context => {
       Object.keys(context).forEach(key => {
-        if (MERGEABLE_KEYS.indexOf(key) === -1 && context[key] !== null) merged[key] = context[key];
+        if (UNMERGEABLE_KEYS.indexOf(key) === -1 && context[key] !== null) merged[key] = context[key];
       });
     });
 
@@ -93,8 +92,8 @@ if (newContexts.length == 0 && inactivatedContexts.length == 0) exit()
         }
       });
 
-    flash((newContexts.length > 0 ? 'New context(s): ' + newContexts.join(', ') : 'Active Context(s): ' + activeContexts.join(', ')));
-    setGlobal('Modes_ActiveContexts', activeContexts.join(','));
+    // flash((newContexts.length > 0 ? 'New context(s): ' + newContexts.join(', ') : 'Active Context(s): ' + activeContexts.join(', ')));
+    // setGlobal('Modes_ActiveContexts', activeContexts.join(','));
 }
 
 function readConfigs(config_path) {
