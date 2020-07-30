@@ -33,3 +33,15 @@ $ port: echo '80 81 82' | tr ' ' '\n'
 $ submodule: git diff --submodule=diff | awk '{ print $2 }'
 $ submodule_name: echo "$((submodule))" | sed 's/.*\///'
 $ dependent: echo "hello $base,hi $base" | tr ',' '\n'
+
+; example.cheat
+% example
+
+# the 1st cmd
+git xxx
+
+# the 2nd cmd
+git yyyyyyyyyyyyyyyyy
+
+# the 3th cmd
+git zzzzzzz

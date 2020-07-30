@@ -47,6 +47,7 @@ yabai -m config window_gap                   10
 # yabai -m rule --add app="Alacritty" manage=off border=off
 yabai -m rule --add app="Chrome" space=^1
 yabai -m rule --add app="Alacritty" space=^2
+yabai -m rule --add app="iTerm" space=^2
 yabai -m rule --add app="Code" space=^3
 yabai -m rule --add app="Spotify" space=^7
 yabai -m rule --add app="Slack" space=^8

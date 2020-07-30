@@ -1,7 +1,7 @@
 {
     "window.zoomLevel": 1,
     "editor.fontSize": 12,
-    "editor.fontFamily": "Hack Nerd Font",
+    // "editor.fontFamily": "Hack Nerd Font",
     "editor.letterSpacing": 0.2,
     "editor.lineHeight": 18,
     "editor.renderControlCharacters": true,
