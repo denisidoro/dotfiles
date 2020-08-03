@@ -59,7 +59,8 @@ case "$name" in
    "full") dot pkg batch add "dev" ;;
 esac
 
-if _list | xargs which &> /dev/null; then
+packages=($(_list))
+if dot pkg check "${packages[@]}" &> /dev/null; then
    log::note "All dependencies already installed for the batch $name"
    exit 0
 fi

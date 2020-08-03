@@ -30,22 +30,29 @@ if [ $# -gt 1 ]; then
    exit "$pkg_failures"
 fi
 
-log::is_installed() {
-   log::success "${package} is already installed"
+exit::is_installed() {
+   log::success "${package} is installed"
+   exit 0
+}
+
+exit::isnt_installed() {
+   log::error "${package} isn't installed"
+   exit 234
 }
 
 package="$(pkg::alias "$1" "$prevent_recipe")"
-has "$package" && log::is_installed && exit 0
+has "$package" && exit::is_installed
 
 file="$(pkg::source_file "$package")"
 
 if $prevent_recipe || ! [ -f "$file" ]; then
-   exit 234
+   exit::isnt_installed   
 fi
 
 source "$file"
 
-has package::is_installed \
-   && package::is_installed &>/dev/null \
-   && log::is_installed \
-   && exit 0
+if has package::is_installed && package::is_installed &>/dev/null; then
+   exit::is_installed
+else
+   exit::isnt_installed
+fi

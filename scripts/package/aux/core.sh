@@ -28,6 +28,7 @@ pkg::alias() {
       space-vim) echo "spacevim" ;;
       clj) echo "clojure" ;;
       vipe) echo "moreutils" ;;
+      tldr) echo "tealdeer" ;;
       *) echo "$pkg" ;;
    esac
 }

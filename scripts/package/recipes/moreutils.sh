@@ -2,11 +2,9 @@
 set -euo pipefail
 
 package::is_installed() {
-   return 1
+    has vipe
 }
 
 package::install() {
-   dot pkg add zim
-
-   zsh -c 'source $HOME/.zshrc; zimfw install'
+   dot pkg add --prevent-recipe moreutils
 }
