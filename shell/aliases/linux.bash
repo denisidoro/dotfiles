@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
 
-open() {
-   dot system open "$@"
-}
-
-pbcopy() {
-   dot system clip copy
-}
-
-pbpaste() {
-   dot system clip paste
-}
+alias open='dot system open'
+alias pbcopy='dot system clip copy'
+alias pbpaste='dot system clip paste'

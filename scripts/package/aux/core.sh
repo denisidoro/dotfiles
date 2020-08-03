@@ -25,6 +25,7 @@ pkg::alias() {
       skim) echo "fzf" ;;
       leiningen) echo "lein" ;;
       ripgrep) echo "rg" ;;
+      neovim) echo "nvim" ;;
       space-vim) echo "spacevim" ;;
       clj) echo "clojure" ;;
       vipe) echo "moreutils" ;;
