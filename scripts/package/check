@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
+source "${DOTFILES}/scripts/package/aux/core.sh"
+
+##? Check if packages are installed
+##?
+##? Usage:
+##?    add [options] [<packages>...]
+##?
+##? Options:
+##?    --prevent-recipe
+
+doc::maybe_help "$@"
+
+if [[ "$1" == "--prevent-recipe" ]]; then
+   prevent_recipe=true
+   shift
+else
+   prevent_recipe=false
+fi
+
+if [ $# -gt 1 ]; then
+   pkg_failures=0
+   for package in "$@"; do
+      dot pkg check $($prevent_recipe && printf %s '--prevent-recipe') "$package" || pkg_failures=$((pkg_failures+1))
+   done
+   exit "$pkg_failures"
+fi
+
+log::is_installed() {
+   log::success "${package} is already installed"
+}
+
+package="$(pkg::alias "$1" "$prevent_recipe")"
+has "$package" && log::is_installed && exit 0
+
+file="$(pkg::source_file "$package")"
+
+if $prevent_recipe || ! [ -f "$file" ]; then
+   exit 234
+fi
+
+source "$file"
+
+has package::is_installed \
+   && package::is_installed &>/dev/null \
+   && log::is_installed \
+   && exit 0
