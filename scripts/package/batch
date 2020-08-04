@@ -4,6 +4,7 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/log.sh"
 source "${DOTFILES}/scripts/core/feedback.sh"
+source "${DOTFILES}/scripts/core/ini.sh"
 
 ##? Install multiple dependencies
 ##?
@@ -25,12 +26,7 @@ DEP_LIST_FILE="${DOTFILES}/scripts/package/aux/dependencies.ini"
 batch::dependencies() {
    local -r name="$1"
 
-   for key in "$@"; do
-      cat "$DEP_LIST_FILE" \
-         | grep -A999 "\[${name}\].*" \
-         | sed '/^ *$/q' \
-         | tail -n +2
-   done
+   cat "$DEP_LIST_FILE" | ini::get "$name"
 }
 
 # input parsing

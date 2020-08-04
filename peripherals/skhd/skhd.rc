@@ -4,9 +4,12 @@
 
 :: default : yabai -m config active_window_border_color 0xFF00BFFF
 :: grab : yabai -m config active_window_border_color 0xffff1493
+:: mark : yabai -m config active_window_border_color 0xffc4fb6d
 
 alt + cmd + ctrl + shift - g ; grab
+alt + cmd + ctrl + shift - b ; mark
 grab < escape ; default
+mark < escape ; default
 
 # =================
 # Application
@@ -15,6 +18,17 @@ grab < escape ; default
 # launch terminal
 alt + cmd + ctrl + shift - return : open -na /Applications/iTerm.app
 alt + cmd + ctrl + shift - a : open -na /Applications/Alacritty.app
+
+# =================
+# Bookmarks
+# =================
+
+mark < m : $HOME/dotfiles/bin/dot url mark mail
+mark < shift - m : $HOME/dotfiles/bin/dot url mark mail work
+mark < c : $HOME/dotfiles/bin/dot url mark calendar
+mark < shift - c : $HOME/dotfiles/bin/dot url mark calendar work
+mark < k : $HOME/dotfiles/bin/dot url mark keep
+mark < t : $HOME/dotfiles/bin/dot url mark test
 
 # =================
 # Power

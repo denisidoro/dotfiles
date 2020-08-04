@@ -42,8 +42,7 @@ file="$(pkg::source_file "$package")"
 
 if $prevent_recipe || ! [ -f "$file" ]; then
    _log::installing
-   # for pkg_mgr in apt apk pkg yum dnf port emerge pacman brew pnpm yarn npm pip; do
-   for pkg_mgr in apt apk pkg yum dnf port emerge pacman brew; do
+   for pkg_mgr in apt apk pkg yum dnf port emerge pacman brew pnpm yarn npm pip; do
       dot pkg proxy $pkg_mgr add "$package" && exit 0 || true
    done
    exit 234

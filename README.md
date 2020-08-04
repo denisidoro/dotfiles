@@ -32,6 +32,8 @@ $HOME/dotfiles/bin/dot self install
 ```
 
 ## Calling scripts
+
+There's a single entry point for almost all scripts, which is the `dot` command:
 ```bash
 dot <ctx> <cmd> [<args>...] # example: dot rice pipes
 ```
@@ -64,6 +66,6 @@ vi $DOTFILES/local/gitconfig
 ```
 
 ## Inspiration
- * [Tuurlijk/dotfiles](https://github.com/Tuurlijk/dotfiles): zsh startup snappiness
  * [rgomezcasas/dotfiles](https://github.com/rgomezcasas/dotfiles): README, some scripts and fine-tuning
+ * [Tuurlijk/dotfiles](https://github.com/Tuurlijk/dotfiles): zsh startup snappiness
  * [wfxr/forgit](https://github.com/wfxr/forgit): some git scripts
