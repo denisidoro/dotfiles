@@ -20,21 +20,35 @@
   <a href="docs">Docs</a>
 </p>
 
-## Installation
+## Minimum installation
+
+If you only want to call scripts and to have the configs available locally:
 
 ```bash
 # with homebrew or linuxbrew
 brew install denisidoro/tools/dotfiles
-dot self install # only if you want to use my .bashrc and other configs
 
 # with git
 git clone https://github.com/denisidoro/dotfiles $HOME/dotfiles
-$HOME/dotfiles/bin/dot self install # only if you want to use my .bashrc and other configs
 ```
+
+## Full installation
+
+If you want to apply all dotfiles such as `.bashrc`, first proceed with the minimum installation then:
+
+```bash
+# with homebrew or linuxbrew
+dot self install
+
+# with git
+$HOME/dotfiles/bin/dot self install
+```
+
+:warning: It's recommended to backup your configs first.
 
 ## Calling scripts
 
-There's a single entry point for almost all scripts, which is the `dot` command:
+There's a single entry point for most scripts, which is the `dot` command:
 ```bash
 dot <ctx> <cmd> [<args>...] # example: dot rice pipes
 ```
