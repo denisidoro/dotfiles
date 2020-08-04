@@ -22,12 +22,6 @@ alias reload='source ~/.zshrc' # env -i zsh
 alias map='xargs -I%'
 
 # ========================
-# work
-# ========================
-alias ph='dot uber projects alias phabricator'
-alias sg='dot uber projects alias sourcegraph'
-
-# ========================
 # editors
 # ========================
 alias vim='nvim'
@@ -66,16 +60,20 @@ alias lst="tree -L 2"
 cdd() { cd "$@" && ls .; }
 mkcd() { mkdir -p -- "$@" && cd -P -- "$@"; }
 
-_safe_cd() { [[ -d "${1:-}" ]] && cd "$1" || echoerr "$1 doesn't exist"; }
+_safe_cd() { 
+    [[ -z "${1:-}" ]] && return 1 || true
+    [[ -d "${1:-}" ]] && cd "$1" || echoerr "$1 doesn't exist"
+}
+
 j() { _safe_cd "$(dot fs jump global "$@")"; }
 jj() { _safe_cd "$(dot fs jump local "$@")"; }
 ju() { _safe_cd "$(dot uber projects --clone local "$@")"; }
 jd() { _safe_cd "$(dot fs jump dev "$@")"; }
 jjf() { _safe_cd "$(dot fs jump file "$@")"; }
-up() { _safe_cd "$(dot fs jump up "$@")"; }
 jr() { _safe_cd "$(dot fs jump root "$@")"; }
 jr() { _safe_cd "$(dot fs jump root "$@")"; }
 fdd() { _safe_cd "$(dot fs nav "$@")"; }
+up() { _safe_cd "$(dot fs jump up "$@")"; }
 alias jv="dot fs jump edit global nvim"
 alias jjv="dot fs jump edit local nvim"
 alias js="dot fs jump edit global code"

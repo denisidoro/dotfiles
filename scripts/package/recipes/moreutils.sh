@@ -2,9 +2,9 @@
 set -euo pipefail
 
 package::is_installed() {
-   has rg
+    has vipe
 }
 
 package::install() {
-   dot pkg add --prevent-recipe ripgrep
+   dot pkg add --prevent-recipe moreutils
 }

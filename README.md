@@ -24,6 +24,7 @@
 ```bash
 # with homebrew or linuxbrew
 brew install denisidoro/tools/dotfiles
+dot self install
 
 # with git
 git clone https://github.com/denisidoro/dotfiles $HOME/dotfiles
@@ -31,6 +32,8 @@ $HOME/dotfiles/bin/dot self install
 ```
 
 ## Calling scripts
+
+There's a single entry point for almost all scripts, which is the `dot` command:
 ```bash
 dot <ctx> <cmd> [<args>...] # example: dot rice pipes
 ```
@@ -45,8 +48,10 @@ dot <ctx> <cmd> --help # example: dot rice pipes --help
 ## Shell startup performance
 
 ```bash
-λ dot shell zsh test-performance
-0.08 real         0.03 user         0.03 sys
+$ dot shell zsh benchmark
+Benchmark #1: /usr/bin/time /bin/zsh -i -c exit
+  Time (mean ± σ):      35.6 ms ±   3.0 ms    [User: 14.0 ms, System: 16.0 ms]
+  Range (min … max):    32.7 ms …  48.8 ms    67 runs
 ```
 
 ## Overriding configs
@@ -54,13 +59,13 @@ dot <ctx> <cmd> --help # example: dot rice pipes --help
 Edit the following files accordingly:
 ```bash
 # shell
-~/.dotfiles/local/zshrc
+vi $DOTFILES/local/zshrc
 
 # git
-~/.dotfiles/local/gitconfig
+vi $DOTFILES/local/gitconfig
 ```
 
 ## Inspiration
- * [Tuurlijk/dotfiles](https://github.com/Tuurlijk/dotfiles): zsh startup snappiness
  * [rgomezcasas/dotfiles](https://github.com/rgomezcasas/dotfiles): README, some scripts and fine-tuning
+ * [Tuurlijk/dotfiles](https://github.com/Tuurlijk/dotfiles): zsh startup snappiness
  * [wfxr/forgit](https://github.com/wfxr/forgit): some git scripts

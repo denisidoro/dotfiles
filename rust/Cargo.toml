@@ -1,6 +1,6 @@
 [package]
 name = "dotrs"
-version = "2020.6.16"
+version = "2020.8.6"
 authors = ["Denis Isidoro <denis_isidoro@live.com>"]
 edition = "2018"
 description = "Awesome personal dotfiles"

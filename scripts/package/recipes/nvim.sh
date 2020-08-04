@@ -4,7 +4,7 @@ set -euo pipefail
 source "${DOTFILES}/scripts/core/platform.sh"
 
 package::install() {
-   dot pkg add neovim && return 0 || true
+   dot pkg add --prevent-recipe neovim && return 0 || true
    dot pkg add --prevent-recipe nvim && return 0 || true
 
    dot pkg add curl
