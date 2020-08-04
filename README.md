@@ -84,3 +84,4 @@ vi $DOTFILES/local/gitconfig
  * [rgomezcasas/dotfiles](https://github.com/rgomezcasas/dotfiles): README, some scripts and fine-tuning
  * [Tuurlijk/dotfiles](https://github.com/Tuurlijk/dotfiles): zsh startup snappiness
  * [wfxr/forgit](https://github.com/wfxr/forgit): some git scripts
+ * [jhotmann/tasker-phone-modes](https://github.com/jhotmann/tasker-phone-modes): Tasker profile framework
