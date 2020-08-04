@@ -21,14 +21,15 @@
 </p>
 
 ## Installation
+
 ```bash
 # with homebrew or linuxbrew
 brew install denisidoro/tools/dotfiles
-dot self install
+dot self install # only if you want to use my .bashrc and other configs
 
 # with git
 git clone https://github.com/denisidoro/dotfiles $HOME/dotfiles
-$HOME/dotfiles/bin/dot self install
+$HOME/dotfiles/bin/dot self install # only if you want to use my .bashrc and other configs
 ```
 
 ## Calling scripts
