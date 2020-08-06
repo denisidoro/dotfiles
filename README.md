@@ -20,7 +20,7 @@
   <a href="docs">Docs</a>
 </p>
 
-## Minimum installation
+## Minimal installation
 
 If you only want to call scripts and to have the configs available locally:
 
