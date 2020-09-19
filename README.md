@@ -20,7 +20,10 @@
   <a href="docs">Docs</a>
 </p>
 
-## Installation
+## Minimal installation
+
+If you only want to call scripts and to have the configs available locally:
+
 ```bash
 # with homebrew or linuxbrew
 brew install denisidoro/tools/dotfiles
@@ -28,12 +31,25 @@ dot self install
 
 # with git
 git clone https://github.com/denisidoro/dotfiles $HOME/dotfiles
+```
+
+## Full installation
+
+If you want to apply all dotfiles such as `.bashrc`, first proceed with the minimum installation then:
+
+```bash
+# with homebrew or linuxbrew
+dot self install
+
+# with git
 $HOME/dotfiles/bin/dot self install
 ```
 
+:warning: It's recommended to backup your configs first.
+
 ## Calling scripts
 
-There's a single entry point for almost all scripts, which is the `dot` command:
+There's a single entry point for most scripts, which is the `dot` command:
 ```bash
 dot <ctx> <cmd> [<args>...] # example: dot rice pipes
 ```
@@ -69,3 +85,4 @@ vi $DOTFILES/local/gitconfig
  * [rgomezcasas/dotfiles](https://github.com/rgomezcasas/dotfiles): README, some scripts and fine-tuning
  * [Tuurlijk/dotfiles](https://github.com/Tuurlijk/dotfiles): zsh startup snappiness
  * [wfxr/forgit](https://github.com/wfxr/forgit): some git scripts
+ * [jhotmann/tasker-phone-modes](https://github.com/jhotmann/tasker-phone-modes): Tasker profile framework
