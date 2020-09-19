@@ -19,7 +19,7 @@
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/platform.sh"
 
-doc::maybe_help "$@"
+doc::parse "$@"
 
 latest_version_released() {
    curl -s "https://api.github.com/repos/${USERNAME}/${REPO}/releases/latest" \
@@ -80,12 +80,14 @@ if $latest_version; then
    exit 0
 fi
 
-url="$(asset_url "$version" "${variant:-}")"
+download_url="$(asset_url "$version" "${variant:-}")"
 
 if $url; then
-   echo "$url"
+   echo "$download_url"
 elif $download; then
-   download_asset "$url" || _invalid_url "$url"
+   download_asset "$download_url" || _invalid_url "$download_url"
 elif $sha; then
-   sha "$url" || _invalid_url "$url"
+   sha "$download_url" || _invalid_url "$download_url"
+else
+   exit 2
 fi

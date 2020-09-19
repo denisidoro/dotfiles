@@ -7,7 +7,10 @@ source "${DOTFILES}/scripts/core/platform.sh"
 ##? Open files/folders
 ##?
 ##? Usage:
-##?    open <args>...
+##?    open [options] <args>...
+##?
+##? Options:
+##?    -b --browser      Open using the browser
 ##?
 ##? Examples:
 ##?    open http://google.com
@@ -22,4 +25,29 @@ _open() {
    fi
 }
 
-_open "${args[@]:-}"
+_browser_cmd() {
+   local -r file="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+   
+   if has google-chrome; then
+      echo "google-chrome"
+   elif has chrome; then
+      echo "chrome"
+   elif has firefox; then
+      echo "firefox"
+   elif [ -f "$file" ]; then
+      echo "$file"
+   else
+      exit 1
+   fi
+}
+
+_open_browser() {
+   local -r cmd="$(_browser_cmd)"
+   "$cmd" "$@"
+}
+
+if $browser; then
+   _open_browser "$@"
+else
+   _open "$@"
+fi

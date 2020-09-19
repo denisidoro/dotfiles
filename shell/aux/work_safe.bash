@@ -7,7 +7,7 @@ export DOT_FRE=${DOT_FRE:-true}
 export DOT_STARSHIP=${DOT_STARSHIP:-true}
 export DOT_ZIM=${DOT_ZIM:-true}
 
-export PATH="${WORK_BINARIES_PATH}:${PATH}"
+export PATH="${WORK_BINARIES_PATH}:/usr/local/opt/bash/bin/:${PATH}"
 
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home"
 
@@ -37,17 +37,17 @@ _load() {
       lda)
          echoerr "Loading lda..."
          if [ -n "$ZSH_VERSION" ]; then
-            autoload -Uz add-zsh-hook
+            # autoload -Uz add-zsh-hook
             # for zsh, only enable LDA before running the command
             # and disable it just before printing the prompt
-            add-zsh-hook preexec zsh_enable_lda
-            add-zsh-hook precmd zsh_disable_lda
+            # add-zsh-hook preexec zsh_enable_lda
+            # add-zsh-hook precmd zsh_disable_lda
          elif [[ ! -z "$JENKINS_HOME" ]]; then
             # do nothing on jenkins
             :
          elif [[ $- == *i* ]]; then
             # interactive bash shell, use PROMPT_COMMAND to hook in pre-execution
-            bash_enable_lda
+            # bash_enable_lda
          else
             # non-interactive bash shell
             :
@@ -55,7 +55,7 @@ _load() {
          ;;
       bazel)
          echoerr "Loading bazel..."
-         case $PROFILE_SHELL in
+         case $DOT_SHELL in
             zsh)
                zstyle ':completion:*' use-cache on
                zstyle ':completion:*' cache-path ~/.zsh/cache
@@ -160,3 +160,5 @@ opensync() {
 }
 
 # if command -v rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+eval "$(direnv hook zsh)"

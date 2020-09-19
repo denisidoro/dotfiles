@@ -1,10 +1,15 @@
 #!/usr/bin/env zsh
 
+# prevent multiple sourcing
+if [ -n "$DOT_SHELL" ]; then
+   return 0
+fi
+
 # dotfiles
 export DOTFILES="${DOTFILES:-"${HOME}/dotfiles"}"
 
 # register which shell is running
-PROFILE_SHELL="zsh"
+DOT_SHELL="zsh"
 
 # load vars
 source "${DOTFILES}/shell/aux/vars.bash"
@@ -55,3 +60,11 @@ WORDCHARS=${WORDCHARS//[\/]}
 
 # set path for completions
 fpath=("${DOTFILES}/shell/zsh/completions" $fpath)
+
+# in order not to mess up with subshells
+export ZDOTDIR="$HOME"
+
+# iTerm integration
+source "${DOTFILES}/local/iterm.zsh"
+
+source /Users/denis.isidoro/.config/broot/launcher/bash/br

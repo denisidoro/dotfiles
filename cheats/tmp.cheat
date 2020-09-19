@@ -1,0 +1,32 @@
+% system, tmp
+
+# Copy environment variable to clipboard
+echo "<env_var_value>" | dot system clip copy
+
+# List path available commands
+which "<cmd>"
+
+# Test multiple
+echo <x> foo <x2> lorem <foo> <x> bar <z>
+
+# This will pick the 3rd column and use the first line as header
+docker rmi <image_id>
+
+# Even though "false/true" is displayed, this will print "0/1"
+echo <mapped>
+
+# Checkout branch
+git checkout <local_branch>
+
+# This is my alias :: ecs
+echo cool stuff
+
+$ image_id: docker images --- --column 3 --header-lines 1 --delimiter '\s\s+'
+$ mapped: echo 'false true' | tr ' ' '\n' --- --map "[[ $0 == t* ]] && echo 1 || echo 0"
+
+$ x: echo "1,2,3" | tr ',' '\n'
+$ x2: echo "$((<x>+1)),$((<x>*<x>))" | tr ',' '\n'
+$ z: echo "7,8,9" | tr ',' '\n'
+$ cmd: bash -c "compgen -c"
+$ env_var_value: echo -e "variable@value\n$(env)" | sed 's/=/@/' | column -t -s'@' -c2 --- --column 2 --header-lines 1
+$ local_branch: f() { echo "BRANCH|DATE|COMMIT|AUTHOR"; git for-each-ref --sort=-committerdate refs/heads --format='%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:blue)%(subject)|%(color:magenta)%(authorname)%(color:reset)' --color=always | cut -c 2-; }; f | column -ts'|' --- --column 1 --header-lines 1 --preview 'echo hi' 

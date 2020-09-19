@@ -10,6 +10,7 @@ alias tl='dot terminal tmux ls'
 alias tn='dot terminal tmux new'
 alias ta='dot terminal tmux attach'
 alias tk='dot terminal tmux kill'
+alias faketty='dot terminal faketty'
 
 # ========================
 # shell
@@ -34,6 +35,9 @@ alias code="dot terminal dashed dot code vscode --"
 # alias fzf='fzf-tmux'
 alias d='dot'
 alias n="navi"
+alias browser="dot system open -b"
+alias chrome="dot system open -b"
+alias color="dot terminal color"
 
 # ========================
 # git

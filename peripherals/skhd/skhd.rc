@@ -23,12 +23,12 @@ alt + cmd + ctrl + shift - a : open -na /Applications/Alacritty.app
 # Bookmarks
 # =================
 
-mark < m : $HOME/dotfiles/bin/dot url mark mail
-mark < shift - m : $HOME/dotfiles/bin/dot url mark mail work
-mark < c : $HOME/dotfiles/bin/dot url mark calendar
-mark < shift - c : $HOME/dotfiles/bin/dot url mark calendar work
-mark < k : $HOME/dotfiles/bin/dot url mark keep
-mark < t : $HOME/dotfiles/bin/dot url mark test
+mark < m : $HOME/dotfiles/bin/dot url mark mail; skhd -r
+mark < shift - m : $HOME/dotfiles/bin/dot url mark mail work; skhd -r
+mark < c : $HOME/dotfiles/bin/dot url mark calendar; skhd -r
+mark < shift - c : $HOME/dotfiles/bin/dot url mark calendar work; skhd -r
+mark < k : $HOME/dotfiles/bin/dot url mark keep; skhd -r
+mark < t : $HOME/dotfiles/bin/dot url mark test; skhd -r
 
 # =================
 # Power

@@ -12,3 +12,6 @@ disabled = true
 
 [python]
 disabled = true
+
+[battery]
+disabled = true
