@@ -27,8 +27,12 @@ alias map='xargs -I%'
 # ========================
 alias vim='nvim'
 alias v="dot terminal dashed nvim --"
-alias code="dot terminal dashed dot code vscode --"
-
+code() {
+   case "$PWD" in
+      *go-code*) gopathmode on ;;
+   esac
+   dot terminal dashed dot code vscode -- "$@"
+}
 # ========================
 # utils
 # ========================

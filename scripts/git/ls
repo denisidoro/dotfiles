@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? List git entities
+##?
+##? Usage:
+##?   ls <entity>
+
+doc::maybe_help "$@"
+
+_local_branch() {
+    git for-each-ref \
+        --sort=-committerdate \
+        refs/heads \
+        --format='%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:blue)%(subject)|%(color:magenta)%(authorname)%(color:reset)' \
+        --color=always \
+        | cut -c 2- \
+        | column -ts'|'
+}
+
+_config() {
+    git config --list \
+        | sed 's/=/|/' \
+        | sort -u \
+        | column -s'|' -t
+}
+
+_stash() {
+    git stash list \
+        --color=always \
+        | sed 's/:/|/' \
+        | column -s'|' -t
+}
+
+_file() {
+    local files="$(git ls-files "$@")"
+    local -r green="$(printf '\033[32m')"
+    local -r reset="$(printf '\033[0m')"
+    
+    for l in $(git ls-files -m); do 
+        files="${files/$l/${green}${l}${reset}}"
+    done
+
+    echo -e "$files"
+} 
+
+_commit() {
+    git log \
+        --pretty=oneline \
+        --abbrev-commit \
+        --color=always \
+        | sed 's/ /|/' \
+        | column -s'|' -t
+}
+
+_toplevel_dir() {
+    git rev-parse --show-toplevel
+}
+
+_tag() {
+    git for-each-ref \
+        --sort=-committerdate \
+        refs/tags \
+        --format='%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(taggerdate:relative)|%(color:blue)%(subject)%(color:reset)' \
+        --color=always \
+        | cut -c 2- \
+        | column -ts'|'
+}
+
+fn="$1"
+shift
+
+"_${fn}" "$@"

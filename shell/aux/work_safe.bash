@@ -13,7 +13,7 @@ export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Ho
 
 alias xdg-open='open'
 
-_load() {
+_load_work_stuff() {
    case $1 in
       nvm)
          if ! ${NVM_LOADED:-false}; then
@@ -75,29 +75,32 @@ _load() {
          echoerr "Loading direnv..."
          eval "$(direnv hook $SHELL)"
          ;;
+      *) 
+         return 1
+         ;;
    esac
 }
 
-_nvm() {
-   _load nvm || true
-   nvm "$@"
-}
-
-_node() {
-   _load nvm || true
-   node "$@"
-}
-
-_npm() {
-   _load nvm || true
-   npm "$@"
-}
-
-rbenv() {
-   unfunction "$0" || true
-   _load rbenv || true
-   "$0" "$@"
-}
+# _nvm() {
+#    _load_work_stuff nvm || true
+#    nvm "$@"
+# }
+# 
+# _node() {
+#    _load_work_stuff nvm || true
+#    node "$@"
+# }
+# 
+# _npm() {
+#    _load_work_stuff nvm || true
+#    npm "$@"
+# }
+# 
+# rbenv() {
+#    unfunction "$0" || true
+#    _load_work_stuff rbenv || true
+#    "$0" "$@"
+# }
 
 zsh_disable_lda() {
    if [[ ! -z "$WORK_BINARIES_PATH" ]]; then
@@ -161,4 +164,36 @@ opensync() {
 
 # if command -v rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
-eval "$(direnv hook zsh)"
+# eval "$(direnv hook zsh)"
+
+gopathmode() {
+	USAGE="$0 [ on | off ]\n\tshows or sets MONOREPO_GOPATH_MODE"
+	[ $# -lt 1 ] && {
+		[ -n "$MONOREPO_GOPATH_MODE" ] \
+		&& echo "MONOREPO_GOPATH_MODE is on." \
+		|| echo "MONOREPO_GOPATH_MODE is off."
+		return
+	}
+	[ $# -gt 1 ] && echo "$USAGE" && return
+	[ "$1" != "on" ] && [ "$1" != "off" ] && {
+		echo "$USAGE"
+		return
+	}
+
+	if [[ "$MONOREPO_GOPATH_MODE" != "1" && "$1" == "on" ]] ; then
+		_load_work_stuff direnv
+		_load_work_stuff bazel
+		export MONOREPO_GOPATH_MODE=1
+		
+		repo=$(git config --get remote.origin.url || true)
+		if [[ $repo =~ ":go-code" ]]; then
+			direnv reload
+		fi
+	elif [[ -n "$MONOREPO_GOPATH_MODE" && "$1" == "off" ]] ; then
+		unset MONOREPO_GOPATH_MODE
+		repo=$(git config --get remote.origin.url || true)
+		if [[ $repo =~ ":go-code" ]]; then
+			direnv reload
+		fi
+	fi
+}

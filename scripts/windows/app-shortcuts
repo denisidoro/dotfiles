@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+pretty() {
+        sed 's/.exe//' \
+       | sed 's/portable//gI' \
+     | sed -E 's/[0-9]+\..*//' \
+  | sed -E 's/[-_]+ *$//'
+          }
+
+ create_link() {
+        local -r exe="$1"
+             local -r exe_win="$(wslpath -w "$exe")"
+    local -r dest_dir_win="$(wslpath -w "/mnt/c/Users/Denis/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Applications")"
+   local -r dest_name="$(basename "$exe" | pretty)"
+
+          echo -e "$exe\n$exe_win\n$dest_name,\n\n"
+   /mnt/c/Portable/NirCmd/nircmdc.exe shortcut \ 
+"$exe_win" \
+"$dest_dir_win" \
+"$dest_name" 
+ }
+
+ all_exes() {
+           find /mnt/c/Portable -maxdepth 2 -iname '*.exe'
+  }
+
+ for exe in $(all_exes); do
+           if echo "$exe" | grep -q "install"; then
+           echo -e "Skipping $exe\n\n"
+        else
+     create_link "$exe" || true
+         fi
+     done      

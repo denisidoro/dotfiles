@@ -29,4 +29,4 @@ $ x2: echo "$((<x>+1)),$((<x>*<x>))" | tr ',' '\n'
 $ z: echo "7,8,9" | tr ',' '\n'
 $ cmd: bash -c "compgen -c"
 $ env_var_value: echo -e "variable@value\n$(env)" | sed 's/=/@/' | column -t -s'@' -c2 --- --column 2 --header-lines 1
-$ local_branch: f() { echo "BRANCH|DATE|COMMIT|AUTHOR"; git for-each-ref --sort=-committerdate refs/heads --format='%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:blue)%(subject)|%(color:magenta)%(authorname)%(color:reset)' --color=always | cut -c 2-; }; f | column -ts'|' --- --column 1 --header-lines 1 --preview 'echo hi' 
+$ local_branch: git for-each-ref --sort=-committerdate refs/heads --format='%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:blue)%(subject)|%(color:magenta)%(authorname)%(color:reset)' --color=always | cut -c 2- | column -ts'|' --- --column 1

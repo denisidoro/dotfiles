@@ -2,7 +2,7 @@
     // ==================
     // Editor
     // ==================
-    "window.zoomLevel": 1,
+    "window.zoomLevel": 2,
     "editor.fontSize": 12,
     // "editor.fontFamily": "Hack Nerd Font",
     "editor.letterSpacing": 0.2,
@@ -18,7 +18,6 @@
     "explorer.sortOrder": "default",
     // "materialTheme.accent": "Remove accents",
     "workbench.colorCustomizations": {},
-    "workbench.colorTheme": "Material Theme Darker High Contrast",
     "breadcrumbs.enabled": true,
     "editor.fontLigatures": true,
     "diffEditor.ignoreTrimWhitespace": false,
@@ -26,22 +25,27 @@
     "editor.wordWrap": "on",
     "editor.suggestSelection": "first",
     // ==================
+    // System
+    // ==================
+    "keyboard.touchbar.enabled": true,
+    // ==================
     // UI
     // ==================
-    "workbench.activityBar.visible": false,
+    "workbench.activityBar.visible": true,
     "workbench.editor.enablePreview": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.list.keyboardNavigation": "simple",
-    // ==================
-    // System
-    // ==================
-    "keyboard.touchbar.enabled": true,
+    "customizeUI.activityBar": "bottom",
+    "customizeUI.titleBar": "inline",
+    "terminal.integrated.rendererType": "dom",
+    "window.titleBarStyle": "native",
     // ==================
     // Explorer
     // ================== 
     "explorer.confirmDragAndDrop": false,
     "explorer.confirmDelete": false,
+    "workbench.iconTheme": "eq-material-theme-icons-palenight",
     "files.exclude": {
         "**/.git": true,
         "**/.DS_Store": true,
@@ -76,10 +80,14 @@
     // ==================
     // GO
     // ==================
-    "go.toolsEnvVars": {
+    /*"go.toolsEnvVars": {
         "GO111MODULE": "off",
     },
-    "go.useLanguageServer": true,
+    "go.useLanguageServer": true,*/
+    /*"go.gopath": "/Users/denis.isidoro/dev/uber/go-code",
+    "go.alternateTools": {
+        "go": "/usr/local/bin/go",
+    },*/
     // ==================
     // Javascript
     // ================== 
@@ -147,5 +155,7 @@
                 }
             ]
         },
-    ]
+    ],
+    "workbench.colorTheme": "Ayu Mirage Bordered",
+    "extensions.ignoreRecommendations": true
 }
