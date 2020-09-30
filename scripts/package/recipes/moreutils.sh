@@ -2,7 +2,7 @@
 set -euo pipefail
 
 package::is_installed() {
-    has vipe
+   has vipe
 }
 
 package::install() {

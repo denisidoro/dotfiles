@@ -46,7 +46,7 @@ has "$package" && exit::is_installed
 file="$(pkg::source_file "$package")"
 
 if $prevent_recipe || ! [ -f "$file" ]; then
-   exit::isnt_installed   
+   exit::isnt_installed
 fi
 
 source "$file"

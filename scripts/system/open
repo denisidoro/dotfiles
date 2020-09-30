@@ -27,7 +27,7 @@ _open() {
 
 _browser_cmd() {
    local -r file="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-   
+
    if has google-chrome; then
       echo "google-chrome"
    elif has chrome; then

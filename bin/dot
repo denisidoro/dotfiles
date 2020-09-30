@@ -13,7 +13,7 @@ CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 ##?    dot <context> <cmd> [<args>...]
 
 _list_command_paths() {
-   find "${DOTFILES}/scripts" -maxdepth 2 -executable -type f 
+   find "${DOTFILES}/scripts" -maxdepth 2 -executable -type f
 
    find "${DOTFILES}/local/scripts" -maxdepth 2 -executable -type f \
       | sed 's|/local/scripts/|/scripts/|g'
@@ -42,7 +42,7 @@ fzf_prompt() {
 }
 
 _version() {
-    cat "${DOTFILES}/rust/Cargo.toml" \
+   cat "${DOTFILES}/rust/Cargo.toml" \
       | grep version \
       | head -n1 \
       | grep -Eo '[0-9\.]+'
@@ -64,6 +64,7 @@ _alias() {
       pkg) echo package ;;
       sec) echo security ;;
       aws) echo cloud ;;
+      win) echo windows ;;
       not) echo notification ;;
       google) echo search ;;
       work|uber|w|u) echo "../local/scripts/uber" ;;

@@ -22,7 +22,7 @@ impl transpiler::Transpiler for Transpiler {
         for line in lines {
             if let Ok(l) = line {
                 result.push_str(&transform(l));
-                result.push_str("\n");
+                result.push('\n');
             }
         }
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-export DOT_DOCOPT=${DOT_DOCOPT:-"python"}
+export DOT_DOCOPT=${DOT_DOCOPT:-"docpars"}
 export DOT_FZF=${DOT_FZF:-true}
 export DOT_NAVI=${DOT_NAVI:-true}
 export DOT_FRE=${DOT_FRE:-true}
@@ -75,7 +75,7 @@ _load_work_stuff() {
          echoerr "Loading direnv..."
          eval "$(direnv hook $SHELL)"
          ;;
-      *) 
+      *)
          return 1
          ;;
    esac
@@ -85,17 +85,17 @@ _load_work_stuff() {
 #    _load_work_stuff nvm || true
 #    nvm "$@"
 # }
-# 
+#
 # _node() {
 #    _load_work_stuff nvm || true
 #    node "$@"
 # }
-# 
+#
 # _npm() {
 #    _load_work_stuff nvm || true
 #    npm "$@"
 # }
-# 
+#
 # rbenv() {
 #    unfunction "$0" || true
 #    _load_work_stuff rbenv || true
@@ -167,33 +167,33 @@ opensync() {
 # eval "$(direnv hook zsh)"
 
 gopathmode() {
-	USAGE="$0 [ on | off ]\n\tshows or sets MONOREPO_GOPATH_MODE"
-	[ $# -lt 1 ] && {
-		[ -n "$MONOREPO_GOPATH_MODE" ] \
-		&& echo "MONOREPO_GOPATH_MODE is on." \
-		|| echo "MONOREPO_GOPATH_MODE is off."
-		return
-	}
-	[ $# -gt 1 ] && echo "$USAGE" && return
-	[ "$1" != "on" ] && [ "$1" != "off" ] && {
-		echo "$USAGE"
-		return
-	}
+   USAGE="$0 [ on | off ]\n\tshows or sets MONOREPO_GOPATH_MODE"
+   [ $# -lt 1 ] && {
+      [ -n "$MONOREPO_GOPATH_MODE" ] \
+         && echo "MONOREPO_GOPATH_MODE is on." \
+         || echo "MONOREPO_GOPATH_MODE is off."
+      return
+   }
+   [ $# -gt 1 ] && echo "$USAGE" && return
+   [ "$1" != "on" ] && [ "$1" != "off" ] && {
+      echo "$USAGE"
+      return
+   }
 
-	if [[ "$MONOREPO_GOPATH_MODE" != "1" && "$1" == "on" ]] ; then
-		_load_work_stuff direnv
-		_load_work_stuff bazel
-		export MONOREPO_GOPATH_MODE=1
-		
-		repo=$(git config --get remote.origin.url || true)
-		if [[ $repo =~ ":go-code" ]]; then
-			direnv reload
-		fi
-	elif [[ -n "$MONOREPO_GOPATH_MODE" && "$1" == "off" ]] ; then
-		unset MONOREPO_GOPATH_MODE
-		repo=$(git config --get remote.origin.url || true)
-		if [[ $repo =~ ":go-code" ]]; then
-			direnv reload
-		fi
-	fi
+   if [[ "$MONOREPO_GOPATH_MODE" != "1" && "$1" == "on" ]] ; then
+      _load_work_stuff direnv
+      _load_work_stuff bazel
+      export MONOREPO_GOPATH_MODE=1
+
+      repo=$(git config --get remote.origin.url || true)
+      if [[ $repo =~ ":go-code" ]]; then
+         direnv reload
+      fi
+   elif [[ -n "$MONOREPO_GOPATH_MODE" && "$1" == "off" ]] ; then
+      unset MONOREPO_GOPATH_MODE
+      repo=$(git config --get remote.origin.url || true)
+      if [[ $repo =~ ":go-code" ]]; then
+         direnv reload
+      fi
+   fi
 }

@@ -68,9 +68,9 @@ alias lst="tree -L 2"
 cdd() { cd "$@" && ls .; }
 mkcd() { mkdir -p -- "$@" && cd -P -- "$@"; }
 
-_safe_cd() { 
-    [[ -z "${1:-}" ]] && return 1 || true
-    [[ -d "${1:-}" ]] && cd "$1" || echoerr "$1 doesn't exist"
+_safe_cd() {
+   [[ -z "${1:-}" ]] && return 1 || true
+   [[ -d "${1:-}" ]] && cd "$1" || echoerr "$1 doesn't exist"
 }
 
 j() { _safe_cd "$(dot fs jump global "$@")"; }

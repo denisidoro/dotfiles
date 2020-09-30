@@ -13,11 +13,11 @@ source "${DOTFILES}/scripts/core/main.sh"
 doc::maybe_help "$@"
 
 colorize_stderr() {
-    "$@" 2> >(while read line; do echo -e "\e[01;31m$line\e[0m" >&2; done)
+   "$@" 2> >(while read line; do echo -e "\e[01;31m$line\e[0m" >&2; done)
 }
 
 colorize_stdout() {
-    "$@" 1> >(while read line; do echo -e "\e[01;32m$line\e[0m" >&1; done)
+   "$@" 1> >(while read line; do echo -e "\e[01;32m$line\e[0m" >&1; done)
 }
 
 # colorize_stderr "$@"

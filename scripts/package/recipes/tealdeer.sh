@@ -2,7 +2,7 @@
 set -euo pipefail
 
 package::is_installed() {
-    has tldr
+   has tldr
 }
 
 package::install() {
