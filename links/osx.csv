@@ -6,3 +6,6 @@ editors/vscode/keybindings.json, $HOME/Library/Application\ Support/Code/User/ke
 editors/vscode/tasks.json, $HOME/Library/Application\ Support/Code/User/tasks.json
 editors/sublime/preferences.json, $HOME/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Preferences.sublime-settings
 launchers/alfred/preferences, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/preferences
+launchers/alfred/workflows/uber, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/workflows/user.workflow.975A997C-2CA4-4505-AFD9-03A3D3C31A2F
+launchers/alfred/workflows/yabai, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/workflows/user.workflow.E122C8D2-26EC-4D0F-9E0E-91D18A25695D
+launchers/alfred/workflows/display, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/workflows/user.workflow.60C7513C-DD9E-4ABC-A4ED-1E5B8D78AA81

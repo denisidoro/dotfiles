@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>io.github.denisidoro.display</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>05D45812-A5DF-4347-9AC4-49C5E4E1AADC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>91F53851-726B-4264-8070-FC1DDC9EC7B1</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>91F53851-726B-4264-8070-FC1DDC9EC7B1</key>
+		<array/>
+	</dict>
+	<key>createdby</key>
+	<string>Denis Isidoro</string>
+	<key>description</key>
+	<string>Control brightness and contrast</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Display</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>#/usr/bin/env bash
+set -euo pipefail
+
+IFS=$'\n'
+
+args=($(eval "for arg in $@; do echo \$arg; done"))
+printf "%s" "$($HOME/dotfiles/bin/dot system display "${args[@]}")"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>91F53851-726B-4264-8070-FC1DDC9EC7B1</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>dis</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Display setup</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>05D45812-A5DF-4347-9AC4-49C5E4E1AADC</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>05D45812-A5DF-4347-9AC4-49C5E4E1AADC</key>
+		<dict>
+			<key>xpos</key>
+			<integer>75</integer>
+			<key>ypos</key>
+			<integer>235</integer>
+		</dict>
+		<key>91F53851-726B-4264-8070-FC1DDC9EC7B1</key>
+		<dict>
+			<key>xpos</key>
+			<integer>240</integer>
+			<key>ypos</key>
+			<integer>235</integer>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>https://denisidoro.github.io</string>
+</dict>
+</plist>

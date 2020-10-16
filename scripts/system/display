@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
+source "${DOTFILES}/scripts/core/platform.sh"
+
+##? Change brightness
+##?
+##? Usage:
+##?    display <id> [options]
+##?    display <id> <bright> [options]
+##?    display <id> <bright> <contr> [options]
+##?
+##? Options:
+##?    -b --brightness <brightness>    Brightness level
+##?    -c --contrast <contrast>        Contrast level
+##?    -R --red-gain <redgain>         Red gain
+##?    -G --green-gain <greengain>     Green gain
+##?    -B --blue-gain <bluegain>       Blue gain
+##?    -p --power <power>              Power configuration
+##?
+##? Levels:
+##?    They range from 0 to 100
+##?
+##? Examples:
+##?    display 0 -b 100 -c 50
+
+doc::parse "$@"
+
+_osx_external() {
+   local args=("ddcctl" "-d" "$id")
+
+   if [[ -n ${brightness:-} ]]; then
+      args+=("-b" "$brightness")
+      if [[ $brightness -lt 1 ]]; then
+         power=5
+      fi
+   fi
+   if [[ -n ${contrast:-} ]]; then
+      args+=("-c" "$contrast")
+   fi
+   if [[ -n ${power:-} ]]; then
+      args+=("-p" "$power")
+   fi
+   if [[ -n ${red_gain:-} ]]; then
+      args+=("-rg" "$red_gain")
+   fi
+   if [[ -n ${green_gain:-} ]]; then
+      args+=("-gg" "$green_gain")
+   fi
+   if [[ -n ${blue_gain:-} ]]; then
+      args+=("-bg" "$blue_gain")
+   fi
+
+   "${args[@]}"
+}
+
+_osx_internal() {
+   _unsupported() {
+      log::warning "$* not implemented for osx_internal"
+   }
+
+   local args=("brightness" "-d" "1")
+
+   if [[ -n ${brightness:-} ]]; then
+      local -r b="$(bc <<< "scale=3; ${brightness}/100")"
+      args+=("$b")
+   fi
+   if [[ -n ${contrast:-} ]]; then
+      _unsupported "Contrast"
+   fi
+   if [[ -n ${power:-} ]]; then
+      _unsupported "Power"
+   fi
+   if [[ -n ${red_gain:-} ]]; then
+      _unsupported "Red gain"
+   fi
+   if [[ -n ${green_gain:-} ]]; then
+      _unsupported "Green gain"
+   fi
+   if [[ -n ${blue_gain:-} ]]; then
+      _unsupported "Blue gain"
+   fi
+
+   "${args[@]}"
+}
+
+_osx() {
+   if [[ $id == 0 ]]; then 
+      _osx_internal "$@"
+   else
+      _osx_external "$@"
+   fi
+}
+
+main() {
+   if [[ -n "${bright:-}" ]]; then
+      brightness="$bright"
+   fi
+   if [[ -n "${contr:-}" ]]; then
+      contrast="$contr"
+   fi
+
+   if platform::is_osx; then
+      _osx "$@"
+   else
+      die "No implementation for this system"
+   fi
+}
+
+main "$@"

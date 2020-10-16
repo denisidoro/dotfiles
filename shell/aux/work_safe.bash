@@ -11,6 +11,8 @@ export PATH="${WORK_BINARIES_PATH}:/usr/local/opt/bash/bin/:${PATH}"
 
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home"
 
+# source "${HOME}/.gradle/jv1/.gradle/caches/okbuck/buck-completion.bash"
+
 alias xdg-open='open'
 
 _load_work_stuff() {
@@ -42,12 +44,14 @@ _load_work_stuff() {
             # and disable it just before printing the prompt
             # add-zsh-hook preexec zsh_enable_lda
             # add-zsh-hook precmd zsh_disable_lda
+            :
          elif [[ ! -z "$JENKINS_HOME" ]]; then
             # do nothing on jenkins
             :
          elif [[ $- == *i* ]]; then
             # interactive bash shell, use PROMPT_COMMAND to hook in pre-execution
             # bash_enable_lda
+            :
          else
             # non-interactive bash shell
             :

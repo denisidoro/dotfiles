@@ -14,3 +14,4 @@ local/
 .lein-env
 modules
 Cargo.lock
+launchers/alfred/**/*.png
