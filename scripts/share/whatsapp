@@ -14,15 +14,15 @@ source "${DOTFILES}/scripts/core/main.sh"
 doc::maybe_help "$@"
 
 _launch() {
-    dot system open -b "https://web.whatsapp.com/send?phone=$*&text&app_absent=1"
+   dot system open -b "https://web.whatsapp.com/send?phone=$*&text&app_absent=1"
 }
 
 main() {
-    local number="$(echo "$1" | sed 's|[^0-9]||g')"
-    if [[ ${#number} -lt 10 ]]; then
-        number="5511${number}"
-    fi
-    _launch "$number"
+   local number="$(echo "$1" | sed 's|[^0-9]||g')"
+   if [[ ${#number} -lt 10 ]]; then
+      number="5511${number}"
+   fi
+   _launch "$number"
 }
 
 main "$@"

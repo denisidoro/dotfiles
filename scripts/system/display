@@ -87,7 +87,7 @@ _osx_internal() {
 }
 
 _osx() {
-   if [[ $id == 0 ]]; then 
+   if [[ $id == 0 ]]; then
       _osx_internal "$@"
    else
       _osx_external "$@"

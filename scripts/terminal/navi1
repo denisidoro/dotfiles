@@ -10,9 +10,9 @@ source "$DOTFILES/scripts/core/main.sh"
 doc::maybe_help "$@"
 
 main() {
-    local -r query="$1"
-    local -r var="$2"
-    shift 2
+   local -r query="$1"
+   local -r var="$2"
+   shift 2
 
    if [[ $# -gt 0 ]]; then
       local -r var_full="${var}__best"
