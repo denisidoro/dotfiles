@@ -310,6 +310,10 @@
    # option to define custom colors and icons for different directory classes.
    #
    #   # Styling for WORK.
+   typeset -g POWERLEVEL9K_DIR_FOREGROUND='147'
+   typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND='141'
+   typeset -g POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='139'
+   typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND='219'
    #   typeset -g POWERLEVEL9K_DIR_WORK_VISUAL_IDENTIFIER_EXPANSION='⭐'
    #   typeset -g POWERLEVEL9K_DIR_WORK_FOREGROUND=31
    #   typeset -g POWERLEVEL9K_DIR_WORK_SHORTENED_FOREGROUND=103

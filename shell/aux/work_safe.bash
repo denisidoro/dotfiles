@@ -77,7 +77,7 @@ _load_work_stuff() {
          ;;
       bazel)
          echoerr "Loading bazel..."
-         case $DOT_SHELL in
+         case ${DOT_SHELL:-} in
             zsh)
                zstyle ':completion:*' use-cache on
                zstyle ':completion:*' cache-path ~/.zsh/cache
