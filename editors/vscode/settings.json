@@ -75,7 +75,7 @@
         "*.envrc": "shellscript",
         "*.uql": "sql",
         "*.proto.txt": "ruby",
-        "*rc": "shellscript",
+        "*rc": "shellscript"
     },
     // ==================
     // GO
@@ -128,7 +128,7 @@
                 "g",
                 "k"
             ]
-        },
+        }
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
         {
@@ -156,7 +156,7 @@
                 "g",
                 "k"
             ]
-        },
+        }
     ],
     "vspacecode.bindingOverrides": [
         // ==================
@@ -166,7 +166,7 @@
             "keys": "g.C",
             "name": "Checkout",
             "type": "command",
-            "command": "git.checkout",
+            "command": "git.checkout"
         },
         {
             "keys": "m",
@@ -190,7 +190,7 @@
                     ]
                 }
             ]
-        },
+        }
     ],
     "extensions.ignoreRecommendations": true,
     "workbench.colorTheme": "Ayu Mirage Bordered"

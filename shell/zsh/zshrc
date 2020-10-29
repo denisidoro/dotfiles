@@ -67,4 +67,4 @@ export ZDOTDIR="$HOME"
 # iTerm integration
 source "${DOTFILES}/local/iterm.zsh"
 
-source /Users/denis.isidoro/.config/broot/launcher/bash/br
+# source "${HOME}/.config/broot/launcher/bash/br"

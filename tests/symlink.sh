@@ -9,7 +9,9 @@ _validate() {
       | cut -d',' -f1)"
 
    for f in $files; do
-      if [[ -f "$f" || -d "$f" ]]; then
+      if echo "$f" | grep -q 'local/'; then
+         :
+      elif [[ -f "$f" || -d "$f" ]]; then
          :
       else
          echoerr "☓ $f"
