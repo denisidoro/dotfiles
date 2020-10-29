@@ -14,6 +14,6 @@ win::nircmd() {
 WIN_USER=${WIN_USER:-$(win::user)}
 DEFAULT_DRIVE_PATH="/mnt/c"
 PORTABLE_PATH="${PORTABLE_PATH:-"${DEFAULT_DRIVE_PATH}/Portable"}"
-NIRCMD_PATH="${NIRCMD_PATH:-"${PORTABLE}/NirCmd/nircmdc.exe"}"
+NIRCMD_PATH="${NIRCMD_PATH:-"${PORTABLE_PATH}/NirCmd/nircmdc.exe"}"
 WIN_HOME="${WIN_HOME:-"${DEFAULT_DRIVE_PATH}/Users/${WIN_USER}"}"
 STARTMENU_PATH="${STARTMENU_PATH:-"${WIN_HOME}/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Applications"}"
