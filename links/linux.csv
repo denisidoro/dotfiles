@@ -4,3 +4,4 @@ editors/vscode/settings.json, $HOME/.config/Code/User/settings.json
 editors/vscode/keybindings.json, $HOME/.config/Code/User/keybindings.json
 editors/vscode/tasks.json, $HOME/.config/Code/User/tasks.json
 editors/sublime/preferences.json, $HOME/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
+git/gitui_config.ron, $HOME/.config/gitui/key_config.ron

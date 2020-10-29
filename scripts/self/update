@@ -23,10 +23,14 @@ main() {
    log::note "Current config: $tags"
    echoerr
 
-   _add dot-submodules || true
-   _add dot-folders || true
-   _add dot-gitconfig || true
-   _add dot-zshrc || true
+   if [[ $* == *"skip-pre"* ]]; then
+      :
+   else
+      _add dot-submodules || true
+      _add dot-folders || true
+      _add dot-gitconfig || true
+      _add dot-zshrc || true
+   fi
 
    echoerr
    log::note "Setting symlinks..."
@@ -37,6 +41,7 @@ main() {
    has_tag "$tags" "x86" && update_dotfiles_x86
    has_tag "$tags" "android" && update_dotfiles_android
    has_tag "$tags" "wsl" && update_dotfiles_wsl
+   [ -f "${DOTFILES}/local/alfred/uber/info.plist" ] && update_dotfiles_work
 
    fix_locales
 
@@ -116,6 +121,11 @@ update_dotfiles_x86() {
 update_dotfiles_android() {
    log::note "Symlinking for Android..."
    dot pkg add termux-essentials
+}
+
+update_dotfiles_work() {
+   log::note "Symlinking for work..."
+   update_dotfiles "work"
 }
 
 # ==============================

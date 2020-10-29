@@ -43,4 +43,6 @@ zmodule zsh-users/zsh-history-substring-search
 
 zmodule hlissner/zsh-autopair
 
+zmodule romkatv/powerlevel10k
+
 # zmodule marlonrichert/zsh-autocomplete

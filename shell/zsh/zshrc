@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # prevent multiple sourcing
-if [ -n "$DOT_SHELL" ]; then
+if [ -n "${DOT_SHELL:-}" ]; then
    return 0
 fi
 

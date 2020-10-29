@@ -4,16 +4,34 @@ export DOT_DOCOPT=${DOT_DOCOPT:-"docpars"}
 export DOT_FZF=${DOT_FZF:-true}
 export DOT_NAVI=${DOT_NAVI:-true}
 export DOT_FRE=${DOT_FRE:-true}
-export DOT_STARSHIP=${DOT_STARSHIP:-true}
+export DOT_THEME=${DOT_THEME:-powerlevel}
 export DOT_ZIM=${DOT_ZIM:-true}
 
-export PATH="${WORK_BINARIES_PATH}:/usr/local/opt/bash/bin/:${PATH}"
+export PATH="${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH}:/usr/local/opt/bash/bin/:${PATH}"
 
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home"
 
 # source "${HOME}/.gradle/jv1/.gradle/caches/okbuck/buck-completion.bash"
 
 alias xdg-open='open'
+
+alias sed='gsed'
+alias awk='gawk'
+alias find='gfind'
+alias grep='ggrep'
+alias head='ghead'
+alias mktemp='gmktemp'
+alias ls='gls'
+alias date='gdate'
+alias cut='gcut'
+alias tr='gtr'
+alias cp='gcp'
+alias cat='gcat'
+alias sort='gsort'
+alias kill='gkill'
+alias xargs='gxargs'
+
+alias mono="dot u mono"
 
 _load_work_stuff() {
    case $1 in

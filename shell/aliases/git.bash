@@ -11,8 +11,8 @@ alias gu="dot git pull module"
 alias gum="dot git pull master"
 
 # tig <> lazygit (DEPRECATED)
-alias tst="lazygit"
-alias tig="lazygit"
+alias tst="gitui"
+alias tig="gitui"
 
 # git push upstream
 alias gpu="dot git push upstream"
@@ -25,7 +25,7 @@ alias gcamp="dot git push commit"
 alias gprp="dot git pr preview"
 
 # git interactive checkout
-alias gcoo="dot git checkout prompt"
+alias gcoo="dot terminal navi1 local_branch local_branch"
 
 # git status
 alias gst="git status"

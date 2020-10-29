@@ -21,6 +21,16 @@ git checkout <local_branch>
 # This is my alias :: ecs
 echo cool stuff
 
+# Issue example
+echo <foo>
+
+# Preview example
+cat "<with_preview>"
+
+$ with_preview: ls --- --column 1 --preview-window 'right:50%' --preview '[ -d {} ] && ls {} || cat {}'
+
+$ foo: echo -e 'key;description\none;1\ntwo;2\nthree;3' | column -t -s';' --- --column 1 --header-lines 1
+
 $ image_id: docker images --- --column 3 --header-lines 1 --delimiter '\s\s+'
 $ mapped: echo 'false true' | tr ' ' '\n' --- --map "[[ $0 == t* ]] && echo 1 || echo 0"
 

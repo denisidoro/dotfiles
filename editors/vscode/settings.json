@@ -12,7 +12,7 @@
     "files.autoSave": "onFocusChange",
     "files.trimFinalNewlines": true,
     "editor.formatOnPaste": true,
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": true,
     "editor.minimap.enabled": true,
     "editor.mouseWheelZoom": true,
     "explorer.sortOrder": "default",
@@ -192,6 +192,6 @@
             ]
         },
     ],
-    "workbench.colorTheme": "Ayu Mirage Bordered",
-    "extensions.ignoreRecommendations": true
+    "extensions.ignoreRecommendations": true,
+    "workbench.colorTheme": "Ayu Mirage Bordered"
 }

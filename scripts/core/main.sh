@@ -8,6 +8,12 @@ echoerr() {
    echo "$@" 1>&2
 }
 
+tap() {
+   local -r input="$(cat)"
+   echoerr "$input"
+   echo "$input"
+}
+
 has() {
    type "$1" &>/dev/null
 }
