@@ -4,6 +4,13 @@ set -euo pipefail
 source "${DOTFILES}/scripts/windows/aux/core.sh"
 source "${DOTFILES}/scripts/core/log.sh"
 
+##? Create app shortcuts
+##?
+##? Usage:
+##?    app-shortcuts
+
+doc::maybe_help "$@"
+
 pretty() {
    sed 's/.exe//' \
      | sed 's/portable//gI' \
