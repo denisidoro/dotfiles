@@ -67,8 +67,9 @@ _alias() {
       win) echo windows ;;
       not) echo notification ;;
       google) echo search ;;
-      work|uber|w|u) echo "../local/scripts/uber" ;;
+      kl) echo knowledge ;;
       down|downloads|torrent) echo download ;;
+      work|uber|w|u) echo "../local/scripts/uber" ;;
       *) echo "$arg" ;;
    esac
 }

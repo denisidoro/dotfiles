@@ -120,6 +120,7 @@ update_dotfiles_x86() {
 
 update_dotfiles_android() {
    log::note "Symlinking for Android..."
+   update_dotfiles "android"
    dot pkg add termux-essentials
 }
 

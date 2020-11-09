@@ -12,6 +12,9 @@ export PATH="${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home"
 
 # source "${HOME}/.gradle/jv1/.gradle/caches/okbuck/buck-completion.bash"
+# source "${HOME}/.config/broot/launcher/bash/br"
+
+alias ls='lsd'
 
 alias xdg-open='open'
 
@@ -21,7 +24,7 @@ alias find='gfind'
 alias grep='ggrep'
 alias head='ghead'
 alias mktemp='gmktemp'
-alias ls='gls'
+# alias ls='gls'
 alias date='gdate'
 alias cut='gcut'
 alias tr='gtr'

@@ -20,6 +20,11 @@ source "${DOTFILES}/shell/aux/core.bash"
 # load aliases
 source "${DOTFILES}/shell/aliases/core.bash"
 
+# enable vi-mode
+bindkey -v
+bindkey "^A" vi-beginning-of-line
+bindkey "^E" vi-end-of-line
+
 # load local custom config
 source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
 
@@ -67,4 +72,6 @@ export ZDOTDIR="$HOME"
 # iTerm integration
 source "${DOTFILES}/local/iterm.zsh"
 
-# source "${HOME}/.config/broot/launcher/bash/br"
+# nnn
+export NNN_PLUG="f:fzcd;o:fzopen;z:fzz;d:diffs;t:treeview;v:preview-tui"
+export NNN_FIFO="/tmp/nnn.fifo"

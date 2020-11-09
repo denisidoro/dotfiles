@@ -63,7 +63,6 @@ alias o="dot terminal dashed open --"
 unalias f &> /dev/null
 alias f="dot terminal dashed vifm --"
 # alias ls='ls --color=auto'
-ls() { has lsd && lsd "$@" || command ls "$@"; }
 alias lst="tree -L 2"
 cdd() { cd "$@" && ls .; }
 mkcd() { mkdir -p -- "$@" && cd -P -- "$@"; }

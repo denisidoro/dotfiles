@@ -38,8 +38,14 @@
     "workbench.list.keyboardNavigation": "simple",
     "customizeUI.activityBar": "bottom",
     "customizeUI.titleBar": "inline",
-    "terminal.integrated.rendererType": "dom",
     "window.titleBarStyle": "native",
+    // ==================
+    // Terminal
+    // ==================
+    "terminal.external.osxExec": "iTerm.app",
+    "terminal.integrated.shell.osx": "/bin/zsh",
+    "terminal.integrated.fontFamily": "MesloLGS NF",
+    "terminal.integrated.rendererType": "dom",
     // ==================
     // Explorer
     // ================== 

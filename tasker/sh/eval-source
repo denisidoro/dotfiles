@@ -1,9 +1,0 @@
-#!/data/data/com.termux/files/usr/bin/env bash
-
-export TASKER_HOME=${TASKER_HOME:-/sdcard/Tasker}
-
-_call() {
-   eval "$(cat "${TASKER_HOME}/sh/src.sh")"
-}
-
-_call "$@" | tee "${TASKER_HOME}/sh/out.txt"
