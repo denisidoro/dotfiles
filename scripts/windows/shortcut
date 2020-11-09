@@ -11,14 +11,14 @@ source "${DOTFILES}/scripts/windows/aux/core.sh"
 doc::maybe_help "$@"
 
 _main() {
-      local -r original_file="$(wslpath -w "$1")"
-      local -r destination_dir="$(wslpath -w "$2")"
-      local -r name="$3"
+   local -r original_file="$(wslpath -w "$1")"
+   local -r destination_dir="$(wslpath -w "$2")"
+   local -r name="$3"
 
-      win::nircmd shortcut \ 
-            "$original_file" \
-            "$destination_dir" \
-            "$name" 
+   win::nircmd shortcut \
+      "$original_file" \
+      "$destination_dir" \
+      "$name"
 }
 
 _main "$@"
