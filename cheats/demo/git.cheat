@@ -1,0 +1,74 @@
+% git common
+
+$ local_branch: dot git ls local_branch --- --column 1
+$ config: dot git ls config --- --column 1
+$ stash: dot git ls stash --- --column 1
+$ commit: dot git ls commit --- --column 1
+$ toplevel_dir: dot git ls toplevel_dir
+$ file: dot git ls file --- --column 1 --preview-window 'right:50%' --preview 'bat -p --color=always {}'
+$ files: dot git ls file --- --multi --column 1 --preview-window 'right:50%' --preview 'bat -p --color=always {}'
+$ modified_file: dot git ls file -m --- --column 1 --preview-window 'right:50%' --preview 'bat -p --color=always {}'
+$ modified_files: dot git ls file -m --- --multi --column 1 --preview-window 'right:50%' --preview 'bat -p --color=always {}'
+$ tag: dot git ls tag --- --column 1
+
+% git branch
+@ git common
+
+# checkout branch
+git checkout "<local_branch>"
+
+# checkout tag
+git checkout "<tag>"
+
+% git config
+@ git common
+
+# print config value
+git config "<config>"
+
+% git view
+@ git common
+
+# view
+bat --color=always "<file>"
+
+% git add
+@ git common
+
+# add files
+cd "<toplevel_dir>"
+files=($(echo "<modified_files>"))
+git add "${files[@]}"
+git status
+
+% httpie 
+
+# send an authenticated http request
+http -a <username>:<password> <method> <url>
+
+# send a http request with a json body
+http <method> <url> <bodykey>=<bodyvalue>
+
+# send a http request with a form body
+http -f POST <url> <bodykey>=<bodyvalue>
+
+# send a http request and see the request as well as the response
+http -v <url>
+
+# send a post http request wih a body from a file
+http <method> <url> < <file>
+
+# send a http request wih a custom header
+http <method> <url> <header_name>:<header_value>
+
+$ file: ls
+$ method: echo 'GET|POST|PUT|DELETE|PATCH' | tr '|' '\n'
+
+% network
+
+# Find primary, local IP address
+ifconfig \
+  | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' \
+  | grep -Eo '([0-9]*\.){3}[0-9]*' \
+  | grep -v '127.0.0.1' \
+  | tail -n1

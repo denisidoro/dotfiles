@@ -35,6 +35,27 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>ft</string>
+				<key>subtext</key>
+				<string>Open current Finder directory in iTerm</string>
+				<key>text</key>
+				<string>Finder → iTerm</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>AA3CDA14-C3B5-442B-B117-D61A244C6625</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>applescript</key>
 				<string>on alfred_script(q)
   
@@ -75,27 +96,6 @@ end alfred_script</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>ft</string>
-				<key>subtext</key>
-				<string>Open current Finder directory in iTerm</string>
-				<key>text</key>
-				<string>Finder → iTerm</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>AA3CDA14-C3B5-442B-B117-D61A244C6625</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -104,9 +104,9 @@ end alfred_script</string>
 		<key>AA3CDA14-C3B5-442B-B117-D61A244C6625</key>
 		<dict>
 			<key>xpos</key>
-			<integer>300</integer>
+			<integer>295</integer>
 			<key>ypos</key>
-			<real>250</real>
+			<integer>250</integer>
 		</dict>
 		<key>BFDCE43A-5AE3-4362-88D9-D0D3CD119C81</key>
 		<dict>

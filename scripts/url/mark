@@ -10,7 +10,7 @@ source "${DOTFILES}/scripts/core/ini.sh"
 ##?    mark <args>...
 ##?
 ##? Examples:
-##?    mark mail 
+##?    mark mail
 
 doc::maybe_help "$@"
 

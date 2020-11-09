@@ -22,7 +22,7 @@ pkg::alias() {
 
    case "$pkg" in
       fasd) echo "fre" ;;
-      skim) echo "fzf" ;;
+      skim) echo "sk" ;;
       leiningen) echo "lein" ;;
       ripgrep) echo "rg" ;;
       neovim) echo "nvim" ;;

@@ -1,11 +1,17 @@
 #!/usr/bin/env zsh
 
-# if ${DOT_MAIN_SOURCED:-false}; then
-#    return 0
-# fi
+if ${DOT_MAIN_SOURCED:-false}; then
+   return 0
+fi
 
 echoerr() {
    echo "$@" 1>&2
+}
+
+tap() {
+   local -r input="$(cat)"
+   echoerr "$input"
+   echo "$input"
 }
 
 has() {
@@ -22,7 +28,7 @@ fi
 export EDITOR="${EDITOR:-vi}"
 
 if ! has dot; then
-   export PATH="${DOTFILES}/bin/:${PATH}"
+   export PATH="${DOTFILES}/bin/:${PATH}:/usr/local/bin:/usr/bin:${HOME}/bin"
 fi
 
 if ! has sudo; then

@@ -48,10 +48,11 @@ export XENVIRONMENT="${XENVIRONMENT:-"${HOME}/.Xresources"}"
 
 # navi
 export NAVI_PATH="${DOTFILES}/cheats:${DOTFILES}/local/cheats"
+# export NAVI_PATH="${DOTFILES}/cheats/demo"
 
 # zsh
 export ZDOTDIR="${ZDOTDIR:-"${HOME}/.zim"}"
 export ZIM_HOME="${ZIM_HOME:-"$ZDOTDIR"}"
 
 # PATH
-export PATH="${DOTFILES}/local/bin:${DOTFILES}/bin:${HOME}/bin:${HOME}/.cargo/bin:${VOLTA_HOME}/bin:${GOBIN}:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${PATH}"
+export PATH="${DOTFILES}/local/bin:${DOTFILES}/bin:${HOME}/bin:${HOME}/.cargo/bin:${VOLTA_HOME}/bin:${GOBIN}:${PATH}"

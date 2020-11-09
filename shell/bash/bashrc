@@ -8,7 +8,7 @@
 export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 
 # register which shell is running
-PROFILE_SHELL="bash"
+DOT_SHELL="bash"
 
 # load vars
 source "${DOTFILES}/shell/aux/vars.bash"

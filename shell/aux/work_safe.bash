@@ -1,19 +1,42 @@
 #!/usr/bin/env zsh
 
-export DOT_DOCOPT=${DOT_DOCOPT:-"python"}
+export DOT_DOCOPT=${DOT_DOCOPT:-"docpars"}
 export DOT_FZF=${DOT_FZF:-true}
 export DOT_NAVI=${DOT_NAVI:-true}
 export DOT_FRE=${DOT_FRE:-true}
-export DOT_STARSHIP=${DOT_STARSHIP:-true}
+export DOT_THEME=${DOT_THEME:-powerlevel}
 export DOT_ZIM=${DOT_ZIM:-true}
 
-export PATH="${WORK_BINARIES_PATH}:${PATH}"
+export PATH="${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH}:/usr/local/opt/bash/bin/:${PATH}"
 
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home"
 
+# source "${HOME}/.gradle/jv1/.gradle/caches/okbuck/buck-completion.bash"
+# source "${HOME}/.config/broot/launcher/bash/br"
+
+alias ls='lsd'
+
 alias xdg-open='open'
 
-_load() {
+alias sed='gsed'
+alias awk='gawk'
+alias find='gfind'
+alias grep='ggrep'
+alias head='ghead'
+alias mktemp='gmktemp'
+# alias ls='gls'
+alias date='gdate'
+alias cut='gcut'
+alias tr='gtr'
+alias cp='gcp'
+alias cat='gcat'
+alias sort='gsort'
+alias kill='gkill'
+alias xargs='gxargs'
+
+alias mono="dot u mono"
+
+_load_work_stuff() {
    case $1 in
       nvm)
          if ! ${NVM_LOADED:-false}; then
@@ -37,17 +60,19 @@ _load() {
       lda)
          echoerr "Loading lda..."
          if [ -n "$ZSH_VERSION" ]; then
-            autoload -Uz add-zsh-hook
+            # autoload -Uz add-zsh-hook
             # for zsh, only enable LDA before running the command
             # and disable it just before printing the prompt
-            add-zsh-hook preexec zsh_enable_lda
-            add-zsh-hook precmd zsh_disable_lda
+            # add-zsh-hook preexec zsh_enable_lda
+            # add-zsh-hook precmd zsh_disable_lda
+            :
          elif [[ ! -z "$JENKINS_HOME" ]]; then
             # do nothing on jenkins
             :
          elif [[ $- == *i* ]]; then
             # interactive bash shell, use PROMPT_COMMAND to hook in pre-execution
-            bash_enable_lda
+            # bash_enable_lda
+            :
          else
             # non-interactive bash shell
             :
@@ -55,7 +80,7 @@ _load() {
          ;;
       bazel)
          echoerr "Loading bazel..."
-         case $PROFILE_SHELL in
+         case ${DOT_SHELL:-} in
             zsh)
                zstyle ':completion:*' use-cache on
                zstyle ':completion:*' cache-path ~/.zsh/cache
@@ -75,29 +100,32 @@ _load() {
          echoerr "Loading direnv..."
          eval "$(direnv hook $SHELL)"
          ;;
+      *)
+         return 1
+         ;;
    esac
 }
 
-_nvm() {
-   _load nvm || true
-   nvm "$@"
-}
-
-_node() {
-   _load nvm || true
-   node "$@"
-}
-
-_npm() {
-   _load nvm || true
-   npm "$@"
-}
-
-rbenv() {
-   unfunction "$0" || true
-   _load rbenv || true
-   "$0" "$@"
-}
+# _nvm() {
+#    _load_work_stuff nvm || true
+#    nvm "$@"
+# }
+#
+# _node() {
+#    _load_work_stuff nvm || true
+#    node "$@"
+# }
+#
+# _npm() {
+#    _load_work_stuff nvm || true
+#    npm "$@"
+# }
+#
+# rbenv() {
+#    unfunction "$0" || true
+#    _load_work_stuff rbenv || true
+#    "$0" "$@"
+# }
 
 zsh_disable_lda() {
    if [[ ! -z "$WORK_BINARIES_PATH" ]]; then
@@ -160,3 +188,37 @@ opensync() {
 }
 
 # if command -v rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+# eval "$(direnv hook zsh)"
+
+gopathmode() {
+   USAGE="$0 [ on | off ]\n\tshows or sets MONOREPO_GOPATH_MODE"
+   [ $# -lt 1 ] && {
+      [ -n "$MONOREPO_GOPATH_MODE" ] \
+         && echo "MONOREPO_GOPATH_MODE is on." \
+         || echo "MONOREPO_GOPATH_MODE is off."
+      return
+   }
+   [ $# -gt 1 ] && echo "$USAGE" && return
+   [ "$1" != "on" ] && [ "$1" != "off" ] && {
+      echo "$USAGE"
+      return
+   }
+
+   if [[ "$MONOREPO_GOPATH_MODE" != "1" && "$1" == "on" ]] ; then
+      _load_work_stuff direnv
+      _load_work_stuff bazel
+      export MONOREPO_GOPATH_MODE=1
+
+      repo=$(git config --get remote.origin.url || true)
+      if [[ $repo =~ ":go-code" ]]; then
+         direnv reload
+      fi
+   elif [[ -n "$MONOREPO_GOPATH_MODE" && "$1" == "off" ]] ; then
+      unset MONOREPO_GOPATH_MODE
+      repo=$(git config --get remote.origin.url || true)
+      if [[ $repo =~ ":go-code" ]]; then
+         direnv reload
+      fi
+   fi
+}

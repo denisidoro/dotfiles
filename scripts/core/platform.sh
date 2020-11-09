@@ -106,8 +106,8 @@ platform::get_dir() {
    platform::get_dir "$@"
 }
 
-platform::root_path() {
-   if [ -n "${PREFIX:-} "]; then
+platform::root() {
+   if [ -n "${PREFIX:-}" ]; then
       local dir="$(cd "${PREFIX}/.." && pwd)"
       echo "$dir"
    fi

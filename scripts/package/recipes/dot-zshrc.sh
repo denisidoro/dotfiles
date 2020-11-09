@@ -15,7 +15,7 @@ _content() {
    echo "export DOT_FZF=${DOT_FZF:-true}"
    echo "export DOT_NAVI=${DOT_NAVI:-true}"
    echo "export DOT_ZIM=${DOT_ZIM:-true}"
-   echo "export DOT_STARSHIP=${DOT_STARSHIP:-true}"
+   echo "export DOT_THEME=${DOT_THEME:-powerlevel}"
 }
 
 package::install() {
@@ -46,7 +46,7 @@ package::install() {
       dot pkg add fzf || true
    fi
 
-   if ${DOT_STARSHIP:-false}; then
+   if [[ "${DOT_THEME:-}" == "starship" ]]; then
       dot pkg add starship || true
    fi
 

@@ -10,6 +10,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?
 ##? Options:
 ##?    --no-rust          Skip rust lints
+##?    --no-bash          Skip bash lints
 
 doc::parse "$@"
 
@@ -47,7 +48,9 @@ if ! $no_rust; then
    dot rust fix
 fi
 
-cd "$DOTFILES"
-_all_dotfiles_files_to_format \
-   | sort -u \
-   | xargs -I% -P8 dot code beautify "%" \
+if ! $no_bash; then
+   cd "$DOTFILES"
+   _all_dotfiles_files_to_format \
+      | sort -u \
+      | xargs -I% -P8 dot code beautify "%"
+fi

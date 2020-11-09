@@ -47,6 +47,8 @@ _build() {
 
    rm -rf "${PROJ_HOME}/target" 2> /dev/null || true
 
+   echo -e "PROJ_HOME: ${PROJ_HOME}\nTARGET: ${TARGET}\n"
+
    if [ -n "$TARGET" ]; then
       cargo install cross 2> /dev/null || true
       cross build --release $($use_locked && printf %s '--locked') --target "$TARGET"
@@ -81,7 +83,7 @@ _build_and_install() {
 _download_and_install() {
    local -r variant="$(platform::rust_compatible_variant)"
    local -r username="${GITHUB_USERNAME:-denisidoro}"
-   local -r repo="${REPO:-PROJ_NAME}"
+   local -r repo="${REPO:-$PROJ_NAME}"
    dot github asset download "$username" "$repo" --variant "$variant"
 }
 
@@ -107,4 +109,6 @@ elif $install; then
    _build_and_install
 elif $uninstall; then
    _uninstall
+else
+   exit 2
 fi

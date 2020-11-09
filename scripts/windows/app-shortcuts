@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/windows/aux/core.sh"
+source "${DOTFILES}/scripts/core/log.sh"
+
+##? Create app shortcuts
+##?
+##? Usage:
+##?    app-shortcuts
+
+doc::maybe_help "$@"
+
+pretty() {
+   sed 's/.exe//' \
+      | sed 's/portable//gI' \
+      | sed -E 's/[0-9]+\..*//' \
+      | sed -E 's/[-_]+ *$//'
+}
+
+create_link() {
+   local -r exe="$1"
+   local -r dest_dir="$STARTMENU_PATH"
+   local -r dest_name="$(basename "$exe" | pretty)"
+
+   dot windows shortcut \
+      "$exe" \
+      "$dest_dir" \
+      "$dest_name"
+}
+
+all_exes() {
+   find "$PORTABLE_PATH" -maxdepth 2 -iname '*.exe'
+}
+
+_main() {
+   for exe in $(all_exes); do
+      log::note "$exe"
+      if echo "$exe" | grep -q "install"; then
+         log::warning "Skipped"
+      else
+         create_link "$exe" || true
+      fi
+      echoerr
+   done
+}
+
+_main "$@"

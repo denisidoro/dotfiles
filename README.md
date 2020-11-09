@@ -27,6 +27,7 @@ If you only want to call scripts and to have the configs available locally:
 ```bash
 # with homebrew or linuxbrew
 brew install denisidoro/tools/dotfiles
+dot self install
 
 # with git
 git clone https://github.com/denisidoro/dotfiles $HOME/dotfiles

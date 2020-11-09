@@ -10,6 +10,7 @@ alias tl='dot terminal tmux ls'
 alias tn='dot terminal tmux new'
 alias ta='dot terminal tmux attach'
 alias tk='dot terminal tmux kill'
+alias faketty='dot terminal faketty'
 
 # ========================
 # shell
@@ -26,14 +27,21 @@ alias map='xargs -I%'
 # ========================
 alias vim='nvim'
 alias v="dot terminal dashed nvim --"
-alias code="dot terminal dashed dot code vscode --"
-
+code() {
+   case "$PWD" in
+      *go-code*) gopathmode on ;;
+   esac
+   dot terminal dashed dot code vscode -- "$@"
+}
 # ========================
 # utils
 # ========================
 # alias fzf='fzf-tmux'
 alias d='dot'
 alias n="navi"
+alias browser="dot system open -b"
+alias chrome="dot system open -b"
+alias color="dot terminal color"
 
 # ========================
 # git
@@ -55,14 +63,13 @@ alias o="dot terminal dashed open --"
 unalias f &> /dev/null
 alias f="dot terminal dashed vifm --"
 # alias ls='ls --color=auto'
-ls() { has lsd && lsd "$@" || command ls "$@"; }
 alias lst="tree -L 2"
 cdd() { cd "$@" && ls .; }
 mkcd() { mkdir -p -- "$@" && cd -P -- "$@"; }
 
-_safe_cd() { 
-    [[ -z "${1:-}" ]] && return 1 || true
-    [[ -d "${1:-}" ]] && cd "$1" || echoerr "$1 doesn't exist"
+_safe_cd() {
+   [[ -z "${1:-}" ]] && return 1 || true
+   [[ -d "${1:-}" ]] && cd "$1" || echoerr "$1 doesn't exist"
 }
 
 j() { _safe_cd "$(dot fs jump global "$@")"; }

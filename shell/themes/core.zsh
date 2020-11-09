@@ -49,11 +49,15 @@ _load_starship() {
    export STARSHIP_SHELL="zsh"
 }
 
-if ${DOT_STARSHIP:-true}; then
-   _load_starship || _load_fallback_theme
-else
-   _load_fallback_theme
-fi
+_load_powerlevel() {
+   source "${DOTFILES}/shell/themes/p10k.zsh"
+}
+
+case "${DOT_THEME:-}" in
+   powerlevel) _load_powerlevel || _load_fallback_theme ;;
+   starship) _load_starship || _load_fallback_theme ;;
+   *) _load_fallback_theme ;;
+esac
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=cyan"
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
