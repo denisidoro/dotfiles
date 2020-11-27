@@ -33,6 +33,10 @@ feedback::confirmation() {
    fi
 }
 
+feedback::enter() {
+   read -p "Press enter to continue"
+}
+
 feedback::text() {
    local -r question="$1"
    printf "$1 " >&2

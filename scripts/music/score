@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+##? Score utils
+##?
+##? Usage:
+##?    score download <name>
+##?
+##? Examples:
+##?    score download "My Immortal"
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
+source "${DOTFILES}/scripts/core/feedback.sh"
+
+doc::parse "$@"
+
+ROOT_DOWNLOAD_PATH="${DOTFILES}/target/score"
+DOWNLOAD_PATH="${ROOT_DOWNLOAD_PATH}/${name}"
+
+as_curl_in_each_line() {
+   sed -E 's|\\ *$||g' \
+      | tr '\n' ' ' \
+      | sed 's/; curl/\ncurl/g' \
+      | grep 'scoredata' \
+      | grep -E 'score_[0-9]\.svg' \
+      | tac
+}
+
+get_page() {
+   echo "$1" \
+      | grep -Eo 'score_[0-9]+' \
+      | head -n1 \
+      | sed 's/score_//g'
+}
+
+download_svgs() {
+   local -r lines="$1"
+
+   local visited=""
+   local page
+   local filename
+   while read -r line
+   do
+      page=""
+      filename=""
+      page="$(printf '%02d' "$(get_page "$line")")"
+      filename="${DOWNLOAD_PATH}/${page}.svg"
+      if echo "$visited" | grep -q "$page"; then
+         continue
+      fi
+      visited="${visited} ${page}"
+      log::note "$line"
+      eval "$line" > "$filename"
+   done < <(echo "$lines")
+}
+
+generate_pngs() {
+   cd "$DOWNLOAD_PATH"
+   local new_f
+   for f in *.svg; do
+      new_f="$(echo "$f" | sed 's/.svg/.png/')" 
+      svgexport "$f" "$new_f" "1.5x"
+   done
+}
+
+generate_pdf() {
+   cd "$DOWNLOAD_PATH"
+   convert *.png "../${name}.pdf"
+   cd ..
+   rm -rf "${name}"
+}
+
+_ls() {
+   echoerr "$(ls -la "$*")"
+}
+
+main() {
+   rm -rf "${DOWNLOAD_PATH}" || true
+   mkdir -p "${DOWNLOAD_PATH}" || true
+
+   log::note "Press enter after you have copied all the curl commands to the clipboard"
+   feedback::enter
+   local -r lines="$(dot system clip paste | as_curl_in_each_line)"
+
+   download_svgs "$lines"
+   _ls "$DOWNLOAD_PATH"
+
+   generate_pngs
+   _ls "$DOWNLOAD_PATH"
+
+   generate_pdf
+   _ls "$ROOT_DOWNLOAD_PATH"
+}
+
+main "$@"

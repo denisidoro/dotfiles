@@ -33,7 +33,6 @@ _print_navi() {
 
 _print() {
    print_fn="$1"
-   IFS=$'\n'
    should_start=false
    comment=""
    for line in $(cat "${DOTFILES}/peripherals/skhd/skhd.rc"); do

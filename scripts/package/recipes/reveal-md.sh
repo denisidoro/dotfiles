@@ -3,5 +3,5 @@ set -euo pipefail
 
 package::install() {
    dot pkg add volta
-   dot pkg proxy add reveal-md
+   dot pkg proxy volta add reveal-md
 }

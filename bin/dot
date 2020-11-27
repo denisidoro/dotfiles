@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-IFS=$' \n\t'
+IFS=$'\n'
 
 export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)}"
 CALLING_DIR="${CALLING_DIR:-"$PWD"}"

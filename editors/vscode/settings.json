@@ -199,5 +199,6 @@
         }
     ],
     "extensions.ignoreRecommendations": true,
-    "workbench.colorTheme": "Ayu Mirage Bordered"
+    "workbench.colorTheme": "Ayu Mirage Bordered",
+    "typescript.updateImportsOnFileMove.enabled": "always"
 }

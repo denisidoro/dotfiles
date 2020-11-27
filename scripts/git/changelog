@@ -77,7 +77,6 @@ _capture() {
 }
 
 _format() {
-   IFS=$'\n'
    for line in $(cat); do
       local commit="$(echo "$line" | cut -d';' -f1 | xargs | cut -c1-5)"
       local msg="$(echo "$line" | cut -d';' -f2 | sed -E "s|\(#([0-9]+)\)|([#\1](${REPO_URL}/issues/\1))|g")"

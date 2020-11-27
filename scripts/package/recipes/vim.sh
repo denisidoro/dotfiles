@@ -4,5 +4,6 @@ set -euo pipefail
 package::install() {
    dot pkg add neovim
    local -r nvim="$(which nvim)"
-   sudo ln -s "$nvim" "$(echo "$nvim" | sed 's/nvim/vim/')"
+   local -r vim="$(echo "$nvim" | sed 's/nvim/vim/')"
+   sudo ln -s "$nvim" "$vim"
 }

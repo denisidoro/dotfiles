@@ -28,11 +28,12 @@ alias mktemp='gmktemp'
 alias date='gdate'
 alias cut='gcut'
 alias tr='gtr'
-alias cp='gcp'
+# alias cp='gcp'
 alias cat='gcat'
 alias sort='gsort'
 alias kill='gkill'
 alias xargs='gxargs'
+alias base64='gbase64'
 
 alias mono="dot u mono"
 

@@ -13,7 +13,14 @@ source "${DOTFILES}/scripts/core/platform.sh"
 
 doc::maybe_help "$@"
 
-pkg_manager="$1"
+aliased() {
+   case "$1" in
+      *npm|yarn) echo "volta" ;;
+      *) echo "$1" ;;
+   esac
+}
+
+pkg_manager="$(aliased "$1")"
 operation="$2"
 shift 2
 

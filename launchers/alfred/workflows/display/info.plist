@@ -45,8 +45,6 @@
 				<string>#/usr/bin/env bash
 set -euo pipefail
 
-IFS=$'\n'
-
 args=($(eval "for arg in $@; do echo \$arg; done"))
 printf "%s" "$($HOME/dotfiles/bin/dot system display "${args[@]}")"</string>
 				<key>scriptargtype</key>

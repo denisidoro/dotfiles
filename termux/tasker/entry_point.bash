@@ -26,9 +26,8 @@ _handler() {
 }
 
 _main() {
-   IFS=$'\n'
    args=($(eval "for arg in $*; do echo \$arg; done"))
    _handler "${args[@]:-}"
 }
 
-_main "$@" > "${SDCARD_TASKER}/sh/out.txt" 2> "${SDCARD_TASKER}/sh/err.txt"
+_main "$@"
