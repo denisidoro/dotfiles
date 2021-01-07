@@ -1,0 +1,40 @@
+#!/usr/bin/env zsh
+
+##? ZSH helpers
+##?
+##? Usage:
+##?    zsh optimize             # Optimize ZSH
+##?    zsh benchmark            # Print the current ZSH performance
+##?    zsh reload-completions   # Reload completions
+
+rxout() { 
+   abra rx --channel "${1}_out"   
+}
+
+rxerr() { 
+   abra rx --channel "${1}_err"   
+}
+
+txspl() { 
+   local -r  channel="$1"
+   abra rx --channel test_out # window 1
+   abra rx --channel test_err # window 2
+   dot terminal faketty "$@" >(abra tx --channel "${channel}_out") 2> >(abra tx --channel "${channel}_err") 
+}
+
+rxls() {
+   local -r cmd="dot terminal faketty ls $@ \"{}\""
+   abra rx --channel pwd --cmd "$cmd"
+}
+
+faketty() {
+   abra faketty --cmd "$*"
+}
+
+main() {
+    local -r fn="$1"
+    shift
+    "$fn" "$@"
+}
+
+main "$@"

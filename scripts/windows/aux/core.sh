@@ -3,7 +3,7 @@
 source "${DOTFILES}/scripts/core/main.sh"
 
 win::user() {
-   echo "${USER^}" \
+   echo "$USER" \
       | cut -d'.' -f1
 }
 

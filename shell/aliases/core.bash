@@ -10,7 +10,12 @@ alias tl='dot terminal tmux ls'
 alias tn='dot terminal tmux new'
 alias ta='dot terminal tmux attach'
 alias tk='dot terminal tmux kill'
-alias faketty='dot terminal faketty'
+alias faketty='dot terminal abra faketty'
+alias rxout='dot terminal abra rxout'
+alias rxerr='dot terminal abra rxerr'
+alias txspl='dot terminal abra txspl'
+alias rxls='dot terminal abra rxls'
+txls() { eval "$(abra hook "$DOT_SHELL")"; }
 
 # ========================
 # shell

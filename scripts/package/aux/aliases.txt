@@ -4,5 +4,5 @@ ripgrep rg
 neovim nvim
 space-vim spacevim
 clj clojure
-vipe moreutils
 tldr tealdeer
+cargo rustup

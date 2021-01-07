@@ -11,6 +11,7 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 doc::parse "$@"
 
 main() {
+   IFS=$'\n'
    if $release; then
       git::changelog_release "$@"
    elif $commit; then

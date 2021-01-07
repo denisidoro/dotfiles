@@ -18,12 +18,19 @@ pretty() {
       | sed -E 's/[-_]+ *$//'
 }
 
+name_from_folder() {
+   grep -Eo '[^\/]+/[^/]+$' \
+      | cut -d'/' -f2
+}
+
 create_link() {
    local -r exe="$1"
    local -r dest_dir="$STARTMENU_PATH"
-   local -r dest_name="$(basename "$exe" | pretty)"
+   local -r folder_name="$(name_from_folder "$exe" | pretty)"
+   local -r exe_name="$(basename "$exe" | pretty)"
+   local -r dest_name="${folder_name}_${exe_name}"
 
-   dot windows shortcut \
+   echo dot windows shortcut \
       "$exe" \
       "$dest_dir" \
       "$dest_name"

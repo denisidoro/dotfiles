@@ -95,6 +95,10 @@
         "go": "/usr/local/bin/go",
     },*/
     // ==================
+    // Rust
+    // ================== 
+    "rust-analyzer.checkOnSave.command": "clippy",
+    // ==================
     // Javascript
     // ================== 
     "javascript.validate.enable": false,
@@ -200,5 +204,6 @@
     ],
     "extensions.ignoreRecommendations": true,
     "workbench.colorTheme": "Ayu Mirage Bordered",
-    "typescript.updateImportsOnFileMove.enabled": "always"
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "code-runner.runInTerminal": true
 }
