@@ -1,25 +1,36 @@
 #!/usr/bin/env zsh
 
-##? ZSH helpers
+##? abra helpers
 ##?
 ##? Usage:
-##?    zsh optimize             # Optimize ZSH
-##?    zsh benchmark            # Print the current ZSH performance
-##?    zsh reload-completions   # Reload completions
+##?    abra rxls <args>...
+##?    abra txspl <channel> <cmds>... 
+##?    abra rxout <channel>
+##?    abra rxerr <channel>
+##?    abra faketty <cmds>... 
+##?
+##? Examples:
+##?    abra rxls -la
+##?    abra txspl test cargo test
+##?    abra rxout test
+##?    abra rxerr test
+##?    abra faketty ls -la
+
+doc::maybe_help "$@"
 
 rxout() {
-   abra rx --channel "${1}_out"
+   abra rx --channel "${1}-out"
 }
 
 rxerr() {
-   abra rx --channel "${1}_err"
+   abra rx --channel "${1}-err"
 }
 
 txspl() {
-   local -r  channel="$1"
+   local -r channel="$1"
    abra rx --channel test_out # window 1
    abra rx --channel test_err # window 2
-   dot terminal faketty "$@" >(abra tx --channel "${channel}_out") 2> >(abra tx --channel "${channel}_err")
+   dot terminal faketty "$@" >(abra tx --channel "${channel}-out") 2> >(abra tx --channel "${channel}-err")
 }
 
 rxls() {
