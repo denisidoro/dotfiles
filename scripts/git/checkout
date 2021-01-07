@@ -6,6 +6,7 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 ##? Interactive git checkout
 ##?
 ##? Usage:
+##?    checkout master
 ##?    checkout prompt
 ##?    checkout latest
 

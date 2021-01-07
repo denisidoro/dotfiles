@@ -10,6 +10,12 @@ git::current_branch() {
    git branch | grep \* | cut -d ' ' -f2
 }
 
+git::master_branch() {
+   local branch="master"
+   git branch | grep -q main || branch="main"
+   echo "$branch"
+}
+
 git::root() {
    git rev-parse --show-toplevel
 }

@@ -3,8 +3,8 @@
 # based on https://github.com/ohmybash/oh-my-bash/blob/master/plugins/git/git.plugin.sh
 
 # master
-alias gcom="git checkout master"
-alias gmm="git merge master"
+alias gcom="dot git master checkout"
+alias gmm="dot git master merge"
 
 # update
 alias gu="dot git pull module"
