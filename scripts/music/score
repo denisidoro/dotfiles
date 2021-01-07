@@ -59,7 +59,7 @@ generate_pngs() {
    cd "$DOWNLOAD_PATH"
    local new_f
    for f in *.svg; do
-      new_f="$(echo "$f" | sed 's/.svg/.png/')" 
+      new_f="$(echo "$f" | sed 's/.svg/.png/')"
       svgexport "$f" "$new_f" "1.5x"
    done
 }

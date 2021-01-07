@@ -14,7 +14,7 @@ _master() {
    dot git master checkout
    git pull
    git checkout -
-   dot git master merge 
+   dot git master merge
    git checkout -v -a
 }
 

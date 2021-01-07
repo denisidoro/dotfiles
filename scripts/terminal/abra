@@ -7,19 +7,19 @@
 ##?    zsh benchmark            # Print the current ZSH performance
 ##?    zsh reload-completions   # Reload completions
 
-rxout() { 
-   abra rx --channel "${1}_out"   
+rxout() {
+   abra rx --channel "${1}_out"
 }
 
-rxerr() { 
-   abra rx --channel "${1}_err"   
+rxerr() {
+   abra rx --channel "${1}_err"
 }
 
-txspl() { 
+txspl() {
    local -r  channel="$1"
    abra rx --channel test_out # window 1
    abra rx --channel test_err # window 2
-   dot terminal faketty "$@" >(abra tx --channel "${channel}_out") 2> >(abra tx --channel "${channel}_err") 
+   dot terminal faketty "$@" >(abra tx --channel "${channel}_out") 2> >(abra tx --channel "${channel}_err")
 }
 
 rxls() {
@@ -32,9 +32,9 @@ faketty() {
 }
 
 main() {
-    local -r fn="$1"
-    shift
-    "$fn" "$@"
+   local -r fn="$1"
+   shift
+   "$fn" "$@"
 }
 
 main "$@"

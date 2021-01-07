@@ -46,7 +46,7 @@ get_info_json() {
 
 get_info_all() {
    for id in $(list_devices_raw); do
-     get_info "$id" 
+      get_info "$id"
    done
 }
 
