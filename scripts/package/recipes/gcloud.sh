@@ -2,8 +2,7 @@
 set -euo pipefail
 
 package::install() {
-   if has brew; then
-      brew cask install google-cloud-sdk && return 0 || return 1
-   fi
-   dot pkg add gcloud --prevent-recipe || dot pkg add google-cloud-sdk --prevent-recipe
+   has brew && brew cask install google-cloud-sdk && return 0 || true
+   dot pkg add gcloud --prevent-recipe && return 0 || true
+   curl https://sdk.cloud.google.com | bash
 }

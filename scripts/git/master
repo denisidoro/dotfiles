@@ -18,3 +18,5 @@ main() {
 
    git "$fn" "$branch" "$@"
 }
+
+main "$@"

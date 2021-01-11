@@ -40,6 +40,7 @@ yabai -m rule --add app="Spotify" space=^7
 yabai -m rule --add app="Slack" space=^8
 # yabai -m rule --add app="zoom.us" space=^8
 yabai -m rule --add app="Digital Color Meter" sticky=on
+yabai -m rule --add title='APPlayMIDI' manage=off topmost=on
 
 # yabai -m signal --add event=space_changed action="open 'bitbar://refreshPlugin?name=yabai.1h.sh'"
 

@@ -39,6 +39,13 @@ alias mono="dot u mono"
 
 _load_work_stuff() {
    case $1 in
+      go)
+         gopathmode on
+         ;;
+      gcloud) 
+         source "${HOME}/google-cloud-sdk/path.zsh.inc" &> /dev/null
+         source "${HOME}/google-cloud-sdk/completion.zsh.inc" &> /dev/null
+         ;;
       nvm)
          if ! ${NVM_LOADED:-false}; then
             unset -f nvm node npm &> /dev/null

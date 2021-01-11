@@ -16,6 +16,7 @@ alias rxerr='dot terminal abra rxerr'
 alias txspl='dot terminal abra txspl'
 alias rxls='dot terminal abra rxls'
 txls() { eval "$(abra hook "$DOT_SHELL")"; }
+alias bt='bat -p'
 
 # ========================
 # shell
@@ -38,6 +39,7 @@ code() {
    esac
    dot terminal dashed dot code vscode -- "$@"
 }
+alias e='code'
 # ========================
 # utils
 # ========================

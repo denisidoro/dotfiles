@@ -31,7 +31,11 @@ if [ $# -gt 1 ]; then
 fi
 
 _log::installing() {
-   log::warning "Attempting to install ${package}..."
+   local suffix=""
+   if $prevent_recipe; then
+      suffix=" without custom recipes"
+   fi
+   log::warning "Attempting to install ${package}${suffix}..."
 }
 
 package="$(pkg::alias "$1" "$prevent_recipe")"

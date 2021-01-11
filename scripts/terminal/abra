@@ -28,8 +28,6 @@ rxerr() {
 
 txspl() {
    local -r channel="$1"
-   abra rx --channel test_out # window 1
-   abra rx --channel test_err # window 2
    dot terminal faketty "$@" >(abra tx --channel "${channel}-out") 2> >(abra tx --channel "${channel}-err")
 }
 
