@@ -4,7 +4,8 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 win::user() {
    echo "$USER" \
-      | cut -d'.' -f1
+      | cut -d'.' -f1 \
+      | sed 's/dns/denis/g'
 }
 
 win::nircmd() {

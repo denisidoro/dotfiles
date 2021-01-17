@@ -23,14 +23,25 @@ name_from_folder() {
       | cut -d'/' -f2
 }
 
+get_dest_name() {
+   local -r folder="$1"
+   local -r exe="$2"
+
+   if [[ "$folder" == "$exe" ]]; then
+	   echo "$folder"
+   else
+	   echo "${folder}_${exe}"
+   fi
+}
+
 create_link() {
    local -r exe="$1"
    local -r dest_dir="$STARTMENU_PATH"
-   local -r folder_name="$(name_from_folder "$exe" | pretty)"
+   local -r folder_name="$(echo "$exe" | name_from_folder | pretty)"
    local -r exe_name="$(basename "$exe" | pretty)"
-   local -r dest_name="${folder_name}_${exe_name}"
+   local -r dest_name="$(get_dest_name "$folder_name" "$exe_name")"
 
-   echo dot windows shortcut \
+   dot windows shortcut \
       "$exe" \
       "$dest_dir" \
       "$dest_name"
@@ -41,6 +52,8 @@ all_exes() {
 }
 
 _main() {
+   mkdir -p "${STARTMENU_PATH}" || true
+
    for exe in $(all_exes); do
       log::note "$exe"
       if echo "$exe" | grep -q "install"; then

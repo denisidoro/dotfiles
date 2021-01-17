@@ -3,7 +3,7 @@
 source "${DOTFILES}/scripts/core/dict.sh"
 
 _apt() {
-   apt-get "$@"
+   sudo apt-get "$@"
 }
 
 apt::install() {
