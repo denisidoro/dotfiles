@@ -27,17 +27,17 @@ get_dest_name() {
    local -r folder="$1"
    local -r exe="$2"
 
-   if [[ "$folder" == "$exe" ]]; then
+   if [[ "${folder,,}" == "${exe,,}" ]]; then
 	   echo "$folder"
    else
-	   echo "${folder}_${exe}"
+	   echo "${folder} ${exe}"
    fi
 }
 
 create_link() {
    local -r exe="$1"
    local -r dest_dir="$STARTMENU_PATH"
-   local -r folder_name="$(echo "$exe" | name_from_folder | pretty)"
+   local -r folder_name="$(dirname "$exe" | name_from_folder | pretty)"
    local -r exe_name="$(basename "$exe" | pretty)"
    local -r dest_name="$(get_dest_name "$folder_name" "$exe_name")"
 
