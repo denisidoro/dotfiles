@@ -12,7 +12,7 @@ git::current_branch() {
 
 git::master_branch() {
    local branch="main"
-   git branch | grep -qE '^[\* ]*main$[ ]*' || branch="master"
+   git branch | grep -qE '^[\* ]*main[ ]*$' || branch="master"
    echo "$branch"
 }
 

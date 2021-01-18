@@ -1,4 +1,6 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
+
+source "${DOTFILES}/scripts/core/main.sh"
 
 ##? abra helpers
 ##?
@@ -33,7 +35,7 @@ txspl() {
 
 rxls() {
    local -r cmd="dot terminal faketty ls $@ \"{}\""
-   abra rx --channel pwd --cmd "$cmd"
+   abra rx --channel pwd --cmd "$cmd" --clear
 }
 
 faketty() {

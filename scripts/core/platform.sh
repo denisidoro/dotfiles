@@ -47,6 +47,7 @@ platform::tags() {
    if platform::is_64bits; then tags="${tags}64bits "; fi
    if platform::is_android; then tags="${tags}android "; fi
    if platform::is_wsl; then tags="${tags}wsl "; fi
+   if [ -n "${UBER_HOME:-}" ]; then tags="${tags}work "; fi
    echo "$tags"
 }
 

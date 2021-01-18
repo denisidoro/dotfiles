@@ -11,6 +11,8 @@ source "${DOTFILES}/scripts/core/log.sh"
 
 doc::maybe_help "$@"
 
+export STARTMENU_APPS_PATH="${STARTMENU_PATH}/Programs/Applications"
+
 pretty() {
    sed 's/.exe//' \
       | sed 's/portable//gI' \
@@ -36,7 +38,7 @@ get_dest_name() {
 
 create_link() {
    local -r exe="$1"
-   local -r dest_dir="$STARTMENU_PATH"
+   local -r dest_dir="$STARTMENU_APPS_PATH"
    local -r folder_name="$(dirname "$exe" | name_from_folder | pretty)"
    local -r exe_name="$(basename "$exe" | pretty)"
    local -r dest_name="$(get_dest_name "$folder_name" "$exe_name")"
@@ -52,7 +54,7 @@ all_exes() {
 }
 
 _main() {
-   mkdir -p "${STARTMENU_PATH}" || true
+   mkdir -p "${STARTMENU_APPS_PATH}" || true
 
    for exe in $(all_exes); do
       log::note "$exe"

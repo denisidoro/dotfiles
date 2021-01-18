@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+source "$DOTFILES/scripts/core/main.sh"
+
+##? navi helpers
+##?
+##? Usage:
+##?    navi one <query> <var> [<value>]
+##?    navi dash [<args>...]
+
+doc::maybe_help "$@"
+
+
+export_var() {
+   local -r var="$(echo "$1" | tr '-' '_')"
+   export "$var"="$2"
+}
+
+main_dash() {
+   local var
+   declare args=()
+   local navi_args=true
+
+   for v in $@; do
+      if $navi_args; then 
+         case $v in 
+            --) navi_args=false ;;
+            *) args+=("$v") ;;
+         esac
+      else
+         case $v in
+            --*) var="${v:2}" ;;
+            *) export_var "$var" "$v"
+         esac
+      fi
+   done
+
+   navi "${args[@]}"
+}
+
+main_one() {
+   local -r query="$1"
+   local -r var="$2"
+   shift 2
+
+   if [[ $# -gt 0 ]]; then
+      local -r var_full="${var}__best" fs
+      read $var_full <<< "$*"
+      export $var_full
+   fi
+
+   navi --query "$query" --best-match
+}
+
+main() {
+   local -r fn="$1"
+   shift
+   "main_${fn}" "$@"
+}
+
+main "$@"

@@ -12,20 +12,15 @@ package::install() {
    platform::is_android || return 1
 
    pkg install ncurses-utils || true
-
    pkg install proot || true
    pkg install unstable-repo || true
    apt install coreutils || true
    pkg install util-linux || true
    pkg install termux-packages || true
-   pkg install ncurses-utils || true
    pkg install grep || true
    pkg install sed || true
    termux-setup-storage || true
-
-   if ! which sudo; then
-      dot pkg add termux-sudo || true
-   fi
-
    termux-chroot || true
+
+   dot pkg add termux-tudo termux-sudo
 }

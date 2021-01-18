@@ -2,7 +2,7 @@
     // ==================
     // Editor
     // ==================
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 1,
     "editor.fontSize": 12,
     // "editor.fontFamily": "Hack Nerd Font",
     "editor.letterSpacing": 0.2,

@@ -25,7 +25,7 @@ alias gcamp="dot git push commit"
 alias gprp="dot git pr preview"
 
 # git interactive checkout
-alias gcoo="dot terminal navi1 local_branch local_branch"
+alias gcoo="dot terminal navi one local_branch local_branch"
 
 # git status
 alias gst="git status"

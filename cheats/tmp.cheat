@@ -58,6 +58,9 @@ $ sub1_var: echo "sub1_var_text + <sub2_var>"
 % sub2
 $ sub2_var: echo "sub2_var_text + <free_text_var>"
 
+# dashed
+echo "1: <foo-bar>, 2: <foo>, 3: <bar>, 4: <foo-bar-baz>"
+
 $ local_file: ls .
 
 # my example
@@ -74,9 +77,19 @@ cal -B <before> -A <after>
 # julian calendar
 cal -j -B <before> -A <after>
 
-
-
 % throw, expression, syntax, c#, cs, .net
+
+% toplevel
+@ sub1
+@ sub2
+# echo vars
+echo <sub1_var>
+
+% sub1
+$ sub1_var: echo "sub1_var_text + <sub2_var>"
+
+% sub2
+$ sub2_var: echo "sub2_var_text + <free_text_var>"
 
 # Throw expression within property
 string Name \
