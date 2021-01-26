@@ -7,7 +7,7 @@ export DOT_FRE=${DOT_FRE:-true}
 export DOT_THEME=${DOT_THEME:-powerlevel}
 export DOT_ZIM=${DOT_ZIM:-true}
 
-export PATH="${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH}:/usr/local/opt/bash/bin/:${PATH}"
+export PATH="/usr/local/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH}:/usr/local/opt/bash/bin/:${PATH}"
 
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home"
 

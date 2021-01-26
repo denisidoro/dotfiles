@@ -205,5 +205,6 @@
     "extensions.ignoreRecommendations": true,
     "workbench.colorTheme": "Ayu Mirage Bordered",
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "code-runner.runInTerminal": true
+    "code-runner.runInTerminal": true,
+    "C_Cpp.updateChannel": "Insiders"
 }

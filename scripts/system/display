@@ -35,6 +35,8 @@ _osx_external() {
       args+=("-b" "$brightness")
       if [[ $brightness -lt 1 ]]; then
          power=5
+      else
+         power=1
       fi
    fi
    if [[ -n ${contrast:-} ]]; then
