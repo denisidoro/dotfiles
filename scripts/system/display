@@ -8,9 +8,10 @@ source "${DOTFILES}/scripts/core/platform.sh"
 ##? Change brightness
 ##?
 ##? Usage:
-##?    display <id> [options]
-##?    display <id> <bright> [options]
-##?    display <id> <bright> <contr> [options]
+##?    display lock
+##?    display q <id> [options]
+##?    display q <id> <bright> [options]
+##?    display q <id> <bright> <contr> [options]
 ##?
 ##? Options:
 ##?    -b --brightness <brightness>    Brightness level
@@ -96,7 +97,7 @@ _osx() {
    fi
 }
 
-main() {
+main_q() {
    if [[ -n "${bright:-}" ]]; then
       brightness="$bright"
    fi
@@ -108,6 +109,20 @@ main() {
       _osx "$@"
    else
       die "No implementation for this system"
+   fi
+}
+
+main_lock() {
+   dot system display q 1 0
+   dot system display q 0 0
+   pmset displaysleepno
+}
+
+main() {
+   if $lock; then
+      main_lock "$@"
+   else
+      main_q "$@"
    fi
 }
 

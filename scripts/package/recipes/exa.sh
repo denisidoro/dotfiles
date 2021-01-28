@@ -2,5 +2,5 @@
 set -euo pipefail
 
 package::install() {
-   recipe::cargo git-delta
+   recipe::cargo exa
 }

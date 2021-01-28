@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/fs.sh"
-source "${DOTFILES}/scripts/core/platform.sh"
-source "${DOTFILES}/scripts/core/log.sh"
-
 _prompt() {
    log::warning "$1"
    read -p "Press enter to continue"

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/platform.sh"
-
 REPO_TAG="2.0.0-alpha.3"
 
 url::generate() {

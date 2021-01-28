@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/platform.sh"
-
 package::is_installed() {
    ! platform::is_osx \
       || has ggrep

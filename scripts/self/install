@@ -2,6 +2,7 @@
 set -euo pipefail
 
 export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
+export PATH="${DOTFILES}/bin:${PATH}"
 REPO="https://github.com/denisidoro/dotfiles.git"
 DOT_BIN="${DOTFILES}/bin/dot"
 

@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/fs.sh"
-source "${DOTFILES}/scripts/core/log.sh"
-
 package::is_installed() {
    fs::is_dir "/var/www/html/phpMyAdmin"
 }

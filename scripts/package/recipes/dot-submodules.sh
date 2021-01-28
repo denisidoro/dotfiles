@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/log.sh"
-
 DEFAULT_DOTFILES="${HOME}/dotfiles"
 
 package::is_installed() {

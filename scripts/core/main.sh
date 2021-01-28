@@ -16,7 +16,7 @@ has() {
 
 export -f has echoerr
 
-if ${DOT_MAIN_SOURCED:-false}; then
+if has doc::parse; then
    return 0
 fi
 
@@ -94,5 +94,3 @@ doc::parse() {
 }
 
 export -f doc::help_msg doc::maybe_help doc::help_or_fail doc::parse
-
-export DOT_MAIN_SOURCED=true

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/platform.sh"
-
 package::install() {
    dot pkg add --prevent-recipe leiningen \
       || dot pkg add --prevent-recipe lein \

@@ -14,7 +14,7 @@ export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Ho
 # source "${HOME}/.gradle/jv1/.gradle/caches/okbuck/buck-completion.bash"
 # source "${HOME}/.config/broot/launcher/bash/br"
 
-alias ls='lsd'
+alias ls='exa --icons'
 
 alias xdg-open='open'
 
