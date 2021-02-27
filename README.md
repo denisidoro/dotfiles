@@ -20,7 +20,7 @@
   <a href="docs">Docs</a>
 </p>
 
-## Minimal installation
+## Installation
 
 If you only want to call scripts and to have the configs available locally:
 
@@ -31,17 +31,6 @@ dot self install
 
 # with git
 git clone https://github.com/denisidoro/dotfiles $HOME/dotfiles
-```
-
-## Full installation
-
-If you want to apply all dotfiles such as `.bashrc`, first proceed with the minimum installation then:
-
-```bash
-# with homebrew or linuxbrew
-dot self install
-
-# with git
 $HOME/dotfiles/bin/dot self install
 ```
 
