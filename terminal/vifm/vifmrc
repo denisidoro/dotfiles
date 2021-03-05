@@ -409,7 +409,7 @@ nnoremap O :!vim %f<cr>
 " Open file in the background using its default program
 nnoremap gb :file &<cr>l
 
-" Interaction with system clipboard
+" Interaction with terminal clipboard
 if has('win')
     " Yank current directory path to Windows clipboard with forward slashes
     nnoremap yp :!echo %"d:gs!\!/! %i | clip<cr>
@@ -521,4 +521,3 @@ highlight AuxWin cterm=bold,underline,reverse,standout ctermfg=default ctermbg=d
 "     vifm --server-name "$VIFM_SERVER_NAME" --remote +"cd '$PWD'"
 "
 " let $VIFM_SERVER_NAME = v:servername
-

@@ -1,8 +1,4 @@
 {
-    // ==================
-    // Editor
-    // ==================
-    "window.zoomLevel": 1,
     "editor.fontSize": 12,
     // "editor.fontFamily": "Hack Nerd Font",
     "editor.letterSpacing": 0.2,
@@ -81,7 +77,8 @@
         "*.envrc": "shellscript",
         "*.uql": "sql",
         "*.proto.txt": "ruby",
-        "*rc": "shellscript"
+        "*rc": "shellscript",
+        "*BUILD": "shellscript"
     },
     // ==================
     // GO
@@ -206,5 +203,6 @@
     "workbench.colorTheme": "Ayu Mirage Bordered",
     "typescript.updateImportsOnFileMove.enabled": "always",
     "code-runner.runInTerminal": true,
-    "C_Cpp.updateChannel": "Insiders"
+    "C_Cpp.updateChannel": "Insiders",
+    "window.zoomLevel": 2
 }

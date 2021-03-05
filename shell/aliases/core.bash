@@ -34,9 +34,9 @@ alias map='xargs -I%'
 alias vim='nvim'
 alias v="dot terminal dashed nvim --"
 code() {
-   case "$PWD" in
-      *go-code*) gopathmode on ;;
-   esac
+   # case "$PWD" in
+   #    *go-code*) gopathmode on ;;
+   # esac
    dot terminal dashed dot code vscode -- "$@"
 }
 alias e='code'
@@ -46,8 +46,8 @@ alias e='code'
 # alias fzf='fzf-tmux'
 alias d='dot'
 alias n="navi"
-alias browser="dot system open -b"
-alias chrome="dot system open -b"
+alias browser="dot terminal open -b"
+alias chrome="dot terminal open -b"
 alias color="dot terminal color"
 
 # ========================

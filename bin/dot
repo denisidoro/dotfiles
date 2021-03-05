@@ -53,7 +53,7 @@ _alias() {
    case "$arg" in
       js|json) echo javascript ;;
       phab|ph) echo phabricator ;;
-      sh|shell) echo terminal ;;
+      sh|shell|script|scripting) echo terminal ;;
       fs) echo filesystem ;;
       and) echo android ;;
       clj) echo clojure ;;

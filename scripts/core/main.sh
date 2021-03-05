@@ -84,7 +84,16 @@ doc::parse() {
    local -r file="$0"
    local -r help="$(doc::help_msg "$file")"
 
-   if [[ ${DOT_DOCOPT:-python} == "python" ]]; then
+   if [ -z ${DOT_DOCOPT:-} ]; then
+      if has python; then
+         DOT_DOCOPT="python"
+      else
+         (dot pkg add docpars >/dev/null && DOT_DOCOPT="$(which docpars)") \
+            || (dot pkg add python >/dev/null && DOT_DOCOPT="python")
+      fi
+   fi
+
+   if [[ $DOT_DOCOPT == "python" ]]; then
       local -r docopt="${DOTFILES}/scripts/core/docopts"
    else
       local -r docopt="$DOT_DOCOPT"

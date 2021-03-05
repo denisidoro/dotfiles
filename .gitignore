@@ -1,5 +1,6 @@
 local*
 *.pyc
+tmp/
 __pycache__
 font*.css
 .lumo_cache

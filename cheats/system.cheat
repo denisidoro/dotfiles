@@ -1,7 +1,7 @@
 % system
 
 # Copy environment variable to clipboard
-echo "<env_var_value>" | dot system clip copy
+echo "<env_var_value>" | dot terminal clip copy
 
 # List path available commands
 which "<cmd>"
