@@ -12,7 +12,7 @@ source "${DOTFILES}/scripts/core/log.sh"
 doc::maybe_help "$@"
 
 main() {
-    "$@"
+   "$@"
 }
 
 main "$@"

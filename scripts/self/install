@@ -86,7 +86,7 @@ main() {
 
    # Use specific version
    if [ -n "${DOT_VERSION:-}" ] && [ "$DOT_VERSION" != "master" ]; then
-      git checkout "${DOT_VERSION}" 
+      git checkout "${DOT_VERSION}"
       _dot self install "$@"
       exit 0
    fi
@@ -97,7 +97,7 @@ main() {
          sudo apt-get upgrade || true
          sudo apt-get update || true
       fi
-      if _has brew; then 
+      if _has brew; then
          brew update || true
       fi
    fi

@@ -30,9 +30,9 @@ get_dest_name() {
    local -r exe="$2"
 
    if [[ "${folder,,}" == "${exe,,}" ]]; then
-	   echo "$folder"
+      echo "$folder"
    else
-	   echo "${folder} ${exe}"
+      echo "${folder} ${exe}"
    fi
 }
 

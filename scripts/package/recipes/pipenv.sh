@@ -2,6 +2,6 @@
 set -euo pipefail
 
 package::install() {
-    dot pkg add pipx
-    pipx install pipenv
+   dot pkg add pipx
+   pipx install pipenv
 }

@@ -8,12 +8,12 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?     color
 ##?
 ##? Examples:
-##?     ls > >(color) 
+##?     ls > >(color)
 
 doc::maybe_help "$@"
 
 main() {
-   while read line; do 
+   while read line; do
       dot terminal ansi --yellow "$line"
    done
 }

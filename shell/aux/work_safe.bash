@@ -42,7 +42,7 @@ _load_work_stuff() {
       go)
          gopathmode on
          ;;
-      gcloud) 
+      gcloud)
          source "${HOME}/google-cloud-sdk/path.zsh.inc" &> /dev/null
          source "${HOME}/google-cloud-sdk/completion.zsh.inc" &> /dev/null
          ;;

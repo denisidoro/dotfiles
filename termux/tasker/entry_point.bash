@@ -18,7 +18,7 @@ termux-chroot || true
 _script() {
    local -r path="$1"
    shift
-   bash "$path" "$@" 
+   bash "$path" "$@"
 }
 
 _dot() {

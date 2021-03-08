@@ -2,6 +2,6 @@
 set -euo pipefail
 
 package::install() {
-    dot pkg add brew
-    brew install openresty/brew/openresty
+   dot pkg add brew
+   brew install openresty/brew/openresty
 }

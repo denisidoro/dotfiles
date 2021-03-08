@@ -22,8 +22,8 @@ main_dash() {
    local navi_args=true
 
    for v in $@; do
-      if $navi_args; then 
-         case $v in 
+      if $navi_args; then
+         case $v in
             --) navi_args=false ;;
             *) args+=("$v") ;;
          esac

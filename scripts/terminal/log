@@ -11,9 +11,9 @@ source "${DOTFILES}/scripts/core/log.sh"
 doc::maybe_help "$@"
 
 main() {
-    local -r fn="$1"
-    shift
-    "log::${fn}" "$@"
+   local -r fn="$1"
+   shift
+   "log::${fn}" "$@"
 }
 
 main "$@"

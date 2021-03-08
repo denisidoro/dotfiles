@@ -5,7 +5,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 win::user() {
    echo "$USER" \
       | cut -d'.' -f1 \
-}
+   }
 
 win::nircmd() {
    "$NIRCMD_PATH" "$@"
