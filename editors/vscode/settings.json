@@ -204,5 +204,10 @@
     "typescript.updateImportsOnFileMove.enabled": "always",
     "code-runner.runInTerminal": true,
     "C_Cpp.updateChannel": "Insiders",
-    "window.zoomLevel": 2
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ]
 }

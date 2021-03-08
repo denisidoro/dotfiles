@@ -1,42 +1,16 @@
 #!/usr/bin/env bash
 
 log::ansi() {
-   local bg=false
-   case "$@" in
-      *reset*) echo "\e[0m"; return 0 ;;
-      *black*) color=30 ;;
-      *red*) color=31 ;;
-      *green*) color=32 ;;
-      *yellow*) color=33 ;;
-      *blue*) color=34 ;;
-      *purple*) color=35 ;;
-      *cyan*) color=36 ;;
-      *white*) color=37 ;;
-   esac
-   case "$@" in
-      *regular*) mod=0 ;;
-      *bold*) mod=1 ;;
-      *underline*) mod=4 ;;
-   esac
-   case "$@" in
-      *background*) bg=true ;;
-      *bg*) bg=true ;;
-   esac
-
-   if $bg; then
-      echo "\e[${color}m"
-   else
-      echo "\e[${mod:-0};${color}m"
-   fi
+   dot terminal ansi "$@"
 }
 
-_log() {
+log::_log() {
    local template=$1
    shift
    echoerr -e $(printf "$template" "$@")
 }
 
-_header() {
+log::_header() {
    local TOTAL_CHARS=60
    local total=$TOTAL_CHARS-2
    local size=${#1}
@@ -47,14 +21,14 @@ _header() {
    printf "%${right}s" '' | tr ' ' =
 }
 
-log::header() { _log "\n$(log::ansi bold)$(log::ansi purple)$(_header "$1")$(log::ansi reset)\n"; }
-log::success() { _log "$(log::ansi green)✔ %s$(log::ansi reset)\n" "$@"; }
-log::error() { _log "$(log::ansi red)✖ %s$(log::ansi reset)\n" "$@"; }
-log::warning() { _log "$(log::ansi yellow)➜ %s$(log::ansi reset)\n" "$@"; }
-log::note() { _log "$(log::ansi blue)%s$(log::ansi reset)\n" "$@"; }
+log::header() { log::_log "$(log::ansi --magenta "$(log::_header "$@")")\n"; }
+log::warn() { log::_log "$(log::ansi --yellow --inverse " WARN ") $(log::ansi --yellow "$@")\n"; }
+log::err() { log::_log "$(log::ansi --red --inverse "⠀⠀ERR⠀") $(log::ansi --red "$@")\n"; }
+log::success() { log::_log "$(log::ansi --green --inverse " SUCC ") $(log::ansi --green "$@")\n"; }
+log::info() { log::_log "$(log::ansi --blue --inverse " INFO ") $(log::ansi --blue "$@")\n"; }
 
 die() {
-   log::error "$@"
+   log::err "$@"
    exit 42
 }
 

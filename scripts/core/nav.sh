@@ -207,7 +207,7 @@ action::browse() {
 }
 
 action::handle_abort() {
-   log::error "Invalid action: ${action:-unknown}"
+   log::err "Invalid action: ${action:-unknown}"
    exit 1
 }
 

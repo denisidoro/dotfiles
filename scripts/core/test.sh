@@ -30,16 +30,16 @@ test::filter_check() {
 
 test::fail() {
    FAILED=$((FAILED+1))
-   log::error "Test failed..."
+   log::err "Test failed..."
    return
 }
 
 test::skip() {
    test::filter_check || return 0
    echo
-   log::note "${SUITE:-unknown} - ${1:-unknown}"
+   log::info "${SUITE:-unknown} - ${1:-unknown}"
    SKIPPED=$((SKIPPED+1))
-   log::warning "Test skipped..."
+   log::warn "Test skipped..."
    return
 }
 
@@ -52,7 +52,7 @@ _with_sleep() {
 test::run() {
    test::filter_check || return 0
    echo
-   log::note "${SUITE:-unknown} - ${1:-unknown}"
+   log::info "${SUITE:-unknown} - ${1:-unknown}"
    shift
    "$@" && test::success || test::fail
 }
@@ -79,7 +79,7 @@ test::equals() {
    local -r expected="$(echo "${1:-}")"
 
    if [[ "$actual" != "$expected" ]]; then
-      log::error "Expected...\n\n${expected}\n\n...but got:\n\n${actual}'"
+      log::err "Expected...\n\n${expected}\n\n...but got:\n\n${actual}'"
       return 2
    fi
 }
@@ -89,7 +89,7 @@ test::includes() {
    local -r should_include="$(echo "${1:-}")"
 
    if ! echo "$actual" | grep -Fq "$should_include"; then
-      log::error "Expected the following string to include...\n\n${should_include}\n\n...but it doesn't:\n\n${actual}"
+      log::err "Expected the following string to include...\n\n${should_include}\n\n...but it doesn't:\n\n${actual}"
       return 3
    fi
 }
@@ -97,10 +97,10 @@ test::includes() {
 test::finish() {
    echo
    if [ $SKIPPED -gt 0 ]; then
-      log::warning "${SKIPPED} tests skipped!"
+      log::warn "${SKIPPED} tests skipped!"
    fi
    if [ $FAILED -gt 0 ]; then
-      log::error "${PASSED} tests passed but ${FAILED} failed... :("
+      log::err "${PASSED} tests passed but ${FAILED} failed... :("
       exit "${FAILED}"
    else
       log::success "All ${PASSED} tests passed! :)"
@@ -120,7 +120,7 @@ test::start() {
       delta=$((SECONDS - seconds))
       echoerr
       filename="$(basename "$test")"
-      log::warning "Running ${filename} took ${delta} seconds"
+      log::warn "Running ${filename} took ${delta} seconds"
    done
 
    test::finish

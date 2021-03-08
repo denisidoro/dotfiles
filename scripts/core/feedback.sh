@@ -13,7 +13,7 @@ feedback::confirmation() {
       options="(y|N)"
    fi
 
-   log::warning "$msg"
+   log::warn "$msg"
    read -p "$options " -n 1 -r </dev/tty
    local reply="$REPLY"
 

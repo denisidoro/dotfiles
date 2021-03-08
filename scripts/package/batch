@@ -67,12 +67,12 @@ esac
 
 packages=($(_list))
 if dot pkg check "${packages[@]}" &> /dev/null; then
-   log::note "All dependencies already installed for the batch $name"
+   log::info "All dependencies already installed for the batch $name"
    exit 0
 fi
 
 if $prompt; then
-   log::warning "There are missing dependencies for the batch $name"
+   log::warn "There are missing dependencies for the batch $name"
    if ! feedback::confirmation "Do you want to install it?"; then
       exit 1
    fi

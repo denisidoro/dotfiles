@@ -17,6 +17,7 @@ alias txspl='dot terminal abra txspl'
 alias rxls='dot terminal abra rxls'
 txls() { eval "$(abra hook "$DOT_SHELL")"; }
 alias bt='bat -p'
+alias ansi='dot terminal ansi'
 
 # ========================
 # shell
@@ -33,12 +34,7 @@ alias map='xargs -I%'
 # ========================
 alias vim='nvim'
 alias v="dot terminal dashed nvim --"
-code() {
-   # case "$PWD" in
-   #    *go-code*) gopathmode on ;;
-   # esac
-   dot terminal dashed dot code vscode -- "$@"
-}
+alias code='dot terminal dashed dot code vscode --'
 alias e='code'
 # ========================
 # utils

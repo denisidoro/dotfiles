@@ -57,9 +57,9 @@ _main() {
    mkdir -p "${STARTMENU_APPS_PATH}" || true
 
    for exe in $(all_exes); do
-      log::note "$exe"
+      log::info "$exe"
       if echo "$exe" | grep -q "install"; then
-         log::warning "Skipped"
+         log::warn "Skipped"
       else
          create_link "$exe" || true
       fi

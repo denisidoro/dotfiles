@@ -61,7 +61,7 @@ _osx_external() {
 
 _osx_internal() {
    _unsupported() {
-      log::warning "$* not implemented for osx_internal"
+      log::warn "$* not implemented for osx_internal"
    }
 
    local args=("brightness" "-d" "1")

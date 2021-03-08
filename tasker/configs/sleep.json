@@ -1,9 +1,0 @@
-{
-  "type": 2,
-  "priority": 95,
-  "volume_notification": 0,
-  "volume_media": 0,
-  "dnd": "priority",
-  "display_brightness": 5,
-  "haptic_feedback": false
-}

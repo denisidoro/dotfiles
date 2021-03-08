@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+main() {
+	local -r bin="${DOTFILES}/scripts/core/ansi.sh"
+	if [ $# -eq 0 ]; then
+		bash "$bin" "--help"
+	else
+		bash "$bin" "$@"
+	fi
+}
+
+main "$@"

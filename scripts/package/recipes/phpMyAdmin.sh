@@ -9,10 +9,10 @@ package::install() {
    dot pkg add wget
 
    cd /var/www/html
-   log::warning "Downloading zip..."
+   log::warn "Downloading zip..."
    wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz
-   log::warning "Extracting zip..."
+   log::warn "Extracting zip..."
    mkdir phpMyAdmin && tar -xvzf phpMyAdmin-latest-all-languages.tar.gz -C phpMyAdmin --strip-components 1
-   log::warning "Cleaning up..."
+   log::warn "Cleaning up..."
    rm phpMyAdmin-latest-all-languages.tar.gz
 }

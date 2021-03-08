@@ -13,7 +13,7 @@ _default_available() {
 
 _symlink() {
    if [ -d "$DEFAULT_DOTFILES" ]; then
-      log::warning "Backing up existing dotfiles folder and cloning new dotfiles..."
+      log::warn "Backing up existing dotfiles folder and symlinking new dotfiles..."
       old_dotfiles=$(mktemp -u -d "${DOTFILES}_XXXX")
       mv "$DEFAULT_DOTFILES" "$old_dotfiles"
    fi

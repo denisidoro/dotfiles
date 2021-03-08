@@ -36,7 +36,7 @@ exit::is_installed() {
 }
 
 exit::isnt_installed() {
-   log::error "${package} isn't installed"
+   log::err "${package} isn't installed"
    exit 234
 }
 

@@ -35,7 +35,7 @@ _log::installing() {
    if $prevent_recipe; then
       suffix=" without custom recipes"
    fi
-   log::warning "Attempting to install ${package}${suffix}..."
+   log::warn "Attempting to install ${package}${suffix}..."
 }
 
 package="$(pkg::alias "$1" "$prevent_recipe")"
