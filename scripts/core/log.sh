@@ -32,7 +32,7 @@ log::_export() {
 log::header() { log::_export header && log::_log "${_templ_header/_/$(log::_header "$@")}"; }
 log::warn() { log::_export warn && log::_log "${_templ_warn_pre/_/ WARN } ${_templ_warn/_/$@}"; }
 log::err() { log::_export err && log::_log "${_templ_err_pre/_/ ERR  } ${_templ_err/_/$@}"; }
-log::success() { log::_export sucess && log::_log "${_templ_success_pre/_/ SUCC } ${_templ_succ/_/$@}"; }
+log::success() { log::_export success && log::_log "${_templ_success_pre/_/ SUCC } ${_templ_succ/_/$@}"; }
 log::info() { log::_export info && log::_log "${_templ_info_pre/_/ INFO } ${_templ_info/_/$@}"; }
 
 die() {
