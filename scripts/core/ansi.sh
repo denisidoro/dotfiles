@@ -835,7 +835,7 @@ ansi::yellowIntense() {
     printf '%s93m' "$ANSI_CSI"
 }
 
-ansi() {
+ansi::call() {
     local addNewline b g m r readOptions restoreText restoreCursorPosition restoreCursorVisibility supported triggerRestore
     local m10 m22 m23 m24 m25 m27 m28 m29 m39 m49 m54 m55 m65
 
@@ -1628,5 +1628,5 @@ ansi() {
 
 # Run if not sourced
 if [[ "$0" == "${BASH_SOURCE[0]}" ]]; then
-    ansi "$@" || exit $?
+    ansi::call "$@" || exit $?
 fi
