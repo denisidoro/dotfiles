@@ -1,42 +1,14 @@
 #!/usr/bin/env bash
 
 log::ansi() {
-   local bg=false
-   case "$@" in
-      *reset*) echo "\e[0m"; return 0 ;;
-      *black*) color=30 ;;
-      *red*) color=31 ;;
-      *green*) color=32 ;;
-      *yellow*) color=33 ;;
-      *blue*) color=34 ;;
-      *purple*) color=35 ;;
-      *cyan*) color=36 ;;
-      *white*) color=37 ;;
-   esac
-   case "$@" in
-      *regular*) mod=0 ;;
-      *bold*) mod=1 ;;
-      *underline*) mod=4 ;;
-   esac
-   case "$@" in
-      *background*) bg=true ;;
-      *bg*) bg=true ;;
-   esac
-
-   if $bg; then
-      echo "\e[${color}m"
-   else
-      echo "\e[${mod:-0};${color}m"
-   fi
+   dot terminal ansi "$@"
 }
 
-_log() {
-   local template=$1
-   shift
-   echoerr -e $(printf "$template" "$@")
+log::_log() {
+   echoerr -e "$*"
 }
 
-_header() {
+log::_header() {
    local TOTAL_CHARS=60
    local total=$TOTAL_CHARS-2
    local size=${#1}
@@ -47,14 +19,24 @@ _header() {
    printf "%${right}s" '' | tr ' ' =
 }
 
-log::header() { _log "\n$(log::ansi bold)$(log::ansi purple)$(_header "$1")$(log::ansi reset)\n"; }
-log::success() { _log "$(log::ansi green)✔ %s$(log::ansi reset)\n" "$@"; }
-log::error() { _log "$(log::ansi red)✖ %s$(log::ansi reset)\n" "$@"; }
-log::warning() { _log "$(log::ansi yellow)➜ %s$(log::ansi reset)\n" "$@"; }
-log::note() { _log "$(log::ansi blue)%s$(log::ansi reset)\n" "$@"; }
+log::_export() {
+   case "$1" in
+      header) [ -z "${_templ_header:-}" ] && _templ_header="$(log::ansi --magenta _)" || true ;;
+      warn) [ -z "${_templ_warn:-}" ] && _templ_warn_pre="$(log::ansi --yellow --inverse _)" && _templ_warn="$(log::ansi --yellow _)" || true ;;
+      err) [ -z "${_templ_err:-}" ] && _templ_err_pre="$(log::ansi --red --inverse _)" && _templ_err="$(log::ansi --red _)" || true ;;
+      success) [ -z "${_templ_success:-}" ] && _templ_success_pre="$(log::ansi --green --inverse _)" && _templ_success="$(log::ansi --green _)" || true ;;
+      info) [ -z "${_templ_info:-}" ] && _templ_info_pre="$(log::ansi --bg-blue _)" && _templ_info="$(log::ansi --blue _)" || true ;;
+   esac
+}
+
+log::header() { log::_export header && log::_log "${_templ_header/_/$(log::_header "$@")}"; }
+log::warn() { log::_export warn && log::_log "${_templ_warn_pre/_/ WARN } ${_templ_warn/_/$@}"; }
+log::err() { log::_export err && log::_log "${_templ_err_pre/_/ ERR  } ${_templ_err/_/$@}"; }
+log::success() { log::_export success && log::_log "${_templ_success_pre/_/ SUCC } ${_templ_succ/_/$@}"; }
+log::info() { log::_export info && log::_log "${_templ_info_pre/_/ INFO } ${_templ_info/_/$@}"; }
 
 die() {
-   log::error "$@"
+   log::err "$@"
    exit 42
 }
 

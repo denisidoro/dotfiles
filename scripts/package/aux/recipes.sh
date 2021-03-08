@@ -3,6 +3,7 @@
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/fs.sh"
 source "${DOTFILES}/scripts/core/platform.sh"
+source "${DOTFILES}/scripts/core/log.sh"
 
 TMP_DIR="$(platform::get_tmp_dir)"
 MODULES_FOLDER="${DOTFILES}/modules"
@@ -93,5 +94,18 @@ recipe::install_from_git() {
       ./build.sh
    elif [ -f Makefile ]; then
       make install
+   fi
+}
+
+recipe::cargo() {
+   local -r cargo_name="$1"
+   local -r pkg_manager_name="${2:$cargo_name}"
+
+   if has cargo; then
+      cargo install "$cargo_name"
+   else
+      dot pkg add --prevent-recipe "$pkg_manager_name" && return 0 || true
+      dot pkg add cargo
+      cargo install "$cargo_name"
    fi
 }

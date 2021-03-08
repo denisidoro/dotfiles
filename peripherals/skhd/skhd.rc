@@ -35,7 +35,7 @@ mark < t : $HOME/dotfiles/bin/dot url mark test; skhd -r
 # =================
 
 # sleep
-alt + cmd + ctrl + shift - q : pmset displaysleepnow
+alt + cmd + ctrl + shift - q : $HOME/dotfiles/bin/dot system display lock
 
 # focus window direction
 alt + cmd + ctrl + shift - h : yabai -m window --focus west || yabai -m display --focus recent || yabai -m display --focus next || yabai -m display --focus first

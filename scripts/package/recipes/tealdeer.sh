@@ -6,5 +6,5 @@ package::is_installed() {
 }
 
 package::install() {
-   dot pkg add --prevent-recipe tealdeer
+   recipe::cargo tealdeer
 }

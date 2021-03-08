@@ -94,7 +94,7 @@ for arg in $(ssh_args "$name"); do
    args+=("$arg")
 done
 
-log::note "ssh'ing into $name..."
+log::info "ssh'ing into $name..."
 echo "ssh ${args[*]}"
 
 ssh "${args[@]}"

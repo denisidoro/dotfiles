@@ -2,13 +2,32 @@
 set -euo pipefail
 
 export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
+export PATH="${DOTFILES}/bin:${PATH}"
 REPO="https://github.com/denisidoro/dotfiles.git"
 DOT_BIN="${DOTFILES}/bin/dot"
 
 ##? Setups the environment
 ##?
 ##? Usage:
-##?    init [<profile>]
+##?    install
+##?
+##? Env vars:
+##?    DOTFILES
+##?    DOT_VERSION
+##?    DOT_INSTALL_SKIP_PM_UPDATE
+##?    DOT_INSTALL_SKIP_CORE_DEPS
+##?    DOT_INSTALL_SKIP_UPDATE
+##?    DOT_GIT_NAME
+##?    DOT_GIT_EMAIL
+##?    DOT_DOCOPT
+##?    DOT_FRE
+##?    DOT_FZF
+##?    DOT_NAVI
+##?    DOT_ZIM
+##?    DOT_THEME
+##?
+##? Examples:
+##?    DOTFILES="$PWD/dotfiles" DOT_VERSION=master https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/self/install
 
 case "${1:-}" in
    -h|--help|--version) grep "^##?" "$0" | cut -c 5-; exit 0 ;;
@@ -18,12 +37,16 @@ _dot() {
    "$DOT_BIN" "$@"
 }
 
-clone_repo() {
-   git clone "$REPO" "$DOTFILES" --depth 1
-}
-
 _has() {
    type "$1" &>/dev/null
+}
+
+_install_git() {
+   sudo apt-get install git \
+      || sudo yum install git \
+      || brew install git \
+      || sudo apk install git \
+      || sudo pkg install git
 }
 
 if ! _has sudo; then
@@ -31,50 +54,76 @@ if ! _has sudo; then
    export -f sudo
 fi
 
-# Pushes the current directory to the stack
-pushd . >/dev/null
+clone_repo() {
+   if !has git; then
+      _install_git &>/dev/null
+   fi
+   git clone "$REPO" "$DOTFILES" --depth 1
+}
 
-if [ -f "$DOT_BIN" ]; then
-   :
-elif [ -d "$DOTFILES" ]; then
-   echo "Backing up existing dotfiles folder and cloning new dotfiles..."
-   old_dotfiles=$(mktemp -u -d "${DOTFILES}_XXXX")
-   mv "$DOTFILES" "$old_dotfiles"
-   clone_repo
-else
-   echo "No dotfiles folder found. Cloning dotfiles..."
-   clone_repo
-fi
+# TODO: use curl + zip file in case DOT_VERSION follow the pattern v20.*
+main() {
+   # let's assume this is being called by a script if we're specifying a version
+   if [ -n "${DOT_VERSION:-}" ]; then
+      [ -n "${DOT_INSTALL_SKIP_PM_UPDATE:-}" ] || export DOT_INSTALL_SKIP_PM_UPDATE=true
+      [ -n "${DOT_INSTALL_SKIP_CORE_DEPS:-}" ] || export DOT_INSTALL_SKIP_CORE_DEPS=true
+      [ -n "${DOT_INSTALL_SKIP_SKIP_UPDATE:-}" ] || export DOT_INSTALL_SKIP_UPDATE=true
+   fi
 
-cd "$DOTFILES"
+   if [ -x "$DOT_BIN" ]; then
+      :
+   elif [ -d "$DOTFILES" ]; then
+      echo "Backing up existing dotfiles folder and cloning new dotfiles..."
+      local -r old_dotfiles=$(mktemp -u -d "${DOTFILES}_XXXX")
+      mv "$DOTFILES" "$old_dotfiles"
+      clone_repo
+   else
+      echo "No dotfiles folder found. Cloning dotfiles..."
+      clone_repo
+   fi
 
-# Make sure everything is up to date
-if ! ${DOT_INSTALL_SKIP_UPDATE:-false}; then
-   _has apt-get && sudo apt-get update || true
-   _has brew && brew update || true
-fi
+   cd "$DOTFILES"
 
-# Install some key dependencies
-_dot pkg add git || true
-_dot pkg add curl || true
-_dot pkg add wget || true
+   # Use specific version
+   if [ -n "${DOT_VERSION:-}" ] && [ "$DOT_VERSION" != "master" ]; then
+      git checkout "${DOT_VERSION}"
+      _dot self install "$@"
+      exit 0
+   fi
 
-# Android bootstrap
-if uname -a | grep -q "ndroid"; then
-   pkg install ncurses-utils || true
-   _dot pkg add termux-essentials || true
-fi
+   # Make sure everything is up to date
+   if ! ${DOT_INSTALL_SKIP_PM_UPDATE:-false}; then
+      if _has apt-get; then
+         sudo apt-get upgrade || true
+         sudo apt-get update || true
+      fi
+      if _has brew; then
+         brew update || true
+      fi
+   fi
 
-# OSX bootstrap
-if uname -s | grep -q "arwin"; then
-   _dot pkg add brew || true
-   _dot pkg add gnu || true
-fi
+   if ! ${DOT_INSTALL_SKIP_CORE_DEPS:-false}; then
+      # Install some key dependencies
+      _dot pkg add git curl wget || true
 
-# call setup
-_dot self update
+      # Android bootstrap
+      if uname -a | grep -q "ndroid"; then
+         pkg install ncurses-utils || true
+         _dot pkg add termux-essentials || true
+      fi
 
-# cleanup
-popd >/dev/null
+      # OSX bootstrap
+      if uname -s | grep -q "arwin"; then
+         xcode-select --install || true
+         _dot pkg add brew || true
+         _dot pkg add gnu || true
+      fi
+   fi
 
-exec "${SHELL:-bash}"
+   # call setup
+   if ! ${DOT_INSTALL_SKIP_UPDATE:-false}; then
+      _dot self update
+   fi
+}
+
+main "$@"

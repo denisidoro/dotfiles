@@ -32,3 +32,8 @@ for FGs in '    m' '   1m' '  30m' '1;30m' '  31m' '1;31m' '  32m' \
    echo
 done
 echo
+
+if has zsh; then
+   echo
+   zsh -c 'for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%12)):#3}:+"\n"}; done'
+fi

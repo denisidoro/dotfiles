@@ -19,7 +19,7 @@ _should_use_arc() {
 _upstream() {
    local -r branch="$(git rev-parse --abbrev-ref HEAD)"
    if _should_use_arc; then
-      arc diff --message "$(git log -1 --pretty=%B)"
+      arc diff --message "$(git log -1 --pretty=%B)" --nounit
    else
       git push -u origin "$branch"
    fi

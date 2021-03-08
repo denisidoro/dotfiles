@@ -1,9 +1,5 @@
 #!/usr/bin/env zsh
 
-if ${DOT_MAIN_SOURCED:-false}; then
-   return 0
-fi
-
 echoerr() {
    echo "$@" 1>&2
 }
@@ -19,6 +15,10 @@ has() {
 }
 
 export -f has echoerr
+
+if has doc::parse; then
+   return 0
+fi
 
 if ${DOT_TRACE:-false}; then
    export PS4='+'$'\t''\e[1;30m\t \e[1;39m$(printf %4s ${SECONDS}s) \e[1;31m$(printf %3d $LINENO) \e[1;34m$BASH_SOURCE \e[1;32m${FUNCNAME[0]:-}\e[0m: '
@@ -84,7 +84,16 @@ doc::parse() {
    local -r file="$0"
    local -r help="$(doc::help_msg "$file")"
 
-   if [[ ${DOT_DOCOPT:-python} == "python" ]]; then
+   if [ -z ${DOT_DOCOPT:-} ]; then
+      if has python; then
+         DOT_DOCOPT="python"
+      else
+         (dot pkg add docpars >/dev/null && DOT_DOCOPT="$(which docpars)") \
+            || (dot pkg add python >/dev/null && DOT_DOCOPT="python")
+      fi
+   fi
+
+   if [[ $DOT_DOCOPT == "python" ]]; then
       local -r docopt="${DOTFILES}/scripts/core/docopts"
    else
       local -r docopt="$DOT_DOCOPT"
@@ -94,5 +103,3 @@ doc::parse() {
 }
 
 export -f doc::help_msg doc::maybe_help doc::help_or_fail doc::parse
-
-export DOT_MAIN_SOURCED=true

@@ -2,6 +2,6 @@
 set -euo pipefail
 
 package::install() {
-   yarn add global terminalizer \
-      || npm install -g terminalizer
+   dot pkg add volta
+   dot pkg proxy volta add terminalizer
 }

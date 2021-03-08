@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+ALIASES_TXT="${DOTFILES}/scripts/package/aux/aliases.txt"
+
 _dashed_package() {
    local -r package="$1"
    echo "$package" | tr ' _' '-'
@@ -20,16 +22,11 @@ pkg::alias() {
       return 0
    fi
 
-   case "$pkg" in
-      fasd) echo "fre" ;;
-      skim) echo "sk" ;;
-      leiningen) echo "lein" ;;
-      ripgrep) echo "rg" ;;
-      neovim) echo "nvim" ;;
-      space-vim) echo "spacevim" ;;
-      clj) echo "clojure" ;;
-      vipe) echo "moreutils" ;;
-      tldr) echo "tealdeer" ;;
-      *) echo "$pkg" ;;
-   esac
+   local -r other_name="$(cat "$ALIASES_TXT" | grep "$pkg" | head -n1 | awk '{print $2}')"
+
+   if [ -n "$other_name" ]; then
+      echo "$other_name"
+   else
+      echo "$pkg"
+   fi
 }

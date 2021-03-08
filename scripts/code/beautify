@@ -46,7 +46,7 @@ _get_language() {
 }
 
 language=${language:-$(_get_language "$filename")}
-log::warning "formatting $filename as <${language}>"
+log::warn "formatting $filename as <${language}>"
 
 case "$language" in
    sh_old)

@@ -49,5 +49,8 @@ sudo nmap -sS -sV -0 "<target>"
 # Port owner
 lsof -n -i4TCP:<port> | grep LISTEN
 
+# List open ports
+lsof -Pn -i4
+
 $ self_global_ip: dig +short myip.opendns.com @resolver1.opendns.com
 $ process: lsof -iTCP -sTCP:LISTEN -n -P | sed -E "s/:([0-9][0-9][0-9]+) /:$(tput setaf 3)\1$(tput sgr0) /g" --- --header-lines 1

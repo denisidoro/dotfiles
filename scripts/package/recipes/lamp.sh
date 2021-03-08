@@ -1,58 +1,54 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/fs.sh"
-source "${DOTFILES}/scripts/core/platform.sh"
-source "${DOTFILES}/scripts/core/log.sh"
-
 _prompt() {
-   log::warning "$1"
+   log::warn "$1"
    read -p "Press enter to continue"
 }
 
 recipe::httpd() {
-   log::warning "Updating packages..."
+   log::warn "Updating packages..."
    sudo yum update -y
-   log::warning "Installing php and mariadb..."
+   log::warn "Installing php and mariadb..."
    sudo amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
    sudo amazon-linux-extras install
    cat /etc/system-release
    sudo yum install -y httpd mariadb-server mod_ssl
    sudo yum install -y php72-xml || sudo yum install -y php7.2-xml || sudo yum install -y php-xml || sudo yum install -y php7.0-xml || sudo yum install -y php70-xml
-   log::warning "Restarting httpd..."
+   log::warn "Restarting httpd..."
    sudo systemctl start httpd
    sudo systemctl enable httpd
    sudo systemctl is-enabled httpd
    ls /var/www/html
-   log::warning "Changing groups..."
+   log::warn "Changing groups..."
    sudo usermod -a -G apache ec2-user
    php --version
    _prompt "Please log out, ssh in and run this command again"
 }
 
 recipe::httpd2() {
-   log::warning "Setting memory limit..."
+   log::warn "Setting memory limit..."
    sudo sed -iE 's/^memory_limit =.*/memory_limit = 512M/' /etc/php.ini
    groups
-   log::warning "Changing groups..."
+   log::warn "Changing groups..."
    sudo chown -R ec2-user:apache /var/www
    sudo chmod 2775 /var/www && find /var/www -type d -exec sudo chmod 2775 {} \;
-   log::warning "Making /var/www executable..."
+   log::warn "Making /var/www executable..."
    find /var/www -type f -exec sudo chmod 0664 {} \;
    echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
    _prompt "Check if phpinfo.php works"
    rm /var/www/html/phpinfo.php
-   log::warning "Starting mariadb..."
+   log::warn "Starting mariadb..."
    sudo systemctl start mariadb
    sudo systemctl enable mariadb
    sudo systemctl is-enabled mariadb
-   log::warning "Setting up mariadb..."
+   log::warn "Setting up mariadb..."
    sudo mysql_secure_installation
    ls /var/www/html
-   log::warning "Allowing overrides..."
+   log::warn "Allowing overrides..."
    sudo sed -i 's/AllowOverride None/AllowOverride All/g' /etc/httpd/conf/httpd.conf
    sudo sed -i 's/AllowOverride none/AllowOverride All/g' /etc/httpd/conf/httpd.conf
-   log::warning "Restarting LAMP..."
+   log::warn "Restarting LAMP..."
    sudo systemctl restart httpd
    sudo systemctl restart php-fpm
 }
@@ -63,7 +59,7 @@ package::is_installed() {
 
 package::install() {
    if ! platform::is_ami2; then
-      log::error "Recipe only available to Amazon Linux AMI 2"
+      log::err "Recipe only available to Amazon Linux AMI 2"
       exit 45
    fi
 

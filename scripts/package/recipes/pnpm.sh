@@ -2,8 +2,6 @@
 set -euo pipefail
 
 package::install() {
-   dot pkg add --prevent-recipe pnpm && return 0 || true
-
-   yarn global add pnpm \
-      || npm install -g pnpm
+   dot pkg add volta
+   dot pkg proxy volta add pnpm
 }

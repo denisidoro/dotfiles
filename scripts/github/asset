@@ -64,7 +64,7 @@ sha_for_asset_on_github() {
 
 _invalid_url() {
    local -r url="$1"
-   log::error "There's no binary at $url"
+   log::err "There's no binary at $url"
    exit 2
 }
 

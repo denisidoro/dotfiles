@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
+
+##? Log helper
+##?
+##? Usage:
+##?    header|warn|err|success|info <args>...
+
+doc::maybe_help "$@"
+
+main() {
+   local -r fn="$1"
+   shift
+   "log::${fn}" "$@"
+}
+
+main "$@"

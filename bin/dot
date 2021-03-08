@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-IFS=$' \n\t'
+IFS=$'\n'
 
 export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)}"
 CALLING_DIR="${CALLING_DIR:-"$PWD"}"
@@ -42,10 +42,7 @@ fzf_prompt() {
 }
 
 _version() {
-   cat "${DOTFILES}/rust/Cargo.toml" \
-      | grep version \
-      | head -n1 \
-      | grep -Eo '[0-9\.]+'
+   echo 'v2021.3.8'
 }
 
 _alias() {
@@ -53,12 +50,12 @@ _alias() {
    case "$arg" in
       js|json) echo javascript ;;
       phab|ph) echo phabricator ;;
-      sh|shell) echo terminal ;;
+      sh|shell|script|scripting) echo terminal ;;
       fs) echo filesystem ;;
       and) echo android ;;
       clj) echo clojure ;;
       game) echo gaming ;;
-      mac|osx|os|linux|win) echo system ;;
+      mac|osx|os|linux) echo system ;;
       environment|env) echo self ;;
       net) echo network ;;
       pkg) echo package ;;

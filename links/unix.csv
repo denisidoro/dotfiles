@@ -14,4 +14,3 @@ git/agignore, $HOME/.gitignore
 terminal/vifm/vifmrc, $HOME/.vifm/vifmrc
 languages/clojure/deps.edn, $HOME/.clojure/deps.edn
 languages/clojure/profiles.clj, $HOME/.lein/profiles.clj
-shell/themes/starship.toml, $HOME/.config/starship.toml

@@ -49,20 +49,30 @@ if $list; then
    exit 0
 fi
 
+install_all_recipes() {
+   local -r recipes="$(ls "${DOTFILES}/scripts/package/recipes" | sed 's/\.sh$//')"
+   for recipe in $recipes; do
+      dot pkg add "$recipe"
+   done
+}
+
 case "$name" in
    "mini") dot pkg batch add "nano" ;;
    "dev") dot pkg batch add "mini" ;;
-   "full") dot pkg batch add "dev" ;;
+   "full")
+      dot pkg batch add "dev"
+      install_all_recipes
+      ;;
 esac
 
 packages=($(_list))
 if dot pkg check "${packages[@]}" &> /dev/null; then
-   log::note "All dependencies already installed for the batch $name"
+   log::info "All dependencies already installed for the batch $name"
    exit 0
 fi
 
 if $prompt; then
-   log::warning "There are missing dependencies for the batch $name"
+   log::warn "There are missing dependencies for the batch $name"
    if ! feedback::confirmation "Do you want to install it?"; then
       exit 1
    fi

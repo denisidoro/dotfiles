@@ -31,7 +31,11 @@ if [ $# -gt 1 ]; then
 fi
 
 _log::installing() {
-   log::warning "Attempting to install ${package}..."
+   local suffix=""
+   if $prevent_recipe; then
+      suffix=" without custom recipes"
+   fi
+   log::warn "Attempting to install ${package}${suffix}..."
 }
 
 package="$(pkg::alias "$1" "$prevent_recipe")"
@@ -42,7 +46,7 @@ file="$(pkg::source_file "$package")"
 
 if $prevent_recipe || ! [ -f "$file" ]; then
    _log::installing
-   for pkg_mgr in apt apk pkg yum dnf port emerge pacman brew pnpm yarn npm pip; do
+   for pkg_mgr in apt apk pkg yum dnf port emerge pacman brew; do
       dot pkg proxy $pkg_mgr add "$package" && exit 0 || true
    done
    exit 234

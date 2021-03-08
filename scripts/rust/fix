@@ -12,14 +12,14 @@ doc::parse "$@"
 
 cd "$PROJ_HOME"
 
-log::warning "Cargo fmt..."
+log::warn "Cargo fmt..."
 cargo fmt || true
 
-log::warning "Cargo nighly fix..."
+log::warn "Cargo nighly fix..."
 cargo +nightly clippy --fix -Z unstable-options || true
 
-log::warning "Cargo fix..."
+log::warn "Cargo fix..."
 cargo fix || true
 
-log::warning "clippy..."
+log::warn "clippy..."
 cargo clippy || true

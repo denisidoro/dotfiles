@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? PS4 helpers
+##?
+##? Usage:
+##?    ps4 name
+
+doc::parse "$@"
+
+get_codes() {
+   grep -Eo 'CUSA\-?[0-9]{5}' \
+      | grep -Eo '[0-9]+'
+}
+
+get_name() {
+   curl -sL "https://www.serialstation.com/serials/CUSA/${1}" \
+      | grep '<div class="col title-bar">' -A5 \
+      | grep h1 \
+      | head -n1 \
+      | sed -E 's/<[^>]*>//g' \
+      | xargs
+}
+
+print_code_name() {
+   local -r cusa="$1"
+   local -r name="$(get_name "$cusa" || echo '???')"
+   printf "CUSA%-10s %s" "$cusa" "$name"
+}
+
+main() {
+   local -r codes="$(get_codes)"
+   for code in $codes; do
+      print_code_name "$code"
+      echo
+   done
+}
+
+main

@@ -1,0 +1,8 @@
+fasd fre
+leiningen lein
+ripgrep rg
+neovim nvim
+space-vim spacevim
+clj clojure
+tldr tealdeer
+cargo rustup

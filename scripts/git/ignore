@@ -51,7 +51,7 @@ git::ignore::get() {
     local item filename header
     for item in "$@"; do
         if filename=$(find -L "$GIT_GI_TEMPLATES" -type f \( -iname "${item}.gitignore" -o -iname "${item}" \) -print -quit); then
-            [[ -z "$filename" ]] && log::warning "No gitignore template found for '$item'." && continue
+            [[ -z "$filename" ]] && log::warn "No gitignore template found for '$item'." && continue
             header="${filename##*/}" && header="${header%.gitignore}"
             echo "### $header" && cat "$filename" && echo
         fi

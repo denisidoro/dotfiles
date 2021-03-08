@@ -10,6 +10,12 @@ git::current_branch() {
    git branch | grep \* | cut -d ' ' -f2
 }
 
+git::master_branch() {
+   local branch="main"
+   git branch | grep -qE '^[\* ]*main[ ]*$' || branch="master"
+   echo "$branch"
+}
+
 git::root() {
    git rev-parse --show-toplevel
 }

@@ -46,10 +46,6 @@ package::install() {
       dot pkg add fzf || true
    fi
 
-   if [[ "${DOT_THEME:-}" == "starship" ]]; then
-      dot pkg add starship || true
-   fi
-
    if ${DOT_ZIM:-false}; then
       dot pkg add zim
    fi

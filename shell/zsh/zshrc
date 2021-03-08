@@ -20,11 +20,6 @@ source "${DOTFILES}/shell/aux/core.bash"
 # load aliases
 source "${DOTFILES}/shell/aliases/core.bash"
 
-# enable vi-mode
-bindkey -v
-bindkey "^A" vi-beginning-of-line
-bindkey "^E" vi-end-of-line
-
 # load local custom config
 source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
 
@@ -44,6 +39,7 @@ dns_chpwd() {
    if ${DOT_FRE:-true}; then
       fre --add "$PWD"
    fi
+   # teleport tx --channel pwd --value "$PWD" &
 }
 typeset -gaU chpwd_functions
 chpwd_functions+=dns_chpwd
@@ -68,9 +64,6 @@ fpath=("${DOTFILES}/shell/zsh/completions" $fpath)
 
 # in order not to mess up with subshells
 export ZDOTDIR="$HOME"
-
-# iTerm integration
-source "${DOTFILES}/local/iterm.zsh"
 
 # nnn
 export NNN_PLUG="f:fzcd;o:fzopen;z:fzz;d:diffs;t:treeview;v:preview-tui"

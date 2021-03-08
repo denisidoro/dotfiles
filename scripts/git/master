@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+source "${DOTFILES}/scripts/git/aux/core.sh"
+
+##? Git master helpers
+##?
+##? Usage:
+##?    master checkout
+##?    master pull
+
+doc::maybe_help "$@"
+
+main() {
+   local -r fn="$1"
+   shift
+
+   local -r branch="$(git::master_branch)"
+
+   git "$fn" "$branch" "$@"
+}
+
+main "$@"

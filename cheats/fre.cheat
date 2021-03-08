@@ -1,4 +1,4 @@
 % fre
 
-# fre path
-echo "${HOME}/Library/Application Support/fre/fre.json"
+# Edit fre entries
+dot code vscode "${HOME}/Library/Application Support/fre/fre.json"

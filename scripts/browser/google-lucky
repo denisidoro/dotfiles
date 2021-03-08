@@ -12,4 +12,4 @@ source "${DOTFILES}/scripts/core/str.sh"
 doc::parse "$@"
 
 url="https://duckduckgo.com/?q=%21+$(str::urlencode "$query")&ia=web"
-dot system open "$url"
+dot terminal open "$url"

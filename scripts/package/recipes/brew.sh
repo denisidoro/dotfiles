@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/fs.sh"
-source "${DOTFILES}/scripts/core/platform.sh"
-
 _brew_osx() {
    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }

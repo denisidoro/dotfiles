@@ -14,7 +14,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 doc::maybe_help "$@"
 
 _launch() {
-   dot system open -b "https://web.whatsapp.com/send?phone=$*&text&app_absent=1"
+   dot terminal open -b "https://web.whatsapp.com/send?phone=$*&text&app_absent=1"
 }
 
 main() {

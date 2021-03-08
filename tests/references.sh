@@ -35,7 +35,6 @@ validate_references() {
    local -r file="$2"
    local -r pairs="$(echo "$all_pairs" | grep "$file +")"
    local -r calls="$(echo "$pairs" | grep -Eo 'dot ([a-z][a-z0-9]+) ([a-z][a-z0-9-]+)' | sort -u)"
-   IFS=$'\n'
    for c in $calls; do
       test::run_with_retry "$c is a valid command" validate_reference "$c"
    done

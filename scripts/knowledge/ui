@@ -12,4 +12,4 @@ doc::maybe_help "$@"
 
 cd "${KNOWLEDGE_HOME}/build"
 python3 -m http.server 8123 &
-dot system open -b "http://localhost:8123"
+dot terminal open -b "http://localhost:8123"

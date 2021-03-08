@@ -11,10 +11,10 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 doc::maybe_help "$@"
 
 _master() {
-   git checkout master
+   dot git master checkout
    git pull
    git checkout -
-   git merge master
+   dot git master merge
    git checkout -v -a
 }
 
@@ -29,6 +29,6 @@ cmd="$1"
 shift
 
 case $cmd in
-   master) _master "$@" ;;
+   master|main) _master "$@" ;;
    *module) _module "$@" ;;
 esac

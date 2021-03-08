@@ -1,8 +1,4 @@
 {
-    // ==================
-    // Editor
-    // ==================
-    "window.zoomLevel": 0,
     "editor.fontSize": 12,
     // "editor.fontFamily": "Hack Nerd Font",
     "editor.letterSpacing": 0.2,
@@ -81,7 +77,8 @@
         "*.envrc": "shellscript",
         "*.uql": "sql",
         "*.proto.txt": "ruby",
-        "*rc": "shellscript"
+        "*rc": "shellscript",
+        "*BUILD": "shellscript"
     },
     // ==================
     // GO
@@ -94,6 +91,10 @@
     "go.alternateTools": {
         "go": "/usr/local/bin/go",
     },*/
+    // ==================
+    // Rust
+    // ================== 
+    "rust-analyzer.checkOnSave.command": "clippy",
     // ==================
     // Javascript
     // ================== 
@@ -199,5 +200,14 @@
         }
     ],
     "extensions.ignoreRecommendations": true,
-    "workbench.colorTheme": "Ayu Mirage Bordered"
+    "workbench.colorTheme": "Ayu Mirage Bordered",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "code-runner.runInTerminal": true,
+    "C_Cpp.updateChannel": "Insiders",
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ]
 }

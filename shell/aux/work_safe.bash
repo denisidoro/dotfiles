@@ -7,14 +7,14 @@ export DOT_FRE=${DOT_FRE:-true}
 export DOT_THEME=${DOT_THEME:-powerlevel}
 export DOT_ZIM=${DOT_ZIM:-true}
 
-export PATH="${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH}:/usr/local/opt/bash/bin/:${PATH}"
+export PATH="/usr/local/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH}:/usr/local/opt/bash/bin/:${PATH}"
 
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home"
 
 # source "${HOME}/.gradle/jv1/.gradle/caches/okbuck/buck-completion.bash"
 # source "${HOME}/.config/broot/launcher/bash/br"
 
-alias ls='lsd'
+alias ls='exa --icons'
 
 alias xdg-open='open'
 
@@ -28,16 +28,24 @@ alias mktemp='gmktemp'
 alias date='gdate'
 alias cut='gcut'
 alias tr='gtr'
-alias cp='gcp'
+# alias cp='gcp'
 alias cat='gcat'
 alias sort='gsort'
 alias kill='gkill'
 alias xargs='gxargs'
+alias base64='gbase64'
 
 alias mono="dot u mono"
 
 _load_work_stuff() {
    case $1 in
+      go)
+         gopathmode on
+         ;;
+      gcloud)
+         source "${HOME}/google-cloud-sdk/path.zsh.inc" &> /dev/null
+         source "${HOME}/google-cloud-sdk/completion.zsh.inc" &> /dev/null
+         ;;
       nvm)
          if ! ${NVM_LOADED:-false}; then
             unset -f nvm node npm &> /dev/null

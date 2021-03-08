@@ -9,7 +9,6 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    lint [options]
 ##?
 ##? Options:
-##?    --no-rust          Skip rust lints
 ##?    --no-bash          Skip bash lints
 
 doc::parse "$@"
@@ -23,7 +22,6 @@ _all_dotfiles_files() {
    find "${DOTFILES}/scripts/core" -maxdepth 2 -type f
    find "${DOTFILES}/shell" -maxdepth 3 -type f
    find "${DOTFILES}/tasker/sh" -maxdepth 3 -type f
-   find "${DOTFILES}/tasker/js" -maxdepth 3 -type f
    find "${DOTFILES}/tests" -maxdepth 3 -type f
    find "${DOTFILES}/local" -maxdepth 3 -iname "*rc" -type f
    echo "${DOTFILES}/shell/hushlogin"
@@ -42,11 +40,6 @@ _all_dotfiles_files_to_format() {
       | _dedupe \
       | _filter
 }
-
-if ! $no_rust; then
-   cd "${DOTFILES}/rust"
-   dot rust fix
-fi
 
 if ! $no_bash; then
    cd "$DOTFILES"

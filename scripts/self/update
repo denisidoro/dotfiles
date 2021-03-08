@@ -9,23 +9,21 @@ source "${DOTFILES}/scripts/core/log.sh"
 ##? Updates submodules, dotfiles and attempts to do some setup
 ##?
 ##? Usage:
-##?    dotfiles
+##?    update
 
 doc::maybe_help "$@"
 
 main() {
-   log::note "Updating dotfiles\n$(_version)\n"
+   log::info "Updating dotfiles\n$(_version)\n"
    echoerr
 
    set +e
 
    tags="$(platform::tags)"
-   log::note "Current config: $tags"
+   log::info "Current config: $tags"
    echoerr
 
-   if [[ $* == *"skip-pre"* ]]; then
-      :
-   else
+   if ! ${DOT_INSTALL_SKIP_CORE_DEPS:-false}; then
       _add dot-submodules || true
       _add dot-folders || true
       _add dot-gitconfig || true
@@ -33,7 +31,7 @@ main() {
    fi
 
    echoerr
-   log::note "Setting symlinks..."
+   log::info "Setting symlinks..."
    update_dotfiles_common
    has_tag "$tags" "osx" && update_dotfiles_osx
    has_tag "$tags" "linux" && update_dotfiles_linux
@@ -41,9 +39,9 @@ main() {
    has_tag "$tags" "x86" && update_dotfiles_x86
    has_tag "$tags" "android" && update_dotfiles_android
    has_tag "$tags" "wsl" && update_dotfiles_wsl
-   [ -f "${DOTFILES}/local/alfred/uber/info.plist" ] && update_dotfiles_work
+   has_tag "$tags" "work" && update_dotfiles_work
 
-   fix_locales
+   fix_locales || true
 
    set -e
 
@@ -64,7 +62,7 @@ _version() {
 }
 
 _add() {
-   log::warning "dot pkg add $*"
+   log::warn "dot pkg add $*"
    dot pkg add "$@"
 }
 
@@ -75,7 +73,7 @@ _add() {
 fix_locales() {
    if has locale-gen; then
       echoerr
-      log::note "Fixing locales..."
+      log::info "Fixing locales..."
       locale-gen en_US en_US.UTF-8
    fi
 }
@@ -89,43 +87,43 @@ update_dotfiles() {
 }
 
 update_dotfiles_common() {
-   log::note "Symlinking for Unix..."
+   log::info "Symlinking for Unix..."
    update_dotfiles
 }
 
 update_dotfiles_osx() {
-   log::note "Symlinking for OSX..."
+   log::info "Symlinking for OSX..."
    update_dotfiles "osx"
 }
 
 update_dotfiles_linux() {
-   log::note "Symlinking for Linux..."
+   log::info "Symlinking for Linux..."
    update_dotfiles "linux"
 }
 
 update_dotfiles_wsl() {
-   log::note "Symlinking for WSL..."
+   log::info "Symlinking for WSL..."
    update_dotfiles "linux"
 }
 
 update_dotfiles_arm() {
-   log::note "Symlinking for ARM..."
-   log::note "No custom config for ARM"
+   log::info "Symlinking for ARM..."
+   log::info "No custom config for ARM"
 }
 
 update_dotfiles_x86() {
-   log::note "Symlinking for x86..."
-   log::note "No custom config for x86"
+   log::info "Symlinking for x86..."
+   log::info "No custom config for x86"
 }
 
 update_dotfiles_android() {
-   log::note "Symlinking for Android..."
+   log::info "Symlinking for Android..."
+   dot pkg add termux-essentials || true
    update_dotfiles "android"
-   dot pkg add termux-essentials
 }
 
 update_dotfiles_work() {
-   log::note "Symlinking for work..."
+   log::info "Symlinking for work..."
    update_dotfiles "work"
 }
 
@@ -134,3 +132,8 @@ update_dotfiles_work() {
 # ==============================
 
 main "$@"
+
+hash -r &>/dev/null || true
+source "${HOME}/.bashrc" &>/dev/null || true
+source "${HOME}/.zshrc" &>/dev/null || true
+hash -r &>/dev/null || true

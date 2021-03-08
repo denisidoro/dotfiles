@@ -11,6 +11,8 @@ source "${DOTFILES}/scripts/core/log.sh"
 
 doc::maybe_help "$@"
 
+export STARTMENU_APPS_PATH="${STARTMENU_PATH}/Programs/Applications"
+
 pretty() {
    sed 's/.exe//' \
       | sed 's/portable//gI' \
@@ -18,10 +20,28 @@ pretty() {
       | sed -E 's/[-_]+ *$//'
 }
 
+name_from_folder() {
+   grep -Eo '[^\/]+/[^/]+$' \
+      | cut -d'/' -f2
+}
+
+get_dest_name() {
+   local -r folder="$1"
+   local -r exe="$2"
+
+   if [[ "${folder,,}" == "${exe,,}" ]]; then
+      echo "$folder"
+   else
+      echo "${folder} ${exe}"
+   fi
+}
+
 create_link() {
    local -r exe="$1"
-   local -r dest_dir="$STARTMENU_PATH"
-   local -r dest_name="$(basename "$exe" | pretty)"
+   local -r dest_dir="$STARTMENU_APPS_PATH"
+   local -r folder_name="$(dirname "$exe" | name_from_folder | pretty)"
+   local -r exe_name="$(basename "$exe" | pretty)"
+   local -r dest_name="$(get_dest_name "$folder_name" "$exe_name")"
 
    dot windows shortcut \
       "$exe" \
@@ -34,10 +54,12 @@ all_exes() {
 }
 
 _main() {
+   mkdir -p "${STARTMENU_APPS_PATH}" || true
+
    for exe in $(all_exes); do
-      log::note "$exe"
+      log::info "$exe"
       if echo "$exe" | grep -q "install"; then
-         log::warning "Skipped"
+         log::warn "Skipped"
       else
          create_link "$exe" || true
       fi

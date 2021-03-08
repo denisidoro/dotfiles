@@ -10,7 +10,14 @@ alias tl='dot terminal tmux ls'
 alias tn='dot terminal tmux new'
 alias ta='dot terminal tmux attach'
 alias tk='dot terminal tmux kill'
-alias faketty='dot terminal faketty'
+alias faketty='dot terminal abra faketty'
+alias rxout='dot terminal abra rxout'
+alias rxerr='dot terminal abra rxerr'
+alias txspl='dot terminal abra txspl'
+alias rxls='dot terminal abra rxls'
+txls() { eval "$(abra hook "$DOT_SHELL")"; }
+alias bt='bat -p'
+alias ansi='dot terminal ansi'
 
 # ========================
 # shell
@@ -27,20 +34,16 @@ alias map='xargs -I%'
 # ========================
 alias vim='nvim'
 alias v="dot terminal dashed nvim --"
-code() {
-   case "$PWD" in
-      *go-code*) gopathmode on ;;
-   esac
-   dot terminal dashed dot code vscode -- "$@"
-}
+alias code='dot terminal dashed dot code vscode --'
+alias e='code'
 # ========================
 # utils
 # ========================
 # alias fzf='fzf-tmux'
 alias d='dot'
 alias n="navi"
-alias browser="dot system open -b"
-alias chrome="dot system open -b"
+alias browser="dot terminal open -b"
+alias chrome="dot terminal open -b"
 alias color="dot terminal color"
 
 # ========================
@@ -51,7 +54,7 @@ source "${DOTFILES}/shell/aliases/git.bash"
 # ========================
 # phabricator
 # ========================
-alias ac="arc diff --create"
+alias ac="arc diff --create --nounit"
 alias au="navi best 'Update a diff'"
 alias al="navi best 'Land a diff'"
 

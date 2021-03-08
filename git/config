@@ -7,6 +7,20 @@
 	pager = $PAGER
 	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
 	untrackedCache = true
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  features = side-by-side line-numbers decorations
+  whitespace-error-style = 22 reverse
+	side-by-side = true
+
+[delta "decorations"]
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
+  file-decoration-style = none
 
 [push]
   default = current
@@ -73,8 +87,10 @@
 
 [url "git@github.com:denisidoro/"]
 	insteadOf = "my:"
+
 [credential]
 	helper = ""
 	helper = manager-core
+  
 [credential "https://dev.azure.com"]
 	useHttpPath = true

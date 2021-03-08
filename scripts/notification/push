@@ -102,6 +102,6 @@ dot pkg add pushbullet-bash &> /dev/null
 
 # call cli
 if ! $list; then
-   log::warning "${args[@]:-}"
+   log::warn "${args[@]:-}"
 fi
 call_api "${args[@]:-}"

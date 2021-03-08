@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-alias open='dot system open'
-alias pbcopy='dot system clip copy'
-alias pbpaste='dot system clip paste'
+alias open='dot terminal open'
+alias pbcopy='dot terminal clip copy'
+alias pbpaste='dot terminal clip paste'

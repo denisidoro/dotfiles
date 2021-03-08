@@ -5,20 +5,17 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Colorize output
 ##?
 ##? Usage:
-##?     color <commands...>
+##?     color
 ##?
 ##? Examples:
-##?     color ls /foobar
+##?     ls > >(color)
 
 doc::maybe_help "$@"
 
-colorize_stderr() {
-   "$@" 2> >(while read line; do echo -e "\e[01;31m$line\e[0m" >&2; done)
+main() {
+   while read line; do
+      dot terminal ansi --yellow "$line"
+   done
 }
 
-colorize_stdout() {
-   "$@" 1> >(while read line; do echo -e "\e[01;32m$line\e[0m" >&1; done)
-}
-
-# colorize_stderr "$@"
-colorize_stdout "$@"
+main "$@"

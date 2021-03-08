@@ -3,8 +3,8 @@
 # based on https://github.com/ohmybash/oh-my-bash/blob/master/plugins/git/git.plugin.sh
 
 # master
-alias gcom="git checkout master"
-alias gmm="git merge master"
+alias gcom="dot git master checkout"
+alias gmm="dot git master merge"
 
 # update
 alias gu="dot git pull module"
@@ -25,7 +25,7 @@ alias gcamp="dot git push commit"
 alias gprp="dot git pr preview"
 
 # git interactive checkout
-alias gcoo="dot terminal navi1 local_branch local_branch"
+alias gcoo="dot terminal navi one local_branch local_branch"
 
 # git status
 alias gst="git status"

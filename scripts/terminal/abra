@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? abra helpers
+##?
+##? Usage:
+##?    abra rxls <args>...
+##?    abra txspl <channel> <cmds>...
+##?    abra rxout <channel>
+##?    abra rxerr <channel>
+##?    abra faketty <cmds>...
+##?
+##? Examples:
+##?    abra rxls -la
+##?    abra txspl test cargo test
+##?    abra rxout test
+##?    abra rxerr test
+##?    abra faketty ls -la
+
+doc::maybe_help "$@"
+
+rxout() {
+   abra rx --channel "${1}-out"
+}
+
+rxerr() {
+   abra rx --channel "${1}-err"
+}
+
+txspl() {
+   local -r channel="$1"
+   dot terminal faketty "$@" >(abra tx --channel "${channel}-out") 2> >(abra tx --channel "${channel}-err")
+}
+
+rxls() {
+   local -r cmd="dot terminal faketty ls $@ \"{}\""
+   abra rx --channel pwd --cmd "$cmd" --clear
+}
+
+faketty() {
+   abra faketty --cmd "$*"
+}
+
+main() {
+   local -r fn="$1"
+   shift
+   "$fn" "$@"
+}
+
+main "$@"

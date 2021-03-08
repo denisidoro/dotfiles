@@ -50,18 +50,6 @@ exit 0
 EOF
 }
 
-_stub_dotrs() {
-   has dotrs && return 0 || true
-   local -r dotrs="${DOTFILES}/target/dotrs"
-   [ -f "$dotrs" ] && return 0
-   local -r content="$(_create_content "dotrs")"
-   _create_file "$content" "$dotrs"
-   _create_file "$content" "${DOTFILES}/target/release/dotrs"
-   _create_file "$content" "${DOTFILES}/target/debug/dotrs"
-   _create_file "$content" "${DOTFILES}/rust/target/release/dotrs"
-   _create_file "$content" "${DOTFILES}/rust/target/debug/dotrs"
-}
-
 _stub_vscode() {
    has code && return 0 || true
    local -r path="${DOTFILES}/local/bin/code"
@@ -91,7 +79,6 @@ mkdir -p "$TEST_DIR" 2>/dev/null || true
 _prepare_zsh 2>/dev/null || true
 _prepare_dotlink 2>/dev/null || true
 _stub_vscode 2>/dev/null || true
-${DOT_STUB_DOTRS:-false} && _stub_dotrs 2>/dev/null || true
 export PATH="${DOTFILES}/local/bin:${PATH}"
 hash -r 2>/dev/null || true
 
