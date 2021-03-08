@@ -42,10 +42,7 @@ fzf_prompt() {
 }
 
 _version() {
-   cat "${DOTFILES}/rust/Cargo.toml" \
-      | grep version \
-      | head -n1 \
-      | grep -Eo '[0-9\.]+'
+   echo 'v2021.3.8'
 }
 
 _alias() {

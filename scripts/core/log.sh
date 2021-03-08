@@ -25,7 +25,7 @@ log::header() { log::_log "$(log::ansi --magenta "$(log::_header "$@")")\n"; }
 log::warn() { log::_log "$(log::ansi --yellow --inverse " WARN ") $(log::ansi --yellow "$@")\n"; }
 log::err() { log::_log "$(log::ansi --red --inverse "⠀⠀ERR⠀") $(log::ansi --red "$@")\n"; }
 log::success() { log::_log "$(log::ansi --green --inverse " SUCC ") $(log::ansi --green "$@")\n"; }
-log::info() { log::_log "$(log::ansi --blue --inverse " INFO ") $(log::ansi --blue "$@")\n"; }
+log::info() { log::_log "$(log::ansi --bg-blue" INFO ") $(log::ansi --blue "$@")\n"; }
 
 die() {
    log::err "$@"

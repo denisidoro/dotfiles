@@ -13,10 +13,10 @@ DOT_BIN="${DOTFILES}/bin/dot"
 ##?
 ##? Env vars:
 ##?    DOTFILES
+##?    DOT_VERSION
 ##?    DOT_INSTALL_SKIP_PM_UPDATE
 ##?    DOT_INSTALL_SKIP_CORE_DEPS
 ##?    DOT_INSTALL_SKIP_UPDATE
-##?    DOT_COMMIT
 ##?    DOT_GIT_NAME
 ##?    DOT_GIT_EMAIL
 ##?    DOT_DOCOPT
@@ -27,7 +27,7 @@ DOT_BIN="${DOTFILES}/bin/dot"
 ##?    DOT_THEME
 ##?
 ##? Examples:
-##?    DOTFILES="$PWD/dotfiles" DOT_INSTALL_SKIP_PM_UPDATE=true DOT_INSTALL_SKIP_CORE_DEPS=true DOT_INSTALL_SKIP_UPDATE=true DOT_COMMIT=master https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/self/install
+##?    DOTFILES="$PWD/dotfiles" DOT_VERSION=master https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/self/install
 
 case "${1:-}" in
    -h|--help|--version) grep "^##?" "$0" | cut -c 5-; exit 0 ;;
@@ -61,7 +61,15 @@ clone_repo() {
    git clone "$REPO" "$DOTFILES" --depth 1
 }
 
+# TODO: use curl + zip file in case DOT_VERSION follow the pattern v20.*
 main() {
+   # let's assume this is being called by a script if we're specifying a version
+   if [ -n "${DOT_VERSION:-}" ]; then
+      [ -n "${DOT_INSTALL_SKIP_PM_UPDATE:-}" ] || export DOT_INSTALL_SKIP_PM_UPDATE=true
+      [ -n "${DOT_INSTALL_SKIP_CORE_DEPS:-}" ] || export DOT_INSTALL_SKIP_CORE_DEPS=true
+      [ -n "${DOT_INSTALL_SKIP_SKIP_UPDATE:-}" ] || export DOT_INSTALL_SKIP_UPDATE=true
+   fi
+
    if [ -x "$DOT_BIN" ]; then
       :
    elif [ -d "$DOTFILES" ]; then
@@ -76,9 +84,9 @@ main() {
 
    cd "$DOTFILES"
 
-   # Use specific commit
-   if [ -n "${DOT_COMMIT:-}" ]; then
-      git checkout "${DOT_COMMIT}" 
+   # Use specific version
+   if [ -n "${DOT_VERSION:-}" ] && [ "$DOT_VERSION" != "master" ]; then
+      git checkout "${DOT_VERSION}" 
       _dot self install "$@"
       exit 0
    fi
@@ -89,8 +97,9 @@ main() {
          sudo apt-get upgrade || true
          sudo apt-get update || true
       fi
-      dot pkg add brew || true
-      brew update || true
+      if _has brew; then 
+         brew update || true
+      fi
    fi
 
    if ! ${DOT_INSTALL_SKIP_CORE_DEPS:-false}; then
@@ -105,6 +114,8 @@ main() {
 
       # OSX bootstrap
       if uname -s | grep -q "arwin"; then
+         xcode-select --install || true
+         _dot pkg add brew || true
          _dot pkg add gnu || true
       fi
    fi
@@ -116,8 +127,3 @@ main() {
 }
 
 main "$@"
-
-hash -r 2>/dev/null || true
-source "${HOME}/.bashrc" 2>/dev/null || true
-source "${HOME}/.zshrc" 2>/dev/null || true
-hash -r 2>/dev/null || true

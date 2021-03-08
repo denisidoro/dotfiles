@@ -20,32 +20,47 @@
   <a href="docs">Docs</a>
 </p>
 
-## Minimal installation
-
-If you only want to call scripts and to have the configs available locally:
+## Full installation 
 
 ```bash
 # with homebrew or linuxbrew
 brew install denisidoro/tools/dotfiles
 dot self install
 
+# with curl
+bash <(curl -s https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/self/install)
+
+# with wget
+bash <(wget -qO- https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/self/install)
+
 # with git
-git clone https://github.com/denisidoro/dotfiles $HOME/dotfiles
+export DOTFILES="${HOME}/dotfiles"
+git clone https://github.com/denisidoro/dotfiles "$DOTFILES"
+"${DOTFILES}/bin/dot" self install
 ```
 
-## Full installation
-
-If you want to apply all dotfiles such as `.bashrc`, first proceed with the minimum installation then:
+## Using in shell scripts
 
 ```bash
-# with homebrew or linuxbrew
-dot self install
+dot::clone() {
+  DOT_VERSION=master bash <(curl -s https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/self/install) 
+}
 
-# with git
-$HOME/dotfiles/bin/dot self install
+dot::clone_if_necessary() {
+  [ -n "${DOTFILES:-}" ] && [ -x "${DOTFILES}/bin/dot" ] && return
+  export DOTFILES="${ABRA_HOME}/dotfiles"
+  export PATH="${DOTFILES}/bin:${PATH}"
+  $(dot::clone >/dev/null || true)
+}
+
+dot::source() {
+  dot::clone_if_necessary
+  source "${DOTFILES}/scripts/core/main.sh"
+  source "${DOTFILES}/scripts/core/log.sh"
+}
+
+dot::source
 ```
-
-:warning: It's recommended to backup your configs first.
 
 ## Calling scripts
 
@@ -75,14 +90,12 @@ Benchmark #1: /usr/bin/time /bin/zsh -i -c exit
 Edit the following files accordingly:
 ```bash
 # shell
-vi $DOTFILES/local/zshrc
+vi "${DOTFILES}/local/zshrc"
 
 # git
-vi $DOTFILES/local/gitconfig
+vi "${DOTFILES}/local/gitconfig"
 ```
 
-## Inspiration
- * [rgomezcasas/dotfiles](https://github.com/rgomezcasas/dotfiles): README, some scripts and fine-tuning
- * [Tuurlijk/dotfiles](https://github.com/Tuurlijk/dotfiles): zsh startup snappiness
- * [wfxr/forgit](https://github.com/wfxr/forgit): some git scripts
- * [jhotmann/tasker-phone-modes](https://github.com/jhotmann/tasker-phone-modes): Tasker profile framework
+## Template
+
+If you want to set up your dotfiles from scratch with an structure similar to this repository, please use [dotly](https://github.com/CodelyTV/dotly), a framework inpired by these dotfiles.
