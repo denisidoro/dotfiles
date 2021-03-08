@@ -1,0 +1,8 @@
+status = [
+  "bash-tests",
+  "js-tests",
+  "rust-tests",
+  "install-tests"
+]
+delete_merged_branches = true
+timeout_sec = 86400
