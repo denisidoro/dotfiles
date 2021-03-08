@@ -48,8 +48,7 @@ dot::clone() {
 
 dot::clone_if_necessary() {
   [ -n "${DOTFILES:-}" ] && [ -x "${DOTFILES}/bin/dot" ] && return
-  export DOTFILES="${ABRA_HOME}/dotfiles"
-  export PATH="${DOTFILES}/bin:${PATH}"
+  export DOTFILES="${HOME}/dotfiles"
   $(dot::clone >/dev/null || true)
 }
 
