@@ -55,7 +55,6 @@ _alias() {
       and) echo android ;;
       clj) echo clojure ;;
       game) echo gaming ;;
-      mac|osx|os|linux) echo system ;;
       environment|env) echo self ;;
       net) echo network ;;
       pkg) echo package ;;

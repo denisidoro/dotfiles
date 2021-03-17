@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/str.sh"
+
+##? JIRA epic helpers
+##?
+##? Usage:
+##?    epic graph
+##?
+##? Examples:
+##?    cat epic.xml | epic graph > epic.dot
+
+doc::parse "$@"
+
+json_to_dot() {
+    node "${DOTFILES}/scripts/jira/aux/jira_epic.js"
+}
+
+main() {
+    npx xml2json | json_to_dot
+}
+
+main "$@"
