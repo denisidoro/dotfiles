@@ -127,3 +127,8 @@ main() {
 }
 
 main "$@"
+
+hash -r &>/dev/null || true
+source "${HOME}/.bashrc" &>/dev/null || true
+source "${HOME}/.zshrc" &>/dev/null || true
+hash -r &>/dev/null || true

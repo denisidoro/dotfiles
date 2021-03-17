@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Kitty
+##?
+##? Usage:
+##?    abra rxls <args>...
+##?    abra txspl <channel> <cmds>...
+##?    abra rxout <channel>
+##?    abra rxerr <channel>
+##?    abra faketty <cmds>...
+##?
+##? Examples:
+##?    abra rxls -la
+##?    abra txspl test cargo test
+##?    abra rxout test
+##?    abra rxerr test
+##?    abra faketty ls -la
+
+doc::maybe_help "$@"
+
+main() {
+   cd ~/.config/kitty/themes
+   fzf --preview 'head -n 40 {} && kitty @ set-colors -a -c {}'
+}
+
+main "$@"

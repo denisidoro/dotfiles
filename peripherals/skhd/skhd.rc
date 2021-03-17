@@ -16,8 +16,8 @@ mark < escape ; default
 # =================
 
 # launch terminal
-alt + cmd + ctrl + shift - return : open -na /Applications/iTerm.app
-alt + cmd + ctrl + shift - a : open -na /Applications/Alacritty.app
+alt + cmd + ctrl + shift - return : open -na /Applications/kitty.app
+# alt + cmd + ctrl + shift - return : open -na /Applications/iTerm.app
 
 # =================
 # Bookmarks

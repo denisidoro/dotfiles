@@ -113,9 +113,12 @@ main_q() {
 }
 
 main_lock() {
-   dot system display q 1 0
-   dot system display q 0 0
-   pmset displaysleepno
+   set +e
+   dot system display q 0 0 &
+   dot system display q 1 0 & 
+   # pmset displaysleepno &
+   skhd -k "ctrl + cmd - q"
+   set -e
 }
 
 main() {

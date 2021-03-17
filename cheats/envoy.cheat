@@ -1,0 +1,7 @@
+% envoy, oss
+
+# regenerate make files
+make CMakeLists.txt 
+
+# fix :: lint, linter, format
+./tools/code_format/check_format.py fix && ./tools/code_format/format_python_tools.sh fix

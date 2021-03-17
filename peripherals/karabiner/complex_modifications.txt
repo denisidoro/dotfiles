@@ -1,0 +1,2 @@
+CapsLock to Hyper/Escape
+Disable Cmd+H Hide (rev 2) -> broken, apparently

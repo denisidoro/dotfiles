@@ -18,11 +18,17 @@ alias rxls='dot terminal abra rxls'
 txls() { eval "$(abra hook "$DOT_SHELL")"; }
 alias bt='bat -p'
 alias ansi='dot terminal ansi'
+alias icat="kitty +kitten icat --align=left"
 
 # ========================
 # shell
 # ========================
 alias reload='source ~/.zshrc' # env -i zsh
+
+# ========================
+# kitty
+# ========================
+alias fw='navi --best-match -q "kitty focus window"'
 
 # ========================
 # scripting
@@ -54,7 +60,8 @@ source "${DOTFILES}/shell/aliases/git.bash"
 # ========================
 # phabricator
 # ========================
-alias ac="arc diff --create --nounit"
+alias ac="arc diff --create --nounit --nolint"
+alias ad="arc diff --nounit --nolint"
 alias au="navi best 'Update a diff'"
 alias al="navi best 'Land a diff'"
 
