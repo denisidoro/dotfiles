@@ -1,0 +1,4 @@
+% clipboard
+
+# Replace line breaks by \n
+dot terminal pbpaste | sed ':a;N;$!ba;s/\n/\\n/g' | dot terminal pbcopy

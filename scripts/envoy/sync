@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/envoy/aux/core.sh"
+
+##? Envoy sync
+##?
+##? Usage:
+##?    sync pull
+##?    sync push
+##?    sync mutable
+
+doc::maybe_help "$@"
+
+_pull() {
+   platform::validate_local
+
+   log::info "Getting info..."
+   local -r branch="$(git::current_branch)"
+
+   log::info "Syncing..."
+   rsync -a --exclude=.git "${USER}@${IP}:~/envoy_mutable/" .
+
+   log::info "Cleaning up..."
+   return 0
+   git add .
+   git stash
+   git checkout "$branch"
+   git stash pop
+}
+
+_push() {
+   platform::validate_local
+
+   log::info "Syncing..."
+   rsync -a --exclude=.git . "${USER}@${IP}:~/envoy_mutable/"
+}
+
+
+_mutable() {
+    platform::validate_remote
+
+    log::info "Setting folders..."
+    rm -rf "$ENVOY_MUTABLE" || true
+    cp -r "$ENVOY" "$ENVOY_MUTABLE"
+}
+
+main() {
+    local -r fn="$1"
+    shift || true
+    "_${fn}" "$@"
+}
+
+main "$@"

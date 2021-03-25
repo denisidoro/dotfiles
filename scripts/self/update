@@ -10,6 +10,9 @@ source "${DOTFILES}/scripts/core/log.sh"
 ##?
 ##? Usage:
 ##?    update
+##?
+##? Env vars:
+##?    Please refer to dot self install
 
 doc::maybe_help "$@"
 
@@ -84,7 +87,11 @@ fix_locales() {
 # ==============================
 
 update_dotfiles() {
-   DOTLINK="${1:-unix}" dot self link set --create-dirs --verbose
+   params=()
+   if [ -n "${DOT_LINK_EXTRA_ARG:-}" ]; then
+      params+=("$DOT_LINK_EXTRA_ARG")
+   fi
+   DOTLINK="${1:-unix}" dot self link set --create-dirs --verbose "${params[@]}"
 }
 
 update_dotfiles_common() {

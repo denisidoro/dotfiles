@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/envoy/aux/core.sh"
+
+##? Envoy pull
+##?
+##? Usage:
+##?    pull
+
+doc::maybe_help "$@"
+
+_fix() {
+    dot envoy sync mutable
+
+    log::info "Running fixers..."
+    cd "$ENVOY_MUTABLE"
+    ./tools/code_format/check_format.py fix || true
+    ./tools/proto_format/proto_format.sh fix || true
+    ./tools/proto_format/proto_sync.py || true
+}
+
+main() {
+    local -r fn="$1"
+    shift || true
+    "_${fn}" "$@"
+}
+
+main "$@"

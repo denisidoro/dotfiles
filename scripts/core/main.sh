@@ -4,6 +4,11 @@ echoerr() {
    echo "$@" 1>&2
 }
 
+# TODO: watch out for PATH explosion
+# if ! has dot; then
+   export PATH="${DOTFILES}/bin/:${PATH}:/usr/local/bin:/usr/bin:${HOME}/bin"
+# fi
+
 tap() {
    local -r input="$(cat)"
    echoerr "$input"
@@ -26,10 +31,6 @@ if ${DOT_TRACE:-false}; then
 fi
 
 export EDITOR="${EDITOR:-vi}"
-
-if ! has dot; then
-   export PATH="${DOTFILES}/bin/:${PATH}:/usr/local/bin:/usr/bin:${HOME}/bin"
-fi
 
 if ! has sudo; then
    sudo() { "$@"; }

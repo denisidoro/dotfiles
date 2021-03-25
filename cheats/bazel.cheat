@@ -1,0 +1,12 @@
+% bazel
+
+# test one target
+ts=($(echo "<targets>"))
+bazel test "${ts[@]}"
+
+# test all targets in a dir
+ts=($(echo "<dir_targets>"))
+bazel test "${ts[@]}"
+
+$ targets: bazel query //... --- --multi
+$ dir_targets: bazel query //... | sed -E 's/:[^:]*$/:\*/' | sort -u --- --multi

@@ -25,6 +25,8 @@ DOT_BIN="${DOTFILES}/bin/dot"
 ##?    DOT_NAVI
 ##?    DOT_ZIM
 ##?    DOT_THEME
+##?    DOT_LINK_EXTRA_ARG
+##?    EDITOR
 ##?
 ##? Examples:
 ##?    DOTFILES="$PWD/dotfiles" DOT_VERSION=master https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/self/install

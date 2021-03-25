@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/envoy/aux/core.sh"
+
+##? Setup dev machine
+##?
+##? Usage:
+##?    init
+
+doc::maybe_help "$@"
+
+main() {
+    dot pkg add protoc pipenv fzf gitui
+
+    EDITOR=cat \
+        DOT_ZIM=false \
+        DOT_THEME="none" \
+        DOT_LINK_EXTRA_ARG="--backup" \
+        DOT_INSTALL_SKIP_PM_UPDATE=false \
+        DOT_INSTALL_SKIP_CORE_DEPS=false \
+        DOT_INSTALL_SKIP_UPDATE=false \
+        dot self update
+}
+
+main "$@"

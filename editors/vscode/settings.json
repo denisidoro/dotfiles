@@ -9,6 +9,7 @@
     "files.trimFinalNewlines": true,
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
+    // "editor.formatOnSave": false,
     "editor.minimap.enabled": true,
     "editor.mouseWheelZoom": true,
     "explorer.sortOrder": "default",
@@ -210,5 +211,6 @@
             "viewType": "jupyter.notebook.ipynb",
             "filenamePattern": "*.ipynb"
         }
-    ]
+    ],
+    "cmake.configureOnOpen": true
 }
