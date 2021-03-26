@@ -2,6 +2,7 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/core.sh"
+source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 ##? Lists custom recipes
 ##?
