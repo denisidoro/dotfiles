@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/core/log.sh"
 source "${DOTFILES}/scripts/package/aux/core.sh"
 
 ##? Check if packages are installed

@@ -2,7 +2,7 @@
 
 source "${DOTFILES}/scripts/core/main.sh"
 
-##? Kitty
+##? abra helpers
 ##?
 ##? Usage:
 ##?    abra rxls <args>...
@@ -20,9 +20,32 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 doc::maybe_help "$@"
 
+rxout() {
+   abra rx --channel "${1}-out"
+}
+
+rxerr() {
+   abra rx --channel "${1}-err"
+}
+
+txspl() {
+   local -r channel="$1"
+   dot terminal faketty "$@" >(abra tx --channel "${channel}-out") 2> >(abra tx --channel "${channel}-err")
+}
+
+rxls() {
+   local -r cmd="dot terminal faketty ls $@ \"{}\""
+   abra rx --channel pwd --cmd "$cmd" --clear
+}
+
+faketty() {
+   abra faketty --cmd "$*"
+}
+
 main() {
-   cd ~/.config/kitty/themes
-   fzf --preview 'head -n 40 {} && kitty @ set-colors -a -c {}'
+   local -r fn="$1"
+   shift
+   "$fn" "$@"
 }
 
 main "$@"

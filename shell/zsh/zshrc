@@ -68,3 +68,6 @@ export ZDOTDIR="$HOME"
 # nnn
 export NNN_PLUG="f:fzcd;o:fzopen;z:fzz;d:diffs;t:treeview;v:preview-tui"
 export NNN_FIFO="/tmp/nnn.fifo"
+
+# $ alias
+alias \$=''

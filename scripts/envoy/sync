@@ -12,6 +12,10 @@ source "${DOTFILES}/scripts/envoy/aux/core.sh"
 
 doc::maybe_help "$@"
 
+_rsync() {
+   rsync -a --exclude='.git/' "$@"
+}
+
 _pull() {
    platform::validate_local
 
@@ -19,10 +23,10 @@ _pull() {
    local -r branch="$(git::current_branch)"
 
    log::info "Syncing..."
-   rsync -a --exclude=.git "${USER}@${IP}:~/envoy_mutable/" .
+   _rsync "${USER}@${IP}:~/envoy_mutable/" .
 
    log::info "Cleaning up..."
-   return 0
+   feedback::enter
    git add .
    git stash
    git checkout "$branch"
@@ -33,7 +37,7 @@ _push() {
    platform::validate_local
 
    log::info "Syncing..."
-   rsync -a --exclude=.git . "${USER}@${IP}:~/envoy_mutable/"
+   _rsync . "${USER}@${IP}:~/envoy_mutable/"
 }
 
 
@@ -41,8 +45,8 @@ _mutable() {
     platform::validate_remote
 
     log::info "Setting folders..."
-    rm -rf "$ENVOY_MUTABLE" || true
-    cp -r "$ENVOY" "$ENVOY_MUTABLE"
+    rm -rf "$REMOTE_ENVOY_MUTABLE" || true
+    cp -r "$REMOTE_ENVOY" "$REMOTE_ENVOY_MUTABLE"
 }
 
 main() {

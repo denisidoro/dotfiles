@@ -16,6 +16,10 @@ _content() {
    echo "export DOT_NAVI=${DOT_NAVI:-true}"
    echo "export DOT_ZIM=${DOT_ZIM:-true}"
    echo "export DOT_THEME=${DOT_THEME:-powerlevel}"
+   if [ -n "${DOT_ZSHRC_EXTRA:-}" ]; then
+      echo
+      echo "$DOT_ZSHRC_EXTRA"
+   fi
 }
 
 package::install() {

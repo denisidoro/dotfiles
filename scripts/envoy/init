@@ -10,17 +10,25 @@ source "${DOTFILES}/scripts/envoy/aux/core.sh"
 
 doc::maybe_help "$@"
 
-main() {
-    dot pkg add protoc pipenv fzf gitui
+_profile() {
+    echo
+    echo 'source "${HOME}/.bashrc"'
+}
 
-    EDITOR=cat \
+main() {
+    EDITOR=echo \
         DOT_ZIM=false \
         DOT_THEME="none" \
         DOT_LINK_EXTRA_ARG="--backup" \
-        DOT_INSTALL_SKIP_PM_UPDATE=false \
-        DOT_INSTALL_SKIP_CORE_DEPS=false \
-        DOT_INSTALL_SKIP_UPDATE=false \
+        DOT_SKIP_PM_UPDATE=true \
+        DOT_SKIP_CORE_DEPS=true \
+        DOT_SKIP_UPDATE=true \
+        DOT_ZSHRC_EXTRA='source "${DOTFILES}/scripts/envoy/aux/bash.rc"' \
         dot self update
+
+    dot pkg add git bash rsync bazel curl wget protoc pipenv fzf gitui 
+
+    _profile >> "${HOME}/.profile" 
 }
 
 main "$@"

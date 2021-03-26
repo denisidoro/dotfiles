@@ -26,7 +26,7 @@ main() {
    log::info "Current config: $tags"
    echoerr
 
-   if ! ${DOT_INSTALL_SKIP_CORE_DEPS:-false}; then
+   if ! ${DOT_SKIP_CORE_DEPS:-false}; then
       _add dot-submodules || true
       _add dot-folders || true
       _add dot-gitconfig || true

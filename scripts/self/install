@@ -14,9 +14,9 @@ DOT_BIN="${DOTFILES}/bin/dot"
 ##? Env vars:
 ##?    DOTFILES
 ##?    DOT_VERSION
-##?    DOT_INSTALL_SKIP_PM_UPDATE
-##?    DOT_INSTALL_SKIP_CORE_DEPS
-##?    DOT_INSTALL_SKIP_UPDATE
+##?    DOT_SKIP_PM_UPDATE
+##?    DOT_SKIP_CORE_DEPS
+##?    DOT_SKIP_UPDATE
 ##?    DOT_GIT_NAME
 ##?    DOT_GIT_EMAIL
 ##?    DOT_DOCOPT
@@ -26,6 +26,7 @@ DOT_BIN="${DOTFILES}/bin/dot"
 ##?    DOT_ZIM
 ##?    DOT_THEME
 ##?    DOT_LINK_EXTRA_ARG
+##?    DOT_ZSHRC_EXTRA
 ##?    EDITOR
 ##?
 ##? Examples:
@@ -67,9 +68,9 @@ clone_repo() {
 main() {
    # let's assume this is being called by a script if we're specifying a version
    if [ -n "${DOT_VERSION:-}" ]; then
-      [ -n "${DOT_INSTALL_SKIP_PM_UPDATE:-}" ] || export DOT_INSTALL_SKIP_PM_UPDATE=true
-      [ -n "${DOT_INSTALL_SKIP_CORE_DEPS:-}" ] || export DOT_INSTALL_SKIP_CORE_DEPS=true
-      [ -n "${DOT_INSTALL_SKIP_SKIP_UPDATE:-}" ] || export DOT_INSTALL_SKIP_UPDATE=true
+      [ -n "${DOT_SKIP_PM_UPDATE:-}" ] || export DOT_SKIP_PM_UPDATE=true
+      [ -n "${DOT_SKIP_CORE_DEPS:-}" ] || export DOT_SKIP_CORE_DEPS=true
+      [ -n "${DOT_SKIP_SKIP_UPDATE:-}" ] || export DOT_SKIP_UPDATE=true
    fi
 
    if [ -x "$DOT_BIN" ]; then
@@ -94,7 +95,7 @@ main() {
    fi
 
    # Make sure everything is up to date
-   if ! ${DOT_INSTALL_SKIP_PM_UPDATE:-false}; then
+   if ! ${DOT_SKIP_PM_UPDATE:-false}; then
       if _has apt-get; then
          sudo apt-get upgrade || true
          sudo apt-get update || true
@@ -104,7 +105,7 @@ main() {
       fi
    fi
 
-   if ! ${DOT_INSTALL_SKIP_CORE_DEPS:-false}; then
+   if ! ${DOT_SKIP_CORE_DEPS:-false}; then
       # Install some key dependencies
       _dot pkg add git curl wget || true
 
@@ -123,7 +124,7 @@ main() {
    fi
 
    # call setup
-   if ! ${DOT_INSTALL_SKIP_UPDATE:-false}; then
+   if ! ${DOT_SKIP_UPDATE:-false}; then
       _dot self update
    fi
 }

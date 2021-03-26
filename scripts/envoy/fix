@@ -14,7 +14,7 @@ _fix() {
     dot envoy sync mutable
 
     log::info "Running fixers..."
-    cd "$ENVOY_MUTABLE"
+    cd "$REMOTE_ENVOY_MUTABLE"
     ./tools/code_format/check_format.py fix || true
     ./tools/proto_format/proto_format.sh fix || true
     ./tools/proto_format/proto_sync.py || true

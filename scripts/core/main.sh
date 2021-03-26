@@ -4,11 +4,6 @@ echoerr() {
    echo "$@" 1>&2
 }
 
-# TODO: watch out for PATH explosion
-# if ! has dot; then
-   export PATH="${DOTFILES}/bin/:${PATH}:/usr/local/bin:/usr/bin:${HOME}/bin"
-# fi
-
 tap() {
    local -r input="$(cat)"
    echoerr "$input"
@@ -24,6 +19,8 @@ export -f has echoerr
 if has doc::parse; then
    return 0
 fi
+
+export PATH="${DOTFILES}/bin/:${PATH}:/usr/local/bin:/usr/bin:${HOME}/bin"
 
 if ${DOT_TRACE:-false}; then
    export PS4='+'$'\t''\e[1;30m\t \e[1;39m$(printf %4s ${SECONDS}s) \e[1;31m$(printf %3d $LINENO) \e[1;34m$BASH_SOURCE \e[1;32m${FUNCNAME[0]:-}\e[0m: '
