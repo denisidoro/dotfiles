@@ -13,6 +13,7 @@ source "${DOTFILES}/scripts/envoy/aux/core.sh"
 doc::maybe_help "$@"
 
 _rsync() {
+   log::info rsync -a --exclude='.git/,.vscode/,CMakeLists.txt' "$@"
    rsync -a --exclude='.git/' "$@"
 }
 
@@ -23,21 +24,21 @@ _pull() {
    local -r branch="$(git::current_branch)"
 
    log::info "Syncing..."
-   _rsync "${USER}@${IP}:~/envoy_mutable/" .
+   _rsync "${USER}@${IP}:~/${ENVOY_MUTABLE_DIR}/" "$LOCAL_ENVOY" 
 
-   log::info "Cleaning up..."
-   feedback::enter
-   git add .
-   git stash
-   git checkout "$branch"
-   git stash pop
+   # log::info "Cleaning up..."
+   # feedback::enter
+   # git add .
+   # git stash
+   # git checkout "$branch"
+   # git stash pop
 }
 
 _push() {
    platform::validate_local
 
    log::info "Syncing..."
-   _rsync . "${USER}@${IP}:~/envoy_mutable/"
+   _rsync "$LOCAL_ENVOY/" "${USER}@${IP}:~/${ENVOY_MUTABLE_DIR}"
 }
 
 

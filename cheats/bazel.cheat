@@ -8,5 +8,8 @@ bazel test "${ts[@]}"
 ts=($(echo "<dir_targets>"))
 bazel test "${ts[@]}"
 
+# get output base directory
+bazel info | grep output_base | awk '{print $NF}'
+
 $ targets: bazel query //... --- --multi
 $ dir_targets: bazel query //... | sed -E 's/:[^:]*$/:\*/' | sort -u --- --multi

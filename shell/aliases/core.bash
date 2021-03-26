@@ -19,11 +19,12 @@ txls() { eval "$(abra hook "$DOT_SHELL")"; }
 alias bt='bat -p'
 alias ansi='dot terminal ansi'
 alias icat="kitty +kitten icat --align=left"
+alias ssh="kitty +kitty ssh"
 
 # ========================
 # shell
 # ========================
-alias reload='source ~/.zshrc' # env -i zsh
+alias reload='source "${HOME}/.${DOT_SHELL:-zsh}rc' # env -i zsh
 
 # ========================
 # kitty
@@ -42,6 +43,7 @@ alias vim='nvim'
 alias v="dot terminal dashed nvim --"
 alias code='dot terminal dashed dot code vscode --'
 alias e='code'
+
 # ========================
 # utils
 # ========================

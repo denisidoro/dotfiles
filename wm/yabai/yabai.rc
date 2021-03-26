@@ -70,5 +70,4 @@ yabai -m rule --add app="Digital Color Meter" sticky=on
 # # Refresh process widget when current window title changes
 # yabai -m signal --add event=window_title_changed action="osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-process-jsx\"'"
 
-
 echo "yabai configuration loaded.."

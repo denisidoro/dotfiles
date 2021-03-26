@@ -7,6 +7,9 @@ source "${DOTFILES}/scripts/envoy/aux/core.sh"
 ##?
 ##? Usage:
 ##?    init
+##?
+##? Examples:
+##?    [ -n "${DOTFILES:-}" ] || (git clone https://github.com/denisidoro/dotfiles ~/dotfiles && ~/dotfiles/bin/dot envoy init)
 
 doc::maybe_help "$@"
 
@@ -16,6 +19,14 @@ _profile() {
 }
 
 main() {
+    platform::validate_remote
+
+    if has gitui; then
+        log::success "Initialization already done!"
+        return 0
+    fi
+
+    log::info "Symlinking..."
     EDITOR=echo \
         DOT_ZIM=false \
         DOT_THEME="none" \
@@ -26,9 +37,14 @@ main() {
         DOT_ZSHRC_EXTRA='source "${DOTFILES}/scripts/envoy/aux/bash.rc"' \
         dot self update
 
-    dot pkg add git bash rsync bazel curl wget protoc pipenv fzf gitui 
+    log::info "Installing packages..."
+    dot pkg batch add mini
+    dot pkg add rsync bazel protoc pipenv
 
+    log::info "Updating ~/.profile..."
     _profile >> "${HOME}/.profile" 
+
+    log::success "Initialization already done!"
 }
 
 main "$@"

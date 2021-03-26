@@ -9,7 +9,7 @@ fi
 export DOTFILES="${DOTFILES:-"${HOME}/dotfiles"}"
 
 # register which shell is running
-DOT_SHELL="zsh"
+export DOT_SHELL="zsh"
 
 # load vars
 source "${DOTFILES}/shell/aux/vars.bash"

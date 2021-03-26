@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+source "${DOTFILES}/scripts/git/aux/core.sh"
+
+##? Initialize a git repo with the first commit
+##?
+##? Usage:
+##?    init
+
+doc::maybe_help "$@"
+
+main() {
+    git init
+    git add .
+    git commit -am 'First commit' 
+}
+
+main "$@"

@@ -6,8 +6,14 @@ source "${DOTFILES}/scripts/core/feedback.sh"
 source "${DOTFILES}/scripts/core/git.sh"
 
 export USER="$(whoami)"
+export LOCAL_ENVOY="${WORK_HOME}/infra/envoy-oss"
+export ENVOY_MUTABLE_DIR="envoy_mutable"
 export REMOTE_ENVOY="${HOME}/envoy"
-export REMOTE_ENVOY_MUTABLE="${HOME}/envoy_mutable"
+export REMOTE_ENVOY_MUTABLE="${HOME}/${ENVOY_MUTABLE_DIR}"
+
+if [ -n "${ENVOY_IP:-}" ]; then
+   export IP="$ENVOY_IP"
+fi
 
 platform::is_local() {
    uname -a | grep -q arwin

@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/envoy/aux/core.sh"
+
+##? Setups VSCode
+##?
+##? Usage:
+##?    vscode
+
+doc::maybe_help "$@"
+
+_content() {
+    local -r workspaceFolder='${workspaceFolder}'
+    local -r out="$(bazel info | grep output_base | awk '{print $NF}')"
+cat <<EOF
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${out}/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/lib/llvm-10/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-clang-x64",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**",
+                    "${out}/**"
+                ]
+            }
+        }
+    ],
+    "version": 4
+}
+EOF
+}
+
+main() {
+    local -r content="$(_content)"
+
+    log::info "c_cpp_properties.json"
+    echo "$content" | jq
+
+    echo "$content" > "./.vscode/c_cpp_properties.json"
+
+    log::info "./.vscode"
+    ls -la "./.vscode"
+}
+
+main "$@"

@@ -4,4 +4,4 @@
 make CMakeLists.txt 
 
 # fix :: lint, linter, format
-./tools/code_format/check_format.py fix && ./tools/code_format/format_python_tools.sh fix
+./tools/code_format/check_format.py fix; ./tools/proto_format/proto_format.sh fix; ./tools/proto_format/proto_sync.py

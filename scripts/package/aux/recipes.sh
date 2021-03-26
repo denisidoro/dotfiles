@@ -96,7 +96,7 @@ recipe::install_from_git() {
 
 recipe::cargo() {
    local -r cargo_name="$1"
-   local -r pkg_manager_name="${2:$cargo_name}"
+   local -r pkg_manager_name="${2:-$cargo_name}"
 
    if has cargo; then
       cargo install "$cargo_name"

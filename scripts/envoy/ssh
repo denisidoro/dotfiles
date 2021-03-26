@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/envoy/aux/core.sh"
+
+##? ssh into envoy machine
+##?
+##? Usage:
+##?    ssh
+
+doc::maybe_help "$@"
+
+main() {
+    kitty +kitten ssh "${USER}@${IP}"
+}
+
+main "$@"
