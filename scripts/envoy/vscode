@@ -10,7 +10,7 @@ source "${DOTFILES}/scripts/envoy/aux/core.sh"
 
 doc::maybe_help "$@"
 
-_content() {
+_content_remote() {
     local -r workspaceFolder='${workspaceFolder}'
     local -r out="$(bazel::output_base_dir)"
 cat <<EOF
@@ -38,6 +38,45 @@ cat <<EOF
     "version": 4
 }
 EOF
+}
+
+_content_local() {
+    local -r workspaceFolder='${workspaceFolder}'
+    local -r out="$(bazel::output_base_dir)"
+cat <<EOF
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${out}/**"
+            ],
+            "defines": [],
+            "macFrameworkPath": [],
+            "compilerPath": "/usr/local/bin/gcc-10",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "macos-gcc-x64",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**",
+                    "${out}/**"
+                ]
+            }
+        }
+    ],
+    "version": 4
+}
+EOF
+}
+
+_content() {
+    if platform::is_local; then
+        _content_local
+    else
+        _content_remote
+    fi
 }
 
 main() {
