@@ -6,7 +6,7 @@ source "${DOTFILES}/scripts/core/feedback.sh"
 source "${DOTFILES}/scripts/core/git.sh"
 
 export USER="$(whoami)"
-export LOCAL_ENVOY="${WORK_HOME}/infra/envoy-oss"
+export LOCAL_ENVOY="${WORK_HOME:-"/tmp/envoy"}/infra/envoy-oss"
 export ENVOY_MUTABLE_DIR="envoy_mutable"
 export REMOTE_ENVOY="${HOME}/envoy"
 export REMOTE_ENVOY_MUTABLE="${HOME}/${ENVOY_MUTABLE_DIR}"

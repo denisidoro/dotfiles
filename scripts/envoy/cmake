@@ -25,7 +25,13 @@ _fix() {
    local -r exp1='s|BZL_OUT "[^"]+"|BZL_OUT "'"$bzl_out"'"|'
    local -r exp2='s|BZL_WKS "[^"]+"|BZL_WKS "'"$bzl_wks"'"|'
 
-   sed -i "${exp1};${exp2}" "$filepath"
+   cat "$filepath" \
+           | sed -E "$exp1" \
+           | sed -E "$exp2" \
+           > "${filepath}.new"
+
+   rm "$filepath"
+   mv "${filepath}.new" "$filepath"
 }
 
 main() {
