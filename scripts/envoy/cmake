@@ -21,17 +21,17 @@ _fix() {
 
    local -r bzl_out="$(bazel::output_base_dir)"
    local -r bzl_wks="$(envoy::dir)"
-    local -r filepath="CMakeLists.txt"
-    local -r exp1='s|BZL_OUT "[^"]+"|BZL_OUT "'"$bzl_out"'"|'
-    local -r exp2='s|BZL_WKS "[^"]+"|BZL_WKS "'"$bzl_wks"'"|'
-     
-        sed -i "${exp1};${exp2}" "$filepath"
+   local -r filepath="CMakeLists.txt"
+   local -r exp1='s|BZL_OUT "[^"]+"|BZL_OUT "'"$bzl_out"'"|'
+   local -r exp2='s|BZL_WKS "[^"]+"|BZL_WKS "'"$bzl_wks"'"|'
+
+   sed -i "${exp1};${exp2}" "$filepath"
 }
 
 main() {
-    local -r fn="$1"
-    shift || true
-    "_${fn}" "$@"
+   local -r fn="$1"
+   shift || true
+   "_${fn}" "$@"
 }
 
 main "$@"

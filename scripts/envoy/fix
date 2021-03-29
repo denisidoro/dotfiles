@@ -11,19 +11,19 @@ source "${DOTFILES}/scripts/envoy/aux/core.sh"
 doc::maybe_help "$@"
 
 _fix() {
-    platform::validate_remote
-    
-    log::info "Running fixers..."
-    cd "$REMOTE_ENVOY_MUTABLE"
-    ./tools/code_format/check_format.py fix || true
-    ./tools/proto_format/proto_format.sh fix || true
-    ./tools/proto_format/proto_sync.py || true
+   platform::validate_remote
+
+   log::info "Running fixers..."
+   cd "$REMOTE_ENVOY_MUTABLE"
+   ./tools/code_format/check_format.py fix || true
+   ./tools/proto_format/proto_format.sh fix || true
+   ./tools/proto_format/proto_sync.py || true
 }
 
 main() {
-    local -r fn="$1"
-    shift || true
-    "_${fn}" "$@"
+   local -r fn="$1"
+   shift || true
+   "_${fn}" "$@"
 }
 
 main "$@"

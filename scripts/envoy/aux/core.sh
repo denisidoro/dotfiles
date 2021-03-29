@@ -21,16 +21,16 @@ platform::is_local() {
 
 platform::validate_local() {
    platform::is_local || die "This call must be made locally"
-} 
+}
 
 platform::validate_remote() {
    platform::is_local && die "This call must be made remotely"
-} 
+}
 
 envoy::rm_symlink() {
    if platform::is_local; then
       rm "envoy" || true
-   else 
+   else
       rm "${REMOTE_ENVOY}/envoy" || true
       rm "${REMOTE_ENVOY_MUTABLE}/envoy" || true
    fi

@@ -11,9 +11,9 @@ source "${DOTFILES}/scripts/envoy/aux/core.sh"
 doc::maybe_help "$@"
 
 main() {
-    platform::validate_local
+   platform::validate_local
 
-    kitty +kitten ssh "${USER}@${IP}"
+   kitty +kitten ssh "${USER}@${IP}"
 }
 
 main "$@"

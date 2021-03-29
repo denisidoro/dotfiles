@@ -14,37 +14,37 @@ source "${DOTFILES}/scripts/envoy/aux/core.sh"
 doc::maybe_help "$@"
 
 _profile() {
-    echo
-    echo 'source "${HOME}/.bashrc"'
+   echo
+   echo 'source "${HOME}/.bashrc"'
 }
 
 main() {
-    platform::validate_remote
+   platform::validate_remote
 
-    if has gitui; then
-        log::success "Initialization already done!"
-        return 0
-    fi
+   if has gitui; then
+      log::success "Initialization already done!"
+      return 0
+   fi
 
-    log::info "Symlinking..."
-    EDITOR=echo \
-        DOT_ZIM=false \
-        DOT_THEME="none" \
-        DOT_LINK_EXTRA_ARG="--backup" \
-        DOT_SKIP_PM_UPDATE=true \
-        DOT_SKIP_CORE_DEPS=true \
-        DOT_SKIP_UPDATE=true \
-        DOT_ZSHRC_EXTRA='source "${DOTFILES}/scripts/envoy/aux/bash.rc"' \
-        dot self update
+   log::info "Symlinking..."
+   EDITOR=echo \
+      DOT_ZIM=false \
+      DOT_THEME="none" \
+      DOT_LINK_EXTRA_ARG="--backup" \
+      DOT_SKIP_PM_UPDATE=true \
+      DOT_SKIP_CORE_DEPS=true \
+      DOT_SKIP_UPDATE=true \
+      DOT_ZSHRC_EXTRA='source "${DOTFILES}/scripts/envoy/aux/bash.rc"' \
+      dot self update
 
-    log::info "Installing packages..."
-    dot pkg batch add mini
-    dot pkg add rsync bazel protoc pipenv
+   log::info "Installing packages..."
+   dot pkg batch add mini
+   dot pkg add rsync bazel protoc pipenv
 
-    log::info "Updating ~/.profile..."
-    _profile >> "${HOME}/.profile" 
+   log::info "Updating ~/.profile..."
+   _profile >> "${HOME}/.profile"
 
-    log::success "Initialization already done!"
+   log::success "Initialization already done!"
 }
 
 main "$@"

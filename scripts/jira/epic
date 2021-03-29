@@ -15,11 +15,11 @@ source "${DOTFILES}/scripts/core/str.sh"
 doc::parse "$@"
 
 json_to_dot() {
-    node "${DOTFILES}/scripts/jira/aux/jira_epic.js"
+   node "${DOTFILES}/scripts/jira/aux/jira_epic.js"
 }
 
 main() {
-    npx xml2json | json_to_dot
+   npx xml2json | json_to_dot
 }
 
 main "$@"

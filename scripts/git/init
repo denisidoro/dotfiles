@@ -10,9 +10,9 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 doc::maybe_help "$@"
 
 main() {
-    git init
-    git add .
-    git commit -am 'First commit' 
+   git init
+   git add .
+   git commit -am 'First commit'
 }
 
 main "$@"
