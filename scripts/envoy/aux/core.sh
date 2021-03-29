@@ -36,4 +36,18 @@ envoy::rm_symlink() {
    fi
 }
 
+envoy::dir() {
+   if platform::is_local; then
+      echo "$LOCAL_ENVOY"
+   else
+      echo "$REMOTE_ENVOY_MUTABLE"
+   fi
+}
+
+bazel::output_base_dir() {
+   bazel info \
+      | grep output_base \
+      | awk '{print $NF}'
+}
+
 envoy::rm_symlink &>/dev/null

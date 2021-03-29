@@ -19,7 +19,7 @@ txls() { eval "$(abra hook "$DOT_SHELL")"; }
 alias bt='bat -p'
 alias ansi='dot terminal ansi'
 alias icat="kitty +kitten icat --align=left"
-alias ssh="kitty +kitty ssh"
+alias ssh="kitty +kitten ssh"
 
 # ========================
 # shell

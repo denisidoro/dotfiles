@@ -1,4 +1,4 @@
 % bash
 
-# cheat.sh for command
-curl "cheat.sh/<command>" | less -R
+# cheat.sh for command :: cheatsh
+curl -s "cheat.sh/<command>" | less -R

@@ -3,16 +3,16 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/envoy/aux/core.sh"
 
-##? Envoy pull
+##? Run linters and formatters
 ##?
 ##? Usage:
-##?    pull
+##?    fix
 
 doc::maybe_help "$@"
 
 _fix() {
-    dot envoy sync mutable
-
+    platform::validate_remote
+    
     log::info "Running fixers..."
     cd "$REMOTE_ENVOY_MUTABLE"
     ./tools/code_format/check_format.py fix || true

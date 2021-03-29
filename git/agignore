@@ -9,9 +9,5 @@ bower_components
 .idea
 .git
 
-# every hidden file/folder except dotfiles
-/.[0-9a-cA-C]*
-/.[dD][a-nA-N]*
-# !/dotfiles
-/.[dD][p-zP-Z]*
-/.[e-zE-Z]*
+# every hidden file
+/.*

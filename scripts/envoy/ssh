@@ -3,7 +3,7 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/envoy/aux/core.sh"
 
-##? ssh into envoy machine
+##? ssh into dev machine
 ##?
 ##? Usage:
 ##?    ssh
@@ -11,6 +11,8 @@ source "${DOTFILES}/scripts/envoy/aux/core.sh"
 doc::maybe_help "$@"
 
 main() {
+    platform::validate_local
+
     kitty +kitten ssh "${USER}@${IP}"
 }
 
