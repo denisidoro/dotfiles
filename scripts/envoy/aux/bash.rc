@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 export TERM="xterm"
-export PATH="$(python -m site --user-base)/bin:${PATH}" 
+
+export PATH="$(python -m site --user-base)/bin:${HOME}/.local/bin/:${PATH}" 
 
 ls() {
    if has exa; then

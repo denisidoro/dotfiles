@@ -25,13 +25,6 @@ _pull() {
 
    log::info "Syncing..."
    _rsync "${USER}@${IP}:~/${ENVOY_MUTABLE_DIR}/" "$LOCAL_ENVOY"
-
-   # log::info "Cleaning up..."
-   # feedback::enter
-   # git add .
-   # git stash
-   # git checkout "$branch"
-   # git stash pop
 }
 
 _push() {

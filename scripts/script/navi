@@ -10,7 +10,6 @@ source "$DOTFILES/scripts/core/main.sh"
 
 doc::maybe_help "$@"
 
-
 export_var() {
    local -r var="$(echo "$1" | tr '-' '_')"
    export "$var"="$2"
