@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+source "${DOTFILES}/scripts/git/aux/core.sh"
+
+##? Git branch helpers
+##?
+##? Usage:
+##?    branch upstream
+
+doc::parse "$@"
+
+if $upstream; then
+   git::upstream_branch
+else 
+   exit 1
+fi

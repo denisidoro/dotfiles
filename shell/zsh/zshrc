@@ -52,7 +52,8 @@ source "${DOTFILES}/shell/themes/core.zsh"
 
 # load bindings
 source "${DOTFILES}/shell/zsh/bindings/editing.zsh"
-[[ ${DOT_NAVI:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
+# [[ ${DOT_NAVI:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
+[[ ${DOT_NAVI:-false} ]] && eval "$(navi widget zsh)"
 [[ ${DOT_ZIM:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/zim.zsh"
 [[ ${DOT_FZF:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
 

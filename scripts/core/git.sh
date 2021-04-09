@@ -19,3 +19,7 @@ git::master_branch() {
 git::root() {
    git rev-parse --show-toplevel
 }
+
+git::upstream_branch() {
+   git rev-parse --abbrev-ref --symbolic-full-name @{u}
+}

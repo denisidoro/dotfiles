@@ -14,18 +14,21 @@ source "${DOTFILES}/scripts/core/main.sh"
 doc::maybe_help "$@"
 
 _fzf() {
-    local -r preview='i={}; echo "$i" | grep -q "^. = " && q="." || q="$(echo "$i" | sed -E "s|(\.[^ ]+).*|\1|")"; cat "'"$1"'" | jq -C "$q"'
+    local -r preview='i={}; echo "$i" | grep -q "^\." || i=".${i}"; echo "$i" | grep -q "^\. = " && q="." || q="$(echo "$i" | sed -E "s|(\.[^ ]+).*|\1|")"; cat "'"$1"'" | jq -C "$q"'
     fzf --ansi --exact --preview "$preview"
 }
 
 _input() {
-    printf '.'
-    echo "$1" | gron -c 
+    if has gron; then
+        printf '.'
+        echo "$1" | gron -c 
+    else
+        echo "$1" | jq '[path(..)|map(if type=="number" then "[]" else tostring end)|join(".")|split(".[]")|join("[]")]|unique|map("."+.)|.[]' -r
+    fi
 }
 
 _pretty() {
-     sed 's|json||' \
-        | sed '/^\./! s/.*/\.&/'
+     sed 's|json||' # | sed '/^\./! s/.*/\.&/' \
 }
 
 main() {
@@ -33,7 +36,7 @@ main() {
     local -r temp_file=$(mktemp)
     trap "rm -f $temp_file" 0 2 3 15
     echo "$content" > "$temp_file"
-    _input "$content" | _pretty | _fzf "$temp_file" 
+    _input "$content" | _pretty | _fzf "$temp_file"
 }
 
 main "$@"

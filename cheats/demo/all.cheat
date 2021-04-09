@@ -1,3 +1,47 @@
+% grep
+
+# filter lines
+grep '<pattern>'
+
+# exclude lines, remove lines
+grep -v '<pattern>'
+
+
+% crontab
+
+# list
+crontab -l
+
+
+% awk
+
+# last line
+awk '{print $NF}'
+
+# nth line
+awk '{print $<n>}'
+
+
+% network
+
+# private ip
+ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'
+
+
+
+
+% docker
+
+# print logs
+docker logs --follow <container_id>
+
+# shell into container
+docker exec -i /bin/bash
+
+$ image_id: docker images --- --headers 1 --column 3 --delimiter '\s\s+'
+$ container_id: docker ps --- --headers 1 --column 1 --delimiter '\s\s+'
+
+
 % git common
 
 $ local_branch: dot git ls local_branch --- --column 1
@@ -16,11 +60,8 @@ $ modified_files_upstream: git diff --name-only "<upstream_branch>" --- --multi 
 % git branch
 @ git common
 
-# checkout branch
+# checkout branch :: gb
 git checkout "<local_branch>"
-
-# checkout tag
-git checkout "<tag>"
 
 % git config
 @ git common

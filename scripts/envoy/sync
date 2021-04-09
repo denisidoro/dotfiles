@@ -24,7 +24,8 @@ _pull() {
    local -r branch="$(git::current_branch)"
 
    log::info "Syncing..."
-   _rsync "${USER}@${IP}:~/${ENVOY_MUTABLE_DIR}/" "$LOCAL_ENVOY"
+   # _rsync "${USER}@${IP}:~/${ENVOY_MUTABLE_DIR}/" "$LOCAL_ENVOY"
+   _rsync "${USER}@${IP}:~/${ENVOY_DIR}/" "$LOCAL_ENVOY"
 }
 
 _push() {
