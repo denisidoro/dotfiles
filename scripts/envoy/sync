@@ -8,13 +8,24 @@ source "${DOTFILES}/scripts/envoy/aux/core.sh"
 ##? Usage:
 ##?    sync pull
 ##?    sync push
-##?    sync mutable
 
 doc::maybe_help "$@"
 
+LOCAL_BASE="$LOCAL_ENVOY_DIR"
+REMOTE_BASE="${USER}@${IP}:~/${REMOTE_ENVOY_DIRNAME}"
+
 _rsync() {
-   log::info rsync -a --exclude='.git/,.vscode/,CMakeLists.txt' "$@"
-   rsync -a --exclude='.git/' "$@"
+   log::info rsync "$@"
+   echo rsync "$@"
+}
+
+_rsync_all() {
+   local -r from="$1"
+   local -r to="$2"
+
+   for f in "source" "generated_api_shadow" "api"; do
+      _rsync -a "${from}/${f}/" "${to}/${f}"
+   done
 }
 
 _pull() {
@@ -24,24 +35,14 @@ _pull() {
    local -r branch="$(git::current_branch)"
 
    log::info "Syncing..."
-   # _rsync "${USER}@${IP}:~/${ENVOY_MUTABLE_DIR}/" "$LOCAL_ENVOY"
-   _rsync "${USER}@${IP}:~/${ENVOY_DIR}/" "$LOCAL_ENVOY"
+   _rsync_all "$REMOTE_BASE" "$LOCAL_BASE"
 }
 
 _push() {
    platform::validate_local
 
    log::info "Syncing..."
-   _rsync "$LOCAL_ENVOY/" "${USER}@${IP}:~/${ENVOY_MUTABLE_DIR}"
-}
-
-
-_mutable() {
-   platform::validate_remote
-
-   log::info "Setting folders..."
-   rm -rf "$REMOTE_ENVOY_MUTABLE" || true
-   cp -r "$REMOTE_ENVOY" "$REMOTE_ENVOY_MUTABLE"
+   _rsync_all "$LOCAL_BASE" "$REMOTE_BASE"
 }
 
 main() {

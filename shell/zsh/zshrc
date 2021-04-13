@@ -1,9 +1,9 @@
 #!/usr/bin/env zsh
 
 # prevent multiple sourcing
-if [ -n "${DOT_SHELL:-}" ]; then
-   return 0
-fi
+# if [ -n "${DOT_SHELL:-}" ]; then
+#   return 0
+# fi
 
 # dotfiles
 export DOTFILES="${DOTFILES:-"${HOME}/dotfiles"}"
@@ -54,7 +54,9 @@ source "${DOTFILES}/shell/themes/core.zsh"
 source "${DOTFILES}/shell/zsh/bindings/editing.zsh"
 # [[ ${DOT_NAVI:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
 [[ ${DOT_NAVI:-false} ]] && eval "$(navi widget zsh)"
-[[ ${DOT_ZIM:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/zim.zsh"
+if [ -z "${DOT_SHELL:-}" ]; then
+   [[ ${DOT_ZIM:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/zim.zsh"
+fi
 [[ ${DOT_FZF:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
 
 # misc
@@ -72,3 +74,5 @@ export NNN_FIFO="/tmp/nnn.fifo"
 
 # $ alias
 alias \$=''
+
+# zprof

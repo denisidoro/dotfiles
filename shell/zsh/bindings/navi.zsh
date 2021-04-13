@@ -8,5 +8,4 @@ _call_navi() {
 }
 
 zle -N _call_navi
-
 bindkey '^g' _call_navi

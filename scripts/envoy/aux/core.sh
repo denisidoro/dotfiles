@@ -6,11 +6,9 @@ source "${DOTFILES}/scripts/core/feedback.sh"
 source "${DOTFILES}/scripts/core/git.sh"
 
 export USER="$(whoami)"
-export LOCAL_ENVOY="${WORK_HOME:-"/tmp/envoy"}/infra/envoy-oss"
-export ENVOY_MUTABLE_DIR="envoy_mutable"
-export ENVOY_DIR="envoy"
-export REMOTE_ENVOY="${HOME}/envoy"
-export REMOTE_ENVOY_MUTABLE="${HOME}/${ENVOY_MUTABLE_DIR}"
+export REMOTE_ENVOY_DIRNAME="envoy"
+export REMOTE_ENVOY_DIR="${HOME}/${REMOTE_ENVOY_DIRNAME}"
+export LOCAL_ENVOY_DIR="${WORK_HOME:-"/tmp/envoy"}/infra/envoy-oss"
 
 if [ -n "${ENVOY_IP:-}" ]; then
    export IP="$ENVOY_IP"
@@ -29,19 +27,14 @@ platform::validate_remote() {
 }
 
 envoy::rm_symlink() {
-   if platform::is_local; then
-      rm "envoy" || true
-   else
-      rm "${REMOTE_ENVOY}/envoy" || true
-      rm "${REMOTE_ENVOY_MUTABLE}/envoy" || true
-   fi
+   rm -rf "$(envoy::dir)/envoy" || true
 }
 
 envoy::dir() {
    if platform::is_local; then
-      echo "$LOCAL_ENVOY"
+      echo "$LOCAL_ENVOY_DIR"
    else
-      echo "$REMOTE_ENVOY_MUTABLE"
+      echo "$REMOTE_ENVOY_DIR"
    fi
 }
 
