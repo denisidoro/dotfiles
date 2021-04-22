@@ -91,7 +91,7 @@ update_dotfiles() {
    if [ -n "${DOT_LINK_EXTRA_ARG:-}" ]; then
       params+=("$DOT_LINK_EXTRA_ARG")
    fi
-   DOTLINK="${1:-unix}" dot self link set --create-dirs --verbose "${params[@]}"
+   DOTLINK="${1:-unix}" dot self link set --create-dirs --verbose "${params[@]:-}"
 }
 
 update_dotfiles_common() {
