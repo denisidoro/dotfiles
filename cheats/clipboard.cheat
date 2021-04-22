@@ -2,3 +2,9 @@
 
 # Replace line breaks by \n
 dot terminal pbpaste | sed ':a;N;$!ba;s/\n/\\n/g' | dot terminal pbcopy
+
+# Convert uppercase to lowercase
+pbpaste | tr '[:upper:]' '[:lower:]' | pbcopy
+
+# Convert lowercase to uppercase
+pbpaste | tr '[:lower:]' '[:upper:]'  | pbcopy

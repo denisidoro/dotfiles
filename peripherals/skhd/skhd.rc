@@ -61,6 +61,9 @@ alt + cmd + ctrl + shift - 8 : yabai -m space --focus 8
 alt + cmd + ctrl + shift - 9 : yabai -m space --focus 9
 alt + cmd + ctrl + shift - 0 : yabai -m space --focus 10
 
+# navi
+alt + cmd + ctrl + shift - space : /Users/denis.isidoro/dotfiles/bin/dotn-alacritty
+
 # focus desktop
 alt + cmd + ctrl + shift - u : yabai -m space --focus prev || yabai -m space --focus 8
 alt + cmd + ctrl + shift - i : yabai -m space --focus next || yabai -m space --focus 1

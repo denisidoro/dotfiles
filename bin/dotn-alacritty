@@ -1,0 +1,5 @@
+#!/usr/bin/env dash
+
+dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+
+NAVI_PATH="${dir}/../cheats:${dir}/../local/cheats" FZF_DEFAULT_OPTS='--tiebreak=begin --literal --layout=reverse --height 100% --inline-info --cycle' NAVI_SHELL='bash' /Applications/Alacritty.app/Contents/MacOS/alacritty --command navi

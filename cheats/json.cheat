@@ -1,0 +1,4 @@
+% javascript, js, npm
+
+# Convert JSON to YAML
+cat "<json_file>" | ruby -ryaml -rjson -e 'puts YAML.dump(JSON.load(ARGF))'

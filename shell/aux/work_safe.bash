@@ -34,8 +34,9 @@ alias sort='gsort'
 alias kill='gkill'
 alias xargs='gxargs'
 alias base64='gbase64'
+alias pr='gpr'
 
-alias mono="dot u mono"
+alias mono="dot work mono"
 
 _load_work_stuff() {
    case $1 in
@@ -44,29 +45,29 @@ _load_work_stuff() {
          ;;
       gcloud)
          source "${HOME}/google-cloud-sdk/path.zsh.inc" &> /dev/null
-         source "${HOME}/google-cloud-sdk/completion.zsh.inc" &> /dev/null
+         # source "${HOME}/google-cloud-sdk/completion.zsh.inc" &> /dev/null
          ;;
       nvm)
          if ! ${NVM_LOADED:-false}; then
             unset -f nvm node npm &> /dev/null
-            echoerr "Loading nvm..."
+            dot script log info "Loading nvm..."
             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
             export NVM_LOADED=true
          else
-            echoerr "nvm already loaded!"
+            dot script log info "nvm already loaded!"
          fi
          ;;
       rbenv)
          if ! ${RBENV_LOADED:-false}; then
-            echoerr "Loading rbenv..."
+            dot script log info "Loading rbenv..."
             type "rbenv" > /dev/null && eval "$(command rbenv init - --no-rehash)"
             export RBENV_LOADED=true
          else
-            echoerr "rbenv already loaded!"
+            dot script log info "rbenv already loaded!"
          fi
          ;;
       lda)
-         echoerr "Loading lda..."
+         dot script log info "Loading lda..."
          if [ -n "$ZSH_VERSION" ]; then
             # autoload -Uz add-zsh-hook
             # for zsh, only enable LDA before running the command
@@ -87,7 +88,7 @@ _load_work_stuff() {
          fi
          ;;
       bazel)
-         echoerr "Loading bazel..."
+         dot script log info "Loading bazel..."
          case ${DOT_SHELL:-} in
             zsh)
                zstyle ':completion:*' use-cache on
@@ -98,14 +99,14 @@ _load_work_stuff() {
          ;;
       virtualenv)
          if [ -z "${_VIRTUALENVWRAPPER_API}" ]; then
-            echoerr "Loading virtualenv..."
+            dot script log info "Loading virtualenv..."
             [ -s "${HOMEBREW_PREFIX}/bin/virtualenvwrapper_lazy.sh" ] && . "${HOMEBREW_PREFIX}/bin/virtualenvwrapper_lazy.sh"
          else
-            echoerr "virtualenv already loaded!"
+            dot script log info "virtualenv already loaded!"
          fi
          ;;
       direnv)
-         echoerr "Loading direnv..."
+         dot script log info "Loading direnv..."
          eval "$(direnv hook $SHELL)"
          ;;
       *)
@@ -136,30 +137,44 @@ _load_work_stuff() {
 # }
 
 zsh_disable_lda() {
-   if [[ ! -z "$WORK_BINARIES_PATH" ]]; then
-      export PATH=${PATH//"${WORK_BINARIES_PATH}:"/}
-      unset LDA_ENABLED
-   fi
+   unset LDA_ENABLED
+   # echo foo
+   # if [[ ! -z "$WORK_BINARIES_PATH" ]]; then
+   #    export PATH=${PATH//"${WORK_BINARIES_PATH}:"/}
+   #    unset LDA_ENABLED
+   # fi
 }
 
 zsh_enable_lda() {
-   if [[ -z "$LDA_ENABLED" ]]; then
-      export PATH="$WORK_BINARIES_PATH:$PATH"
-      export LDA_ENABLED=1
-   fi
+   export LDA_ENABLED=1
+   # echo hi
+   # if [[ -z "$LDA_ENABLED" ]]; then
+   #    export PATH="$WORK_BINARIES_PATH:$PATH"
+   #    export LDA_ENABLED=1
+   # fi
 }
 
-bash_enable_lda() {
-   if [[ ! -z "$LDA_ENABLED" ]]; then
-      return
-   fi
-   export LDA_ENABLED=1
+bash_disable_lda() {
+   unset LDA_ENABLED
+   # echo foo
+   # if [[ ! -z "$WORK_BINARIES_PATH" ]]; then
+   #    export PATH=${PATH//"${WORK_BINARIES_PATH}:"/}
+   #    unset LDA_ENABLED
+   # fi
+}
 
-   if [[ -z "$PROMPT_COMMAND" ]]; then
-      PROMPT_COMMAND='[[ "$PATH" =~ "pex_resource" ]] || export PATH="$WORK_BINARIES_PATH:$PATH"'
-   else
-      PROMPT_COMMAND='[[ "$PATH" =~ "pex_resource" ]] || export PATH="$WORK_BINARIES_PATH:$PATH"'";$PROMPT_COMMAND"
-   fi
+bash2_enable_lda() {
+   export LDA_ENABLED=1
+   # if [[ ! -z "$LDA_ENABLED" ]]; then
+   #    return
+   # fi
+   # export LDA_ENABLED=1
+
+   # if [[ -z "$PROMPT_COMMAND" ]]; then
+   #    PROMPT_COMMAND='[[ "$PATH" =~ "pex_resource" ]] || export PATH="$WORK_BINARIES_PATH:$PATH"'
+   # else
+   #    PROMPT_COMMAND='[[ "$PATH" =~ "pex_resource" ]] || export PATH="$WORK_BINARIES_PATH:$PATH"'";$PROMPT_COMMAND"
+   # fi
 }
 
 # run brew --prefix only once in script, even if sourced again in same shell
@@ -203,13 +218,13 @@ gopathmode() {
    USAGE="$0 [ on | off ]\n\tshows or sets MONOREPO_GOPATH_MODE"
    [ $# -lt 1 ] && {
       [ -n "$MONOREPO_GOPATH_MODE" ] \
-         && echo "MONOREPO_GOPATH_MODE is on." \
-         || echo "MONOREPO_GOPATH_MODE is off."
+         && dot script log info "MONOREPO_GOPATH_MODE is on." \
+         || dot script log info "MONOREPO_GOPATH_MODE is off."
       return
    }
-   [ $# -gt 1 ] && echo "$USAGE" && return
+   [ $# -gt 1 ] && dot script log info "$USAGE" && return
    [ "$1" != "on" ] && [ "$1" != "off" ] && {
-      echo "$USAGE"
+      dot script log info "$USAGE"
       return
    }
 

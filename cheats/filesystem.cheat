@@ -8,3 +8,6 @@ dot fs nav
 
 # Folder size
 du -sh
+
+# Edit fre entries
+dot code vscode "${HOME}/Library/Application Support/fre/fre.json"

@@ -14,7 +14,11 @@ has() {
    type "$1" &>/dev/null
 }
 
-export -f has echoerr
+export_f() {
+   export -f "$@" >/dev/null
+}
+
+export_f has echoerr
 
 if has doc::parse; then
    return 0
@@ -31,12 +35,12 @@ export EDITOR="${EDITOR:-vi}"
 
 if ! has sudo; then
    sudo() { "$@"; }
-   export -f sudo
+   export_f sudo
 fi
 
 if ! has tput; then
    tput() { :; }
-   export -f tput
+   export_f tput
 fi
 
 if has ggrep; then
@@ -55,7 +59,7 @@ if has ggrep; then
    sort() { gsort "$@"; }
    kill() { gkill "$@"; }
    xargs() { gxargs "$@"; }
-   export -f sed awk find head mktemp date cut tr cp cat sort kill xargs
+   export_f sed awk find head mktemp date cut tr cp cat sort kill xargs
 fi
 
 doc::help_msg() {
@@ -100,4 +104,4 @@ doc::parse() {
    eval "$("$docopt" -h "${help}" : "${@:1}")"
 }
 
-export -f doc::help_msg doc::maybe_help doc::help_or_fail doc::parse
+export_f doc::help_msg doc::maybe_help doc::help_or_fail doc::parse

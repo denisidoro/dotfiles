@@ -8,6 +8,7 @@ shell/hushlogin, $HOME/.hushlogin
 editors/spacevim/spacevim.rc, $HOME/.spacevim
 terminal/tmux/tmux.conf, $HOME/.tmux.conf
 terminal/kitty/kitty.conf, $HOME/.config/kitty/kitty.conf
+terminal/alacritty/alacritty.yml, $HOME/.config/alacritty/alacritty.yml
 git/config, $HOME/.gitconfig
 editors/intellij/ideavim.rc, $HOME/.ideavimrc
 git/agignore, $HOME/.gitignore

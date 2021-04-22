@@ -3,4 +3,7 @@
 # List VSCode commands
 echo "<vscode_action>"
 
+# Edit dotfiles in VSCode
+dot terminal dashed dot code vscode -- "${DOTFILES}" &disown
+
 $ vscode_action: curl -sL "https://raw.githubusercontent.com/aburok/mysettings/master/VisualStudio/vscommands.txt"

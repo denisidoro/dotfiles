@@ -16,16 +16,30 @@ REMOTE_BASE="${USER}@${IP}:~/${REMOTE_ENVOY_DIRNAME}"
 
 _rsync() {
    log::info rsync "$@"
-   echo rsync "$@"
+   rsync "$@"
 }
 
 _rsync_all() {
    local -r from="$1"
    local -r to="$2"
 
-   for f in "source" "generated_api_shadow" "api"; do
-      _rsync -a "${from}/${f}/" "${to}/${f}"
-   done
+   #local includes=()
+   #for f in "source" "test" "generated_api_shadow" "api"; do
+   #   includes+=("--include=\"${f}/\"")
+   #done
+
+   #_rsync \
+   # -v -r -R -a \
+   # "${includes[@]}" \
+   # --exclude='*' \
+   # "${from}/" \
+   # "$to"
+
+   # _rsync -avn ./source/**/* ./test/**/* ./api/**/* ./generated_api_shadow/**/*
+
+   # mv .git ../envoy-oss.bk/.git
+   _rsync -a --cvs-exclude --exclude='.git/' --exclude='.vscode/' --exclude='bazel*/' --exclude='CMakeLists.txt' "${from}/" "$to"
+   # mv ../envoy-oss.bk/.git .git
 }
 
 _pull() {
