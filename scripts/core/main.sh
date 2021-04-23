@@ -43,7 +43,7 @@ if ! has tput; then
    export_f tput
 fi
 
-if has ggrep; then
+if has gcat; then
    sed() { gsed "$@"; }
    awk() { gawk "$@"; }
    find() { gfind "$@"; }

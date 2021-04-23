@@ -1,7 +1,7 @@
 % clipboard
 
 # Replace line breaks by \n
-dot terminal pbpaste | sed ':a;N;$!ba;s/\n/\\n/g' | dot terminal pbcopy
+dot script clip paste | sed ':a;N;$!ba;s/\n/\\n/g' | dot script clip copy
 
 # Convert uppercase to lowercase
 pbpaste | tr '[:upper:]' '[:lower:]' | pbcopy

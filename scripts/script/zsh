@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 ##? ZSH helpers
 ##?
@@ -6,6 +6,9 @@
 ##?    zsh optimize             # Optimize ZSH
 ##?    zsh benchmark            # Print the current ZSH performance
 ##?    zsh reload-completions   # Reload completions
+
+      source "$DOTFILES/scripts/core/main.sh"
+      doc::maybe_help "$@"
 
 _benchmark() {
    env | grep "DOT_"
@@ -23,9 +26,5 @@ case "${1:-}" in
       ;;
    *comp*)
       zsh -c "autoload -U compaudit && compinit"
-      ;;
-   *)
-      source "$DOTFILES/scripts/core/main.sh"
-      doc::maybe_help --help
       ;;
 esac

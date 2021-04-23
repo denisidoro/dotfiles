@@ -57,7 +57,7 @@ action::edit() {
 
 action::fm() {
    cd "$CWD"
-   vifm "."
+   nnn "."
 }
 
 action::before_exit() {

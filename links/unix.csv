@@ -12,4 +12,3 @@ terminal/alacritty/alacritty.yml, $HOME/.config/alacritty/alacritty.yml
 git/config, $HOME/.gitconfig
 git/ignore, $HOME/.gitignore
 editors/intellij/ideavim.rc, $HOME/.ideavimrc
-terminal/vifm/vifmrc, $HOME/.vifm/vifmrc

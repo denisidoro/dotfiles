@@ -76,8 +76,8 @@ fpath=("${DOTFILES}/shell/zsh/completions" $fpath)
 export ZDOTDIR="$HOME"
 
 # nnn
-export NNN_PLUG="f:fzcd;o:fzopen;z:fzz;d:diffs;t:treeview;v:preview-tui"
-export NNN_FIFO="/tmp/nnn.fifo"
+# export NNN_PLUG="f:fzcd;o:fzopen;z:fzz;d:diffs;t:treeview;v:preview-tui"
+# export NNN_FIFO="/tmp/nnn.fifo"
 
 # $ alias
 alias \$=''
@@ -86,3 +86,11 @@ alias \$=''
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# The next line updates PATH for the Google Cloud SDK.
+# if [ -f '/Users/denis.isidoro/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/denis.isidoro/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+# if [ -f '/Users/denis.isidoro/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/denis.isidoro/google-cloud-sdk/completion.zsh.inc'; fi
+
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

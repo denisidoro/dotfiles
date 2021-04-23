@@ -73,7 +73,7 @@ alias al="navi best 'Land a diff'"
 
 alias o="dot terminal dashed open --"
 unalias f &> /dev/null
-alias f="dot terminal dashed vifm --"
+# alias f="dot terminal dashed vifm --"
 # alias ls='ls --color=auto'
 alias lst="tree -L 2"
 cdd() { cd "$@" && ls .; }

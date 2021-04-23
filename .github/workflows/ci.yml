@@ -1,0 +1,72 @@
+# Based on https://github.com/actions-rs/meta/blob/master/recipes/quickstart.md
+
+on: [push]
+
+name: Tests
+
+jobs:
+  scripts-core-tests:
+    name: Scripts core library
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: ./bin/dot self test file 'coll|dict|platform'
+
+  json-tests:
+    name: JSONs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Install tools
+        run: sudo ./bin/dot pkg add jsmin jq
+      - name: Run tests
+        run: ./bin/dot self test file 'json'
+
+  help-tests:
+    name: Help
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: ./bin/dot self test file 'help'
+
+  references-tests:
+    name: References
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: ./bin/dot self test file 'references'
+
+  symlink-tests:
+    name: Symlinks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: ./bin/dot self test file 'symlink'
+
+  install-tests:
+    name: Install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Bashrc is fine
+        run: ./bin/dot self test file 'bashrc'
+      - name: Cleanup
+        run: cd $HOME && for f in $(ls -a | grep '^\.'); do rm "$f" || true; done
+      - name: dot self install
+        run: EDITOR=cat TERM=dumb DOT_INSTALL_SKIP_UPDATE=true DOT_DOCOPT=python DOT_FRE=false DOT_FZF=false DOT_NAVI=false DOT_ZIM=false DOT_STARSHIP=false ./bin/dot self install
+      - name: DOTFILES bashrc
+        run: cat $HOME/.bashrc | grep DOTFILES
+      - name: DOTFILES env variable
+        run: bash -c 'source $HOME/.bashrc; env | grep DOTFILES'
+      - name: dot version
+        run: bash -c 'source $HOME/.bashrc; dot --version | grep -E '^202[0-9]\.[0-9]+\.[0-9]+$''
