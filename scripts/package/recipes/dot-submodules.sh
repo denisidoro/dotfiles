@@ -4,7 +4,7 @@ set -euo pipefail
 DEFAULT_DOTFILES="${HOME}/dotfiles"
 
 package::is_installed() {
-   return 1
+   [[ -f "${DOTFILES}/modules/dotlink/README.md" ]]
 }
 
 _default_available() {
@@ -22,6 +22,8 @@ _symlink() {
 }
 
 package::install() {
+   rm -rf "${DOTFILES}/modules/dotlink"
+   
    dot pkg add git
 
    cd "$DOTFILES"
