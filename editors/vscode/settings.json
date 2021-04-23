@@ -85,14 +85,13 @@
     // ==================
     // GO
     // ==================
-    /*"go.toolsEnvVars": {
-        "GO111MODULE": "off",
-    },
-    "go.useLanguageServer": true,*/
-    /*"go.gopath": "/Users/denis.isidoro/dev/uber/go-code",
-    "go.alternateTools": {
-        "go": "/usr/local/bin/go",
-    },*/
+    // "go.toolsEnvVars": {
+    //     "GO111MODULE": "off",
+    // },
+    // "go.useLanguageServer": true,
+    // "go.alternateTools": {
+    //     "go": "/usr/local/bin/go",
+    // },
     // ==================
     // Rust
     // ================== 

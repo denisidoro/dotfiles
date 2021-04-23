@@ -9,11 +9,7 @@ _jsons() {
 
 _valid_json() {
    local -r file="$1"
-   if has jsmin; then
-      cat "$file" | jsmin | jq . &>/dev/null
-   else
-      cat "$file" | jq . &>/dev/null
-   fi
+      cat "$file" | grep -v '//' | jq . >/dev/null
 }
 
 _run() {
