@@ -27,11 +27,11 @@ main() {
    echoerr
 
       _add dot-submodules || true
-
-   if ! ${DOT_SKIP_CORE_DEPS:-false}; then
       _add dot-folders || true
       _add dot-gitconfig || true
       _add dot-zshrc || true
+
+   if ! ${DOT_SKIP_CORE_DEPS:-false}; then
       has zimfw && zimfw update || true
    fi
 
