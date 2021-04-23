@@ -23,7 +23,6 @@ validate_reference() {
 _run() {
    local -r ifs="$IFS"
    local -r pairs="$(_pairs)"
-   echoerr "pairs: $pairs"
    local -r calls="$(echo "$pairs" | grep -Eo 'dot ([a-z][a-z0-9]+) ([a-z][a-z0-9-]+)' | sort -u)"
    IFS=$'\n'
    for c in $calls; do
