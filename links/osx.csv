@@ -7,4 +7,4 @@ editors/vscode/tasks.json, $HOME/Library/Application\ Support/Code/User/tasks.js
 launchers/alfred/preferences, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/preferences
 launchers/alfred/workflows/yabai, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/workflows/user.workflow.E122C8D2-26EC-4D0F-9E0E-91D18A25695D
 launchers/alfred/workflows/display, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/workflows/user.workflow.60C7513C-DD9E-4ABC-A4ED-1E5B8D78AA81
-git/gitui_config.ron, $HOME/Library/Application\ Support/gitui/key_config.ron
+git/gitui_config.ron, $HOME/.config/gitui/key_config.ron

@@ -9,7 +9,7 @@ _jsons() {
 
 _valid_json() {
    local -r file="$1"
-      cat "$file" | grep -v '//' | jq . >/dev/null
+   cat "$file" | grep -v '//' | jq . >/dev/null
 }
 
 _run() {

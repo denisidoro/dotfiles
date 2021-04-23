@@ -10,17 +10,17 @@ log::ansi() {
       shift
    fi
    local -r txt="$*"
-   case "${mod1}${mod2}" in 
-   "--blue--inverse") printf "\033[34m\033[7m${txt}\033[27;39m" ;; 
-   "--blue") printf "\033[34m${txt}\033[39m" ;; 
-   "--magenta") printf "\033[35m${txt}\033[39m" ;; 
-   "--yellow--inverse") printf "\033[33m\033[7m${txt}\033[27;39m" ;; 
-   "--yellow") printf "\033[33m${txt}\033[39m" ;; 
-   "--red--inverse") printf "\033[31m\033[7m${txt}\033[27;39m" ;; 
-   "--red") printf "\033[31m${txt}\033[39m" ;; 
-   "--green--inverse") printf "\033[32m\033[7m${txt}\033[27;39m" ;; 
-   "--green") printf "\033[32m${txt}\033[39m" ;; 
-   *) dot terminal ansi "${all_args[@]}" ;;
+   case "${mod1}${mod2}" in
+      "--blue--inverse") printf "\033[34m\033[7m${txt}\033[27;39m" ;;
+      "--blue") printf "\033[34m${txt}\033[39m" ;;
+      "--magenta") printf "\033[35m${txt}\033[39m" ;;
+      "--yellow--inverse") printf "\033[33m\033[7m${txt}\033[27;39m" ;;
+      "--yellow") printf "\033[33m${txt}\033[39m" ;;
+      "--red--inverse") printf "\033[31m\033[7m${txt}\033[27;39m" ;;
+      "--red") printf "\033[31m${txt}\033[39m" ;;
+      "--green--inverse") printf "\033[32m\033[7m${txt}\033[27;39m" ;;
+      "--green") printf "\033[32m${txt}\033[39m" ;;
+      *) dot terminal ansi "${all_args[@]}" ;;
    esac
 }
 

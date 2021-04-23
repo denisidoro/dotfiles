@@ -11,6 +11,6 @@ doc::parse "$@"
 
 if $upstream; then
    git::upstream_branch
-else 
+else
    exit 1
 fi

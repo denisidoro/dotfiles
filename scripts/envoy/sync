@@ -29,11 +29,11 @@ _rsync_all() {
    #done
 
    #_rsync \
-   # -v -r -R -a \
-   # "${includes[@]}" \
-   # --exclude='*' \
-   # "${from}/" \
-   # "$to"
+      # -v -r -R -a \
+      # "${includes[@]}" \
+      # --exclude='*' \
+      # "${from}/" \
+      # "$to"
 
    # _rsync -avn ./source/**/* ./test/**/* ./api/**/* ./generated_api_shadow/**/*
 

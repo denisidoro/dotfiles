@@ -26,9 +26,9 @@ _fix() {
    local -r exp2='s|BZL_WKS "[^"]+"|BZL_WKS "'"$bzl_wks"'"|'
 
    cat "$filepath" \
-           | sed -E "$exp1" \
-           | sed -E "$exp2" \
-           > "${filepath}.new"
+      | sed -E "$exp1" \
+      | sed -E "$exp2" \
+      > "${filepath}.new"
 
    rm "$filepath"
    mv "${filepath}.new" "$filepath"
