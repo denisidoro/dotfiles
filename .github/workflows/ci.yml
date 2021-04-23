@@ -21,7 +21,7 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
       - name: Install tools
-        run: sudo ./bin/dot pkg add jsmin jq
+        run: sudo ./bin/dot pkg add jq
       - name: Run tests
         run: ./bin/dot self test file 'json'
 
