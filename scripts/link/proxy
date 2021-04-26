@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+main() {
+   source "${DOTFILES}/scripts/link/aux/core.sh"
+   dotlink_main "$@"
+}
+
+main "$@"

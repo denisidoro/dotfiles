@@ -1,5 +1,0 @@
-[submodule "modules/dotlink"]
-	path = modules/dotlink
-	url = https://github.com/denisidoro/dotlink
-	shallow = true
-	ignore = dirty

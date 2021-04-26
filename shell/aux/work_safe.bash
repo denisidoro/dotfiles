@@ -11,9 +11,6 @@ export PATH="/usr/local/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WOR
 
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home"
 
-# source "${HOME}/.gradle/jv1/.gradle/caches/okbuck/buck-completion.bash"
-# source "${HOME}/.config/broot/launcher/bash/br"
-
 alias ls='exa --icons'
 
 alias xdg-open='open'
@@ -115,71 +112,21 @@ _load_work_stuff() {
    esac
 }
 
-# _nvm() {
-#    _load_work_stuff nvm || true
-#    nvm "$@"
-# }
-#
-# _node() {
-#    _load_work_stuff nvm || true
-#    node "$@"
-# }
-#
-# _npm() {
-#    _load_work_stuff nvm || true
-#    npm "$@"
-# }
-#
-# rbenv() {
-#    unfunction "$0" || true
-#    _load_work_stuff rbenv || true
-#    "$0" "$@"
-# }
-
 zsh_disable_lda() {
    unset LDA_ENABLED
-   # echo foo
-   # if [[ ! -z "$WORK_BINARIES_PATH" ]]; then
-   #    export PATH=${PATH//"${WORK_BINARIES_PATH}:"/}
-   #    unset LDA_ENABLED
-   # fi
 }
 
 zsh_enable_lda() {
    export LDA_ENABLED=1
-   # echo hi
-   # if [[ -z "$LDA_ENABLED" ]]; then
-   #    export PATH="$WORK_BINARIES_PATH:$PATH"
-   #    export LDA_ENABLED=1
-   # fi
 }
 
 bash_disable_lda() {
    unset LDA_ENABLED
-   # echo foo
-   # if [[ ! -z "$WORK_BINARIES_PATH" ]]; then
-   #    export PATH=${PATH//"${WORK_BINARIES_PATH}:"/}
-   #    unset LDA_ENABLED
-   # fi
 }
 
-bash2_enable_lda() {
+bash_enable_lda() {
    export LDA_ENABLED=1
-   # if [[ ! -z "$LDA_ENABLED" ]]; then
-   #    return
-   # fi
-   # export LDA_ENABLED=1
-
-   # if [[ -z "$PROMPT_COMMAND" ]]; then
-   #    PROMPT_COMMAND='[[ "$PATH" =~ "pex_resource" ]] || export PATH="$WORK_BINARIES_PATH:$PATH"'
-   # else
-   #    PROMPT_COMMAND='[[ "$PATH" =~ "pex_resource" ]] || export PATH="$WORK_BINARIES_PATH:$PATH"'";$PROMPT_COMMAND"
-   # fi
 }
-
-# run brew --prefix only once in script, even if sourced again in same shell
-# [ "${HOMEBREW_PREFIX-no}"=="no" ] || type "brew" &>/dev/null && export HOMEBREW_PREFIX=$(brew --prefix)
-# [ "${HOMEBREW_PREFIX-no}"=="no" ] || export PATH=${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:$PATH
 
 export VAGRANT_DEFAULT_PROVIDER=aws
 export HOMEBREW_NO_SANDBOX=1
@@ -209,10 +156,6 @@ editsync() {
 opensync() {
    _sync_dir open @
 }
-
-# if command -v rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
-# eval "$(direnv hook zsh)"
 
 gopathmode() {
    USAGE="$0 [ on | off ]\n\tshows or sets MONOREPO_GOPATH_MODE"
