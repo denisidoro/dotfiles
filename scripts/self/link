@@ -11,7 +11,7 @@ export DOT_DIR="$DOTFILES"
 export DOT_LINK="${DOTFILES}/links/${DOTLINK:-"unix"}.csv"
 
 main() {
-    dot link set "$@"
+   dot link set "$@"
 }
 
 main "$@"

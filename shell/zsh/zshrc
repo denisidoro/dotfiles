@@ -6,7 +6,7 @@
 # fi
 
 # Powerlevel10k instant prompt
-if [[ "$DOT_THEME" -eq "powerlevel" ]]; then 
+if [[ "$DOT_THEME" -eq "powerlevel" ]]; then
    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 

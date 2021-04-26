@@ -7,7 +7,7 @@
 ##?    zsh benchmark            # Print the current ZSH performance
 ##?    zsh reload-completions   # Reload completions
 
-source "$DOTFILES/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/main.sh"
 doc::maybe_help "$@"
 
 _benchmark() {

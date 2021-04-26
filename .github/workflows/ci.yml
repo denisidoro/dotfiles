@@ -41,7 +41,7 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
       - name: Run tests
-        run: ./bin/dot self test file 'references'
+        run: ./bin/dot self test file 'imports|references'
 
   symlink-tests:
     name: Symlinks

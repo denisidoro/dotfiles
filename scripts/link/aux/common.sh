@@ -26,15 +26,15 @@ dotset_verbose=false
 dotpull_update_submodule=true
 
 if hash colordiff 2>/dev/null; then
-  diffcmd='colordiff -u'
+   diffcmd='colordiff -u'
 else
-  diffcmd='diff -u'
+   diffcmd='diff -u'
 fi
 
 if hash vimdiff 2>/dev/null; then
-  edit2filecmd='vimdiff'
+   edit2filecmd='vimdiff'
 else
-  edit2filecmd="${diffcmd}"
+   edit2filecmd="${diffcmd}"
 fi
 
 # --------------------------------------------------------------------------}}}
@@ -42,9 +42,9 @@ fi
 # -----------------------------------------------------------------------------
 
 dotbundle() {
-  if [ -e "$1" ]; then
-    source "$1"
-  fi
+   if [ -e "$1" ]; then
+      source "$1"
+   fi
 }
 
 # path to the config file
@@ -70,100 +70,100 @@ tp_reset="$(tput sgr0)"
 #}}}
 
 get_fullpath() { #{{{
-  echo "$(builtin cd "$(dirname "$1")" && builtin pwd)"/"$(basename "$1")"
+   echo "$(builtin cd "$(dirname "$1")" && builtin pwd)"/"$(basename "$1")"
 } #}}}
 
 path_without_home() { #{{{
-  get_fullpath "$1" | sed -ne "${home_pattern}"
+   get_fullpath "$1" | sed -ne "${home_pattern}"
 } #}}}
 
 path_without_dotdir() { #{{{
-  get_fullpath "$1" | sed -ne "${dotdir_pattern}"
+   get_fullpath "$1" | sed -ne "${dotdir_pattern}"
 } #}}}
 
 __confirm() { #{{{
-  # __confirm [ y | n ] [<message>]
-  local yn YN confirm ret
-  if [ "$1" = "y" ]; then
-    yn="y"
-    YN="Y/n"
-    ret=0
-    shift
-  elif [ "$1" = "n" ]; then
-    yn="n"
-    YN="y/N"
-    ret=1
-    shift
-  else
-    YN="y/n"
-    ret=-1
-  fi
+   # __confirm [ y | n ] [<message>]
+   local yn YN confirm ret
+   if [ "$1" = "y" ]; then
+      yn="y"
+      YN="Y/n"
+      ret=0
+      shift
+   elif [ "$1" = "n" ]; then
+      yn="n"
+      YN="y/N"
+      ret=1
+      shift
+   else
+      YN="y/n"
+      ret=-1
+   fi
 
-  echo -n "$@($YN)> "
-  read confirm
-  confirm=$(echo $confirm | tr '[:upper:]' '[:lower:]')
-  case $confirm in
-    y|yes) return 0 ;;
-     n|no) return 1 ;;
-       "") if [ $ret -eq -1 ]; then
-             echo "Please answer with 'y' or 'n'."
-             __confirm $@
-           else
-             return $ret
-           fi
-           ;;
-        *) echo "Please answer with 'y' or 'n'."
-           __confirm $yn $@;;
-  esac
+   echo -n "$@($YN)> "
+   read confirm
+   confirm=$(echo $confirm | tr '[:upper:]' '[:lower:]')
+   case $confirm in
+      y|yes) return 0 ;;
+      n|no) return 1 ;;
+      "") if [ $ret -eq -1 ]; then
+            echo "Please answer with 'y' or 'n'."
+            __confirm $@
+         else
+            return $ret
+         fi
+         ;;
+      *) echo "Please answer with 'y' or 'n'."
+         __confirm $yn $@ ;;
+   esac
 
 } #}}}
 
 prmpt() { #{{{
-  echo "${tp_bold}$(tput setaf $1)$2${tp_reset} "
+   echo "${tp_bold}$(tput setaf $1)$2${tp_reset} "
 } #}}}
 
 bd_() { #{{{
-  echo "${tp_bold}$@${tp_reset}"
+   echo "${tp_bold}$@${tp_reset}"
 } #}}}
 
 rd_() { #{{{
-  echo "${tp_red}$@${tp_reset}"
+   echo "${tp_red}$@${tp_reset}"
 } #}}}
 
 grn_() { #{{{
-  echo "${tp_green}$@${tp_reset}"  
+   echo "${tp_green}$@${tp_reset}"
 } #}}}
 
 cleanup_namespace() { #{{{
-  unset -f dotbundle get_fullpath path_without_home path_without_dotdir
-  unset -f __confirm prmpt bd_ grn_ rd_ dot_usage parse_linkfiles $0
+   unset -f dotbundle get_fullpath path_without_home path_without_dotdir
+   unset -f __confirm prmpt bd_ grn_ rd_ dot_usage parse_linkfiles $0
 } #}}}
 
 parse_linkfiles() { # {{{
-  local linkfile l
-  local command
-  local IFS_BACKUP=$IFS
-  IFS=$'\n'
+   local linkfile l
+   local command
+   local IFS_BACKUP=$IFS
+   IFS=$'\n'
 
-  command="$1"
+   command="$1"
 
-  for linkfile in "${linkfiles[@]}"; do
-    echo "$(prmpt 4 "Loading ${linkfile} ...")"
-    for l in $(grep -Ev '^\s*#|^\s*$' "${linkfile}"); do
-      # extract environment variables
-      dotfile="$(echo $l | cut -d, -f1)"
-      dotfile="$(eval echo ${dotfile})"
-      orig="$(echo $l | cut -d, -f2)"
-      orig="$(eval echo ${orig})"
+   for linkfile in "${linkfiles[@]}"; do
+      echo "$(prmpt 4 "Loading ${linkfile} ...")"
+      for l in $(grep -Ev '^\s*#|^\s*$' "${linkfile}"); do
+         # extract environment variables
+         dotfile="$(echo $l | cut -d, -f1)"
+         dotfile="$(eval echo ${dotfile})"
+         orig="$(echo $l | cut -d, -f2)"
+         orig="$(eval echo ${orig})"
 
-      # path completion
-      [ "${dotfile:0:1}" = "/" ] || dotfile="${dotdir}/$dotfile"
-      [ "${orig:0:1}" = "/" ] || orig="$HOME/$orig"
+         # path completion
+         [ "${dotfile:0:1}" = "/" ] || dotfile="${dotdir}/$dotfile"
+         [ "${orig:0:1}" = "/" ] || orig="$HOME/$orig"
 
-      $command "$dotfile" "$orig"
-    done
-  done
+         $command "$dotfile" "$orig"
+      done
+   done
 
-  IFS=$IFS_BACKUP
+   IFS=$IFS_BACKUP
 
 } # }}}

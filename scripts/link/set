@@ -4,9 +4,9 @@ source "${DOTFILES}/scripts/package/aux/core.sh"
 
 ##? Set the symbolic links interactively
 ##?
-##? Usage: 
+##? Usage:
 ##?   dotlink set [-i | --ignore] [-f | --force] [-b | --backup] [-v | --verbose] [-p | --create-dirs]
-##? 
+##?
 ##? Options:
 ##?   -c <file>, --config <file>     Specify the configuration file to load.
 ##?                                  default: $HOME/.config/dot/dotrc

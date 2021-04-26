@@ -10,18 +10,18 @@
 # License:             MIT
 
 if [[ -z "${DOT_SCRIPT_ROOTDIR:-}" ]]; then
-	export DOT_SCRIPT_ROOTDIR="${DOTFILES}/scripts/link"
-	readonly DOT_SCRIPT_ROOTDIR
-	export DOT_SCRIPT_ROOTDIR
+   export DOT_SCRIPT_ROOTDIR="${DOTFILES}/scripts/link"
+   readonly DOT_SCRIPT_ROOTDIR
+   export DOT_SCRIPT_ROOTDIR
 fi
 
 dotlink_main() {
 
-  dot_usage() { #{{{
-    cat << EOF
+   dot_usage() { #{{{
+      cat << EOF
 dotlink - Simplest dotfiles manager
 
-Usage: 
+Usage:
   dotlink [options] <commands> [<args>]
   dotlink pull [--self]
   dotlink (set | update) [-i | --ignore] [-f | --force] [-b | --backup] [-v | --verbose] [-p | --create-dirs]
@@ -53,70 +53,70 @@ Options:
 
 EOF
 
-  } #}}}
+   } #}}}
 
-  # Option handling {{{
-  local arg
-  for arg in "$@"; do
-    shift
-    case "$arg" in
-      "--help") set -- "$@" "-h" ;;
-      "--help-all") set -- "$@" "-H" ;;
-      "--config") set -- "$@" "-c" ;;
-      *)        set -- "$@" "$arg" ;;
-    esac
-  done
+   # Option handling {{{
+   local arg
+   for arg in "$@"; do
+      shift
+      case "$arg" in
+         "--help") set -- "$@" "-h" ;;
+         "--help-all") set -- "$@" "-H" ;;
+         "--config") set -- "$@" "-c" ;;
+         *)        set -- "$@" "$arg" ;;
+      esac
+   done
 
-  OPTIND=1
-  local dotrc
-  while getopts "c:hH" OPT
-  do
-    case $OPT in
-      "c")
-        dotrc="$OPTARG"
-        ;;
-      "h")
-        dot_usage
-        unset -f dot_usage
-        return 0
-        ;;
-      "H")
-        man "${DOT_SCRIPT_ROOTDIR}/doc/dot.1"
-        unset -f dot_usage
-        return 0
-        ;;
-      * )
-        dot_usage
-        unset -f dot_usage
-        return 1
-        ;;
-    esac
-  done
+   OPTIND=1
+   local dotrc
+   while getopts "c:hH" OPT
+   do
+      case $OPT in
+         "c")
+            dotrc="$OPTARG"
+            ;;
+         "h")
+            dot_usage
+            unset -f dot_usage
+            return 0
+            ;;
+         "H")
+            man "${DOT_SCRIPT_ROOTDIR}/doc/dot.1"
+            unset -f dot_usage
+            return 0
+            ;;
+         * )
+            dot_usage
+            unset -f dot_usage
+            return 1
+            ;;
+      esac
+   done
 
-  shift $((OPTIND-1))
-  # }}}
+   shift $((OPTIND-1))
+   # }}}
 
-  # Load common.sh {{{
-  source "$DOT_SCRIPT_ROOTDIR/aux/common.sh"
-  trap cleanup_namespace EXIT
-  # }}}
+   # Load common.sh {{{
+   source "$DOT_SCRIPT_ROOTDIR/aux/common.sh"
+   trap cleanup_namespace EXIT
+   # }}}
 
-  # main command handling {{{
-  case "$1" in
-    clone|pull|update|list|check|set|add|edit|unlink|clear|config|cd)
-      subcommand="$1"
-      source "$DOT_SCRIPT_ROOTDIR/aux/${subcommand}.sh"
-      shift 1
-      dot_${subcommand} "$@"
-      ;;
-    *)
-      echo -n "[$(tput bold)$(tput setaf 1)error$(tput sgr0)] "
-      echo "command $(tput bold)$1$(tput sgr0) not found."
-      return 1
-      ;;
-  esac
+   # main command handling {{{
+   case "$1" in
+      clone|pull|update|list|check|set|add|edit|unlink|clear|config|cd)
+         subcommand="$1"
+         source "$DOT_SCRIPT_ROOTDIR/aux/${subcommand}.sh"
+         shift 1
+         dot_${subcommand} "$@"
+         ;;
+      *)
+         echo -n "[$(tput bold)$(tput setaf 1)error$(tput sgr0)] "
+         echo "command $(tput bold)$1$(tput sgr0) not found."
+         return 1
+         ;;
+   esac
 
-  # }}}
+   # }}}
 
 }
 

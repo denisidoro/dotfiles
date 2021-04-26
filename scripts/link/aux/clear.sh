@@ -1,18 +1,18 @@
 # vim:ft=sh
 dot_clear() {
 
-  _dot_clear() { #{{{
-    local orig
-    
-    orig="$2"
+   _dot_clear() { #{{{
+      local orig
 
-    if [ -L "${orig}" ]; then
-      unlink "${orig}"
-      echo "$(prmpt 1 unlink)${orig}"
-    fi
-  } #}}}
+      orig="$2"
 
-  parse_linkfiles _dot_clear
+      if [ -L "${orig}" ]; then
+         unlink "${orig}"
+         echo "$(prmpt 1 unlink)${orig}"
+      fi
+   } #}}}
 
-  unset -f _dot_clear $0
+   parse_linkfiles _dot_clear
+
+   unset -f _dot_clear $0
 }
