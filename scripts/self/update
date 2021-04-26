@@ -26,6 +26,7 @@ main() {
    log::info "Current config: $tags"
    echoerr
 
+   _add dot-git || true
    _add dot-folders || true
    _add dot-gitconfig || true
    _add dot-zshrc || true
