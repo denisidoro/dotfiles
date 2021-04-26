@@ -27,15 +27,8 @@ main() {
    fi
 
    log::info "Symlinking..."
-   EDITOR=echo \
-      DOT_ZIM=false \
-      DOT_THEME="none" \
-      DOT_LINK_EXTRA_ARG="--backup" \
-      DOT_SKIP_PM_UPDATE=true \
-      DOT_SKIP_CORE_DEPS=true \
-      DOT_SKIP_UPDATE=true \
-      DOT_ZSHRC_EXTRA='source "${DOTFILES}/scripts/envoy/aux/bash.rc"' \
-      dot self update
+   DOT_ZSHRC_EXTRA='source "${DOTFILES}/scripts/envoy/aux/bash.rc"' \
+      dot self install-no-interactive
 
    log::info "Installing packages..."
    dot pkg batch add mini
