@@ -4,6 +4,10 @@ echoerr() {
    echo "$@" 1>&2
 }
 
+println() {
+   print '%s\n' "$@"
+}
+
 tap() {
    local -r input="$(cat)"
    echoerr "$input"
@@ -18,7 +22,7 @@ export_f() {
    export -f "$@" >/dev/null
 }
 
-export_f has echoerr
+export_f has tap println echoerr
 
 if has doc::parse; then
    return 0
@@ -78,6 +82,12 @@ doc::maybe_help() {
 doc::help_or_fail() {
    local -r file="$0"
 
+   case "${!#:-}" in
+      -h|--help|--version) doc::help_msg "$file"; exit 0 ;;
+   esac
+
+   echoerr "Invalid command"
+   echoerr
    doc::help_msg "$file"
    exit 1
 }

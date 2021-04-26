@@ -6,7 +6,7 @@ source "${DOTFILES}/scripts/core/str.sh"
 source "${DOTFILES}/scripts/core/platform.sh"
 source "${DOTFILES}/scripts/core/log.sh"
 
-##? Updates submodules, dotfiles and attempts to do some setup
+##? Updates dotfiles and attempts to do some setup
 ##?
 ##? Usage:
 ##?    update
@@ -26,14 +26,9 @@ main() {
    log::info "Current config: $tags"
    echoerr
 
-   _add dot-submodules || true
    _add dot-folders || true
    _add dot-gitconfig || true
    _add dot-zshrc || true
-
-   if ! ${DOT_SKIP_CORE_DEPS:-false}; then
-      has zimfw && zimfw update || true
-   fi
 
    echoerr
    log::info "Setting symlinks..."
@@ -47,6 +42,10 @@ main() {
    has_tag "$tags" "work" && update_dotfiles_work
 
    fix_locales || true
+
+   if ! ${DOT_SKIP_CORE_DEPS:-false}; then
+      has zimfw && zimfw install && zimfw update || true
+   fi
 
    set -e
 
