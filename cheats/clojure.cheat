@@ -1,6 +1,0 @@
-% clojure, clj
-
-# Start a Clojure REPL using deps aliases
-clj "-A:<alias>"
-
-$ alias: cat "${HOME}/.clojure/deps.edn" | grep -A999 :aliases | grep -Ev ':extra-deps|:main-opts' | grep '^  :' | sed 's/^ *://g'

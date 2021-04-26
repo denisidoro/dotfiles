@@ -1,9 +1,9 @@
 # Sensitive data
 .zshrc-secrets
 local.properties
-*secret*
-*credential*
-*password*
+# *secret*
+# *credential*
+# *password*
 
 # ZSH
 .zcompdump*

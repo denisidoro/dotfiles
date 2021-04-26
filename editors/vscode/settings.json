@@ -9,6 +9,7 @@
     "files.trimFinalNewlines": true,
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
+    // "editor.formatOnSave": false,
     "editor.minimap.enabled": true,
     "editor.mouseWheelZoom": true,
     "explorer.sortOrder": "default",
@@ -78,19 +79,19 @@
         "*.uql": "sql",
         "*.proto.txt": "ruby",
         "*rc": "shellscript",
-        "*BUILD": "shellscript"
+        "*BUILD": "shellscript",
+        "*config": "ini"
     },
     // ==================
     // GO
     // ==================
-    /*"go.toolsEnvVars": {
-        "GO111MODULE": "off",
-    },
-    "go.useLanguageServer": true,*/
-    /*"go.gopath": "/Users/denis.isidoro/dev/uber/go-code",
-    "go.alternateTools": {
-        "go": "/usr/local/bin/go",
-    },*/
+    // "go.toolsEnvVars": {
+    //     "GO111MODULE": "off",
+    // },
+    // "go.useLanguageServer": true,
+    // "go.alternateTools": {
+    //     "go": "/usr/local/bin/go",
+    // },
     // ==================
     // Rust
     // ================== 
@@ -202,12 +203,12 @@
     "extensions.ignoreRecommendations": true,
     "workbench.colorTheme": "Ayu Mirage Bordered",
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "code-runner.runInTerminal": true,
     "C_Cpp.updateChannel": "Insiders",
     "workbench.editorAssociations": [
         {
             "viewType": "jupyter.notebook.ipynb",
             "filenamePattern": "*.ipynb"
         }
-    ]
+    ],
+    "cmake.configureOnOpen": true
 }

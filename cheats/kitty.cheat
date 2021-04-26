@@ -1,0 +1,11 @@
+% kitty
+
+# change themes
+echo <theme>
+
+$ theme: ls ~/.config/kitty/themes --- --preview 'cd ~/.config/kitty/themes && head -n 40 {} && kitty @ set-colors -a -c {}'
+
+# focus window
+kitty @ focus-window --match id:<window_id>
+
+$ window_id: kitty @ ls | jq -r 'map(.tabs | map(.windows | map([ "\u001b[34m"+(.id|tostring), "\u001b[32m"+(.pid|tostring), "\u001b[35m"+.cwd ] | join(";")))) | flatten | .[]' | column -t -s';' --- headers 1 --column 1

@@ -9,8 +9,11 @@
 	untrackedCache = true
   pager = delta
 
-[interactive]
-  diffFilter = delta --color-only
+[branch]
+	autosetuprebase = always
+
+[rerere]
+	enabled = true
 
 [delta]
   features = side-by-side line-numbers decorations
@@ -33,11 +36,28 @@
   local = yellow
   remote = green
 
-[color "diff"]
-  meta = yellow bold
-  frag = magenta bold # line info
-  old = red # deletions
-  new = green # additions
+# [interactive]
+#   diffFilter = delta --color-only
+# 
+# [color "diff"]
+#   meta = yellow bold
+#   frag = magenta bold # line info
+#   old = red # deletions
+#   new = green # additions
+
+[diff]
+    tool = kitty
+    guitool = kitty.gui
+
+[difftool]
+    prompt = false
+    trustExitCode = true
+
+[difftool "kitty"]
+    cmd = kitty +kitten diff $LOCAL $REMOTE
+
+[difftool "kitty.gui"]
+    cmd = kitty kitty +kitten diff $LOCAL $REMOTE
 
 [color "status"]
   added = yellow

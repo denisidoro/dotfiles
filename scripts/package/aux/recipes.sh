@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/fs.sh"
-source "${DOTFILES}/scripts/core/platform.sh"
-source "${DOTFILES}/scripts/core/log.sh"
 
 TMP_DIR="$(platform::get_tmp_dir)"
 MODULES_FOLDER="${DOTFILES}/modules"
@@ -99,7 +96,7 @@ recipe::install_from_git() {
 
 recipe::cargo() {
    local -r cargo_name="$1"
-   local -r pkg_manager_name="${2:$cargo_name}"
+   local -r pkg_manager_name="${2:-$cargo_name}"
 
    if has cargo; then
       cargo install "$cargo_name"

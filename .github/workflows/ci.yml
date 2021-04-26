@@ -1,0 +1,72 @@
+# Based on https://github.com/actions-rs/meta/blob/master/recipes/quickstart.md
+
+on: [push]
+
+name: Tests
+
+jobs:
+  core-tests:
+    name: Core library
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: ./bin/dot self test file 'coll|dict|platform'
+
+  json-tests:
+    name: JSONs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Install tools
+        run: sudo ./bin/dot pkg add jq
+      - name: Run tests
+        run: ./bin/dot self test file 'json'
+
+  help-tests:
+    name: Help
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: ./bin/dot self test file 'help'
+
+  references-tests:
+    name: References
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: ./bin/dot self test file 'imports|references'
+
+  symlink-tests:
+    name: Symlinks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: ./bin/dot self test file 'symlink'
+
+  install-tests:
+    name: Install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: bashrc is fine
+        run: ./bin/dot self test file 'bashrc'
+      - name: Cleanup
+        run: rm -rf ./tests || true; cd $HOME && for f in $(ls -a | grep '^\.'); do rm "$f" || true; done
+      - name: dot self install
+        run: ./bin/dot self install-no-interactive || true
+      - name: ls
+        run: ls -la $HOME; echo; echo; cat /home/runner/work/dotfiles/dotfiles/shell/bash/bashrc
+      - name: DOTFILES env variable
+        run: bash -c 'source $HOME/.bashrc; env; env | grep DOTFILES'
+      - name: dot version
+        run: bash -c 'source $HOME/.bashrc; dot --version; dot --version | grep -E "202[0-9]\.[0-9]+\.[0-9]+$"'

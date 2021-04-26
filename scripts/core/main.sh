@@ -4,6 +4,10 @@ echoerr() {
    echo "$@" 1>&2
 }
 
+println() {
+   print '%s\n' "$@"
+}
+
 tap() {
    local -r input="$(cat)"
    echoerr "$input"
@@ -14,11 +18,17 @@ has() {
    type "$1" &>/dev/null
 }
 
-export -f has echoerr
+export_f() {
+   export -f "$@" >/dev/null
+}
+
+export_f has tap println echoerr
 
 if has doc::parse; then
    return 0
 fi
+
+export PATH="${DOTFILES}/bin/:${PATH}:/usr/local/bin:/usr/bin:${HOME}/bin"
 
 if ${DOT_TRACE:-false}; then
    export PS4='+'$'\t''\e[1;30m\t \e[1;39m$(printf %4s ${SECONDS}s) \e[1;31m$(printf %3d $LINENO) \e[1;34m$BASH_SOURCE \e[1;32m${FUNCNAME[0]:-}\e[0m: '
@@ -27,21 +37,17 @@ fi
 
 export EDITOR="${EDITOR:-vi}"
 
-if ! has dot; then
-   export PATH="${DOTFILES}/bin/:${PATH}:/usr/local/bin:/usr/bin:${HOME}/bin"
-fi
-
 if ! has sudo; then
    sudo() { "$@"; }
-   export -f sudo
+   export_f sudo
 fi
 
 if ! has tput; then
    tput() { :; }
-   export -f tput
+   export_f tput
 fi
 
-if has ggrep; then
+if has gcat; then
    sed() { gsed "$@"; }
    awk() { gawk "$@"; }
    find() { gfind "$@"; }
@@ -57,7 +63,7 @@ if has ggrep; then
    sort() { gsort "$@"; }
    kill() { gkill "$@"; }
    xargs() { gxargs "$@"; }
-   export -f sed awk find head mktemp date cut tr cp cat sort kill xargs
+   export_f sed awk find head mktemp date cut tr cp cat sort kill xargs
 fi
 
 doc::help_msg() {
@@ -76,6 +82,12 @@ doc::maybe_help() {
 doc::help_or_fail() {
    local -r file="$0"
 
+   case "${!#:-}" in
+      -h|--help|--version) doc::help_msg "$file"; exit 0 ;;
+   esac
+
+   echoerr "Invalid command"
+   echoerr
    doc::help_msg "$file"
    exit 1
 }
@@ -102,4 +114,4 @@ doc::parse() {
    eval "$("$docopt" -h "${help}" : "${@:1}")"
 }
 
-export -f doc::help_msg doc::maybe_help doc::help_or_fail doc::parse
+export_f doc::help_msg doc::maybe_help doc::help_or_fail doc::parse

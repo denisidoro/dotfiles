@@ -42,7 +42,7 @@ fzf_prompt() {
 }
 
 _version() {
-   echo 'v2021.3.8'
+   echo 'v2021.4.26'
 }
 
 _alias() {
@@ -50,12 +50,11 @@ _alias() {
    case "$arg" in
       js|json) echo javascript ;;
       phab|ph) echo phabricator ;;
-      sh|shell|script|scripting) echo terminal ;;
+      bash|sh|shell|terminal|scripting) echo script ;;
       fs) echo filesystem ;;
       and) echo android ;;
       clj) echo clojure ;;
       game) echo gaming ;;
-      mac|osx|os|linux) echo system ;;
       environment|env) echo self ;;
       net) echo network ;;
       pkg) echo package ;;
@@ -88,7 +87,7 @@ elif [[ $# -eq 1 ]]; then
    context_query="$(_alias $1)"
 
    case $context_query in
-      -h|--help) doc::help_or_fail "$@" && exit ;;
+      -h|--help) doc::maybe_help "$@" && exit ;;
       -v|--version) _version && exit ;;
    esac
 

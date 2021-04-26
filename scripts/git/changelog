@@ -5,18 +5,75 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 ##? Changelog generator
 ##?
 ##? Usage:
-##?    log release
+##?    log release (github|local)
 ##?    log commit
 
 doc::parse "$@"
 
 main() {
    IFS=$'\n'
-   if $release; then
-      git::changelog_release "$@"
+   if $local; then
+      git::changelog_release_local "$@"
+   elif $github; then
+      git::changelog_release_github "$@"
    elif $commit; then
       git::changelog_commit "$@"
    fi
+}
+
+github::lines() {
+   grep '<code>' -A2 \
+      | grep 'commit/' \
+      | grep 'title' \
+      | sed -E 's|.*title="([^"]+)".*commit/([a-f0-9]+).*|\2;\1|g' \
+      | sed -E 's/ \(#([0-9]+)\)/;\1/'
+}
+
+github::process_line() {
+   local -r line="$1"
+   local commit="$(echo "$line" | cut -d';' -f1)"
+   commit="${commit:0:5}"
+   local -r name="$(echo "$line" | cut -d';' -f2)"
+   local -r pr="$(echo "$line" | cut -d';' -f3)"
+
+   local extra=""
+   if [ -n "$pr" ]; then
+      extra=" ([#${pr}](${REPO_URL}/issues/${pr}))"
+   fi
+
+   echo "- [\`${commit}\`](${REPO_URL}/commit/${commit}) ${name}${extra}"
+}
+
+github::changelog() {
+   local tag_older="$1"
+   local tag_newer="$2"
+   curl -s "${REPO_URL}/compare/${tag_older}...${tag_newer}"
+}
+
+git::changelog_release_github() {
+   echo "### :sparkles: New features
+### :bug: Fixes
+### :computer: Code quality
+### :information_source: Context
+### :bangbang: Breaking changes"
+   echo
+   echo
+
+   REPO_URL="$(_repo_url)"
+
+   pairs=($(_all_tags))
+   len="${#pairs[@]}"
+
+   for i in $(seq 0 $((len - 2))); do
+      tag_older="${pairs[$((len - i - 2))]}"
+      tag_newer="${pairs[$((len - i - 1))]}"
+      echo "[${tag_newer}]"
+      for l in $(github::changelog "$tag_older" "$tag_newer" | github::lines); do
+         github::process_line "$l"
+      done
+      echo
+      echo
+   done
 }
 
 git::changelog_commit() {
@@ -43,7 +100,7 @@ git::changelog_commit() {
    echo "$(date +'%b-%d %Hh%M'): ${msg}"
 }
 
-git::changelog_release() {
+git::changelog_release_local() {
    REPO_URL="$(_repo_url)"
 
    pairs=($(_all_tags))

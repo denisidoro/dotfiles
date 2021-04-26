@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/envoy/aux/core.sh"
+
+##? Run linters and formatters
+##?
+##? Usage:
+##?    fix
+
+doc::maybe_help "$@"
+
+_fix_bad_files() {
+   local -r upstream="$(git::upstream_branch || echo master)"
+   for f in "./tools/type_whisperer/api_type_db.h" "./tools/type_whisperer/api_type_db.proto" "./tools/type_whisperer/proto_cc_source.bzl" "./test/test_common/environment.cc" "./source/common/local_reply/local_reply.cc" "./test/common/grpc/grpc_client_integration.h"; do
+      git checkout "$upstream" "$f"
+   done
+}
+
+_main() {
+   cd "$(envoy::dir)"
+
+   log::info "Fixing bad files..."
+   _fix_bad_files || true
+
+   log::info "Running fixers..."
+   ./tools/code_format/check_format.py fix || true
+   ./tools/proto_format/proto_format.sh fix || true
+   ./tools/proto_format/proto_sync.py || true
+
+   log::info "Fixing bad files..."
+   _fix_bad_files || true
+}
+
+_main "$@"

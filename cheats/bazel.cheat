@@ -1,0 +1,13 @@
+% bazel
+
+# test one target
+bazel test <targets>
+
+# test all targets in a dir
+bazel test <dir_targets>
+
+# get output base directory
+bazel info | grep output_base | awk '{print $NF}'
+
+$ targets: bazel query //... --- --multi --map 'navi fn map::expand'
+$ dir_targets: bazel query //... | sed -E 's/:[^:]*$/:\*/' | sort -u --- --multi --map 'navi fn map::expand'

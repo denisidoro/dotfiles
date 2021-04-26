@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? VSCode helpers
+##?
+##? Usage:
+##?    vscode
+
+doc::maybe_help "$@"
+
 _code() {
    local target="${1:-$PWD}"
    [[ "$target" == "." ]] && target="$PWD"

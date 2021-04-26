@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
+
+##? Shows startup daemons
+##?
+##? Usage:
+##?    startup
+
+doc::parse "$@"
+
+_ls() {
+   log::info "$1"
+   ls -l "$1" | awk '{print $NF}' | grep '.plist'
+   echoerr
+}
+
+main() {
+   _ls "/Library/LaunchDaemons"
+   _ls "/System/Library/LaunchDaemons"
+   _ls "/Library/LaunchAgents"
+   _ls "/System/Library/LaunchAgents"
+   _ls "${HOME}/Library/LaunchAgents"
+}
+
+main "$@"

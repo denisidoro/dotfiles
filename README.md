@@ -55,7 +55,6 @@ dot::clone_if_necessary() {
 dot::source() {
   dot::clone_if_necessary
   source "${DOTFILES}/scripts/core/main.sh"
-  source "${DOTFILES}/scripts/core/log.sh"
 }
 
 dot::source

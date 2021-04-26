@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/envoy/aux/core.sh"
+
+##? Setup dev machine
+##?
+##? Usage:
+##?    init
+##?
+##? Examples:
+##?    [ -n "${DOTFILES:-}" ] || (git clone https://github.com/denisidoro/dotfiles ~/dotfiles && ~/dotfiles/bin/dot envoy init)
+
+doc::maybe_help "$@"
+
+_profile() {
+   echo
+   echo 'source "${HOME}/.bashrc"'
+}
+
+main() {
+   platform::validate_remote
+
+   if has gitui; then
+      log::success "Initialization already done!"
+      return 0
+   fi
+
+   log::info "Symlinking..."
+   DOT_ZSHRC_EXTRA='source "${DOTFILES}/scripts/envoy/aux/bash.rc"' \
+      dot self install-no-interactive
+
+   log::info "Installing packages..."
+   dot pkg batch add mini
+   dot pkg add rsync bazel protoc pipenv
+
+   log::info "Updating ~/.profile..."
+   _profile >> "${HOME}/.profile"
+
+   log::success "Initialization already done!"
+}
+
+main "$@"

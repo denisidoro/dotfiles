@@ -8,4 +8,10 @@ export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null
 ##? Usage:
 ##?    dot <context> <cmd> [<args>...]
 
-NAVI_PATH="${DOTFILES}/cheats" navi best "${@:-}"
+main() {
+   local -r query="$1"
+   shift || true
+   NAVI_PATH="${DOTFILES}/cheats" navi --query "$query" --best-match "$@"
+}
+
+main "$@"

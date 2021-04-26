@@ -2,7 +2,7 @@
 
 symlink_bashrc() {
    cd "$DOTFILES"
-   bashrc_path="$(cat "links/unix.yaml" | grep bashrc | cut -d',' -f1)"
+   local -r bashrc_path="$(cat "links/unix.yaml" | grep bashrc | cut -d',' -f1)"
    source "$bashrc_path"
 }
 

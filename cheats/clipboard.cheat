@@ -1,0 +1,10 @@
+% clipboard
+
+# Replace line breaks by \n
+dot script clip paste | sed ':a;N;$!ba;s/\n/\\n/g' | dot script clip copy
+
+# Convert uppercase to lowercase
+pbpaste | tr '[:upper:]' '[:lower:]' | pbcopy
+
+# Convert lowercase to uppercase
+pbpaste | tr '[:lower:]' '[:upper:]'  | pbcopy

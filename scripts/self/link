@@ -10,6 +10,8 @@ export DOT_REPO="https://github.com/denisidoro/dotfiles.git"
 export DOT_DIR="$DOTFILES"
 export DOT_LINK="${DOTFILES}/links/${DOTLINK:-"unix"}.csv"
 
-source "${DOTFILES}/modules/dotlink/dotlink"
+main() {
+   dot link set "$@"
+}
 
-dotlink_main "$@"
+main "$@"

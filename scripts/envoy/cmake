@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/envoy/aux/core.sh"
+
+##? CMake utils
+##?
+##? Usage:
+##?    cmake gen
+##?    cmake fix
+
+doc::maybe_help "$@"
+
+_gen() {
+   cd "$(envoy::dir)"
+   make CMakeLists.txt
+}
+
+_fix() {
+   cd "$(envoy::dir)"
+
+   local -r bzl_out="$(bazel::output_base_dir)"
+   local -r bzl_wks="$(envoy::dir)"
+   local -r filepath="CMakeLists.txt"
+   local -r exp1='s|BZL_OUT "[^"]+"|BZL_OUT "'"$bzl_out"'"|'
+   local -r exp2='s|BZL_WKS "[^"]+"|BZL_WKS "'"$bzl_wks"'"|'
+
+   cat "$filepath" \
+      | sed -E "$exp1" \
+      | sed -E "$exp2" \
+      > "${filepath}.new"
+
+   rm "$filepath"
+   mv "${filepath}.new" "$filepath"
+}
+
+main() {
+   local -r fn="$1"
+   shift || true
+   "_${fn}" "$@"
+}
+
+main "$@"

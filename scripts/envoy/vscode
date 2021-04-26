@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/envoy/aux/core.sh"
+
+##? Setup VSCode
+##?
+##? Usage:
+##?    vscode
+
+doc::maybe_help "$@"
+
+_content_remote() {
+    local -r workspaceFolder='${workspaceFolder}'
+    local -r out="$(bazel::output_base_dir)"
+cat <<EOF
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${out}/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/lib/llvm-10/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-clang-x64",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**",
+                    "${out}/**"
+                ]
+            }
+        }
+    ],
+    "version": 4
+}
+EOF
+}
+
+_content_local() {
+    local -r workspaceFolder='${workspaceFolder}'
+    local -r out="$(bazel::output_base_dir)"
+cat <<EOF
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${out}/**"
+            ],
+            "defines": [],
+            "macFrameworkPath": [],
+            "compilerPath": "/usr/bin/clang++",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "macos-gcc-x64",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**",
+                    "${out}/**"
+                ]
+            }
+        }
+    ],
+    "version": 4
+}
+EOF
+}
+
+_content() {
+    if platform::is_local; then
+        _content_local
+    else
+        _content_remote
+    fi
+}
+
+main() {
+    cd "$(envoy::dir)"
+
+    local -r content="$(_content)"
+
+    log::info "c_cpp_properties.json"
+    echo "$content" | jq
+
+    echo "$content" > "./.vscode/c_cpp_properties.json"
+
+    log::info "./.vscode"
+    ls -la "./.vscode"
+}
+
+main "$@"

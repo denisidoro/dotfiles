@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/envoy/aux/core.sh"
+
+##? Envoy sync
+##?
+##? Usage:
+##?    sync pull
+##?    sync push
+
+doc::maybe_help "$@"
+
+LOCAL_BASE="$LOCAL_ENVOY_DIR"
+REMOTE_BASE="${USER}@${IP}:~/${REMOTE_ENVOY_DIRNAME}"
+
+_rsync() {
+   log::info rsync "$@"
+   rsync "$@"
+}
+
+_rsync_all() {
+   local -r from="$1"
+   local -r to="$2"
+
+   #local includes=()
+   #for f in "source" "test" "generated_api_shadow" "api"; do
+   #   includes+=("--include=\"${f}/\"")
+   #done
+
+   #_rsync \
+      # -v -r -R -a \
+      # "${includes[@]}" \
+      # --exclude='*' \
+      # "${from}/" \
+      # "$to"
+
+   # _rsync -avn ./source/**/* ./test/**/* ./api/**/* ./generated_api_shadow/**/*
+
+   # mv .git ../envoy-oss.bk/.git
+   _rsync -a --cvs-exclude --exclude='.git/' --exclude='.vscode/' --exclude='bazel*/' --exclude='CMakeLists.txt' "${from}/" "$to"
+   # mv ../envoy-oss.bk/.git .git
+}
+
+_pull() {
+   platform::validate_local
+
+   log::info "Getting info..."
+   local -r branch="$(git::current_branch)"
+
+   log::info "Syncing..."
+   _rsync_all "$REMOTE_BASE" "$LOCAL_BASE"
+}
+
+_push() {
+   platform::validate_local
+
+   log::info "Syncing..."
+   _rsync_all "$LOCAL_BASE" "$REMOTE_BASE"
+}
+
+main() {
+   local -r fn="$1"
+   shift || true
+   "_${fn}" "$@"
+}
+
+main "$@"

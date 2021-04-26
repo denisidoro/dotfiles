@@ -6,10 +6,13 @@ source "${DOTFILES}/scripts/core/str.sh"
 source "${DOTFILES}/scripts/core/platform.sh"
 source "${DOTFILES}/scripts/core/log.sh"
 
-##? Updates submodules, dotfiles and attempts to do some setup
+##? Updates dotfiles and attempts to do some setup
 ##?
 ##? Usage:
 ##?    update
+##?
+##? Env vars:
+##?    Please refer to dot self install
 
 doc::maybe_help "$@"
 
@@ -23,12 +26,10 @@ main() {
    log::info "Current config: $tags"
    echoerr
 
-   if ! ${DOT_INSTALL_SKIP_CORE_DEPS:-false}; then
-      _add dot-submodules || true
-      _add dot-folders || true
-      _add dot-gitconfig || true
-      _add dot-zshrc || true
-   fi
+   _add dot-git || true
+   _add dot-folders || true
+   _add dot-gitconfig || true
+   _add dot-zshrc || true
 
    echoerr
    log::info "Setting symlinks..."
@@ -42,6 +43,10 @@ main() {
    has_tag "$tags" "work" && update_dotfiles_work
 
    fix_locales || true
+
+   if ! ${DOT_SKIP_CORE_DEPS:-false}; then
+      has zimfw && zimfw install && zimfw update || true
+   fi
 
    set -e
 
@@ -83,7 +88,11 @@ fix_locales() {
 # ==============================
 
 update_dotfiles() {
-   DOTLINK="${1:-unix}" dot self link set --create-dirs --verbose
+   params=()
+   if [ -n "${DOT_LINK_EXTRA_ARG:-}" ]; then
+      params+=("$DOT_LINK_EXTRA_ARG")
+   fi
+   DOTLINK="${1:-unix}" dot self link set --create-dirs --verbose "${params[@]:-}"
 }
 
 update_dotfiles_common() {

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/package/aux/core.sh"
+source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 ##? Lists custom recipes
 ##?

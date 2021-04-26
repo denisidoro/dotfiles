@@ -1,15 +1,20 @@
 #!/usr/bin/env zsh
 
 # prevent multiple sourcing
-if [ -n "${DOT_SHELL:-}" ]; then
-   return 0
+# if [ -n "${DOT_SHELL:-}" ]; then
+#   return 0
+# fi
+
+# Powerlevel10k instant prompt
+if [[ "$DOT_THEME" -eq "powerlevel" ]]; then
+   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # dotfiles
 export DOTFILES="${DOTFILES:-"${HOME}/dotfiles"}"
 
 # register which shell is running
-DOT_SHELL="zsh"
+export DOT_SHELL="zsh"
 
 # load vars
 source "${DOTFILES}/shell/aux/vars.bash"
@@ -27,10 +32,11 @@ source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
 if ${DOT_ZIM:-false}; then
    # source ${ZIM_HOME}/login_init.zsh -q &!
 
-   if [[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
-      # Update static initialization script if it's outdated, before sourcing it
-      source ${ZIM_HOME}/zimfw.zsh init -q
-   fi
+   # if [[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
+   #    # Update static initialization script if it's outdated, before sourcing it
+   #    source ${ZIM_HOME}/zimfw.zsh init -q
+   # fi
+
    source ${ZIM_HOME}/init.zsh
 fi
 
@@ -66,5 +72,10 @@ fpath=("${DOTFILES}/shell/zsh/completions" $fpath)
 export ZDOTDIR="$HOME"
 
 # nnn
-export NNN_PLUG="f:fzcd;o:fzopen;z:fzz;d:diffs;t:treeview;v:preview-tui"
-export NNN_FIFO="/tmp/nnn.fifo"
+# export NNN_PLUG="f:fzcd;o:fzopen;z:fzz;d:diffs;t:treeview;v:preview-tui"
+# export NNN_FIFO="/tmp/nnn.fifo"
+
+# $ alias
+alias \$=''
+
+# zprof

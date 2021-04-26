@@ -1,7 +1,0 @@
-% code
-
-# Beautify source code
-dot code beautify <path>
-
-# Search for cheatsheets
-curl -s "https://cheat.sh/<query>"
