@@ -42,7 +42,7 @@ fzf_prompt() {
 }
 
 _version() {
-   echo 'v2021.4.26'
+   echo 'v2021.04.26'
 }
 
 _alias() {
