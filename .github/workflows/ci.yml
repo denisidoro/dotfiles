@@ -64,9 +64,9 @@ jobs:
         run: rm -rf ./tests || true; cd $HOME && for f in $(ls -a | grep '^\.'); do rm "$f" || true; done
       - name: dot self install
         run: ./bin/dot self install-no-interactive || true
-      - name: tree
-        run: tree $DOTFILES
+      - name: ls
+        run: ls -la $HOME
       - name: DOTFILES env variable
-        run: bash -c 'env | grep DOTFILES'
+        run: source $HOME/.bashrc && env | grep DOTFILES
       - name: dot version
-        run: bash -c 'dot --version | grep -E "202[0-9]\.[0-9]+\.[0-9]+$"'
+        run: source $HOME/.bashrc && dot --version | grep -E "202[0-9]\.[0-9]+\.[0-9]+$"
