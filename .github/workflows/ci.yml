@@ -65,7 +65,7 @@ jobs:
       - name: dot self install
         run: ./bin/dot self install-no-interactive || true
       - name: ls
-        run: ls -la $HOME
+        run: ls -la $HOME; echo; echo; cat /home/runner/work/dotfiles/dotfiles/shell/bash/bashrc
       - name: DOTFILES env variable
         run: source $HOME/.bashrc && env | grep DOTFILES
       - name: dot version
