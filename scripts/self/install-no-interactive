@@ -1,16 +1,25 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Install dotfiles without asking for input
+##?
+##? Usage:
+##?    install-no-interactive
+
+doc::maybe_help "$@"
+
 EDITOR=cat \
-    TERM=dumb \
-    DOT_ZIM=false \
-    DOT_THEME=none \
-    DOT_DOCOPT=python \
-    DOT_FRE=false \
-    DOT_FZF=false \
-    DOT_NAVI=false \
-    DOT_ZIM=false \
-    DOT_LINK_EXTRA_ARG='--backup' \
-    DOT_SKIP_PM_UPDATE=true \
-    DOT_SKIP_CORE_DEPS=true \
-    dot self install
+   TERM=dumb \
+   DOT_ZIM=false \
+   DOT_THEME=none \
+   DOT_DOCOPT=python \
+   DOT_FRE=false \
+   DOT_FZF=false \
+   DOT_NAVI=false \
+   DOT_ZIM=false \
+   DOT_LINK_EXTRA_ARG='--backup' \
+   DOT_SKIP_PM_UPDATE=true \
+   DOT_SKIP_CORE_DEPS=true \
+   dot self install
