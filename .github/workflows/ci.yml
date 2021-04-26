@@ -67,6 +67,6 @@ jobs:
       - name: ls
         run: ls -la $HOME; echo; echo; cat /home/runner/work/dotfiles/dotfiles/shell/bash/bashrc
       - name: DOTFILES env variable
-        run: bash -c 'source $HOME/.bashrc && env | grep DOTFILES'
+        run: source $HOME/.bashrc; env; env | grep DOTFILES'
       - name: dot version
-        run: bash -c 'source $HOME/.bashrc && dot --version | grep -E "202[0-9]\.[0-9]+\.[0-9]+$"'
+        run: source $HOME/.bashrc; dot --version; dot --version | grep -E "202[0-9]\.[0-9]+\.[0-9]+$"'
