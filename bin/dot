@@ -87,7 +87,7 @@ elif [[ $# -eq 1 ]]; then
    context_query="$(_alias $1)"
 
    case $context_query in
-      -h|--help) doc::help_or_fail "$@" && exit ;;
+      -h|--help) doc::maybe_help "$@" && exit ;;
       -v|--version) _version && exit ;;
    esac
 
