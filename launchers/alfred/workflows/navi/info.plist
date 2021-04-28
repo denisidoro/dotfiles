@@ -99,7 +99,7 @@ end alfred_script</string>
 		<key>182E86BC-031E-4F52-9BF0-977ED9A9AD24</key>
 		<dict>
 			<key>xpos</key>
-			<integer>305</integer>
+			<integer>270</integer>
 			<key>ypos</key>
 			<integer>10</integer>
 		</dict>
@@ -113,9 +113,9 @@ end alfred_script</string>
 		<key>5DC42D11-FD6B-412F-940D-E8295F4E4B21</key>
 		<dict>
 			<key>xpos</key>
-			<integer>65</integer>
+			<integer>60</integer>
 			<key>ypos</key>
-			<integer>75</integer>
+			<integer>175</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>

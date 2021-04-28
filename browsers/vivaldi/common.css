@@ -1,0 +1,16 @@
+.win #tabs-container .tab:not(.pinned):not(.tab-small).audio-on .tab-audio,
+.linux:not(.alt) #tabs-container .tab:not(.pinned):not(.tab-small).audio-on .tab-audio,
+.win #tabs-container .tab:not(.pinned):not(.tab-small).audio-muted .tab-audio,
+.linux:not(.alt) #tabs-container .tab:not(.pinned):not(.tab-small).audio-muted .tab-audio,
+.win #tabs-container .tab:not(.pinned):not(.tab-small).tab-captured .tab-audio,
+.linux:not(.alt) #tabs-container .tab:not(.pinned):not(.tab-small).tab-captured .tab-audio {
+    transform: scale(0) !important;
+}
+.win #tabs-container .tab:not(.pinned):not(.tab-small).audio-on .favicon,
+.linux:not(.alt) #tabs-container .tab:not(.pinned):not(.tab-small).audio-on .favicon,
+.win #tabs-container .tab:not(.pinned):not(.tab-small).audio-muted .favicon,
+.linux:not(.alt) #tabs-container .tab:not(.pinned):not(.tab-small).audio-muted .favicon,
+.win #tabs-container .tab:not(.pinned):not(.tab-small).tab-captured .favicon,
+.linux:not(.alt) #tabs-container .tab:not(.pinned):not(.tab-small).tab-captured .favicon {
+    transform: scale(1) !important;
+}

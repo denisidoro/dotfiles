@@ -2,7 +2,6 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/core/platform.sh"
 
 ##? Open files/folders
 ##?
@@ -18,27 +17,37 @@ source "${DOTFILES}/scripts/core/platform.sh"
 doc::parse "$@"
 
 _open() {
-   if platform::is_osx; then
-      open "$@" & disown
+   if has open; then
+      open "$@"
+   elif has xdg-open
+      xdg-open "$@"
    else
-      xdg-open "$@" & disown
+      exit 1
    fi
 }
 
 _browser_cmd() {
-   local -r file="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-
-   if has google-chrome; then
-      echo "google-chrome"
+   if has vivaldi; then
+      echo "vivaldi" && return 0
+   elif has google-chrome; then
+      echo "google-chrome" && return 0
    elif has chrome; then
-      echo "chrome"
+      echo "chrome" && return 0
    elif has firefox; then
-      echo "firefox"
-   elif [ -f "$file" ]; then
-      echo "$file"
-   else
-      exit 1
+      echo "firefox" && return 0
    fi
+
+   local file="/Applications/Vivaldi.app/Contents/MacOS/Vivaldi"
+   if [ -f "$file" ]; then
+      echo "$file" && return 0
+   fi
+
+   file="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+   if [ -f "$file" ]; then
+      echo "$file" && return 0
+   fi
+
+   exit 1
 }
 
 _open_browser() {
@@ -47,7 +56,8 @@ _open_browser() {
 }
 
 if $browser; then
-   _open_browser "$@"
+   shift
+   _open "$@"
 else
    _open "$@"
 fi
