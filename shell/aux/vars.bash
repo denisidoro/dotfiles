@@ -4,7 +4,7 @@
 export EDITOR='nvim'
 
 # default browser
-export BROWSER='google-chrome'
+export BROWSER='vivaldi'
 
 # default pager
 export PAGER='less'

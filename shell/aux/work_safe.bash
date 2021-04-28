@@ -34,6 +34,8 @@ alias base64='gbase64'
 alias pr='gpr'
 
 alias mono="dot work mono"
+alias ep="dot envoy sync push"
+alias el="dot envoy sync pull"
 
 _load_work_stuff() {
    case $1 in

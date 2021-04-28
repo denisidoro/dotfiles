@@ -3,14 +3,27 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>io.github.denisidoro.display</string>
+	<string>io.github.denisidoro.uber</string>
 	<key>connections</key>
 	<dict>
-		<key>2DF9308E-5EEC-42FA-9F63-3134AD664A17</key>
+		<key>5DC42D11-FD6B-412F-940D-E8295F4E4B21</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>5AF0A6DD-96E0-42BF-837C-4761F5761EDB</string>
+				<string>CEAF2AE2-7473-45E8-8099-C118A401A14F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>CEAF2AE2-7473-45E8-8099-C118A401A14F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>5D421996-54C8-43F2-B9C1-F8EC076FB7D1</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -23,11 +36,11 @@
 	<key>createdby</key>
 	<string>Denis Isidoro</string>
 	<key>description</key>
-	<string>Control brightness and contrast</string>
+	<string>Uber</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Display</string>
+	<string>Uber</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -38,22 +51,18 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>#/usr/bin/env bash
-set -euo pipefail
-
-args=($(eval "for arg in $@; do echo \$arg; done"))
-printf "%s" "$($HOME/dotfiles/bin/dot system display q "${args[@]}")"</string>
+				<string>/Users/denis.isidoro/dotfiles/bin/dotn-alacritty &amp;disown</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string></string>
+				<string>/Users/denis.isidoro/dotfiles/bin/dotn-alacritty</string>
 				<key>type</key>
-				<integer>0</integer>
+				<integer>8</integer>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>5AF0A6DD-96E0-42BF-837C-4761F5761EDB</string>
+			<string>5D421996-54C8-43F2-B9C1-F8EC076FB7D1</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -61,20 +70,35 @@ printf "%s" "$($HOME/dotfiles/bin/dot system display q "${args[@]}")"</string>
 			<key>config</key>
 			<dict>
 				<key>argumenttype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>keyword</key>
-				<string>dis</string>
+				<string>u</string>
 				<key>subtext</key>
 				<string></string>
 				<key>text</key>
-				<string>Display setup</string>
+				<string>Uber</string>
 				<key>withspace</key>
 				<true/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
-			<string>2DF9308E-5EEC-42FA-9F63-3134AD664A17</string>
+			<string>5DC42D11-FD6B-412F-940D-E8295F4E4B21</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>uber {query}</string>
+				<key>variables</key>
+				<dict/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>CEAF2AE2-7473-45E8-8099-C118A401A14F</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -83,19 +107,26 @@ printf "%s" "$($HOME/dotfiles/bin/dot system display q "${args[@]}")"</string>
 	<string></string>
 	<key>uidata</key>
 	<dict>
-		<key>2DF9308E-5EEC-42FA-9F63-3134AD664A17</key>
+		<key>5D421996-54C8-43F2-B9C1-F8EC076FB7D1</key>
 		<dict>
 			<key>xpos</key>
-			<integer>195</integer>
+			<integer>375</integer>
 			<key>ypos</key>
-			<integer>185</integer>
+			<integer>75</integer>
 		</dict>
-		<key>5AF0A6DD-96E0-42BF-837C-4761F5761EDB</key>
+		<key>5DC42D11-FD6B-412F-940D-E8295F4E4B21</key>
 		<dict>
 			<key>xpos</key>
-			<integer>360</integer>
+			<integer>65</integer>
 			<key>ypos</key>
-			<integer>185</integer>
+			<integer>75</integer>
+		</dict>
+		<key>CEAF2AE2-7473-45E8-8099-C118A401A14F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>260</integer>
+			<key>ypos</key>
+			<integer>105</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>
