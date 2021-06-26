@@ -45,6 +45,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>45EC9E17-D76A-4C87-BE83-9693848BB4C6</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>264B6358-C6DD-420B-AECC-E1990C584503</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>797E0471-425F-4045-8F01-1218BB6056E3</key>
 		<array>
 			<dict>
@@ -243,6 +256,27 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>whatsapp</string>
+				<key>subtext</key>
+				<string>WhatsApp</string>
+				<key>text</key>
+				<string>WhatsApp</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>DCAFDC11-9A4F-4314-86F6-3CB2F544A779</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -262,27 +296,6 @@
 			<string>264B6358-C6DD-420B-AECC-E1990C584503</string>
 			<key>version</key>
 			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>whatsapp</string>
-				<key>subtext</key>
-				<string>WhatsApp</string>
-				<key>text</key>
-				<string>WhatsApp</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>DCAFDC11-9A4F-4314-86F6-3CB2F544A779</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -335,6 +348,27 @@
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>t</string>
+				<key>subtext</key>
+				<string>Focus tab</string>
+				<key>text</key>
+				<string>Tab</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>45EC9E17-D76A-4C87-BE83-9693848BB4C6</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -350,9 +384,9 @@
 		<key>264B6358-C6DD-420B-AECC-E1990C584503</key>
 		<dict>
 			<key>xpos</key>
-			<integer>510</integer>
+			<integer>655</integer>
 			<key>ypos</key>
-			<integer>445</integer>
+			<integer>515</integer>
 		</dict>
 		<key>2BB47762-A6E2-4A4D-94E7-277943AFD1D8</key>
 		<dict>
@@ -367,6 +401,13 @@
 			<integer>165</integer>
 			<key>ypos</key>
 			<integer>180</integer>
+		</dict>
+		<key>45EC9E17-D76A-4C87-BE83-9693848BB4C6</key>
+		<dict>
+			<key>xpos</key>
+			<integer>160</integer>
+			<key>ypos</key>
+			<integer>830</integer>
 		</dict>
 		<key>797E0471-425F-4045-8F01-1218BB6056E3</key>
 		<dict>

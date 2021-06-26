@@ -39,11 +39,11 @@ log::_header() {
    printf "%${right}s" '' | tr ' ' =
 }
 
-log::header() { log::_stderr $(log::ansi --magenta "$(log::_header $@)"); }
-log::warn() { log::_stderr $(log::ansi --yellow --inverse '    WARN ') $(log::ansi --yellow $@); }
-log::err() { log::_stderr $(log::ansi --red --inverse '   ERROR ') $(log::ansi --red $@); }
-log::success() { log::_stderr $(log::ansi --green --inverse ' SUCCESS ') $(log::ansi --green $@); }
-log::info() { log::_stderr $(log::ansi --blue --inverse '    INFO ') $(log::ansi --blue $@); }
+log::header() { log::_stderr $(log::ansi --magenta "$(log::_header "$@")"); }
+log::warn() { log::_stderr $(log::ansi --yellow --inverse '    WARN ') "$(log::ansi --yellow "$@")"; }
+log::err() { log::_stderr $(log::ansi --red --inverse '   ERROR ') "$(log::ansi --red "$@")"; }
+log::success() { log::_stderr $(log::ansi --green --inverse ' SUCCESS ') "$(log::ansi --green "$@")"; }
+log::info() { log::_stderr $(log::ansi --blue --inverse '    INFO ') "$(log::ansi --blue "$@")"; }
 
 die() {
    log::err "$@"

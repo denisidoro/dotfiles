@@ -10,10 +10,15 @@ source "${DOTFILES}/scripts/envoy/aux/core.sh"
 
 doc::maybe_help "$@"
 
+_ssh() {
+   log::info "$@"
+   ssh "$@"
+}
+
 main() {
    platform::validate_local
 
-   kitty +kitten ssh "${USER}@${IP}"
+   _ssh "${USER}@${IP}"
 }
 
 main "$@"

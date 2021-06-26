@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$(dirname "$0")/core.sh"
+
+cd "$PROJ_HOME"
+npx eslint 'src/**' --fix

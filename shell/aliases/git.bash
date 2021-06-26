@@ -2,6 +2,9 @@
 
 # based on https://github.com/ohmybash/oh-my-bash/blob/master/plugins/git/git.plugin.sh
 
+# cleanup to HEAD
+alias gcl="git add --all; git reset --hard HEAD"
+
 # master
 alias gcom="dot git master checkout"
 alias gmm="dot git master merge"

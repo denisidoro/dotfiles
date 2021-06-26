@@ -68,6 +68,11 @@ alias au="navi best 'Update a diff'"
 alias al="navi best 'Land a diff'"
 
 # ========================
+# projects
+# ========================
+sc() { "./scripts/$@"; }
+
+# ========================
 # explorer
 # ========================
 
@@ -86,10 +91,10 @@ _safe_cd() {
 
 j() { _safe_cd "$(dot fs jump global "$@")"; }
 jj() { _safe_cd "$(dot fs jump local "$@")"; }
-ju() { _safe_cd "$(dot uber projects --clone local "$@")"; }
+# ju() { _safe_cd "$(dot uber projects --clone local "$@")"; }
+ju() { _safe_cd "$(dot fs jump work "$@")"; }
 jd() { _safe_cd "$(dot fs jump dev "$@")"; }
 jjf() { _safe_cd "$(dot fs jump file "$@")"; }
-jr() { _safe_cd "$(dot fs jump root "$@")"; }
 jr() { _safe_cd "$(dot fs jump root "$@")"; }
 fdd() { _safe_cd "$(dot fs nav "$@")"; }
 up() { _safe_cd "$(dot fs jump up "$@")"; }

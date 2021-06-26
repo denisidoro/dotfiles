@@ -26,6 +26,7 @@ export LEIN_SUPPRESS_USER_LEVEL_REPO_WARNINGS=true
 # Golang
 export GOPATH="${DEV_HOME}/go"
 export GOBIN="${GOPATH}/bin"
+export GOPROXY="https://goproxy.uberinternal.com|https://goproxy.uberinternal.com"
 
 # package management
 export HOMEBREW_NO_AUTO_UPDATE=1

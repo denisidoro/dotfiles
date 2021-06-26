@@ -19,7 +19,7 @@ doc::parse "$@"
 _open() {
    if has open; then
       open "$@"
-   elif has xdg-open
+   elif has xdg-open; then
       xdg-open "$@"
    else
       exit 1

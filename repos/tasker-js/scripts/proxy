@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$(dirname "$0")/core.sh"
+
+main() {
+	local -r npm="$(npm::cmd)"
+	cd "$PROJ_HOME"
+	$npm "$@"
+}
+
+main "$@"

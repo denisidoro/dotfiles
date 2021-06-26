@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$(dirname "$0")/core.sh"
+
+main() {
+	if [ -d "${PROJ_HOME}/node_modules" ]; then
+		:
+	else
+		"${PROJ_HOME}/scripts/proxy" install
+	fi
+}
+
+main "$@"

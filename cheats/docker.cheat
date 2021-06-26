@@ -7,13 +7,13 @@ docker image rm <image_id>
 docker rmi <image_id>
 
 # Remove all images from the local image store
-docker rmi $(docker images -q) --force
+docker images -q | xargs -I% docker rmi "%" --force
 
 # Remove all containers
-docker rm $(docker ps -aq)
+docker ps -aq | xargs -I% docker rm "%"
 
 # Stop all containers
-docker stop $(docker ps -aq)
+docker ps -aq | xargs -I% docker stop "%"
 
 # List all images that are locally stored with the Docker engine
 docker images
@@ -37,7 +37,7 @@ docker network ls
 docker ps
 
 # Delete all running and stopped containers
-docker rm -f "$(docker ps -aq)"
+docker ps -aq | xargs -I% docker rm -f "%"
 
 # Create a new bash process inside the container and connect it to the terminal
 docker exec -it <container_id> bash

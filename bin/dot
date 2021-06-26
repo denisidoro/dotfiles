@@ -13,9 +13,9 @@ CALLING_DIR="${CALLING_DIR:-"$PWD"}"
 ##?    dot <context> <cmd> [<args>...]
 
 _list_command_paths() {
-   find "${DOTFILES}/scripts" -maxdepth 2 -executable -type f
+   find "${DOTFILES}/scripts" -mindepth 2 -maxdepth 2 -executable -type f
 
-   find "${DOTFILES}/local/scripts" -maxdepth 2 -executable -type f \
+   find "${DOTFILES}/local/scripts" -mindepth 2 -maxdepth 2 -executable -type f \
       | sed 's|/local/scripts/|/scripts/|g'
 }
 
@@ -71,8 +71,9 @@ _alias() {
 }
 
 if [[ $# -eq 0 ]]; then
-   # Shows available contexts
-   # or prompts for a command if fzf is installed
+   # Show available contexts
+   # or prompt for a command if fzf is installed
+
    source "${DOTFILES}/scripts/core/main.sh"
    source "${DOTFILES}/scripts/core/coll.sh"
 
@@ -81,7 +82,8 @@ if [[ $# -eq 0 ]]; then
       || (list_command_paths | beautify_command)
 
 elif [[ $# -eq 1 ]]; then
-   # Shows available commands for a given context
+   # Show available commands for a given context
+
    source "${DOTFILES}/scripts/core/main.sh"
 
    context_query="$(_alias $1)"
@@ -91,11 +93,13 @@ elif [[ $# -eq 1 ]]; then
       -v|--version) _version && exit ;;
    esac
 
-   find "${DOTFILES}/scripts/${context_query}/" -maxdepth 2 -executable -type f \
-      | awk -F"/" '{print $NF}'
-
+   echo 'Commands:'
+   for cmd in $(find "${DOTFILES}/scripts/${context_query}/" -mindepth 1 -maxdepth 1 -executable -type f | awk -F"/" '{print $NF}'); do
+		printf "   %-20s %s" "$cmd" "$("${DOTFILES}/scripts/${context_query}/${cmd}" --help | head -n1)"
+		echo
+	done
 else
-   # Executes a command directly
+   # Execute a command directly
 
    ctx="$(_alias $1)"
    cmd="$2"
