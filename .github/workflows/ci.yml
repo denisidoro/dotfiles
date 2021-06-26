@@ -25,6 +25,13 @@ jobs:
       - name: Run tests
         run: ./bin/dot self test file 'json'
 
+  npm-tests:
+    name: npm
+    runs-on: ubuntu-latest
+    steps:
+      - name: npm test
+        run: cd ./repos/tasker-js; make test
+
   help-tests:
     name: Help
     runs-on: ubuntu-latest

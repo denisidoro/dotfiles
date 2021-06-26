@@ -15,7 +15,7 @@ source "${DOTFILES}/scripts/core/str.sh"
 doc::parse "$@"
 
 json_to_dot() {
-   node "${DOTFILES}/scripts/jira/aux/jira_epic.js"
+   node "${DOTFILES}/repos/jira-epic/index.js"
 }
 
 main() {
