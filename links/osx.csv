@@ -4,7 +4,6 @@ wm/yabai/yabai.rc, $HOME/.yabairc
 editors/vscode/settings.json, $HOME/Library/Application\ Support/Code/User/settings.json
 editors/vscode/keybindings.json, $HOME/Library/Application\ Support/Code/User/keybindings.json
 editors/vscode/tasks.json, $HOME/Library/Application\ Support/Code/User/tasks.json
-launchers/alfred/preferences, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/preferences
 git/gitui_config.ron, $HOME/.config/gitui/key_config.ron
 launchers/alfred/workflows/uber, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/workflows/user.workflow.9F7C091B-B265-48B1-8A55-C63BC5BA34C6
 launchers/alfred/workflows/navi, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/workflows/user.workflow.6942ED95-563C-44A0-AA67-D611E9A0A570

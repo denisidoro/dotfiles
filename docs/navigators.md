@@ -57,15 +57,6 @@ Use it via the `fd` alias in order to `cd` to the last visited folder.
 
 ---
 
-## AWS S3 navigator
-
-```sh
-dot aws s3 <bucket>
-```
-
-
----
-
 ## JSON navigator
 
 ```sh
