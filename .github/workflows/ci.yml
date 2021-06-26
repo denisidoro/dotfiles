@@ -29,6 +29,8 @@ jobs:
     name: npm
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
       - name: npm test
         run: cd ./repos/tasker-js; make test
 
