@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
 npm::cmd() {
-	if has yarn; then
-		echo yarn
-		return 0
-	elif has npm; then
-		echo npm
-		return 0
-	fi
+   if has yarn; then
+      echo yarn
+      return 0
+   elif has npm; then
+      echo npm
+      return 0
+   fi
 
-	dot pkg add yarn
-	echo yarn
+   dot pkg add yarn
+   echo yarn
 }
 
 dot::clone() {

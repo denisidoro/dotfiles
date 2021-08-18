@@ -33,7 +33,7 @@ _run() {
       call="$(grep -Eo 'dot [a-zA-z0-9_\-]+ [a-zA-z0-9_\-]+' "$file" || true)"
       [ -n "$call" ] || continue
       while IFS= read -r line; do
-         case "$line" in 
+         case "$line" in
             *add_to_dotlink*) continue ;;
             *add\ -m*) continue ;;
          esac

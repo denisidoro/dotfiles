@@ -35,7 +35,7 @@ tell application "$browser"
 end tell
 EOF
 
-    osascript -e "$code"
+   osascript -e "$code"
 }
 
 _focus_app() {
@@ -48,7 +48,7 @@ main() {
    local -r browser="Vivaldi"
 
    _focus_tab "$browser" "$*" || true
-   _focus_app "$browser" 
+   _focus_app "$browser"
 }
 
 main "$@"

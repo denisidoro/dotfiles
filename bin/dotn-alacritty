@@ -9,10 +9,10 @@ export PATH="${PATH}:/usr/local/bin"
 
 args=("navi")
 if [ $# -eq 0 ]; then
-    :
+   :
 else
-    args+=("--query")
-    args+=("$* ")
+   args+=("--query")
+   args+=("$* ")
 fi
 
 /Applications/Alacritty.app/Contents/MacOS/alacritty --command "${args[@]}"

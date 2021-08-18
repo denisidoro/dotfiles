@@ -10,7 +10,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 doc::parse "$@"
 
-_files(){
+_files() {
    find "${DOTFILES}/scripts/core" -maxdepth 4 -iname "*.sh" -type f
    find "${DOTFILES}/tests" -maxdepth 4 -iname "*.sh" -type f
    find "${DOTFILES}/bin" -maxdepth 2 -executable -type f

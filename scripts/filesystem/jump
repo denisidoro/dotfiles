@@ -119,36 +119,36 @@ jump_to_specific_folder() {
 
 jump_to_work_folder() {
    cd "$DEV_HOME"
-   
-	local -r GO_DIR="${DEV_HOME}/go/src/code.uber.internal"
 
-	_go_projs() {
-		cd "$GO_DIR"
-		find . -mindepth 2 -maxdepth 2 -type d | cut -c 3-
-	}
+   local -r GO_DIR="${DEV_HOME}/go/src/code.uber.internal"
 
-	_work_home_projs() {
-		cd "$WORK_HOME"
-		find . -maxdepth 3 -not -path "./go-code/*" -type d -name .git -prune | cut -c 3- | sed 's|/.git$||'
-	}
+   _go_projs() {
+      cd "$GO_DIR"
+      find . -mindepth 2 -maxdepth 2 -type d | cut -c 3-
+   }
 
-	_suffix() {
-		awk -v suffix="$1" -v color="$2" '{printf("%s%sm%-32s%s\n", NC "\033[0;", color, $1, suffix) }'
-	}
+   _work_home_projs() {
+      cd "$WORK_HOME"
+      find . -maxdepth 3 -not -path "./go-code/*" -type d -name .git -prune | cut -c 3- | sed 's|/.git$||'
+   }
 
-	_cd() {
-		local -r input="$(echo "$1" | xargs)"
-		local -r dir="$(echo "$input" | cut -d' ' -f1)"
-		local -r kind="$(echo "$input" | cut -d' ' -f2)"
+   _suffix() {
+      awk -v suffix="$1" -v color="$2" '{printf("%s%sm%-32s%s\n", NC "\033[0;", color, $1, suffix) }'
+   }
 
-		case "$kind" in
-			"dev/go") realpath "${GO_DIR}/${dir}" ;;
-			*) realpath "${WORK_HOME}/${dir}" ;;
-		esac
-	}
-   
-	(_go_projs | _suffix 'dev/go' 32; _work_home_projs | _suffix 'dev/uber' 34) \
-		| _select_and_apply _cd "$@"
+   _cd() {
+      local -r input="$(echo "$1" | xargs)"
+      local -r dir="$(echo "$input" | cut -d' ' -f1)"
+      local -r kind="$(echo "$input" | cut -d' ' -f2)"
+
+      case "$kind" in
+         "dev/go") realpath "${GO_DIR}/${dir}" ;;
+         *) realpath "${WORK_HOME}/${dir}" ;;
+      esac
+   }
+
+   (_go_projs | _suffix 'dev/go' 32; _work_home_projs | _suffix 'dev/uber' 34) \
+      | _select_and_apply _cd "$@"
 }
 
 jump_to_uber_go() {

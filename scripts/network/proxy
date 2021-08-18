@@ -14,9 +14,9 @@ source "${DOTFILES}/scripts/core/main.sh"
 doc::maybe_help "$@"
 
 main() {
-    cd "${DOTFILES}/repos/proxy"
-    yarn install || true
-    yarn run start
+   cd "${DOTFILES}/repos/proxy"
+   yarn install || true
+   yarn run start
 }
 
 main "$@"

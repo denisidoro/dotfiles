@@ -85,8 +85,8 @@ alias lst="tree -L 2"
 cdd() { cd "$@" && ls .; }
 mkcd() { mkdir -p -- "$@" && cd -P -- "$@"; }
 debug() {
-	dot shell log info "$@"
-	"$@"
+   dot shell log info "$@"
+   "$@"
 }
 
 _safe_cd() {

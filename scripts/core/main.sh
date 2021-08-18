@@ -16,8 +16,8 @@ tap() {
 }
 
 debug() {
-	dot shell log info "$@"
-	"$@"
+   dot shell log info "$@"
+   "$@"
 }
 
 has() {

@@ -79,7 +79,7 @@ main() {
    rm -rf "${DOWNLOAD_PATH}" || true
    mkdir -p "${DOWNLOAD_PATH}" || true
 
-	dot pkg add imagemagick svgexport
+   dot pkg add imagemagick svgexport
 
    log::info "Press enter after you have copied all the curl commands to the clipboard"
    feedback::enter

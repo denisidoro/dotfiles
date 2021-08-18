@@ -11,7 +11,7 @@ export PATH="/usr/local/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WOR
 
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-11.0.11.jdk/Contents/Home"
 
-export NPM_CONFIG_REGISTRY="https://registry.npmjs.org/" 
+export NPM_CONFIG_REGISTRY="https://registry.npmjs.org/"
 
 alias ls='exa --icons'
 

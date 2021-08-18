@@ -98,9 +98,9 @@ elif [[ $# -eq 1 ]]; then
 
    echo 'Commands:'
    for cmd in $(find "${DOTFILES}/scripts/${context_query}/" -mindepth 1 -maxdepth 1 -executable -type f | awk -F"/" '{print $NF}'); do
-		printf "   %-20s %s" "$cmd" "$("${DOTFILES}/scripts/${context_query}/${cmd}" --help | head -n1)"
-		echo
-	done
+      printf "   %-20s %s" "$cmd" "$("${DOTFILES}/scripts/${context_query}/${cmd}" --help | head -n1)"
+      echo
+   done
 else
    # Execute a command directly
 

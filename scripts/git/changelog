@@ -23,18 +23,18 @@ main() {
 }
 
 github::lines() {
-	local -r e2="$(printf $ESCAPE_CHAR_2)"
-	local -r e3="$(printf $ESCAPE_CHAR_3)"
+   local -r e2="$(printf $ESCAPE_CHAR_2)"
+   local -r e3="$(printf $ESCAPE_CHAR_3)"
 
    grep '<code>' -A3 \
-	   | sed "s/^--/${e2}/g" \
-		| tr '\n' "$ESCAPE_CHAR_3" \
-		| tr "$ESCAPE_CHAR_2" '\n' \
+      | sed "s/^--/${e2}/g" \
+      | tr '\n' "$ESCAPE_CHAR_3" \
+      | tr "$ESCAPE_CHAR_2" '\n' \
       | grep 'commit/' \
       | grep 'title=' \
       | sed -E 's|.*title="([^"]+)".*commit/([a-f0-9]+).*|\2;\1|g' \
       | sed -E 's/ \(#([0-9]+)\).*/;\1/' \
-	   | sed -E "s/${e3}.*//g"
+      | sed -E "s/${e3}.*//g"
 }
 
 github::process_line() {
