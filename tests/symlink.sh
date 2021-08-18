@@ -4,11 +4,9 @@ _validate() {
    local -r filename="$1"
    local success=true
 
-   echoerr "validate: $@"
+   echoerr "validate: $*"
 
-   local -r files="$(cat "$filename" \
-      | sed '/^$/d' \
-      | cut -d',' -f1)"
+   local -r files="$(sed "$filename" '/^$/d' | cut -d',' -f1)"
 
    for f in $files; do
       if echo "$f" | grep -q 'local/'; then
@@ -24,10 +22,10 @@ _validate() {
    $success && return 0 || return 1
 }
 
-cd "$DOTFILES"
+cd "$DOTFILES" || exit
 
 test::set_suite "bash - symlink"
 
-for f in $(ls "./links/" | grep -v 'gdrive'); do
+for f in ./links/[^gdrive]*; do
    test::run "$f - symlinks are valid" _validate "./links/$f"
 done

@@ -3,6 +3,7 @@
 source "${DOTFILES}/scripts/core/log.sh"
 
 _pairs() {
+   # shellcheck disable=2156
    find . \( -name .git -prune \) -o \( -name modules -prune \) -o \( -name rust -prune \) -o \( -name target -prune \)  -o -name '*' -type f \
       -exec bash -c 'x="$(grep "dot " {})"; [ -n "$x" ] && echo "$x" | sed -e "s|^|{} \+ |"' \; \
       | grep -v 'completions' \
@@ -13,7 +14,8 @@ _pairs() {
 }
 
 validate_reference() {
-   local cmds=($(echo "$*" | tr ' ' '\n'))
+   local cmds
+   mapfile -r cmds < <(echo "$*" | tr ' ' '\n')
    case "$*" in
       *uber*|*work*) ;;
       *) "${cmds[@]}" --help &>/dev/null ;;

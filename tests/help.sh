@@ -5,7 +5,7 @@ without_dot_slash() {
 }
 
 _execs() {
-   cd "${DOTFILES}/scripts"
+   cd "${DOTFILES}/scripts" || exit
    find . -type f -executable -print \
       | grep -v node_modules \
       | grep -v './core' \
@@ -13,7 +13,7 @@ _execs() {
 }
 
 _scripts() {
-   cd "${DOTFILES}/scripts"
+   cd "${DOTFILES}/scripts" || exit
    find . -maxdepth 2 -type f \
       | grep -v '/core/' \
       | grep -v '.clj$' \
@@ -61,7 +61,7 @@ _run() {
       $test_fn "${bin} has a help command" assert_help "$bin"
    done
 
-   cd "$DOTFILES/scripts"
+   cd "$DOTFILES/scripts" || exit
    for f in $(); do
       context="$(echo "$f" | cut -d'/' -f2)"
       command="$(echo "$f" | cut -d'/' -f3)"

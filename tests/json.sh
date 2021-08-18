@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 _jsons() {
-   cd "$DOTFILES"
+   cd "$DOTFILES" || exit
    find . -iname "*.json" \
       | grep -Ev 'node_modules|cache|modules/|rust/|target|lock.json' \
       | sed 's|\./||g'
@@ -9,11 +9,11 @@ _jsons() {
 
 _valid_json() {
    local -r file="$1"
-   cat "$file" | grep -v '//' | jq . >/dev/null
+   grep "$file" '//' | jq . >/dev/null
 }
 
 _run() {
-   cd "$DOTFILES"
+   cd "$DOTFILES" || exit
    for f in $(_jsons); do
       test::run "$f is syntactically valid" _valid_json "$f"
    done
