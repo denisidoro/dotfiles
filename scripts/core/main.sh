@@ -102,7 +102,7 @@ doc::help_or_fail() {
 doc::parse() {
    local -r file="$0"
    local -r help="$(doc::help_msg "$file")"
-   local docopt="$DOT_DOCOPT"
+   local docopt="${DOT_DOCOPT:-}"
 
    if [ -z "${docopt:-}" ]; then
       if has python; then
