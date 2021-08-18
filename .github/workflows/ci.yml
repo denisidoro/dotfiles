@@ -43,6 +43,15 @@ jobs:
       - name: Run tests
         run: ./bin/dot self test file 'help'
 
+  imports-tests:
+    name: Imports
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: ./bin/dot self test file 'imports'
+
   references-tests:
     name: References
     runs-on: ubuntu-latest
@@ -50,7 +59,7 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
       - name: Run tests
-        run: ./bin/dot self test file 'imports|references'
+        run: ./bin/dot self test file 'references'
 
   symlink-tests:
     name: Symlinks

@@ -96,4 +96,4 @@ vi "${DOTFILES}/local/gitconfig"
 
 ## Template
 
-If you want to set up your dotfiles from scratch with an structure similar to this repository, please use [dotly](https://github.com/CodelyTV/dotly), a framework inpired by these dotfiles.
+In order to setup your own dotfiles, I recommend using [dotly](https://github.com/CodelyTV/dotly) or [Sloth](https://github.com/gtrabanco/.Sloth), which are frameworks inpired by this repository.
