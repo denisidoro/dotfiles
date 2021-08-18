@@ -35,7 +35,7 @@ _run() {
    echoerr $file
       [ -f "$file" ] || continue
    echoerr 4
-      call="$(grep -Eo 'dot [a-zA-z0-9_\-]+ [a-zA-z0-9_\-]+' "$file")"
+      call="$(grep -Eo 'dot [a-zA-z0-9_\-]+ [a-zA-z0-9_\-]+' "$file" || true)"
    echoerr 5
       [ -n "$call" ] || continue
       while IFS= read -r line; do
