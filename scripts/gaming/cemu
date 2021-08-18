@@ -20,7 +20,7 @@ _gen_list() {
    cd "$SAVE_BASE"
 
    for f in $(find -name '*meta.xml'); do
-      cat $f | grep longname_en | tr '\n' ' ' | sed -E 's/.*?>(.*?)<.*/\1/'
+      cat "$f" | grep longname_en | tr '\n' ' ' | sed -E 's/.*?>(.*?)<.*/\1/'
       echo
       echo "$f" | sed 's|/meta/meta.xml||'
       echo

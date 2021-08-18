@@ -31,7 +31,7 @@ _valid_pkg_mgr_for_osx() {
 
 # short-circuit on OSX
 platform::is_osx \
-   && ! _valid_pkg_mgr_for_osx $pkg_manager \
+   && ! _valid_pkg_mgr_for_osx "$pkg_manager" \
    && exit 123
 
 # unavailable package manager

@@ -85,7 +85,7 @@ git::changelog_release_github() {
 }
 
 git::changelog_commit() {
-   cd "$(git::root)"
+   cd "$(git::root)" || exit
 
    local -r changes="$(git diff --numstat HEAD \
       | awk '{print $3" "$1-$2}' \

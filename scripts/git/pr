@@ -25,8 +25,8 @@ _full_uri() {
 }
 
 _get_url() {
-   cd "$(git::root)"
-   cd .git
+   cd "$(git::root)" || exit
+   cd .git || exit
    local -r original_uri="$(cat config \
       | grep "remote \"origin" -A2 \
       | grep github \

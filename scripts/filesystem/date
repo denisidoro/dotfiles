@@ -30,7 +30,7 @@ only_digits() {
 
 epoch_to_touchdate() {
    local -r epoch=$1
-   local -r date=$(epoch_to_date $epoch)
+   local -r date=$(epoch_to_date "$epoch")
    printf "${date::-2}" | only_digits
    printf '.'
    echo "${date: -2}"
@@ -38,7 +38,7 @@ epoch_to_touchdate() {
 
 epoch_to_filedate() {
    local -r epoch=$1
-   local -r date=$(epoch_to_date $epoch)
+   local -r date=$(epoch_to_date "$epoch")
    printf "${date::-8}"
    printf '_'
    echo "${date: -8}"
@@ -51,7 +51,7 @@ get_new_filepath() {
    local -r extension="${filepath##*.}"
 
    printf "$(cd "$(dirname "$filepath")" && pwd)/"
-   printf "$(epoch_to_filedate $target_time).${extension}" | sed 's/[^0-9_]*//g'
+   printf "$(epoch_to_filedate "$target_time").${extension}" | sed 's/[^0-9_]*//g'
    printf '.'
    echo "$extension"
 }
@@ -78,7 +78,7 @@ prompt_text() {
    local -r yellow="$(log::ansi yellow)"
    local -r reset="$(log::ansi reset)"
 
-   echo "${green}[${filename}]${reset} from ${yellow}$(epoch_to_date $current_time)${reset} to ${yellow}$(epoch_to_date $target_time)${reset}?"
+   echo "${green}[${filename}]${reset} from ${yellow}$(epoch_to_date "$current_time")${reset} to ${yellow}$(epoch_to_date "$target_time")${reset}?"
 }
 
 should_rename() {
@@ -87,10 +87,10 @@ should_rename() {
 
 current_time=$(get_creation_time "$filepath")
 target_time=$(get_target_time "$current_time")
-touchdate="$(epoch_to_touchdate $target_time)"
+touchdate="$(epoch_to_touchdate "$target_time")"
 
 if feedback::confirmation "$(prompt_text "$filepath")"; then
-   touch -a -m -t $touchdate "$filepath"
+   touch -a -m -t "$touchdate" "$filepath"
    if should_rename "$filepath"; then
       mv "$filepath" "$(get_new_filepath "$filepath" "$target_time")"
    fi

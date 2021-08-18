@@ -19,13 +19,13 @@ transfer() {
 
    if tty -s; then
       basefile=$(basename "$path" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
-      curl --progress-bar --upload-file "$path" "https://transfer.sh/$basefile" >>$tmpfile
+      curl --progress-bar --upload-file "$path" "https://transfer.sh/$basefile" >>"$tmpfile"
    else
-      curl --progress-bar --upload-file "-" "https://transfer.sh/$path" >>$tmpfile
+      curl --progress-bar --upload-file "-" "https://transfer.sh/$path" >>"$tmpfile"
    fi
 
    cat "$tmpfile"
-   rm -f $tmpfile
+   rm -f "$tmpfile"
 }
 
 transfer "$path"

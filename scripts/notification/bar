@@ -36,4 +36,4 @@ baropt="-d -g ${barw}x${barh}+${barx}+${bary} -f ${bar_font_1} -f ${bar_font_2} 
 (
    echo -e "${1}"
    sleep ${duration}
-) | lemonbar ${baropt}
+) | lemonbar "${baropt}"

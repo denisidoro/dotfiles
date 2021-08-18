@@ -107,7 +107,7 @@ EOF
          subcommand="$1"
          source "$DOT_SCRIPT_ROOTDIR/aux/${subcommand}.sh"
          shift 1
-         dot_${subcommand} "$@"
+         dot_"${subcommand}" "$@"
          ;;
       *)
          echo -n "[$(tput bold)$(tput setaf 1)error$(tput sgr0)] "
