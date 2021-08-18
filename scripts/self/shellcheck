@@ -6,7 +6,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Shellcheck
 ##?
 ##? Usage:
-##?    shellcheck [--fix]
+##?    shellcheck
 
 doc::parse "$@"
 
@@ -17,9 +17,11 @@ _files(){
 }
 
 main() {
+   local errors=0
    for f in $(_files); do
-      shellcheck -x -e SC2154 "$f"
+      shellcheck -x -e SC2154 "$f" || errors=$((errors+1))
    done
+   return $errors
 }
 
 cd "$DOTFILES" || exit

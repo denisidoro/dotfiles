@@ -41,7 +41,7 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
       - name: Create mocks
-        run: mkdir -p ./local/scripts; ln -s ./scripts/self/install ./local/scripts/cloud/password
+        run: mkdir -p ./local/scripts/cloud; ln -s ./scripts/self/install ./local/scripts/cloud/password
       - name: Run tests
         run: ./bin/dot self test file 'help'
 
@@ -52,7 +52,7 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
       - name: Create mocks
-        run: mkdir -p ./local/scripts; ln -s ./scripts/self/install ./local/scripts/cloud/password
+        run: mkdir -p ./local/scripts/cloud; ln -s ./scripts/self/install ./local/scripts/cloud/password
       - name: Run tests
         run: ./bin/dot self test file 'imports|references'
 
