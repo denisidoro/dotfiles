@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 
-source "${DOTFILES}/scripts/core/dict.sh"
-
 _apt() {
    sudo apt-get "$@"
 }
 
 apt::install() {
-   local -r ask="$(dict::get "$OPTIONS" ask || false)"
+   local -r ask=false # TODO
    _apt install $([ ! "$ask" ] && echo "--yes") "$@"
 }
 

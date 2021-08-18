@@ -14,7 +14,7 @@ _expand() {
 
    while read line || [ -n "$line" ]; do
       if [[ "$line" == source* ]]; then
-         file="$(echo $line | cut -d' ' -f2)"
+         file="$(echo "$line" | cut -d' ' -f2)"
          file="$(eval echo "$file")"
          if echo "$file" | grep -q "modules/zsh"; then
             echo "$line"

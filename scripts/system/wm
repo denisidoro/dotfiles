@@ -14,7 +14,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 doc::maybe_help "$@"
 
 _last_word() {
-   echo ${1##* }
+   echo "${1##* }"
 }
 
 _print_alfred() {

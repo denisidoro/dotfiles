@@ -33,12 +33,12 @@ ask_for_permission() {
 
 get_info() {
    ask_for_permission "$1"
-   cd "$USB_DIR"
+   cd "$USB_DIR" || exit
    termux-usb -e ./usbtest "$1"
 }
 
 get_info_json() {
-   cd "$USB_DIR"
+   cd "$USB_DIR" || exit
    echo '{'
    get_info "$1" | sed -E 's/^([^:]+): (.*)/"\1":"\2",/' | remove_last_comma
    echo '}'
@@ -57,7 +57,7 @@ contains_manufacturer() {
 }
 
 compile() {
-   cd "$USB_DIR"
+   cd "$USB_DIR" || exit
    gcc usbtest.c -lusb-1.0 -o usbtest
 }
 

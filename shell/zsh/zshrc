@@ -78,4 +78,5 @@ export ZDOTDIR="$HOME"
 # $ alias
 alias \$=''
 
+# zmodload zsh/zprof (in /etc/zshenv)
 # zprof

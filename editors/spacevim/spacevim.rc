@@ -23,6 +23,7 @@ function! UserInit()
   Plug 'airblade/vim-rooter'
   Plug 'danilo-augusto/vim-afterglow'
   Plug 'liuchengxu/space-vim-dark'
+  Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 endfunction
 

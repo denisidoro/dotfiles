@@ -4,7 +4,6 @@ export FORCE_GNU=true
 
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/coll.sh"
-source "${DOTFILES}/scripts/core/dict.sh"
 source "${DOTFILES}/scripts/core/log.sh"
 
 PASSED=0
@@ -54,7 +53,11 @@ test::run() {
    echo
    log::info "${SUITE:-unknown} - ${1:-unknown}"
    shift
-   "$@" && test::success || test::fail
+   if "$@"; then
+      test::success
+   else
+      test::fail
+   fi
 }
 
 test::run_with_retry() {
@@ -76,7 +79,7 @@ test::lazy_run() {
 
 test::equals() {
    local -r actual="$(cat)"
-   local -r expected="$(echo "${1:-}")"
+   local -r expected="${1:-}"
 
    if [[ "$actual" != "$expected" ]]; then
       log::err "Expected...\n\n${expected}\n\n...but got:\n\n${actual}'"
@@ -86,7 +89,7 @@ test::equals() {
 
 test::includes() {
    local -r actual="$(cat)"
-   local -r should_include="$(echo "${1:-}")"
+   local -r should_include="${1:-}"
 
    if ! echo "$actual" | grep -Fq "$should_include"; then
       log::err "Expected the following string to include...\n\n${should_include}\n\n...but it doesn't:\n\n${actual}"
@@ -116,6 +119,7 @@ test::find_files() {
 test::start() {
    for test in $(test::find_files "$@"); do
       seconds=$SECONDS
+      # shellcheck disable=SC1090
       source "$test"
       delta=$((SECONDS - seconds))
       echoerr

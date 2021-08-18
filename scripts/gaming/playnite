@@ -14,9 +14,9 @@ doc::parse "$@"
 LIBRARY_DIR="${HOME}/Downloads/library"
 
 if $games; then
-   cat $LIBRARY_DIR/games/* | jq -r '.Name'
+   cat "$LIBRARY_DIR"/games/* | jq -r '.Name'
 elif $set; then
-   game="$(cat $LIBRARY_DIR/games/* \
+   game="$(cat "$LIBRARY_DIR"/games/* \
         | jq -r '.Name' \
         | fzf --height '50%')"
    dot gaming images "$game"

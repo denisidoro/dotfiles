@@ -8,12 +8,32 @@ source "${DOTFILES}/scripts/core/log.sh"
 ##?
 ##? Usage:
 ##?    header|warn|err|success|info <args>...
+##?    sep <args>...
 
 doc::maybe_help "$@"
+
+_sep() {
+   for i in $(seq 0 300); do
+      echo
+   done
+
+   clear
+
+   log::header "$(date)"
+
+   for i in $(seq 0 5); do
+      echo
+   done
+}
 
 main() {
    local -r fn="$1"
    shift
+
+   case "$fn" in
+      sep) _sep "$@"; return 0 ;;
+   esac
+
    "log::${fn}" "$@"
 }
 

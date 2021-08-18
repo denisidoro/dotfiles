@@ -4,15 +4,13 @@
 <dict>
 	<key>bundleid</key>
 	<string>io.github.denisidoro.display</string>
-	<key>category</key>
-	<string>Tools</string>
 	<key>connections</key>
 	<dict>
-		<key>05D45812-A5DF-4347-9AC4-49C5E4E1AADC</key>
+		<key>2DF9308E-5EEC-42FA-9F63-3134AD664A17</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>91F53851-726B-4264-8070-FC1DDC9EC7B1</string>
+				<string>5AF0A6DD-96E0-42BF-837C-4761F5761EDB</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -21,8 +19,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>91F53851-726B-4264-8070-FC1DDC9EC7B1</key>
-		<array/>
 	</dict>
 	<key>createdby</key>
 	<string>Denis Isidoro</string>
@@ -57,7 +53,7 @@ printf "%s" "$($HOME/dotfiles/bin/dot system display q "${args[@]}")"</string>
 			<key>type</key>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>91F53851-726B-4264-8070-FC1DDC9EC7B1</string>
+			<string>5AF0A6DD-96E0-42BF-837C-4761F5761EDB</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -78,7 +74,7 @@ printf "%s" "$($HOME/dotfiles/bin/dot system display q "${args[@]}")"</string>
 			<key>type</key>
 			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
-			<string>05D45812-A5DF-4347-9AC4-49C5E4E1AADC</string>
+			<string>2DF9308E-5EEC-42FA-9F63-3134AD664A17</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -87,22 +83,22 @@ printf "%s" "$($HOME/dotfiles/bin/dot system display q "${args[@]}")"</string>
 	<string></string>
 	<key>uidata</key>
 	<dict>
-		<key>05D45812-A5DF-4347-9AC4-49C5E4E1AADC</key>
+		<key>2DF9308E-5EEC-42FA-9F63-3134AD664A17</key>
 		<dict>
 			<key>xpos</key>
-			<integer>75</integer>
+			<integer>195</integer>
 			<key>ypos</key>
-			<integer>235</integer>
+			<integer>185</integer>
 		</dict>
-		<key>91F53851-726B-4264-8070-FC1DDC9EC7B1</key>
+		<key>5AF0A6DD-96E0-42BF-837C-4761F5761EDB</key>
 		<dict>
 			<key>xpos</key>
-			<integer>240</integer>
+			<integer>360</integer>
 			<key>ypos</key>
-			<integer>235</integer>
+			<integer>185</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>
-	<string>https://denisidoro.github.io</string>
+	<string>https://github.com/denisidoro/dotfiles</string>
 </dict>
 </plist>

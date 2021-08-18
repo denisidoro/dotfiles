@@ -59,7 +59,7 @@ while getopts "p:t:f:s:r:RBChv" arg; do
       B) BOLD=0 ;;
       C) NOCOLOR=1 ;;
       h)
-         echo -e "Usage: $(basename $0) [OPTION]..."
+         echo -e "Usage: $(basename "$0") [OPTION]..."
          echo -e "Animated pipes terminal screensaver.\n"
          echo -e " -p [1-]\tnumber of pipes (D=1)."
          echo -e " -t [0-$((${#sets[@]} - 1))]\ttype of pipes, can be used more than once (D=0)."
@@ -135,7 +135,7 @@ do
       ((n[i] = (${n[i]} < 0) ? 3 : ${n[i]} % 4))
 
       # Print:
-      tput cup ${y[i]} ${x[i]}
+      tput cup "${y[i]}" "${x[i]}"
       echo -ne "\x1b[${BOLD}m"
       [[ $NOCOLOR == 0 ]] && echo -ne "\x1b[3${c[i]}m"
       echo -n "${sets[v[i]]:l[i]*4+n[i]:1}"

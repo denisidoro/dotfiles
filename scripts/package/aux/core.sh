@@ -3,7 +3,6 @@
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/log.sh"
 source "${DOTFILES}/scripts/core/platform.sh"
-source "${DOTFILES}/scripts/core/dict.sh"
 
 ALIASES_TXT="${DOTFILES}/scripts/package/aux/aliases.txt"
 

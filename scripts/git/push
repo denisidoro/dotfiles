@@ -12,7 +12,7 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 doc::maybe_help "$@"
 
 _should_use_arc() {
-   cd "$(git::root)"
+   cd "$(git::root)" || exit
    cat .git/config | grep -q gitolite
 }
 

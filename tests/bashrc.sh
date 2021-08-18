@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 symlink_bashrc() {
-   cd "$DOTFILES"
-   local -r bashrc_path="$(cat "links/unix.yaml" | grep bashrc | cut -d',' -f1)"
+   cd "$DOTFILES" || exit
+   local -r bashrc_path="$(grep bashrc "links/unix.yaml" | cut -d',' -f1)"
+   # shellcheck disable=SC1090
    source "$bashrc_path"
 }
 

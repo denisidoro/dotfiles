@@ -37,6 +37,6 @@ echo -e "\e[1;40m"
 clear
 
 while :; do
-   echo $lines $cols $(($RANDOM % $cols)) $(($RANDOM % 72))
+   echo "$lines" "$cols" $(($RANDOM % $cols)) $(($RANDOM % 72))
    sleep 0.05
 done | awk "$awkscript"

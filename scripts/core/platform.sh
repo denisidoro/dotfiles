@@ -60,7 +60,7 @@ platform::main_package_manager() {
       echo "apt"
    elif has apt-get; then
       local -r apt_get_path="$(which apt-get)"
-      local -r apt_path="$(echo "$apt_get_path" | sed 's/-get//')"
+      local -r apt_path="${apt_get_path//-get//}"
       sudo ln -s "$apt_get_path" "$apt_path"
       echo "apt"
    elif has yum; then
@@ -109,8 +109,7 @@ platform::get_dir() {
 
 platform::root() {
    if [ -n "${PREFIX:-}" ]; then
-      local dir="$(cd "${PREFIX}/.." && pwd)"
-      echo "$dir"
+      cd "${PREFIX}/.." && pwd
    fi
 }
 

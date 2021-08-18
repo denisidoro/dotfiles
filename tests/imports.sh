@@ -3,6 +3,7 @@
 source "${DOTFILES}/scripts/core/log.sh"
 
 _paths() {
+   # shellcheck disable=SC2156
    find . \( -name .git -prune \) -o \( -name modules -prune \) -o \( -name rust -prune \) -o \( -name target -prune \)  -o -name '*' -type f \
       -exec bash -c "grep -o '[^ =:]*DOTFILES[^ ]*' {}" \; \
       | grep -o '[^ =:]*DOTFILES[^ ]*' \
@@ -14,12 +15,11 @@ _paths() {
 }
 
 validate_path() {
-   local p="$(echo "$1" | sed 's|\$DOTFILES|'"${DOTFILES}|")"
+   local -r p="${1//\$DOTFILES/$DOTFILES}"
    [ -f "$p" ] || [ -d "$p" ]
 }
 
 _run() {
-   local -r ifs="$IFS"
    for p in $(_paths); do
       test::run "$p is a valid path" validate_path "$p"
    done

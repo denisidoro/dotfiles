@@ -14,7 +14,7 @@ source "${DOTFILES}/scripts/core/str.sh"
 doc::maybe_help "$@"
 
 _row() {
-   for i in $(seq 1 $cols); do
+   for i in $(seq 1 "$cols"); do
       echo -n "█"
    done
 }
@@ -22,7 +22,7 @@ _row() {
 _as_printf_color() {
    local -r color="$1"
    local c
-   [ ${color:0:1} == "#" ] && c=${color:1} || c="$color"
+   [ "${color:0:1}" == "#" ] && c=${color:1} || c="$color"
    echo "$c" \
       | str::uppercase \
       | sed -E 's/([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})/\1\n\2\n\3/' \
@@ -34,7 +34,7 @@ _print_colors() {
    local -r row="$(_row)"
    local -r rows=$(echo "${COLS:-5} * 3 / 5" | bc)
    local i color c
-   for i in $(seq 1 $rows); do
+   for i in $(seq 1 "$rows"); do
       for color in "$@"; do
          c="$(_as_printf_color "$color")"
          printf "\x1b[38;2;${c}m${row}\x1b[0m "
@@ -49,7 +49,7 @@ _rgb_to_hex() {
 
 _hex_to_rgb() {
    local -r hex="$(echo "$1" | tr -d '#')"
-   echo "$(printf "%d %d %d\n" 0x${hex:0:2} 0x${hex:2:2} 0x${hex:4:2})"
+   echo "$(printf "%d %d %d\n" 0x"${hex:0:2}" 0x"${hex:2:2}" 0x"${hex:4:2}")"
 }
 
 operation="$1"

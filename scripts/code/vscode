@@ -26,7 +26,8 @@ _code() {
 
    [[ $# -gt 0 ]] && shift
 
-   export JAVA_HOME=$(/usr/libexec/java_home -v 14)
+   local -r java_home=$(/usr/libexec/java_home -v 14)
+   export JAVA_HOME="$java_home"
 
    local -r osx_path="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
    if [ -f "$osx_path" ]; then

@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
+
+##? Focus browser tab
+##?
+##? Usage:
+##?    focus-tab <query>
+
+doc::maybe_help "$@"
+
+_focus_tab() {
+   local -r browser="$1"
+   local -r query="$2"
+
+   local code
+   read -r -d '' code <<EOF
+set searchString to "$query"
+
+tell application "$browser"
+    set win_List to every window
+    repeat with win in win_List
+        set tab_list to every tab of win
+        set i to 0
+        repeat with t in tab_list
+            set i to i + 1
+            if searchString is in (title of t as string) or searchString is in (URL of t as string) then
+                set active tab index of front window to i
+                return
+            end if
+        end repeat
+    end repeat
+end tell
+EOF
+
+   osascript -e "$code"
+}
+
+_focus_app() {
+   local -r browser="$1"
+
+   osascript -e "tell application \"${browser}\" to activate"
+}
+
+main() {
+   local -r browser="Vivaldi"
+
+   _focus_tab "$browser" "$*" || true
+   _focus_app "$browser"
+}
+
+main "$@"

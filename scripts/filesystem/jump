@@ -13,7 +13,7 @@ source "${DOTFILES}/scripts/core/git.sh"
 doc::maybe_help "$@"
 
 _fzf() {
-   fzf --exact --no-sort +m "$@"
+   fzf --ansi --exact --no-sort +m "$@"
 }
 
 _fre_suggestions() {
@@ -52,6 +52,7 @@ cd_file() {
    cd "$(dirname "$filepath")"
 }
 
+# DEPRECATED: use _select_and_apply
 _jump() {
    local cmd="$1"
    local lines="$2"
@@ -61,6 +62,20 @@ _jump() {
       "$cmd" "$(best_match "$lines" "$@")"
    else
       local -r selection="$(echo "$lines" | _fzf)"
+      if [ -n "$selection" ]; then
+         "$cmd" "$selection"
+      fi
+   fi
+}
+
+_select_and_apply() {
+   local cmd="$1"
+   shift 1
+
+   if [ $# -gt 0 ]; then
+      "$cmd" "$(best_match "$(cat)" "$@")"
+   else
+      local -r selection="$(_fzf)"
       if [ -n "$selection" ]; then
          "$cmd" "$selection"
       fi
@@ -104,8 +119,40 @@ jump_to_specific_folder() {
 
 jump_to_work_folder() {
    cd "$DEV_HOME"
-   local -r projects="$(rg --files -g main.go | grep -v 'test' | sed 's|/main.go||')"
-   FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-} --exact --preview 'proj={}; readme=\$proj/README.md; [ -f \$readme ] && dot shell less \$readme || cd \$proj && lsd . --color always'" _jump cd "$projects" "$@"
+
+   local -r GO_DIR="${DEV_HOME}/go/src/code.uber.internal"
+
+   _go_projs() {
+      cd "$GO_DIR"
+      find . -mindepth 2 -maxdepth 2 -type d | cut -c 3-
+   }
+
+   _work_home_projs() {
+      cd "$WORK_HOME"
+      find . -maxdepth 3 -not -path "./go-code/*" -type d -name .git -prune | cut -c 3- | sed 's|/.git$||'
+   }
+
+   _suffix() {
+      awk -v suffix="$1" -v color="$2" '{printf("%s%sm%-32s%s\n", NC "\033[0;", color, $1, suffix) }'
+   }
+
+   _cd() {
+      local -r input="$(echo "$1" | xargs)"
+      local -r dir="$(echo "$input" | cut -d' ' -f1)"
+      local -r kind="$(echo "$input" | cut -d' ' -f2)"
+
+      case "$kind" in
+         "dev/go") realpath "${GO_DIR}/${dir}" ;;
+         *) realpath "${WORK_HOME}/${dir}" ;;
+      esac
+   }
+
+   (_go_projs | _suffix 'dev/go' 32; _work_home_projs | _suffix 'dev/uber' 34) \
+      | _select_and_apply _cd "$@"
+}
+
+jump_to_uber_go() {
+   _jump cd "$projects" "$@"
 }
 
 # Go up X directories (default: 1)
@@ -133,7 +180,7 @@ shift
 
 case "$cmd" in
    "local") jump_to_folder "$@" >/dev/null && pwd ;;
-   "work") jump_to_work_folder "$@" >/dev/null && pwd ;;
+   "work") jump_to_work_folder "$@" ;;
    "dev") jump_to_specific_folder "$DEV_HOME" "$@" >/dev/null && pwd ;;
    "file") jump_to_folder_for_file "$@" >/dev/null && pwd ;;
    "up") cd_up "$@" >/dev/null && pwd ;;

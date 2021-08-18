@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? AES
+##?
+##? Usage:
+##?    aes <pass> <nbits>
+##?
+##? Examples:
+##?    TODO
+
+doc::parse "$@"
+
+main() {
+   node "${DOTFILES}/repos/aes/index.js" "$@"
+}
+
+main "$@"

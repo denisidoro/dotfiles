@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Shellcheck
+##?
+##? Usage:
+##?    shellcheck
+
+doc::parse "$@"
+
+_files() {
+   find "${DOTFILES}/scripts/core" -maxdepth 4 -iname "*.sh" -type f
+   find "${DOTFILES}/tests" -maxdepth 4 -iname "*.sh" -type f
+   find "${DOTFILES}/bin" -maxdepth 2 -executable -type f
+}
+
+main() {
+   local errors=0
+   for f in $(_files); do
+      shellcheck -x -e SC2154 "$f" || errors=$((errors+1))
+   done
+   return $errors
+}
+
+cd "$DOTFILES" || exit
+main "$@"

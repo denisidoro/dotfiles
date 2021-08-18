@@ -5,7 +5,7 @@ without_dot_slash() {
 }
 
 _execs() {
-   cd "${DOTFILES}/scripts"
+   cd "${DOTFILES}/scripts" || exit
    find . -type f -executable -print \
       | grep -v node_modules \
       | grep -v './core' \
@@ -13,7 +13,7 @@ _execs() {
 }
 
 _scripts() {
-   cd "${DOTFILES}/scripts"
+   cd "${DOTFILES}/scripts" || exit
    find . -maxdepth 2 -type f \
       | grep -v '/core/' \
       | grep -v '.clj$' \
@@ -56,12 +56,13 @@ _run() {
    for bin in $(_bins); do
       case $bin in
          *zsh) has zsh && test_fn=test::run_with_retry || test_fn=test::skip ;;
+         *password) test_fn=test::skip ;;
          *) test_fn=test::run ;;
       esac
       $test_fn "${bin} has a help command" assert_help "$bin"
    done
 
-   cd "$DOTFILES/scripts"
+   cd "$DOTFILES/scripts" || exit
    for f in $(); do
       context="$(echo "$f" | cut -d'/' -f2)"
       command="$(echo "$f" | cut -d'/' -f3)"

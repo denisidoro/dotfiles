@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Proxy server
+##?
+##? Usage:
+##?    proxy
+##?
+##? Examples:
+##?    PORT=3001 proxy
+
+doc::maybe_help "$@"
+
+main() {
+   cd "${DOTFILES}/repos/proxy"
+   yarn install || true
+   yarn run start
+}
+
+main "$@"

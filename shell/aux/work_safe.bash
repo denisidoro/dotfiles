@@ -9,7 +9,9 @@ export DOT_ZIM=${DOT_ZIM:-true}
 
 export PATH="/usr/local/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH}:/usr/local/opt/bash/bin/:${PATH}"
 
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-11.0.11.jdk/Contents/Home"
+
+export NPM_CONFIG_REGISTRY="https://registry.npmjs.org/"
 
 alias ls='exa --icons'
 
@@ -32,8 +34,8 @@ alias kill='gkill'
 alias xargs='gxargs'
 alias base64='gbase64'
 alias pr='gpr'
-
 alias mono="dot work mono"
+alias ysa="killall Dock; sudo yabai --install-sa; sudo yabai --load-sa"
 
 _load_work_stuff() {
    case $1 in

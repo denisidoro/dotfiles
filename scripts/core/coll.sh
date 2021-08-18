@@ -19,6 +19,7 @@ coll::rest() {
 coll::map() {
    local -r fn="$1"
 
+   # shellcheck disable=SC2013
    for x in $(cat); do
       "$fn" "$x"
    done
@@ -27,14 +28,18 @@ coll::map() {
 coll::filter() {
    local -r pred="$1"
 
+   # shellcheck disable=SC2013
    for x in $(cat); do
-      "$pred" "$x" && echo "$x" || true
+      if "$pred" "$x"; then
+         echo "$x"
+      fi
    done
 }
 
 coll::remove() {
    local -r pred="$1"
 
+   # shellcheck disable=SC2013
    for x in $(cat); do
       "$pred" "$x" || echo "$x"
    done
@@ -91,7 +96,7 @@ coll::is_empty() {
 }
 
 coll::contains_element() {
-   elements="${@:2}"
+   elements="${*:2}"
    element="${1}"
 
    for e in "${elements[@]}"; do

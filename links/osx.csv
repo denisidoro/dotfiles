@@ -4,7 +4,8 @@ wm/yabai/yabai.rc, $HOME/.yabairc
 editors/vscode/settings.json, $HOME/Library/Application\ Support/Code/User/settings.json
 editors/vscode/keybindings.json, $HOME/Library/Application\ Support/Code/User/keybindings.json
 editors/vscode/tasks.json, $HOME/Library/Application\ Support/Code/User/tasks.json
-launchers/alfred/preferences, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/preferences
-launchers/alfred/workflows/yabai, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/workflows/user.workflow.E122C8D2-26EC-4D0F-9E0E-91D18A25695D
-launchers/alfred/workflows/display, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/workflows/user.workflow.60C7513C-DD9E-4ABC-A4ED-1E5B8D78AA81
 git/gitui_config.ron, $HOME/.config/gitui/key_config.ron
+launchers/alfred/workflows/uber, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/workflows/user.workflow.9F7C091B-B265-48B1-8A55-C63BC5BA34C6
+launchers/alfred/workflows/navi, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/workflows/user.workflow.6942ED95-563C-44A0-AA67-D611E9A0A570
+launchers/alfred/workflows/display, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/workflows/user.workflow.877279B5-E229-44BA-A6A3-07C051AF1A6F
+launchers/alfred/workflows/vivaldi, $HOME/Library/Application\ Support/Alfred/Alfred.alfredpreferences/workflows/user.workflow.277279B5-E229-44BA-A6A3-07C051AF1A6B

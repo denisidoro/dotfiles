@@ -66,6 +66,12 @@ alias ac="arc diff --create --nounit --nolint"
 alias ad="arc diff --nounit --nolint"
 alias au="navi best 'Update a diff'"
 alias al="navi best 'Land a diff'"
+uc() { navi --best-match --query "uber creds $@"; }
+
+# ========================
+# projects
+# ========================
+sc() { "./scripts/$@"; }
 
 # ========================
 # explorer
@@ -78,6 +84,10 @@ unalias f &> /dev/null
 alias lst="tree -L 2"
 cdd() { cd "$@" && ls .; }
 mkcd() { mkdir -p -- "$@" && cd -P -- "$@"; }
+debug() {
+   dot shell log info "$@"
+   "$@"
+}
 
 _safe_cd() {
    [[ -z "${1:-}" ]] && return 1 || true
@@ -86,12 +96,11 @@ _safe_cd() {
 
 j() { _safe_cd "$(dot fs jump global "$@")"; }
 jj() { _safe_cd "$(dot fs jump local "$@")"; }
-ju() { _safe_cd "$(dot uber projects --clone local "$@")"; }
+# ju() { _safe_cd "$(dot uber projects --clone local "$@")"; }
+ju() { _safe_cd "$(dot fs jump work "$@")"; }
 jd() { _safe_cd "$(dot fs jump dev "$@")"; }
 jjf() { _safe_cd "$(dot fs jump file "$@")"; }
 jr() { _safe_cd "$(dot fs jump root "$@")"; }
-jr() { _safe_cd "$(dot fs jump root "$@")"; }
-fdd() { _safe_cd "$(dot fs nav "$@")"; }
 up() { _safe_cd "$(dot fs jump up "$@")"; }
 alias jv="dot fs jump edit global nvim"
 alias jjv="dot fs jump edit local nvim"

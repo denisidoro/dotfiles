@@ -35,16 +35,16 @@ faketty() {
 
    # Ensure that the status code was written to the temporary file or
    # fail with status 99
-   [ -s $tmp ] || return 99
+   [ -s "$tmp" ] || return 99
 
    # Collect the status code from the temporary file
-   err=$(cat $tmp)
+   err=$(cat "$tmp")
 
    # Remove the temporary file
-   rm -f $tmp
+   rm -f "$tmp"
 
    # Return the status code
-   return $err
+   return "$err"
 }
 
 faketty "$@"

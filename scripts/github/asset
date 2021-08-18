@@ -48,7 +48,7 @@ download_asset() {
    mkdir -p "$TMP_DIR"
    mkdir -p "$BIN_DIR"
 
-   cd "$TMP_DIR"
+   cd "$TMP_DIR" || exit
    rm -f "$gz_path"
    echoerr "Downloading ${url}..."
    curl -L "$url" -o "$gz_path"

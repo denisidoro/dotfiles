@@ -44,8 +44,8 @@ main_one() {
 
    if [[ $# -gt 0 ]]; then
       local -r var_full="${var}__best" fs
-      read $var_full <<< "$*"
-      export $var_full
+      read "$var_full" <<< "$*"
+      export "$var_full"
    fi
 
    navi --query "$query" --best-match

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "$DOTFILES/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/main.sh"
 import "" # todo
 
 ##? Brief script explanation
@@ -24,10 +24,9 @@ trap_exit() { # move to core?
    die "Exit trapped. In function: '${FUNCNAME[*]}'"
 }
 
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" # move to core?
 IFS=$' \n\t'
 
 trap trap_exit EXIT INT TERM
 doc::parse "$@"
 main
-safe_exit
+safe_exit "$@"
