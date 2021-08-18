@@ -113,7 +113,7 @@ doc::parse() {
       fi
    fi
 
-   if [[ $DOT_DOCOPT == "python" ]]; then
+   if [[ $docopt == "python" ]]; then
       docopt="${DOTFILES}/scripts/core/docopts"
    else
       docopt="$DOT_DOCOPT"
