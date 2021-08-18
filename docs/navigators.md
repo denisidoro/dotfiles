@@ -35,28 +35,6 @@ Please use [this implementation](https://github.com/denisidoro/dotfiles/blob/mas
 
 ---
 
-## Filesystem navigator
-
-```sh
-dot fs nav
-```
-
-![Filesystem navigator](https://user-images.githubusercontent.com/3226564/59693889-05491480-91be-11e9-89dc-b5827cc15a20.gif)
-
-### Extra commands
-
-```
-ctrl-e: edit file in $EDITOR
-ctrl-o: browse directory in a fully-fledged terminal file manager
-```
-
-### Using it as an enhanced `cd`
-
-Use it via the `fd` alias in order to `cd` to the last visited folder.
-
-
----
-
 ## JSON navigator
 
 ```sh

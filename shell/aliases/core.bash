@@ -101,7 +101,6 @@ ju() { _safe_cd "$(dot fs jump work "$@")"; }
 jd() { _safe_cd "$(dot fs jump dev "$@")"; }
 jjf() { _safe_cd "$(dot fs jump file "$@")"; }
 jr() { _safe_cd "$(dot fs jump root "$@")"; }
-fdd() { _safe_cd "$(dot fs nav "$@")"; }
 up() { _safe_cd "$(dot fs jump up "$@")"; }
 alias jv="dot fs jump edit global nvim"
 alias jjv="dot fs jump edit local nvim"

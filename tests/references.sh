@@ -19,34 +19,35 @@ _files() {
 }
 
 validate_reference() {
-   local cmds=($(echo "$*" | tr ' ' '\n'))
    case "$*" in
       *uber*|*work*) ;;
-      *) "${cmds[@]}" --help &>/dev/null ;;
+      *) dot "$@" --help &>/dev/null ;;
    esac
 }
 
 _run() {
+   local call ctx cmd
    declare -A checked
    for file in $(_files); do
       [ -f "$file" ] || continue
-      local call="$(grep -Eo 'dot [a-zA-z0-9_\-]+ [a-zA-z0-9_\-]+' "$file")"
+      call="$(grep -Eo 'dot [a-zA-z0-9_\-]+ [a-zA-z0-9_\-]+' "$file")"
       [ -n "$call" ] || continue
-      echo "call: $call, checked: ${checked[$call]:-}"
-      if [ "${checked[$call]:-}" ]; then
-         continue
-      fi
       while IFS= read -r line; do
-         local ctx="$(echo "$line" | cut -d' ' -f2)"
-         local cmd="$(echo "$line" | cut -d' ' -f3)"
+         case "$line" in 
+            *add_to_dotlink*) continue ;;
+            *add\ -m*) continue ;;
+         esac
+         if [ "${checked[$line]:-}" ]; then
+            continue
+         fi
+         ctx="$(echo "$line" | cut -d' ' -f2)"
+         cmd="$(echo "$line" | cut -d' ' -f3)"
          [ -n "$cmd" ] || continue
-         echo "${ctx};${cmd};"
-         checked[$call]=1
+         test::run "the call dot ${ctx} ${cmd} in ${file} is valid" validate_reference "$ctx" "$cmd"
+         checked[$line]=1
       done <<< "$call"
    done
 }
 
-# test::set_suite "bash - references"
-# test::lazy_run _run
-
-_run
+test::set_suite "bash - references"
+test::lazy_run _run
