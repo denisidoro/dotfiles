@@ -27,8 +27,12 @@ validate_reference() {
 
 _run() {
    local call ctx cmd
+   echoerr 1
    declare -A checked
+   echoerr 2
    for file in $(_files); do
+   echoerr 3
+   echoerr $file
       [ -f "$file" ] || continue
       call="$(grep -Eo 'dot [a-zA-z0-9_\-]+ [a-zA-z0-9_\-]+' "$file")"
       [ -n "$call" ] || continue
@@ -49,6 +53,5 @@ _run() {
    done
 }
 
-bash --version
 test::set_suite "bash - references"
 test::lazy_run _run
