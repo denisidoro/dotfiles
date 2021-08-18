@@ -68,7 +68,7 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
       - name: Install shellcheck
-        run: dot pkg add shellcheck; shellcheck --version
+        run: ./bin/dot pkg add shellcheck; shellcheck --version
       - name: Run tests
         run: ./bin/dot self shellcheck
 
