@@ -29,15 +29,16 @@ beautify_command() {
 
 fzf_prompt() {
    local paths="$1"
+   # shellcheck disable=SC2016
    match="$(echo "$paths" \
          | beautify_command \
 			| fzf-tmux --height 50% --preview 'dot $(echo {} | cut -d" " -f 1) $(echo {} | cut -d" " -f 2) -h')"
-   printf "$match "
-   read args
+   printf "%s " "$match"
+   read -r args
    if coll::is_empty "$args"; then
-      dot $match
+      dot "$match"
    else
-      dot $match "$args"
+      dot "$match" "$args"
    fi
 }
 
@@ -77,16 +78,18 @@ if [[ $# -eq 0 ]]; then
    source "${DOTFILES}/scripts/core/main.sh"
    source "${DOTFILES}/scripts/core/coll.sh"
 
-   has fzf \
-      && fzf_prompt "$(list_command_paths)" \
-      || (list_command_paths | beautify_command)
+   if has fzf; then
+      fzf_prompt "$(list_command_paths)"
+   else
+      list_command_paths | beautify_command
+   fi
 
 elif [[ $# -eq 1 ]]; then
    # Show available commands for a given context
 
    source "${DOTFILES}/scripts/core/main.sh"
 
-   context_query="$(_alias $1)"
+   context_query="$(_alias "$1")"
 
    case $context_query in
       -h|--help) doc::maybe_help "$@" && exit ;;
@@ -101,7 +104,7 @@ elif [[ $# -eq 1 ]]; then
 else
    # Execute a command directly
 
-   ctx="$(_alias $1)"
+   ctx="$(_alias "$1")"
    cmd="$2"
 
    shift 2
