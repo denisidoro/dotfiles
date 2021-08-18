@@ -37,7 +37,7 @@ _get_language() {
    fi
 
    if [ -z "${language:-}" ] && [ -z "$extension" ]; then
-      if cat "$filename" | head -n3 | grep -Eq "sh *$|compdef"; then
+      if head "$filename" -n3 | grep -Eq "sh *$|compdef"; then
          language="sh"
       fi
    fi
@@ -45,32 +45,35 @@ _get_language() {
    echo "${language:-"unknown"}"
 }
 
-language=${language:-$(_get_language "$filename")}
-log::warn "formatting $filename as <${language}>"
+main() {
+   language=${language:-$(_get_language "$filename")}
+   log::warn "formatting $filename as <${language}>"
 
-case "$language" in
-   sh_old)
-      shfmt -w -i 3 -ci -bn "$filename"
-      ;;
-   sh)
-      beautysh -i 3 -s paronly "$filename"
-      sed -i -e 's/() ::/::/g' "$filename"
-      # shellcheck -f diff "$filename" | git apply
-      # shellcheck "$filename"
-      ;;
-   json)
-      cat "$filename" | jq . > "$filename"
-      ;;
-   javascript)
-      js-beautify "$filename" > /dev/null
-      ;;
-   rust)
-      rustfmt "$filename"
-      ;;
-   go)
-      gofmt "$filename"
-      ;;
-   *)
-      nvim --headless --noplugin -n -u NONE -c ':normal gg=G' +wq "$filename"
-      ;;
-esac
+   case "$language" in
+      sh_old)
+         shfmt -w -i 3 -ci -bn "$filename"
+         ;;
+      sh)
+         beautysh -i 3 -s paronly "$filename"
+         sed -i -e 's/() ::/::/g' "$filename"
+         ;;
+      json)
+         local -r formatted="$(jq . "$filename")"
+         echo "$formatted" > "$filename"
+         ;;
+      javascript)
+         js-beautify "$filename" > /dev/null
+         ;;
+      rust)
+         rustfmt "$filename"
+         ;;
+      go)
+         gofmt "$filename"
+         ;;
+      *)
+         nvim --headless --noplugin -n -u NONE -c ':normal gg=G' +wq "$filename"
+         ;;
+   esac
+}
+
+main "$@"
