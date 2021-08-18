@@ -40,6 +40,8 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
+      - name: Create mocks
+        run: mkdir -p ./local/scripts; ln -s ./scripts/self/install ./local/scripts/cloud/password
       - name: Run tests
         run: ./bin/dot self test file 'help'
 
@@ -49,6 +51,8 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
+      - name: Create mocks
+        run: mkdir -p ./local/scripts; ln -s ./scripts/self/install ./local/scripts/cloud/password
       - name: Run tests
         run: ./bin/dot self test file 'imports|references'
 
@@ -60,6 +64,15 @@ jobs:
         uses: actions/checkout@v2
       - name: Run tests
         run: ./bin/dot self test file 'symlink'
+
+  shellcheck-tests:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: ./bin/dot self shellcheck
 
   install-tests:
     name: Install

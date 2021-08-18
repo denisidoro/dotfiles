@@ -108,8 +108,12 @@ doc::parse() {
       if has python; then
          docopt="python"
       else
-         (dot pkg add docpars >/dev/null && docopt="$(which docpars)") \
-            || (dot pkg add python >/dev/null && docopt="python")
+         if dot pkg add docpars >/dev/null; then
+            docopt="$(which docpars)"
+         else
+            dot pkg add python >/dev/null
+            docopt="python"
+         fi
       fi
    fi
 
