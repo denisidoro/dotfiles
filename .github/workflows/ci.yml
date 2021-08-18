@@ -68,7 +68,7 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
       - name: Install shellcheck
-        run: ./bin/dot pkg add shellcheck; shellcheck --version
+        run: shellcheck --version; sudo apt-get remove shellcheck; wget -qO- https://github.com/koalaman/shellcheck/releases/download/v0.7.2/shellcheck-v0.7.2.linux.x86_64.tar.xz | tar -xJf -; cd shellcheck-v0.7.2; sudo cp shellcheck /usr/local/bin; sudo cp shellcheck /usr/bin; shellcheck --version
       - name: Run tests
         run: ./bin/dot self shellcheck
 
