@@ -34,9 +34,12 @@ _run() {
    echoerr 3
    echoerr $file
       [ -f "$file" ] || continue
+   echoerr 4
       call="$(grep -Eo 'dot [a-zA-z0-9_\-]+ [a-zA-z0-9_\-]+' "$file")"
+   echoerr 5
       [ -n "$call" ] || continue
       while IFS= read -r line; do
+   echoerr 6
          case "$line" in 
             *add_to_dotlink*) continue ;;
             *add\ -m*) continue ;;
