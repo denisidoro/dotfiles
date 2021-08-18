@@ -66,6 +66,7 @@ alias ac="arc diff --create --nounit --nolint"
 alias ad="arc diff --nounit --nolint"
 alias au="navi best 'Update a diff'"
 alias al="navi best 'Land a diff'"
+uc() { navi --best-match --query "uber creds $@"; }
 
 # ========================
 # projects
@@ -83,6 +84,10 @@ unalias f &> /dev/null
 alias lst="tree -L 2"
 cdd() { cd "$@" && ls .; }
 mkcd() { mkdir -p -- "$@" && cd -P -- "$@"; }
+debug() {
+	dot shell log info "$@"
+	"$@"
+}
 
 _safe_cd() {
    [[ -z "${1:-}" ]] && return 1 || true

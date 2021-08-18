@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
+
+##? Zip
+##?
+##? Usage:
+##?    zip <filename>
+##?    zip <name> <files>...
+##?
+##? Example:
+##?    zip img.jpg
+
+doc::maybe_help "$@"
+
+main() {
+	local -r suffix=".7z"
+	local filename pass log_args filehash
+
+   export IFS=$'\n'
+	for f in $(find . -iname '*.7z' | grep -v './box'); do
+	   filename="$(basename "$f")"
+		filename=${filename%"$suffix"}
+		pass="$(dot cloud password "$filename")"
+		filehash="$(md5sum "$f" | awk '{print $1}')"
+		log_args="$(printf "%-25s %s %s" "$pass" "$filehash" "$f")"
+
+		7z t -p"$pass" "$f" &>/dev/null && success=true || success=false
+
+		if $success; then
+			log::success "$log_args"
+		else
+			log::err "$log_args"
+		fi
+	done
+}
+
+main "$@"

@@ -1,0 +1,4 @@
+% web
+
+# get cookie from EditThisCookie export
+pbpaste | jq '. | map(.name + "=" + .value) | .[] ' -r | tr '\n' ';' | sed 's/;/; /g'

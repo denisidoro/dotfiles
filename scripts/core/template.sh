@@ -24,10 +24,9 @@ trap_exit() { # move to core?
    die "Exit trapped. In function: '${FUNCNAME[*]}'"
 }
 
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" # move to core?
 IFS=$' \n\t'
 
 trap trap_exit EXIT INT TERM
 doc::parse "$@"
 main
-safe_exit
+safe_exit "$@"

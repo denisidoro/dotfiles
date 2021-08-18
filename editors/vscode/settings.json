@@ -1,221 +1,231 @@
 {
-    "editor.fontSize": 12,
-    // "editor.fontFamily": "Hack Nerd Font",
-    "editor.letterSpacing": 0.2,
-    "editor.lineHeight": 18,
-    "editor.renderControlCharacters": true,
-    "editor.renderWhitespace": "none",
-    "files.autoSave": "onFocusChange",
-    "files.trimFinalNewlines": true,
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    // "editor.formatOnSave": false,
-    "editor.minimap.enabled": true,
-    "editor.mouseWheelZoom": true,
-    "explorer.sortOrder": "default",
-    // "materialTheme.accent": "Remove accents",
-    "workbench.colorCustomizations": {},
-    "breadcrumbs.enabled": true,
-    "editor.fontLigatures": true,
-    "diffEditor.ignoreTrimWhitespace": false,
-    "diffEditor.renderSideBySide": true,
-    "editor.wordWrap": "off",
-    "editor.suggestSelection": "first",
-    // ==================
-    // System
-    // ==================
-    "keyboard.touchbar.enabled": true,
-    // ==================
-    // UI
-    // ==================
-    "workbench.activityBar.visible": false,
-    "workbench.editor.enablePreview": false,
-    "workbench.editor.enablePreviewFromQuickOpen": false,
-    "workbench.editor.highlightModifiedTabs": true,
-    "workbench.list.keyboardNavigation": "simple",
-    "customizeUI.activityBar": "bottom",
-    "customizeUI.titleBar": "inline",
-    "window.titleBarStyle": "native",
-    // ==================
-    // Terminal
-    // ==================
-    "terminal.external.osxExec": "iTerm.app",
-    "terminal.integrated.shell.osx": "/bin/zsh",
-    "terminal.integrated.fontFamily": "MesloLGS NF",
-    "terminal.integrated.rendererType": "dom",
-    // ==================
-    // Explorer
-    // ================== 
-    "explorer.confirmDragAndDrop": false,
-    "explorer.confirmDelete": false,
-    "files.exclude": {
-        "**/.git": true,
-        "**/.DS_Store": true,
-        "**/node_modules": true,
-        "**/.gen": true,
-        "**/gen": true,
-        "/gen": true,
-        "**/.glue": true,
-        "**/.tmp": true,
-        "**/vendor": true,
-        "**/go-build": true,
-        "bazel-*": true,
-        "pkg*": true,
-        "**/.classpath": true,
-        "**/.project": true,
-        "**/.settings": true,
-        "**/.factorypath": true
-    },
-    "files.watcherExclude": {
-        "bazel-*": true,
-        "pkg*": true
-    },
-    "files.associations": {
-        "*.cheat": "shellscript",
-        "*.arc*": "jsonc",
-        "*.eslintrc": "jsonc",
-        "*.envrc": "shellscript",
-        "*.uql": "sql",
-        "*.proto.txt": "ruby",
-        "*rc": "shellscript",
-        "*BUILD": "shellscript",
-        "*config": "ini"
-    },
-    // ==================
-    // GO
-    // ==================
-    // "go.toolsEnvVars": {
-    //     "GO111MODULE": "off",
-    // },
-    // "go.useLanguageServer": true,
-    // "go.alternateTools": {
-    //     "go": "/usr/local/bin/go",
-    // },
-    // ==================
-    // Rust
-    // ================== 
-    "rust-analyzer.checkOnSave.command": "clippy",
-    // ==================
-    // Javascript
-    // ================== 
-    "javascript.validate.enable": false,
-    "javascript.updateImportsOnFileMove.enabled": "always",
-    // ==================
-    // Spacemacs
-    // ==================
-    "whichkey.delay": 300,
-    "vim.easymotion": true,
-    "vim.useSystemClipboard": false,
-    "vim.hlsearch": true,
-    "vim.incsearch": true,
-    "vim.useCtrlKeys": true,
-    "vim.normalModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                " "
-            ],
-            "commands": [
-                "vspacecode.space"
-            ]
-        },
-        {
-            "before": [
-                "j"
-            ],
-            "after": [
-                "g",
-                "j"
-            ]
-        },
-        {
-            "before": [
-                "k"
-            ],
-            "after": [
-                "g",
-                "k"
-            ]
-        }
-    ],
-    "vim.visualModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                " "
-            ],
-            "commands": [
-                "vspacecode.space"
-            ]
-        },
-        {
-            "before": [
-                "j"
-            ],
-            "after": [
-                "g",
-                "j"
-            ]
-        },
-        {
-            "before": [
-                "k"
-            ],
-            "after": [
-                "g",
-                "k"
-            ]
-        }
-    ],
-    "vspacecode.bindingOverrides": [
-        // ==================
-        // git
-        // ==================
-        {
-            "keys": "g.C",
-            "name": "Checkout",
-            "type": "command",
-            "command": "git.checkout"
-        },
-        {
-            "keys": "m",
-            "name": "Major...",
-            "type": "conditional",
-            "bindings": [
-                // ==================
-                // markdown
-                // ==================
-                {
-                    "key": "languageId:markdown",
-                    "name": "Markdown",
-                    "type": "bindings",
-                    "bindings": [
-                        {
-                            "key": "p",
-                            "name": "Open preview to the side",
-                            "type": "command",
-                            "command": "markdown.showPreviewToSide"
-                        }
-                    ]
-                }
-            ]
-        }
-    ],
-    "extensions.ignoreRecommendations": true,
-    "workbench.colorTheme": "Ayu Mirage Bordered",
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    "C_Cpp.updateChannel": "Insiders",
-    "workbench.editorAssociations": {
-        "*.ipynb": "jupyter.notebook.ipynb"
-    },
-    "cmake.configureOnOpen": true,
-    "update.showReleaseNotes": false,
-    "extensions.autoCheckUpdates": false,
-    "workbench.iconTheme": "material-icon-theme",
-    "editor.tabSize": 3,
-    "editor.detectIndentation": false,
-    "editor.cursorStyle": "line",
-    "editor.insertSpaces": false,
-    "editor.lineNumbers": "on",
-    "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+	"editor.fontSize": 12,
+	// "editor.fontFamily": "Hack Nerd Font",
+	"editor.letterSpacing": 0.2,
+	"editor.lineHeight": 18,
+	"editor.renderControlCharacters": true,
+	"editor.renderWhitespace": "none",
+	"files.autoSave": "onFocusChange",
+	"files.trimFinalNewlines": true,
+	"editor.formatOnPaste": true,
+	"editor.formatOnSave": true,
+	// "editor.formatOnSave": false,
+	"editor.minimap.enabled": true,
+	"editor.mouseWheelZoom": true,
+	"explorer.sortOrder": "default",
+	// "materialTheme.accent": "Remove accents",
+	"workbench.colorCustomizations": {},
+	"breadcrumbs.enabled": true,
+	"editor.fontLigatures": true,
+	"diffEditor.ignoreTrimWhitespace": false,
+	"diffEditor.renderSideBySide": true,
+	"editor.wordWrap": "on",
+	"editor.suggestSelection": "first",
+	// ==================
+	// System
+	// ==================
+	"keyboard.touchbar.enabled": true,
+	// ==================
+	// UI
+	// ==================
+	"workbench.activityBar.visible": false,
+	"workbench.editor.enablePreview": false,
+	"workbench.editor.enablePreviewFromQuickOpen": false,
+	"workbench.editor.highlightModifiedTabs": true,
+	"workbench.list.keyboardNavigation": "simple",
+	"customizeUI.activityBar": "bottom",
+	"customizeUI.titleBar": "inline",
+	"window.titleBarStyle": "native",
+	// ==================
+	// Terminal
+	// ==================
+	"terminal.external.osxExec": "iTerm.app",
+	"terminal.integrated.fontFamily": "MesloLGS NF",
+	"terminal.integrated.rendererType": "dom",
+	// ==================
+	// Explorer
+	// ================== 
+	"explorer.confirmDragAndDrop": false,
+	"explorer.confirmDelete": false,
+	"files.exclude": {
+		"**/.git": true,
+		"**/.DS_Store": true,
+		"**/node_modules": true,
+		"**/.gen": true,
+		"**/gen": true,
+		"/gen": true,
+		"**/.glue": true,
+		"**/.tmp": true,
+		"**/vendor": true,
+		"**/go-build": true,
+		"bazel-*": true,
+		"pkg*": true,
+		"**/.classpath": true,
+		"**/.project": true,
+		"**/.settings": true,
+		"**/.factorypath": true
+	},
+	"files.watcherExclude": {
+		"bazel-*": true,
+		"pkg*": true
+	},
+	"files.associations": {
+		"*.cheat": "shellscript",
+		"*.arc*": "jsonc",
+		"*.eslintrc": "jsonc",
+		"*.envrc": "shellscript",
+		"*.uql": "sql",
+		"*.proto.txt": "ruby",
+		"*rc": "shellscript",
+		"*BUILD": "shellscript",
+		"*config": "ini"
+	},
+	// ==================
+	// GO
+	// ==================
+	// "go.toolsEnvVars": {
+	//     "GO111MODULE": "off",
+	// },
+	// "go.useLanguageServer": true,
+	// "go.alternateTools": {
+	//     "go": "/usr/local/bin/go",
+	// },
+	// ==================
+	// Rust
+	// ================== 
+	"rust-analyzer.checkOnSave.command": "clippy",
+	// ==================
+	// Javascript
+	// ================== 
+	"javascript.validate.enable": false,
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	// ==================
+	// Spacemacs
+	// ==================
+	"whichkey.delay": 300,
+	"vim.easymotion": true,
+	"vim.useSystemClipboard": false,
+	"vim.hlsearch": true,
+	"vim.incsearch": true,
+	"vim.useCtrlKeys": true,
+	"vim.normalModeKeyBindingsNonRecursive": [
+		{
+			"before": [
+				" "
+			],
+			"commands": [
+				"vspacecode.space"
+			]
+		},
+		{
+			"before": [
+				"j"
+			],
+			"after": [
+				"g",
+				"j"
+			]
+		},
+		{
+			"before": [
+				"k"
+			],
+			"after": [
+				"g",
+				"k"
+			]
+		}
+	],
+	"vim.visualModeKeyBindingsNonRecursive": [
+		{
+			"before": [
+				" "
+			],
+			"commands": [
+				"vspacecode.space"
+			]
+		},
+		{
+			"before": [
+				"j"
+			],
+			"after": [
+				"g",
+				"j"
+			]
+		},
+		{
+			"before": [
+				"k"
+			],
+			"after": [
+				"g",
+				"k"
+			]
+		}
+	],
+	"vspacecode.bindingOverrides": [
+		// ==================
+		// git
+		// ==================
+		{
+			"keys": "g.C",
+			"name": "Checkout",
+			"type": "command",
+			"command": "git.checkout"
+		},
+		{
+			"keys": "m",
+			"name": "Major...",
+			"type": "conditional",
+			"bindings": [
+				// ==================
+				// markdown
+				// ==================
+				{
+					"key": "languageId:markdown",
+					"name": "Markdown",
+					"type": "bindings",
+					"bindings": [
+						{
+							"key": "p",
+							"name": "Open preview to the side",
+							"type": "command",
+							"command": "markdown.showPreviewToSide"
+						}
+					]
+				}
+			]
+		}
+	],
+	"extensions.ignoreRecommendations": true,
+	"workbench.colorTheme": "Ayu Mirage Bordered",
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"C_Cpp.updateChannel": "Insiders",
+	"workbench.editorAssociations": {
+		"*.ipynb": "jupyter.notebook.ipynb"
+	},
+	"cmake.configureOnOpen": true,
+	"update.showReleaseNotes": false,
+	"extensions.autoCheckUpdates": false,
+	"workbench.iconTheme": "material-icon-theme",
+	"editor.tabSize": 3,
+	"editor.detectIndentation": false,
+	"editor.cursorStyle": "line",
+	"editor.insertSpaces": true,
+	"editor.lineNumbers": "on",
+	"editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
 	"go.toolsManagement.autoUpdate": true,
-	"window.zoomLevel": -1
+	"diffEditor.wordWrap": "on",
+   "security.workspace.trust.untrustedFiles": "open",
+   "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+   "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
+   "typescript.inlayHints.enumMemberValues.enabled": true,
+   "javascript.inlayHints.enumMemberValues.enabled": true,
+   "javascript.inlayHints.parameterTypes.enabled": true,
+   "javascript.inlayHints.variableTypes.enabled": true,
+   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+   "typescript.inlayHints.parameterTypes.enabled": true,
+   "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+   "typescript.inlayHints.variableTypes.enabled": true
 }

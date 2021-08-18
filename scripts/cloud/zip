@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
+
+##? Zip
+##?
+##? Usage:
+##?    zip <filename>
+##?    zip <name> <files>...
+##?
+##? Example:
+##?    zip img.jpg
+
+doc::maybe_help "$@"
+
+_meta() {
+	local -r target="$1"
+	local -r filehash="$(md5sum "$target" | awk '{print $1}')"
+	shift
+
+	echo "$target"
+	echo "$filehash"
+	date +'%Y-%m-%d'
+	echo	
+
+	for p in "$@"; do
+		find "$p" -type f | grep -v '.DS_Store'
+	done
+}
+
+7z_a() {
+	local -r zipName="$1"
+	local -r pass="$(dot cloud password "$zipName")"
+	local -r target="${zipName}.7z"
+	shift
+
+	7z a -p"$pass" "$target" "$@" >&2
+
+	_meta "$target" "$@" > "${zipName}.files.txt"
+}
+
+one_file() {
+	local -r from="$1"
+   7z_a "$from" "$from"
+}
+
+multiple_files() {
+	local -r name="$1"
+	shift
+   7z_a "$name" "$@"
+}
+
+main() {
+	if [ -z "${CLOUD_PASS:-}" ]; then
+	   die "CLOUD_PASS variable not set"
+	fi
+
+	if [ $# -gt 1 ]; then
+		multiple_files "$@"
+	else
+	   one_file "$@"
+	fi
+}
+
+main "$@"

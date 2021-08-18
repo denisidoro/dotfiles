@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC2034
 ESCAPE_CHAR="\034"
+# shellcheck disable=SC2034
 ESCAPE_CHAR_2="\035"
+# shellcheck disable=SC2034
 ESCAPE_CHAR_3="\036"
 
 str::length() {
@@ -98,7 +101,7 @@ str::remove_last_char() {
 
 str::urlencode() {
    local data
-   data="$(curl -s -o /dev/null -w %{url_effective} --get --data-urlencode "$1" "")"
+   data="$(curl -s -o /dev/null -w '%{url_effective}' --get --data-urlencode "$1" "")"
    if [[ $? != 3 ]]; then
       echo "Unexpected error" 1>&2
       return 2

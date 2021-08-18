@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 echoerr() {
    echo "$@" 1>&2
@@ -9,9 +9,15 @@ println() {
 }
 
 tap() {
+   # shellcheck disable=SC2119
    local -r input="$(cat)"
    echoerr "$input"
    echo "$input"
+}
+
+debug() {
+	dot shell log info "$@"
+	"$@"
 }
 
 has() {
@@ -19,7 +25,7 @@ has() {
 }
 
 export_f() {
-   export -f "$@" >/dev/null
+   export -f "${@?}" >/dev/null
 }
 
 export_f has tap println echoerr
@@ -47,7 +53,7 @@ if ! has tput; then
    export_f tput
 fi
 
-if has gcat; then
+if has ggrep; then
    sed() { gsed "$@"; }
    awk() { gawk "$@"; }
    find() { gfind "$@"; }
@@ -59,6 +65,7 @@ if has gcat; then
    cut() { gcut "$@"; }
    tr() { gtr "$@"; }
    cp() { gcp "$@"; }
+   # shellcheck disable=SC2120
    cat() { gcat "$@"; }
    sort() { gsort "$@"; }
    kill() { gkill "$@"; }
@@ -95,20 +102,21 @@ doc::help_or_fail() {
 doc::parse() {
    local -r file="$0"
    local -r help="$(doc::help_msg "$file")"
+   local docopt="$DOT_DOCOPT"
 
-   if [ -z ${DOT_DOCOPT:-} ]; then
+   if [ -z "${docopt:-}" ]; then
       if has python; then
-         DOT_DOCOPT="python"
+         docopt="python"
       else
-         (dot pkg add docpars >/dev/null && DOT_DOCOPT="$(which docpars)") \
-            || (dot pkg add python >/dev/null && DOT_DOCOPT="python")
+         (dot pkg add docpars >/dev/null && docopt="$(which docpars)") \
+            || (dot pkg add python >/dev/null && docopt="python")
       fi
    fi
 
    if [[ $DOT_DOCOPT == "python" ]]; then
-      local -r docopt="${DOTFILES}/scripts/core/docopts"
+      docopt="${DOTFILES}/scripts/core/docopts"
    else
-      local -r docopt="$DOT_DOCOPT"
+      docopt="$DOT_DOCOPT"
    fi
 
    eval "$("$docopt" -h "${help}" : "${@:1}")"

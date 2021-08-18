@@ -11,6 +11,8 @@ export PATH="/usr/local/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WOR
 
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-11.0.11.jdk/Contents/Home"
 
+export NPM_CONFIG_REGISTRY="https://registry.npmjs.org/" 
+
 alias ls='exa --icons'
 
 alias xdg-open='open'
@@ -32,10 +34,8 @@ alias kill='gkill'
 alias xargs='gxargs'
 alias base64='gbase64'
 alias pr='gpr'
-
 alias mono="dot work mono"
-alias ep="dot envoy sync push"
-alias el="dot envoy sync pull"
+alias ysa="killall Dock; sudo yabai --install-sa; sudo yabai --load-sa"
 
 _load_work_stuff() {
    case $1 in

@@ -47,7 +47,7 @@ export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"${HOME}/.config"}"
 export XENVIRONMENT="${XENVIRONMENT:-"${HOME}/.Xresources"}"
 
 # navi
-export NAVI_PATH="${DOTFILES}/cheats:${DOTFILES}/local/cheats"
+# export NAVI_PATH="${DOTFILES}/cheats:${DOTFILES}/local/cheats"
 # export NAVI_PATH="${DOTFILES}/cheats/demo"
 
 # zsh

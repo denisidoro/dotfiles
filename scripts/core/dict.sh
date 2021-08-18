@@ -24,7 +24,7 @@ dict::dissoc() {
 }
 
 dict::escape_value() {
-   tr '\n' "$ESCAPE_CHAR" | sed 's/\\n/'$(printf "$ESCAPE_CHAR")'/g'
+   tr '\n' "$ESCAPE_CHAR" | sed 's/\\n/'"$(printf "%s" "$ESCAPE_CHAR")"'/g'
 }
 
 str::without_trailing_newline() {
@@ -41,14 +41,14 @@ dict::assoc() {
    local -r input="$(cat)"
 
    if [ -z "$key" ]; then
-      printf "$(echo "$input" | tr '%' "$ESCAPE_CHAR_2")" | tr "$ESCAPE_CHAR_2" '%'
+      printf "%s" "$(echo "$input" | tr '%' "$ESCAPE_CHAR_2")" | tr "$ESCAPE_CHAR_2" '%'
       return
    fi
 
    local -r value="$(echo "${2:-}" | dict::escape_value)"
 
    shift 2
-   echo "$(echo "$input" | dict::dissoc "$key")${key}: ${value}\n" | dict::assoc "$@"
+   printf "%s" "$(echo "$input" | dict::dissoc "$key")${key}: ${value}\n" | dict::assoc "$@"
 }
 
 dict::get() {
@@ -82,7 +82,7 @@ dict::values() {
 }
 
 dict::zipmap() {
-   IFS='\n'
+   IFS=$'\n'
 
    local -r keys_str="$1"
    local -r values_str="$2"

@@ -7,7 +7,7 @@ git::inside_work_tree() {
 }
 
 git::current_branch() {
-   git branch | grep \* | cut -d ' ' -f2
+   git branch | grep '\*' | cut -d ' ' -f2
 }
 
 git::master_branch() {
@@ -21,5 +21,5 @@ git::root() {
 }
 
 git::upstream_branch() {
-   git rev-parse --abbrev-ref --symbolic-full-name @{u}
+   git rev-parse --abbrev-ref --symbolic-full-name '@{u}'
 }
