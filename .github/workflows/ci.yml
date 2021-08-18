@@ -40,8 +40,6 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
-      - name: Create mocks
-        run: mkdir -p ./local/scripts/cloud; ln -s ./scripts/self/install ./local/scripts/cloud/password
       - name: Run tests
         run: ./bin/dot self test file 'help'
 
@@ -51,8 +49,6 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
-      - name: Create mocks
-        run: mkdir -p ./local/scripts/cloud; ln -s ./scripts/self/install ./local/scripts/cloud/password
       - name: Run tests
         run: ./bin/dot self test file 'imports|references'
 
@@ -71,6 +67,8 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
+      - name: Install shellcheck
+        uses: dot pkg add shellcheck; shellcheck --version
       - name: Run tests
         run: ./bin/dot self shellcheck
 

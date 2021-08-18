@@ -17,7 +17,7 @@ validate_reference() {
    local cmds
    mapfile -r cmds < <(echo "$*" | tr ' ' '\n')
    case "$*" in
-      *uber*|*work*) ;;
+      *uber*|*work*|*password*) ;;
       *) "${cmds[@]}" --help &>/dev/null ;;
    esac
 }
