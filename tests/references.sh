@@ -49,5 +49,6 @@ _run() {
    done
 }
 
+bash --version
 test::set_suite "bash - references"
 test::lazy_run _run
