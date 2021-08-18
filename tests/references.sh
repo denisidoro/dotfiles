@@ -20,26 +20,19 @@ _files() {
 
 validate_reference() {
    case "$*" in
-      *uber*|*work*) ;;
+      *uber*|*work*|*password*) ;;
       *) dot "$@" --help &>/dev/null ;;
    esac
 }
 
 _run() {
    local call ctx cmd
-   echoerr 1
    declare -A checked
-   echoerr 2
    for file in $(_files); do
-   echoerr 3
-   echoerr $file
       [ -f "$file" ] || continue
-   echoerr 4
       call="$(grep -Eo 'dot [a-zA-z0-9_\-]+ [a-zA-z0-9_\-]+' "$file" || true)"
-   echoerr 5
       [ -n "$call" ] || continue
       while IFS= read -r line; do
-   echoerr 6
          case "$line" in 
             *add_to_dotlink*) continue ;;
             *add\ -m*) continue ;;
