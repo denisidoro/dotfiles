@@ -2,7 +2,7 @@
 
 symlink_bashrc() {
    cd "$DOTFILES" || exit
-   local -r bashrc_path="$(grep "links/unix.yaml" bashrc | cut -d',' -f1)"
+   local -r bashrc_path="$(grep bashrc "links/unix.yaml" | cut -d',' -f1)"
    # shellcheck disable=SC1090
    source "$bashrc_path"
 }

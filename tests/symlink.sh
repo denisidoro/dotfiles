@@ -6,7 +6,7 @@ _validate() {
 
    echoerr "validate: $*"
 
-   local -r files="$(sed "$filename" '/^$/d' | cut -d',' -f1)"
+   local -r files="$(sed '/^$/d' "$filename" | cut -d',' -f1)"
 
    for f in $files; do
       if echo "$f" | grep -q 'local/'; then
