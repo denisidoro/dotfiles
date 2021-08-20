@@ -1,4 +1,5 @@
-# vim:ft=sh
+#!/usr/bin/env bash
+
 dot_clear() {
 
    _dot_clear() { #{{{
@@ -14,5 +15,5 @@ dot_clear() {
 
    parse_linkfiles _dot_clear
 
-   unset -f _dot_clear $0
+   unset -f _dot_clear "$0"
 }

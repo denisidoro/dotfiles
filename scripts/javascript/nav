@@ -35,7 +35,7 @@ _pretty() {
 main() {
    local -r content="$(cat)"
    local -r temp_file=$(mktemp)
-   trap "rm -f '$temp_file'" 0 2 3 15
+   trap 'rm -f "$temp_file"' 0 2 3 15
    echo "$content" > "$temp_file"
    _input "$content" | _pretty | _fzf "$temp_file"
 }

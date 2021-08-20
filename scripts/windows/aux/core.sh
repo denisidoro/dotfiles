@@ -1,4 +1,4 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
 
 source "${DOTFILES}/scripts/core/main.sh"
 

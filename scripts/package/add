@@ -15,11 +15,10 @@ source "${DOTFILES}/scripts/package/aux/recipes.sh"
 
 doc::maybe_help "$@"
 
+prevent_recipe=false
 if [[ "$1" == "--prevent-recipe" ]]; then
    prevent_recipe=true
    shift
-else
-   prevent_recipe=false
 fi
 
 if [ $# -gt 1 ]; then

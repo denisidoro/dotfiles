@@ -13,17 +13,21 @@ source "${DOTFILES}/scripts/core/test.sh"
 doc::maybe_help "$@"
 
 _prepare_zsh() {
-   has zsh && return 0 || true
+   if has zsh; then 
+      return 0
+   fi
    local -r bash_path="$(which bash)"
-   local -r zsh_path="$(echo "$bash_path" | sed 's/bash/zsh/')"
+   local -r zsh_path="${bash_path//bash/zsh}"
    sudo ln -s "$bash_path" "$zsh_path" || sudo ln -s "$bash_path" "$zsh_path"
 }
 
 _prepare_dotlink() {
    local file="${DOTFILES}/modules/dotlink/dotlink"
-   [[ -f "$file" ]] && return 0 || true
+   if [[ -f "$file" ]]; then
+      return 0
+   fi
    mkdir -p "$(dirname "$file")" || true
-   local content="$(cat "$0"; echo; echo; echo "dotlink_main() { echo stub; }")"
+   local -r content="$(cat "$0"; echo; echo; echo "dotlink_main() { echo stub; }")"
    echo "$content" > "$file"
 }
 
@@ -51,7 +55,9 @@ EOF
 }
 
 _stub_vscode() {
-   has code && return 0 || true
+   if has code; then
+      return 0
+   fi
    local -r path="${DOTFILES}/local/bin/code"
    [ -f "$path" ] && return 0
    local -r content="$(_create_content "code")"

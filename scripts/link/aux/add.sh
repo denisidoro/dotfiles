@@ -1,4 +1,5 @@
-# vim: ft=sh
+#!/usr/bin/env bash
+
 dot_add() {
    # default message
    local message=""
@@ -14,7 +15,7 @@ dot_add() {
    shift $((OPTIND-1))
 
    if [ ! -e "$1" ]; then
-      echo "$(prmpt 1 error)$(bd_ $1) doesn't exist."
+      echo "$(prmpt 1 error)$(bd_ "$1") doesn't exist."
       return 1
    fi
 
@@ -39,7 +40,7 @@ dot_add() {
       dotfile="$(path_without_dotdir "$2")"
       if [ "${dotfile}" = "" ]; then
          dotfile="$(path_without_home "$2")"
-         if [ -n ${dotfile} ]; then
+         if [ -n "${dotfile}" ]; then
             dotfile="\$HOME/${dotfile}"
          else
             dotfile="$(get_fullpath "$2")"
@@ -63,7 +64,7 @@ dot_add() {
 
       for f in "$@"; do
          if [ ! -L "$f" ]; then
-            echo "$(prmpt 1 error)$(bd_ $1) is not the symbolic link."
+            echo "$(prmpt 1 error)$(bd_ "$1") is not the symbolic link."
             continue
          fi
 
@@ -71,7 +72,7 @@ dot_add() {
          abspath="$(readlink "$f")"
 
          if [ ! -e "${abspath}" ]; then
-            echo -n "$(prmpt 1 error)Target path $(bd_ ${abspath}) doesn't exist."
+            echo -n "$(prmpt 1 error)Target path $(bd_ "${abspath}") doesn't exist."
             return 1
          fi
 
@@ -85,7 +86,7 @@ dot_add() {
       echo "    dot add -m '${message}' $1 ${dotdir}/$(path_without_home "$1")"
       __confirm n "Continue? " || return 1
 
-      dot_add_main "$1" "${dotdir}/$(path_without_home $1)"
+      dot_add_main "$1" "${dotdir}/$(path_without_home "$1")"
    } #}}}
 
    check_dir() { #{{{
@@ -93,8 +94,8 @@ dot_add() {
          return 0
       fi
 
-      echo "$(prmpt 1 error)$(bd_ ${1%/*}) doesn't exist."
-      if __confirm y "make directory $(bd_ ${1%/*}) ? "; then
+      echo "$(prmpt 1 error)$(bd_ "${1%/*}") doesn't exist."
+      if __confirm y "make directory $(bd_ "${1%/*}") ? "; then
          mkdir -p "${1%/*}"
          return 0
       fi
@@ -139,5 +140,5 @@ dot_add() {
    dot_add_main "$@"
 
    unset -f orig_to_dot add_to_dotlink if_islink suggest check_dir
-   unset -f $0
+   unset -f "$0"
 }

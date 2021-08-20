@@ -1,4 +1,5 @@
-# vim: ft=sh
+#!/usr/bin/env bash
+
 dot_set() {
    # option handling
    local arg
@@ -38,12 +39,12 @@ dot_set() {
 
       [ -d "${origdir}" ] && return 0
 
-      echo "$(prmpt 1 error)$(bd_ ${origdir}) doesn't exist."
+      echo "$(prmpt 1 error)$(bd_ "${origdir}") doesn't exist."
 
       ${dotset_ignore} && return 1
 
       if ! ${dotset_force} && ! ${dotset_create_dirs}; then
-         __confirm y "make directory $(bd_ ${origdir}) ? " || return 1
+         __confirm y "make directory $(bd_ "${origdir}") ? " || return 1
       fi
       mkdir -p "${origdir}" && return 0
    } #}}}
@@ -79,7 +80,7 @@ dot_set() {
          return 0
       fi
 
-      echo "$(prmpt 1 conflict)Other link already exists at $(bd_ ${orig})"
+      echo "$(prmpt 1 conflict)Other link already exists at $(bd_ "${orig}")"
 
       ${dotset_ignore} && return 0
 
@@ -88,7 +89,7 @@ dot_set() {
          echo "${orig} $(tput setaf 5)<--$(tput sgr0) ${linkto}"
          echo -n "  $(prmpt 3 try)"
          echo "${orig} $(tput setaf 5)<--$(tput sgr0) ${dotfile}"
-         __confirm n "Unlink and re-link for $(bd_ ${orig}) ? " || return 0
+         __confirm n "Unlink and re-link for $(bd_ "${orig}") ? " || return 0
       fi
       unlink "${orig}"
       ln -s "${dotfile}" "${orig}"
@@ -103,7 +104,7 @@ dot_set() {
       local dotfile="$2"
 
       if ${dotset_ignore}; then
-         echo "$(prmpt 1 conflict)File already exists at $(bd_ ${orig})."
+         echo "$(prmpt 1 conflict)File already exists at $(bd_ "${orig}")."
          return 0
       fi
 
@@ -118,7 +119,7 @@ dot_set() {
       fi
 
       while true; do
-         echo "$(prmpt 1 conflict)File already exists at $(bd_ ${orig})."
+         echo "$(prmpt 1 conflict)File already exists at $(bd_ "${orig}")."
          echo "Choose the operation:"
          echo "    ($(bd_ d)):show diff"
          echo "    ($(bd_ e)):edit files"
@@ -185,5 +186,5 @@ dot_set() {
 
    parse_linkfiles _dot_set
 
-   unset -f check_dir if_islink if_exist _dot_set replace replace_and_backup $0
+   unset -f check_dir if_islink if_exist _dot_set replace replace_and_backup "$0"
 }

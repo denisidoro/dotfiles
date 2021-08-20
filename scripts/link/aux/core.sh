@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# vim: ft=zsh
+
 # dotlink - dotfiles management framework
 
 # Version:             2.0.0

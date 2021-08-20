@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/usr/bin/env -i bash --norc --noprofile
 
 # Required parameters:
 # @raycast.schemaVersion 1

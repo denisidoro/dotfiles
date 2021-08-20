@@ -1,4 +1,5 @@
-# vim: ft=sh
+#!/usr/bin/env bash
+
 dot_check() {
 
    _dot_check() { #{{{
@@ -26,5 +27,5 @@ dot_check() {
 
    parse_linkfiles _dot_check
 
-   unset -f _dot_check $0
+   unset -f _dot_check "$0"
 }

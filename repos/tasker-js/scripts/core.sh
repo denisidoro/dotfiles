@@ -16,7 +16,7 @@ npm::cmd() {
 dot::clone() {
    local -r DOTFILES_COMMIT_HASH="e517c25"
    git clone "https://github.com/denisidoro/dotfiles.git" "$DOTFILES"
-   cd "$DOTFILES"
+   cd "$DOTFILES" || exit
    git checkout "$DOTFILES_COMMIT_HASH"
 }
 
@@ -25,7 +25,7 @@ dot::install_if_necessary() {
    export DOTFILES="${PROJ_HOME}/dotfiles"
    export PATH="${DOTFILES}/bin:${PATH}"
    [ -n "${DOTFILES:-}" ] && [ -x "${DOTFILES}/bin/dot" ] && return
-   $(dot::clone 2>/dev/null || true)
+   dot::clone 2>/dev/null || true
 }
 
 export PROJ_HOME="${PROJ_HOME:-$(cd "$(dirname "$0")/.." && pwd)}"
