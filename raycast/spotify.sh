@@ -14,4 +14,4 @@
 # @raycast.author Denis Isidoro
 # @raycast.authorURL https://denisidoro.github.io
 
-"${HOME}/dotfiles/bin/dot" osx focus-tab spotify
+"${HOME}/dotfiles/bin/dot" osx focus-tab spotify "https://open.spotify.com"

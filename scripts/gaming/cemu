@@ -19,12 +19,12 @@ _gen_list() {
 
    cd "$SAVE_BASE"
 
-   for f in $(find -name '*meta.xml'); do
+   while IFS= read -r -d '' f; do
       cat "$f" | grep longname_en | tr '\n' ' ' | sed -E 's/.*?>(.*?)<.*/\1/'
       echo
-      echo "$f" | sed 's|/meta/meta.xml||'
+      echo "${f//\/meta/\/meta.xml}"
       echo
-   done
+   done < <(find . -name '*meta.xml')
 }
 
 _gen_list > "$SAVE_BASE/list.txt"

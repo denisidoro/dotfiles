@@ -52,6 +52,7 @@ _rename() {
    local -r new_roms="$(echo "$splits" | cut -f2 -d';' | _rename_rom)"
    local -r new_exts="$(echo "$splits" | cut -f3 -d';' | _rename_ext)"
 
+   # shellcheck disable=SC2001
    local -r output="$(paste <(echo "$new_dirs") <(echo "$new_roms") <(echo "$new_exts" | sed 's/^/\./g') | tr -d '\t')"
 
    paste <(echo "$input" | _quoted) <(echo "$output" | _quoted) \

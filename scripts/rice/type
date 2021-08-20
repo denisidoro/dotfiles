@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2004,SC2015,SC2155,SC2206,SC2016,SC2220,SC2162,SC2155
 set -eo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
@@ -13,17 +14,21 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 doc::maybe_help "$@"
 
-text="$1"
-speed="${2:-10}"
-wait=$(echo "scale=2; 1 / ${speed}" | bc)
+main() {
+   local text="$1"
+   local speed="${2:-10}"
+   local wait=$(echo "scale=2; 1 / ${speed}" | bc)
 
-while read -n1 character; do
-   count="$(echo "$character" | wc -w | xargs)"
-   if [[ $count -gt 0 ]]; then
-      printf "$character"
-   else
-      printf ' '
-   fi
-   sleep "$wait"
-done < <(echo -n "$text")
-echo
+   while read -r -n1 character; do
+      count="$(echo "$character" | wc -w | xargs)"
+      if [[ $count -gt 0 ]]; then
+         printf '%s' "$character"
+      else
+         printf ' '
+      fi
+      sleep "$wait"
+   done < <(echo -n "$text")
+   echo
+}
+
+main "$@"

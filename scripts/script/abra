@@ -34,7 +34,7 @@ txspl() {
 }
 
 rxls() {
-   local -r cmd="dot terminal faketty ls $@ \"{}\""
+   local -r cmd="dot terminal faketty ls $* \"{}\""
    abra rx --channel pwd --cmd "$cmd" --clear
 }
 

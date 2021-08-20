@@ -15,7 +15,7 @@ doc::parse "$@"
 
 transfer() {
    local path="$1"
-   local tmpfile="$(mktemp -t transferXXX)"
+   local -r tmpfile="$(mktemp -t transferXXX)"
 
    if tty -s; then
       basefile=$(basename "$path" | sed -e 's/[^a-zA-Z0-9._-]/-/g')

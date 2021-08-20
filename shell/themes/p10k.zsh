@@ -1557,6 +1557,8 @@
    #   - same-dir: Trim down prompt when accepting a command line unless this is the first command
    #               typed after changing current working directory.
    typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=off
+   function p10k-on-pre-prompt() {}
+   function p10k-on-post-prompt() {}
 
    # Instant prompt mode.
    #

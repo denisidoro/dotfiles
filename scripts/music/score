@@ -59,14 +59,14 @@ generate_pngs() {
    cd "$DOWNLOAD_PATH"
    local new_f
    for f in *.svg; do
-      new_f="$(echo "$f" | sed 's/.svg/.png/')"
+      new_f="${f//.svg/.png}"
       svgexport "$f" "$new_f" "1.5x"
    done
 }
 
 generate_pdf() {
    cd "$DOWNLOAD_PATH"
-   convert *.png "../${name}.pdf"
+   convert ./*.png "../${name}.pdf"
    cd ..
    rm -rf "${name}"
 }

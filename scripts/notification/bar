@@ -18,8 +18,8 @@ barw=300
 barh=35
 barx=$(xdpyinfo | grep dimensions | tr -s ' ' ';' | cut -f 3 -d ';' | cut -f 1 -d 'x')
 bary=$(xdpyinfo | grep dimensions | tr -s ' ' ';' | cut -f 3 -d ';' | cut -f 2 -d 'x')
-let barx=${barx}/2-${barw}/2
-let bary=${bary}/2-${barh}/2
+barx=$((barx/2 - barw/2))
+bary=$((bary/2 - barh/2))
 
 # colors
 bar_bg='#64000000'

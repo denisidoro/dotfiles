@@ -18,7 +18,8 @@ _launch() {
 }
 
 main() {
-   local number="$(echo "$1" | sed 's|[^0-9]||g')"
+   local number
+   number="${1//[^0-9]/}"
    if [[ ${#number} -lt 10 ]]; then
       number="5511${number}"
    fi

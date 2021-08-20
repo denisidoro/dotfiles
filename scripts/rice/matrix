@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2004,SC2015,SC2155,SC2206,SC2016,SC2220,SC2162,SC2155
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"

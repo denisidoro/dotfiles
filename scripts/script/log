@@ -13,7 +13,7 @@ source "${DOTFILES}/scripts/core/log.sh"
 doc::maybe_help "$@"
 
 _sep() {
-   for i in $(seq 0 300); do
+   for _ in $(seq 0 300); do
       echo
    done
 
@@ -21,7 +21,7 @@ _sep() {
 
    log::header "$(date)"
 
-   for i in $(seq 0 5); do
+   for _ in $(seq 0 5); do
       echo
    done
 }
