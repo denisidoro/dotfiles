@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2046,SC2015,SC1090,SC1091,SC2034,SC2012,SC2207,SC1090,SC201
 
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/git/aux/core.sh"
@@ -48,8 +47,8 @@ _fzf() {
 }
 
 _target() {
-   local reaodnly tags="$1"
-   local reaodnly branches="$2"
+   local -r tags="$1"
+   local -r branches="$2"
    shift 2
 
    (echo "$tags"; echo "$branches") \

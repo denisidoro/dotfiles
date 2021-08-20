@@ -35,7 +35,7 @@ _print() {
    print_fn="$1"
    should_start=false
    comment=""
-   for line in $(cat "${DOTFILES}/peripherals/skhd/skhd.rc"); do
+   cat "${DOTFILES}/peripherals/skhd/skhd.rc" | while read -r line; do
       if ! $should_start; then
          case $line in
             *Power*) should_start=true ;;
