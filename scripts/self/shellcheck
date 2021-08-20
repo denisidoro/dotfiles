@@ -46,7 +46,7 @@ _fix_one() {
 }
 
 _fix() {
-   for f in $(_files); do 
+   for f in $(_files); do
       _fix_one "$f" || true
    done
 }

@@ -95,7 +95,7 @@ git::check_conflict() {
    local err=false
 
    for file in $files; do
-      if grep -qE '^[><=]{7}( |$)' "$file"; then 
+      if grep -qE '^[><=]{7}( |$)' "$file"; then
          err=true
       fi
       if $err; then

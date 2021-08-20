@@ -13,7 +13,7 @@ source "${DOTFILES}/scripts/core/test.sh"
 doc::maybe_help "$@"
 
 _prepare_zsh() {
-   if has zsh; then 
+   if has zsh; then
       return 0
    fi
    local -r bash_path="$(which bash)"

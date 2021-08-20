@@ -16,7 +16,7 @@ _focus_tab() {
    local -r uri="$3"
 
    local code
-   set +e 
+   set +e
    read -r -d '' code <<EOF
 set searchString to "$query"
 set found to false
@@ -41,9 +41,9 @@ if found is false then
    do shell script "open '$uri'"
 end if
 
-tell application "$browser" 
+tell application "$browser"
    activate
-end tell 
+end tell
 EOF
    set -e
 
