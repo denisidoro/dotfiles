@@ -5,11 +5,6 @@
 # ========================
 alias c='clear'
 alias t='tmux'
-alias tt='dot terminal tmux tat'
-alias tl='dot terminal tmux ls'
-alias tn='dot terminal tmux new'
-alias ta='dot terminal tmux attach'
-alias tk='dot terminal tmux kill'
 alias faketty='dot terminal abra faketty'
 alias rxout='dot terminal abra rxout'
 alias rxerr='dot terminal abra rxerr'
