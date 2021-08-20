@@ -6,7 +6,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Window manager utilities
 ##?
 ##? Usage:
-##?    wm cheats (alfred|navi)
+##?    wm cheats navi
 ##?
 ##? Examples:
 ##?    wm cheats
@@ -15,13 +15,6 @@ doc::maybe_help "$@"
 
 _last_word() {
    echo "${1##* }"
-}
-
-_print_alfred() {
-   local -r comment="$1"
-   local -r cmd="$2"
-   local -r hotkey="$3"
-   echo "{\"title\":\"${comment}\",\"match\":\"${comment} ${cmd}\",\"subtitle\":\"${hotkey} :: ${cmd}\",\"arg\":\"${cmd}\"},"
 }
 
 _print_navi() {
@@ -66,19 +59,11 @@ _print() {
    done
 }
 
-_alfred() {
-   echo '{"items":['
-   items="$(_print _print_alfred)"
-   echo "${items::-1}"
-   echo ']}'
-}
-
 _navi() {
    _print _print_navi
 }
 
 target="${2:-}"
 case $target in
-   alfred) _alfred ;;
    *) _navi ;;
 esac
