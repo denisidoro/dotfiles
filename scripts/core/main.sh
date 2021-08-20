@@ -82,7 +82,7 @@ doc::maybe_help() {
    local -r sh_file="$0"
 
    case "${!#:-}" in
-      -h|--help|--version) doc::help_msg "$file"; exit 0 ;;
+      -h|--help|--version) doc::help_msg "$sh_file"; exit 0 ;;
    esac
 }
 
@@ -90,12 +90,12 @@ doc::help_or_fail() {
    local -r sh_file="$0"
 
    case "${!#:-}" in
-      -h|--help|--version) doc::help_msg "$file"; exit 0 ;;
+      -h|--help|--version) doc::help_msg "$sh_file"; exit 0 ;;
    esac
 
    echoerr "Invalid command"
    echoerr
-   doc::help_msg "$file"
+   doc::help_msg "$sh_file"
    exit 1
 }
 
