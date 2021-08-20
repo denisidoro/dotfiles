@@ -58,7 +58,7 @@ if ! _has sudo; then
 fi
 
 clone_repo() {
-   if !has git; then
+   if ! has git; then
       _install_git &>/dev/null
    fi
    git clone "$REPO" "$DOTFILES" --depth 1

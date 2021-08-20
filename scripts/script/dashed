@@ -18,6 +18,7 @@ indexof() {
    local -r index="$1"
    i=0;
    shift
+   # shellcheck disable=SC2198
    while [ "$i" -le "$#" ]; do
       if [ "${@:$i:1}" = "$index" ]; then
          echo $i
@@ -30,11 +31,14 @@ indexof() {
 
 dot_or_args() {
    local -r dash_index="$(indexof "--" "$@")"
+   # shellcheck disable=SC2124
    readonly fn="${@:1:$((dash_index-1))}"
    shift "$dash_index"
    if [[ $# -lt 1 ]]; then
+      # shellcheck disable=SC2068
       ${fn[@]} .
    else
+      # shellcheck disable=SC2068
       ${fn[@]} "$@"
    fi
 }

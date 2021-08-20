@@ -40,9 +40,9 @@ print_result() {
    local -r id="$(echo "$data" | jq -r .id)"
    local -r name="$(echo "$data" | jq -r .name)"
 
-   printf "{\"name\": \"${name}\", \"igdbId\": ${id}"
-   [ -n "$cover" ] && printf ", 'cover': \"${cover}\""
-   [ -n "$background" ] && printf ", \"background\": \"${background}\""
+   printf "{\"name\": \"%s\", \"igdbId\": %s" "$name" "$id"
+   [ -n "$cover" ] && printf ", 'cover': \"%s\"" "$name"
+   [ -n "$background" ] && printf ", \"background\": \"%s\"" "$background"
    echo "}"
 }
 
@@ -57,7 +57,7 @@ prompt() {
       echo "$url" | with_resolution "720p" | xargs curl -s | imgcat
       echo
 
-      read -n1 -p "Use as [c]over, [b]ackground, [s]kip or [a]bort: " answer
+      read -r -n1 -p "Use as [c]over, [b]ackground, [s]kip or [a]bort: " answer
       echo
       case "$answer" in
          c) cover="$url" ;;

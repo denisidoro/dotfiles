@@ -20,7 +20,7 @@ main_dash() {
    declare args=()
    local navi_args=true
 
-   for v in $@; do
+   for v in "$@"; do
       if $navi_args; then
          case $v in
             --) navi_args=false ;;
@@ -43,9 +43,9 @@ main_one() {
    shift 2
 
    if [[ $# -gt 0 ]]; then
-      local -r var_full="${var}__best" fs
-      read "$var_full" <<< "$*"
-      export "$var_full"
+      local -r var_full="${var}__best"
+      read -r "${var_full?}" <<< "$*"
+      export "${var_full?}"
    fi
 
    navi --query "$query" --best-match

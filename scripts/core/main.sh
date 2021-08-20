@@ -74,34 +74,34 @@ if has ggrep; then
 fi
 
 doc::help_msg() {
-   local -r file="$1"
-   grep "^##?" "$file" | cut -c 5-
+   local -r sh_file="$1"
+   grep "^##?" "$sh_file" | cut -c 5-
 }
 
 doc::maybe_help() {
-   local -r file="$0"
+   local -r sh_file="$0"
 
    case "${!#:-}" in
-      -h|--help|--version) doc::help_msg "$file"; exit 0 ;;
+      -h|--help|--version) doc::help_msg "$sh_file"; exit 0 ;;
    esac
 }
 
 doc::help_or_fail() {
-   local -r file="$0"
+   local -r sh_file="$0"
 
    case "${!#:-}" in
-      -h|--help|--version) doc::help_msg "$file"; exit 0 ;;
+      -h|--help|--version) doc::help_msg "$sh_file"; exit 0 ;;
    esac
 
    echoerr "Invalid command"
    echoerr
-   doc::help_msg "$file"
+   doc::help_msg "$sh_file"
    exit 1
 }
 
 doc::parse() {
-   local -r file="$0"
-   local -r help="$(doc::help_msg "$file")"
+   local -r sh_file="$0"
+   local -r help="$(doc::help_msg "$sh_file")"
    local docopt="${DOT_DOCOPT:-}"
 
    if [ -z "${docopt:-}" ]; then

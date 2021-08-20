@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/usr/bin/env -i bash --norc --noprofile
 
 # Required parameters:
 # @raycast.schemaVersion 1
@@ -14,4 +14,4 @@
 # @raycast.author Denis Isidoro
 # @raycast.authorURL https://denisidoro.github.io
 
-"${HOME}/dotfiles/bin/dot" osx focus-tab slack
+"${HOME}/dotfiles/bin/dot" osx focus-tab slack "https://uber.slack.com"

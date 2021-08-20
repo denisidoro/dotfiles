@@ -3,7 +3,6 @@
 source "${DOTFILES}/scripts/core/ansi.sh"
 
 main() {
-   local -r bin="${DOTFILES}/scripts/core/ansi.sh"
    if [ $# -eq 0 ]; then
       ansi::call "--help"
    else

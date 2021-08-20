@@ -1,5 +1,6 @@
-# vim: ft=sh
+#!/usr/bin/env bash
+
 dot_cd() {
-   builtin cd "${dotdir}"
-   unset -f $0
+   builtin cd "${dotdir}" || exit
+   unset -f "$0"
 }

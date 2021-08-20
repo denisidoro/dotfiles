@@ -13,7 +13,7 @@ doc::parse "$@"
 
 _ls() {
    log::info "$1"
-   ls -l "$1" | awk '{print $NF}' | grep '.plist'
+   find . "$1" | awk '{print $NF}' | grep '.plist'
    echoerr
 }
 

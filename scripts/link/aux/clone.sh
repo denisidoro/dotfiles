@@ -1,4 +1,5 @@
-# vim: ft=sh
+#!/usr/bin/env bash
+
 dot_clone() {
    local cloneto clonecmd
    local arg
@@ -43,5 +44,5 @@ dot_clone() {
       git -C "${cloneto}" submodule update
    fi
 
-   unset -f $0
+   unset -f "$0"
 }

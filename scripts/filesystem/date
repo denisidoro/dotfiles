@@ -31,7 +31,7 @@ only_digits() {
 epoch_to_touchdate() {
    local -r epoch=$1
    local -r date=$(epoch_to_date "$epoch")
-   printf "${date::-2}" | only_digits
+   printf '%s' "${date::-2}" | only_digits
    printf '.'
    echo "${date: -2}"
 }
@@ -39,7 +39,7 @@ epoch_to_touchdate() {
 epoch_to_filedate() {
    local -r epoch=$1
    local -r date=$(epoch_to_date "$epoch")
-   printf "${date::-8}"
+   printf '%s' "${date::-8}"
    printf '_'
    echo "${date: -8}"
 }
@@ -50,8 +50,8 @@ get_new_filepath() {
 
    local -r extension="${filepath##*.}"
 
-   printf "$(cd "$(dirname "$filepath")" && pwd)/"
-   printf "$(epoch_to_filedate "$target_time").${extension}" | sed 's/[^0-9_]*//g'
+   printf '%s' "$(cd "$(dirname "$filepath")" && pwd)/"
+   printf '%s' "$(epoch_to_filedate "$target_time").${extension}" | sed 's/[^0-9_]*//g'
    printf '.'
    echo "$extension"
 }
@@ -64,9 +64,9 @@ get_target_time() {
    local -r current_time="$1"
 
    local -r minutes_to_add=$(echo "$days * 24 * 60 + $hours * 60 + $minutes" | bc)
-   local -r seconds_to_add=$(($minutes_to_add * 60))
+   local -r seconds_to_add=$((minutes_to_add * 60))
 
-   echo $(($current_time + $seconds_to_add))
+   echo $((current_time + seconds_to_add))
 }
 
 prompt_text() {

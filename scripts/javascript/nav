@@ -14,6 +14,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 doc::maybe_help "$@"
 
 _fzf() {
+   # shellcheck disable=SC2016
    local -r preview='i={}; echo "$i" | grep -q "^\." || i=".${i}"; echo "$i" | grep -q "^\. = " && q="." || q="$(echo "$i" | sed -E "s|(\.[^ ]+).*|\1|")"; cat "'"$1"'" | jq -C "$q"'
    fzf --ansi --exact --preview "$preview"
 }
@@ -34,7 +35,7 @@ _pretty() {
 main() {
    local -r content="$(cat)"
    local -r temp_file=$(mktemp)
-   trap "rm -f $temp_file" 0 2 3 15
+   trap 'rm -f "$temp_file"' 0 2 3 15
    echo "$content" > "$temp_file"
    _input "$content" | _pretty | _fzf "$temp_file"
 }

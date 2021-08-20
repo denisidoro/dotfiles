@@ -1,10 +1,11 @@
-# vim: ft=sh
+#!/usr/bin/env bash
+
 dot_unlink() {
    local f
 
    for f in "$@"; do
       if [ ! -L "$f" ]; then
-         echo "$(prmpt 1 error)$(bd_ $f) is not the symbolic link."
+         echo "$(prmpt 1 error)$(bd_ "$f") is not the symbolic link."
          continue
       fi
 
@@ -24,5 +25,5 @@ dot_unlink() {
       echo "$(prmpt 2 copy)$abspath"
    done
 
-   unset -f $0
+   unset -f "$0"
 }

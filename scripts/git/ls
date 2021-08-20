@@ -34,7 +34,8 @@ _stash() {
 }
 
 _file() {
-   local files="$(git ls-files "$@")"
+   local files
+   files="$(git ls-files "$@")"
    local -r green="$(printf '\033[32m')"
    local -r reset="$(printf '\033[0m')"
 

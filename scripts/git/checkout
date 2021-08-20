@@ -47,8 +47,8 @@ _fzf() {
 }
 
 _target() {
-   local reaodnly tags="$1"
-   local reaodnly branches="$2"
+   local -r tags="$1"
+   local -r branches="$2"
    shift 2
 
    (echo "$tags"; echo "$branches") \

@@ -2,27 +2,61 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/log.sh"
 
 ##? Shellcheck
 ##?
 ##? Usage:
-##?    shellcheck
+##?    shellcheck ls [--all]
+##?    shellcheck fix
+##?    shellcheck test
 
 doc::parse "$@"
 
+_files0() {
+   cd "$DOTFILES" || exit
+   find "./bin" -maxdepth 2 -executable -type f
+   find "./scripts" -maxdepth 2 -executable -type f
+   find "." -maxdepth 5 -iname "*.sh" -type f
+}
+
 _files() {
-   find "${DOTFILES}/scripts/core" -maxdepth 4 -iname "*.sh" -type f
-   find "${DOTFILES}/tests" -maxdepth 4 -iname "*.sh" -type f
-   find "${DOTFILES}/bin" -maxdepth 2 -executable -type f
+   _files0 | sort -u
 }
 
-main() {
-   local errors=0
+_filtered_files() {
+   _files \
+      | grep -v 'scripts/link/aux' \
+      | grep -v 'scripts/rice' \
+      | grep -v 'scripts/package' \
+      | grep -v 'scripts/git' \
+      | grep -v 'scripts/self/install' \
+      | grep -v 'scripts/self/update' \
+      | grep -v 'scripts/style' \
+      | grep -v 'docopt' \
+      | grep -v '.py'
+}
+
+_fix_one() {
+   log::warn "$1"
+   shellcheck -x -f diff "$(realpath "$1")" \
+      | sed "s|${DOTFILES}|.|g" \
+      | sed 's|././tests|./tests|g' \
+      | git apply
+}
+
+_fix() {
    for f in $(_files); do
-      shellcheck -x -e SC2154 "$f" || errors=$((errors+1))
+      _fix_one "$f" || true
    done
-   return $errors
 }
 
-cd "$DOTFILES" || exit
-main "$@"
+if $ls && $all; then
+   _files
+elif $ls && ! $all; then
+   _filtered_files
+elif $fix; then
+   _fix
+elif $test; then
+   dot self test file 'shellcheck'
+fi

@@ -43,8 +43,8 @@ git::match_content() {
    local pattern="$3"
    local stop="${4:-true}"
 
-   for file in $(echo "$files"); do
-      local res=$(cat "$file" | grep -E --line-number "$pattern");
+   for file in $files; do
+      local -r res=$(cat "$file" | grep -E --line-number "$pattern");
       if [ -n "$res" ]; then
          $stop && { not_commited_msg; }
          log::err "$file matched the \"$name\" blacklist content regex:"
@@ -66,8 +66,8 @@ git::match_filename() {
    local pattern="$3"
    local stop="${4:-true}"
 
-   for file in $(echo "$files"); do
-      local res=$(echo "$file" | grep -E "$pattern");
+   for file in $files; do
+      local -r res=$(echo "$file" | grep -E "$pattern");
       if [ -n "$res" ]; then
          $stop && { not_commited_msg; }
          log::err "$file matched the \"$name\" blacklist filename regex:"
@@ -95,10 +95,9 @@ git::check_conflict() {
    local err=false
 
    for file in $files; do
-      cat "$file" \
-         | grep -qE '^[><=]{7}( |$)' \
-         && err=true \
-         || true
+      if grep -qE '^[><=]{7}( |$)' "$file"; then
+         err=true
+      fi
       if $err; then
          git::not_commited_msg
          log::err "$file still has unresolved conflicts"

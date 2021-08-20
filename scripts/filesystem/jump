@@ -21,8 +21,8 @@ _fre_suggestions() {
 }
 
 files_for_folders() {
-   for folder in $(cat); do
-      find "$folder" -maxdepth 1 -type f \
+   while IFS= read -r folder; do
+      find "$folder" -maxdepth 1 -type f -print0 \
          | xargs -I% echo "$folder/%"
    done
 }
@@ -37,7 +37,7 @@ best_match() {
 }
 
 list_files() {
-   ag --hidden --ignore .git -g "${1:-}"
+   ag --hidden --ignore .git -g "" # "${1:-}"
 }
 
 list_folders() {
