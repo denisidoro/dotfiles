@@ -1,7 +1,0 @@
-Emoji search             James Sumners
-IncognitoClone           Vitor Galvão
-Menu Bar Search          Benzi Ahamed
-navi                     Denis Isidoro
-Spotify Mini Player      vdesabou
-Visual Studio Code       Alex Chan
-
