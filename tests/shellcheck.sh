@@ -3,7 +3,12 @@
 source "${DOTFILES}/scripts/core/log.sh"
 
 _validate() {
-   dot self shellcheck check "$@"
+   shellcheck -x \
+      -e SC2154 \
+      -e SC2119 \
+      -e SC2002 \
+      -e SC2096 \
+      "$@"
 }
 
 _run() {

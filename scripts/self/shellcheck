@@ -8,7 +8,6 @@ source "${DOTFILES}/scripts/core/log.sh"
 ##?
 ##? Usage:
 ##?    shellcheck ls [--all]
-##?    shellcheck check <file>
 ##?    shellcheck fix
 ##?    shellcheck test
 
@@ -52,23 +51,10 @@ _fix() {
    done
 }
 
-_shellcheck() {
-   shellcheck -x \
-      -e SC2154 \
-      -e SC2119 \
-      -e SC2002 \
-      -e SC2096 \
-      "$@"
-}
-
-cd "$DOTFILES" || exit
-
 if $ls && $all; then
    _files
 elif $ls && ! $all; then
    _filtered_files
-elif $check; then
-   _shellcheck "$file"
 elif $fix; then
    _fix
 elif $test; then

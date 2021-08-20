@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? IGDB
+##?
+##? Usage:
+##?    igdb api <endpoint> <query>
+
+doc::parse "$@"
+
+api_call() {
+   local -r endpoint="$1"
+   local -r query="$2"
+
+   curl "https://api-v3.igdb.com/${endpoint}" \
+      -d "$query" \
+      -H "user-key: ${IGDB_KEY}" \
+      -H 'Accept: application/json' \
+      -s
+}
+
+if $api; then
+   api_call "$endpoint" "$query"
+fi
