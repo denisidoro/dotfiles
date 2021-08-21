@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2046,SC2015,SC1090,SC1091,SC2034,SC2012,SC2207,SC1090,SC2012
 set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/core.sh"
@@ -24,7 +23,7 @@ fi
 if [ $# -gt 1 ]; then
    pkg_failures=0
    for package in "$@"; do
-      dot pkg check $($prevent_recipe && printf %s '--prevent-recipe') "$package" || pkg_failures=$((pkg_failures+1))
+      dot pkg check "$($prevent_recipe && printf %s '--prevent-recipe')" "$package" || pkg_failures=$((pkg_failures+1))
    done
    exit "$pkg_failures"
 fi
@@ -35,7 +34,7 @@ exit::is_installed() {
 }
 
 exit::isnt_installed() {
-   log::err "${package} isn't installed"
+   log::error "${package} isn't installed"
    exit 234
 }
 
@@ -48,6 +47,7 @@ if $prevent_recipe || ! [ -f "$file" ]; then
    exit::isnt_installed
 fi
 
+# shellcheck disable=SC1090
 source "$file"
 
 if has package::is_installed && package::is_installed &>/dev/null; then

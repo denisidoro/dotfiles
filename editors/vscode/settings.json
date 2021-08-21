@@ -199,7 +199,7 @@
       }
    ],
    "extensions.ignoreRecommendations": true,
-   "workbench.colorTheme": "Solarized Light",
+   "workbench.colorTheme": "Ayu Mirage Bordered",
    "typescript.updateImportsOnFileMove.enabled": "always",
    "C_Cpp.updateChannel": "Insiders",
    "workbench.editorAssociations": {

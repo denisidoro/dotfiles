@@ -29,7 +29,7 @@ test::filter_check() {
 
 test::fail() {
    FAILED=$((FAILED+1))
-   log::err "Test failed..."
+   log::error "Test failed..."
    return
 }
 
@@ -82,7 +82,7 @@ test::equals() {
    local -r expected="${1:-}"
 
    if [[ "$actual" != "$expected" ]]; then
-      log::err "Expected...\n\n${expected}\n\n...but got:\n\n${actual}'"
+      log::error "Expected...\n\n${expected}\n\n...but got:\n\n${actual}'"
       return 2
    fi
 }
@@ -92,7 +92,7 @@ test::includes() {
    local -r should_include="${1:-}"
 
    if ! echo "$actual" | grep -Fq "$should_include"; then
-      log::err "Expected the following string to include...\n\n${should_include}\n\n...but it doesn't:\n\n${actual}"
+      log::error "Expected the following string to include...\n\n${should_include}\n\n...but it doesn't:\n\n${actual}"
       return 3
    fi
 }
@@ -103,7 +103,7 @@ test::finish() {
       log::warn "${SKIPPED} tests skipped!"
    fi
    if [ $FAILED -gt 0 ]; then
-      log::err "${PASSED} tests passed but ${FAILED} failed... :("
+      log::error "${PASSED} tests passed but ${FAILED} failed... :("
       exit "${FAILED}"
    else
       log::success "All ${PASSED} tests passed! :)"

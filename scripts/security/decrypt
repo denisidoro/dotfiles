@@ -21,12 +21,12 @@ source "${DOTFILES}/scripts/core/log.sh"
 doc::parse "$@"
 
 algo_0() {
-   log::err "Impossible to decrypt"
+   log::error "Impossible to decrypt"
    exit 1
 }
 
 algo_1() {
-   log::err "Impossible to decrypt"
+   log::error "Impossible to decrypt"
    exit 1
 }
 

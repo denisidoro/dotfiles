@@ -31,7 +31,7 @@ git::check_json() {
       _parse_json "$file" &>/dev/null || err=true
       if $err; then
          git::not_commited_msg
-         log::err "Lint check of JSON object failed\n\tin $git_dir/$file"
+         log::error "Lint check of JSON object failed\n\tin $git_dir/$file"
          exit 1
       fi
    done
@@ -47,7 +47,7 @@ git::match_content() {
       local -r res=$(cat "$file" | grep -E --line-number "$pattern");
       if [ -n "$res" ]; then
          $stop && { not_commited_msg; }
-         log::err "$file matched the \"$name\" blacklist content regex:"
+         log::error "$file matched the \"$name\" blacklist content regex:"
          echo "$res"
          if $stop; then
             if ! feedback::confirmation "Are you sure you want to commit anyway?" false; then
@@ -70,7 +70,7 @@ git::match_filename() {
       local -r res=$(echo "$file" | grep -E "$pattern");
       if [ -n "$res" ]; then
          $stop && { not_commited_msg; }
-         log::err "$file matched the \"$name\" blacklist filename regex:"
+         log::error "$file matched the \"$name\" blacklist filename regex:"
 
          if $stop; then
             if ! feedback::confirmation "Are you sure you want to commit anyway?" false; then
@@ -100,14 +100,14 @@ git::check_conflict() {
       fi
       if $err; then
          git::not_commited_msg
-         log::err "$file still has unresolved conflicts"
+         log::error "$file still has unresolved conflicts"
          exit 5
       fi
    done
 }
 
 git::not_commited_msg() {
-   log::err "Your changes were not commited"
+   log::error "Your changes were not commited"
 }
 
 git::commited_anyway_msg() {

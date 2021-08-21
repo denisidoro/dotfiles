@@ -11,21 +11,18 @@ log::ansi() {
    fi
    local -r txt="$*"
    case "${mod1}${mod2}" in
-      "--blue--inverse") printf "\033[34m\033[7m%s\033[27;39m" "$txt" ;;
       "--blue") printf "\033[34m%s\033[39m" "$txt" ;;
+      "--blue--inverse") printf "\033[34m\033[7m%s\033[27;39m" "$txt" ;;
       "--magenta") printf "\033[35m%s\033[39m" "$txt" ;;
-      "--yellow--inverse") printf "\033[33m\033[7m%s\033[27;39m" "$txt" ;;
+      "--magenta--inverse") printf "\033[35m\033[7m%s\033[27;39m" "$txt" ;;
       "--yellow") printf "\033[33m%s\033[39m" "$txt" ;;
-      "--red--inverse") printf "\033[31m\033[7m%s\033[27;39m" "$txt" ;;
+      "--yellow--inverse") printf "\033[33m\033[7m%s\033[27;39m" "$txt" ;;
       "--red") printf "\033[31m%s\033[39m" "$txt" ;;
-      "--green--inverse") printf "\033[32m\033[7m%s\033[27;39m" "$txt" ;;
+      "--red--inverse") printf "\033[31m\033[7m%s\033[27;39m" "$txt" ;;
       "--green") printf "\033[32m%s\033[39m" "$txt" ;;
+      "--green--inverse") printf "\033[32m\033[7m%s\033[27;39m" "$txt" ;;
       *) dot terminal ansi "${all_args[@]}" ;;
    esac
-}
-
-log::_stderr() {
-   echoerr -e "$*"
 }
 
 log::_header() {
@@ -39,14 +36,16 @@ log::_header() {
    printf "%${right}s" '' | tr ' ' =
 }
 
-log::header() { log::_stderr "$(log::ansi --magenta "$(log::_header "$@")")"; }
-log::warn() { log::_stderr "$(log::ansi --yellow --inverse '    WARN ')" "$(log::ansi --yellow "$@")"; }
-log::err() { log::_stderr "$(log::ansi --red --inverse '   ERROR ')" "$(log::ansi --red "$@")"; }
-log::success() { log::_stderr "$(log::ansi --green --inverse ' SUCCESS ')" "$(log::ansi --green "$@")"; }
-log::info() { log::_stderr "$(log::ansi --blue --inverse '    INFO ')" "$(log::ansi --blue "$@")"; }
+log::fatal() { echoerr "$(log::ansi --red --inverse '   FATAL ')" "$(log::ansi --red --inverse "$@")"; }
+log::error() { echoerr "$(log::ansi --red --inverse '   ERROR ')" "$(log::ansi --red "$@")"; }
+log::warn() { echoerr "$(log::ansi --yellow --inverse '    WARN ')" "$(log::ansi --yellow "$@")"; }
+log::success() { echoerr "$(log::ansi --green --inverse ' SUCCESS ')" "$(log::ansi --green "$@")"; }
+log::info() { echoerr "$(log::ansi --green --inverse '    INFO ')" "$(log::ansi --green "$@")"; }
+log::debug() { echoerr "$(log::ansi --blue --inverse '   DEBUG ')" "$(log::ansi --blue "$@")"; }
+log::trace() { echoerr "$(log::ansi --magenta --inverse '   TRACE ')" "$(log::ansi --magenta "$@")"; }
 
 die() {
-   log::err "$@"
+   log::fatal "$@"
    exit 42
 }
 

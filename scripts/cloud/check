@@ -32,7 +32,7 @@ main() {
       if $success; then
          log::success "$log_args"
       else
-         log::err "$log_args"
+         log::error "$log_args"
       fi
    done
 }
