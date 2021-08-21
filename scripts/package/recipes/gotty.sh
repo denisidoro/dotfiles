@@ -23,7 +23,7 @@ url::get() {
 }
 
 package::install() {
-   has brew && brew install yudai/gotty/gotty && return 0 || true
+   if has brew && brew install yudai/gotty/gotty; then return 0; fi
 
    dot pkg add wget
    dot pkg add tar

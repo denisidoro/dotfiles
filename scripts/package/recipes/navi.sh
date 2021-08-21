@@ -2,7 +2,7 @@
 set -euo pipefail
 
 package::install() {
-   recipe::cargo navi && return 0 || true
+   if recipe::cargo navi; then return 0; fi
 
    dot pkg add curl
    bash <(curl -sL https://raw.githubusercontent.com/denisidoro/navi/master/scripts/install)

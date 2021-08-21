@@ -2,7 +2,7 @@
 set -euo pipefail
 
 package::install() {
-   dot pkg add --prevent-recipe volta && return 0 || true
+   if dot pkg add --prevent-recipe volta; then return 0; fi
 
    dot pkg add curl
    curl https://get.volta.sh | bash

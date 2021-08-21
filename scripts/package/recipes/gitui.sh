@@ -2,7 +2,7 @@
 set -euo pipefail
 
 package::install() {
-   dot pkg add --prevent-recipe gitui && return 0 || true
+   if dot pkg add --prevent-recipe gitui; then return 0; fi
 
    dot pkg add cargo
    cargo install gitui

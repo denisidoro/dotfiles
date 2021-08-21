@@ -10,31 +10,27 @@ source "${DOTFILES}/scripts/core/log.sh"
 ##?    shellcheck ls [--all]
 ##?    shellcheck fix
 ##?    shellcheck test
+##?    shellcheck check <args>...
 
 doc::parse "$@"
 
-_files0() {
+_unsorted_files() {
    cd "$DOTFILES" || exit
    find "./bin" -maxdepth 2 -executable -type f
-   find "./scripts" -maxdepth 2 -executable -type f
+   find "./scripts" -maxdepth 5 -executable -type f
    find "." -maxdepth 5 -iname "*.sh" -type f
 }
 
 _files() {
-   _files0 | sort -u
+   _unsorted_files | sort -u
 }
 
 _filtered_files() {
    _files \
       | grep -v 'scripts/link/aux' \
       | grep -v 'scripts/rice' \
-      | grep -v 'scripts/package' \
-      | grep -v 'scripts/git' \
-      | grep -v 'scripts/self/install' \
-      | grep -v 'scripts/self/update' \
-      | grep -v 'scripts/style' \
       | grep -v 'docopt' \
-      | grep -v '.py'
+      | grep -v '\.py'
 }
 
 _fix_one() {
@@ -51,6 +47,15 @@ _fix() {
    done
 }
 
+_check() {
+   shellcheck -x \
+      -e SC2154 \
+      -e SC2119 \
+      -e SC2002 \
+      -e SC2096 \
+      "${args[@]}"
+}
+
 if $ls && $all; then
    _files
 elif $ls && ! $all; then
@@ -59,4 +64,6 @@ elif $fix; then
    _fix
 elif $test; then
    dot self test file 'shellcheck'
+elif $check; then
+   _check
 fi

@@ -2,6 +2,6 @@
 set -euo pipefail
 
 package::install() {
-   has brew && brew install denisidoro/tools/docpars && return 0 || true
+   if has brew && brew install denisidoro/tools/docpars; then return 0; fi
    recipe::cargo docpars
 }

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 package::install() {
-   has brew && brew install borkdude/brew/jet && return 0 || true
+   if has brew && brew install borkdude/brew/jet; then return 0; fi
 
    dot pkg add curl
    bash <(curl -s https://raw.githubusercontent.com/borkdude/jet/master/install)

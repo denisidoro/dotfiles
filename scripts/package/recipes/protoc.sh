@@ -2,8 +2,8 @@
 set -euo pipefail
 
 package::install() {
-   has brew && brew install protobuf && return 0 || true
-   has apt && sudo apt install -y protobuf-compiler protobuf-compiler && return 0 || true
+   if has brew && brew install protobuf; then return 0; fi
+   if has apt && sudo apt install -y protobuf-compiler protobuf-compiler; then return 0; fi
 
    local -r PROTOC_ZIP=protoc-3.14.0-osx-x86_64.zip
    curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v3.14.0/$PROTOC_ZIP

@@ -32,6 +32,7 @@ package::install() {
       $EDITOR "$ZSHRC_PATH"
    fi
 
+   # shellcheck source=./local/zshrc
    source "$ZSHRC_PATH" || true
 
    if [ -n "${DOT_DOCOPT:-}" ]; then

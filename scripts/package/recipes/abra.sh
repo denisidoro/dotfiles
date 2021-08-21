@@ -2,6 +2,8 @@
 set -euo pipefail
 
 package::install() {
-   has brew && brew install denisidoro/tools/abra && return 0 || true
+   if has brew && brew install denisidoro/tools/abra; then
+      return 0
+   fi
    recipe::cargo kadabra abra
 }
