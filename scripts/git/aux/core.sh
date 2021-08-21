@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/core/log.sh"
 source "${DOTFILES}/scripts/core/git.sh"
 
 export GIT_GI_REPO_REMOTE=${GIT_GI_REPO_REMOTE:-https://github.com/dvcs/gitignore}

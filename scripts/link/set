@@ -14,7 +14,7 @@ source "${DOTFILES}/scripts/package/aux/core.sh"
 doc::maybe_help "$@"
 
 main() {
-   source "${DOTFILES}/scripts/link/aux/core.sh"
+   source "${DOTFILES}/repos/dotlink/core.sh"
    dotlink_main update "$@"
 }
 

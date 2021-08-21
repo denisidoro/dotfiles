@@ -41,4 +41,3 @@ export -f klap
 
 dot::install_if_necessary
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/core/log.sh"

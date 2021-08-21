@@ -2,7 +2,6 @@
 # set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/core/log.sh"
 
 ##? Set sane defaults
 ##?    ~/.macos — https://mths.be/macos

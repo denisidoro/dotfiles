@@ -24,7 +24,7 @@ _validate() {
 
 cd "$DOTFILES" || exit
 
-test::set_suite "bash - symlink"
+test::set_suite "bash | symlink"
 
 for f in ./links/[^gdrive]*; do
    test::run "$f - symlinks are valid" _validate "$f"

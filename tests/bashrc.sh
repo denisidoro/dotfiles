@@ -7,5 +7,5 @@ symlink_bashrc() {
    source "$bashrc_path"
 }
 
-test::set_suite "bash - bashrc"
+test::set_suite "bash | bashrc"
 test::skip "sourcing the bashrc won't bork" symlink_bashrc

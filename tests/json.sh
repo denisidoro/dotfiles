@@ -19,5 +19,5 @@ _run() {
    done
 }
 
-test::set_suite "js - json"
+test::set_suite "js | json"
 test::lazy_run _run

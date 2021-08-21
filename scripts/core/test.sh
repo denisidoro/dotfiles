@@ -4,11 +4,11 @@ export FORCE_GNU=true
 
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/coll.sh"
-source "${DOTFILES}/scripts/core/log.sh"
 
 PASSED=0
 FAILED=0
 SKIPPED=0
+RAN=false
 SUITE=""
 
 test::set_suite() {
@@ -36,7 +36,7 @@ test::fail() {
 test::skip() {
    test::filter_check || return 0
    echo
-   log::info "${SUITE:-unknown} - ${1:-unknown}"
+   log::info "${SUITE:-unknown} | ${1:-unknown}"
    SKIPPED=$((SKIPPED+1))
    log::warn "Test skipped..."
    return
@@ -51,8 +51,9 @@ _with_sleep() {
 test::run() {
    test::filter_check || return 0
    echo
-   log::info "${SUITE:-unknown} - ${1:-unknown}"
+   log::info "${SUITE:-unknown} | ${1:-unknown}"
    shift
+   RAN=true
    if "$@"; then
       test::success
    else
@@ -119,12 +120,16 @@ test::find_files() {
 test::start() {
    for test in $(test::find_files "$@"); do
       seconds=$SECONDS
+      RAN=false
       # shellcheck disable=SC1090
       source "$test"
+      if ! $RAN; then
+         continue
+      fi
       delta=$((SECONDS - seconds))
       echoerr
       filename="$(basename "$test")"
-      log::warn "Running ${filename} took ${delta} seconds"
+      log::debug "Running ${filename} took ${delta} seconds"
    done
 
    test::finish

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-source "${DOTFILES}/scripts/core/log.sh"
 source "${DOTFILES}/scripts/core/feedback.sh"
 
 git::prompt_if_protected() {

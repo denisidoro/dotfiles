@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-source "${DOTFILES}/scripts/core/log.sh"
 
 _validate() {
    dot self shellcheck check "$@"
@@ -18,5 +17,5 @@ _run() {
    done
 }
 
-test::set_suite "bash - shellcheck"
+test::set_suite "bash | shellcheck"
 test::lazy_run _run

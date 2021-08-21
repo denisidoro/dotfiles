@@ -95,7 +95,7 @@ coll_set() {
       | test::coll_equals 1 2 3 4
 }
 
-test::set_suite "bash - coll"
+test::set_suite "bash | coll"
 test::run "map" coll_map
 test::run "filter" coll_filter
 test::run "remove" coll_remove

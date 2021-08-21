@@ -2,7 +2,6 @@
 set -uo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/core/log.sh"
 
 ##? Source code indentation fixer
 ##?
@@ -47,7 +46,7 @@ _get_language() {
 
 main() {
    language=${language:-$(_get_language "$filename")}
-   log::warn "formatting $filename as <${language}>"
+   log::info "beautify | ${language} | ${filename}"
 
    case "$language" in
       sh_old)

@@ -47,7 +47,7 @@ main() {
       _log::installing
       for pkg_mgr in apt apk pkg yum dnf port emerge pacman brew; do
          if dot pkg proxy $pkg_mgr add "$package"; then
-            return 0 
+            return 0
          fi
       done
       return 234

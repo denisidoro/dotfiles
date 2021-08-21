@@ -50,7 +50,7 @@ print_health() {
    dot "$@" --help | grep -q Usage
 }
 
-test::set_suite "bash - help"
+test::set_suite "bash | help"
 
 _run() {
    for bin in $(_bins); do
