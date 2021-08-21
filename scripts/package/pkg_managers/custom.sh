@@ -17,7 +17,7 @@ custom::install() {
 
    if has "$depend_fn"; then
       echoerr dep_fn "$depend_fn"
-      local dependencies="$($depend_fn)"
+      local -r dependencies="$($depend_fn)"
       for dependency in $dependencies; do
          install_if_not_installed "$dependency" || true
       done

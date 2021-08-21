@@ -14,7 +14,7 @@ source "${DOTFILES}/scripts/core/str.sh"
 doc::maybe_help "$@"
 
 _row() {
-   for i in $(seq 1 "$cols"); do
+   for _ in $(seq 1 "$cols"); do
       echo -n "█"
    done
 }
@@ -33,23 +33,23 @@ _as_printf_color() {
 _print_colors() {
    local -r row="$(_row)"
    local -r rows=$(echo "${COLS:-5} * 3 / 5" | bc)
-   local i color c
-   for i in $(seq 1 "$rows"); do
+   local color c
+   for _ in $(seq 1 "$rows"); do
       for color in "$@"; do
          c="$(_as_printf_color "$color")"
-         printf "\x1b[38;2;${c}m${row}\x1b[0m "
+         printf "\x1b[38;2;%sm%s\x1b[0m " "$c" "$row"
       done
       echo
    done
 }
 
 _rgb_to_hex() {
-   echo "$(printf \#%02X%02X%02X "$@")"
+   printf \#%02X%02X%02X "$@"
 }
 
 _hex_to_rgb() {
    local -r hex="$(echo "$1" | tr -d '#')"
-   echo "$(printf "%d %d %d\n" 0x"${hex:0:2}" 0x"${hex:2:2}" 0x"${hex:4:2}")"
+   printf "%d %d %d\n" 0x"${hex:0:2}" 0x"${hex:2:2}" 0x"${hex:4:2}"
 }
 
 operation="$1"

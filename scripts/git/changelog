@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2046,SC2015,SC1090,SC1091,SC2034,SC2012,SC2207,SC1090,SC201,SC2059,SC2155,SC2013
 
 source "${DOTFILES}/scripts/git/aux/core.sh"
 source "${DOTFILES}/scripts/core/str.sh"
@@ -24,8 +23,8 @@ main() {
 }
 
 github::lines() {
-   local -r e2="$(printf $ESCAPE_CHAR_2)"
-   local -r e3="$(printf $ESCAPE_CHAR_3)"
+   local -r e2="$(printf '%s' "$ESCAPE_CHAR_2")"
+   local -r e3="$(printf '%s' "$ESCAPE_CHAR_3")"
 
    grep '<code>' -A3 \
       | sed "s/^--/${e2}/g" \
@@ -40,7 +39,8 @@ github::lines() {
 
 github::process_line() {
    local -r line="$1"
-   local commit="$(echo "$line" | cut -d';' -f1)"
+   local commit
+   commit="$(echo "$line" | cut -d';' -f1)"
    commit="${commit:0:5}"
    local -r name="$(echo "$line" | cut -d';' -f2)"
    local -r pr="$(echo "$line" | cut -d';' -f3)"
@@ -70,7 +70,9 @@ git::changelog_release_github() {
 
    REPO_URL="$(_repo_url)"
 
-   pairs=($(_all_tags))
+   pairs=()
+   while IFS='' read -r line; do pairs+=("$line"); done < <(_all_tags)
+
    len="${#pairs[@]}"
 
    for i in $(seq 0 $((len - 2))); do
@@ -94,11 +96,11 @@ git::changelog_commit() {
       | awk '{print $1}' \
       | sed -E 's|(.*)/(.*)|\2|g')"
 
-   local -r n="$(printf "$changes" \
+   local -r n="$(printf '%s' "$changes" \
       | wc -l \
       | xargs)"
 
-   local msg="$(printf "$changes" \
+   local -r msg="$(printf '%s' "$changes" \
       | head -n3 \
       | tr '\n' ';' \
       | sed -E 's/ *; */, /g' \
@@ -112,7 +114,9 @@ git::changelog_commit() {
 git::changelog_release_local() {
    REPO_URL="$(_repo_url)"
 
-   pairs=($(_all_tags))
+   pairs=()
+   while IFS='' read -r line; do pairs+=("$line"); done < <(_all_tags)
+
    len="${#pairs[@]}"
 
    for i in $(seq 0 $((len - 2))); do
@@ -144,9 +148,9 @@ _capture() {
 }
 
 _format() {
-   for line in $(cat); do
-      local commit="$(echo "$line" | cut -d';' -f1 | xargs | cut -c1-5)"
-      local msg="$(echo "$line" | cut -d';' -f2 | sed -E "s|\(#([0-9]+)\)|([#\1](${REPO_URL}/issues/\1))|g")"
+   while IFS= read -r line; do
+      local -r commit="$(echo "$line" | cut -d';' -f1 | xargs | cut -c1-5)"
+      local -r msg="$(echo "$line" | cut -d';' -f2 | sed -E "s|\(#([0-9]+)\)|([#\1](${REPO_URL}/issues/\1))|g")"
       echo "- [\`${commit}\`](${REPO_URL}/commit/${commit}) ${msg}"
    done
 }

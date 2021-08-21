@@ -7,15 +7,15 @@ _brew_osx() {
 
 _brew_linux() {
    if has apt; then
-      sudo apt update && sudo apt-get install -y build-essential curl file git && exit 0 || true
+      if sudo apt update && sudo apt-get install -y build-essential curl file git; then return 0; fi
    elif has yum; then
-      sudo yum groupinstall 'Development Tools' && sudo yum install curl file git && exit 0 || true
+      if sudo yum groupinstall 'Development Tools' && sudo yum install curl file git; then return 0; fi
    fi
 
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
 
-   test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-   test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+   test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+   test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
    test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >> ~/.bash_profile
    echo "eval \$($(brew --prefix)/bin/brew shellenv)" >> ~/.profile
 }

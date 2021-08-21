@@ -72,9 +72,10 @@ recipe::clone_as_submodule() {
    yes | git clone "$(git::url "$user" "$repo")" --depth 1 "$module_path"
 
    cd "$module_path" || exit
-   git submodule init &2> /dev/null \
-      && git submodule update &2> /dev/null \
-      || true
+   set +e
+   git submodule init 2> /dev/null
+   git submodule update 2> /dev/null
+   set -e
 }
 
 recipe::install_from_git() {
@@ -101,7 +102,9 @@ recipe::cargo() {
    if has cargo; then
       cargo install "$cargo_name"
    else
-      dot pkg add --prevent-recipe "$pkg_manager_name" && return 0 || true
+      if dot pkg add --prevent-recipe "$pkg_manager_name"; then
+         return 0
+      fi
       dot pkg add cargo
       cargo install "$cargo_name"
    fi

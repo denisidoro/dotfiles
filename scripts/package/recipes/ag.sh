@@ -2,9 +2,9 @@
 set -euo pipefail
 
 package::install() {
-   has apt && dot pkg proxy apt add silversearcher-ag && return 0 || true
-   has brew && brew install the_silver_searcher && return 0 || true
-   has pkg && dot pkg proxy pkg add the_silver_searcher && return 0 || true
+   if has apt && dot pkg proxy apt add silversearcher-ag; then return 0; fi
+   if has brew && brew install the_silver_searcher; then return 0; fi
+   if has pkg && dot pkg proxy pkg add the_silver_searcher; then return 0; fi
 
    dot pkg add git
    recipe::install_from_git "ggreer/the_silver_searcher"

@@ -63,7 +63,7 @@ _checkout() {
    tags=$(_tags "$@") || return
    branches=$(_branches "$@") || return
    target=$(_target "$tags" "$branches" "$@") || return
-   git checkout $(echo "$target" | awk '{print $2}')
+   git checkout "$(echo "$target" | awk '{print $2}')"
 }
 
 if $prompt; then

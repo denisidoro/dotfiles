@@ -32,6 +32,7 @@ package::install() {
       $EDITOR "$ZSHRC_PATH"
    fi
 
+   # shellcheck disable=SC1090,SC1091
    source "$ZSHRC_PATH" || true
 
    if [ -n "${DOT_DOCOPT:-}" ]; then

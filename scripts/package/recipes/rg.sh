@@ -2,6 +2,6 @@
 set -euo pipefail
 
 package::install() {
-   recipe::cargo ripgrep && return 0 || true
+   if recipe::cargo ripgrep; then return 0; fi
    recipe::cargo rg
 }
