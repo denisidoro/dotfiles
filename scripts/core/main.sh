@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if ${DOT_DEBUG:-false}; then
+   set -x
+fi
+
 echoerr() {
    echo "$@" 1>&2
 }

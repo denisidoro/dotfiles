@@ -39,7 +39,8 @@ _log::installing() {
 main() {
    package="$(pkg::alias "$1" "$prevent_recipe")"
 
-   dot pkg check "$($prevent_recipe && printf %s '--prevent-recipe')" "$package" && exit 0
+   # shellcheck disable=SC2046
+   dot pkg check $($prevent_recipe && printf %s '--prevent-recipe') "$package" && exit 0
 
    file="$(pkg::source_file "$package")"
 
