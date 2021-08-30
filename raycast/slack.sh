@@ -1,4 +1,4 @@
-#!/usr/bin/env -i bash --norc --noprofile
+#!/usr/bin/env bash --norc --noprofile
 
 # Required parameters:
 # @raycast.schemaVersion 1

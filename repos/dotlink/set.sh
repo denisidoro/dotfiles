@@ -124,7 +124,7 @@ dot_set() {
          echo "    ($(bd_ d)):show diff"
          echo "    ($(bd_ e)):edit files"
          echo "    ($(bd_ f)):replace"
-         echo "    ($(bd_ b)):replace and make backup"
+         echo "    ($(bd_ b)):make backup and replace"
          echo "    ($(bd_ n)):do nothing"
          echo -n ">>> "; read line
          case $line in

@@ -8,8 +8,8 @@
    "files.autoSave": "onFocusChange",
    "files.trimFinalNewlines": true,
    "editor.formatOnPaste": true,
-   "editor.formatOnSave": true,
-   // "editor.formatOnSave": false,
+   // "editor.formatOnSave": true,
+   "editor.formatOnSave": false,
    "editor.minimap.enabled": true,
    "editor.mouseWheelZoom": true,
    "explorer.sortOrder": "default",
@@ -199,7 +199,7 @@
       }
    ],
    "extensions.ignoreRecommendations": true,
-   "workbench.colorTheme": "Solarized Light",
+   "workbench.colorTheme": "Ayu Mirage Bordered",
    "typescript.updateImportsOnFileMove.enabled": "always",
    "C_Cpp.updateChannel": "Insiders",
    "workbench.editorAssociations": {

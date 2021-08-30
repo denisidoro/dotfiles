@@ -1,0 +1,184 @@
+% yabai, display
+
+# Focus display focused before the current one (so you can alternate)
+yabai -m display --focus recent
+
+# Focus previous display by arrangement index
+yabai -m display --focus prev
+
+# Focus next display by arrangement index
+yabai -m display --focus next
+
+# Focus display with arrangement index 2
+yabai -m display --focus 2
+
+
+% yabai, space
+
+# Focus space focused before the current one (so you can alternate)
+yabai -m space --focus recent
+
+# Focus previous space by mission-control index
+yabai -m space --focus prev
+
+# Focus next space by mission-control index
+yabai -m space --focus next
+
+# Focus space with mission-control index 2
+yabai -m space --focus 2
+
+# Focus next space by mission-control index if one exists, otherwise focus the first space
+yabai -m space --focus next || yabai -m space --focus first
+
+# Focus previous space by mission-control index if one exists, otherwise focus the last space
+yabai -m space --focus prev || yabai -m space --focus last
+
+# Create space on the active display
+yabai -m space --create
+
+# Delete focused space and focus first space on display
+yabai -m space --destroy
+
+# Move space left
+yabai -m space --move prev
+
+# Move space right
+yabai -m space --move next
+
+# Send space to display 2 (by display arrangement index)
+yabai -m space --display 2
+
+# Balance out all windows both horizontally and vertically to occupy the same space
+yabai -m space --balance
+
+# Flip the tree horizontally
+yabai -m space --mirror x-axis
+
+# Flip the tree vertically
+yabai -m space --mirror y-axis
+
+# Rotate the window tree clock-wise
+yabai -m space --rotate 90
+
+# Set layout of the space to bsp
+yabai -m space --layout bsp
+
+# Set layout of the space to float
+yabai -m space --layout float
+
+# toggle padding on the current space
+yabai -m space --toggle padding
+
+# add 10 to the top padding, subtract 5 from the left and right padding
+yabai -m space --padding rel:10:0:-5:-5
+
+# set all padding to 20 (abs = absolute)
+yabai -m space --padding abs:20:20:20:20
+
+# toggle gap between windows on the current space
+yabai -m space --toggle gap
+
+# add 10 to gap between windows (rel = relative)
+yabai -m space --gap rel:10
+
+# set gap between windows to 0 (abs = absolute)
+yabai -m space --gap abs:0
+
+
+% yabai, window
+
+# focus window in direction of focused window (options: north, east, south, west)
+yabai -m window --focus east
+
+# focus window that was previously focused
+yabai -m window --focus recent
+
+# focus previous or next window in window tree (options: prev, next)
+yabai -m window --focus prev
+
+# focus first or last window in window tree (options: first, last)
+yabai -m window --focus first
+
+# focus window under cursor
+yabai -m window --focus mouse
+
+# swap window position and size with window in direction of focused window
+yabai -m window --swap north
+
+# swap with previously focused window
+yabai -m window --swap recent
+
+# swap with previous or next window in window tree (options: prev, next)
+yabai -m window --swap prev
+
+# swap with first or last window in window tree (options: first, last)
+yabai -m window --swap first
+
+# swap with window under cursor
+yabai -m window --swap mouse
+
+# cycle window clockwise
+win=$(yabai -m query --windows --window last | jq '.id')
+while : ; do
+    yabai -m window "$win" --swap prev &> /dev/null
+    if [[ $? -eq 1 ]]; then
+        break
+    fi
+done
+
+# warp at window in direction of focused window
+yabai -m window --warp north
+
+# warp at previously focused window
+yabai -m window --warp recent
+
+# warp at previous or next window in window tree 
+yabai -m window --warp prev
+
+# warp at first or last window in window tree
+yabai -m window --warp first
+
+# warp at window under cursor
+yabai -m window --warp mouse
+
+# move focused window to (100, 200)
+yabai -m window --move abs:100:200
+
+# change window size to (500, 800)
+yabai -m window --resize abs:500:800
+
+# move floating focused window 100 to the right, 200 up
+yabai -m window --move rel:100:-200
+
+# grow floating window by 100 to the right, shrink by 200 at the bottom
+yabai -m window --resize bottom_right:100:-200
+
+# change floating window size to (500, 800)
+yabai -m window --resize abs:500:800
+
+# move focused window to occupy the left two thirds of the screen. 
+yabai -m window --grid 1:3:0:0:2:1
+
+# move window to previous space
+yabai -m window --space prev
+
+# move window to display focused before the current one
+yabai -m window --display recent
+
+# move window to space 2
+yabai -m window --space 2
+
+# options: zoom-parent, zoom-fullscreen, native-fullscreen
+yabai -m window --toggle zoom-parent
+
+# whether a window is split vertically or horizontally
+yabai -m window --toggle split
+
+# toggle whether the focused window should be tiled (only on bsp spaces)
+yabai -m window --toggle float
+
+# toggle whether the focused window should have a border
+yabai -m window --toggle border
+
+# toggle whether the focused window should be shown on all spaces
+yabai -m window --toggle sticky

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-source "${DOTFILES}/scripts/core/log.sh"
 
 _paths() {
    # shellcheck disable=SC2156
@@ -25,5 +24,5 @@ _run() {
    done
 }
 
-test::set_suite "bash - imports"
+test::set_suite "bash | imports"
 test::lazy_run _run

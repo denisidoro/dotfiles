@@ -10,7 +10,7 @@
 # License:             MIT
 
 if [[ -z "${DOT_SCRIPT_ROOTDIR:-}" ]]; then
-   export DOT_SCRIPT_ROOTDIR="${DOTFILES}/scripts/link"
+   export DOT_SCRIPT_ROOTDIR="${DOTFILES}/repos/dotlink"
    readonly DOT_SCRIPT_ROOTDIR
    export DOT_SCRIPT_ROOTDIR
 fi
@@ -97,7 +97,7 @@ EOF
    # }}}
 
    # Load common.sh {{{
-   source "$DOT_SCRIPT_ROOTDIR/aux/common.sh"
+   source "$DOT_SCRIPT_ROOTDIR/common.sh"
    trap cleanup_namespace EXIT
    # }}}
 
@@ -105,7 +105,7 @@ EOF
    case "$1" in
       clone|pull|update|list|check|set|add|edit|unlink|clear|config|cd)
          subcommand="$1"
-         source "$DOT_SCRIPT_ROOTDIR/aux/${subcommand}.sh"
+         source "${DOT_SCRIPT_ROOTDIR}/${subcommand}.sh"
          shift 1
          dot_"${subcommand}" "$@"
          ;;

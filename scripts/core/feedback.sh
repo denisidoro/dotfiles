@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-source "${DOTFILES}/scripts/core/log.sh"
 
 feedback::confirmation() {
    local -r msg="$1"

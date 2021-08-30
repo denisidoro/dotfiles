@@ -4,11 +4,11 @@ export FORCE_GNU=true
 
 source "${DOTFILES}/scripts/core/main.sh"
 source "${DOTFILES}/scripts/core/coll.sh"
-source "${DOTFILES}/scripts/core/log.sh"
 
 PASSED=0
 FAILED=0
 SKIPPED=0
+RAN=false
 SUITE=""
 
 test::set_suite() {
@@ -29,14 +29,14 @@ test::filter_check() {
 
 test::fail() {
    FAILED=$((FAILED+1))
-   log::err "Test failed..."
+   log::error "Test failed..."
    return
 }
 
 test::skip() {
    test::filter_check || return 0
    echo
-   log::info "${SUITE:-unknown} - ${1:-unknown}"
+   log::info "${SUITE:-unknown} | ${1:-unknown}"
    SKIPPED=$((SKIPPED+1))
    log::warn "Test skipped..."
    return
@@ -51,8 +51,9 @@ _with_sleep() {
 test::run() {
    test::filter_check || return 0
    echo
-   log::info "${SUITE:-unknown} - ${1:-unknown}"
+   log::info "${SUITE:-unknown} | ${1:-unknown}"
    shift
+   RAN=true
    if "$@"; then
       test::success
    else
@@ -82,7 +83,7 @@ test::equals() {
    local -r expected="${1:-}"
 
    if [[ "$actual" != "$expected" ]]; then
-      log::err "Expected...\n\n${expected}\n\n...but got:\n\n${actual}'"
+      log::error "Expected...\n\n${expected}\n\n...but got:\n\n${actual}'"
       return 2
    fi
 }
@@ -92,7 +93,7 @@ test::includes() {
    local -r should_include="${1:-}"
 
    if ! echo "$actual" | grep -Fq "$should_include"; then
-      log::err "Expected the following string to include...\n\n${should_include}\n\n...but it doesn't:\n\n${actual}"
+      log::error "Expected the following string to include...\n\n${should_include}\n\n...but it doesn't:\n\n${actual}"
       return 3
    fi
 }
@@ -103,7 +104,7 @@ test::finish() {
       log::warn "${SKIPPED} tests skipped!"
    fi
    if [ $FAILED -gt 0 ]; then
-      log::err "${PASSED} tests passed but ${FAILED} failed... :("
+      log::error "${PASSED} tests passed but ${FAILED} failed... :("
       exit "${FAILED}"
    else
       log::success "All ${PASSED} tests passed! :)"
@@ -119,12 +120,16 @@ test::find_files() {
 test::start() {
    for test in $(test::find_files "$@"); do
       seconds=$SECONDS
+      RAN=false
       # shellcheck disable=SC1090
       source "$test"
+      if ! $RAN; then
+         continue
+      fi
       delta=$((SECONDS - seconds))
       echoerr
       filename="$(basename "$test")"
-      log::warn "Running ${filename} took ${delta} seconds"
+      log::debug "Running ${filename} took ${delta} seconds"
    done
 
    test::finish

@@ -7,5 +7,5 @@ existing() {
       | test::equals awk
 }
 
-test::set_suite "bash - platform"
+test::set_suite "bash | platform"
 test::run "existing_command" existing

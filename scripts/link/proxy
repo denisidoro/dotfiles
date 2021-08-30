@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 main() {
-   source "${DOTFILES}/scripts/link/aux/core.sh"
+   source "${DOTFILES}/repos/dotlink/core.sh"
    dotlink_main "$@"
 }
 

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2046,SC2015,SC1090,SC1091,SC2034,SC2012,SC2207,SC1090,SC2012
 set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/core.sh"
@@ -50,7 +49,7 @@ if $list; then
 fi
 
 install_all_recipes() {
-   local -r recipes="$(ls "${DOTFILES}/scripts/package/recipes" | sed 's/\.sh$//')"
+   local -r recipes="$(find "${DOTFILES}/scripts/package/recipes" | sed 's/\.sh$//')"
    for recipe in $recipes; do
       dot pkg add "$recipe"
    done
@@ -65,7 +64,9 @@ case "$name" in
       ;;
 esac
 
-packages=($(_list))
+packages=()
+while IFS='' read -r line; do packages+=("$line"); done < <(_list)
+
 if dot pkg check "${packages[@]}" &> /dev/null; then
    log::info "All dependencies already installed for the batch $name"
    exit 0
@@ -78,5 +79,8 @@ if $prompt; then
    fi
 fi
 
-deps=($(batch::dependencies "$name"))
-dot pkg add "${deps[@]}"
+if $add; then
+   deps=()
+   while IFS='' read -r line; do deps+=("$line"); done < <(batch::dependencies "$name")
+   dot pkg add "${deps[@]}"
+fi

@@ -2,7 +2,6 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/core/log.sh"
 
 ##? Log helper
 ##?
@@ -19,7 +18,7 @@ _sep() {
 
    clear
 
-   log::header "$(date)"
+   log::trace "$(date)"
 
    for _ in $(seq 0 5); do
       echo

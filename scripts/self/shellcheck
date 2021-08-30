@@ -2,7 +2,6 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
-source "${DOTFILES}/scripts/core/log.sh"
 
 ##? Shellcheck
 ##?
@@ -27,14 +26,14 @@ _files() {
 
 _filtered_files() {
    _files \
-      | grep -v 'scripts/link/aux' \
+      | grep -v 'repos/dotlink' \
       | grep -v 'scripts/rice' \
       | grep -v 'docopt' \
       | grep -v '\.py'
 }
 
 _fix_one() {
-   log::warn "$1"
+   log::info "shellcheck | ${1}"
    shellcheck -x -f diff "$(realpath "$1")" \
       | sed "s|${DOTFILES}|.|g" \
       | sed 's|././tests|./tests|g' \

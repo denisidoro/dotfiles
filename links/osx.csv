@@ -5,3 +5,4 @@ editors/vscode/settings.json, $HOME/Library/Application\ Support/Code/User/setti
 editors/vscode/keybindings.json, $HOME/Library/Application\ Support/Code/User/keybindings.json
 editors/vscode/tasks.json, $HOME/Library/Application\ Support/Code/User/tasks.json
 git/gitui_config.ron, $HOME/.config/gitui/key_config.ron
+navi/config.yaml, /Users/denis.isidoro/Library/Application\ Support/navi/config.yaml

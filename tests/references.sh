@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-source "${DOTFILES}/scripts/core/log.sh"
 
 _files() {
    find . \
@@ -49,5 +48,5 @@ _run() {
    done
 }
 
-test::set_suite "bash - references"
+test::set_suite "bash | references"
 test::lazy_run _run

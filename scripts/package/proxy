@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2046,SC2015,SC1090,SC1091,SC2034,SC2012,SC2207,SC1090,SC2012
+set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/core.sh"
 
@@ -53,6 +53,8 @@ file="${DOTFILES}/scripts/package/pkg_managers/${pkg_manager}.sh"
 # unsupported package manager
 [ ! -f "$file" ] && exit 125
 
+# shellcheck disable=SC1090
 source "$file"
+
 fn="${pkg_manager}::$(_actual_operation "$operation")"
 "$fn" "$@"

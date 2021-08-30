@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2046,SC2015,SC1090,SC1091,SC2034,SC2012,SC2207,SC1090,SC2012
 set -euo pipefail
 
 source "${DOTFILES}/scripts/package/aux/core.sh"
-source "${DOTFILES}/scripts/package/aux/recipes.sh"
+source "${DOTFILES}/scripts/package/aux/recipe.sh"
 
 ##? Install packages
 ##?
@@ -24,7 +23,7 @@ fi
 if [ $# -gt 1 ]; then
    pkg_failures=0
    for package in "$@"; do
-      dot pkg add $($prevent_recipe && printf %s '--prevent-recipe') "$package" || pkg_failures=$((pkg_failures+1))
+      dot pkg add "$($prevent_recipe && printf %s '--prevent-recipe')" "$package" || pkg_failures=$((pkg_failures+1))
    done
    exit "$pkg_failures"
 fi
@@ -37,26 +36,36 @@ _log::installing() {
    log::warn "Attempting to install ${package}${suffix}..."
 }
 
-package="$(pkg::alias "$1" "$prevent_recipe")"
+main() {
+   package="$(pkg::alias "$1" "$prevent_recipe")"
 
-dot pkg check $($prevent_recipe && printf %s '--prevent-recipe') "$package" && exit 0
+   # shellcheck disable=SC2046
+   dot pkg check $($prevent_recipe && printf %s '--prevent-recipe') "$package" && exit 0
 
-file="$(pkg::source_file "$package")"
+   file="$(pkg::source_file "$package")"
 
-if $prevent_recipe || ! [ -f "$file" ]; then
+   if $prevent_recipe || ! [ -f "$file" ]; then
+      _log::installing
+      for pkg_mgr in apt apk pkg yum dnf port emerge pacman brew; do
+         if dot pkg proxy $pkg_mgr add "$package"; then
+            return 0
+         fi
+      done
+      return 234
+   fi
+
+   # shellcheck disable=SC1090
+   source "$file"
+
    _log::installing
-   for pkg_mgr in apt apk pkg yum dnf port emerge pacman brew; do
-      dot pkg proxy $pkg_mgr add "$package" && exit 0 || true
-   done
-   exit 234
-fi
+   package::install && log::success "Finished installing ${package}!"
 
-source "$file"
+   hash -r 2>/dev/null || true
+   # shellcheck disable=SC1091
+   source "${HOME}/.bashrc" 2>/dev/null || true
+   # shellcheck disable=SC1091
+   source "${HOME}/.zshrc" 2>/dev/null || true
+   hash -r 2>/dev/null || true
+}
 
-_log::installing
-package::install && log::success "Finished installing ${package}!"
-
-hash -r 2>/dev/null || true
-source "${HOME}/.bashrc" 2>/dev/null || true
-source "${HOME}/.zshrc" 2>/dev/null || true
-hash -r 2>/dev/null || true
+main "$@"
