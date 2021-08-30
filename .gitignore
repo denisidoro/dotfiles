@@ -16,3 +16,4 @@ local/
 modules
 Cargo.lock
 launchers/alfred/**/*.png
+raycast/gen*.sh

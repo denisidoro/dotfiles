@@ -2,16 +2,16 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title WhatsApp
+# @raycast.title ${title}
 # @raycast.mode silent
 
 # Optional parameters:
-# @raycast.icon 💬
+# @raycast.icon /Users/denis.isidoro/Pictures/Icons/${icon}_64.png
 # @raycast.packageName Browser
 
 # Documentation:
-# @raycast.description Focus on WhatsApp tab
+# @raycast.description Focus on ${title} tab
 # @raycast.author Denis Isidoro
 # @raycast.authorURL https://denisidoro.github.io
 
-"${HOME}/dotfiles/bin/dot" osx focus-tab whatsapp "https://web.whatsapp.com"
+"${HOME}/dotfiles/bin/dot" osx focus-tab "${query}" "${url}"
