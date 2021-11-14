@@ -14,5 +14,9 @@ rg <opts1> <pattern> <path>
 # search 2
 rg <opts2> <pattern> <path>
 
+# make install path
+echo make DESTDIR=<dst> install
+
+$ dst: echo "$HOME" --- --fzf-overrides '--no-select-1'
 $ opts1: echo -e 'option;description\n--column;show column numbers\n-l;print filenames with maches\n--files-without-match;print filenames without matches' | column -t -s';' --- --column 1 --header-lines 1 --multi --map "tr '\n' ' '"
 $ opts2: echo -e 'option;description\n--column;show column numbers\n-l;print filenames with maches\n--files-without-match;print filenames without matches' | column -t -s';' --- --column 1 --header-lines 1 --multi --map "tr c f"

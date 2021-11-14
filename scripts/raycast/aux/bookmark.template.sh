@@ -2,7 +2,7 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title Downloads
+# @raycast.title ${title}
 # @raycast.mode silent
 
 # Optional parameters:
@@ -10,8 +10,8 @@
 # @raycast.packageName Favorites
 
 # Documentation:
-# @raycast.description Open Downloads folder
+# @raycast.description Open ${title} folder
 # @raycast.author Denis Isidoro
 # @raycast.authorURL https://denisidoro.github.io
 
-open "${HOME}/Downloads"
+open "${path}"

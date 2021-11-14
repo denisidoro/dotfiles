@@ -1,0 +1,10 @@
+title,path
+Downloads,${HOME}/Downloads
+Pictures,${HOME}/Pictures
+Screenshots,${HOME}/Pictures/Screenshots
+dotfiles,${HOME}/dotfiles
+Desktop,${HOME}/Desktop
+Home,${HOME}
+Documents,${HOME}/Documents
+Applications,/Applications
+Dev,${HOME}/dev

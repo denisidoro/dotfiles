@@ -63,8 +63,10 @@ main() {
    cd "${DOTFILES}/raycast" &>/dev/null || exit
    mkdir -p "${DOTFILES}/raycast" &>/dev/null || exit
    rm ./gen*.sh || true
-   gen "yabai"
-   gen "focus_tab"
+
+   for n in "bookmark" "focus_tab" "yabai"; do
+      gen "$n" 
+   done
 }
 
 main "$@"

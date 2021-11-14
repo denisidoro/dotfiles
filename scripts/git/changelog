@@ -100,7 +100,7 @@ git::changelog_commit() {
       | wc -l \
       | xargs)"
 
-   local -r msg="$(printf '%s' "$changes" \
+   local msg="$(printf '%s' "$changes" \
       | head -n3 \
       | tr '\n' ';' \
       | sed -E 's/ *; */, /g' \
