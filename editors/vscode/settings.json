@@ -199,7 +199,7 @@
       }
    ],
    "extensions.ignoreRecommendations": true,
-   "workbench.colorTheme": "Ayu Mirage Bordered",
+   "workbench.colorTheme": "Visual Studio Light",
    "typescript.updateImportsOnFileMove.enabled": "always",
    "C_Cpp.updateChannel": "Insiders",
    "workbench.editorAssociations": {

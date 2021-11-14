@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Sends a message to a channel
+##?
+##? Usage:
+##?    channel <target> <type> [<data>]
+##?
+##? Examples:
+##?    channel phone app BubbleUPnP
+
+doc::maybe_help "$@"
+
+_ids() {
+   local -r target="$1"
+   local ids=""
+   IFS=','
+   for t in $target; do
+      ids="${ids},\"$(dot security store get "channel/${t}_id")\""
+   done
+   echo "${ids:1}"
+}
+
+main() {
+   local -r target="$1"
+   local -r type="$2"
+   local -r payload="${3:-}"
+
+   ids="$(_ids "$target")"
+   SERVER_TOKEN="$(dot security store get channel/server_token)"
+
+body=$(cat <<END_HEREDOC
+   {
+      "registration_ids": [${ids}]
+      "data": {
+         "t": "${type}",
+         "p": "${payload}"
+      }
+   }
+END_HEREDOC
+)
+
+   curl -X POST \
+      https://fcm.googleapis.com/fcm/send \
+      -d "$body" \
+      -H 'Content-Type: application/json' \
+      -H "Authorization: key=${SERVER_TOKEN}" \
+      -vvv
+}
+
+main "$@"

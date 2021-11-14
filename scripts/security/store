@@ -10,9 +10,12 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    store lsa
 ##?    store add <key> <val>
 ##?    store get <key>
-##?    store rm <key> <val>
+##?    store rm <key>
+##?    store rma
+##?    store import
+##?    store export
 
-doc::parse "$@"
+doc::maybe_help "$@"
 
 STORE_DIR="${HOME}/.dotsecrets"
 VALS_DIR="${STORE_DIR}/vals"
@@ -59,18 +62,22 @@ store::ls() {
 }
 
 store::lsa() {
-   local -r GRAY='\033[0;35m'
-   local -r GREEN='\033[0;32m'
-   local -r NC='\033[0m'
+   # local -r GRAY='\033[0;35m'
+   local GREEN='\033[0;32m'
+   local NC='\033[0m'
+   if [ -t 0 ]; then
+      GREEN=''
+      NC=''
+   fi
+   
    local encrypted_key encrypted_value decrypted_key decrypted_value
-
    for path in "${VALS_DIR}"/*; do
       encrypted_key="$(basename "$path")"
       decrypted_key="$(echo "$encrypted_key" | store::decrypt_path)"
       encrypted_value="$(cat "$path")"
       decrypted_value="$(echo "$encrypted_value" | store::decrypt)"
-      printf "%b%-28s" "$GRAY" "$encrypted_key"
-      printf "%b%-18s" "$GREEN" "$decrypted_key"
+      # printf "%b%-28s" "$GRAY" "$encrypted_key"
+      printf "%b%-25s" "$GREEN" "$decrypted_key"
       printf "%b%s\n" "$NC" "$decrypted_value"
    done
 }
@@ -91,20 +98,31 @@ store::rm() {
    rm "${VALS_DIR}/${encrypted_key}"
 }
 
+store::rma() {
+   rm -rf "$VALS_DIR"
+}
+
+store::import() {
+   IFS=$'\n'
+   
+   for l in $(pbpaste); do 
+      k="$(echo "$l" | cut -d' ' -f1)"
+      v="$(echo "$l" | cut -d' ' -f2)"
+      store::add "$k" "$v"
+   done
+}
+
+store::export() {
+   store::lsa | sed -E 's/\s+/ /' | sort
+}
+
 main() {
    PASSWORD="$(cat "${STORE_DIR}/pw")/$(store::unique_id)"
-   
-   if $ls; then
-      store::ls
-   elif $lsa; then
-      store::lsa
-   elif $add; then
-      store::add "$key" "$val"
-   elif $get; then
-      store::get "$key"
-   elif $rm; then
-      store::rm "$key"
-   fi
+
+   local -r fn="$1"
+   shift
+
+   "store::${fn}" "$@"
 }
 
 main "$@"
