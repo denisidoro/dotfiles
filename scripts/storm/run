@@ -59,13 +59,11 @@ telegram:
    chat_id: ${telegramChatId}
 
 db:
-   path: ${DOTFILES}/local/sky_db.txt
+   path: ${DOTFILES}/local/storm_db.txt
 EOF
    )"
 
-   echo "$yaml"
-
-   echoerr storm --config <(echo "$yaml") "$@"
+   storm --config <(echo "$yaml") "$@"
 }
 
 main "$@"
