@@ -8,6 +8,7 @@
    "files.autoSave": "onFocusChange",
    "files.trimFinalNewlines": true,
    "editor.formatOnPaste": true,
+   // "editor.formatOnPaste": false,
    "editor.formatOnSave": true,
    // "editor.formatOnSave": false,
    "editor.minimap.enabled": true,
@@ -29,8 +30,7 @@
    // UI
    // ==================
    "workbench.activityBar.visible": false,
-   "workbench.editor.enablePreview": false,
-   "workbench.editor.enablePreviewFromQuickOpen": false,
+   "workbench.editor.enablePreviewFromQuickOpen": true,
    "workbench.editor.highlightModifiedTabs": true,
    "workbench.list.keyboardNavigation": "simple",
    "customizeUI.activityBar": "bottom",
@@ -199,7 +199,7 @@
       }
    ],
    "extensions.ignoreRecommendations": true,
-   "workbench.colorTheme": "Visual Studio Light",
+   "workbench.colorTheme": "Ayu Mirage Bordered",
    "typescript.updateImportsOnFileMove.enabled": "always",
    "C_Cpp.updateChannel": "Insiders",
    "workbench.editorAssociations": {
@@ -227,5 +227,6 @@
    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
    "typescript.inlayHints.parameterTypes.enabled": true,
    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
-   "typescript.inlayHints.variableTypes.enabled": true
+   "typescript.inlayHints.variableTypes.enabled": true,
+   "workbench.editor.enablePreviewFromCodeNavigation": true
 }

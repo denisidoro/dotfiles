@@ -7,9 +7,11 @@ zmodule input
 # Utility aliases and functions. Adds colour to ls, grep and less.
 zmodule utility
 
+# zmodule marlonrichert/zsh-autocomplete
+# zmodule zsh-users/zsh-completions
+zmodule Aloxaf/fzf-tab
 zmodule zsh-users/zsh-autosuggestions
 zmodule zsh-users/zsh-history-substring-search
 zmodule hlissner/zsh-autopair
 zmodule romkatv/powerlevel10k
 zmodule zsh-users/zsh-syntax-highlighting
-# zmodule marlonrichert/zsh-autocomplete

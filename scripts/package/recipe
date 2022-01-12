@@ -14,8 +14,8 @@ doc::maybe_help "$@"
 RECIPES_FOLDER="${DOTFILES}/scripts/package/recipes"
 
 recipe::list() {
-   find "${RECIPES_FOLDER}" \
-      | sed 's/\.sh//g'
+   cd "${RECIPES_FOLDER}" 
+   find . -iname '*.sh' | sed 's|^\./||' | sed 's|\.sh$||'
 }
 
 recipe::list

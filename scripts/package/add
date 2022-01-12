@@ -12,6 +12,10 @@ source "${DOTFILES}/scripts/package/aux/recipe.sh"
 ##? Options:
 ##?    --prevent-recipe
 
+_autocomplete() {
+   dot package recipe list
+}
+
 doc::maybe_help "$@"
 
 prevent_recipe=false

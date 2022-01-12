@@ -134,6 +134,8 @@ doc::help_msg() {
 doc::maybe_help() {
    local -r sh_file="$0"
 
+   doc::autocomplete "$@"
+
    case "${!#:-}" in
       -h|--help|--version) doc::help_msg "$sh_file"; exit 0 ;;
    esac
@@ -141,6 +143,8 @@ doc::maybe_help() {
 
 doc::help_or_fail() {
    local -r sh_file="$0"
+
+   doc::autocomplete "$@"
 
    case "${!#:-}" in
       -h|--help|--version) doc::help_msg "$sh_file"; exit 0 ;;
@@ -154,6 +158,9 @@ doc::help_or_fail() {
 
 doc::parse() {
    local -r sh_file="$0"
+
+   doc::autocomplete "$@"
+
    local -r help="$(doc::help_msg "$sh_file")"
    local docopt="${DOT_DOCOPT:-}"
 
@@ -179,4 +186,24 @@ doc::parse() {
    eval "$("$docopt" -h "${help}" : "${@:1}")"
 }
 
-export_f doc::help_msg doc::maybe_help doc::help_or_fail doc::parse
+doc::autocomplete() {
+   if [ "${1:-}" != "_autocomplete" ]; then
+      return 0
+   fi
+
+   shift
+
+   if ! has _autocomplete; then
+      exit 99
+   fi
+
+   local -r out="$(_autocomplete "$@")"
+   if [ -n "$out" ]; then
+      echo "$out"
+      exit 0
+   else 
+      exit 1
+   fi
+}
+
+export_f doc::help_msg doc::maybe_help doc::help_or_fail doc::parse doc::autocomplete

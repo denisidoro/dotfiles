@@ -20,3 +20,55 @@ echo make DESTDIR=<dst> install
 $ dst: echo "$HOME" --- --fzf-overrides '--no-select-1'
 $ opts1: echo -e 'option;description\n--column;show column numbers\n-l;print filenames with maches\n--files-without-match;print filenames without matches' | column -t -s';' --- --column 1 --header-lines 1 --multi --map "tr '\n' ' '"
 $ opts2: echo -e 'option;description\n--column;show column numbers\n-l;print filenames with maches\n--files-without-match;print filenames without matches' | column -t -s';' --- --column 1 --header-lines 1 --multi --map "tr c f"
+
+% slow
+
+# Slow command
+echo <a> <b>
+
+$ a: printf 'Loading...' >&2; sleep 2; printf '%b' '\r\033[2K' >&2; echo "a c" | tr ' ' '\n'
+$ b: sleep 2 && echo "b d" | tr ' ' '\n'
+
+% table
+
+# my make command
+echo make <cfg>
+
+$ cfg: for x in 1 2 3; do \
+   for y in a b c; do \
+      echo "$x $y"; \
+   done; \
+  done \
+  --- --expand --prevent-extra
+
+% shell
+
+# env
+cat ${HOME}/dotfiles/shell/bash/bashrc | wc
+echoerr foo
+
+% err
+
+# check for error
+log="<log>"
+if [ -n "$log" ]; then
+   echo "my git log has <words> words"
+else
+   echo "failed to get git log"
+fi
+
+$ log: echo "foo bar"
+$ words: echo "$log" | wc -w | xargs
+
+
+% src
+
+# This will output "foo\nyes"
+echo foo
+true \
+    && echo yes `# comment 1` \
+    || echo no `# comment 2`
+
+# echoerr
+source "${HOME}/dotfiles/shell/aux/core.bash"
+echoerr foo

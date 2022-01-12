@@ -15,7 +15,12 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##?    store import
 ##?    store export
 
-doc::maybe_help "$@"
+_autocomplete() {
+   PASSWORD="$(store::password)"
+   case "$*" in
+      "get"|"rm") store::ls ;;
+   esac
+}
 
 STORE_DIR="${HOME}/.dotsecrets"
 VALS_DIR="${STORE_DIR}/vals"
@@ -116,13 +121,24 @@ store::export() {
    store::lsa | sed -E 's/\s+/ /' | sort
 }
 
-main() {
-   PASSWORD="$(cat "${STORE_DIR}/pw")/$(store::unique_id)"
-
-   local -r fn="$1"
-   shift
-
-   "store::${fn}" "$@"
+store::password() {
+   echo "$(cat "${STORE_DIR}/pw")/$(store::unique_id)"
 }
 
+main() {
+   PASSWORD="$(store::password)"
+
+   local -r fn="${1:-unknown}"
+   shift || true
+
+   local -r cmd="store::${fn}"
+   if has "$cmd"; then
+      "$cmd" "$@"
+   else
+      doc::help_msg "$0"
+      exit 1
+   fi
+}
+
+doc::maybe_help "$@"
 main "$@"

@@ -6,8 +6,8 @@ source "${DOTFILES}/scripts/core/str.sh"
 ##? Changelog generator
 ##?
 ##? Usage:
-##?    log release (github|local)
-##?    log commit
+##?    changelog release (github|local)
+##?    changelog commit
 
 doc::parse "$@"
 
@@ -23,18 +23,9 @@ main() {
 }
 
 github::lines() {
-   local -r e2="$(printf '%s' "$ESCAPE_CHAR_2")"
-   local -r e3="$(printf '%s' "$ESCAPE_CHAR_3")"
-
-   grep '<code>' -A3 \
-      | sed "s/^--/${e2}/g" \
-      | tr '\n' "$ESCAPE_CHAR_3" \
-      | tr "$ESCAPE_CHAR_2" '\n' \
-      | grep 'commit/' \
-      | grep 'title=' \
-      | sed -E 's|.*title="([^"]+)".*commit/([a-f0-9]+).*|\2;\1|g' \
-      | sed -E 's/ \(#([0-9]+)\).*/;\1/' \
-      | sed -E "s/${e3}.*//g"
+   local -r reg='commit\/([^">]+).*>(.+?) \(<\/.*?pull\/([0-9]+)'
+   # TODO: pbpaste
+   pbpaste | grep -Eo "$reg" | sed -E "s/${reg}/\1;\2\;\3/" 
 }
 
 github::process_line() {
@@ -84,6 +75,7 @@ git::changelog_release_github() {
       done
       echo
       echo
+      exit 1 # TODO
    done
 }
 
@@ -136,7 +128,7 @@ _repo_url() {
       | head -n1 \
       | tr ':' '/' \
       | sed 's|git@|https://|g' \
-      |  sed -E 's/.git$//'
+      | sed -E 's/.git$//'
 }
 
 _remove_empty_lines() {

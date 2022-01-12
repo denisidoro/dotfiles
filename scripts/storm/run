@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Runs storm
+##?
+##? Usage:
+##?    storm <args...>
+##?
+##? Examples:
+##?    storm
+
+doc::maybe_help "$@"
+
+main() {
+   local -r telegramToken="$(dot security store get telegram/bot_token)"
+   local -r telegramChatId="$(dot security store get telegram/bot_chat_id)"
+   local -r cryptoPassword="$(dot security store get cloud/password)"
+
+   local -r yaml="$(cat <<EOF
+crypto:
+   password: ${cryptoPassword}
+
+cloud:
+   providers:
+      box:
+          buffer: ${HOME}/Cloud/Box
+          rclone: box
+      pcloud:
+          buffer: ${HOME}/Cloud/pCloud
+          rclone: pcloud
+      alumni:
+          buffer: ${HOME}/Cloud/Alumni
+          rclone: alumni
+      telegram:
+          buffer: ${HOME}/Cloud/Telegram
+      gphotos:
+          buffer: ${HOME}/DCIM/GPhotos
+          multi_folder: false
+
+camera:
+   paths:
+      - from: ${HOME}/Pictures/Camera
+        to: Pictures/Camera
+        low_unzipped: gphotos
+
+backup:
+   provider: box
+   max_kb: 1024
+   suffix_denylist:
+      - .app
+   paths:
+      - from: ${DOTFILES}/local
+        to: Devices/macbook/dotfiles
+
+telegram:
+   token: ${telegramToken}
+   chat_id: ${telegramChatId}
+
+db:
+   path: ${DOTFILES}/local/sky_db.txt
+EOF
+   )"
+
+   echo "$yaml"
+
+   echoerr storm --config <(echo "$yaml") "$@"
+}
+
+main "$@"
