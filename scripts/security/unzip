@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Unzips content
+##?
+##? Usage:
+##?    unzip
+##?
+##? Examples:
+##?    unzip foo.7z
+
+doc::maybe_help "$@"
+
+main() {
+   local -r path="$1"
+   local -r pass="$(dot storm run password "$path")"
+   7z x "$path" -p"$pass"
+}
+
+main "$@"
