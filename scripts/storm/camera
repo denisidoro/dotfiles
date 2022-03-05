@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/storm/aux/core.sh"
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Camera utilities
+##?
+##? Usage:
+##?    camera pull
+##?    camera set
+##?    camera upload
+
+doc::parse "$@"
+
+export BOXTMP_PHONE="${STORM}/boxtmp/phone"
+
+_pull() {
+   rclone move "box:/${INTERMEDIATE_CAMERA}" "${PICTURES}/Camera" -vv
+   rclone move "vvdropbox:/Camera uploads" "${PICTURES}/VVCamera" -vv
+}
+
+_set() {
+   dot storm run set-camera-buffers
+}
+
+_upload() {
+   dot storm run upload-buffer box
+   dot storm run upload-buffer pcloud
+   dot storm run upload-buffer alumni
+   dot storm run upload-buffer vvgphotos
+   dot storm run upload-buffer gphotos
+   dot storm run upload-telegram-buffer
+}
+
+main() {
+   if $pull; then
+      _pull "$@"
+   elif $set; then
+      _set "$@"
+   elif $upload; then
+      _upload "$@"
+   fi
+}
+
+main "$@"

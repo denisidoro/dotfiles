@@ -60,6 +60,7 @@
       "**/go-build": true,
       "bazel-*": true,
       "pkg*": true,
+      "**/.gradle": true,
       "**/.classpath": true,
       "**/.project": true,
       "**/.settings": true,
@@ -228,6 +229,5 @@
    "typescript.inlayHints.parameterTypes.enabled": true,
    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
    "typescript.inlayHints.variableTypes.enabled": true,
-   "workbench.editor.enablePreviewFromCodeNavigation": true,
-   "window.zoomLevel": 1
+   "workbench.editor.enablePreviewFromCodeNavigation": true
 }

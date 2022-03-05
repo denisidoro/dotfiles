@@ -45,9 +45,14 @@ github::process_line() {
 }
 
 github::changelog() {
-   local tag_older="$1"
-   local tag_newer="$2"
-   curl -s "${REPO_URL}/compare/${tag_older}...${tag_newer}"
+   echoerr "BROKEN"
+   echoerr "Copy output from ${REPO_URL}/compare/${tag_older}...${tag_newer} into the clipboard"
+
+   pbpaste
+
+   # local tag_older="$1"
+   # local tag_newer="$2"
+   # curl -s "${REPO_URL}/compare/${tag_older}...${tag_newer}"
 }
 
 git::changelog_release_github() {

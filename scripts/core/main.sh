@@ -136,7 +136,7 @@ doc::maybe_help() {
 
    doc::autocomplete "$@"
 
-   case "${!#:-}" in
+   case "${1:-}" in
       -h|--help|--version) doc::help_msg "$sh_file"; exit 0 ;;
    esac
 }
@@ -146,7 +146,7 @@ doc::help_or_fail() {
 
    doc::autocomplete "$@"
 
-   case "${!#:-}" in
+   case "${1:-}" in
       -h|--help|--version) doc::help_msg "$sh_file"; exit 0 ;;
    esac
 

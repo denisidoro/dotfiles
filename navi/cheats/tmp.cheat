@@ -61,6 +61,13 @@ $ log: echo "foo bar"
 $ words: echo "$log" | wc -w | xargs
 
 
+% default
+
+# default test
+echo "<n>"
+
+$ n: echo -e "16\n"
+
 % src
 
 # This will output "foo\nyes"
