@@ -97,7 +97,9 @@ git::changelog_commit() {
       | wc -l \
       | xargs)"
 
-   local msg="$(printf '%s' "$changes" \
+
+   local msg
+   msg="$(printf '%s' "$changes" \
       | head -n3 \
       | tr '\n' ';' \
       | sed -E 's/ *; */, /g' \
