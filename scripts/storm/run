@@ -70,7 +70,7 @@ camera:
       - from: ${PICTURES}/Camera
         to: Pictures/Camera
         low_unzipped: gphotos
-      - from: ${PICTURES}/VV/Camera
+      - from: ${PICTURES}/VVCamera
         to: VV/Pictures/Camera
         low_unzipped: vvgphotos
 
@@ -79,7 +79,7 @@ camera_backup:
    local_intermediate: ${PICTURES}/Camera
    intermediate_provider: box
    intermediate_relative: ${INTERMEDIATE_CAMERA}
-   gphotos_provider: gphotos
+   ref_provider: gphotos
 
 backup:
    provider: box
@@ -90,7 +90,7 @@ backup:
       - from: ${DOTFILES}/local
         to: Devices/macbook/dotfiles
       - from: ${storm}/db
-        to: Devices/macbook/Storm
+        to: Storm/macbook/db
 
 telegram:
    token: ${telegramToken}

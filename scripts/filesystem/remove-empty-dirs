@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Remove empty dirs
+##?
+##? Usage:
+##?    remove-empty-dirs <path>
+
+doc::maybe_help "$@"
+
+main() {
+   local -r path="$1"
+
+   for _ in $(seq 0 10); do
+      find "$path" -type d -exec rmdir {} + 2>/dev/null
+   done
+}
+
+main "$@"

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -euo pipefail
+set -x
+
+source "${DOTFILES}/scripts/storm/aux/core.sh"
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Upload
+##?
+##? Usage:
+##?    upload
+
+doc::parse "$@"
+
+_upload_buffer() {
+   local -r provider="$1"
+   dot storm run upload-buffer "$provider"
+   dot fs remove-empty-dirs "${STORM}/${provider}"
+} 
+
+main() {
+   local errors=0
+
+   _upload_buffer gphotos || errors=$((errors+1))
+   _upload_buffer vvgphotos || errors=$((errors+1))
+   _upload_buffer pcloud || errors=$((errors+1))
+   _upload_buffer box || errors=$((errors+1))
+   _upload_buffer alumni || errors=$((errors+1))
+
+   dot storm run upload-telegram-buffer || errors=$((errors+1))
+   dot fs remove-empty-dirs "${STORM}/telegram"
+
+   return $errors
+}
+
+main "$@"

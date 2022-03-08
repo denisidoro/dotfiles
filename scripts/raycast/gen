@@ -64,7 +64,8 @@ main() {
    mkdir -p "${DOTFILES}/raycast" &>/dev/null || exit
    rm ./gen*.sh || true
 
-   for n in "bookmark" "focus_tab" "yabai"; do
+   # ignored: "yabai"
+   for n in "bookmark" "focus_tab"; do
       gen "$n" 
    done
 }
