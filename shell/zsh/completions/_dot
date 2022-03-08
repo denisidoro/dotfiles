@@ -1,32 +1,62 @@
-#!/usr/bin/env zsh
-
 #compdef dot
 
-_command_for() {
+_dot_commands() {
    command ls "${DOTFILES}/scripts/${1:-}" | grep -v / | xargs echo
 }
 
+_dot_subcommands() {
+   local context="$1"
+   local command="$2"
+   dot "$context" "$command" --help \
+      | grep 'Usage:' -A99 \
+      | grep " $command " \
+      | awk '{print $2}'
+   echo "--help"
+}
+
+_dot_adhoc() {
+   local context="$1"
+   local command="$2"
+   shift 2
+   dot "$context" "$command" _autocomplete "$@" || true
+}
+
 _dot() {
-   local curcontext="$curcontext" state line
-   typeset -A opt_args
+   local curcontext="$curcontext" state
 
    _arguments \
       '1: :->context' \
       '2: :->command' \
       '*: :->args'
 
+   local context="${words[2]:-}"
+   local command="${words[3]:-}"
+
    case $state in
       context)
-         existing_contexts="$(_command_for)"
+         existing_contexts="$(_dot_commands)"
          _arguments "1:Context:($existing_contexts)"
          ;;
       command)
-         existing_commands=$(_command_for $words[2])
+         existing_commands=$(_dot_commands "$context")
          _arguments "2:Command:($existing_commands)"
          ;;
       *)
+         local n="${#words[@]}"
+         local m=$((n-1))
+
+         local args="$(_dot_adhoc "$context" "$command" "${words[4]}")"
+
+         if [ -z "$args" ] && [ "$n" -eq 4 ]; then
+            args="$(_dot_subcommands "$context" "$command")"
+         fi
+
+         if [ -n "$args" ]; then
+            _arguments "${m}:Args:(${args})"
+            return 0
+         fi
+
          _files
-         ;;
    esac
 }
 

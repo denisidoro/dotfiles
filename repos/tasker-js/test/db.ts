@@ -54,31 +54,31 @@ const out = `
 1,blob.rar,4,2;5;3;6`
 
 describe('Db', () => {
-	it('idempotency', () => {
-		const db = new Db(txt)
-		const db2 = new Db(db.serialize())
-		const db3 = new Db(db2.serialize())
-		assert.deepStrictEqual(db3.serialize().trim(), db.serialize().trim())
-	});
+   it('idempotency', () => {
+      const db = new Db(txt)
+      const db2 = new Db(db.serialize())
+      const db3 = new Db(db2.serialize())
+      assert.deepStrictEqual(db3.serialize().trim(), db.serialize().trim())
+   });
 
-	it('integration test', () => {
-		const db = new Db(txt)
-		db.fsFileAdd("Pictures/DCIM/img01.jpg", 323, 150630)
-		db.fsFileAdd("Books/Fiction/LotR2.pdf", 1123, 181203)
-		db.fsFileAdd("Books/Fiction/LotR2.pdf", 1123, 181203)
-		db.telegramUploadAdd("Pictures/DCIM/img01.jpg.7z", 666, 777)
-		db.telegramUploadAdd("/Pictures/DCIM/img01.jpg", 666, 777)
-		db.telegramUploadAdd("/Pictures/DCIM/img01b.jpg", 666, 777)
-		db.azureFileAdd("/Books/blob.rar", ["Pictures/DCIM/img01.jpg.7z", "Pictures/DCIM/img03.jpg", "/Books/Fiction/LotR2.pdf", "Books/German/nein.pdf"])
-		db.telegramUploadAdd("/Documents/ID/rg.jpg", 666, 777)
-		db.telegramUploadAdd("/Documents/ID/titre.jpg", 666, 777)
+   it('integration test', () => {
+      const db = new Db(txt)
+      db.fsFileAdd("Pictures/DCIM/img01.jpg", 323, 150630)
+      db.fsFileAdd("Books/Fiction/LotR2.pdf", 1123, 181203)
+      db.fsFileAdd("Books/Fiction/LotR2.pdf", 1123, 181203)
+      db.telegramUploadAdd("Pictures/DCIM/img01.jpg.7z", 666, 777)
+      db.telegramUploadAdd("/Pictures/DCIM/img01.jpg", 666, 777)
+      db.telegramUploadAdd("/Pictures/DCIM/img01b.jpg", 666, 777)
+      db.azureFileAdd("/Books/blob.rar", ["Pictures/DCIM/img01.jpg.7z", "Pictures/DCIM/img03.jpg", "/Books/Fiction/LotR2.pdf", "Books/German/nein.pdf"])
+      db.telegramUploadAdd("/Documents/ID/rg.jpg", 666, 777)
+      db.telegramUploadAdd("/Documents/ID/titre.jpg", 666, 777)
 
-		assert.deepStrictEqual(db.azurePathsNotUploaded(), [
-			'Pictures/DCIM/img01b.jpg',
-			'Documents/ID/rg.jpg',
-			'Documents/ID/titre.jpg'
-		])
+      assert.deepStrictEqual(db.azurePathsNotUploaded(), [
+         'Pictures/DCIM/img01b.jpg',
+         'Documents/ID/rg.jpg',
+         'Documents/ID/titre.jpg'
+      ])
 
-		assert.deepStrictEqual(db.serialize().trim(), out.trim())
-	});
+      assert.deepStrictEqual(db.serialize().trim(), out.trim())
+   });
 });

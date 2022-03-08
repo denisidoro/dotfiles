@@ -8,8 +8,9 @@
    "files.autoSave": "onFocusChange",
    "files.trimFinalNewlines": true,
    "editor.formatOnPaste": true,
-   // "editor.formatOnSave": true,
-   "editor.formatOnSave": false,
+   // "editor.formatOnPaste": false,
+   "editor.formatOnSave": true,
+   // "editor.formatOnSave": false,
    "editor.minimap.enabled": true,
    "editor.mouseWheelZoom": true,
    "explorer.sortOrder": "default",
@@ -29,8 +30,7 @@
    // UI
    // ==================
    "workbench.activityBar.visible": false,
-   "workbench.editor.enablePreview": false,
-   "workbench.editor.enablePreviewFromQuickOpen": false,
+   "workbench.editor.enablePreviewFromQuickOpen": true,
    "workbench.editor.highlightModifiedTabs": true,
    "workbench.list.keyboardNavigation": "simple",
    "customizeUI.activityBar": "bottom",
@@ -52,14 +52,15 @@
       "**/.DS_Store": true,
       "**/node_modules": true,
       "**/.gen": true,
-      "**/gen": true,
-      "/gen": true,
+      // "**/gen": true,
+      // gen": true,
       "**/.glue": true,
       "**/.tmp": true,
       "**/vendor": true,
       "**/go-build": true,
       "bazel-*": true,
       "pkg*": true,
+      "**/.gradle": true,
       "**/.classpath": true,
       "**/.project": true,
       "**/.settings": true,
@@ -227,5 +228,6 @@
    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
    "typescript.inlayHints.parameterTypes.enabled": true,
    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
-   "typescript.inlayHints.variableTypes.enabled": true
+   "typescript.inlayHints.variableTypes.enabled": true,
+   "workbench.editor.enablePreviewFromCodeNavigation": true
 }

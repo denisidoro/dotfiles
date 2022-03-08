@@ -1,0 +1,144 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Key-value encrypted store
+##?
+##? Usage:
+##?    store ls
+##?    store lsa
+##?    store add <key> <val>
+##?    store get <key>
+##?    store rm <key>
+##?    store rma
+##?    store import
+##?    store export
+
+_autocomplete() {
+   PASSWORD="$(store::password)"
+   case "$*" in
+      "get"|"rm") store::ls ;;
+   esac
+}
+
+STORE_DIR="${HOME}/.dotsecrets"
+VALS_DIR="${STORE_DIR}/vals"
+
+store::unique_id() {
+   ioreg -d2 -c IOPlatformExpertDevice | awk -F\" '/IOPlatformUUID/{print $(NF-1)}'
+}
+
+store::encrypt() {
+   openssl enc "$@" -aes-256-cbc -md sha512 -base64 -nosalt -pass pass:"$PASSWORD"
+}
+
+store::decrypt() {
+   store::encrypt "-d"
+}
+
+store::encrypt_path() {
+   local -r e="$(store::encrypt)"
+   echo "${e//\//.}"
+}
+
+store::decrypt_path() {
+   local d
+   d="$(cat)"
+   d="${d//./\/}"
+   echo "$d" | store::decrypt
+}
+
+store::add() {
+   local -r key="$1"
+   local -r val="$2"
+
+   local -r encrypted_key="$(echo "$key" | store::encrypt_path)"
+   local -r encrypted_val="$(echo "$val" | store::encrypt)"
+
+   mkdir -p "$VALS_DIR" || true
+   echo "$encrypted_val" > "${VALS_DIR}/${encrypted_key}"
+}
+
+store::ls() {
+   for f in "${VALS_DIR}"/*; do
+      basename "$f" | store::decrypt_path
+   done
+}
+
+store::lsa() {
+   # local -r GRAY='\033[0;35m'
+   local GREEN='\033[0;32m'
+   local NC='\033[0m'
+   if [ -t 0 ]; then
+      GREEN=''
+      NC=''
+   fi
+   
+   local encrypted_key encrypted_value decrypted_key decrypted_value
+   for path in "${VALS_DIR}"/*; do
+      encrypted_key="$(basename "$path")"
+      decrypted_key="$(echo "$encrypted_key" | store::decrypt_path)"
+      encrypted_value="$(cat "$path")"
+      decrypted_value="$(echo "$encrypted_value" | store::decrypt)"
+      # printf "%b%-28s" "$GRAY" "$encrypted_key"
+      printf "%b%-25s" "$GREEN" "$decrypted_key"
+      printf "%b%s\n" "$NC" "$decrypted_value"
+   done
+}
+
+store::get() {
+   local -r key="$1"
+
+   local -r encrypted_key="$(echo "$key" | store::encrypt_path)"
+
+   store::decrypt < "${VALS_DIR}/${encrypted_key}"
+}
+
+store::rm() {
+   local -r key="$1"
+
+   local -r encrypted_key="$(echo "$key" | store::encrypt_path)"
+
+   rm "${VALS_DIR}/${encrypted_key}"
+}
+
+store::rma() {
+   rm -rf "$VALS_DIR"
+}
+
+store::import() {
+   IFS=$'\n'
+   
+   for l in $(pbpaste); do 
+      k="$(echo "$l" | cut -d' ' -f1)"
+      v="$(echo "$l" | cut -d' ' -f2)"
+      store::add "$k" "$v"
+   done
+}
+
+store::export() {
+   store::lsa | sed -E 's/\s+/ /' | sort
+}
+
+store::password() {
+   echo "$(cat "${STORE_DIR}/pw")/$(store::unique_id)"
+}
+
+main() {
+   PASSWORD="$(store::password)"
+
+   local -r fn="${1:-unknown}"
+   shift || true
+
+   local -r cmd="store::${fn}"
+   if has "$cmd"; then
+      "$cmd" "$@"
+   else
+      doc::help_msg "$0"
+      exit 1
+   fi
+}
+
+doc::maybe_help "$@"
+main "$@"

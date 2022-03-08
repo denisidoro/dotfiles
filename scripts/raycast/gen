@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+##? Generate raycast scripts
+##?
+##? Usage:
+##?    gen
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+doc::parse "$@"
+
+gen() {
+   local -r name="$1"
+
+   local -r template="$(cat "${DOTFILES}/scripts/raycast/aux/${name}.template.sh")"
+   local headers=""
+   local title content
+
+   while read -r line; do
+      if [ -n "$headers" ]; then
+         content="$(gen_file "$headers" "$line" "$template")"
+         title="$(get_title "$content")"
+         echo "$content" > "${DOTFILES}/raycast/gen_${name}_${title}.sh" 
+      else 
+         headers="$line"
+      fi
+   done < "${DOTFILES}/scripts/raycast/aux/${name}.csv"
+}
+
+get_title() {
+   local -r content="$1"
+   title="$(echo "$content" | grep 'raycast.title' | head -n1)"
+   title="${title,,}"
+   title="${title//# @raycast.title /}"
+   echo "$title" | tr ' ' '_' | sed -e 's/[^a-z0-9_]//g'
+}
+
+replace() {
+   local -r txt="$1"
+   local -r find="$2"
+   local -r replace="$3"
+   echo "${txt//${find}/${replace}}"
+}
+
+gen_file() {
+   local -r headers="$1"
+   IFS=',' read -r -a headerArr <<< "$headers"
+
+   local -r line="$2"
+   IFS=',' read -r -a args <<< "$line"
+
+   local txt="$3"
+   local i=0
+   for header in "${headerArr[@]}"; do
+      txt="$(replace "$txt" "$\{${header}\}" "${args[$i]}")"
+      i=$((i+1))
+   done
+   echo "$txt"
+}
+
+main() {
+   cd "${DOTFILES}/raycast" &>/dev/null || exit
+   mkdir -p "${DOTFILES}/raycast" &>/dev/null || exit
+   rm ./gen*.sh || true
+
+   # ignored: "yabai"
+   for n in "bookmark" "focus_tab"; do
+      gen "$n" 
+   done
+}
+
+main "$@"

@@ -4,6 +4,9 @@
 ##?
 ##? Usage:
 ##?    link <args>...
+##?
+##? Example:
+##?    DOTLINK=osx link
 
 export DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." >/dev/null && pwd)}"
 export DOT_REPO="https://github.com/denisidoro/dotfiles.git"

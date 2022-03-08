@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/storm/aux/core.sh"
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Runs storm
+##?
+##? Usage:
+##?    storm <args...>
+##?
+##? Examples:
+##?    storm
+
+doc::maybe_help "$@"
+
+main() {
+   local -r storm="$STORM"
+   local -r telegramToken="$(dot security store get telegram/bot_token)"
+   local -r telegramChatId="$(dot security store get "$TELEGRAM_CHAT_KEY")"
+   local -r cryptoPassword="$(dot security store get cloud/password)"
+
+   local -r yaml="$(cat <<EOF
+crypto:
+   password: ${cryptoPassword}
+
+cloud:
+   providers:
+
+      alumni: 
+          buffer: ${storm}/alumni
+          rclone: alumni
+      vvalumni: 
+          buffer: ${storm}/vvalumni
+          rclone: vvalumni
+      box: 
+          buffer: ${storm}/box
+          rclone: box
+      pcloud: 
+          buffer: ${storm}/pcloud
+          rclone: pcloud
+      azure:
+          buffer: ${storm}/azure
+          rclone: azure
+          remote_path_fallback: "/main/"
+          extra_rclone_push_args:
+          - "--fast-list"
+          - "--azureblob-access-tier"
+          - "Archive"
+          - "--min-size"
+          - "200k"
+      telegram: 
+          buffer: ${storm}/telegram
+      vvdropbox:
+          buffer: ${storm}/vvdropbox
+          rclone: vvdropbox
+      gphotos: 
+          buffer: ${storm}/gphotos
+          rclone: gphotos
+          single_folder: true
+          remote_path_fallback: album/rclone
+      vvgphotos:
+          buffer: ${storm}/vvgphotos
+          rclone: vvgphotos
+          single_folder: true
+          remote_path_fallback: album/rclone
+
+camera:
+   paths:
+      - from: ${PICTURES}/Camera
+        to: Pictures/Camera
+        low_unzipped: gphotos
+      - from: ${PICTURES}/VVCamera
+        to: VV/Pictures/Camera
+        low_unzipped: vvgphotos
+
+camera_backup:
+   local_source: ${PICTURES}/DCIM
+   local_intermediate: ${PICTURES}/Camera
+   intermediate_provider: box
+   intermediate_relative: ${INTERMEDIATE_CAMERA}
+   ref_provider: gphotos
+
+backup:
+   provider: box
+   max_kb: 1024
+   denylist:
+      - .*/\.app$
+   paths:
+      - from: ${DOTFILES}/local
+        to: Devices/macbook/dotfiles
+      - from: ${storm}/db
+        to: Storm/macbook/db
+
+telegram:
+   token: ${telegramToken}
+   chat_id: ${telegramChatId}
+   db_path: ${TELEGRAM_DB}
+
+archive:
+   max_file_kb: 302400
+   max_zip_kb: 712000
+   tmp_buffer: ${storm}/azuretmp
+   db_folder: ${DB}/azure
+   denylist:
+   - ^Flickr.*
+   - .*Devices\.7z$
+   - ^GooglePhotos/.*
+   - Documents/Documents\.7z$
+   - .*Takeout_Gmail.*
+   - Projects/Projects\.7z$
+   - Downloads/Downloads\.7z$
+   - Music/Music\.7z$
+   - Games/Games\.7z$
+   - Books/[^\.]+\.7z$
+   - Academy/.*\.7z$
+EOF
+   )"
+
+   local -r temp_file=$(mktemp)
+   echo "$yaml" > "$temp_file"
+   storm --config "$temp_file" "$@"
+
+   # storm --config <(echo "$yaml") "$@"
+}
+
+main "$@"

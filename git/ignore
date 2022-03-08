@@ -1,6 +1,7 @@
 # Sensitive data
 .zshrc-secrets
 local.properties
+.dotsecrets
 # *secret*
 # *credential*
 # *password*

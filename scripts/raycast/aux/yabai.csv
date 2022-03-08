@@ -1,0 +1,58 @@
+title,command
+Balance windows size,yabai -m space --balance
+Stack on Top of Left,yabai -m window --stack west
+Stack on Top of Down,yabai -m window --stack south
+Stack on Top of Right,yabai -m window --stack east
+Stack on Top of Up,yabai -m window --stack north
+Stack on Top of Recent,yabai -m window --stack recent
+Unstack,yabai -m window --toggle float && yabai -m window --toggle float
+Focus Left,yabai -m window --focus west
+Focus Down,yabai -m window --focus south
+Focus Right,yabai -m window --focus east
+Focus Up,yabai -m window --focus north
+Focus First in Stack,yabai -m window --focus stack.first
+Focus Last in Stack,yabai -m window --focus stack.last
+Focus Recent in Stack,yabai -m window --focus stack.recent
+Focus Next in Stack,yabai -m window --focus stack.next 2>/dev/null || yabai -m window --focus stack.first
+Focus Prev in Stack,yabai -m window --focus stack.prev 2>/dev/null || yabai -m window --focus stack.last
+Focus Recent,yabai -m window --focus recent
+Focus Next,yabai -m window --focus next 2>/dev/null || yabai -m window --focus first
+Focus Prev,yabai -m window --focus prev 2>/dev/null || yabai -m window --focus last
+Warp with Left,yabai -m window --warp west
+Warp with Down,yabai -m window --warp south
+Warp with Right,yabai -m window --warp east
+Warp with Up,yabai -m window --warp north
+Warp with Recent,yabai -m window --warp Recent
+Swap with Left,yabai -m window --swap west
+Swap with Down,yabai -m window --swap south
+Swap with Right,yabai -m window --swap east
+Swap with Up,yabai -m window --swap north
+Insert Left,yabai -m window --insert west
+Insert Down,yabai -m window --insert south
+Insert Right,yabai -m window --insert east
+Insert Up,yabai -m window --insert north
+Insert in Stack,yabai -m window --insert stack
+Send to Next Space,yabai -m window --space next 2>/dev/null || yabai -m window --space first
+Send to Prev Space,yabai -m window --space prev 2>/dev/null || yabai -m window --space last
+Send to Prev Display,yabai -m window --space prev 2>/dev/null || yabai -m window --space last
+Send to Next Display,yabai -m window --space next 2>/dev/null || yabai -m window --space first
+Switch to BSP Layout,yabai -m space --layout bsp
+Switch to Stack Layout,yabai -m space --layout stack
+Switch to Float Layout,yabai -m space --layout float
+Mirror using Y Axis,yabai -m space --mirror y-axis
+Mirror using X Axis,yabai -m space --mirror x-axis
+Rotate 90°,yabai -m space --rotate 90
+Rotate 180°,yabai -m space --rotate 180
+Rotate 270°,yabai -m space --rotate 270
+Close Window,yabai -m window --close
+Maximize Window,yabai -m window --toggle zoom-fullscreen
+FullScreen Window,yabai -m window --toggle native-fullscreen
+Toggle Split Type,yabai -m window --toggle split
+Toggle Float Type,yabai -m window --toggle float
+Increase Left Size,yabai -m window --ratio rel:0.05
+Increase Right Size,yabai -m window --ratio rel:-0.05
+Set ratio to 25,yabai -m window --ratio abs:0.25
+Set ratio to 33,yabai -m window --ratio abs:0.33
+Set ratio to 50,yabai -m window --ratio abs:0.5
+Set ratio to 66,yabai -m window --ratio abs:0.66
+Set ratio to 75,yabai -m window --ratio abs:0.75

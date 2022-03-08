@@ -7,11 +7,12 @@ export DOT_FRE=${DOT_FRE:-true}
 export DOT_THEME=${DOT_THEME:-powerlevel}
 export DOT_ZIM=${DOT_ZIM:-true}
 
-export PATH="/usr/local/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin:${WORK_BINARIES_PATH}:/usr/local/opt/bash/bin/:${PATH}"
+export PATH="${PATH}:${WORK_BINARIES_PATH}:/usr/local/opt/bash/bin/:/usr/local/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin"
 
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-11.0.11.jdk/Contents/Home"
 
 export NPM_CONFIG_REGISTRY="https://registry.npmjs.org/"
+export GOOGLE_CLOUD_SDK_HOME="${DEV_HOME}/google-cloud-sdk"
 
 alias ls='exa --icons'
 
@@ -167,6 +168,7 @@ gopathmode() {
          || dot script log info "MONOREPO_GOPATH_MODE is off."
       return
    }
+
    [ $# -gt 1 ] && dot script log info "$USAGE" && return
    [ "$1" != "on" ] && [ "$1" != "off" ] && {
       dot script log info "$USAGE"

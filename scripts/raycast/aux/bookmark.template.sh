@@ -2,16 +2,16 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title Spotify
+# @raycast.title ${title}
 # @raycast.mode silent
 
 # Optional parameters:
-# @raycast.icon 🎹
-# @raycast.packageName Browser
+# @raycast.icon 📁
+# @raycast.packageName Favorites
 
 # Documentation:
-# @raycast.description Focus on Slack tab
+# @raycast.description Open ${title} folder
 # @raycast.author Denis Isidoro
 # @raycast.authorURL https://denisidoro.github.io
 
-"${HOME}/dotfiles/bin/dot" osx focus-tab spotify "https://open.spotify.com"
+open "${path}"

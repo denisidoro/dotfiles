@@ -18,6 +18,13 @@ _focus_tab() {
    local code
    set +e
    read -r -d '' code <<EOF
+set keystrokeDelay to 3
+
+if application "$browser" is not running then
+   do shell script "open -a Slack"
+   delay keystrokeDelay
+end if
+
 set searchString to "$query"
 set found to false
 
