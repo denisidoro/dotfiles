@@ -43,7 +43,15 @@ recipe::shallow_gitlab_clone() {
    recipe::shallow_git_clone "$@"
 }
 
+recipe::check_if_can_build() {
+   if ! ${DOT_PKG_ALLOW_BUILD:-true}; then
+      log:error "Building binaries not allowed!"
+      exit 1
+   fi
+}
+
 recipe::make() {
+   recipe::check_if_can_build
    local -r repo="$1"
    cd "$(recipe::folder "$repo")" || exit
    make && sudo make install
@@ -79,6 +87,8 @@ recipe::clone_as_submodule() {
 }
 
 recipe::install_from_git() {
+   recipe::check_if_can_build
+   
    local -r repo="$(echo "$@" | tr ' ' '/')"
 
    local -r package="$(basename "$repo")"
@@ -99,12 +109,10 @@ recipe::cargo() {
    local -r cargo_name="$1"
    local -r pkg_manager_name="${2:-$cargo_name}"
 
-   if has cargo; then
-      cargo install "$cargo_name"
+   if dot pkg add --prevent-recipe "$pkg_manager_name"; then
+      return 0
    else
-      if dot pkg add --prevent-recipe "$pkg_manager_name"; then
-         return 0
-      fi
+      recipe::check_if_can_build
       dot pkg add cargo
       cargo install "$cargo_name"
    fi

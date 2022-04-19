@@ -65,7 +65,7 @@ main() {
    rm ./gen*.sh || true
 
    # ignored: "yabai"
-   for n in "bookmark" "focus_tab"; do
+   for n in "bookmark" "focus_tab" "brightness"; do
       gen "$n" 
    done
 }

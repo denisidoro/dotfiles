@@ -55,6 +55,7 @@ _osx_external() {
       args+=("-bg" "$blue_gain")
    fi
 
+   set -x
    "${args[@]}"
 }
 
@@ -85,6 +86,7 @@ _osx_internal() {
       _unsupported "Blue gain"
    fi
 
+   set -x
    "${args[@]}"
 }
 

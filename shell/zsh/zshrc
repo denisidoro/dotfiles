@@ -6,7 +6,7 @@
 # fi
 
 # Powerlevel10k instant prompt
-if [[ "$DOT_THEME" -eq "powerlevel" ]]; then
+if [[ "$DOT_THEME" == "powerlevel" ]]; then
    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
@@ -24,8 +24,6 @@ source "${DOTFILES}/shell/aux/core.bash"
 
 # load aliases
 source "${DOTFILES}/shell/aliases/core.bash"
-# echoerr foo
-# export -f echoerr
 
 # load local custom config
 source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
@@ -49,7 +47,7 @@ fpath=("${DOTFILES}/shell/zsh/completions" $fpath)
 autoload -U compinit && compinit
 
 # zim
-if ${DOT_ZIM:-false}; then
+if [[ "${DOT_THEME:-}" == "powerlevel" ]]; then
    # source ${ZIM_HOME}/login_init.zsh -q &!
 
    # if [[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
@@ -57,12 +55,12 @@ if ${DOT_ZIM:-false}; then
    #    source ${ZIM_HOME}/zimfw.zsh init -q
    # fi
 
-   source ${ZIM_HOME}/init.zsh
+   source "${ZIM_HOME}/init.zsh"
 fi
 
 # on directory change
 dns_chpwd() {
-   if ${DOT_FRE:-true}; then
+   if has fre; then
       fre --add "$PWD"
    fi
    # teleport tx --channel pwd --value "$PWD" &
@@ -78,13 +76,12 @@ source "${DOTFILES}/shell/themes/core.zsh"
 
 # load bindings
 source "${DOTFILES}/shell/zsh/bindings/editing.zsh"
-[[ ${DOT_NAVI:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
-[[ ${DOT_ZIM:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/zim.zsh"
-[[ ${DOT_FZF:-false} ]] && source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
+has navi && source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
+[[ "$DOT_THEME" == "powerlevel" ]] && source "${DOTFILES}/shell/zsh/bindings/zim.zsh"
+has fzf && source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
 
 # misc
 # WORDCHARS=${WORDCHARS//[\/]}
-
 
 # in order not to mess up with subshells
 export ZDOTDIR="$HOME"

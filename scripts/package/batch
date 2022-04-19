@@ -64,14 +64,6 @@ case "$name" in
       ;;
 esac
 
-packages=()
-while IFS='' read -r line; do packages+=("$line"); done < <(_list)
-
-if dot pkg check "${packages[@]}" &> /dev/null; then
-   log::info "All dependencies already installed for the batch $name"
-   exit 0
-fi
-
 if $prompt; then
    log::warn "There are missing dependencies for the batch $name"
    if ! feedback::confirmation "Do you want to install it?"; then
@@ -80,7 +72,9 @@ if $prompt; then
 fi
 
 if $add; then
-   deps=()
-   while IFS='' read -r line; do deps+=("$line"); done < <(batch::dependencies "$name")
-   dot pkg add "${deps[@]}"
+   echoerr add
+   IFS=$'\n' 
+   for dep in $(batch::dependencies "$name"); do
+      dot pkg add "$dep" || true
+   done
 fi

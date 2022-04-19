@@ -9,13 +9,14 @@ dot_set() {
    local dotset_backup=false
    local dotset_verbose=false
 
+   # TODO: understand why doset_backup=true is necessary here
    for arg in "$@"; do
       shift
       case "$arg" in
          "--ignore" ) set -- "$@" "-i" ;;
          "--force"  ) set -- "$@" "-f" ;;
          "--create-dirs"|"p" ) dotset_create_dirs=true ;;
-         "--backup" ) set -- "$@" "-b" ;;
+         "--backup" ) dotset_backup=true; set -- "$@" "-b" ;;
          "--verbose") set -- "$@" "-v" ;;
          *) set -- "$@" "$arg" ;;
       esac
@@ -31,6 +32,12 @@ dot_set() {
          "v" ) dotset_verbose=true ;;
       esac
    done
+
+   # echo "args: $*" >&2
+   # echo "dotset_ignore: ${dotset_ignore:-}" >&2
+   # echo "dotset_force: ${dotset_force:-}" >&2
+   # echo "dotset_backup: ${dotset_backup:-}" >&2
+   # echo "dotset_verbose: ${dotset_verbose:-}" >&2
 
    check_dir() { #{{{
       local orig="$1"

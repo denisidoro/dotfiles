@@ -61,6 +61,13 @@ $ log: echo "foo bar"
 $ words: echo "$log" | wc -w | xargs
 
 
+% empty
+
+# empty test
+tar -xf <file>
+
+$ file: ls *.tar
+
 % default
 
 # default test

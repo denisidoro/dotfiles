@@ -10,11 +10,10 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 doc::maybe_help "$@"
 
-if ${1:-install}; then
-   SCRIPT="EDITOR=cat dot self install"
-else
-   SCRIPT=":"
-fi
+case "${1:-}" in
+   install) SCRIPT="EDITOR=cat dot self install --profile devpod" ;;
+   *) SCRIPT=":" ;;
+esac
 
 docker run \
    -it \

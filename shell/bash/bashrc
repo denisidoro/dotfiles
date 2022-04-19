@@ -26,4 +26,4 @@ source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
 source "${DOTFILES}/shell/themes/dns.bash"
 
 # [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-. "$HOME/.cargo/env"
+# . "$HOME/.cargo/env"

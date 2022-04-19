@@ -1,11 +1,7 @@
 #!/usr/bin/env zsh
 
 export DOT_DOCOPT=${DOT_DOCOPT:-"docpars"}
-export DOT_FZF=${DOT_FZF:-true}
-export DOT_NAVI=${DOT_NAVI:-true}
-export DOT_FRE=${DOT_FRE:-true}
 export DOT_THEME=${DOT_THEME:-powerlevel}
-export DOT_ZIM=${DOT_ZIM:-true}
 
 export PATH="${PATH}:${WORK_BINARIES_PATH}:/usr/local/opt/bash/bin/:/usr/local/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/bin"
 
@@ -94,7 +90,7 @@ _load_work_stuff() {
                zstyle ':completion:*' use-cache on
                zstyle ':completion:*' cache-path ~/.zsh/cache
                ;;
-            *) source /usr/local/etc/bash_completion.d/bazel-complete.bash ;;
+            *) source /usr/local/etc/bash_completion.d/bazel-complete.bash || true ;;
          esac
          ;;
       virtualenv)

@@ -11,10 +11,6 @@ _content() {
    echo "#!/usr/bin/env bash"
    echo
    echo "export DOT_DOCOPT=\"${DOT_DOCOPT:-python}\""
-   echo "export DOT_FRE=${DOT_FRE:-true}"
-   echo "export DOT_FZF=${DOT_FZF:-true}"
-   echo "export DOT_NAVI=${DOT_NAVI:-true}"
-   echo "export DOT_ZIM=${DOT_ZIM:-true}"
    echo "export DOT_THEME=${DOT_THEME:-powerlevel}"
    if [ -n "${DOT_ZSHRC_EXTRA:-}" ]; then
       echo
@@ -23,7 +19,7 @@ _content() {
 }
 
 package::install() {
-   dot pkg add dot-folders
+   dot pkg add dot-folders || true
 
    if ! [ -f "$ZSHRC_PATH" ]; then
       dot pkg add "$EDITOR" || true
@@ -51,7 +47,7 @@ package::install() {
       dot pkg add fzf || true
    fi
 
-   if ${DOT_ZIM:-false}; then
-      dot pkg add zim
-   fi
+   if [ "${DOT_THEME:-}" == "powerlevel" ]; then
+      dot pkg add zim-modules || true
+   fi 
 }

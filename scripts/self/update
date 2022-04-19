@@ -43,12 +43,6 @@ main() {
 
    fix_locales || true
 
-   if ! ${DOT_SKIP_CORE_DEPS:-false}; then
-      if has zimfw && zimfw install; then
-         zimfw update || true
-      fi
-   fi
-
    set -e
 
    echoerr
@@ -147,5 +141,5 @@ hash -r &>/dev/null || true
 # shellcheck disable=SC1091
 source "${HOME}/.bashrc" &>/dev/null || true
 # shellcheck disable=SC1091
-source "${HOME}/.zshrc" &>/dev/null || true
+# source "${HOME}/.zshrc" &>/dev/null || true
 hash -r &>/dev/null || true

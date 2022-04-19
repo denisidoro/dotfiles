@@ -9,7 +9,13 @@ DOT_BIN="${DOTFILES}/bin/dot"
 ##? Setups the environment
 ##?
 ##? Usage:
-##?    install
+##?    install [--profile <profile>]
+##?
+##? Profiles:
+##?    work
+##?    desktop
+##?    termux
+##?    devpod
 ##?
 ##? Env vars:
 ##?    DOTFILES
@@ -20,9 +26,6 @@ DOT_BIN="${DOTFILES}/bin/dot"
 ##?    DOT_GIT_NAME
 ##?    DOT_GIT_EMAIL
 ##?    DOT_DOCOPT
-##?    DOT_FRE
-##?    DOT_FZF
-##?    DOT_NAVI
 ##?    DOT_ZIM
 ##?    DOT_THEME
 ##?    DOT_LINK_EXTRA_ARG
@@ -32,8 +35,10 @@ DOT_BIN="${DOTFILES}/bin/dot"
 ##? Examples:
 ##?    DOTFILES="$PWD/dotfiles" DOT_VERSION=master https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/self/install
 
+profile="none"
 case "${1:-}" in
    -h|--help|--version) grep "^##?" "$0" | cut -c 5-; exit 0 ;;
+   --profile) profile="$2" ;;
 esac
 
 _dot() {
@@ -87,6 +92,20 @@ main() {
 
    cd "$DOTFILES"
 
+   # Install some key dependencies
+   _dot pkg add git curl wget || true
+
+   # Android bootstrap
+   if uname -a | grep -q "ndroid"; then
+      pkg install ncurses-utils || true
+      _dot pkg add termux-essentials || true
+   fi
+
+   # OSX bootstrap
+   if uname -s | grep -q "arwin"; then
+      _dot pkg add xcode-select brew gnu || true
+   fi
+
    # Use specific version
    if [ -n "${DOT_VERSION:-}" ] && [ "$DOT_VERSION" != "master" ]; then
       git checkout "${DOT_VERSION}"
@@ -95,7 +114,7 @@ main() {
    fi
 
    # Make sure everything is up to date
-   if ! ${DOT_SKIP_PM_UPDATE:-false}; then
+   if ! ${DOT_SKIP_PM_UPDATE:-true}; then
       if _has apt-get; then
          sudo apt-get upgrade || true
          sudo apt-get update || true
@@ -105,35 +124,36 @@ main() {
       fi
    fi
 
-   if ! ${DOT_SKIP_CORE_DEPS:-false}; then
-      # Install some key dependencies
-      _dot pkg add git curl wget || true
+   _dot self update
 
-      # Android bootstrap
-      if uname -a | grep -q "ndroid"; then
-         pkg install ncurses-utils || true
-         _dot pkg add termux-essentials || true
-      fi
+   hash -r &>/dev/null || true
+   # shellcheck disable=SC1091
+   source "${HOME}/.bashrc" &>/dev/null || true
+   # shellcheck disable=SC1091
+   # source "${HOME}/.zshrc" &>/dev/null || true
+   hash -r &>/dev/null || true
 
-      # OSX bootstrap
-      if uname -s | grep -q "arwin"; then
-         xcode-select --install || true
-         _dot pkg add brew || true
-         _dot pkg add gnu || true
-      fi
-   fi
-
-   # call setup
-   if ! ${DOT_SKIP_UPDATE:-false}; then
-      _dot self update
-   fi
 }
 
-main "$@"
+echo "profile ${profile}"
 
-hash -r &>/dev/null || true
-# shellcheck disable=SC1091
-source "${HOME}/.bashrc" &>/dev/null || true
-# shellcheck disable=SC1091
-source "${HOME}/.zshrc" &>/dev/null || true
-hash -r &>/dev/null || true
+case "$profile" in
+   "devpod")
+      export EDITOR=cat
+      export TERM=dumb
+      export DOT_THEME=powerlevel
+      export DOT_DOCOPT=python
+      export DOT_PKG_ALLOW_BUILD=false
+      export DOT_LINK_EXTRA_ARG='--backup'
+      export DOT_SKIP_PM_UPDATE=true
+
+      main "$@" || true
+
+      _dot pkg batch add mini || true
+      ;;
+   *)
+      main "$@" || true
+      ;;
+esac
+
+_dot self health
