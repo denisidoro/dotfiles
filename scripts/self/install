@@ -135,7 +135,7 @@ main() {
 
 }
 
-echo "profile ${profile}"
+echo "Profile ${profile}"
 
 case "$profile" in
    "devpod")
@@ -150,6 +150,9 @@ case "$profile" in
       main "$@" || true
 
       _dot pkg batch add mini || true
+      _dot pkg add zim-modules || true
+      sudo mkdir -p /home/user/.cache || true
+      sudo chmod 777 /home/user/.cache || true
       ;;
    *)
       main "$@" || true

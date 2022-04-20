@@ -11,7 +11,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 doc::maybe_help "$@"
 
 case "${1:-}" in
-   install) SCRIPT="EDITOR=cat dot self install --profile devpod" ;;
+   install) SCRIPT="EDITOR=cat DOT_INSTANCE=devpod-br dot self install --profile devpod" ;;
    *) SCRIPT=":" ;;
 esac
 

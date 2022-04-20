@@ -12,6 +12,9 @@ _content() {
    echo
    echo "export DOT_DOCOPT=\"${DOT_DOCOPT:-python}\""
    echo "export DOT_THEME=${DOT_THEME:-powerlevel}"
+   if [ -n "${DOT_INSTANCE:-}" ]; then
+      echo "export DOT_INSTANCE=${DOT_INSTANCE}"
+   fi
    if [ -n "${DOT_ZSHRC_EXTRA:-}" ]; then
       echo
       echo "$DOT_ZSHRC_EXTRA"

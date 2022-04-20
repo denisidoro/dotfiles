@@ -5,11 +5,6 @@
 #   return 0
 # fi
 
-# Powerlevel10k instant prompt
-if [[ "$DOT_THEME" == "powerlevel" ]]; then
-   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # dotfiles
 export DOTFILES="${DOTFILES:-"${HOME}/dotfiles"}"
 
@@ -25,38 +20,6 @@ source "${DOTFILES}/shell/aux/core.bash"
 # load aliases
 source "${DOTFILES}/shell/aliases/core.bash"
 
-# load local custom config
-source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
-
-# autocomplete
-# sudo chmod g-w /usr/local/share/zsh/site-functions
-#  sudo chmod g-w /usr/local/share/zsh
-# export POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE=false
-# disable sort when completing `git checkout`
-zstyle ':completion:*:git-checkout:*' sort false
-# set descriptions format to enable group support
-zstyle ':completion:*:descriptions' format '[%d]'
-# set list-colors to enable filename colorizing
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-# preview directory's content with exa when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
-# switch group using `,` and `.`
-zstyle ':fzf-tab:*' switch-group ',' '.'
-# set path for completions
-fpath=("${DOTFILES}/shell/zsh/completions" $fpath)
-autoload -U compinit && compinit
-
-# zim
-if [[ "${DOT_THEME:-}" == "powerlevel" ]]; then
-   # source ${ZIM_HOME}/login_init.zsh -q &!
-
-   # if [[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
-   #    # Update static initialization script if it's outdated, before sourcing it
-   #    source ${ZIM_HOME}/zimfw.zsh init -q
-   # fi
-
-   source "${ZIM_HOME}/init.zsh"
-fi
 
 # on directory change
 dns_chpwd() {
@@ -71,17 +34,34 @@ chpwd_functions+=dns_chpwd
 # history
 setopt HIST_IGNORE_ALL_DUPS
 
-# theme
-source "${DOTFILES}/shell/themes/core.zsh"
-
 # load bindings
 source "${DOTFILES}/shell/zsh/bindings/editing.zsh"
 has navi && source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
-[[ "$DOT_THEME" == "powerlevel" ]] && source "${DOTFILES}/shell/zsh/bindings/zim.zsh"
 has fzf && source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
+
+# load local custom config
+source "${DOTFILES}/local/zshrc" 2> /dev/null || true
+
+# theme
+source "${DOTFILES}/shell/themes/core.zsh"
 
 # misc
 # WORDCHARS=${WORDCHARS//[\/]}
+
+# zim
+if [[ "${DOT_THEME:-}" == "powerlevel" ]]; then
+   # source ${ZIM_HOME}/login_init.zsh -q &!
+
+   # if [[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
+   #    # Update static initialization script if it's outdated, before sourcing it
+   #    source ${ZIM_HOME}/zimfw.zsh init -q
+   # fi
+
+   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+   source "${ZIM_HOME}/init.zsh"
+   source "${DOTFILES}/shell/zsh/bindings/zim.zsh"
+fi
+
 
 # in order not to mess up with subshells
 export ZDOTDIR="$HOME"
