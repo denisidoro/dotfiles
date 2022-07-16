@@ -6,7 +6,7 @@
 # @raycast.mode silent
 
 # Optional parameters:
-# @raycast.icon /Users/denis.isidoro/Pictures/Icons/navi_128.png
+# @raycast.icon /Users/denis.isidoro/Pictures/Icons/brightness.png
 # @raycast.packageName Brightness
 
 # Documentation:
@@ -14,4 +14,4 @@
 # @raycast.author Denis Isidoro
 # @raycast.authorURL https://denisidoro.github.io
 
-"${HOME}/dotfiles/bin/dot" system display q 1 -b ${n} -c ${n} 
+"${HOME}/dotfiles/bin/dot" system display q 1 -b "$n" -c "$n" 

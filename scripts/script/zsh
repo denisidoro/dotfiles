@@ -21,7 +21,7 @@ case "${1:-}" in
       echo "👌 Done!"
       ;;
    *perf*|bench*)
-      DOT_ZIM=false _benchmark
+      DOT_THEME=none _benchmark
       _benchmark
       ;;
    *comp*)

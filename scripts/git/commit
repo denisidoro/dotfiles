@@ -7,11 +7,37 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 ##? Usage:
 ##?    commit am <args>...
 
+git::changelog_commit() {
+   cd "$(git::root)" || exit
+
+   local -r changes="$(git diff --numstat HEAD \
+      | awk '{print $3" "$1-$2}' \
+      | sort -k2 -n -r \
+      | awk '{print $1}' \
+      | sed -E 's|(.*)/(.*)|\2|g')"
+
+   local -r n="$(printf '%s' "$changes" \
+      | wc -l \
+      | xargs)"
+
+
+   local msg
+   msg="$(printf '%s' "$changes" \
+      | head -n3 \
+      | tr '\n' ';' \
+      | sed -E 's/ *; */, /g' \
+      | sed -E 's/ *, *$//g')"
+
+   [[ $n -gt 3 ]] && msg="${msg}, ..."
+
+   echo "$(date +'%b-%d %Hh%M'): ${msg}"
+}
+
 _msg() {
    if [[ $# -gt 0 ]] && [[ "${1:-}" != "wip" ]]; then
       echo "$*"
    else
-      dot git changelog commit
+      git::changelog_commit "$@"
    fi
 }
 
@@ -25,5 +51,5 @@ _am() {
 cmd="${1:-}"
 case $cmd in
    am) _am "$@" ;;
-   *) doc::help_or_fail "$@" ;;
+   *) log::error "Invalid command: $*" ;;
 esac

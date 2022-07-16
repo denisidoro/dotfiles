@@ -120,7 +120,7 @@ jump_to_specific_folder() {
 jump_to_work_folder() {
    cd "$DEV_HOME"
 
-   local -r GO_DIR="${DEV_HOME}/go/src/code.uber.internal"
+   local -r GO_DIR="${DEV_HOME}/go/src/code.uber.internal" # TODO
 
    _go_projs() {
       cd "$GO_DIR"
@@ -133,7 +133,7 @@ jump_to_work_folder() {
    }
 
    _suffix() {
-      awk -v suffix="$1" -v color="$2" '{printf("%s%sm%-32s%s\n", NC "\033[0;", color, $1, suffix) }'
+      awk -v suffix="$1" -v color="$2" '{printf("%s%sm%-46s%s\n", NC "\033[0;", color, $1, suffix) }'
    }
 
    _cd() {

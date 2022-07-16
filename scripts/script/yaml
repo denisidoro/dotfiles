@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+##? YAML parser
+##?
+##? Usage:
+##?    yaml
+##?
+##? Examples:
+##?    eval "$(yaml my.yaml yaml_)"   
+
+source "${DOTFILES}/scripts/core/main.sh"
+doc::maybe_help "$@"
+
+main() {
+  # echoerr "reading yaml!"
+
+  local -r prefix=$2
+  local -r s='[[:space:]]*'
+  local -r w='[a-zA-Z0-9_]*'
+  local -r fs=$(echo @|tr @ '\034')
+  
+  sed "h;s/^[^:]*//;x;s/:.*$//;y/-/_/;G;s/\n//" "$1" |
+  sed -ne "s|^\($s\)\($w\)$s:$s\"\(.*\)\"$s\$|\1$fs\2$fs\3|p" \
+      -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" |
+  awk -F "$fs" '{
+    indent = length($1)/2;
+    vname[indent] = $2;
+
+    for (i in vname) {if (i > indent) {delete vname[i]}}
+    if (length($3) > 0) {
+        vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+        printf("export %s%s%s=\"%s\"\n", "'"$prefix"'",vn, $2, $3);
+    }
+  }'
+}
+
+main "$@"

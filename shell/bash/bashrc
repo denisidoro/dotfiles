@@ -5,10 +5,7 @@
 # fi
 
 # dotfiles
-export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
-
-# register which shell is running
-export DOT_SHELL="bash"
+export DOTFILES="${DOTFILES:-"${HOME}/dotfiles"}"
 
 # load vars
 source "${DOTFILES}/shell/aux/vars.bash"
@@ -20,10 +17,8 @@ source "${DOTFILES}/shell/aux/core.bash"
 source "${DOTFILES}/shell/aliases/core.bash"
 
 # load local custom config
-source "${DOTFILES}/local/zshrc" # 2> /dev/null || true
+source "${DOTFILES}/local/zshrc" 2> /dev/null || true
+source "${DOTFILES}/local/${DOT_INSTANCE}/zshrc" 2> /dev/null || true
 
 # theme
 source "${DOTFILES}/shell/themes/dns.bash"
-
-# [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-# . "$HOME/.cargo/env"

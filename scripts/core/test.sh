@@ -121,6 +121,7 @@ test::start() {
    for test in $(test::find_files "$@"); do
       seconds=$SECONDS
       RAN=false
+      log::debug "Start running tests in ${test}..."
       # shellcheck disable=SC1090
       source "$test"
       if ! $RAN; then

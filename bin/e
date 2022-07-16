@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+dot_bin_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
+
+editors="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code,code,vscode,sublime,nvim,vim,vi,nano"
+"${dot_bin_dir}/dot" terminal dashed "$editors" -- "$@"

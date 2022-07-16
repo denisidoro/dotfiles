@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export DOTFILES="${DOTFILES:-$HOME/dotfiles}"
-export PATH="${DOTFILES}/bin:${PATH}"
+export DOTFILES="${DOTFILES:-"${HOME}/dotfiles"}"
+export PATH="${DOTFILES}/bin:${PATH}:/usr/local/bin:/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:${HOME}/bin"
+
 REPO="https://github.com/denisidoro/dotfiles.git"
 DOT_BIN="${DOTFILES}/bin/dot"
 
@@ -19,23 +20,21 @@ DOT_BIN="${DOTFILES}/bin/dot"
 ##?
 ##? Env vars:
 ##?    DOTFILES
-##?    DOT_VERSION
-##?    DOT_SKIP_PM_UPDATE
+##?    DOT_PM_UPDATE
 ##?    DOT_SKIP_CORE_DEPS
 ##?    DOT_SKIP_UPDATE
 ##?    DOT_GIT_NAME
 ##?    DOT_GIT_EMAIL
 ##?    DOT_DOCOPT
-##?    DOT_ZIM
 ##?    DOT_THEME
 ##?    DOT_LINK_EXTRA_ARG
 ##?    DOT_ZSHRC_EXTRA
 ##?    EDITOR
 ##?
 ##? Examples:
-##?    DOTFILES="$PWD/dotfiles" DOT_VERSION=master https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/self/install
+##?    DOTFILES="$PWD/dotfiles" https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/self/install
 
-profile="none"
+profile="devpod"
 case "${1:-}" in
    -h|--help|--version) grep "^##?" "$0" | cut -c 5-; exit 0 ;;
    --profile) profile="$2" ;;
@@ -45,41 +44,38 @@ _dot() {
    "$DOT_BIN" "$@"
 }
 
-_has() {
+has() {
    type "$1" &>/dev/null
 }
 
-_install_git() {
-   sudo apt-get install git \
-      || sudo yum install git \
-      || brew install git \
-      || sudo apk install git \
-      || sudo pkg install git
+_install() {
+   sudo apt-get install "$1" \
+      || sudo yum install "$1" \
+      || brew install "$1" \
+      || sudo apk install "$1" \
+      || sudo pkg install "$1"
 }
 
-if ! _has sudo; then
+clone_repo() {
+   if ! has git; then
+      _install git
+   fi
+   
+   git clone "$REPO" "$DOTFILES" --depth 1
+}
+
+if ! has sudo; then
    sudo() { "$@"; }
    export -f sudo
 fi
 
-clone_repo() {
-   if ! has git; then
-      _install_git &>/dev/null
-   fi
-   git clone "$REPO" "$DOTFILES" --depth 1
-}
-
-# TODO: use curl + zip file in case DOT_VERSION follow the pattern v20.*
 main() {
-   # let's assume this is being called by a script if we're specifying a version
-   if [ -n "${DOT_VERSION:-}" ]; then
-      [ -n "${DOT_SKIP_PM_UPDATE:-}" ] || export DOT_SKIP_PM_UPDATE=true
-      [ -n "${DOT_SKIP_CORE_DEPS:-}" ] || export DOT_SKIP_CORE_DEPS=true
-      [ -n "${DOT_SKIP_SKIP_UPDATE:-}" ] || export DOT_SKIP_UPDATE=true
-   fi
+   export DOT_PM_UPDATE=${DOT_PM_UPDATE:-false}
+   export DOT_SKIP_CORE_DEPS=${DOT_SKIP_CORE_DEPS:-false}
+   export DOT_INSTANCE=${DOT_INSTANCE:-devpod}
 
    if [ -x "$DOT_BIN" ]; then
-      :
+      echo "dotfiles already cloned!"
    elif [ -d "$DOTFILES" ]; then
       echo "Backing up existing dotfiles folder and cloning new dotfiles..."
       local -r old_dotfiles=$(mktemp -u -d "${DOTFILES}_XXXX")
@@ -93,70 +89,86 @@ main() {
    cd "$DOTFILES"
 
    # Install some key dependencies
-   _dot pkg add git curl wget || true
+   _dot pkg add git curl wget 
 
    # Android bootstrap
    if uname -a | grep -q "ndroid"; then
-      pkg install ncurses-utils || true
-      _dot pkg add termux-essentials || true
+      pkg install ncurses-utils
+      _dot pkg add termux-essentials
    fi
 
    # OSX bootstrap
    if uname -s | grep -q "arwin"; then
-      _dot pkg add xcode-select brew gnu || true
-   fi
-
-   # Use specific version
-   if [ -n "${DOT_VERSION:-}" ] && [ "$DOT_VERSION" != "master" ]; then
-      git checkout "${DOT_VERSION}"
-      _dot self install "$@"
-      exit 0
+      _dot pkg add xcode-select brew gnu
    fi
 
    # Make sure everything is up to date
-   if ! ${DOT_SKIP_PM_UPDATE:-true}; then
-      if _has apt-get; then
-         sudo apt-get upgrade || true
-         sudo apt-get update || true
-      fi
-      if _has brew; then
-         brew update || true
+   if $DOT_PM_UPDATE; then
+      if has apt-get; then
+         sudo apt-get upgrade 
+         sudo apt-get update 
+      elif has brew; then
+         brew update 
       fi
    fi
 
+   # Some setup
+   _dot pkg add dot-folders
+   _dot pkg add dot-gitconfig
+   _dot pkg add dot-zshrc
+   
+   # Machine-specific setup
+   _dot self edit instance "$DOT_INSTANCE"
+
+   # Symlinks
    _dot self update
 
-   hash -r &>/dev/null || true
-   # shellcheck disable=SC1091
-   source "${HOME}/.bashrc" &>/dev/null || true
-   # shellcheck disable=SC1091
-   # source "${HOME}/.zshrc" &>/dev/null || true
-   hash -r &>/dev/null || true
+   # Misc
+   fix_locales
 
+   # Reload
+   hash -r &>/dev/null
+   # shellcheck disable=SC1091
+   source "${HOME}/.bashrc" &>/dev/null
+   hash -r &>/dev/null
 }
 
-echo "Profile ${profile}"
+fix_locales() {
+   if has locale-gen; then
+      echo "Fixing locales..."
+      locale-gen en_US en_US.UTF-8
+   fi
+}
+
+echo "Install using profile ${profile}!"
+
+set +e
 
 case "$profile" in
    "devpod")
       export EDITOR=cat
       export TERM=dumb
-      export DOT_THEME=powerlevel
+      export DOT_THEME=none
       export DOT_DOCOPT=python
+      export DOT_INSTANCE="devpod"
       export DOT_PKG_ALLOW_BUILD=false
       export DOT_LINK_EXTRA_ARG='--backup'
-      export DOT_SKIP_PM_UPDATE=true
+      export DOTLINK_IGNORE_LIST="git/config,zshrc,bashrc"
 
-      main "$@" || true
+      sudo mkdir -p "${HOME}/.cache"
+      sudo chmod 777 "${HOME}/.cache"
 
-      _dot pkg batch add mini || true
-      _dot pkg add zim-modules || true
-      sudo mkdir -p /home/user/.cache || true
-      sudo chmod 777 /home/user/.cache || true
+      main "$@"
+
+      _dot pkg batch add mini
+      _dot pkg add dot-source-shellrc
       ;;
    *)
-      main "$@" || true
+      DOT_INSTANCE="$profile"
+      main "$@"
       ;;
 esac
+
+set -e
 
 _dot self health

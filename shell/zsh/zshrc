@@ -1,15 +1,9 @@
 #!/usr/bin/env zsh
 
-# prevent multiple sourcing
-# if [ -n "${DOT_SHELL:-}" ]; then
-#   return 0
-# fi
+# set +x
 
 # dotfiles
 export DOTFILES="${DOTFILES:-"${HOME}/dotfiles"}"
-
-# register which shell is running
-export DOT_SHELL="zsh"
 
 # load vars
 source "${DOTFILES}/shell/aux/vars.bash"
@@ -20,16 +14,18 @@ source "${DOTFILES}/shell/aux/core.bash"
 # load aliases
 source "${DOTFILES}/shell/aliases/core.bash"
 
+# load local custom config
+source "${DOTFILES}/local/zshrc" 2> /dev/null || true
+source "${DOTFILES}/local/${DOT_INSTANCE}/zshrc" 2> /dev/null || true
 
 # on directory change
-dns_chpwd() {
-   if has fre; then
+if has fre; then
+   dns_chpwd() {
       fre --add "$PWD"
-   fi
-   # teleport tx --channel pwd --value "$PWD" &
-}
-typeset -gaU chpwd_functions
-chpwd_functions+=dns_chpwd
+   }
+   typeset -gaU chpwd_functions
+   chpwd_functions+=dns_chpwd
+fi
 
 # history
 setopt HIST_IGNORE_ALL_DUPS
@@ -39,17 +35,17 @@ source "${DOTFILES}/shell/zsh/bindings/editing.zsh"
 has navi && source "${DOTFILES}/shell/zsh/bindings/navi.zsh"
 has fzf && source "${DOTFILES}/shell/zsh/bindings/fzf.zsh"
 
-# load local custom config
-source "${DOTFILES}/local/zshrc" 2> /dev/null || true
-
 # theme
-source "${DOTFILES}/shell/themes/core.zsh"
+export DOT_THEME="${DOT_THEME:-none}"
+# if [ "$DOT_THEME" != "none" ]; then
+   source "${DOTFILES}/shell/themes/core.zsh"
+# fi
 
 # misc
 # WORDCHARS=${WORDCHARS//[\/]}
 
 # zim
-if [[ "${DOT_THEME:-}" == "powerlevel" ]]; then
+if [[ "$DOT_THEME" == "powerlevel" ]]; then
    # source ${ZIM_HOME}/login_init.zsh -q &!
 
    # if [[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
@@ -75,3 +71,5 @@ export ZDOTDIR="$HOME"
 
 # zmodload zsh/zprof (in /etc/zshenv)
 # zprof
+
+# set -x

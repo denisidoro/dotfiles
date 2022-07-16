@@ -3,7 +3,6 @@
 source "${DOTFILES}/scripts/core/fs.sh"
 
 TMP_DIR="$(platform::get_tmp_dir)"
-MODULES_FOLDER="${DOTFILES}/modules"
 
 recipe::folder() {
    echo "${TMP_DIR}/${1}"
@@ -45,7 +44,7 @@ recipe::shallow_gitlab_clone() {
 
 recipe::check_if_can_build() {
    if ! ${DOT_PKG_ALLOW_BUILD:-true}; then
-      log:error "Building binaries not allowed!"
+      log::error "Building binaries not allowed!"
       exit 1
    fi
 }
@@ -55,20 +54,6 @@ recipe::make() {
    local -r repo="$1"
    cd "$(recipe::folder "$repo")" || exit
    make && sudo make install
-}
-
-recipe::has_submodule() {
-   local -r module="$1"
-   local -r probe_file="${2:-}"
-
-   local -r module_path="${MODULES_FOLDER}/${module}"
-
-   if [[ -n $probe_file ]]; then
-      local -r probe_path="${module_path}/${probe_file}"
-      fs::is_file "$probe_path"
-   else
-      fs::is_dir "$module_path"
-   fi
 }
 
 recipe::clone_as_submodule() {

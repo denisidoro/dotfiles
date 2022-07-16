@@ -32,4 +32,4 @@ $ ssh_config: echo "${PREFIX}/etc/ssh/sshd_config"
 % android, apps
 
 # Open Google Play Store profile page for an app
-dot browser google-lucky "<query> site:play.google.com"
+dot terminal open "https://duckduckgo.com/?q=%21+$(dot script eval --load str str::urlencode "<query> site:play.google.com")&ia=web"

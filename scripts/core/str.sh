@@ -100,6 +100,7 @@ str::remove_last_char() {
 }
 
 str::urlencode() {
+   set +e
    local data
    data="$(curl -s -o /dev/null -w '%{url_effective}' --get --data-urlencode "$1" "")"
    if [[ $? != 3 ]]; then

@@ -167,6 +167,16 @@ dot_set() {
       dotfile="$1"
       orig="$2"
 
+      if [ -n "${DOTLINK_IGNORE_LIST:-}" ]; then
+         IFS=',' read -r -a ignores <<< "$DOTLINK_IGNORE_LIST"
+         for ignore in "${ignores[@]}"; do
+            if [[ "$dotfile" = *"$ignore"* ]]; then
+               echo "IGNORING ${dotfile} because it matches ${ignore}!"
+               return 0
+            fi
+         done
+      fi
+
       # if dotfile doesn't exist, print error message and pass
       if [ ! -e "${dotfile}" ]; then
          echo "$(prmpt 1 "not found")${dotfile}"

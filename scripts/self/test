@@ -85,6 +85,7 @@ mkdir -p "$TEST_DIR" 2>/dev/null || true
 _prepare_zsh 2>/dev/null || true
 _prepare_dotlink 2>/dev/null || true
 _stub_vscode 2>/dev/null || true
+
 export PATH="${DOTFILES}/local/bin:${PATH}"
 hash -r 2>/dev/null || true
 

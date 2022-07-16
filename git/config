@@ -86,7 +86,7 @@
   autoStash = true
 
 [include]
-  path = ~/dotfiles/local/gitconfig
+  path = ~/dotfiles/local/mac/gitconfig
 
 [pull]
   rebase = true

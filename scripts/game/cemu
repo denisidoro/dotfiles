@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Cemu helpers
+##?
+##? Usage:
+##?    cemu gen
+
+doc::maybe_help "$@"
+
+CEMU_DIR="$(yaml::var game_cemu_dir)"
+SAVE_BASE="${CEMU_DIR}/mlc01/usr/"
+
+_gen_list() {
+   date +'%Y-%m-%d'
+   echo
+
+   cd "$SAVE_BASE"
+
+   while IFS= read -r -d '' f; do
+      cat "$f" | grep longname_en | tr '\n' ' ' | sed -E 's/.*?>(.*?)<.*/\1/'
+      echo
+      echo "${f//\/meta/\/meta.xml}"
+      echo
+   done < <(find . -name '*meta.xml')
+}
+
+_gen_list > "$SAVE_BASE/list.txt"

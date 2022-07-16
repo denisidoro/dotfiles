@@ -1,0 +1,168 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+# ======================
+# wrappers
+# ======================
+
+_arc() {
+   debug arc "$@"
+   arc "$@"
+}
+
+arc_diff() {
+   local argv=() title="" summary="" jira="" template="" create_fast=false
+
+   while [[ $# -gt 0 ]]; do
+   case $1 in
+      --title) title="$2"; shift 2 ;;
+      --summary) summary="$2"; shift 2 ;;
+      --jira) jira="$2"; shift 2 ;;
+      --template) template="$2"; shift 2 ;;
+      --create-fast) create_fast=true; shift ;;
+      *) argv+=("$1"); shift ;;
+   esac
+   done
+   set -- "${argv[@]}"
+
+  if [ -n "$title" ] || [ -n "$summary" ] || [ -n "$jira" ]; then
+      local -r tmpfile="$(mktmpfile)"
+      interpolated_revision_message "$title" "$summary" "$jira" > "$tmpfile"
+      argv+=("--message-file")
+      argv+=("$tmpfile")
+   fi
+
+   if $create_fast; then
+     to_append=(--excuse ci --add-all --amend-all --autoland --ignore-unsound-tests --nointeractive --nounit --nolint --create)
+     # shellcheck disable=SC2206
+     argv=(${argv[@]} ${to_append[@]})
+   fi
+
+   if [ -n "$template" ]; then
+      local -r tmpfile="$(mktmpfile)"
+     editor_source_code "$template" "${EDITOR:-vi}" >> "$tmpfile"
+     chmod +x "$tmpfile"
+     log::warn "export EDITOR=\"$tmpfile\"" 
+     export EDITOR="$tmpfile" 
+   fi
+
+   _arc diff "${argv[@]}"  
+}
+
+arc_help() {
+   if [ $# = 0 ]; then
+      _arc --help
+   else
+      _arc help "$@"
+   fi
+}
+
+# ======================
+# revision message
+# ======================
+
+interpolated_revision_message() {
+   local -r title="$1"
+   local -r summary="$2"
+   local -r jira="$3"
+
+  cat <<EOF
+${title}
+
+Summary: ${summary}
+
+Test Plan: 
+
+Reviewers: 
+
+Subscribers: 
+
+Tags: 
+
+Revert Plan: 
+
+JIRA Issues: ${jira}
+
+API Changes: 
+
+Monitoring and Alerts: 
+EOF
+}
+
+editor_source_code() {
+   local -r template="$1"
+   local -r title="$1"
+   local -r editor="$2"
+
+  cat <<EOF
+#!/usr/bin/env bash
+set -euo pipefail
+
+main() {
+   local -r msgfile="\${1:-}"
+   rm "\$msgfile"
+   cp "$template" "\$msgfile"
+   "$editor" "\$msgfile" || true
+}
+
+main "\$@"
+EOF
+}
+
+# ======================
+# help message
+# ======================
+
+show_help() {
+   echo "$(log::ansi --magenta "arcx
+More info: https://t.uber.com/arcx")
+
+$(log::ansi --yellow Warning:) this has only been tested on Linux and on OSX with GNU tools
+
+$(log::ansi --blue "Usage:")
+$(log::ansi --bold diff) [<args>...]       Extension to \`arc diff\`
+$(log::ansi --bold help) [<args>...]       Show arc's original help messages
+$(log::ansi --bold --help)                 Show this help message
+$(log::ansi --bold "<cmd>") [<args>...]       Call to \`arc <cmd>\`
+
+$(log::ansi --blue "Extra arguments for \`arcx diff\`:")
+$(log::ansi --bold --title) <string>       Skip the revision message edit screen, including the diff title
+$(log::ansi --bold --summary) <string>     Skip the revision message edit screen, including the diff summary
+$(log::ansi --bold --jira) <string>        Skip the revision message edit screen, including the diff JIRA ticket
+$(log::ansi --bold --create-fast)          Use an opinionated list of arc args to create a new diff as fast as possible
+$(log::ansi --bold --template) <path>      Use a different template for revision messages 
+
+$(log::ansi --blue "Examples:")
+arcx diff --create-fast --title \"Add new feature\" --jira XYZ-123
+arcx diff --create --template mytemplate.txt"
+}
+
+# ======================
+# low-level helpers
+# ======================
+
+mktmpfile() {
+   tmpfile="$(mktemp)"
+   trap 'rm -f -- "$tmpfile"' INT TERM HUP EXIT
+   echo "$tmpfile"
+}
+
+# ======================
+# main
+# ======================
+
+main() {
+   local -r fn="${1:-"--help"}"
+   shift || true
+
+   case "$fn" in
+      "diff") arc_diff "$@" ;;
+      "help") arc_help "$@" ;;
+      "--help") show_help ;;
+      *) _arc "$@" ;;
+   esac
+}
+
+main "$@"

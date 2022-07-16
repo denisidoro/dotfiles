@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/rust/aux/core.bash"
+
+main() {
+   set -x
+   rsync \
+      -e "ssh -p ${ANDROID_PORT}" \
+      "${PROJ_HOME}/target/aarch64-linux-android/release/${PROJ_BIN_NAME}" \
+      "${ANDROID_HOST}:/data/data/com.termux/files/home/${PROJ_BIN_NAME}"
+}
+
+main "$@"

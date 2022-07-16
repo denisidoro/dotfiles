@@ -54,8 +54,9 @@ _alias() {
       bash|sh|shell|terminal|scripting) echo script ;;
       fs) echo filesystem ;;
       and) echo android ;;
+      cloud) echo storm ;;
       clj) echo clojure ;;
-      game) echo gaming ;;
+      gaming) echo game ;;
       environment|env) echo self ;;
       net) echo network ;;
       pkg) echo package ;;
@@ -98,7 +99,7 @@ elif [[ $# -eq 1 ]]; then
 
    echo 'Commands:'
    for cmd in $(find "${DOTFILES}/scripts/${context_query}/" -mindepth 1 -maxdepth 1 -executable -type f | awk -F"/" '{print $NF}'); do
-      printf "   %-24s %s" "$cmd" "$("${DOTFILES}/scripts/${context_query}/${cmd}" --help | head -n1)"
+      printf "   \033[34m%-24s\033[39m \033[37m%s\033[39m" "$cmd" "$("${DOTFILES}/scripts/${context_query}/${cmd}" --help | head -n1)"
       echo
    done
 else

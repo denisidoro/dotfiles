@@ -7,11 +7,11 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Camera utilities
 ##?
 ##? Usage:
-##?    camera pull
-##?    camera set
-##?    camera push
+##?    camera pull <args...>
+##?    camera set <args...>
+##?    camera push <args...>
 
-doc::parse "$@"
+doc::maybe_help --show-if-no-args "$@"
 
 export BOXTMP_PHONE="${STORM}/boxtmp/phone"
 
@@ -21,21 +21,18 @@ _pull() {
 }
 
 _set() {
-   dot storm run set-camera-buffers
+   dot storm run "$@" set-camera-buffers 
 }
 
 _push() {
-   dot storm upload
+   dot storm upload "$@"
 }
 
 handler() {
-   if $pull; then
-      _pull "$@"
-   elif $set; then
-      _set "$@"
-   elif $push; then
-      _push "$@"
-   fi
+   local -r fn="$1"
+   shift
+
+   "_${fn}" "$@"
 }
 
 main() {

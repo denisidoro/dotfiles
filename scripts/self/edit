@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Edit itself
+##?
+##? Usage:
+##?    edit instance <instance>
+
+doc::maybe_help "$@"
+
+_instance() {
+   local -r instance="$1"
+   local -r filename="${DOTFILES}/shell/aux/vars.bash"
+   sed -i -E 's/DOT_INSTANCE.*/DOT_INSTANCE="'"$instance"'"/' "$filename"
+}
+
+main() {
+   case "${1:-}" in
+      instance) _instance "$2" ;;
+      *) exit 1 ;;
+   esac
+}
+
+main "$@"

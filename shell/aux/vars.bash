@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
+# dotfiles
+export DOT_INSTANCE="mac"
+
 # default editor
-export EDITOR='nvim'
+export EDITOR='v'
 
 # default browser
 export BROWSER='vivaldi'
@@ -23,10 +26,6 @@ export DEV_HOME="${HOME}/dev"
 # Clojure
 export LEIN_SUPPRESS_USER_LEVEL_REPO_WARNINGS=true
 
-# Golang
-export GOPATH="${DEV_HOME}/go"
-export GOBIN="${GOPATH}/bin"
-
 # package management
 export HOMEBREW_NO_AUTO_UPDATE=1
 
@@ -34,13 +33,6 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 export FZF_DEFAULT_OPTS='--height 70% --reverse --inline-info --cycle'
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-# JS
-export VOLTA_HOME="${HOME}/.volta"
-export NVM_DIR="${HOME}/.nvm"
-
-# security
-export GPG_TTY=$(tty)
 
 # x11
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"${HOME}/.config"}"

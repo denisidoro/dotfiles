@@ -1,0 +1,34 @@
+#!/bin/bash
+set -euo pipefail
+
+export PROJ_BIN_NAME="__BIN_NAME__"
+
+main() {
+   local -r config="${1//@/\"}"
+   shift || true
+
+   local args="$*"
+   args="${args//\//_}"
+   args="${args:0:64}"
+
+   local -r tasker_tmp="${TASKER_TMP:-"/sdcard/Tasker/tmp"}"
+   local -r timestamp="$(date +"%Y-%m-%dT%H-%M-%S")"
+   local log="${tasker_tmp}/${PROJ_BIN_NAME}_${args}_${timestamp}.txt"
+   log="${log//[^0-9a-zA-Z_/]/_}"
+   
+   mkdir -p "$tasker_tmp" &>/dev/null || true
+
+   for i in "$@"; do
+      case "$i" in
+         "%"*)
+            echo "aborting because of undefined input" > "$log"
+            exit 1
+            ;;
+      esac
+   done
+
+   local -r proj_bin="${PROJ_BIN:-"${HOME}/${PROJ_BIN_NAME}"}"
+   "$proj_bin" --config <(echo "$config") "$@" |& tee "$log"
+}
+
+main "$@"

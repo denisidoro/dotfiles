@@ -24,7 +24,7 @@ prompt_dns_precmd() {
 }
 
 prompt_dns_setup() {
-   local prompt_dns_status="%(?:%F${PROMPT_COLOR_1}$FIRST_CHARACTER_OK:%F{red}$FIRST_CHARACTER_KO)"
+   local prompt_dns_status="%(?:%F${PROMPT_COLOR_1}$FIRST_CHARACTER_OK:%F{red}$FIRST_CHARACTER_KO)%F{reset}"
 
    autoload -Uz add-zsh-hook && add-zsh-hook precmd prompt_dns_precmd
 

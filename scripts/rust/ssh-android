@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/rust/aux/core.bash"
+
+main() {
+   ssh -p "$ANDROID_PORT" "$ANDROID_HOST" "$@"
+}
+
+main "$@"

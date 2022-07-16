@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+has() {
+   type "$1" &>/dev/null
+}
+
+if has doc::maybe_help; then 
+   return 0
+fi
+
+# echo "IMPORTED MAIN: $0" >&2
+
 if ${DOT_DEBUG:-false}; then
    set -x
 fi
@@ -30,6 +40,7 @@ log::ansi() {
    fi
    local -r txt="$*"
    case "${mod1}${mod2}" in
+      "--bold") printf "\033[1m%s\033[0m" "$txt" ;;
       "--blue") printf "\033[34m%s\033[39m" "$txt" ;;
       "--blue--inverse") printf "\033[34m\033[7m%s\033[27;39m" "$txt" ;;
       "--magenta") printf "\033[35m%s\033[39m" "$txt" ;;
@@ -73,19 +84,38 @@ debug() {
    "$@"
 }
 
-has() {
-   type "$1" &>/dev/null
-}
-
 export_f() {
    export -f "${@?}" >/dev/null
 }
 
-export_f has tap println echoerr
+yaml::export() {
+   if ${DOT_YAML_PARSED:-false}; then
+      return 0
+   fi
 
-if has doc::parse; then
-   return 0
-fi
+   eval "$(dot script yaml "${DOTFILES}/config.yaml" "DOT_")"
+
+   local -r override="${DOTFILES}/local/config.yaml"
+   if [ -f "$override" ]; then
+      eval "$(dot script yaml "$override" "DOT_")"
+   fi
+
+   export DOT_YAML_PARSED=true
+}
+
+yaml::var() {
+   local -r varname="DOT_${1:-}"
+
+   yaml::export
+
+   if [ -z "${!varname:-}" ]; then
+      local -r default="${2:-false}"
+      echo "$default"
+      return 0
+   fi
+
+   echo "${!varname}"
+}
 
 export PATH="${DOTFILES}/bin/:${PATH}:/usr/local/bin:/usr/bin:${HOME}/bin"
 
@@ -94,7 +124,7 @@ if ${DOT_TRACE:-false}; then
    set -x
 fi
 
-export EDITOR="${EDITOR:-vi}"
+export EDITOR="${EDITOR:-v}"
 
 if ! has sudo; then
    sudo() { "$@"; }
@@ -126,34 +156,30 @@ if has ggrep; then
    export_f sed awk find head mktemp date cut tr cp cat sort kill xargs
 fi
 
-doc::help_msg() {
+doc::_help_msg() {
    local -r sh_file="$1"
    grep "^##?" "$sh_file" | cut -c 5-
 }
 
 doc::maybe_help() {
    local -r sh_file="$0"
+   
+   local show_if_no_args=false
+   if [ "${1:-}" = "--show-if-no-args" ]; then
+      shift || true
+      show_if_no_args=true
+   fi
 
    doc::autocomplete "$@"
 
-   case "${1:-}" in
-      -h|--help|--version) doc::help_msg "$sh_file"; exit 0 ;;
-   esac
-}
-
-doc::help_or_fail() {
-   local -r sh_file="$0"
-
-   doc::autocomplete "$@"
+   if $show_if_no_args && [ $# = 0 ]; then
+      doc::_help_msg "$sh_file"
+      exit 0 
+   fi
 
    case "${1:-}" in
-      -h|--help|--version) doc::help_msg "$sh_file"; exit 0 ;;
+      -h|--help|--version) doc::_help_msg "$sh_file"; exit 0 ;;
    esac
-
-   echoerr "Invalid command"
-   echoerr
-   doc::help_msg "$sh_file"
-   exit 1
 }
 
 doc::parse() {
@@ -161,7 +187,7 @@ doc::parse() {
 
    doc::autocomplete "$@"
 
-   local -r help="$(doc::help_msg "$sh_file")"
+   local -r help="$(doc::_help_msg "$sh_file")"
    local docopt="${DOT_DOCOPT:-}"
 
    if [ -z "${docopt:-}" ]; then
@@ -205,5 +231,3 @@ doc::autocomplete() {
       exit 1
    fi
 }
-
-export_f doc::help_msg doc::maybe_help doc::help_or_fail doc::parse doc::autocomplete

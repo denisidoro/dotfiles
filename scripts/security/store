@@ -135,7 +135,7 @@ main() {
    if has "$cmd"; then
       "$cmd" "$@"
    else
-      doc::help_msg "$0"
+      doc::_help_msg "$0"
       exit 1
    fi
 }

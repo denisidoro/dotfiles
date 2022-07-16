@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Handle a channel message
+##?
+##? Usage:
+##?    handle <type> [<data>]
+##? 
+##? Examples:
+##?    handle url https://google.com
+
+doc::maybe_help "$@"
+
+_log() {
+   local -r file="${DOTFILES}/local/channel_log.txt"
+   if [ -f "$file" ]; then
+      touch "$file"
+   fi
+   echo "$(date +"%Y-%m-%d %H:%M:%S") $*" >> "$file"
+}
+
+main() {
+   _log "$@"
+
+   local -r type="$1"
+   shift
+
+   case "$type" in
+      url|uri) 
+         open "$@" 
+         ;;
+      not|notify|notification) 
+         # set -f
+         # args=(${*//;/ })
+         IFS=';' read -r -a args <<< "$*"
+         dot channel notify "${args[@]}" 
+         ;;
+      clip) 
+         if [ -n "$*" ]; then
+            echo "$*" | dot script clip copy
+         else
+            local -r clip="$(dot script clip paste)"
+            dot telegram message "$clip"
+         fi
+         ;;
+      say)
+         osascript -e "say \"$*\""
+         ;;
+      rickroll) 
+         open "https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
+         ;;
+      *) 
+         die "unknown type: $type" 
+         ;;
+   esac
+}
+
+main "$@"

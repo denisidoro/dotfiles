@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 _apt() {
-   sudo apt-get "$@"
+   apt-get "$@"
 }
 
 apt::install() {

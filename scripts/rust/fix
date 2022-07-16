@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/rust/aux/core.bash"
+
+_commit() {
+   if [ -n "${DOTFILES:-}" ]; then
+      git add --all || true
+      dot git commit am || true
+   fi
+}
+
+cd "$PROJ_HOME"
+
+_commit
+log::note "cargo fix..."
+cargo fix || true
+
+_commit
+log::note "cargo fmt..."
+cargo fmt || true
+
+_commit
+log::note "clippy..."
+cargo clippy --fix || true
+
+# _commit
+# log::note "dot code beautify..."
+# find scripts -type f | xargs -I% dot code beautify % || true
+# dot code beautify "${PROJ_HOME}/tests/run" || true

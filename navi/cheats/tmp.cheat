@@ -1,3 +1,13 @@
+% examples
+# Display contents of a file
+cat <file>
+
+# Echo text
+echo <some_text>
+
+$file: ls
+
+
 % tmp
 
 # Echo multiline
