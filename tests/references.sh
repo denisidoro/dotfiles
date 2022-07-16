@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 _files() {
    find . \
       \( -name .git -prune \) \
@@ -13,6 +12,7 @@ _files() {
       | grep -v 'completions' \
       | grep -v 'references' \
       | grep -v 'bin/dot' \
+      | grep -v 'node_modules' \
       | grep -v 'STORE' \
       | grep -v 'help.sh'
 }

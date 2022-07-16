@@ -1,3 +1,5 @@
+let g:go_version_warning = 0
+
 let g:spacevim_plug_home = '~/.vim/plugged'
 
 " let g:spacevim_leader = "<\Space>"
@@ -22,7 +24,7 @@ function! UserInit()
   Plug 'junegunn/seoul256.vim'
   Plug 'airblade/vim-rooter'
   Plug 'danilo-augusto/vim-afterglow'
-  Plug 'liuchengxu/space-vim-dark'
+  " Plug 'liuchengxu/space-vim-dark'
   Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 endfunction
@@ -39,7 +41,7 @@ function! UserConfig()
   if has('termguicolors')
 
     " colorscheme afterglow
-    colorscheme space-vim-dark
+    " colorscheme space-vim-dark
     hi Comment cterm=italic
     hi Normal     ctermbg=NONE guibg=NONE
     hi LineNr     ctermbg=NONE guibg=NONE

@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Self health
+##?
+##? Usage:
+##?    health
+
+doc::maybe_help "$@"
+
+no="$(log::ansi --red no)"
+yes="$(log::ansi --green yes)"
+
+ls_batch() {
+   echoerr
+   local -r batch="$1"
+   log::info "batch $batch"
+   for dep in $(dot pkg batch list "$batch"); do
+      local bool="$no"
+      if has "$dep"; then
+         bool="$yes"
+      elif dot pkg check "$dep" &>/dev/null; then
+         bool="$yes"
+      fi
+      printf "%-20s %s\n" "$dep" "$bool"
+   done
+}
+
+main() {
+   ls_batch "nano"
+   ls_batch "mini"
+   ls_batch "dev"
+   ls_batch "full"
+}
+
+main "$@"

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Shows a system notification
+##?
+##? Usage:
+##?    notify <message> [<title>] [<subtitle>]
+
+doc::maybe_help "$@"
+
+main() {
+   local -r message="$1"
+   local -r title="${2:-}"
+   local -r subtitle="${3:-}"
+
+   local code="display notification \"${message}\""
+   if [ -n "$title" ]; then
+      code="${code} with title \"${title}\""
+   fi
+   if [ -n "$subtitle" ]; then
+      code="${code} subtitle \"${subtitle}\""
+   fi
+   
+   afplay "/System/Library/Sounds/Glass.aiff" &
+   osascript -e "$code"
+}
+
+main "$@"

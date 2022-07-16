@@ -1,33 +1,33 @@
 #!/usr/bin/env bash
 
 yum::install() {
-   sudo yum install "$@"
+   yum install "$@"
 }
 
 yum::remove() {
-   sudo yum uninstall "$@"
+   yum uninstall "$@"
 }
 
 yum::update() {
-   sudo yum updateinfo "$@"
+   yum updateinfo "$@"
 }
 
 yum::upgrade() {
-   sudo yum update "$@"
+   yum update "$@"
 }
 
 yum::clean() {
-   sudo yum clean "$@"
+   yum clean "$@"
 }
 
 yum::search() {
-   sudo yum search "$@"
+   yum search "$@"
 }
 
 yum::list() {
-   sudo yum list "$@"
+   yum list "$@"
 }
 
 yum::info() {
-   sudo yum info "$@"
+   yum info "$@"
 }

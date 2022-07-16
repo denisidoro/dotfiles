@@ -6,7 +6,7 @@
 # @raycast.mode silent
 
 # Optional parameters:
-# @raycast.icon /Users/denis.isidoro/Pictures/Icons/navi_128.png
+# @raycast.icon /Users/denis.isidoro/Pictures/Icons/navi_64sq.png
 # @raycast.packageName Browser
 
 # Documentation:

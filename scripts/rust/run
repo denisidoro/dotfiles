@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/rust/aux/core.bash"
+
+main() {
+   local f="${PROJ_HOME}/target/debug/${PROJ_BIN_NAME}"
+   if [ -f "$f" ]; then
+      "$f" "$@"
+      return 0
+   fi
+
+   f="${PROJ_HOME}/target/release/${PROJ_BIN_NAME}"
+   if [ -f "$f" ]; then
+      "$f" "$@"
+      return 0
+   fi
+
+   if command_exists "${PROJ_BIN_NAME}"; then
+      "${PROJ_BIN_NAME}" "$@"
+      return 0
+   fi
+
+   cd "$PROJ_HOME"
+   cargo run -- "$@"
+}
+
+main "$@"

@@ -20,13 +20,13 @@ else
    prevent_recipe=false
 fi
 
-if [ $# -gt 1 ]; then
-   pkg_failures=0
-   for package in "$@"; do
-      dot pkg check "$($prevent_recipe && printf %s '--prevent-recipe')" "$package" || pkg_failures=$((pkg_failures+1))
-   done
-   exit "$pkg_failures"
-fi
+# if [ $# -gt 1 ]; then
+#    pkg_failures=0
+#    for package in "$@"; do
+#       dot pkg check "$($prevent_recipe && printf %s '--prevent-recipe')" "$package" || pkg_failures=$((pkg_failures+1))
+#    done
+#    exit "$pkg_failures"
+# fi
 
 exit::is_installed() {
    log::success "${package} is installed"

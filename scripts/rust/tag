@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/rust/aux/core.bash"
+
+version_from_toml() {
+   cat "${PROJ_HOME}/Cargo.toml" \
+      | grep version \
+      | head -n1 \
+      | awk '{print $NF}' \
+      | tr -d '"' \
+      | tr -d "'"
+}
+
+main() {
+   cd "$PROJ_HOME"
+   
+   version="${1:-$(version_from_toml)}"
+   log::note "version: $version..."
+   sleep 2
+
+   git tag -a "v${version}"
+   git push origin --tags
+}
+
+main "$@"

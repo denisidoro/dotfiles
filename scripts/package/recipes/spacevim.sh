@@ -2,7 +2,7 @@
 set -euo pipefail
 
 package::is_installed() {
-   cat "$HOME/.config/nvim/init.vim" 2>/dev/null | grep -q "space-vim" 2>/dev/null
+   cat "${HOME}/.config/nvim/init.vim" 2>/dev/null | grep -q "spacevim"
 }
 
 package::install() {

@@ -32,7 +32,7 @@
    # The list of segments shown on the left. Fill it with the most important segments.
    typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
       # =========================[ Line #1 ]=========================
-      # os_icon                 # os identifier
+      os_icon                 # os identifier
       dir                     # current directory
       vcs                     # git status
       # =========================[ Line #2 ]=========================
@@ -190,7 +190,7 @@
    # Transparent background.
    typeset -g POWERLEVEL9K_PROMPT_CHAR_BACKGROUND=
    # Green prompt symbol if the last command succeeded.
-   typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=31 # THEMECOLOR: 76
+   typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=31 # BKP: 76
    # Red prompt symbol if the last command failed.
    typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=196
    # Default prompt symbol.
@@ -211,17 +211,18 @@
 
    ##################################[ dir: current directory ]##################################
    # Default current directory color.
-   typeset -g POWERLEVEL9K_DIR_FOREGROUND=219 # THEMECOLOR: 31
+   typeset -g POWERLEVEL9K_DIR_FOREGROUND=219 # BKP: 31
+
    # If directory is too long, shorten some of its segments to the shortest possible unique
    # prefix. The shortened directory can be tab-completed to the original.
    typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
    # Replace removed segment suffixes with this symbol.
    typeset -g POWERLEVEL9K_SHORTEN_DELIMITER=
    # Color of the shortened directory segments.
-   typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=103 # THEMECOLOR?: 103
+   typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=103 # BKP?: 103
    # Color of the anchor directory segments. Anchor segments are never shortened. The first
    # segment is always an anchor.
-   typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=225 # THEMECOLOR: 39
+   typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=225 # BKP: 39
    # Display anchor directory segments in bold.
    typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
    # Don't shorten directories that contain any of these files. They are anchors.
@@ -365,9 +366,9 @@
       if (( $1 )); then
          # Styling for up-to-date Git status.
          local       meta='%246F'  # grey foreground
-         local      clean='%183F'  # green foreground, THEMECOLOR: 36
-         local   modified='%252F'  # yellow foreground, THEMECOLOR: 178
-         local  untracked='%74F'   # blue foreground, THEMECOLOR: 39
+         local      clean='%183F'  # green foreground, BKP: 36
+         local   modified='%252F'  # yellow foreground, BKP: 178
+         local  untracked='%74F'   # blue foreground, BKP: 39
          local conflicted='%196F'  # red foreground
       else
          # Styling for incomplete and stale Git status.
@@ -462,7 +463,7 @@
    typeset -g POWERLEVEL9K_VCS_{STAGED,UNSTAGED,UNTRACKED,CONFLICTED,COMMITS_AHEAD,COMMITS_BEHIND}_MAX_NUM=-1
 
    # Icon color.
-   typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_COLOR=183 # THEMECOLOR: 76
+   typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_COLOR=183 # BKP: 76
    typeset -g POWERLEVEL9K_VCS_LOADING_VISUAL_IDENTIFIER_COLOR=244
    # Custom icon.
    # typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_EXPANSION='⭐'

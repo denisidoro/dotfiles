@@ -13,7 +13,9 @@ doc::maybe_help "$@"
 main() {
    local -r path="$1"
 
-   for _ in $(seq 0 10); do
+   find "$path" -name '.DS_Store' -type f -delete || true
+
+   for _ in $(seq 0 5); do
       find "$path" -type d -exec rmdir {} + 2>/dev/null
    done
 }

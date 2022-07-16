@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/storm/aux/core.sh"
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Fix GPS coordinates in case lat/lng are glued
+##?
+##? Usage:
+##?    fix-gps myfile.mpg
+
+doc::maybe_help "$@"
+
+main() {
+   local -r filename="$1"
+
+   local -r gps="$(exiftool -T -n "-gpsLatitude" "$filename" | sed 's/-0/;-0/g')"
+   
+   local -r lat=$(echo "$gps" | cut -d';' -f2)
+   local -r lng=$(echo "$gps" | cut -d';' -f3)
+
+   if [[ $(echo "$lat >= -90" | bc) -ne "1" || $(echo "$lat <= 90" | bc) -ne "1" ]]; then
+      echoerr "invalid lat: $lat"
+      exit 1
+   fi 
+
+   if [[ $(echo "$lng >= -180" | bc) -ne "1" || $(echo "$lng <= 180" | bc) -ne "1" ]]; then
+      echoerr "invalid lng: $lng"
+      exit 1
+   fi 
+
+   exiftool -overwrite_original_in_place -gps:all= "$filename" || true
+   exiftool  -overwrite_original_in_place "-gps*=" "$filename" || true
+
+   set -x
+   exiftool -overwrite_original_in_place -gpsLatitude="$lat" -gpsLongitude="$lng" "$filename"
+   exiftool -T -n -gpsLatitude -gpsLongitude "$filename"
+}
+
+main "$@"

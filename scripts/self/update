@@ -25,11 +25,6 @@ main() {
    log::info "Current config: $tags"
    echoerr
 
-   _add dot-git || true
-   _add dot-folders || true
-   _add dot-gitconfig || true
-   _add dot-zshrc || true
-
    echoerr
    log::info "Setting symlinks..."
    update_dotfiles_common
@@ -40,14 +35,6 @@ main() {
    has_tag "$tags" "android" && update_dotfiles_android
    has_tag "$tags" "wsl" && update_dotfiles_wsl
    has_tag "$tags" "work" && update_dotfiles_work
-
-   fix_locales || true
-
-   if ! ${DOT_SKIP_CORE_DEPS:-false}; then
-      if has zimfw && zimfw install; then
-         zimfw update || true
-      fi
-   fi
 
    set -e
 
@@ -72,17 +59,6 @@ _add() {
    dot pkg add "$@"
 }
 
-# ==============================
-# Locale
-# ==============================
-
-fix_locales() {
-   if has locale-gen; then
-      echoerr
-      log::info "Fixing locales..."
-      locale-gen en_US en_US.UTF-8
-   fi
-}
 
 # ==============================
 # Symlinks and custom configs
@@ -90,15 +66,17 @@ fix_locales() {
 
 update_dotfiles() {
    params=()
+
    if [ -n "${DOT_LINK_EXTRA_ARG:-}" ]; then
       params+=("$DOT_LINK_EXTRA_ARG")
    fi
-   DOTLINK="${1:-unix}" dot self link set --create-dirs --verbose "${params[@]:-}"
+
+   DOTLINK="$1" dot self link set --create-dirs --verbose "${params[@]:-}"
 }
 
 update_dotfiles_common() {
    log::info "Symlinking for Unix..."
-   update_dotfiles
+   update_dotfiles "unix"
 }
 
 update_dotfiles_osx() {
@@ -147,5 +125,5 @@ hash -r &>/dev/null || true
 # shellcheck disable=SC1091
 source "${HOME}/.bashrc" &>/dev/null || true
 # shellcheck disable=SC1091
-source "${HOME}/.zshrc" &>/dev/null || true
+# source "${HOME}/.zshrc" &>/dev/null || true
 hash -r &>/dev/null || true

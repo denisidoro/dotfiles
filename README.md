@@ -1,7 +1,4 @@
 <h3 align="center">
-  <span><img width="18" src="https://image.flaticon.com/icons/svg/226/226769.svg" alt="OSX - Icon made by Freepik from Flaticon" /></span>
-  <span><img width="18" src="https://image.flaticon.com/icons/svg/226/226772.svg" alt="Linux - Icon made by Freepik from Flaticon" /></span>
-  <span><img width="18" src="https://image.flaticon.com/icons/svg/174/174836.svg" alt="Android - Icon made by Freepik from Flaticon" /></span>
   denisidoro/dotfiles
   <a alt="CI status" href="https://github.com/denisidoro/dotfiles/actions"><img src="https://github.com/denisidoro/dotfiles/workflows/Tests/badge.svg" /></a>
   <a alt="GitHub release" href="https://github.com/denisidoro/dotfiles/releases"><img src="https://img.shields.io/github/v/release/denisidoro/dotfiles?include_prereleases" /></a>
@@ -13,7 +10,7 @@
   <sub>Awesome personal dotfiles</sub>
 </p>
 <p align="center">
-  <a href="#-installation">Installation</a>&nbsp;&nbsp;&nbsp;
+  <a href="#full-installation">Installation</a>&nbsp;&nbsp;&nbsp;
   <a href="shell">Shell</a>&nbsp;&nbsp;&nbsp;
   <a href="scripts">Scripts</a>&nbsp;&nbsp;&nbsp;
   <a href="git/config">Git</a>&nbsp;&nbsp;&nbsp;
@@ -43,7 +40,7 @@ git clone https://github.com/denisidoro/dotfiles "$DOTFILES"
 
 ```bash
 dot::clone() {
-  DOT_VERSION=master bash <(curl -s https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/self/install) 
+  bash <(curl -s https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/self/install) 
 }
 
 dot::clone_if_necessary() {
@@ -81,17 +78,6 @@ $ dot shell zsh benchmark
 Benchmark #1: /usr/bin/time /bin/zsh -i -c exit
   Time (mean ± σ):      35.6 ms ±   3.0 ms    [User: 14.0 ms, System: 16.0 ms]
   Range (min … max):    32.7 ms …  48.8 ms    67 runs
-```
-
-## Overriding configs
-
-Edit the following files accordingly:
-```bash
-# shell
-vi "${DOTFILES}/local/zshrc"
-
-# git
-vi "${DOTFILES}/local/gitconfig"
 ```
 
 ## Template

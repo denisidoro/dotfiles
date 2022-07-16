@@ -10,9 +10,8 @@ _mkdir() {
 }
 
 package::install() {
-   _mkdir "${DOTFILES}/local"
-   _mkdir "${DOTFILES}/local/tmp"
-   _mkdir "${DOTFILES}/local/bin"
+   _mkdir "${DOTFILES}/local/${DOT_INSTANCE}/tmp"
+   _mkdir "${DOTFILES}/local/${DOT_INSTANCE}/bin"
    _mkdir "${DOTFILES}/target"
    _mkdir "${DOTFILES}/bin"
 

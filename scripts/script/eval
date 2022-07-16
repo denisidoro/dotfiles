@@ -11,6 +11,19 @@ source "${DOTFILES}/scripts/core/main.sh"
 doc::maybe_help "$@"
 
 main() {
+   if [ "${1:-}" = "--load" ]; then
+      local -r load="$2"
+      shift 2
+
+      ifs=$IFS
+      IFS=':'
+      for l in $load; do
+         # shellcheck disable=SC1090
+         source "${DOTFILES}/scripts/core/${l}.sh"
+      done
+      IFS=$ifs
+   fi
+
    "$@"
 }
 

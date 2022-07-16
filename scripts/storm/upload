@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
-set -x
 
 source "${DOTFILES}/scripts/storm/aux/core.sh"
 source "${DOTFILES}/scripts/core/main.sh"

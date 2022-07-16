@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
-set -x
 
 source "${DOTFILES}/scripts/storm/aux/core.sh"
 source "${DOTFILES}/scripts/core/main.sh"
@@ -8,11 +7,11 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Camera utilities
 ##?
 ##? Usage:
-##?    camera pull
-##?    camera set
-##?    camera push
+##?    camera pull <args...>
+##?    camera set <args...>
+##?    camera push <args...>
 
-doc::parse "$@"
+doc::maybe_help --show-if-no-args "$@"
 
 export BOXTMP_PHONE="${STORM}/boxtmp/phone"
 
@@ -22,21 +21,18 @@ _pull() {
 }
 
 _set() {
-   dot storm run set-camera-buffers
+   dot storm run "$@" set-camera-buffers 
 }
 
 _push() {
-   dot storm upload
+   dot storm upload "$@"
 }
 
 handler() {
-   if $pull; then
-      _pull "$@"
-   elif $set; then
-      _set "$@"
-   elif $push; then
-      _push "$@"
-   fi
+   local -r fn="$1"
+   shift
+
+   "_${fn}" "$@"
 }
 
 main() {
@@ -47,7 +43,8 @@ main() {
    fi
 
    dot fs remove-empty-dirs "$STORM" || true
-   dot fs remove-empty-dirs "$PICTURES" || true
+   dot fs remove-empty-dirs "$PICTURES/Camera" || true
+   dot fs remove-empty-dirs "$PICTURES/VVCamera" || true
 
    return $errors
 }

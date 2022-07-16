@@ -2,6 +2,7 @@
 set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/platform.sh"
 
 ##? Use current path as argument if none is specified
 ##
@@ -29,18 +30,33 @@ indexof() {
    echo -1;
 }
 
+get_fn() {
+   IFS=',' read -r -a args <<< "$1"
+   platform::existing_command "${args[@]}"
+}
+
 dot_or_args() {
    local -r dash_index="$(indexof "--" "$@")"
-   # shellcheck disable=SC2124
-   readonly fn="${@:1:$((dash_index-1))}"
+   
+   local args=()
+   args=("${@:2:$((dash_index-2))}")
+
+   local -r fn1s="$1"
+   local -r fn1="$(get_fn "$fn1s")"
+
    shift "$dash_index"
-   if [[ $# -lt 1 ]]; then
-      # shellcheck disable=SC2068
-      ${fn[@]} .
-   else
-      # shellcheck disable=SC2068
-      ${fn[@]} "$@"
+
+   # echo "len args: ${#args[@]}; len @: $#" 
+   # echo "args[0]: ${args[0]:-nil}" 
+
+   if [ $# -lt 1 ]; then
+      set -- "."
    fi
+
+   args=("${args[@]}" "$@")
+
+   # set -x
+   "$fn1" "${args[@]:-}"
 }
 
 dot_or_args "$@"

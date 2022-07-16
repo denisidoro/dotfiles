@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Sends a message to Telegram
+##?
+##? Usage:
+##?    message [options] <body>
+##?
+##? Options:
+##?    -c --chat <chat>       Chat to receive the message [default: bot]
+##?
+##? Examples:
+##?    message --chat "foo bar"
+
+doc::parse "$@"
+
+main() {
+   export TELEGRAM_CHAT_KEY="${TELEGRAM_CHAT_KEY:-"telegram/${chat}_chat_id"}"
+   dot storm run send-telegram-message "$body"
+}
+
+main "$@"

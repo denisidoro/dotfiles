@@ -44,7 +44,7 @@
    "terminal.integrated.rendererType": "dom",
    // ==================
    // Explorer
-   // ================== 
+   // ==================
    "explorer.confirmDragAndDrop": false,
    "explorer.confirmDelete": false,
    "files.exclude": {
@@ -93,11 +93,11 @@
    // },
    // ==================
    // Rust
-   // ================== 
+   // ==================
    "rust-analyzer.checkOnSave.command": "clippy",
    // ==================
    // Javascript
-   // ================== 
+   // ==================
    "javascript.validate.enable": false,
    "javascript.updateImportsOnFileMove.enabled": "always",
    // ==================

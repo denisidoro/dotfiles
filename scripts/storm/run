@@ -18,7 +18,7 @@ main() {
    local -r storm="$STORM"
    local -r telegramToken="$(dot security store get telegram/bot_token)"
    local -r telegramChatId="$(dot security store get "$TELEGRAM_CHAT_KEY")"
-   local -r cryptoPassword="$(dot security store get cloud/password)"
+   local -r cryptoPassword="${CRYPTO_PASSWORD:-$(dot security store get cloud/password)}"
 
    local -r yaml="$(cat <<EOF
 crypto:
@@ -117,11 +117,12 @@ archive:
 EOF
    )"
 
+   # storm --config <(echo "$yaml") "$@"
+
    local -r temp_file=$(mktemp)
    echo "$yaml" > "$temp_file"
+   # set -x
    storm --config "$temp_file" "$@"
-
-   # storm --config <(echo "$yaml") "$@"
 }
 
 main "$@"

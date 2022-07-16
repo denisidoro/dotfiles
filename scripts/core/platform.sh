@@ -77,10 +77,13 @@ platform::main_package_manager() {
 platform::existing_command() {
    local cmd
    for cmd in "$@"; do
+      # echoerr "cmd: $cmd"
       if has "$cmd"; then
+         # echoerr "has $cmd"
          echo "$cmd"
          return 0
       fi
+      # echoerr "doesn't have $cmd"
    done
    return 1
 }

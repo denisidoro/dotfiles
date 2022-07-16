@@ -2,4 +2,5 @@
 set -euo pipefail
 
 dot_bin_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
+
 "${dot_bin_dir}/dot" git "$@"

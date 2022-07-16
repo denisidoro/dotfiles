@@ -57,4 +57,12 @@ file="${DOTFILES}/scripts/package/pkg_managers/${pkg_manager}.sh"
 source "$file"
 
 fn="${pkg_manager}::$(_actual_operation "$operation")"
-"$fn" "$@"
+
+yaml::export
+use_sudo="$(yaml::var "pkg_sudo_${pkg_manager}" false)"
+
+if $use_sudo; then
+   sudo "$fn" "$@"
+else
+   "$fn" "$@"
+fi

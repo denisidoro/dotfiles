@@ -10,15 +10,14 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 doc::maybe_help "$@"
 
-if ${1:-install}; then
-   SCRIPT="EDITOR=cat dot self install"
-else
-   SCRIPT=":"
-fi
+case "${1:-}" in
+   install) SCRIPT="DOT_INSTANCE=devpod /root/dotfiles/bin/dot self install --profile devpod" ;;
+   *) SCRIPT=":" ;;
+esac
 
 docker run \
    -it \
    --entrypoint /bin/bash \
-   -v "${DOTFILES}:/dotfiles" \
+   -v "${DOTFILES}:/root/dotfiles" \
    "bashell/alpine-bash" \
-   -c "export DOTFILES=/dotfiles; export EDITOR=vi; export PATH=${PATH}:/dotfiles/bin; $SCRIPT; bash"
+   -c "$SCRIPT; bash"

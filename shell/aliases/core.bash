@@ -4,22 +4,15 @@
 # terminal
 # ========================
 alias c='clear'
-alias t='tmux'
-alias faketty='dot terminal abra faketty'
-alias rxout='dot terminal abra rxout'
-alias rxerr='dot terminal abra rxerr'
-alias txspl='dot terminal abra txspl'
-alias rxls='dot terminal abra rxls'
-txls() { eval "$(abra hook "$DOT_SHELL")"; }
-alias bt='bat -p'
-alias ansi='dot terminal ansi'
+alias faketty='dot script faketty'
+alias ansi='dot script ansi'
 alias icat="kitty +kitten icat --align=left"
-alias ssh="kitty +kitten ssh"
+# alias ssh="kitty +kitten ssh"
 
 # ========================
 # shell
 # ========================
-alias reload='source "${HOME}/.${DOT_SHELL:-zsh}rc' # env -i zsh
+alias reload='source "${HOME}/.$(basename $SHELL)rc"' # env -i zsh
 
 # ========================
 # kitty
@@ -34,10 +27,10 @@ alias map='xargs -I%'
 # ========================
 # editors
 # ========================
-alias vim='nvim'
-alias v="dot terminal dashed nvim --"
-alias code='dot terminal dashed dot code vscode --'
-alias e='code'
+alias vim='v'
+alias nvim='v'
+alias vi='v'
+alias code='e'
 
 # ========================
 # utils
@@ -46,7 +39,6 @@ alias e='code'
 alias d='dot'
 alias n="navi"
 alias browser="dot terminal open -b"
-alias chrome="dot terminal open -b"
 alias color="dot terminal color"
 
 # ========================
@@ -57,11 +49,12 @@ source "${DOTFILES}/shell/aliases/git.bash"
 # ========================
 # phabricator
 # ========================
-alias ac="arc diff --create --nounit --nolint"
-alias ad="arc diff --nounit --nolint"
+alias ac="arc diff --create --nounit --nolint --excuse=ci"
+alias ad="arc diff --nounit --nolint --excuse=ci"
 alias au="navi best 'Update a diff'"
 alias al="navi best 'Land a diff'"
 uc() { navi --best-match --query "uber creds $@"; }
+alias arcx="dot phabricator arcx"
 
 # ========================
 # projects
@@ -79,13 +72,9 @@ unalias f &> /dev/null
 alias lst="tree -L 2"
 cdd() { cd "$@" && ls .; }
 mkcd() { mkdir -p -- "$@" && cd -P -- "$@"; }
-debug() {
-   dot shell log info "$@"
-   "$@"
-}
 
 _safe_cd() {
-   [[ -z "${1:-}" ]] && return 1 || true
+   # [[ -z "${1:-}" ]] && return 1 || true
    [[ -d "${1:-}" ]] && cd "$1" || echoerr "$1 doesn't exist"
 }
 
@@ -101,3 +90,14 @@ alias jv="dot fs jump edit global nvim"
 alias jjv="dot fs jump edit local nvim"
 alias js="dot fs jump edit global code"
 alias jjs="dot fs jump edit local code"
+
+# ========================
+# misc
+# ========================
+alias pr='gpr'
+alias mono="dot work mono"
+
+# debug() {
+#    dot shell log info "$@"
+#    "$@"
+# }

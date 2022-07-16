@@ -1,3 +1,13 @@
+% examples
+# Display contents of a file
+cat <file>
+
+# Echo text
+echo <some_text>
+
+$file: ls
+
+
 % tmp
 
 # Echo multiline
@@ -60,6 +70,13 @@ fi
 $ log: echo "foo bar"
 $ words: echo "$log" | wc -w | xargs
 
+
+% empty
+
+# empty test
+tar -xf <file>
+
+$ file: ls *.tar
 
 % default
 

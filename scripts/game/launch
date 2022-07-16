@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Launch game
+##?
+##? Usage:
+##?    launch <system> <path>
+
+doc::maybe_help "$@"
+
+main() {
+   # local -r system="$1"
+   # local -r path="$2"
+
+   # dot channel notify "$path" "$system"
+   # open "https://google.com?q=${system}"
+   log::warn "TODO"
+}
+
+main "$@"
