@@ -116,8 +116,7 @@ EOF
 # ======================
 
 show_help() {
-   echo "$(log::ansi --magenta "arcx
-More info: https://t.uber.com/arcx")
+   echo "$(log::ansi --magenta "arcx")
 
 $(log::ansi --yellow Warning:) this has only been tested on Linux and on OSX with GNU tools
 
@@ -125,7 +124,7 @@ $(log::ansi --blue "Usage:")
 $(log::ansi --bold diff) [<args>...]       Extension to \`arc diff\`
 $(log::ansi --bold help) [<args>...]       Show arc's original help messages
 $(log::ansi --bold --help)                 Show this help message
-$(log::ansi --bold "<cmd>") [<args>...]       Call to \`arc <cmd>\`
+$(log::ansi --bold "<cmd>") [<args>...]      Call to \`arc <cmd>\`
 
 $(log::ansi --blue "Extra arguments for \`arcx diff\`:")
 $(log::ansi --bold --title) <string>       Skip the revision message edit screen, including the diff title
