@@ -7,7 +7,7 @@ todo_doc() {
    echo "TODO: proper documentation for this Rust util  
    
 Usage:
-  $0"
+  ${0:-"unknown"}"
 }
 
 case "${1:-}" in

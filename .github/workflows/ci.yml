@@ -92,7 +92,7 @@ jobs:
       - name: Cleanup
         run: rm -rf ./tests || true; cd $HOME && for f in $(ls -a | grep '^\.'); do rm "$f" || true; done
       - name: dot self install
-        run: ./bin/dot self --profile simple || true
+        run: ./bin/dot self install --profile simple || true
       - name: ls
         run: ls -la $HOME; echo; echo; cat /home/runner/work/dotfiles/dotfiles/shell/bash/bashrc
       - name: DOTFILES env variable
