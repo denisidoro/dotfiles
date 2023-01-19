@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? LED tools
+##?
+##? Usage:
+##?    led <command>
+##?
+##? Examples:
+##?    led on,cyan
+
+doc::parse "$@"
+
+main() {
+   local -r is_on="$(bluetooth_status)"
+
+   if ! $is_on; then
+      log::info "turning bluetooth on..."
+      blueutil -p on || true  
+   fi
+
+   blue led "$command"
+
+   if ! $is_on; then
+      log::info "turning bluetooth off..."
+      blueutil -p off || true  
+   fi
+}
+
+bluetooth_status() {
+   local -r res="$(timeout 0.1 blueutil --inquiry 1 |& grep "required to be on")"
+   if [ -n "$res" ]; then 
+      echo false
+   else 
+      echo true
+   fi
+}
+
+main "$@"

@@ -110,26 +110,30 @@ platform::get_dir() {
    platform::get_dir "$@"
 }
 
+# TODO
 platform::root() {
    if [ -n "${PREFIX:-}" ]; then
       cd "${PREFIX}/.." && pwd
    fi
 }
 
+# TODO
 platform::get_source_dir() {
    local -r proj_name="${1:-}"
    platform::get_dir "$(platform::root)/opt/${proj_name}" "${HOME}/.${proj_name}/src"
 }
 
+# TODO
 platform::get_bin_dir() {
    platform::get_dir "$(platform::root)/usr/bin" "$(platform::root)/usr/local/bin" "${DOTFILES}/local/bin"
 }
 
+# TODO
 platform::get_tmp_dir() {
-   local -r proj_name="${1:-}"
-   platform::get_dir "$(platform::root)/tmp/${proj_name}" "${HOME}/.${proj_name}/tmp"
+   mktemp -d
 }
 
+# TODO
 platform::rust_compatible_variant() {
    local -r unamea="$(uname -a)"
    local -r archi="$(uname -sm)"

@@ -6,15 +6,6 @@ osascript -e 'display notification "<message>" with title "<title>" subtitle "<s
 # Display a notification with message and title
 osascript -e 'display notification "<message>" with title "<title>"'
 
-# Set DND on (silent)
-defaults -currentHost write ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturb -boolean true
-defaults -currentHost write ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturbDate -date "$(date -u +\"%Y-%m-%d %H:%M:%S +000\")"
-killall NotificationCenter
-
-# Set DND off (not silent)
-defaults -currentHost write ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturb -boolean false
-killall NotificationCenter
-
 
 % osx, file
 
@@ -46,18 +37,10 @@ caffeinate -t $((60*<minutes>))
 caffeinate -t 18000
 
 # Turn Macbook display on :: screen
-for i in $(seq 0 30); do osascript -e 'tell application "System Events"' -e 'key code 144' -e ' end tell'; done
+brightness 0.5
 
 # Turn Macbook display off :: screen
-for i in $(seq 0 30); do osascript -e 'tell application "System Events"' -e 'key code 145' -e ' end tell'; done
-
-
-% osx, wm
-
-# Execute yabai command
-eval "<yabai_cmd>"
-
-$ yabai_cmd: dot system wm cheats navi --- --column 3 --delimiter '\s\s+'
+brightness 0
 
 
 % osx, ui

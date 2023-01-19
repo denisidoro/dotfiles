@@ -1,4 +1,8 @@
 % examples
+
+# Simple echo
+echo foo bar
+
 # Display contents of a file
 cat <file>
 
@@ -6,6 +10,10 @@ cat <file>
 echo <some_text>
 
 $file: ls
+
+
+# Send WhatsApp message to phone number
+open 'https://web.whatsapp.com/send?phone=<phone>'
 
 
 % tmp
@@ -96,3 +104,8 @@ true \
 # echoerr
 source "${HOME}/dotfiles/shell/aux/core.bash"
 echoerr foo
+
+% headphone, sound
+
+# play a sound
+afplay "/Applications/Slack.app/Contents/Resources/b2.mp3"

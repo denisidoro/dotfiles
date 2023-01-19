@@ -82,7 +82,7 @@ main() {
 
    log::info "Press enter after you have copied all the curl commands to the clipboard"
    feedback::enter
-   local -r lines="$(dot terminal clip paste | as_curl_in_each_line)"
+   local -r lines="$(dot script clip paste | as_curl_in_each_line)"
 
    download_svgs "$lines"
    _ls "$DOWNLOAD_PATH"

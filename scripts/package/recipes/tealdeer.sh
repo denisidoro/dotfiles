@@ -6,5 +6,13 @@ package::is_installed() {
 }
 
 package::install() {
-   recipe::cargo tealdeer
+   if dot pkg add --ignore-recipe tealdeer; then 
+      return 0
+   fi
+
+   if recipe::install_github_release dbrgn tealdeer; then
+      return 0
+   fi
+
+   recipe::cargo install tealdeer
 }

@@ -6,9 +6,12 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Helpers for louvre
 ##?
 ##? Usage:
-##?    louvre config
+##?    louvre config (init|set)
+##?    louvre refresh
 
-doc::maybe_help "$@"
+doc::parse "$@"
+
+TAB="  "
 
 libretro() {
    local -r core="$1"
@@ -31,47 +34,75 @@ dolphin() {
    echo 'am start -n org.dolphinemu.dolphinemu/.ui.main.MainActivity -a android.intent.action.VIEW --activity-clear-task --activity-clear-top --activity-no-history' # -e AutoStartFile "{file.path}" 
 }
 
-# drastic() {
-#    echo 'am start -n com.dsemu.drastic/.DraSticActivity -a android.intent.action.VIEW -d "{file.path}" --activity-clear-task --activity-clear-top --activity-no-history'
-# }
+ppsspp() {
+   echo 'am start -n org.ppsspp.ppsspp/.PpssppActivity -a android.intent.action.VIEW -d "{file.documenturi}" --activity-clear-task --activity-clear-top --activity-no-history'
+}
+
+drastic() {
+   echo 'am start -n com.dsemu.drastic/.DraSticActivity -a android.intent.action.VIEW -d "{file.path}" --activity-clear-task --activity-clear-top --activity-no-history'
+}
+
+yuzu() {
+   skyline "$@" # TODO
+}
+
+list_3tabs() {
+   if [ -z "${1:-}" ]; then
+      echo "~"
+      return
+   fi
+
+   local -r prefix="${2:-}"
+
+   echo ""
+   IFS=","
+   for element in $1; do
+      echo "${TAB}${TAB}${TAB}${prefix}${element}"
+   done
+}
 
 collection() {
    local -r platform="$1"
    local -r name="$2"
    local -r launch="$3"
    local -r extensions="$(echo "$4" | tr ',' '\n' | sed 's/^/      - /')"
+   local -r denylist="$(list_3tabs "${5:-""}" "- ")"
+   local -r title_map="$(list_3tabs "$(generic_map "$platform")")"
 
    cat << EOF
   - name: ${name}
-    path: ${ROMS}/${platform}
+    path: ${ROMS_DIR}/${platform}
     extensions: 
 ${extensions}
     platform: ${platform}
-    denylist: ~
-    launch: $launch
+    launch: ${launch}
+    denylist: ${denylist}
+    title_map: ${title_map}
 EOF
 }
 
 gen_collections() {
    collection gbc "Game Boy Color" "$(libretro gambatte)" "zip,rar,7z,dmg,gb,gbc"
-   collection gba "Game Boy Advance" "$(libretro mgba)" "zip,rar,7z,gb,gba,gbc"
+   collection gba "Game Boy Advance" "$(libretro vba_next)" "zip,rar,7z,gb,gba,gbc"
    collection nds "Nintendo DS" "$(libretro melonds)" "zip,rar,7z,bin,dsi,nds"
    collection 3ds "Nintendo 3DS" "$(citra_mmj)" "zip,rar,7z,3ds,cia,3dsx,app,axf,cci,cxi,elf"
    collection nes "Nintendo Entertainment System" "$(libretro bnes)" "zip,rar,7z,nes"
+   collection megadrive "Mega Drive" "$(libretro genesis_plus_gx)" "7z,zip,68k,bin,bms,chd,cue,gen,gg,iso,m3u,md,mdx,sg,sgd,smd,sms"
+   collection nes "Dreamcast" "$(libretro flycast)" "7z,bin,cdi,chd,cue,dat,elf,gdi,lst,m3u,zip"
    collection snes "Super Nintendo" "$(libretro snes9x)" "zip,rar,7z,bs,fig,sfc,smc,st,swc"
-   collection psp "PSP" "$(libretro ppsspp)" "zip,rar,7z,cso,elf,iso,pbp,prx"
    collection n64 "Nintendo 64" "$(libretro mupen64plus_next)" "zip,rar,7z,bin,n64,u1,v64,z64"
-   collection ps1 "Playstation" "$(libretro duckstation)" "bin,cue"
+   collection ps1 "Playstation" "$(libretro swanstation)" "bin,cue"
    collection ps2 "Playstation 2" "$(aether)" "bin,chd,ciso,cso,cue,dump,elf,gz,img,iso,isz,m3u,mdf,nrg"
    collection ps3 "Playstation 3" "$(libretro rpcs3)" "bin"
    collection gc "Nintendo GameCube" "$(dolphin)" "ciso,dff,dol,elf,gcm,gcz,iso,m3u,rvz,tgc,wad,wbfs"
    collection wii "Nintendo Wii" "$(dolphin)" "ciso,dff,dol,elf,gcm,gcz,iso,m3u,rvz,tgc,wad,wbfs"
-   collection switch "Nintendo Switch" "$(skyline)" "iso,cia,nsp,nsz"
-   # collection cps2 "CPS2" "$(libretro fbalpha2012_cps2)" "zip,rar,7z,fba"
+   collection switch "Nintendo Switch" "$(skyline)" "iso,cia,nsp,xci"
+   collection arcade "Arcade" "$(libretro fbneo)" "zip,rar,7z,fba" "fbneo"
+   collection psp "PSP" "$(ppsspp)" "zip,rar,7z,cso,elf,iso,pbp,prx"
 }
 
 gen_yaml() {
-   export ROMS="${ROMS:-$(get_roms_dir)}"
+   export ROMS_DIR="${ROMS_DIR:-$(get_roms_dir)}"
 
    local -r collections="$(gen_collections)"
    local -r client_id="$(dot sec store get louvre/client_id)"
@@ -83,6 +114,19 @@ parallelism:
 igdb:
   api_base_url: "https://api.igdb.com"
   images_base_url: "https://images.igdb.com"
+  denylisted_name_substrings:
+    - dlroW
+    - Clone Tag Team
+    - Trigger+
+    - Demake
+    - Shadow the Hedgehog
+    - Metal Sonic
+    - Mighty & Ray in Sonic 
+    - (Another)
+    - the Hedgehog in Sonic
+    - 8 Deluxe + Super
+    - Balloon World
+    - Limited Edition
 twitch:
   client_id: ${client_id}
   client_secret: ${client_secret}
@@ -93,10 +137,6 @@ tracing:
   time: false
   level: louvre=info
 EOF
-}
-
-main() {
-   gen_yaml
 }
 
 get_roms_dir() {
@@ -110,5 +150,70 @@ get_roms_dir() {
    exit 1
 }
 
+refresh() {
+   local wait
+   local finished_scraping=false
+
+   wait=60
+   for i in $(seq 0 50); do 
+      if ! $finished_scraping && [ $((i % 2)) -eq 0 ]; then
+         # louvre scrape || true
+         if louvre scrape; then
+            finished_scraping=true
+         fi
+      else
+         louvre media download || true
+         # if louvre media download; then
+         #    break
+         # fi
+      fi
+
+      if [ $((i % 10)) -eq 0 ]; then
+         louvre pegasus gen || true
+      fi
+
+      sleep $wait
+      wait=$((wait + 20))
+   done 
+
+   louvre pegasus gen
+}
+
+generic_map() {
+   local -r platform="$1"
+
+   local -r txt="./${platform}.txt"
+   local -r zip="./${platform}.zip"
+
+   cd "${DOTFILES}/scripts/game/aux/louvre_title_map"
+
+   if ! [ -f "$txt" ]; then   
+      if ! [ -f "$zip" ]; then   
+         return
+      fi
+      unzip "$zip"
+   fi
+
+   cat "$txt" \
+      | awk 'NF' \
+      | sed 's/"/\"/g' \
+      | sed -E 's/\s+$//' \
+      | awk -F'  +' '{print "\""$1"\": \""$2"\""}' \
+      | tr '\n' ','
+}
+
+main() {
+   if $config && $init; then 
+      gen_yaml
+   elif $config && $set; then
+      cd "${HOME}/.config/louvre"
+      rm config.yaml || true
+      gen_yaml > config.yaml
+   elif $refresh; then
+      refresh
+   else
+      die "Invalid input"
+   fi
+}
 
 main "$@"

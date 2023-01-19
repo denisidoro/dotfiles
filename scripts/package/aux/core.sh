@@ -18,9 +18,9 @@ pkg::source_file() {
 
 pkg::alias() {
    local -r pkg="$1"
-   local -r prevent_recipe="$2"
+   local -r ignore_recipe="$2"
 
-   if $prevent_recipe; then
+   if $ignore_recipe; then
       echo "$pkg"
       return 0
    fi

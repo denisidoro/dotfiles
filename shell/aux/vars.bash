@@ -47,4 +47,4 @@ export ZDOTDIR="${ZDOTDIR:-"${HOME}/.zim"}"
 export ZIM_HOME="${ZIM_HOME:-"$ZDOTDIR"}"
 
 # PATH
-export PATH="${DOTFILES}/local/bin:${DOTFILES}/bin:${HOME}/.cargo/bin:${HOME}/bin:${HOME}/.cargo/bin:${VOLTA_HOME}/bin:${GOBIN}:${PATH}"
+export PATH="${DOTFILES}/local/bin:${DOTFILES}/bin:${HOME}/.cargo/bin:${HOME}/bin:${HOME}/.cargo/bin:${VOLTA_HOME}/bin:${GOBIN}:${HOME}/.local/bin:${PATH}"

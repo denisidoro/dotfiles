@@ -40,7 +40,7 @@ git clone https://github.com/denisidoro/dotfiles "$DOTFILES"
 
 ```bash
 dot::clone() {
-  bash <(curl -s https://raw.githubusercontent.com/denisidoro/dotfiles/master/scripts/self/install) 
+  git clone https://github.com/denisidoro/dotfiles "$DOTFILES"
 }
 
 dot::clone_if_necessary() {

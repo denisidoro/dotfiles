@@ -1,11 +1,4 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Transpile",
-            "type": "shell",
-            "command": "/Users/denis.isidoro/dotfiles/bin/dot",
-            "args": ["code", "transpile", "${file}"] 
-        }
-    ]
+   "version": "2.0.0",
+   "tasks": []
 }

@@ -36,4 +36,4 @@ _get_url() {
    _full_uri "$uri" "$branch"
 }
 
-dot terminal open "$(_get_url)"
+dot script open "$(_get_url)"

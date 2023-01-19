@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set +e
+set -x
+
+export HOME="${HOME:-"/Users/denis.isidoro"}"
+
+start_tcp_server() {
+   local -r file="${HOME}/Library/LaunchAgents/io.github.denisidoro.tcpserver.plist"
+   launchctl stop "$file"
+   launchctl unload "$file"
+   launchctl load "$file"
+}
+
+_kill() {
+   killall -KILL "$1"
+   osascript -e "quit app \"$1\""
+   pkill -9 "$1"
+}
+
+start_tcp_server
+
+_kill "Cisco AnyConnect Secure Mobility Client"
+_kill "CleanMyMac X"
+_kill "Zoom"
+_kill "Adobe Creative Cloud"
+_kill "CrowdStrike Inc."
+_kill "Elasticsearch, Inc"
+_kill "Google Updater"
+_kill "vboxwebsrv"
+_kill "Hello IT"
+_kill "Falcon Notifications"
+
+brew services stop skhd
+
+_kill "Terminal"

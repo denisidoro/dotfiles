@@ -9,7 +9,6 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 _arc() {
    debug arc "$@"
-   arc "$@"
 }
 
 arc_diff() {
@@ -152,7 +151,7 @@ mktmpfile() {
 # main
 # ======================
 
-main() {
+main_with_sanitized_args() {
    local -r fn="${1:-"--help"}"
    shift || true
 
@@ -162,6 +161,25 @@ main() {
       "--help") show_help ;;
       *) _arc "$@" ;;
    esac
+}
+
+without_host() {
+   sed -E 's|https?://[^/]+||' | tr -d '/'
+}
+
+main() {
+   local args=()
+   local arg
+
+   for ((i=1 ; i <= $# ; i++)); do
+      arg="${!i}"
+      case "$arg" in
+         http*://*) args[$i]="$(echo "$arg" | without_host)" ;;
+         *) args[$i]="$arg" ;; 
+      esac
+   done
+
+   main_with_sanitized_args "${args[@]}"
 }
 
 main "$@"

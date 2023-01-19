@@ -15,9 +15,8 @@ mark < escape ; default
 # Application
 # =================
 
-# launch terminal
-# alt + cmd + ctrl + shift - return : open -na /Applications/kitty.app
-# alt + cmd + ctrl + shift - return : open -na /Applications/iTerm.app
+# navi
+alt + cmd + ctrl + shift - n : kitty -o confirm_os_window_close=0 -o initial_window_width=150c -o initial_window_height=50c -o include=batman.conf /Users/denis.isidoro/dotfiles/bin/quicknavi & disown
 
 # =================
 # Power
@@ -214,7 +213,8 @@ grab < alt + cmd + ctrl + shift - right : yabai -m window --warp east
 # ctrl + alt - l : yabai -m window --insert east
 
 # rotate tree
-alt - r : yabai -m space --rotate 90
+alt + cmd + ctrl + shift - r : yabai -m space --rotate 90
+# alt - r : yabai -m space --rotate 90
 
 # mirror tree y-axis
 # alt - y : yabai -m space --mirror y-axis

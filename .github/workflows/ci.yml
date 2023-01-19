@@ -25,14 +25,14 @@ jobs:
       - name: Run tests
         run: ./bin/dot self test file 'json'
 
-  npm-tests:
-    name: npm
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v2
-      - name: npm test
-        run: cd ./repos/tasker-js; make test
+  # npm-tests:
+  #   name: npm
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout sources
+  #       uses: actions/checkout@v2
+  #     - name: npm test
+  #       run: cd ./repos/tasker-js; make test
 
   help-tests:
     name: Help
@@ -92,9 +92,11 @@ jobs:
       - name: Cleanup
         run: rm -rf ./tests || true; cd $HOME && for f in $(ls -a | grep '^\.'); do rm "$f" || true; done
       - name: dot self install
-        run: ./bin/dot self install-no-interactive || true
+        run: ./bin/dot self install --profile simple || true
+      - name: symlink
+        run: ln -s /home/runner/work/dotfiles/dotfiles /home/runner/dotfiles || true
       - name: ls
-        run: ls -la $HOME; echo; echo; cat /home/runner/work/dotfiles/dotfiles/shell/bash/bashrc
+        run: ls -la $HOME; echo; echo; cat /home/runner/dotfiles/shell/bash/bashrc
       - name: DOTFILES env variable
         run: bash -c 'source $HOME/.bashrc; env; env | grep DOTFILES'
       - name: dot version

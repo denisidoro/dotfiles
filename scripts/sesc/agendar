@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Agendar almoço
+##?
+##? Usage:
+##?     agendar <cpf> <pass> <credencial> [<unidade>] [<fallback_horario_id>]
+##?
+##? Examples:
+##?     agendar "$(dot sec store get me/cpf)" "$(dot sec store get sesc/password)" "$(dot sec store get sesc/credencial)"
+##?
+##? Unidades:
+##?         66     Vila Mariana
+##?
+##? Horário IDs (Vila Mariana):
+##?     963396     11h10
+##?     963397     11h45
+##?     963398     12h20
+##?     963409     12h55
+##?     963410     13h30
+##?     963411     14h05
+##?     963412     14h40
+
+doc::maybe_help "$@"
+
+CPF="$1"
+PASS="$2"
+CREDENCIAL="$3"
+UNIDADE="${4:-"66"}"
+FALLBACK_HORARIO_ID="${5:-"963396"}"
+USER_AGENT='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36'
+
+_curl() {
+   local -r url="$1"
+   shift || true
+
+   curl "$url" \
+      -H 'authority: centralrelacionamento-api.sescsp.org.br' \
+      -H 'accept: application/json, text/plain, */*' \
+      -H 'accept-language: en-US,en;q=0.9,pt-BR;q=0.8,pt;q=0.7,fr-FR;q=0.6,fr;q=0.5,el;q=0.4' \
+      -H 'dnt: 1' \
+      -H 'origin: https://centralrelacionamento.sescsp.org.br' \
+      -H 'referer: https://centralrelacionamento.sescsp.org.br/' \
+      -H 'sec-ch-ua: "Chromium";v="108", "Not?A_Brand";v="8"' \
+      -H 'sec-ch-ua-mobile: ?0' \
+      -H 'sec-ch-ua-platform: "macOS"' \
+      -H 'sec-fetch-dest: empty' \
+      -H 'sec-fetch-mode: cors' \
+      -H 'sec-fetch-site: same-site' \
+      -H "user-agent: ${USER_AGENT}" \
+      "$@" \
+      --compressed \
+      -vvv
+}
+
+get_token() {
+   local -r url='https://centralrelacionamento-api.sescsp.org.br/autenticacao/login'
+   local -r body='{"cpf":"'"$CPF"'","credencial":"","senha":"'"$PASS"'","audit":{"ip":"111.111.11.111","location":null,"device":{"ua":"'"$USER_AGENT"'"}}}'
+  
+  _curl "$url" \
+      -H 'content-type: application/json' \
+      --data-raw "$body" \
+      | jq -r .auth_token
+}
+
+get_agendamento() {
+   local -r token="$1"
+   local -r url="https://centralrelacionamento-api.sescsp.org.br/api/agendamento-comedoria/unidades-horarios?uo=${UNIDADE}&credenciais=${CREDENCIAL}"
+
+   _curl "$url" \
+      -H "authorization: Bearer ${token}" \
+      --max-time 15
+}
+
+get_best_horario_id() {
+   local -r json="$1"
+   id="$(echo "$json" | jq '[.horarios.manha[] | select(.disponivel==true)][0].id')"
+   if [ -z "$id" ]; then
+      id="$(echo "$json" | jq '[.horarios.tarde[] | select(.disponivel==true)][0].id')"
+   fi
+   if [ -z "$id" ]; then
+      id="$FALLBACK_HORARIO_ID"
+   fi
+   echo "$id"
+}
+
+agendar() {
+   local -r token="$1"
+   local -r horario_id="$2"
+
+   _curl 'https://centralrelacionamento-api.sescsp.org.br/api/agendamento-comedoria/agendar' \
+      -H "authorization: Bearer ${token}" \
+      -H 'content-type: application/json' \
+      --data-raw "{\"credenciais\":[${CREDENCIAL}],\"horarioId\":${horario_id}}" 
+}
+
+main() {
+   set -x
+   local -r token="$(get_token)"
+   if [ -z "$token" ] || [ "$token" == "null" ]; then
+      echo "invalid token"
+      exit 3
+   fi
+
+   local -r horarios="$(get_agendamento "$token")"
+   local -r horario_id="$(get_best_horario_id "$horarios")"
+   agendar "$token" "$horario_id"
+}
+
+main "$@"

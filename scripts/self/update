@@ -82,6 +82,7 @@ update_dotfiles_common() {
 update_dotfiles_osx() {
    log::info "Symlinking for OSX..."
    update_dotfiles "osx"
+   dot osx config ln
 }
 
 update_dotfiles_linux() {

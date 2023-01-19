@@ -39,7 +39,7 @@ alias kill='gkill'
 alias xargs='gxargs'
 alias base64='gbase64'
 
-alias ysa="killall Dock; sudo yabai --install-sa; sudo yabai --load-sa"
+# alias ysa="killall Dock; sudo yabai --install-sa; sudo yabai --load-sa"
 
 _load_work_stuff() {
    case $1 in

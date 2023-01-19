@@ -10,10 +10,12 @@ source "${DOTFILES}/scripts/core/main.sh"
 
 doc::parse "$@"
 
+SCRIPT_DIR="${DOTFILES}/raycast/script-commands"
+
 gen() {
    local -r name="$1"
 
-   local -r template="$(cat "${DOTFILES}/scripts/raycast/aux/${name}.template.sh")"
+   local -r template="$(cat "${SCRIPT_DIR}/${name}.template.sh")"
    local headers=""
    local title content
 
@@ -21,11 +23,11 @@ gen() {
       if [ -n "$headers" ]; then
          content="$(gen_file "$headers" "$line" "$template")"
          title="$(get_title "$content")"
-         echo "$content" > "${DOTFILES}/raycast/gen_${name}_${title}.sh" 
+         echo "$content" > "${SCRIPT_DIR}/gen_${name}_${title}.sh" 
       else 
          headers="$line"
       fi
-   done < "${DOTFILES}/scripts/raycast/aux/${name}.csv"
+   done < "${SCRIPT_DIR}/aux/${name}.csv"
 }
 
 get_title() {
@@ -60,13 +62,12 @@ gen_file() {
 }
 
 main() {
-   cd "${DOTFILES}/raycast" &>/dev/null || exit
-   mkdir -p "${DOTFILES}/raycast" &>/dev/null || exit
+   mkdir -p "$SCRIPT_DIR" &>/dev/null || exit
+   cd "$SCRIPT_DIR" &>/dev/null || exit
    rm ./gen*.sh || true
 
-   # ignored: "yabai"
-   for n in "bookmark" "focus_tab" "brightness"; do
-      gen "$n" 
+   for f in ./*.template.*; do
+      gen "$f" 
    done
 }
 

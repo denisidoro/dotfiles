@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/termux/aux/core.sh"
+
+main() {
+   local -r address="${1:-}"
+   set -f
+   local args
+   # shellcheck disable=SC2206
+   args=(${2//,/ })
+
+   for i in "${args[@]}"; do
+      case "$i" in
+         "%"*) 
+           echo "aborting because of undefined input"
+           exit 1
+           ;;
+      esac
+   done
+
+   local -r bin="${CASTER_BIN:-"caster"}"
+   "$bin" --address "$address" "${args[@]}"
+}
+
+main "$@"

@@ -2,8 +2,13 @@
 set -euo pipefail
 
 package::install() {
-   if dot pkg add --prevent-recipe gitui; then return 0; fi
+   if dot pkg add --ignore-recipe gitui; then 
+      return 0
+   fi
 
-   dot pkg add cargo
-   cargo install gitui
+   if recipe::install_github_release extrawurst gitui; then
+      return 0
+   fi
+
+   recipe::cargo install gitui
 }

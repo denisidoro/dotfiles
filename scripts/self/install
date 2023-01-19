@@ -89,7 +89,7 @@ main() {
    cd "$DOTFILES"
 
    # Install some key dependencies
-   _dot pkg add git curl wget 
+   _dot pkg add git curl wget tar
 
    # Android bootstrap
    if uname -a | grep -q "ndroid"; then
@@ -145,27 +145,48 @@ echo "Install using profile ${profile}!"
 set +e
 
 case "$profile" in
-   "devpod")
+   "simple"|"devpod")
       export EDITOR=cat
       export TERM=dumb
       export DOT_THEME=none
       export DOT_DOCOPT=python
-      export DOT_INSTANCE="devpod"
       export DOT_PKG_ALLOW_BUILD=false
       export DOT_LINK_EXTRA_ARG='--backup'
-      export DOTLINK_IGNORE_LIST="git/config,zshrc,bashrc"
+esac
 
+case "$profile" in
+   "simple")   
+      export DOT_SKIP_PM_UPDATE=true
+      export DOT_SKIP_CORE_DEPS=true
+      export DOT_INSTANCE="simple"
+      main "$@"
+      ;;
+   "devpod")
+      export DOT_INSTANCE="devpod"
+      export DOTLINK_IGNORE_LIST="git/config,zshrc,bashrc"
+      
       sudo mkdir -p "${HOME}/.cache"
       sudo chmod 777 "${HOME}/.cache"
 
       main "$@"
 
       _dot pkg batch add mini
-      _dot pkg add dot-source-shellrc
+      _dot pkg add dot-source-shellrc 
       ;;
    *)
       DOT_INSTANCE="$profile"
       main "$@"
+      ;;
+esac
+
+# extra
+case "$profile" in
+   "devpod")
+      sudo apt remove fzf -y
+      _dot pkg add cqlsh fzf-latest navi
+      ;;
+   "phone")
+      _dot pkg add rclone wget curl exiftool 7z curl louvre storm
       ;;
 esac
 

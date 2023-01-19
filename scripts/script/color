@@ -14,7 +14,7 @@ doc::maybe_help "$@"
 
 main() {
    while read -r line; do
-      dot terminal ansi --yellow "$line"
+      dot script ansi --yellow "$line"
    done
 }
 

@@ -1,13 +1,16 @@
 % fs, filesystem
 
-# Delete all broken symlinks in the current directory
+# Delete all broken symlinks
 find -L . -name . -o -type d -prune -o -type l -exec rm {} +
+
+# Delete all .DS_Store files
+find . -name ".DS_Store" -type f -delete
+
+# Delete empty directories
+find . -type d -empty -delete
 
 # Folder size
 du -sh
 
 # Edit fre entries
 e "${HOME}/Library/Application Support/fre/fre.json"
-
-# Resize pngs to 128x128
-\ls ./*[^(_128)].png | sed 's/.png//' | xargs -I% convert "%.png" -resize 128x128 "%_128.png"

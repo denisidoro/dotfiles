@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+source "${DOTFILES}/scripts/git/aux/core.sh"
+
+##? Git deletion helpers
+##?
+##? Usage:
+##?    delete non-master
+
+doc::maybe_help "$@"
+
+non_master() {
+   local -r master="$(git::master_branch)"
+   git checkout "$master"
+
+   local -r branches="$(git for-each-ref --format='%(refname:short)' refs/heads)"
+   echoerr "branches: $branches"
+
+   for b in $branches; do 
+      case "$b" in 
+         "$master") echoerr "skipping ${b}" ;;
+         *) git branch -D "$b" ;;
+      esac
+   done
+}
+
+main() {
+   local -r fn="${1:-}"
+   shift || true
+   case "$fn" in
+      "non-master") non_master "$@" ;;
+      *) exit 42 ;; 
+   esac
+}
+
+main "$@"

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/termux/aux/core.sh"
+
+main() {
+   local -r mac="$1"
+   local -r ip="${2:-}"
+   local -r port="${3:-9}"
+
+   if [ -n "$ip" ]; then
+      wol "$mac" --host "$ip" --port "$port"
+   else 
+      wol "$mac"
+   fi
+}
+
+main "$@"

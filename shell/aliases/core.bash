@@ -38,8 +38,8 @@ alias code='e'
 # alias fzf='fzf-tmux'
 alias d='dot'
 alias n="navi"
-alias browser="dot terminal open -b"
-alias color="dot terminal color"
+alias browser="dot script open -b"
+alias color="dot script color"
 
 # ========================
 # git
@@ -65,9 +65,9 @@ sc() { "./scripts/$@"; }
 # explorer
 # ========================
 
-alias o="dot terminal dashed open --"
+alias o="dot script dashed open --"
 unalias f &> /dev/null
-# alias f="dot terminal dashed vifm --"
+# alias f="dot script dashed vifm --"
 # alias ls='ls --color=auto'
 alias lst="tree -L 2"
 cdd() { cd "$@" && ls .; }

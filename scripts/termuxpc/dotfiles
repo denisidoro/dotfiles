@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/termuxpc/aux/core.sh"
+
+##? Dotfiles utilities
+##?
+##? Usage:
+##?    dotfiles push
+##?    dotfiles install
+##?
+##? Examples:
+##?    dotfiles install
+
+doc::maybe_help --show-if-no-args "$@"
+
+_push_dotfiles() {
+   cd "$DOTFILES"
+
+   dot self edit instance "termux"
+
+   debug rsync --rsh="ssh -p ${TERMUX_PORT}" -avzh \
+      --exclude="node_modules" --exclude="local/mac" \
+      "$DOTFILES"/** \
+      "${TERMUX_ADDRESS}:${TERMUX_HOME}/dotfiles"
+
+   # shellcheck disable=SC2016
+   run_cmd 'export DOTFILES="${HOME}/dotfiles"; "${DOTFILES}/termux/tasker/dot-termux" cp-tasker-scripts' 
+}
+
+_install_dotfiles() {
+   cd "$DOTFILES"
+
+   run_cmd "${TERMUX_HOME}/dotfiles/bin/dot self install --profile termux"
+}
+
+main() {
+   case "${1:-}" in
+      "push") _push_dotfiles ;;
+      "install") _push_dotfiles; _install_dotfiles ;;
+      *) exit 1 ;;
+   esac
+}
+
+cleanup() {
+   dot self edit instance "$DOT_INSTANCE"
+}
+
+trap cleanup INT TERM EXIT
+main "$@"

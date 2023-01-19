@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/termux/aux/core.sh"
+
+main() {
+   local -r from="$1"
+   local -r type="$2"
+   local -r data="${3//¶//\"}"
+   local -r target_mac="$4"
+   local -r target_ip="$5"
+   local -r target_tcp_port="$6"
+   local -r target_wol_port="${7:-9}"
+
+   dot_termux wol "$target_mac" "$target_ip" "$target_wol_port" || true
+   
+   local -r msg="$(dot_termux channeltcp encrypt "$from" "$type" "$data")"
+   printf "%s" "$msg" | ncat "$target_ip" "$target_tcp_port"
+}
+
+main "$@"

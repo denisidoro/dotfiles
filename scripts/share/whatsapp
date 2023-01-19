@@ -14,13 +14,13 @@ source "${DOTFILES}/scripts/core/main.sh"
 doc::maybe_help "$@"
 
 _launch() {
-   dot terminal open -b "https://web.whatsapp.com/send?phone=$*&text&app_absent=1"
+   dot script open -b "https://web.whatsapp.com/send?phone=$*&text&app_absent=1"
 }
 
 main() {
    local number
    number="${1//[^0-9]/}"
-   if [[ ${#number} -lt 10 ]]; then
+   if [[ ${#number} -lt 12 ]]; then
       number="5511${number}"
    fi
    _launch "$number"

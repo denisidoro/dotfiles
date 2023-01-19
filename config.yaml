@@ -1,6 +1,7 @@
 pkg:
   sudo:
     apk: true
+    apt: true
 
 game:
   cemu:

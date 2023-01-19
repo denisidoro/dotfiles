@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
 _apt() {
+   set -x
    apt-get "$@"
 }
 
 apt::install() {
-   local -r ask=false # TODO
-   _apt install "$([ ! "$ask" ] && echo "--yes")" "$@"
+   local ask=false # TODO
+   if ! $ask; then unset ask; fi
+   _apt install ${ask:+ "--yes"} "$@"
 }
 
 apt::remove() {

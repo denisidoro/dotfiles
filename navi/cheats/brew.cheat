@@ -4,13 +4,13 @@
 brew info <package>
 
 # Get info for a cask
-brew cask info <casks>
+brew cask info <cask>
 
 # Install a package
 brew install <package>
 
 # Install a cask
-brew cask install <casks>
+brew cask install <cask>
 
 # Uninstall a package
 brew uninstall <installed>
@@ -25,6 +25,6 @@ brew edit <package>
 brew cask edit <casks>
 
 $ package: brew search
-$ casks: brew search --casks
+$ cask: brew search --casks
 $ installed: brew list
 $ installed_cask: brew cask list

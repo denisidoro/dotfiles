@@ -6,6 +6,7 @@ package::install() {
    if has brew && brew install the_silver_searcher; then return 0; fi
    if has pkg && dot pkg proxy pkg add the_silver_searcher; then return 0; fi
 
-   dot pkg add git
-   recipe::install_from_git "ggreer/the_silver_searcher"
+   local -r folder="$(recipe::shallow_github_clone ggreer the_silver_searcher)"
+   cd "$folder" || exit
+   recipe::install
 }

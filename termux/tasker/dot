@@ -1,0 +1,8 @@
+#!/data/data/com.termux/files/usr/bin/env bash
+set -euo pipefail
+
+export HOME="${HOME:-"/data/data/com.termux/files/home"}"
+export DOTFILES="${DOTFILES:-"${HOME}/dotfiles"}"
+source "${DOTFILES}/scripts/termux/aux/core.sh"
+
+dot_script "$@"

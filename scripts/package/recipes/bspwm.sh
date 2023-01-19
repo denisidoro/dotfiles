@@ -11,12 +11,12 @@ package::install() {
    recipe::shallow_github_clone baskerville sutils
    recipe::shallow_github_clone baskerville xtitle
    recipe::shallow_github_clone LemonBoy bar
-   recipe::make bspwm
-   recipe::make sxhkd
-   recipe::make xdo
-   recipe::make sutils
-   recipe::make xtitle
-   recipe::make bar
+   recipe::install bspwm
+   recipe::install sxhkd
+   recipe::install xdo
+   recipe::install sutils
+   recipe::install xtitle
+   recipe::install bar
 
    echo "sxhkd & exec bspwm" >> "$HOME"/.xinitrc
 
