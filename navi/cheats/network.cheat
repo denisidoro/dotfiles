@@ -5,7 +5,7 @@ lsof -i :<port> \
    | awk '{l=$2} END {print l}' \
    | xargs kill
 
-# Kill a process for port
+# Kill a process using a port given a name
 port="$(echo "<process>" | grep -Eo ':([0-9][0-9][0-9]+) ' | tr -d ':')"
 lsof -i :$port \
    | awk '{l=$2} END {print l}' \
@@ -31,9 +31,6 @@ ifconfig \
   | grep -v '127.0.0.1' \
   | tail -n1
 
-# Get certificates for a service
-openssl s_client -showcerts -connect <url>
-
 # Geolocation data given an IP
 curl -sL "ipinfo.io/<ip>" | jq
 
@@ -46,11 +43,14 @@ docker run -it --entrypoint /bin/sh nicolaka/netshoot
 # Map ports
 sudo nmap -sS -sV -0 "<target>"
 
-# Port owner
+# Find process using a port
 lsof -n -i4TCP:<port> | grep LISTEN
 
 # List open ports
 lsof -Pn -i4
+
+# Start a Python3 server
+python3 -m http.server
 
 $ self_global_ip: dig +short myip.opendns.com @resolver1.opendns.com
 $ process: lsof -iTCP -sTCP:LISTEN -n -P | sed -E "s/:([0-9][0-9][0-9]+) /:$(tput setaf 3)\1$(tput sgr0) /g" --- --header-lines 1

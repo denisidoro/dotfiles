@@ -2,9 +2,9 @@
 set -euo pipefail
 
 package::install() {
-   if has brew && brew install denisidoro/tools/docpars; then 
+   if recipe::install_github_release denisidoro docpars; then
       return 0
    fi
    
-   recipe::cargo docpars
+   recipe::cargo install --git https://github.com/denisidoro/docpars
 }

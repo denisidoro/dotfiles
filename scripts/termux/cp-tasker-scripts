@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/termux/aux/core.sh"
+
+main() {
+   set +e
+   set -x
+   cd "$HOME" 
+   cp -r ./.termux/tasker ./.termux/tasker_bkp
+   rm -r ./.termux/tasker
+   mkdir -p ./.termux || true
+   ln -s "${DOTFILES}/termux/tasker" "${HOME}/.termux/tasker"
+}
+
+main "$@"

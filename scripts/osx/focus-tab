@@ -6,7 +6,7 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Focus browser tab
 ##?
 ##? Usage:
-##?    focus-tab <query>
+##?    focus-tab <query> <uri>
 
 doc::maybe_help "$@"
 

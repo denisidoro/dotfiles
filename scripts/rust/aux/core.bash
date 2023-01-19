@@ -3,6 +3,17 @@ set -euo pipefail
 
 source "${DOTFILES}/scripts/core/main.sh"
 
+todo_doc() {
+   echo "TODO: proper documentation for this Rust util  
+   
+Usage:
+  $0"
+}
+
+case "${1:-}" in
+   -h|--help) todo_doc "$@"; exit 0 ;;
+esac
+
 # =====================
 # main
 # =====================
@@ -14,14 +25,6 @@ fi
 export PROJ_BIN_NAME="${PROJ_BIN_NAME:-$PROJ_NAME}"
 
 export PROJ_HOME="${PROJ_HOME:-"$(pwd)"}"
-
-# =====================
-# android
-# =====================
-
-export ANDROID_HOST="${ANDROID_HOST:-192.168.0.12}"
-export ANDROID_PORT="${ANDROID_PORT:-8022}"
-
 
 # =====================
 # paths

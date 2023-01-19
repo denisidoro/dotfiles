@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+
+    <key>Label</key>
+    <string>io.github.denisidoro.channeltcp</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/denis.isidoro/tmp/channeltcp/stderr.log</string>
+
+    <key>StandardOutPath</key>
+    <string>/Users/denis.isidoro/tmp/channeltcp/stdout.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+       <key>PATH</key>
+       <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/denis.isidoro/tmp/channeltcp</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/channeltcp</string>
+    </array>
+
+     <key>Sockets</key>
+    <dict>
+    <key>Listeners</key>
+    <dict>
+      <key>SockServiceName</key>
+      <string>channeltcp</string>
+      <key>SockType</key>
+      <string>stream</string>
+      <key>SockFamily</key>
+      <string>IPv4</string>
+    </dict>
+  </dict>
+
+  </dict>
+</plist>

@@ -29,7 +29,8 @@ _filtered_files() {
       | grep -v 'repos/dotlink' \
       | grep -v 'scripts/rice' \
       | grep -v 'docopt' \
-      | grep -v '\.py'
+      | grep -v '\.py' \
+      | grep -v 'terminal/kitty'
 }
 
 _fix_one() {

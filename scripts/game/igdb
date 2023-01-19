@@ -6,21 +6,28 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? IGDB
 ##?
 ##? Usage:
-##?    igdb api <endpoint> <query>
+##?    igdb [<query>]
 
 doc::parse "$@"
 
-api_call() {
-   local -r endpoint="$1"
-   local -r query="$2"
-
-   curl "https://api-v3.igdb.com/${endpoint}" \
-      -d "$query" \
-      -H "user-key: ${IGDB_KEY}" \
-      -H 'Accept: application/json' \
-      -s
+sample_query() {
+   echo 'fields name;
+      search "Sonic the Hedgehog";
+      where platforms = (29);
+      limit 5;'
 }
 
-if $api; then
-   api_call "$endpoint" "$query"
-fi
+main() {
+   local -r query="${1:-"$(sample_query)"}"
+
+   curl -X POST \
+      'https://api.igdb.com/v4/games' \
+      --header 'Accept: */*' \
+      --header 'User-Agent: Thunder Client' \
+      --header "Client-ID: $(dot security store get igdb/client_id)" \
+      --header "Authorization: Bearer $(dot security store get igdb/token)" \
+      --header 'Content-Type: text/plain' \
+      --data-raw "$query"
+}
+
+main "$query" | jq

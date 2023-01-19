@@ -2,7 +2,7 @@
 set -euo pipefail
 
 package::install() {
-   recipe::shallow_github_clone junegunn fzf # TODO
-   cd "$TMP_DIR/fzf"
-   yes | ./install
+   local -r folder="$(recipe::shallow_github_clone junegunn fzf)"
+   cd "$folder" || exit
+   recipe::install
 }

@@ -2,11 +2,13 @@
 set -euo pipefail
 
 package::install() {
-   if recipe::cargo navi; then 
-      return 0; 
+   if dot pkg add --ignore-recipe navi; then 
+      return 0
    fi
 
-   recipe::check_if_can_build
-   dot pkg add curl
-   bash <(curl -sL https://raw.githubusercontent.com/denisidoro/navi/master/scripts/install)
+   if recipe::install_github_release denisidoro navi; then
+      return 0
+   fi
+
+   recipe::cargo install navi
 }

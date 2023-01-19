@@ -6,5 +6,5 @@ package::is_installed() {
 }
 
 package::install() {
-   dot pkg add --prevent-recipe imagemagick
+   dot pkg add --ignore-recipe imagemagick
 }

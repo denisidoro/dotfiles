@@ -7,6 +7,8 @@ source "${DOTFILES}/scripts/git/aux/core.sh"
 ##? Usage:
 ##?    commit am <args>...
 
+doc::maybe_help "$@"
+
 git::changelog_commit() {
    cd "$(git::root)" || exit
 

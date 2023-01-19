@@ -13,18 +13,18 @@ _commit() {
 cd "$PROJ_HOME"
 
 _commit
-log::note "cargo fix..."
+log::info "cargo fix..."
 cargo fix || true
 
 _commit
-log::note "cargo fmt..."
+log::info "cargo fmt..."
 cargo fmt || true
 
 _commit
-log::note "clippy..."
+log::info "clippy..."
 cargo clippy --fix || true
 
 # _commit
-# log::note "dot code beautify..."
+# log::info "dot code beautify..."
 # find scripts -type f | xargs -I% dot code beautify % || true
 # dot code beautify "${PROJ_HOME}/tests/run" || true

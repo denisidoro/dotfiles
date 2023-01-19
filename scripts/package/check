@@ -9,21 +9,21 @@ source "${DOTFILES}/scripts/package/aux/core.sh"
 ##?    add [options] [<packages>...]
 ##?
 ##? Options:
-##?    --prevent-recipe
+##?    --ignore-recipe
 
 doc::maybe_help "$@"
 
-if [[ "$1" == "--prevent-recipe" ]]; then
-   prevent_recipe=true
+if [[ "$1" == "--ignore-recipe" ]]; then
+   ignore_recipe=true
    shift
 else
-   prevent_recipe=false
+   ignore_recipe=false
 fi
 
 # if [ $# -gt 1 ]; then
 #    pkg_failures=0
 #    for package in "$@"; do
-#       dot pkg check "$($prevent_recipe && printf %s '--prevent-recipe')" "$package" || pkg_failures=$((pkg_failures+1))
+#       dot pkg check "$($ignore_recipe && printf %s '--ignore-recipe')" "$package" || pkg_failures=$((pkg_failures+1))
 #    done
 #    exit "$pkg_failures"
 # fi
@@ -38,12 +38,12 @@ exit::isnt_installed() {
    exit 234
 }
 
-package="$(pkg::alias "$1" "$prevent_recipe")"
+package="$(pkg::alias "$1" "$ignore_recipe")"
 has "$package" && exit::is_installed
 
 file="$(pkg::source_file "$package")"
 
-if $prevent_recipe || ! [ -f "$file" ]; then
+if $ignore_recipe || ! [ -f "$file" ]; then
    exit::isnt_installed
 fi
 

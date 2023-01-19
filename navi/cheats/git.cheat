@@ -1,4 +1,5 @@
 % git common
+; raycast.icon: bank-note-16
 
 $ local_branch: dot git ls local_branch --- --column 1
 $ config: dot git ls config --- --column 1
@@ -21,6 +22,9 @@ git checkout "<local_branch>"
 
 # checkout tag
 git checkout "<tag>"
+
+# set upstream
+git branch —set-upstream-to "<local_branch>"
 
 % git config
 @ git common

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/termuxpc/aux/core.sh"
+
+##? SSH
+##?
+##? Usage:
+##?    ssh
+
+doc::maybe_help "$@"
+
+main() {
+   debug ssh "$TERMUX_ADDRESS" -p "$TERMUX_PORT"
+}
+
+main "$@"

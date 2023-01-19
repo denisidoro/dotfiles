@@ -27,6 +27,7 @@ _scripts() {
 _bins() {
    echo -e "$(_scripts)\n$(_execs)" \
       | grep -v '.DS_Store' \
+      | grep -v '^termux/' \
       | sort -u
 }
 

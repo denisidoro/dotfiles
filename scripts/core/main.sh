@@ -51,7 +51,7 @@ log::ansi() {
       "--red--inverse") printf "\033[31m\033[7m%s\033[27;39m" "$txt" ;;
       "--green") printf "\033[32m%s\033[39m" "$txt" ;;
       "--green--inverse") printf "\033[32m\033[7m%s\033[27;39m" "$txt" ;;
-      *) dot terminal ansi "${all_args[@]}" ;;
+      *) dot script ansi "${all_args[@]}" ;;
    esac
 }
 
@@ -152,6 +152,7 @@ if has ggrep; then
    cat() { gcat "$@"; }
    sort() { gsort "$@"; }
    kill() { gkill "$@"; }
+   # shellcheck disable=SC2120
    xargs() { gxargs "$@"; }
    export_f sed awk find head mktemp date cut tr cp cat sort kill xargs
 fi
@@ -170,7 +171,7 @@ doc::maybe_help() {
       show_if_no_args=true
    fi
 
-   doc::autocomplete "$@"
+   doc::handle "$@"
 
    if $show_if_no_args && [ $# = 0 ]; then
       doc::_help_msg "$sh_file"
@@ -185,7 +186,7 @@ doc::maybe_help() {
 doc::parse() {
    local -r sh_file="$0"
 
-   doc::autocomplete "$@"
+   doc::handle "$@"
 
    local -r help="$(doc::_help_msg "$sh_file")"
    local docopt="${DOT_DOCOPT:-}"
@@ -213,12 +214,6 @@ doc::parse() {
 }
 
 doc::autocomplete() {
-   if [ "${1:-}" != "_autocomplete" ]; then
-      return 0
-   fi
-
-   shift
-
    if ! has _autocomplete; then
       exit 99
    fi
@@ -230,4 +225,25 @@ doc::autocomplete() {
    else 
       exit 1
    fi
+}
+
+doc::install_deps() {
+   local -r deps="$(doc::_help_msg "$0" \
+      | awk '/Depends on/,/^$/' \
+      | tail -n +2 \
+      | xargs)"
+
+   IFS=' '
+   for dep in $deps; do
+      dot pkg add "$dep"
+   done
+
+   exit 0
+}
+
+doc::handle() {
+   case "${1:-}" in
+      "_autocomplete") shift; doc::autocomplete "$@" ;;
+      "_install_deps") shift; doc::install_deps "$@" ;;
+   esac
 }

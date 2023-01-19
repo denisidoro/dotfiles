@@ -3,4 +3,4 @@
 dot_bin_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 
 editors="nvim,vim,vi,nano"
-"${dot_bin_dir}/dot" terminal dashed "$editors" -- "$@"
+"${dot_bin_dir}/dot" script dashed "$editors" -- "$@"

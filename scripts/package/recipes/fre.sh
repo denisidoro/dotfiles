@@ -2,6 +2,5 @@
 set -euo pipefail
 
 package::install() {
-   if has brew && brew install camdencheek/brew/fre; then return 0; fi
-   recipe::cargo fre
+   recipe::install_github_release denisidoro fre
 }

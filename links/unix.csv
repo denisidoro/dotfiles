@@ -6,9 +6,9 @@ shell/profile, $HOME/.bash_profile
 shell/profile, $HOME/.profile
 shell/hushlogin, $HOME/.hushlogin
 editors/spacevim/spacevim.rc, $HOME/.spacevim
-terminal/tmux/tmux.conf, $HOME/.tmux.conf
 terminal/kitty/kitty.conf, $HOME/.config/kitty/kitty.conf
 terminal/alacritty/alacritty.yml, $HOME/.config/alacritty/alacritty.yml
 git/config, $HOME/.gitconfig
 git/ignore, $HOME/.gitignore
 editors/intellij/ideavim.rc, $HOME/.ideavimrc
+navi/config.yaml, $HOME/.config/navi/config.yaml

@@ -4,7 +4,8 @@ set -euo pipefail
 source "${DOTFILES}/scripts/rust/aux/core.bash"
 
 version_from_toml() {
-   cat "${PROJ_HOME}/Cargo.toml" \
+   local -r cargo_path="${CARGO_PATH:-"${PROJ_HOME}/Cargo.toml"}"
+   cat "$cargo_path" \
       | grep version \
       | head -n1 \
       | awk '{print $NF}' \
@@ -16,7 +17,7 @@ main() {
    cd "$PROJ_HOME"
    
    version="${1:-$(version_from_toml)}"
-   log::note "version: $version..."
+   log::info "version: $version..."
    sleep 2
 
    git tag -a "v${version}"

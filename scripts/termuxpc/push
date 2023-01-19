@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/termuxpc/aux/core.sh"
+
+##? Push files
+##?
+##? Usage:
+##?    push <from> <to>
+##?
+##? Examples:
+##?    push 
+
+doc::maybe_help --show-if-no-args "$@"
+
+main() {
+   local -r from="$1"
+   local -r to="$2"
+
+   debug rsync --rsh="ssh -p ${TERMUX_PORT}" -avzh \
+      --exclude="node_modules" --exclude="local/mac" \
+      "$from" \
+      "${TERMUX_ADDRESS}:${to}"
+}
+
+main "$@"

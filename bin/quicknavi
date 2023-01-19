@@ -1,0 +1,9 @@
+#!/usr/bin/env dash
+
+# shellcheck disable=SC1007
+export DOTFILES="${DOTFILES:-"$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"}"
+. "${DOTFILES}/shell/aux/vars.bash"
+export FZF_DEFAULT_OPTS='--tiebreak=begin --literal --layout=reverse --height 100% --inline-info --cycle'
+export PATH="${PATH}:/usr/local/bin"
+
+navi "$@"

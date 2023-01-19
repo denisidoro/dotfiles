@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+
+##? Helpers for configs
+##?
+##? Usage:
+##?    config ln
+
+doc::parse "$@"
+
+_files() {
+   ls ./*/*.yaml || true
+   ls ./*/*.yml || true
+   ls ./*/*.toml || true
+   ls ./*/*.json || true
+}
+
+_projects() {
+   _files 2>/dev/null \
+      | cut -d'/' -f2 \
+      | sort -u \
+      | grep -v ' '
+}
+
+_ln() {
+   export IFS=$'\n'
+   local -r support_dir="${HOME}/Library/Application Support"
+   cd "$support_dir"
+   for project in $(_projects); do
+      if ! [ -d "${HOME}/.config/${project}" ]; then
+         ln -s "${support_dir}/${project}" "${HOME}/.config"
+      fi
+   done
+   ln -s "${HOME}/Library/Preferences/pegasus-frontend" "${HOME}/.config/pegasus" || true
+}
+
+main() {
+   if $ln; then
+      _ln
+   else
+      die "Invalid argument"
+   fi
+}
+
+main "$@"

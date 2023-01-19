@@ -6,10 +6,10 @@ source "${DOTFILES}/scripts/core/main.sh"
 ##? Handle a channel message
 ##?
 ##? Usage:
-##?    handle <type> [<data>]
+##?    handle <client> <type> [<data>]
 ##? 
 ##? Examples:
-##?    handle url https://google.com
+##?    handle phone url https://google.com
 
 doc::maybe_help "$@"
 
@@ -24,8 +24,13 @@ _log() {
 main() {
    _log "$@"
 
-   local -r type="$1"
-   shift
+   local -r from="$1"
+   local type="$2"
+   type="${type//_/-}"
+   type="${type// /-}"
+   shift 2 || true
+
+   log::info "handling message: ${from}, ${type}"
 
    case "$type" in
       url|uri) 
@@ -51,10 +56,37 @@ main() {
       rickroll) 
          open "https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
          ;;
+      kill|"app-kill")
+         _kill "$*"
+         ;;
+      app|"app-open")
+         osascript -e "tell application \"$*\" to activate"
+         ;;
+      led) 
+         dot home led "$@"
+         ;;
       *) 
          die "unknown type: $type" 
          ;;
    esac
 }
 
-main "$@"
+bluetooth_status() {
+   local -r res="$(timeout 0.1 blueutil --inquiry 1 |& grep "required to be on")"
+   if [ -n "$res" ]; then 
+      echo false
+   else 
+      echo true
+   fi
+}
+
+_kill() {
+   set +e
+   killall -KILL "$1"
+   osascript -e "quit app \"$1\""
+   pkill -9 "$1"
+   set -e
+}
+
+
+main "$@" 2>&1

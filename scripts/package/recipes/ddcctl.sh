@@ -6,7 +6,7 @@ repo="ddcctl"
 
 package::install() {
    platform::is_osx || return 1
-   recipe::shallow_github_clone "$user" "$repo"
-   cd "$(recipe::folder "$repo")"
-   make install
+   local -r folder="$(recipe::shallow_github_clone "$user" "$repo")"
+   cd "$folder"
+   recipe::install
 }

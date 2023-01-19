@@ -10,7 +10,7 @@ source "${DOTFILES}/scripts/package/aux/recipe.sh"
 ##?    add [options] [<packages>...]
 ##?
 ##? Options:
-##?    --prevent-recipe
+##?    --ignore-recipe
 
 _autocomplete() {
    dot package recipe list
@@ -18,37 +18,37 @@ _autocomplete() {
 
 doc::maybe_help "$@"
 
-prevent_recipe=false
-if [[ "$1" == "--prevent-recipe" ]]; then
-   prevent_recipe=true
+ignore_recipe=false
+if [[ "$1" == "--ignore-recipe" ]]; then
+   ignore_recipe=true
    shift
 fi
 
 # if [ $# -gt 1 ]; then
 #    pkg_failures=0
 #    for package in "$@"; do
-#       dot pkg add "$($prevent_recipe && printf %s '--prevent-recipe')" "$package" || pkg_failures=$((pkg_failures+1))
+#       dot pkg add "$($ignore_recipe && printf %s '--ignore-recipe')" "$package" || pkg_failures=$((pkg_failures+1))
 #    done
 #    exit "$pkg_failures"
 # fi
 
 _log::installing() {
    local suffix=""
-   if $prevent_recipe; then
+   if $ignore_recipe; then
       suffix=" without custom recipes"
    fi
    log::warn "Attempting to install ${package}${suffix}..."
 }
 
 main() {
-   package="$(pkg::alias "$1" "$prevent_recipe")"
+   package="$(pkg::alias "$1" "$ignore_recipe")"
 
    # shellcheck disable=SC2046
-   dot pkg check $($prevent_recipe && printf %s '--prevent-recipe') "$package" && exit 0
+   dot pkg check $($ignore_recipe && printf %s '--ignore-recipe') "$package" && exit 0
 
    file="$(pkg::source_file "$package")"
 
-   if $prevent_recipe || ! [ -f "$file" ]; then
+   if $ignore_recipe || ! [ -f "$file" ]; then
       _log::installing
       for pkg_mgr in apt apk pkg yum dnf port emerge pacman brew; do
          if dot pkg proxy $pkg_mgr add "$package"; then

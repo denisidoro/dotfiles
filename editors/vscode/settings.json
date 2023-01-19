@@ -1,5 +1,6 @@
 {
    "editor.fontSize": 12,
+   "update.mode": "none",
    // "editor.fontFamily": "Hack Nerd Font",
    "editor.letterSpacing": 0.2,
    "editor.lineHeight": 18,
@@ -7,8 +8,8 @@
    "editor.renderWhitespace": "none",
    "files.autoSave": "onFocusChange",
    "files.trimFinalNewlines": true,
-   "editor.formatOnPaste": true,
-   // "editor.formatOnPaste": false,
+   // "editor.formatOnPaste": true,
+   "editor.formatOnPaste": false,
    "editor.formatOnSave": true,
    // "editor.formatOnSave": false,
    "editor.minimap.enabled": true,
@@ -32,7 +33,7 @@
    "workbench.activityBar.visible": false,
    "workbench.editor.enablePreviewFromQuickOpen": true,
    "workbench.editor.highlightModifiedTabs": true,
-   "workbench.list.keyboardNavigation": "simple",
+   "workbench.list.defaultFindMode": "highlight",
    "customizeUI.activityBar": "bottom",
    "customizeUI.titleBar": "custom",
    "window.titleBarStyle": "custom",
@@ -200,7 +201,7 @@
       }
    ],
    "extensions.ignoreRecommendations": true,
-   "workbench.colorTheme": "Ayu Mirage Bordered",
+   "workbench.colorTheme": "Ayu Mirage",
    "typescript.updateImportsOnFileMove.enabled": "always",
    "C_Cpp.updateChannel": "Insiders",
    "workbench.editorAssociations": {
@@ -229,5 +230,6 @@
    "typescript.inlayHints.parameterTypes.enabled": true,
    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
    "typescript.inlayHints.variableTypes.enabled": true,
-   "workbench.editor.enablePreviewFromCodeNavigation": true
+   "workbench.editor.enablePreviewFromCodeNavigation": true,
+   "window.zoomLevel": -1
 }

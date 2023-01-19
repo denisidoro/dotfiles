@@ -19,9 +19,10 @@ aliased() {
    esac
 }
 
-pkg_manager="$(aliased "$1")"
-operation="$2"
-shift 2
+sudo_dot() {
+   # echoerr sudo "$@"
+   sudo HOME="$HOME" ALREADY_CALLED_SELF=true "${DOTFILES}/bin/dot" "$@"
+}
 
 _valid_pkg_mgr_for_osx() {
    case "${1:-}" in
@@ -29,6 +30,25 @@ _valid_pkg_mgr_for_osx() {
    esac
    return 0
 }
+
+echoerr "args: 0: $0, 1: ${1:-}, 2: ${2:-}, 3: ${3:-}"
+
+pkg_manager="$(aliased "$1")"
+
+already_called_self=${ALREADY_CALLED_SELF:-false}
+if $already_called_self; then
+   :
+else
+   yaml::export
+   use_sudo="$(yaml::var "pkg_sudo_${pkg_manager}" false)"
+   if $use_sudo; then
+      sudo_dot package proxy "$@"
+      exit 0
+   fi
+fi
+
+operation="$2"
+shift 2
 
 # short-circuit on OSX
 platform::is_osx \
@@ -57,12 +77,4 @@ file="${DOTFILES}/scripts/package/pkg_managers/${pkg_manager}.sh"
 source "$file"
 
 fn="${pkg_manager}::$(_actual_operation "$operation")"
-
-yaml::export
-use_sudo="$(yaml::var "pkg_sudo_${pkg_manager}" false)"
-
-if $use_sudo; then
-   sudo "$fn" "$@"
-else
-   "$fn" "$@"
-fi
+debug "$fn" "$@"

@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "${DOTFILES}/scripts/core/main.sh"
+source "${DOTFILES}/scripts/core/str.sh"
+
+##? Spotify web player utils
+##?
+##? Usage:
+##?    spotify current
+
+doc::maybe_help "$@"
+
+_current() {
+   local -r browser="$1"
+   local -r uri="spotify.com"
+
+   local code
+   set +e
+   read -r -d '' code <<EOF
+if application "$browser" is not running then
+   return
+end if
+
+set searchString to "$uri"
+
+tell application "$browser"
+    set win_List to every window
+    repeat with win in win_List
+        set tab_list to every tab of win
+        set i to 0
+        repeat with t in tab_list
+            set i to i + 1
+            if searchString is in (URL of t as string) then
+                set msg to title of t as string
+                return msg
+            end if
+        end repeat
+    end repeat
+end tell
+EOF
+   set -e
+
+   osascript -e "$code"
+}
+
+main() {
+   local -r browser="Vivaldi"
+
+   local -r info="$(_current "$browser" "$@" | sed -E "s/•+/|/g")"
+
+   local -r song="$(echo "$info" | cut -d'|' -f1 | xargs)"
+   local -r author="$(echo "$info" | cut -d'|' -f2 | xargs)"
+   osascript -e "display notification \"${song}\" with title \"${author}\""
+}
+
+main "$@"

@@ -4,11 +4,9 @@ set -euo pipefail
 source "${DOTFILES}/scripts/rust/aux/core.bash"
 
 main() {
-   set -x
-   rsync \
-      -e "ssh -p ${ANDROID_PORT}" \
+   dot termuxpc push \
       "${PROJ_HOME}/target/aarch64-linux-android/release/${PROJ_BIN_NAME}" \
-      "${ANDROID_HOST}:/data/data/com.termux/files/home/${PROJ_BIN_NAME}"
+      "data/data/com.termux/files/home/${PROJ_BIN_NAME}"
 }
 
 main "$@"

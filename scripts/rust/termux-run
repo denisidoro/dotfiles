@@ -1,7 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
 export PROJ_BIN_NAME="__BIN_NAME__"
+
+todo_doc() {
+   echo 'Termux run
+   
+Usage:
+   termux-run <args...>'
+}
 
 main() {
    local -r config="${1//@/\"}"
@@ -28,7 +35,10 @@ main() {
    done
 
    local -r proj_bin="${PROJ_BIN:-"${HOME}/${PROJ_BIN_NAME}"}"
-   "$proj_bin" --config <(echo "$config") "$@" |& tee "$log"
+   "$proj_bin" --config <(echo "$config") "$@" # |& tee "$log"
 }
 
-main "$@"
+case "${1:-}" in
+   -h|--help) todo_doc "$@" ;;
+   *) main "$@" ;;
+esac
