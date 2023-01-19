@@ -152,7 +152,6 @@ case "$profile" in
       export DOT_DOCOPT=python
       export DOT_PKG_ALLOW_BUILD=false
       export DOT_LINK_EXTRA_ARG='--backup'
-      export DOTLINK_IGNORE_LIST="git/config,zshrc,bashrc"
 esac
 
 case "$profile" in
@@ -164,6 +163,8 @@ case "$profile" in
       ;;
    "devpod")
       export DOT_INSTANCE="devpod"
+      export DOTLINK_IGNORE_LIST="git/config,zshrc,bashrc"
+      
       sudo mkdir -p "${HOME}/.cache"
       sudo chmod 777 "${HOME}/.cache"
 

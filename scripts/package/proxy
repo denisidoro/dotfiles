@@ -31,7 +31,7 @@ _valid_pkg_mgr_for_osx() {
    return 0
 }
 
-echoerr "args: 0: $0, 1: ${1:-}, 2: ${2:-}, 3: ${3:-}"
+# echoerr "args: 0: $0, 1: ${1:-}, 2: ${2:-}, 3: ${3:-}"
 
 pkg_manager="$(aliased "$1")"
 
