@@ -94,9 +94,9 @@ jobs:
       - name: dot self install
         run: ./bin/dot self install --profile simple || true
       - name: symlink
-        run: ln -s /home/runner/work/dotfiles /home/runner/dotfiles || true
+        run: ln -s /home/runner/work/dotfiles/dotfiles /home/runner/dotfiles || true
       - name: ls
-        run: ls -la $HOME; echo; echo; cat /home/runner/work/dotfiles/dotfiles/shell/bash/bashrc
+        run: ls -la $HOME; echo; echo; cat /home/runner/dotfiles/shell/bash/bashrc
       - name: DOTFILES env variable
         run: bash -c 'source $HOME/.bashrc; env; env | grep DOTFILES'
       - name: dot version
