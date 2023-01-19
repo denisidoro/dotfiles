@@ -37,7 +37,16 @@ assert_help() {
    local -r ctx="$(echo "$words" | awk '{print $1}')"
    local -r cmd="$(echo "$words" | awk '{print $2}')"
 
-   dot "$ctx" "$cmd" --help | cat | grep -Eq 'Usage|USAGE|usage' 
+   local help_cmd=""
+   local i=1
+   while true; do
+      help_cmd="$(dot "$ctx" "$cmd" --help)"
+      i=$((i+1))
+      if [ -z "$help_cmd" ] || [ $i -gt 3 ]; then
+         break
+      fi
+   done
+   echo "$help_cmd" | grep -Eq 'Usage|USAGE|usage' 
 }
 
 _with_eval_help() {
